@@ -1,0 +1,103 @@
+{
+    "name": "su-sws/stanford_profile_helper",
+    "description": "Helper Module For Stanford Profile",
+    "type": "drupal-custom-module",
+    "license": "GPL-2.0+",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "ckeditor-plugin/a11ychecker",
+                "version": "1.1.1",
+                "type": "drupal-library",
+                "dist": {
+                    "url": "https://download.ckeditor.com/a11ychecker/releases/a11ychecker_1.1.1.zip",
+                    "type": "zip"
+                },
+                "require": {
+                    "composer/installers": "~1.0"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "ckeditor-plugin/balloonpanel",
+                "version": "4.14.0",
+                "type": "drupal-library",
+                "dist": {
+                    "url": "https://download.ckeditor.com/balloonpanel/releases/balloonpanel_4.14.0.zip",
+                    "type": "zip"
+                },
+                "require": {
+                    "composer/installers": "~1.0"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "ckeditor-plugin/link",
+                "version": "4.14.0",
+                "type": "drupal-library",
+                "dist": {
+                    "url": "https://download.ckeditor.com/link/releases/link_4.14.0.zip",
+                    "type": "zip"
+                },
+                "require": {
+                    "composer/installers": "~1.0"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "ckeditor-plugin/fakeobjects",
+                "version": "4.14.0",
+                "type": "drupal-library",
+                "dist": {
+                    "url": "https://download.ckeditor.com/fakeobjects/releases/fakeobjects_4.14.0.zip",
+                    "type": "zip"
+                },
+                "require": {
+                    "composer/installers": "~1.0"
+                }
+            }
+        }
+    ],
+    "require": {
+        "drupal/core": "^8.9",
+        "drupal/display_field_copy": "~1.2",
+        "drupal/ds": "~3.3",
+        "drupal/field_formatter_class": "dev-1.x#e7b3c4a959f63d7a9efc74f2d3a67de306b8ddb4",
+        "drupal/field_group": "^3.0@rc",
+        "drupal/paragraphs": "^1.11",
+        "drupal/ui_patterns": "~1.0",
+        "su-sws/jumpstart_ui": "dev-8.x-1.x",
+        "su-sws/react_paragraphs": "dev-8.x-1.x",
+        "su-sws/stanford_date_formats": "dev-8.x-1.x",
+        "su-sws/stanford_fields": "dev-8.x-1.x",
+        "su-sws/stanford_image_styles": "dev-8.x-1.x",
+        "su-sws/stanford_text_editor": "dev-8.x-1.x"
+    },
+    "autoload": {
+        "psr-4": {
+            "Drupal\\stanford_paragraph_card\\": "stanford_paragraph_card/src/",
+            "Drupal\\stanford_profile_drush\\": "stanford_profile_drush/src/",
+            "Drupal\\stanford_profile_styles\\": "stanford_profile_styles/src/"
+        }
+    },
+    "extra": {
+        "drush": {
+            "services": {
+                "drush.services.yml": "^9"
+            }
+        }
+    }
+}
