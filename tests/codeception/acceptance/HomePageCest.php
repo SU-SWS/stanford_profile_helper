@@ -9,7 +9,7 @@ class HomePageCest {
     $I->amOnPage('/');
     $I->canSee('Stanford');
     $I->seeCurrentUrlEquals('/');
-    $I->canSee('Welcome to your site!', 'h2');
+    $I->canSeeResponseCodeIs(200);
     $I->logInWithRole('administrator');
     $I->amOnPage('/admin/structure');
     $I->canSeeResponseCodeIs(200);
