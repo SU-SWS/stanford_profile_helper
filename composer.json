@@ -73,6 +73,7 @@
     ],
     "require": {
         "drupal/core": "^8.9",
+        "drupal/admin_toolbar": "^2.2",
         "drupal/display_field_copy": "~1.2",
         "drupal/ds": "~3.3",
         "drupal/field_formatter_class": "dev-1.x#e7b3c4a959f63d7a9efc74f2d3a67de306b8ddb4",
