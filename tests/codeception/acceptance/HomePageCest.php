@@ -7,8 +7,6 @@ class HomePageCest {
    */
   public function testHomepage(AcceptanceTester $I) {
     $I->amOnPage('/');
-    $I->canSee('Stanford');
-    $I->seeCurrentUrlEquals('/');
     $I->canSeeResponseCodeIs(200);
     $I->logInWithRole('administrator');
     $I->amOnPage('/admin/structure');
