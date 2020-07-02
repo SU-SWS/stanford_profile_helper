@@ -8,7 +8,8 @@
   div[data-react-columns="12"] {
     &.ptype-stanford-card,
     &.ptype-stanford-wysiwyg,
-    &.ptype-stanford-media-caption {
+    &.ptype-stanford-media-caption,
+    &.ptype-stanford-cta-list {
       max-width: 980px;
 
       @include grid-media-only('lg') {
