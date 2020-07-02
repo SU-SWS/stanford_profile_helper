@@ -19,7 +19,8 @@
     .ptype-stanford-media-caption,
     .ptype-stanford-card,
     .ptype-stanford-wysiwyg,
-    .ptype-stanford-cta-list {
+    .ptype-stanford-cta-list,
+    .ptype-stanford-stories {
 
       @include grid-media('xs') {
         @include margin(null map-get($su-screen-margins, 'xs'));
