@@ -4,8 +4,6 @@
 
   // Button Spacing
   [class^="su-button"] {
-    //@include modular-spacing('margin-bottom', 0);
-    //@include modular-spacing('margin-right', 0);
     @include modular-spacing('margin', null 0 0 null);
   }
 
