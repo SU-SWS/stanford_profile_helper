@@ -1,6 +1,8 @@
 # [Stanford Profile Helper](https://github.com/SU-SWS/stanford_profile_helper)
 ##### 8.x
-
+[![Maintainability](https://api.codeclimate.com/v1/badges/73a84da54c8a1175ab3e/maintainability)](https://codeclimate.com/github/SU-SWS/stanford_profile_helper/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/73a84da54c8a1175ab3e/test_coverage)](https://codeclimate.com/github/SU-SWS/stanford_profile_helper/test_coverage)
+[![CircleCI](https://circleci.com/gh/SU-SWS/stanford_profile_helper.svg?style=svg)](https://circleci.com/gh/SU-SWS/stanford_profile_helper)
 Maintainers: [Mike Decker](https://github.com/pookmish), [sherakama](https://github.com/sherakama)
 
 Changelog: [Changelog.md](CHANGELOG.md)
@@ -35,9 +37,9 @@ Steps to build a new release:
   -  These may include, but are not necessarily limited to:
     - Update the version in any `info.yml` files, including in any submodules.
     - Update the CHANGELOG to reflect the changes made in the new release.
-- Make a PR to merge your release branch into `master`
+- Make a PR to merge your release branch into `main`
 - Give the PR a semver-compliant label, e.g., (`patch`, `minor`, `major`).  This may happen automatically via Github actions (if a labeler action is configured).
-- When the PR is merged to `master`, a new tag will be created automatically, bumping the version by the semver label.
+- When the PR is merged to `main`, a new tag will be created automatically, bumping the version by the semver label.
 - The github action is built from: [semver-release-action](https://github.com/K-Phoen/semver-release-action), and further documentation is available there.
 
 

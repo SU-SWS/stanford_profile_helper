@@ -22,9 +22,9 @@ use Drupal\node\NodeInterface;
  * Implements hook_menu_links_discovered_alter().
  */
 function stanford_profile_helper_menu_links_discovered_alter(&$links) {
-  if (isset($links['admin_toolbar_tools.media_page'])) {
+  if (isset($links['admin_toolbar_tools.extra_links:media_page'])) {
     // Alter the "Media" link for /admin/content/media path.
-    $links['admin_toolbar_tools.media_page']['title'] = t('All Media');
+    $links['admin_toolbar_tools.extra_links:media_page']['title'] = t('All Media');
   }
   if (isset($links['system.admin_content'])) {
     // Change the node list page for the /admin/content path.
