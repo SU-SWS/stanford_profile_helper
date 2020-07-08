@@ -67,8 +67,10 @@ function stanford_profile_helper_menu_link_content_presave(MenuLinkContent $enti
   // by the menu cache tags.
   $parent_id = $entity->getParentId();
   if (!empty($parent_id)) {
-    list($entity_name, $uuid) = explode(':', $parent_id);
-    $menu_link_content = \Drupal::entityTypeManager()->getStorage($entity_name)->loadByProperties(['uuid' => $uuid]);
+    [$entity_name, $uuid] = explode(':', $parent_id);
+    $menu_link_content = \Drupal::entityTypeManager()
+      ->getStorage($entity_name)
+      ->loadByProperties(['uuid' => $uuid]);
     if (is_array($menu_link_content)) {
       $parent_item = array_pop($menu_link_content);
       $params = $parent_item->getUrlObject()->getRouteParameters();
@@ -107,7 +109,8 @@ function stanford_profile_helper_entity_field_access($operation, FieldDefinition
  * Implements hook_field_widget_WIDGET_TYPE_form_alter().
  */
 function stanford_profile_helper_field_widget_options_select_form_alter(&$element, FormStateInterface $form_state, $context) {
-  if ($context['items']->getFieldDefinition()->getName() == 'layout_selection') {
+  if ($context['items']->getFieldDefinition()
+      ->getName() == 'layout_selection') {
     $element['#description'] = t('Choose a layout to display the page as a whole. Choose "- None -" to keep the default layout setting.');
   }
 }
@@ -164,7 +167,8 @@ function stanford_profile_helper_form_menu_edit_form_alter(array &$form, FormSta
 
   // If the form is locked, hide the config you cannot change from users without
   // the know how.
-  $access = \Drupal::currentUser()->hasPermission('Administer menus and menu items');
+  $access = \Drupal::currentUser()
+    ->hasPermission('Administer menus and menu items');
   $form['label']['#access'] = $access;
   $form['description']['#access'] = $access;
   $form['id']['#access'] = $access;
@@ -206,7 +210,8 @@ function stanford_profile_helper_config_pages_stanford_basic_site_settings_form_
  * Implements hook_ENTITY_TYPE_presave().
  */
 function stanford_profile_helper_config_pages_presave(ConfigPagesInterface $entity) {
-  if ($entity->hasField('su_site_url') && ($url_field = $entity->get('su_site_url')->getValue())) {
+  if ($entity->hasField('su_site_url') && ($url_field = $entity->get('su_site_url')
+      ->getValue())) {
     // Set the xml sitemap module state to the new domain.
     \Drupal::state()->set('xmlsitemap_base_url', $url_field[0]['uri']);
   }
@@ -226,10 +231,12 @@ function stanford_profile_helper_xmlsitemap_link_alter(array &$link, array $cont
   $node_id = $link['loc'];
 
   // Get 403 page path.
-  $stanford_profile_helper_403_page = \Drupal::config('system.site')->get('page.403');
+  $stanford_profile_helper_403_page = \Drupal::config('system.site')
+    ->get('page.403');
 
   // Get 404 page path.
-  $stanford_profile_helper_404_page = \Drupal::config('system.site')->get('page.404');
+  $stanford_profile_helper_404_page = \Drupal::config('system.site')
+    ->get('page.404');
 
   // If node id matches 403 or 404 pages, remove it from sitemap.
   switch ($node_id) {
@@ -248,4 +255,35 @@ function stanford_profile_helper_config_readonly_whitelist_patterns() {
   $default_theme = \Drupal::config('system.theme')->get('default');
   // Allow the theme settings to be changed in the UI.
   return ["$default_theme.settings"];
+}
+
+/**
+ * Implements hook_preprocess_breadcrumb().
+ */
+function stanford_profile_helper_preprocess_breadcrumb(&$variables) {
+  /** @var \Drupal\Core\Extension\ThemeHandlerInterface $th */
+  $default_theme = \Drupal::service('theme_handler')->getDefault();
+  $active_theme = \Drupal::service('theme.manager')
+    ->getActiveTheme()
+    ->getName();
+
+  // Don't modify the breadcrumbs on the admin pages.
+  if ($default_theme != $active_theme) {
+    return;
+  }
+
+  $config_pages = \Drupal::service('config_pages.loader');
+  // If the config pages isn't configured to display breadcrumbs, clear the data
+  // to display nothing.
+  if (!$config_pages->getValue('stanford_basic_site_settings', 'su_site_breadcrumbs', 0, 'value')) {
+    $variables['breadcrumb'] = [];
+    return;
+  }
+
+  // Add the current page title to the end of the breadcrumbs as a
+  // non-clickable link.
+  $request = \Drupal::request();
+  $route = \Drupal::routeMatch()->getRouteObject();
+  $title = \Drupal::service('title_resolver')->getTitle($request, $route);
+  $variables['breadcrumb'][] = ['text' => $title];
 }
