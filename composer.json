@@ -82,12 +82,12 @@
         "drupal/field_group": "^3.0@rc",
         "drupal/paragraphs": "^1.11",
         "drupal/ui_patterns": "~1.0",
-        "su-sws/jumpstart_ui": "~8.1.0",
-        "su-sws/react_paragraphs": "~8.1.0",
-        "su-sws/stanford_date_formats": "~8.1.0",
-        "su-sws/stanford_fields": "~8.1.0",
-        "su-sws/stanford_image_styles": "~8.1.0",
-        "su-sws/stanford_text_editor": "~8.1.0",
+        "su-sws/jumpstart_ui": "dev-8.x-1.x",
+        "su-sws/react_paragraphs": "dev-8.x-1.x",
+        "su-sws/stanford_date_formats": "dev-8.x-1.x",
+        "su-sws/stanford_fields": "dev-8.x-1.x",
+        "su-sws/stanford_image_styles": "dev-8.x-1.x",
+        "su-sws/stanford_text_editor": "dev-8.x-1.x",
         "drupal/xmlsitemap": "~1.0"
     },
     "autoload": {
