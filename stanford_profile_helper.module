@@ -371,8 +371,10 @@ function stanford_profile_helper_form_config_pages_lockup_settings_form_alter(ar
 /**
  * Clear cache after lockup config page form submit.
  *
- * @param  array              $form       The form array.
- * @param  FormStateInterface $form_state The form state.
+ * @param array $form
+ *   The form array.
+ * @param FormStateInterface $form_state
+ *   The form state.
  */
 function stanford_profile_helper_form_config_pages_lockup_settings_form_alter_submit(array &$form, FormStateInterface $form_state) {
   $renderCache = \Drupal::service('cache.render');
