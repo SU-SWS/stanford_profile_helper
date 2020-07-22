@@ -92,6 +92,7 @@
     },
     "autoload": {
         "psr-4": {
+            "Drupal\\stanford_profile_helper\\": "src/",
             "Drupal\\stanford_paragraph_card\\": "modules/stanford_paragraph_card/src/",
             "Drupal\\stanford_profile_drush\\": "modules/stanford_profile_drush/src/",
             "Drupal\\stanford_profile_styles\\": "modules/stanford_profile_styles/src/"
