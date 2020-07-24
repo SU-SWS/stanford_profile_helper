@@ -381,8 +381,5 @@ function _stanford_profile_helper_get_lockup_states(array $opts, $input) {
  *   The form state.
  */
 function stanford_profile_helper_form_config_pages_lockup_settings_form_alter_submit(array &$form, FormStateInterface $form_state) {
-  \Drupal::service('cache.render')
-    ->invalidateAll();
-  \Drupal::service('cache_tags.invalidator')
-    ->invalidateTags();
+  drupal_flush_all_caches();
 }
