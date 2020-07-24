@@ -18,6 +18,7 @@ use Drupal\menu_link_content\Entity\MenuLinkContent;
 use Drupal\node\NodeInterface;
 use Drupal\Core\Url;
 use Drupal\Core\Link;
+use Drupal\Core\Cache\Cache;
 
 /**
  * Implements hook_form_alter().
@@ -275,8 +276,6 @@ function stanford_profile_helper_form_config_pages_lockup_settings_form_alter(ar
   $form['group_lockup_options']['#field_prefix'] = "<p>$img</p><p>More examples can be found at: $decanter</p>";
 
   // Change the label for none/disabled
-  $form['su_lockup_options']['widget']['#options']['_none'] = t('Default: Lines 1');
-
   $form['su_upload_logo_image']['#states'] = [
     'invisible' => [
       ':input[name="su_use_theme_logo[value]"]' => ['checked' => TRUE],
@@ -331,6 +330,29 @@ function stanford_profile_helper_form_config_pages_lockup_settings_form_alter(ar
 }
 
 /**
+ * Implements field_group_form_process_build_alter().
+ */
+function stanford_profile_helper_field_group_form_process_build_alter(&$element) {
+  // Hide / Show the field groups based on the enabled checkbox.
+  if (isset($element['group_lockup_options'])) {
+    $element['group_lockup_options']['#states'] = [
+      'visible' => [
+        ':input[name="su_lockup_enabled[value]"]' => [
+          'checked' => false
+        ]
+      ]
+    ];
+    $element['group_logo_image']['#states'] = [
+      'visible' => [
+        ':input[name="su_lockup_enabled[value]"]' => [
+          'checked' => false
+        ]
+      ]
+    ];
+  }
+}
+
+/**
  * Creates a states array.
  *
  * @param  array  $opts
@@ -360,6 +382,8 @@ function _stanford_profile_helper_get_lockup_states(array $opts, $input) {
  *   The form state.
  */
 function stanford_profile_helper_form_config_pages_lockup_settings_form_alter_submit(array &$form, FormStateInterface $form_state) {
-  $renderCache = \Drupal::service('cache.render');
-  $renderCache->invalidateAll();
+  \Drupal::service('cache.render')
+    ->invalidateAll();
+  \Drupal::service('cache_tags.invalidator')
+    ->invalidateTags();
 }
