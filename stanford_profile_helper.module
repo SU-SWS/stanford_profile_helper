@@ -297,7 +297,7 @@ function stanford_profile_helper_form_config_pages_lockup_settings_form_alter(ar
   // LINE 2.
   $form['su_line_2']['widget']['0']['value']['#states'] = [
     'invisible' => _stanford_profile_helper_get_lockup_states(
-      ['none', 'a', 'd', 'h', 'i', 'k', 'l', 'n', 'o', 'p', 'q', 'r'],
+      ['_none', 'none', 'a', 'd', 'h', 'i', 'k', 'l', 'n', 'o', 'p', 'q', 'r'],
       ':input[name="su_lockup_options"]'
     ),
   ];
@@ -305,7 +305,7 @@ function stanford_profile_helper_form_config_pages_lockup_settings_form_alter(ar
   // LINE 3.
   $form['su_line_3']['widget']['0']['value']['#states'] = [
     'invisible' => _stanford_profile_helper_get_lockup_states(
-      ['none', 'a', 'b', 'c', 'f', 'g', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's'],
+      ['_none', 'none', 'a', 'b', 'c', 'f', 'g', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's'],
       ':input[name="su_lockup_options"]'
     ),
   ];
@@ -313,7 +313,7 @@ function stanford_profile_helper_form_config_pages_lockup_settings_form_alter(ar
   // LINE 4.
   $form['su_line_4']['widget']['0']['value']['#states'] = [
     'invisible' => _stanford_profile_helper_get_lockup_states(
-      ['none', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'j', 'k', 'l', 'm', 'n', 'r'],
+      ['_none', 'none', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'j', 'k', 'l', 'm', 'n', 'r'],
       ':input[name="su_lockup_options"]'
     ),
   ];
@@ -321,7 +321,7 @@ function stanford_profile_helper_form_config_pages_lockup_settings_form_alter(ar
   // LINE 5.
   $form['su_line_5']['widget']['0']['value']['#states'] = [
     'invisible' => _stanford_profile_helper_get_lockup_states(
-      ['none', 'b', 'd', 'e', 'f', 'h', 'i', 'l', 'm', 'n', 'o', 'p', 'q', 's', 't'],
+      ['_none', 'none', 'b', 'd', 'e', 'f', 'h', 'i', 'l', 'm', 'n', 'o', 'p', 'q', 's', 't'],
       ':input[name="su_lockup_options"]'
     ),
   ];
