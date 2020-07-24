@@ -289,7 +289,7 @@ function stanford_profile_helper_form_config_pages_lockup_settings_form_alter(ar
   // LINE 1.
   $form['su_line_1']['widget']['0']['value']['#states'] = [
     'invisible' => _stanford_profile_helper_get_lockup_states(
-      ['none', 'o', 'r'],
+      ['_none', 'none', 'o', 'r'],
       ':input[name="su_lockup_options"]'
     ),
   ];
