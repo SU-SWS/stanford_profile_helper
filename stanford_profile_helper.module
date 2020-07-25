@@ -274,7 +274,7 @@ function stanford_profile_helper_form_config_pages_lockup_settings_form_alter(ar
   $decanter = Link::fromTextAndUrl(t('Decanter Lockup Component'), Url::fromUri('https://decanter.stanford.edu/component/identity-lockup/'))->toString();
   $form['group_lockup_options']['#field_prefix'] = "<p>$img</p><p>More examples can be found at: $decanter</p>";
 
-  // Change the label for none/disabled
+  // Change the label for none/disabled.
   $form['su_upload_logo_image']['#states'] = [
     'invisible' => [
       ':input[name="su_use_theme_logo[value]"]' => ['checked' => TRUE],
@@ -337,16 +337,16 @@ function stanford_profile_helper_field_group_form_process_build_alter(&$element)
     $element['group_lockup_options']['#states'] = [
       'visible' => [
         ':input[name="su_lockup_enabled[value]"]' => [
-          'checked' => false
-        ]
-      ]
+          'checked' => false,
+        ],
+      ],
     ];
     $element['group_logo_image']['#states'] = [
       'visible' => [
         ':input[name="su_lockup_enabled[value]"]' => [
-          'checked' => false
-        ]
-      ]
+          'checked' => false,
+        ],
+      ],
     ];
   }
 }
@@ -354,10 +354,10 @@ function stanford_profile_helper_field_group_form_process_build_alter(&$element)
 /**
  * Creates a states array.
  *
- * @param  array  $opts
+ * @param array  $opts
  *   Allowed values.
- * @param  string $input
- *   Field selector
+ * @param string $input
+ *   Field selector.
  *
  * @return array
  *   State array.
