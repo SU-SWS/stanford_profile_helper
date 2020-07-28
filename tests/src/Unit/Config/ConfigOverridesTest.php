@@ -1,12 +1,12 @@
 <?php
 
-namespace Drupal\Tests\stanford_profile\Unit\Config;
+namespace Drupal\Tests\stanford_profile_helper\Unit\Config;
 
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Config\Config;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\State\StateInterface;
-use Drupal\stanford_profile\Config\ConfigOverrides;
+use Drupal\stanford_profile_helper\Config\ConfigOverrides;
 use Drupal\Tests\UnitTestCase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\config_pages\ConfigPagesLoaderServiceInterface;
@@ -22,13 +22,13 @@ use Drupal\Core\StreamWrapper\StreamWrapperInterface;
 /**
  * Class ConfigOverridesTest
  *
- * @group stanford_profile
- * @coversDefaultClass \Drupal\stanford_profile\Config\ConfigOverrides
+ * @group stanford_profile_helper
+ * @coversDefaultClass \Drupal\stanford_profile_helper\Config\ConfigOverrides
  */
 class ConfigOverridesTest extends UnitTestCase {
 
   /**
-   * @var \Drupal\stanford_profile\Config\ConfigOverrides
+   * @var \Drupal\stanford_profile_helper_helper\Config\ConfigOverrides
    */
   protected $overrideService;
 
