@@ -163,7 +163,7 @@ class ConfigOverrides implements ConfigFactoryOverrideInterface {
         'line2' => $config_page->get('su_line_2')->getString(),
         'line3' => $config_page->get('su_line_3')->getString(),
         'line4' => $config_page->get('su_line_4')->getString(),
-        'line5' => $config_page->get('su_line_1')->getString(),
+        'line5' => $config_page->get('su_line_5')->getString(),
       ],
       'logo' => [
         'use_default' => ($config_page->get('su_use_theme_logo')->getString() == "1") ? TRUE : FALSE,
