@@ -238,7 +238,7 @@ class ConfigOverridesTest extends UnitTestCase {
     $this->assertNull($this->overrideService->createConfigObject('name'));
     $this->assertEquals($this->overrideService->getCacheSuffix(), 'StanfordProfileConfigOverride');
     $obj = new CacheableMetadata();
-    $this->assertEquals(get_class($obj), get_class($this->overrideService->getCacheableMetadata('name'));
+    $this->assertEquals(get_class($obj), get_class($this->overrideService->getCacheableMetadata('name')));
   }
 
 }
