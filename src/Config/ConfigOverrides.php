@@ -76,22 +76,10 @@ class ConfigOverrides implements ConfigFactoryOverrideInterface {
     StreamWrapperManagerInterface $stream_wrapper_manager = NULL
   ) {
     $this->state = $state;
-
-    if ($config_pages_loader) {
-      $this->configPagesLoader = $config_pages_loader;
-    }
-
-    if ($config_factory) {
-      $this->configFactory = $config_factory;
-    }
-
-    if ($entity_type_manager) {
-      $this->entityTypeManager = $entity_type_manager;
-    }
-
-    if ($stream_wrapper_manager) {
-      $this->streamWrapperManager = $stream_wrapper_manager;
-    }
+    $this->configPagesLoader = $config_pages_loader;
+    $this->configFactory = $config_factory;
+    $this->entityTypeManager = $entity_type_manager;
+    $this->streamWrapperManager = $stream_wrapper_manager;
   }
 
   /**
