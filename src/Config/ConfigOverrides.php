@@ -201,37 +201,6 @@ class ConfigOverrides implements ConfigFactoryOverrideInterface {
   }
 
   /**
-   * Disable google tag manager entities when not on prod environment.
-   *
-   * @param array $names
-   *   Config names.
-   * @param array $overrides
-   *   Keyed array of config overrides.
-   */
-  protected function setOverridesGoogleTag(array $names, array &$overrides) {
-    if ($this->isProdEnv()) {
-      return;
-    }
-
-    foreach ($names as $name) {
-      if (strpos($name, 'google_tag.container.') === 0) {
-        $overrides[$name]['status'] = FALSE;
-      }
-    }
-  }
-
-  /**
-   * Check if this is Acquia's prod environment.
-   *
-   * @return bool
-   *   Is Acquia environment.
-   */
-  protected function isProdEnv() {
-    $ah_env = $_ENV['AH_SITE_ENVIRONMENT'] ?? NULL;
-    return $ah_env == 'prod' || preg_match('/^\d*live$/', $ah_env);
-  }
-
-  /**
    * {@inheritDoc}
    */
   public function createConfigObject($name, $collection = StorageInterface::DEFAULT_COLLECTION) {
@@ -242,7 +211,7 @@ class ConfigOverrides implements ConfigFactoryOverrideInterface {
    * {@inheritDoc}
    */
   public function getCacheSuffix() {
-    return 'StanfordProfileConfigOverride';
+    return 'StanfordProfileHelperConfigOverride';
   }
 
   /**
