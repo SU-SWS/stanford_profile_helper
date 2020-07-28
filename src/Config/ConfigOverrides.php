@@ -70,10 +70,10 @@ class ConfigOverrides implements ConfigFactoryOverrideInterface {
    */
   public function __construct(
     StateInterface $state,
-    ConfigPagesLoaderServiceInterface $config_pages_loader = NULL,
-    ConfigFactoryInterface $config_factory = NULL,
-    EntityTypeManagerInterface $entity_type_manager = NULL,
-    StreamWrapperManagerInterface $stream_wrapper_manager = NULL
+    ConfigPagesLoaderServiceInterface $config_pages_loader,
+    ConfigFactoryInterface $config_factory,
+    EntityTypeManagerInterface $entity_type_manager,
+    StreamWrapperManagerInterface $stream_wrapper_manager
   ) {
     $this->state = $state;
     $this->configPagesLoader = $config_pages_loader;
