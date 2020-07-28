@@ -105,7 +105,6 @@ class ConfigOverridesTest extends UnitTestCase {
           'line4' => 'Line 4',
           'line5' => 'Line 5',
         ],
-        'use_logo' => TRUE,
         'logo' => [
           'path' => '/sites/default/files/logo.jpg',
           'use_default' => TRUE,
@@ -224,10 +223,7 @@ class ConfigOverridesTest extends UnitTestCase {
         break;
 
       case 'su_upload_logo_image':
-        $obj->method('getValue')->willReturn(['target_id' => 1]);
-        $obj->method('first')->will(
-          $this->returnSelf()
-        );
+        $obj->method('getValue')->willReturn([['target_id' => 1]]);
         break;
     }
 
