@@ -59,13 +59,13 @@ class ConfigOverrides implements ConfigFactoryOverrideInterface {
    *
    * @param \Drupal\Core\State\StateInterface $state
    *   State service.
-   * @param \Drupal\config_pages\ConfigPagesLoaderServiceInterface|null $config_pages_loader
+   * @param \Drupal\config_pages\ConfigPagesLoaderServiceInterface $config_pages_loader
    *   Config pages service.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface|null $config_factory
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   Config factory service.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface|null $entity_type_manager
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   Entity type manager interface.
-   * @param \Drupal\Core\StreamWrapper\StreamWrapperManagerInterface|null $stream_wrapper_manager
+   * @param \Drupal\Core\StreamWrapper\StreamWrapperManagerInterface $stream_wrapper_manager
    *   Stream wrapper manager interface.
    */
   public function __construct(
