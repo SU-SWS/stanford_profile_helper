@@ -337,14 +337,14 @@ function stanford_profile_helper_field_group_form_process_build_alter(&$element)
     $element['group_lockup_options']['#states'] = [
       'visible' => [
         ':input[name="su_lockup_enabled[value]"]' => [
-          'checked' => false,
+          'checked' => FALSE,
         ],
       ],
     ];
     $element['group_logo_image']['#states'] = [
       'visible' => [
         ':input[name="su_lockup_enabled[value]"]' => [
-          'checked' => false,
+          'checked' => FALSE,
         ],
       ],
     ];
@@ -354,7 +354,7 @@ function stanford_profile_helper_field_group_form_process_build_alter(&$element)
 /**
  * Creates a states array.
  *
- * @param array  $opts
+ * @param array $opts
  *   Allowed values.
  * @param string $input
  *   Field selector.
