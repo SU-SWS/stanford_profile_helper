@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\stanford_profile\Config;
+namespace Drupal\stanford_profile_helper\Config;
 
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Config\ConfigFactoryInterface;
@@ -15,7 +15,7 @@ use Drupal\Core\StreamWrapper\StreamWrapperManagerInterface;
 /**
  * Config overrides for stanford profile.
  *
- * @package Drupal\stanford_profile\Config
+ * @package Drupal\stanford_profile_helper\Config
  */
 class ConfigOverrides implements ConfigFactoryOverrideInterface {
 
@@ -166,8 +166,8 @@ class ConfigOverrides implements ConfigFactoryOverrideInterface {
         'line5' => $config_page->get('su_line_1')->getString(),
       ],
       'logo' => [
-        'use_default' => ($config_page->get('su_use_theme_logo')->getString() == "1") ? TRUE : FALSE
-      ]
+        'use_default' => ($config_page->get('su_use_theme_logo')->getString() == "1") ? TRUE : FALSE,
+      ],
     ];
   }
 
