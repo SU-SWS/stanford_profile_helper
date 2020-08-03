@@ -270,9 +270,19 @@ function stanford_profile_helper_form_config_pages_lockup_settings_form_alter(ar
 
   // This alter function adds an image above the settings and provides
   // the visibility states for the line input field elements.
-  $img = '<img src="' . base_path() . drupal_get_path('theme', 'stanford_basic') . '/dist/assets/img/lockup-example.png" />';
-  $decanter = Link::fromTextAndUrl(t('Decanter Lockup Component'), Url::fromUri('https://decanter.stanford.edu/component/identity-lockup/'))->toString();
-  $form['group_lockup_options']['#field_prefix'] = "<p>$img</p><p>More examples can be found at: $decanter</p>";
+  $form['group_lockup_options']['intro'] = [
+    'image' => [
+      '#theme' => 'image',
+      '#uri' => drupal_get_path('theme', 'stanford_basic') . '/dist/assets/img/lockup-example.png',
+    ],
+    'text' => [
+      '#type' => 'link',
+      '#url' => Url::fromUri('https://decanter.stanford.edu/component/identity-lockup/'),
+      '#title' => t('Decanter Lockup Component'),
+      '#prefix' => '<p>',
+      '#suffix' => '</p>',
+    ],
+  ];
 
   // Change the label for none/disabled.
   $form['su_upload_logo_image']['#states'] = [
