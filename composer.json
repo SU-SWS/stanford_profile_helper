@@ -2,7 +2,7 @@
     "name": "su-sws/stanford_profile_helper",
     "description": "Helper Module For Stanford Profile",
     "type": "drupal-custom-module",
-    "license": "GPL-2.0+",
+    "license": "GPL-2.0-or-later",
     "minimum-stability": "dev",
     "prefer-stable": true,
     "repositories": [
@@ -92,6 +92,7 @@
     },
     "autoload": {
         "psr-4": {
+            "Drupal\\stanford_profile_helper\\": "src/",
             "Drupal\\stanford_paragraph_card\\": "modules/stanford_paragraph_card/src/",
             "Drupal\\stanford_profile_drush\\": "modules/stanford_profile_drush/src/",
             "Drupal\\stanford_profile_styles\\": "modules/stanford_profile_styles/src/"

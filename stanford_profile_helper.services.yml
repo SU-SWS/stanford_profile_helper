@@ -1,0 +1,6 @@
+services:
+  stanford_profile_helper.config_overrider:
+    class: Drupal\stanford_profile_helper\Config\ConfigOverrides
+    arguments: ['@state', '@config_pages.loader', '@config.factory', '@entity_type.manager', '@stream_wrapper_manager']
+    tags:
+      - {name: config.factory.override, priority: 5}

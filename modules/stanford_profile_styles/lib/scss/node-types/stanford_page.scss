@@ -10,7 +10,8 @@
     &.ptype-stanford-wysiwyg,
     &.ptype-stanford-media-caption,
     &.ptype-stanford-cta-list,
-    &.ptype-stanford-stories {
+    &.ptype-stanford-stories,
+    &.ptype-stanford-image-cta {
       max-width: 980px;
 
       @include grid-media-only('lg') {
