@@ -24,3 +24,15 @@ svg {
     width: 1px;
   }
 }
+// Add the Decanter external link icon to text fields.
+.stanford-wysiwyg,
+.su-wysiwyg-text {
+  a.ext {
+    @include link-icon(arrow-up-right, 1.2rem, topright);
+
+    &::after {
+      @include margin(null 0.4rem null 0.5rem);
+      background-color: $su-color-bright-blue;
+    }
+  }
+}
