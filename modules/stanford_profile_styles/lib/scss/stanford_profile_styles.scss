@@ -1,4 +1,4 @@
-@charset 'UTF-8';
+@charset "UTF-8";
 @import './config';
 
 .toolbar-oriented {
@@ -13,26 +13,38 @@
 // See the hide-visually mixin.
 svg {
   &.ext {
-    border: 0;
-    clip: rect(1px, 1px, 1px, 1px);
-    clip-path: inset(100%);
-    height: 1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
+    @include hide-visually;
   }
 }
-// Add the Decanter external link icon to text fields.
-.stanford-wysiwyg,
-.su-wysiwyg-text {
+//.su-link--external:after {
+//  @include hide-visually;
+//}
+
+
+// Add the Decanter external link icon to the user editable areas.
+.su-local-footer__columns,
+.page-content {
+
   a.ext {
     @include link-icon(arrow-up-right, 1.2rem, topright);
 
-    &::after {
-      @include margin(null 0.4rem null 0.5rem);
+    &:after {
       background-color: $su-color-bright-blue;
     }
+
+    text-decoration: underline;
   }
-}
+
+  .su-local-footer__action-links {
+    a.ext {
+      @include link-icon(arrow-right, 0.8em, right, -0.18em);
+      font-weight: $su-font-semi-bold;
+    }
+  }
+
+  .su-local-footer__social-links {
+      a.ext:after {
+        @include hide-visually;
+      }
+    }
+  }
