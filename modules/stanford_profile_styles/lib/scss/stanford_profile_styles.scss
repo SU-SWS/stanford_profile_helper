@@ -10,41 +10,27 @@
 }
 
 // Hide the SVG for external link, but keep the aria-label.
-// See the hide-visually mixin.
 svg {
-  &.ext {
+  &.su-link--external {
     @include hide-visually;
   }
 }
 
-// Add the Decanter external link icon to the user editable areas.
-.su-local-footer__columns,
-.page-content {
-
+.su-brand-bar,
+.su-global-footer {
   a {
-    text-decoration: underline;
-
-    &.ext {
-      @include link-icon(arrow-up-right, 1.2rem, topright);
-
+    &.su-link--external {
       &::after {
-        background-color: $su-color-bright-blue;
+        @include hide-visually;
       }
     }
   }
+}
 
-  .su-local-footer__action-links {
-    a {
-      &.ext {
-        @include link-icon(arrow-right, 0.8em, right, -0.18em);
-        font-weight: $su-font-semi-bold;
-      }
-    }
-  }
-
+.su-local-footer__columns {
   .su-local-footer__social-links {
     a {
-      &.ext {
+      &.su-link--external {
         &::after {
           @include hide-visually;
         }
@@ -52,3 +38,16 @@ svg {
     }
   }
 }
+
+
+// Add the underline to all links.
+.su-local-footer__columns,
+.page-content {
+
+  a {
+    text-decoration: underline;
+  }
+}
+
+
+
