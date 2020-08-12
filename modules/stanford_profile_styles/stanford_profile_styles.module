@@ -136,16 +136,18 @@ function stanford_profile_styles_node_form_wide(array $form, FormStateInterface 
 /**
  * Implements hook_preprocess_HOOK().
  */
-function stanford_profile_styles_preprocess_react_paragraphs(&$variables) {
-  // For adding grid classes to multirow paragraphs.
-  foreach ($variables['rows'] as &$row) {
-    foreach ($row['items'] as &$item) {
-      $width = $item['width'];
-      $item['attributes']->addClass("flex-$width-of-12");
+function stanford_profile_styles_preprocess_field__react_paragraph_row(&$variables) {
+  $count = count($variables['items']);
+  $variables['attributes']['class'][] = "container-$count-items";
+  $variables['attributes']['class'][] = 'flex-container';
+  $variables['attributes']['data-item-count'][] = $count;
+
+  foreach ($variables['items'] as &$item) {
+    /** @var \Drupal\paragraphs\ParagraphInterface $entity */
+    $entity = $item['content']['#paragraph'];
+
+    if ($width = $entity->getBehaviorSetting('react', 'width')) {
+      $item['attributes']['class'][] = "flex-$width-of-12";
     }
-    $count = count($row['items']);
-    $row['attributes']->addClass("container-$count-items");
-    $row['attributes']->addClass("flex-container");
-    $row['attributes']->setAttribute('data-item-count', $count);
   }
 }
