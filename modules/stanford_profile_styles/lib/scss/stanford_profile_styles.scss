@@ -26,14 +26,14 @@ svg {
 .page-content {
 
   a {
+    text-decoration: underline;
+
     &.ext {
       @include link-icon(arrow-up-right, 1.2rem, topright);
 
       &::after {
         background-color: $su-color-bright-blue;
       }
-
-      text-decoration: underline;
     }
   }
 
@@ -47,7 +47,7 @@ svg {
   }
 
   .su-local-footer__social-links {
-    a{
+    a {
       &.ext {
         &::after {
           @include hide-visually;
