@@ -49,13 +49,16 @@ svg {
 
     // Style the SVG for mailto.
     svg.mailto {
-      @include padding(null 0.2em null 0.1em);
+      @include margin(null 0 null 0.25em);
+      @include padding(null 0.01em null null);
       fill: $su-color-bright-blue;
-      height: 15px;
-      width: 20px;
+      height: 19px;
+      width: 22px;
 
       path {
         stroke: $su-color-bright-blue;
+        stroke-width: 0;
+
       }
     }
   }
