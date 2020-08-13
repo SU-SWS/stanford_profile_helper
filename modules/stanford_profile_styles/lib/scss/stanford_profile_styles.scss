@@ -48,17 +48,18 @@ svg {
     text-decoration: underline;
 
     // Style the SVG for mailto.
-    svg.mailto {
-      @include margin(null 0 null 0.25em);
-      @include padding(null 0.01em null null);
-      fill: $su-color-bright-blue;
-      height: 19px;
-      width: 22px;
+    svg {
+      &.mailto {
+        @include margin(null 0 null 0.25em);
+        @include padding(null 0.01em null null);
+        fill: $su-color-bright-blue;
+        height: 19px;
+        width: 22px;
 
-      path {
-        stroke: $su-color-bright-blue;
-        stroke-width: 0;
-
+        path {
+          stroke: $su-color-bright-blue;
+          stroke-width: 0;
+        }
       }
     }
   }
