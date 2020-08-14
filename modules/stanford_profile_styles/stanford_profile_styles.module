@@ -149,3 +149,17 @@ function stanford_profile_styles_preprocess_react_paragraphs(&$variables) {
     $row['attributes']->setAttribute('data-item-count', $count);
   }
 }
+
+
+function stanford_profile_styles_preprocess_block(&$variables) {
+  $variables['plugin_id'] = $variables['elements']['#plugin_id'];
+
+  $block_id = $variables['elements']['#id'];
+
+//  dpm($block_id);
+
+  if (!empty($variables['elements']['#id']) && ($block_id)  === 'stanford_basic_search') {
+//  if (isset($block_id)  === 'stanford_basic_search') {
+    $variables['#attached']['library'][] = 'stanford_profile_style.super-footer';
+  }
+}
