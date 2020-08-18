@@ -42,15 +42,21 @@ svg {
 
 // Style the icons with external links.
 a {
-  // Add the underline to all links.
-  text-decoration: underline;
-
   &.su-link--external {
+    // Add the underline to all links.
+    text-decoration: underline;
 
     // Style Buttons.
-    &.su-button,
+    &.su-button {
+      &::after {
+        background-color: $su-color-white;
+      }
+    }
+
     &.su-button--big {
       &::after {
+        height: 15px;
+        width: 15px;
         background-color: $su-color-white;
       }
     }
