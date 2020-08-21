@@ -2,7 +2,7 @@
     "name": "su-sws/stanford_profile_helper",
     "description": "Helper Module For Stanford Profile",
     "type": "drupal-custom-module",
-    "license": "GPL-2.0+",
+    "license": "GPL-2.0-or-later",
     "minimum-stability": "dev",
     "prefer-stable": true,
     "repositories": [
