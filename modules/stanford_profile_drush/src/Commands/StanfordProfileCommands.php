@@ -197,6 +197,18 @@ class StanfordProfileCommands extends DrushCommands {
     return $row_values;
   }
 
+  /**
+   * Get the paragraph row bundle name.
+   *
+   * @param \Drupal\field\FieldConfigInterface $field
+   *   Entity reference field.
+   *
+   * @return string
+   *   Row bundle name.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   */
   protected function getRowBundle(FieldConfigInterface $field) {
     $handler_settings = $field->getSetting('handler_settings');
     $row_bundle = key($handler_settings['target_bundles']);
