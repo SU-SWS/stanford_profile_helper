@@ -48,7 +48,7 @@ class StanfordProfileCommands extends DrushCommands {
   /**
    * Array of original paragraphs with the key as the paragraph bundle.
    *
-   * @var \Drupal\paragraphs\ParagraphInterface
+   * @var \Drupal\paragraphs\ParagraphInterface[]
    */
   protected $paragraphs;
 
