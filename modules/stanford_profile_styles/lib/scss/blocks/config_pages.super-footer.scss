@@ -5,17 +5,87 @@
   @include modular-spacing('padding', 4);
   background: $su-color-fog;
 
+  // Center the heading.
   .left-region {
     display: flex;
     align-items: center;
   }
-
 }
 
+// Heading styles.
 .su-super-footer__heading {
   h2 {
     @include type-d;
     @include margin(0);
     @include padding(0);
+  }
+}
+
+// Link styles.
+.su-super-footer__link {
+  @include margin(null null 1em null);
+
+  div {
+    text-align: right;
+  }
+
+  a {
+    @include link-icon(arrow-right, 10px, right, 0.06em);
+
+    &,
+    &:link,
+    &:visited {
+      @include modular-spacing('padding', 0);
+      @include modular-spacing('margin-bottom', 0);
+      @include box-shadow('medium');
+      transition: background-color 0.3s linear;
+      background-color: $su-color-white;
+      display: inline-block;
+      text-align: right;
+      text-decoration: none;
+    }
+
+    &::after {
+      height: 12px;
+      width: 15px;
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+      transition: background-color 0.3s linear;
+      background-color: $su-color-bright-red;
+      color: $su-color-white;
+      text-decoration: underline;
+
+      &::after {
+        background-color: $su-color-white;
+      }
+    }
+
+  }
+}
+
+// Intranet link styles.
+.su-super-footer__intranet {
+  text-align: right;
+
+  a {
+    @include link-icon(lock, 13px, none, -0.03em);
+    color: $su-color-cardinal-red;
+    text-decoration: none;
+
+    &::after {
+      background-color: $su-color-cardinal-red;
+    }
+
+    &:hover,
+    &:focus {
+      text-decoration: underline;
+
+      &::after {
+        mask-image: url("#{$su-image-path}/lock-solid.svg");
+      }
+    }
   }
 }
