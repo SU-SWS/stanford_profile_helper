@@ -55,12 +55,12 @@ var webpackConfig = {
     "stanford_profile_styles.paragraph.spacer":           path.resolve(srcSass, "paragraph-types/spacer/index.scss"),
     "stanford_profile_styles.react_paragraphs":           path.resolve(srcSass, "paragraph-types/react_paragraphs/index.scss"),
     "stanford_profile_styles":                            path.resolve(srcSass, "stanford_profile_styles.scss"),
-    "stanford_profile_styles.footer.super-footer":        path.resolve(srcSass, "node-types/stanford_page.footer.super-footer.scss")
+    "stanford_profile_styles.footer.super-footer":        path.resolve(srcSass, "blocks/config_pages.super-footer.scss"),
   },
   // Where put build?
   output: {
     filename: "[name].js",
-    path: path.resolve(__dirname, distJS)
+    path: path.resolve(__dirname, distJS),
   },
   // Relative output paths for css assets.
   resolve: {
