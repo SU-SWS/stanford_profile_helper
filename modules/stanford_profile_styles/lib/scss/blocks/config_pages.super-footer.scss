@@ -4,30 +4,25 @@
 .block-config-pages-super-footer {
   @include modular-spacing('padding', 4);
   background: $su-color-fog;
-
-  // Center the heading.
-  .left-region {
-    display: flex;
-    align-items: center;
-  }
 }
 
 // Heading styles.
 .su-super-footer__heading {
+  width: 100%;
+
   h2 {
     @include type-d;
-    @include margin(0);
-    @include padding(0);
   }
+}
+
+// Open text.
+.su-super-foot-text {
+  width: 100%;
 }
 
 // Link styles.
 .su-super-footer__link {
   @include margin(null null 1em null);
-
-  div {
-    text-align: right;
-  }
 
   a {
     @include link-icon(arrow-right, 10px, right, 0.06em);
@@ -41,7 +36,6 @@
       transition: background-color 0.3s linear;
       background-color: $su-color-white;
       display: inline-block;
-      text-align: right;
       text-decoration: none;
     }
 
@@ -68,7 +62,6 @@
 
 // Intranet link styles.
 .su-super-footer__intranet {
-  text-align: right;
 
   a {
     @include link-icon(lock, 13px, none, -0.03em);
