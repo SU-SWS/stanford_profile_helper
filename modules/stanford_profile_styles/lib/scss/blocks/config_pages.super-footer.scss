@@ -1,5 +1,21 @@
 @charset "UTF-8";
+@import '../config';
 
-#block-config-pages-super-footer {
-  background-color: #F0F;
+.block-config-pages-super-footer {
+  @include modular-spacing('padding', 4);
+  background: $su-color-fog;
+
+  .left-region {
+    display: flex;
+    align-items: center;
+  }
+
+}
+
+.su-super-footer__heading {
+  h2 {
+    @include type-d;
+    @include margin(0);
+    @include padding(0);
+  }
 }
