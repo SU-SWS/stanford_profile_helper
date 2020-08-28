@@ -155,10 +155,13 @@ function stanford_profile_styles_preprocess_react_paragraphs(&$variables) {
  */
 function stanford_profile_styles_preprocess_block(&$variables) {
 
+  // Alter the styles and values for the config form blocks.
   $plugin = $variables['plugin_id'];
   if ($plugin == "config_pages_block") {
     $config_page = $variables['content']['#config_pages'];
     $type = $config_page->bundle();
+
+    // SUPER! Footer!
     if ($type == "super_footer") {
       $variables['#attached']['library'][] = 'stanford_profile_styles/super_footer';
     }
