@@ -406,6 +406,7 @@ function stanford_profile_helper_preprocess_pattern_alert(&$variables) {
 
     try {
       $color = $entity->get('su_global_msg_color')->getString();
+    }
     catch(\Exception $e) {
       return;
     }
