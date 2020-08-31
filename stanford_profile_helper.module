@@ -403,14 +403,7 @@ function stanford_profile_helper_preprocess_pattern_alert(&$variables) {
 
   // Global Messages!
   if ($entity_type == "config_pages" && $bundle == "global_message") {
-
-    try {
-      $color = $entity->get('su_global_msg_color')->getString();
-    }
-    catch(\Exception $e) {
-      return;
-    }
-
+    $color = $entity->get('su_global_msg_type')->getString();
     $variables['attributes']->addClass("su-alert--" . $color);
     $dark_bgs = ['error', 'info', 'success'];
     if (in_array($color, $dark_bgs)) {
