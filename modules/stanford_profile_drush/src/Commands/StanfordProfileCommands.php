@@ -3,6 +3,7 @@
 namespace Drupal\stanford_profile_drush\Commands;
 
 use Drupal\Core\Entity\EntityFieldManagerInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Field\FieldTypePluginManagerInterface;
@@ -45,6 +46,27 @@ class StanfordProfileCommands extends DrushCommands {
   protected $fieldTypeManager;
 
   /**
+   * Array of original paragraphs with the key as the paragraph bundle.
+   *
+   * @var \Drupal\paragraphs\ParagraphInterface[]
+   */
+  protected $paragraphs;
+
+  /**
+   * Name of the content to create.
+   *
+   * @var string
+   */
+  protected $name;
+
+  /**
+   * Array of paragraph bundles to skip.
+   *
+   * @var array
+   */
+  protected $exclude;
+
+  /**
    * Drush command constructor.
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
@@ -57,6 +79,7 @@ class StanfordProfileCommands extends DrushCommands {
    *   Field type plugin manager service.
    */
   public function __construct(EntityTypeManagerInterface $entityTypeManager, EntityTypeBundleInfoInterface $bundleInfo, EntityFieldManagerInterface $fieldManager, FieldTypePluginManagerInterface $fieldTypeManager) {
+    parent::__construct();
     $this->entityTypeManager = $entityTypeManager;
     $this->bundleInfo = $bundleInfo;
     $this->fieldManager = $fieldManager;
@@ -66,11 +89,25 @@ class StanfordProfileCommands extends DrushCommands {
   /**
    * Generate a page with the possible combinations of components in rows.
    *
+   * @option name
+   *   Name the node something specific.
+   * @option exclude
+   *   Comma separated list of paragraphs to skip.
+   *
    * @command stanford-profile:stress-test-components
    * @aliases spstc
+   *
+   * @params array $options
+   *   Keyed array of command options.
    */
-  public function generateStressTestNode() {
-    $fields_map = $this->fieldManager->getFieldMapByFieldType('react_paragraphs');
+  public function generateStressTestNode(array $options = [
+    'name' => NULL,
+    'exclude' => '',
+  ]) {
+    $this->name = $options['name'] ?? 'Stress Test ' . date('F j Y');
+    $this->exclude = explode(',', $options['exclude']);
+
+    $fields_map = $this->fieldManager->getFieldMapByFieldType('entity_reference_revisions');
     foreach ($fields_map as $entity_type_id => $fields) {
       foreach ($fields as $field_name => $bundles) {
         foreach ($bundles['bundles'] as $bundle) {
@@ -104,18 +141,93 @@ class StanfordProfileCommands extends DrushCommands {
     $field_config = $this->entityTypeManager->getStorage('field_config')
       ->load("$entity_type_id.$bundle.$field");
 
+    if ($field_config->getSetting('handler') != 'default:paragraph_row') {
+      return;
+    }
+
     $this->entityTypeManager->getStorage($entity_type_id)->create([
-      $label_key => 'Stress Test ' . date('F j Y'),
+      $label_key => $this->name,
       $bundle_key => $bundle,
-      $field => $this->getParagraphFieldValues($field_config),
+      $field => $this->getRowFieldValues($field_config),
     ])->save();
   }
 
   /**
-   * Get the field value for the react paragraphs field with sample content.
+   * Build the rows with paragraphs on them.
    *
    * @param \Drupal\field\FieldConfigInterface $field
-   *   React paragraphs field config object.
+   *   Row entity reference field entity.
+   *
+   * @return array
+   *   Array of field values for the given field.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  protected function getRowFieldValues(FieldConfigInterface $field): array {
+    $row_bundle = $this->getRowBundle($field);
+    $row_fields = $this->fieldManager->getFieldDefinitions($field->getSetting('target_type'), $row_bundle);
+
+    $bundle_key = $this->entityTypeManager->getDefinition($field->getSetting('target_type'))
+      ->getKey('bundle');
+
+    $row_values = [];
+
+    foreach ($row_fields as $row_field) {
+      if ($row_field instanceof FieldConfigInterface && $row_field->getType() == 'entity_reference_revisions') {
+        foreach ($this->getParagraphBundles($row_field) as $paragraph_bundle) {
+          foreach ([12, 6, 4, 3] as $width) {
+
+            $row = $this->entityTypeManager->getStorage($field->getSetting('target_type'))
+              ->create([
+                $bundle_key => $row_bundle,
+                $row_field->getName() => $this->getParagraphFieldValues($paragraph_bundle, $width),
+              ]);
+            $row->save();
+
+            $row_values[] = [
+              'target_id' => $row->id(),
+              'target_revision_id' => $row->getRevisionId(),
+            ];
+          }
+        }
+      }
+    }
+    return $row_values;
+  }
+
+  /**
+   * Get the paragraph row bundle name.
+   *
+   * @param \Drupal\field\FieldConfigInterface $field
+   *   Entity reference field.
+   *
+   * @return string
+   *   Row bundle name.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   */
+  protected function getRowBundle(FieldConfigInterface $field) {
+    $handler_settings = $field->getSetting('handler_settings');
+    $row_bundle = key($handler_settings['target_bundles']);
+
+    if ($row_bundle) {
+      return $row_bundle;
+    }
+    $row_types = $this->entityTypeManager->getStorage('paragraphs_row_type')
+      ->loadMultiple();
+    return key($row_types);
+  }
+
+  /**
+   * Build paragraphs and load them into an array for the row field values.
+   *
+   * @param string $bundle
+   *   Paragraph bundle name.
+   * @param int $width
+   *   Width of the paragraph to build.
    *
    * @return array
    *   Field value list array.
@@ -124,59 +236,21 @@ class StanfordProfileCommands extends DrushCommands {
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  protected function getParagraphFieldValues(FieldConfigInterface $field) {
-    $paragraph_bundles = $this->bundleInfo->getBundleInfo('paragraph');
-    $handler_settings = $field->getSetting('handler_settings');
-
+  protected function getParagraphFieldValues($bundle, $width): array {
     $paragraphs = [];
-    $row = 0;
-    foreach (array_keys($paragraph_bundles) as $bundle) {
-      // Find out if the field is configured to allow the current bundle. The
-      // field allows for "Exclude selected" which is the `negate` value. If a
-      // paragraph has been added but the field settings haven't been resaved,
-      // it may or may not be allowed in the field, so we check that too.
-      if (isset($handler_settings['target_bundles_drag_drop'][$bundle])) {
-        if ((bool) $handler_settings['negate'] === (bool) $handler_settings['target_bundles_drag_drop'][$bundle]['enabled']) {
-          continue;
-        }
-      }
-      elseif (!$handler_settings['negate']) {
-        continue;
-      }
 
-      // Create a paragraph entity that we can clone so we can see the effects
-      // at the different widths on the same display.
-      $original_paragraph = $this->createParagraph($bundle);
+    for ($i = 1; $i <= 12 / $width; $i++) {
+      /** @var \Drupal\paragraphs\ParagraphInterface $new_paragraph */
+      $paragraph = $this->createParagraph($bundle);
+      $paragraph->setBehaviorSettings('react', [
+        'width' => $width,
+        'label' => "$width columns",
+      ]);
+      $paragraph->save();
       $paragraphs[] = [
-        'target_id' => $original_paragraph->id(),
-        'target_revision_id' => $original_paragraph->getRevisionId(),
-        'settings' => [
-          'row' => $row,
-          'index' => 0,
-          'width' => 12,
-          'admin_title' => '12 columns',
-        ],
+        'target_id' => $paragraph->id(),
+        'target_revision_id' => $paragraph->getRevisionId(),
       ];
-      $row++;
-
-      // Take the original paragraph, clone it and make it smaller.
-      foreach ([6, 4, 3] as $width) {
-        for ($i = 1; $i <= 12 / $width; $i++) {
-          $new_paragraph = $original_paragraph->createDuplicate();
-          $new_paragraph->save();
-          $paragraphs[] = [
-            'target_id' => $new_paragraph->id(),
-            'target_revision_id' => $new_paragraph->getRevisionId(),
-            'settings' => [
-              'row' => $row,
-              'index' => $i - 1,
-              'width' => $width,
-              'admin_title' => "$width columns",
-            ],
-          ];
-        }
-        $row++;
-      }
     }
 
     return $paragraphs;
@@ -195,7 +269,12 @@ class StanfordProfileCommands extends DrushCommands {
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  protected function createParagraph($bundle) {
+  protected function createParagraph($bundle): EntityInterface {
+    // We've already created this paragraph type, just duplicated i.
+    if (isset($this->paragraphs[$bundle])) {
+      return $this->paragraphs[$bundle]->createDuplicate();
+    }
+
     $bundle_fields = $this->fieldManager->getFieldDefinitions('paragraph', $bundle);
     $values = [
       'type' => $bundle,
@@ -231,8 +310,45 @@ class StanfordProfileCommands extends DrushCommands {
     }
     $paragraph = $this->entityTypeManager->getStorage('paragraph')
       ->create($values);
+    $paragraph->setBehaviorSettings('react', [
+      'width' => 12,
+      'label' => '12 columns',
+    ]);
     $paragraph->save();
+    $this->paragraphs[$bundle] = $paragraph;
     return $paragraph;
+  }
+
+  /**
+   * Based on the field settings, get the available paragraph bundles.
+   *
+   * @param \Drupal\field\FieldConfigInterface $paragraph_field
+   *   Field entity targeting paragraphs.
+   *
+   * @return array
+   *   Array of paragraph bundle machine names.
+   */
+  protected function getParagraphBundles(FieldConfigInterface $paragraph_field): array {
+    $paragraph_bundles = $this->bundleInfo->getBundleInfo('paragraph');
+    $handler_settings = $paragraph_field->getSetting('handler_settings');
+    $allowed_bundles = [];
+    foreach (array_keys($paragraph_bundles) as $bundle) {
+      // Find out if the field is configured to allow the current bundle. The
+      // field allows for "Exclude selected" which is the `negate` value. If a
+      // paragraph has been added but the field settings haven't been resaved,
+      // it may or may not be allowed in the field, so we check that too.
+      if (isset($handler_settings['target_bundles_drag_drop'][$bundle])) {
+        if ((bool) $handler_settings['negate'] === (bool) $handler_settings['target_bundles_drag_drop'][$bundle]['enabled']) {
+          continue;
+        }
+      }
+      elseif (isset($handler_settings['negate']) && !$handler_settings['negate']) {
+        continue;
+      }
+      $allowed_bundles[] = $bundle;
+    }
+    $allowed_bundles = array_diff($allowed_bundles, $this->exclude);
+    return array_filter($allowed_bundles);
   }
 
   /**

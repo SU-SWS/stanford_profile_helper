@@ -9,6 +9,7 @@ use Drupal\node\Entity\Node;
 use Drupal\node\Entity\NodeType;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\paragraphs\Entity\ParagraphsType;
+use Drupal\react_paragraphs\Entity\ParagraphsRowType;
 use Drupal\stanford_profile_drush\Commands\StanfordProfileCommands;
 
 /**
@@ -53,8 +54,11 @@ class StanfordProfileCommandsTest extends KernelTestBase {
     $this->installEntitySchema('node');
     $this->installEntitySchema('user');
     $this->installEntitySchema('paragraph');
+    $this->installEntitySchema('paragraph_row');
 
     NodeType::create(['type' => 'page'])->save();
+    ParagraphsRowType::create(['id' => 'row', 'label' => 'Row'])->save();
+
     ParagraphsType::create([
       'label' => 'card',
       'id' => 'card',
@@ -67,9 +71,10 @@ class StanfordProfileCommandsTest extends KernelTestBase {
     ])->save();
 
     $field_storage = FieldStorageConfig::create([
-      'field_name' => 'field_foo',
+      'field_name' => 'field_row',
       'entity_type' => 'node',
-      'type' => 'react_paragraphs',
+      'type' => 'entity_reference_revisions',
+      'settings' => ['target_type' => 'paragraph_row']
     ]);
     $field_storage->save();
 
@@ -77,15 +82,22 @@ class StanfordProfileCommandsTest extends KernelTestBase {
       'field_storage' => $field_storage,
       'bundle' => 'page',
       'label' => $this->randomMachineName(),
-      'settings' => [
-        'handler_settings' => [
-          'negate' => 1,
-          'target_bundles_drag_drop' => [
-            'card' => ['enabled' => FALSE],
-            'foo_bar' => ['enabled' => TRUE],
-          ],
-        ],
-      ],
+      'settings' => ['handler_settings' => ['target_bundles' => []]],
+    ])->save();
+
+    $field_storage = FieldStorageConfig::create([
+      'field_name' => 'field_items',
+      'entity_type' => 'paragraph_row',
+      'type' => 'entity_reference_revisions',
+      'settings' => ['target_type' => 'paragraph']
+    ]);
+    $field_storage->save();
+
+    FieldConfig::create([
+      'field_storage' => $field_storage,
+      'bundle' => 'row',
+      'label' => $this->randomMachineName(),
+      'settings' => ['handler_settings' => ['target_bundles' => []]],
     ])->save();
 
     $entityTypeManager = \Drupal::entityTypeManager();
@@ -141,7 +153,7 @@ class StanfordProfileCommandsTest extends KernelTestBase {
     $this->assertCount(0, Paragraph::loadMultiple());
     $this->command->generateStressTestNode();
     $this->assertCount(1, Node::loadMultiple());
-    $this->assertCount(10, Paragraph::loadMultiple());
+    $this->assertCount(20, Paragraph::loadMultiple());
   }
 
 }
