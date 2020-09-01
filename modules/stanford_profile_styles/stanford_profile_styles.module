@@ -163,6 +163,7 @@ function stanford_profile_styles_preprocess_block(&$variables) {
 
     // SUPER! Footer!
     if ($type == "super_footer") {
+      $variables['attributes']['class'][] = 'block-config-pages-super-footer';
       $variables['#attached']['library'][] = 'stanford_profile_styles/super_footer';
     }
   }
