@@ -2,7 +2,7 @@
 @import '../config';
 
 .block-config-pages-super-footer {
-  @include modular-spacing('padding', 4 null);
+  @include modular-spacing('padding', 3 null);
   background: $su-color-fog;
   border-bottom: solid 1px #D5D5D4;
 
