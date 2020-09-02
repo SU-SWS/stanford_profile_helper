@@ -112,7 +112,7 @@ var webpackConfig = {
             options: {
               sourceMap: true,
               plugins: () => [
-                autoprefixer()
+                autoprefixer({ grid: true })
               ]
             }
           },
