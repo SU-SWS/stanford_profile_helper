@@ -17,6 +17,7 @@ use Drupal\Core\Site\Settings;
 use Drupal\menu_link_content\Entity\MenuLinkContent;
 use Drupal\node\NodeInterface;
 use Drupal\Core\Url;
+use Drupal\Core\Entity\EntityInterface;
 
 /**
  * Implements hook_form_alter().
@@ -510,6 +511,17 @@ function _stanford_profile_helper_get_lockup_states(array $opts, $input) {
  */
 function stanford_profile_helper_form_config_pages_lockup_settings_form_alter_submit(array &$form, FormStateInterface $form_state) {
   Cache::invalidateTags(['config:system.site']);
+}
+
+/**
+ * Implements hook_entity_type_update().
+ */
+function stanford_profile_helper_taxonomy_term_update(EntityInterface $entity) {
+
+  // https://www.drupal.org/project/taxonomy_menu/issues/2867626
+  if ("hierarchy" == $entity->bundle()) {
+    \Drupal::service('router.builder')->rebuild();
+  }
 }
 
 /**
