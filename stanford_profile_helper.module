@@ -525,7 +525,7 @@ function stanford_profile_helper_preprocess_pattern_alert(&$variables) {
 
     // Validate that the entity has the field we need so we don't 500 the site.
     if (!$entity->hasField('su_global_msg_type')) {
-      \Drupal::logger('stanford_profile_helper')->error("Global Messages Config Block is missing the field su_global_msg_type");
+      \Drupal::logger('stanford_profile_helper')->error(t("Global Messages Config Block is missing the field su_global_msg_type"));
       return;
     }
 
