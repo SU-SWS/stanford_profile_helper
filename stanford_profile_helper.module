@@ -17,7 +17,6 @@ use Drupal\Core\Site\Settings;
 use Drupal\menu_link_content\Entity\MenuLinkContent;
 use Drupal\node\NodeInterface;
 use Drupal\Core\Url;
-use Drupal\file\Entity\File;
 
 /**
  * Implements hook_form_alter().
@@ -397,7 +396,7 @@ function stanford_profile_helper_form_config_pages_stanford_local_footer_form_al
       [
         ':input[name="su_local_foot_use_logo[value]"]' => ['checked' => TRUE],
         '#edit-su-local-foot-use-loc-value' => ['checked' => TRUE],
-      ]
+      ],
     ],
     'visible' => [
       [
