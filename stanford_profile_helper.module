@@ -551,7 +551,10 @@ function stanford_profile_helper_preprocess_pattern_localfooter(&$variables) {
   if ($entity_type == "config_pages" && $bundle == "stanford_local_footer") {
 
     // If the lockup updates are not enabled just end.
-    if ($entity->get('su_local_foot_use_loc')->getString() === "1") {
+    if (
+      !$entity->hasField('su_local_foot_use_loc')
+      || $entity->get('su_local_foot_use_loc')->getString() === "1"
+    ) {
       return;
     }
 
