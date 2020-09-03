@@ -156,3 +156,20 @@ function stanford_profile_styles_preprocess_field__react_paragraph_row(&$variabl
     }
   }
 }
+
+/**
+ * Implements hook_preprocess_block__config_pages_block().
+ */
+function stanford_profile_styles_preprocess_block__config_pages_block(&$variables) {
+
+  // Alter the styles and values for the config form blocks.
+  $config_page = $variables['content']['#config_pages'];
+  $type = $config_page->bundle();
+
+  // SUPER! Footer!
+  if ($type == "super_footer") {
+    $variables['attributes']['class'][] = 'block-config-pages-super-footer';
+    $variables['#attached']['library'][] = 'stanford_profile_styles/super_footer';
+  }
+
+}

@@ -26,6 +26,7 @@ rules:
     -
       convention: hyphenatedlowercase
   hex-length: 0
+  hex-notation: uppercase
   leading-zero:
     - 1
     - include: true

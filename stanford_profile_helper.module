@@ -338,6 +338,125 @@ function stanford_profile_helper_form_config_pages_lockup_settings_form_alter(ar
 }
 
 /**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function stanford_profile_helper_form_config_pages_stanford_local_footer_form_alter(array &$form, FormStateInterface $form_state) {
+
+  // This alter function adds an image above the settings and provides
+  // the visibility states for the line input field elements.
+  $form['group_local_lockup']['intro'] = [
+    'image' => [
+      '#theme' => 'image',
+      '#uri' => drupal_get_path('theme', 'stanford_basic') . '/dist/assets/img/lockup-example.png',
+    ],
+    'text' => [
+      '#type' => 'link',
+      '#url' => Url::fromUri('https://decanter.stanford.edu/component/identity-lockup/'),
+      '#title' => t('Decanter Lockup Component'),
+      '#prefix' => '<p>',
+      '#suffix' => '</p>',
+    ],
+  ];
+
+  // Hide show logo checkbox.
+  $form['su_local_foot_use_logo']['#states'] = [
+    'invisible' => [
+      '#edit-su-local-foot-use-loc-value' => ['checked' => TRUE],
+    ],
+    'visible' => [
+      '#edit-su-local-foot-use-loc-value' => ['checked' => FALSE],
+    ],
+  ];
+
+  // Lockup options field.
+  $form['su_local_foot_loc_op']['#states'] = [
+    'invisible' => [
+      '#edit-su-local-foot-use-loc-value' => ['checked' => TRUE],
+    ],
+    'visible' => [
+      '#edit-su-local-foot-use-loc-value' => ['checked' => FALSE],
+    ],
+  ];
+  // Lockup Link.
+  $form['su_local_foot_loc_link']['#states'] = [
+    'invisible' => [
+      '#edit-su-local-foot-use-loc-value' => ['checked' => TRUE],
+    ],
+    'visible' => [
+      '#edit-su-local-foot-use-loc-value' => ['checked' => FALSE],
+    ],
+  ];
+
+  // Logo upload field.
+  $form['su_local_foot_loc_img']['#states'] = [
+    'invisible' => [
+      [
+        ':input[name="su_local_foot_use_logo[value]"]' => ['checked' => TRUE],
+      ],
+      [
+        ':input[name="su_local_foot_use_logo[value]"]' => ['checked' => TRUE],
+        '#edit-su-local-foot-use-loc-value' => ['checked' => TRUE],
+      ],
+    ],
+    'visible' => [
+      [
+        ':input[name="su_local_foot_use_logo[value]"]' => ['checked' => FALSE],
+        '#edit-su-local-foot-use-loc-value' => ['checked' => FALSE],
+      ],
+    ],
+  ];
+
+  // LINE 1.
+  $form['su_local_foot_line_1']['widget']['0']['value']['#states'] = [
+    'invisible' => _stanford_profile_helper_get_lockup_states(
+      ['_none', 'none', 'o', 'r'],
+      ':input[name="su_local_foot_loc_op"]'
+    ),
+  ];
+  // Disable on enable.
+  $form['su_local_foot_line_1']['widget']['0']['value']['#states']['invisible'][] = ['#edit-su-local-foot-use-loc-value' => ['checked' => TRUE]];
+
+  // LINE 2.
+  $form['su_local_foot_line_2']['widget']['0']['value']['#states'] = [
+    'invisible' => _stanford_profile_helper_get_lockup_states(
+      ['_none', 'none', 'a', 'd', 'h', 'i', 'k', 'l', 'n', 'o', 'p', 'q', 'r'],
+      ':input[name="su_local_foot_loc_op"]'
+    ),
+  ];
+  $form['su_local_foot_line_2']['widget']['0']['value']['#states']['invisible'][] = ['#edit-su-local-foot-use-loc-value' => ['checked' => TRUE]];
+
+  // LINE 3.
+  $form['su_local_foot_line_3']['widget']['0']['value']['#states'] = [
+    'invisible' => _stanford_profile_helper_get_lockup_states(
+      ['_none', 'none', 'a', 'b', 'c', 'f', 'g', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's'],
+      ':input[name="su_local_foot_loc_op"]'
+    ),
+  ];
+  $form['su_local_foot_line_3']['widget']['0']['value']['#states']['invisible'][] = ['#edit-su-local-foot-use-loc-value' => ['checked' => TRUE]];
+
+  // LINE 4.
+  $form['su_local_foot_line_4']['widget']['0']['value']['#states'] = [
+    'invisible' => _stanford_profile_helper_get_lockup_states(
+      ['_none', 'none', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'j', 'k', 'l', 'm', 'n', 'r'],
+      ':input[name="su_local_foot_loc_op"]'
+    ),
+  ];
+  $form['su_local_foot_line_4']['widget']['0']['value']['#states']['invisible'][] = ['#edit-su-local-foot-use-loc-value' => ['checked' => TRUE]];
+
+  // LINE 5.
+  $form['su_local_foot_line_5']['widget']['0']['value']['#states'] = [
+    'invisible' => _stanford_profile_helper_get_lockup_states(
+      ['_none', 'none', 'b', 'd', 'e', 'f', 'h', 'i', 'l', 'm', 'n', 'o', 'p', 'q', 's', 't'],
+      ':input[name="su_local_foot_loc_op"]'
+    ),
+  ];
+  $form['su_local_foot_line_5']['widget']['0']['value']['#states']['invisible'][] = ['#edit-su-local-foot-use-loc-value' => ['checked' => TRUE]];
+
+  // Clear caches on submit.
+  $form['actions']["submit"]['#submit'][] = "stanford_profile_helper_form_config_pages_lockup_settings_form_alter_submit";
+}
+
+/**
  * Implements field_group_form_process_build_alter().
  */
 function stanford_profile_helper_field_group_form_process_build_alter(&$element) {
@@ -391,4 +510,77 @@ function _stanford_profile_helper_get_lockup_states(array $opts, $input) {
  */
 function stanford_profile_helper_form_config_pages_lockup_settings_form_alter_submit(array &$form, FormStateInterface $form_state) {
   Cache::invalidateTags(['config:system.site']);
+}
+
+/**
+ * Implements hook_preprocess_pattern_NAME().
+ */
+function stanford_profile_helper_preprocess_pattern_alert(&$variables) {
+  $entity_type = $variables['context']->getProperty('entity_type');
+  $bundle = $variables['context']->getProperty('bundle');
+  $entity = $variables['context']->getProperty('entity');
+
+  // Global Messages!
+  if ($entity_type == "config_pages" && $bundle == "global_message") {
+
+    // Validate that the entity has the field we need so we don't 500 the site.
+    if (!$entity->hasField('su_global_msg_type')) {
+      \Drupal::logger('stanford_profile_helper')->error(t("Global Messages Config Block is missing the field su_global_msg_type"));
+      return;
+    }
+
+    $color = $entity->get('su_global_msg_type')->getString();
+    $variables['attributes']->addClass("su-alert--" . $color);
+    $dark_bgs = ['error', 'info', 'success'];
+    if (in_array($color, $dark_bgs)) {
+      $variables['attributes']->addClass("su-alert--text-light");
+    }
+  }
+
+}
+
+/**
+ * Implements hook_preprocess_pattern_NAME().
+ */
+function stanford_profile_helper_preprocess_pattern_localfooter(&$variables) {
+  $entity_type = $variables['context']->getProperty('entity_type');
+  $bundle = $variables['context']->getProperty('bundle');
+  $entity = $variables['context']->getProperty('entity');
+
+  // Local Footer!
+  if ($entity_type == "config_pages" && $bundle == "stanford_local_footer") {
+
+    // If the lockup updates are not enabled just end.
+    if (
+      !$entity->hasField('su_local_foot_use_loc')
+      || $entity->get('su_local_foot_use_loc')->getString() === "1"
+    ) {
+      return;
+    }
+
+    // Enable custom lockup.
+    $variables['custom_lockup'] = TRUE;
+
+    // Lockup customizations are enabled.
+    $variables['line1'] = $entity->get('su_local_foot_line_1')->getString();
+    $variables['line2'] = $entity->get('su_local_foot_line_2')->getString();
+    $variables['line3'] = $entity->get('su_local_foot_line_3')->getString();
+    $variables['line4'] = $entity->get('su_local_foot_line_4')->getString();
+    $variables['line5'] = $entity->get('su_local_foot_line_5')->getString();
+    $variables['use_logo'] = $entity->get('su_local_foot_use_logo')->getString();
+    $file_uri = $entity->get('su_local_foot_loc_img')->entity->getFileUri();
+
+    if (!empty($file_uri)) {
+      $variables['site_logo'] = file_create_url($file_uri);
+    }
+
+    $link = $entity->get('su_local_foot_loc_link')->getString();
+    if ($link) {
+      $variables['lockup_link'] = URL::fromUri($link);
+    }
+
+    $option = $entity->get('su_local_foot_loc_op')->getString();
+    $variables['lockup_option'] = 'su-lockup--option-' . $option;
+  }
+
 }
