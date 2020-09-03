@@ -17,6 +17,7 @@ use Drupal\Core\Site\Settings;
 use Drupal\menu_link_content\Entity\MenuLinkContent;
 use Drupal\node\NodeInterface;
 use Drupal\Core\Url;
+use Drupal\file\Entity\File;
 
 /**
  * Implements hook_form_alter().
@@ -377,6 +378,15 @@ function stanford_profile_helper_form_config_pages_stanford_local_footer_form_al
       '#edit-su-local-foot-use-loc-value' => ['checked' => FALSE],
     ],
   ];
+  // Lockup Link.
+  $form['su_local_foot_loc_link']['#states'] = [
+    'invisible' => [
+      '#edit-su-local-foot-use-loc-value' => ['checked' => TRUE],
+    ],
+    'visible' => [
+      '#edit-su-local-foot-use-loc-value' => ['checked' => FALSE],
+    ],
+  ];
 
   // Logo upload field.
   $form['su_local_foot_loc_img']['#states'] = [
@@ -526,6 +536,49 @@ function stanford_profile_helper_preprocess_pattern_alert(&$variables) {
     if (in_array($color, $dark_bgs)) {
       $variables['attributes']->addClass("su-alert--text-light");
     }
+  }
+
+}
+
+/**
+ * Implements hook_preprocess_pattern_NAME().
+ */
+function stanford_profile_helper_preprocess_pattern_localfooter(&$variables) {
+  $entity_type = $variables['context']->getProperty('entity_type');
+  $bundle = $variables['context']->getProperty('bundle');
+  $entity = $variables['context']->getProperty('entity');
+
+  // Local Footer!
+  if ($entity_type == "config_pages" && $bundle == "stanford_local_footer") {
+
+    // If the lockup updates are not enabled just end.
+    if ($entity->get('su_local_foot_use_loc')->getString() === "1") {
+      return;
+    }
+
+    // Enable custom lockup.
+    $variables['custom_lockup'] = TRUE;
+
+    // Lockup customizations are enabled.
+    $variables['line1'] = $entity->get('su_local_foot_line_1')->getString();
+    $variables['line2'] = $entity->get('su_local_foot_line_2')->getString();
+    $variables['line3'] = $entity->get('su_local_foot_line_3')->getString();
+    $variables['line4'] = $entity->get('su_local_foot_line_4')->getString();
+    $variables['line5'] = $entity->get('su_local_foot_line_5')->getString();
+    $variables['use_logo'] = $entity->get('su_local_foot_use_logo')->getString();
+    $file_uri = $entity->get('su_local_foot_loc_img')->entity->getFileUri();
+
+    if (!empty($file_uri)) {
+      $variables['site_logo'] = file_create_url($file_uri);
+    }
+
+    $link = $entity->get('su_local_foot_loc_link')->getString();
+    if ($link) {
+      $variables['lockup_link'] = URL::fromUri($link);
+    }
+
+    $option = $entity->get('su_local_foot_loc_op')->getString();
+    $variables['lockup_option'] = 'su-lockup--option-' . $option;
   }
 
 }
