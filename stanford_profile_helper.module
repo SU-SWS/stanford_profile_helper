@@ -600,9 +600,6 @@ function stanford_profile_helper_preprocess_pattern_localfooter(&$variables) {
     // Pass through the lockup option.
     $option = $entity->get('su_local_foot_loc_op')->getString();
     $variables['lockup_option'] = 'su-lockup--option-' . $option;
-
-    dpm($variables);
-
   }
 
 }
