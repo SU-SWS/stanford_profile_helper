@@ -52,7 +52,7 @@ react_paragraphs:
     layout:
       dist/css/stanford_profile_styles.react_paragraphs.css: {}
 
-super_footer:
+stanford_super_footer:
   version: VERSION
   css:
     theme:

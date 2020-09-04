@@ -533,7 +533,7 @@ function stanford_profile_helper_preprocess_pattern_alert(&$variables) {
   $entity = $variables['context']->getProperty('entity');
 
   // Global Messages!
-  if ($entity_type == "config_pages" && $bundle == "global_message") {
+  if ($entity_type == "config_pages" && $bundle == "stanford_global_message") {
 
     // Validate that the entity has the field we need so we don't 500 the site.
     if (!$entity->hasField('su_global_msg_type')) {
