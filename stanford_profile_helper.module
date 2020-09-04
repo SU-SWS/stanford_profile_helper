@@ -533,7 +533,7 @@ function stanford_profile_helper_preprocess_pattern_alert(&$variables) {
   $entity = $variables['context']->getProperty('entity');
 
   // Global Messages!
-  if ($entity_type == "config_pages" && $bundle == "global_message") {
+  if ($entity_type == "config_pages" && $bundle == "stanford_global_message") {
 
     // Validate that the entity has the field we need so we don't 500 the site.
     if (!$entity->hasField('su_global_msg_type')) {
@@ -580,17 +580,24 @@ function stanford_profile_helper_preprocess_pattern_localfooter(&$variables) {
     $variables['line4'] = $entity->get('su_local_foot_line_4')->getString();
     $variables['line5'] = $entity->get('su_local_foot_line_5')->getString();
     $variables['use_logo'] = $entity->get('su_local_foot_use_logo')->getString();
-    $file_uri = $entity->get('su_local_foot_loc_img')->entity->getFileUri();
+    $file_field = $entity->get('su_local_foot_loc_img');
 
-    if (!empty($file_uri)) {
+    // Check if there is a file.
+    if (isset($file_field->entity)) {
+      $file_uri = $file_field->entity->getFileUri();
       $variables['site_logo'] = file_create_url($file_uri);
     }
+    else {
+      $variables['use_logo'] = "1";
+    }
 
+    // Check if there is a link and patch it through.
     $link = $entity->get('su_local_foot_loc_link')->getString();
     if ($link) {
       $variables['lockup_link'] = URL::fromUri($link);
     }
 
+    // Pass through the lockup option.
     $option = $entity->get('su_local_foot_loc_op')->getString();
     $variables['lockup_option'] = 'su-lockup--option-' . $option;
   }
