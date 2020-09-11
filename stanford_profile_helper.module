@@ -624,17 +624,16 @@ function stanford_profile_helper_preprocess_pattern_localfooter(&$variables) {
  *   The form state.
  */
 function _stanford_profile_helper_embeddable_field_access(array &$form, FormStateInterface $form_state) {
-  $field = NULL;
+  $field = [];
   $user = \Drupal::currentUser();
   $authorized = $user->hasPermission('create field_media_embeddable_code')
     || $user->hasPermission('edit field_media_embeddable_code');
-
 
   // Find the field we are working on.
   if (isset($form['field_media_embeddable_code'])) {
     $field =& $form['field_media_embeddable_code'];
   }
-  else if (isset($form['container']['field_media_embeddable_code'])) {
+  elseif (isset($form['container']['field_media_embeddable_code'])) {
     $field =& $form['container']['field_media_embeddable_code'];
   }
 
