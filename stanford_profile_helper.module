@@ -29,6 +29,17 @@ function stanford_profile_helper_form_alter(&$form, FormStateInterface $form_sta
     // @link https://www.drupal.org/project/views_bulk_operations/issues/3055770#comment-13116724
     unset($form['header']['views_bulk_operations_bulk_form']['select_all']);
   }
+
+  $embeddable_forms = [
+    'media_library_add_form_embeddable',
+    'media_embeddable_edit_form',
+    'media_embeddable_add_form',
+  ];
+
+  // Everywhere embeddable forms are used.
+  if (in_array($form_id, $embeddable_forms)) {
+    _stanford_profile_helper_embeddable_field_access($form, $form_sate);
+  }
 }
 
 /**
@@ -602,20 +613,6 @@ function stanford_profile_helper_preprocess_pattern_localfooter(&$variables) {
     $variables['lockup_option'] = 'su-lockup--option-' . $option;
   }
 
-}
-
-/**
- * Implements hook_form_FORM_ID_alter().
- */
-function stanford_profile_helper_form_media_embeddable_add_form_alter(array &$form, FormStateInterface $form_state) {
-  _stanford_profile_helper_embeddable_field_access($form, $form_state);
-}
-
-/**
- * Implements hook_form_FORM_ID_alter().
- */
-function stanford_profile_helper_form_media_embeddable_edit_form_alter(array &$form, FormStateInterface $form_state) {
-  _stanford_profile_helper_embeddable_field_access($form, $form_state);
 }
 
 /**
