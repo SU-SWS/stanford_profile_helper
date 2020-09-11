@@ -30,16 +30,6 @@ function stanford_profile_helper_form_alter(&$form, FormStateInterface $form_sta
     unset($form['header']['views_bulk_operations_bulk_form']['select_all']);
   }
 
-  $embeddable_forms = [
-    'media_library_add_form_embeddable',
-    'media_embeddable_edit_form',
-    'media_embeddable_add_form',
-  ];
-
-  // Everywhere embeddable forms are used.
-  if (in_array($form_id, $embeddable_forms)) {
-    _stanford_profile_helper_embeddable_field_access($form, $form_state);
-  }
 }
 
 /**
@@ -616,27 +606,14 @@ function stanford_profile_helper_preprocess_pattern_localfooter(&$variables) {
 }
 
 /**
- * Add a field permission to the open embed code field.
- *
- * @param array $form
- *   The form array.
- * @param \Drupal\Core\Form\FormStateInterface $form_state
- *   The form state.
+ * Implements hook_form_FORM_ID_alter
  */
-function _stanford_profile_helper_embeddable_field_access(array &$form, FormStateInterface $form_state) {
-  $field = [];
+function stanford_profile_helper_form_media_library_add_form_embeddable_alter(array &$form, FormStateInterface $form_state) {
   $user = \Drupal::currentUser();
   $authorized = $user->hasPermission('create field_media_embeddable_code')
     || $user->hasPermission('edit field_media_embeddable_code');
 
-  // Find the field we are working on.
-  if (isset($form['field_media_embeddable_code'])) {
-    $field =& $form['field_media_embeddable_code'];
+  if (isset($form['container']['field_media_embeddable_code'])) {
+    $form['container']['field_media_embeddable_code']['#access'] = $authorized;
   }
-  elseif (isset($form['container']['field_media_embeddable_code'])) {
-    $field =& $form['container']['field_media_embeddable_code'];
-  }
-
-  // Set the perm on the field container.
-  $field['#access'] = $authorized;
 }
