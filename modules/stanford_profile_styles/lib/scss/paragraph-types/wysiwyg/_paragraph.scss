@@ -8,6 +8,18 @@
 
 .su-wysiwyg-text {
 
+  .media {
+    @include padding(null null 2em null);
+  }
+
+  // Remove the bottom padding when the media has a caption since we add padding
+  // to the caption itself.
+  figure {
+    .media {
+      @include padding(null null 0 null);
+    }
+  }
+
   // Remove any existing top and bottom margin and padding.
   p {
     @include big-paragraph;
@@ -20,6 +32,7 @@
   .caption {
     figcaption {
       text-align: center;
+      @include padding(null null 2em null);
     }
   }
 
