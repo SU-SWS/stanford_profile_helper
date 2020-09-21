@@ -621,7 +621,7 @@ function stanford_profile_helper_form_media_library_add_form_embeddable_alter(ar
     $form['container'][$embed_code_field]['#access'] = $authorized;
   }
 
-  if ( isset($form['container'][$source_field]) ){
+  if (isset($form['container'][$source_field])) {
     $new_desc = 'Allowed providers: @providers. For custom embeds, please <a href="@snow_form">request support.</a>';
     $args = $form['container'][$source_field]['#description']->getArguments();
     $args['@snow_form'] = 'https://stanford.service-now.com/it_services?id=sc_cat_item&sys_id=83daed294f4143009a9a97411310c70a';
@@ -630,7 +630,6 @@ function stanford_profile_helper_form_media_library_add_form_embeddable_alter(ar
   }
 
 }
-
 
 /**
  * Implements hook_form_FORM_ID_alter().
@@ -654,5 +653,3 @@ function stanford_profile_helper_form_media_embeddable_add_form_alter(&$form, Fo
 function stanford_profile_helper_form_media_embeddable_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   stanford_profile_helper_form_media_embeddable_add_form_alter($form, $form_state, $form_id);
 }
-
-
