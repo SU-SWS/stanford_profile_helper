@@ -8,7 +8,6 @@
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Cache\Cache;
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -19,6 +18,7 @@ use Drupal\config_pages\ConfigPagesInterface;
 use Drupal\field\FieldStorageConfigInterface;
 use Drupal\menu_link_content\Entity\MenuLinkContent;
 use Drupal\node\NodeInterface;
+use Drupal\taxonomy\TermInterface;
 
 /**
  * Implements hook_form_alter().
@@ -518,10 +518,25 @@ function stanford_profile_helper_form_config_pages_lockup_settings_form_alter_su
 /**
  * Implements hook_entity_type_update().
  */
-function stanford_profile_helper_taxonomy_term_update(EntityInterface $entity) {
-
+function stanford_profile_helper_taxonomy_term_update(TermInterface $entity) {
   // https://www.drupal.org/project/taxonomy_menu/issues/2867626
-  if ("hierarchy" == $entity->bundle()) {
+  $original_parent = $entity->original->get('parent')->getString();
+  if ($original_parent == $entity->get('parent')->getString()) {
+    return;
+  }
+  $database = \Drupal::database();
+  $menu_link_exists = $database->select('menu_tree', 'm')->fields('m')
+    ->condition('id', 'taxonomy_menu.menu_link%', 'LIKE')
+    ->condition('route_param_key', 'taxonomy_term=' . $entity->id())
+    ->countQuery()
+    ->execute()
+    ->fetchField();
+
+  if ($menu_link_exists > 0) {
+    $database->delete('menu_tree')
+      ->condition('id', 'taxonomy_menu.menu_link%', 'LIKE')
+      ->condition('route_param_key', 'taxonomy_term=' . $entity->id())
+      ->execute();
     \Drupal::service('router.builder')->rebuild();
   }
 }
