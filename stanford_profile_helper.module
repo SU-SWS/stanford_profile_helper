@@ -6,7 +6,6 @@
  */
 
 use Drupal\Component\Utility\Html;
-use Drupal\config_pages\ConfigPagesInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Field\FieldDefinitionInterface;
@@ -14,10 +13,12 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Site\Settings;
+use Drupal\Core\Url;
+use Drupal\config_pages\ConfigPagesInterface;
+use Drupal\field\FieldStorageConfigInterface;
 use Drupal\menu_link_content\Entity\MenuLinkContent;
 use Drupal\node\NodeInterface;
-use Drupal\Core\Url;
-use Drupal\Core\Entity\EntityInterface;
+use Drupal\taxonomy\TermInterface;
 
 /**
  * Implements hook_form_alter().
@@ -517,10 +518,25 @@ function stanford_profile_helper_form_config_pages_lockup_settings_form_alter_su
 /**
  * Implements hook_entity_type_update().
  */
-function stanford_profile_helper_taxonomy_term_update(EntityInterface $entity) {
-
+function stanford_profile_helper_taxonomy_term_update(TermInterface $entity) {
   // https://www.drupal.org/project/taxonomy_menu/issues/2867626
-  if ("hierarchy" == $entity->bundle()) {
+  $original_parent = $entity->original->get('parent')->getString();
+  if ($original_parent == $entity->get('parent')->getString()) {
+    return;
+  }
+  $database = \Drupal::database();
+  $menu_link_exists = $database->select('menu_tree', 'm')->fields('m')
+    ->condition('id', 'taxonomy_menu.menu_link%', 'LIKE')
+    ->condition('route_param_key', 'taxonomy_term=' . $entity->id())
+    ->countQuery()
+    ->execute()
+    ->fetchField();
+
+  if ($menu_link_exists > 0) {
+    $database->delete('menu_tree')
+      ->condition('id', 'taxonomy_menu.menu_link%', 'LIKE')
+      ->condition('route_param_key', 'taxonomy_term=' . $entity->id())
+      ->execute();
     \Drupal::service('router.builder')->rebuild();
   }
 }
@@ -609,11 +625,66 @@ function stanford_profile_helper_preprocess_pattern_localfooter(&$variables) {
  * Implements hook_form_FORM_ID_alter().
  */
 function stanford_profile_helper_form_media_library_add_form_embeddable_alter(array &$form, FormStateInterface $form_state) {
+
+  $source_field = $form_state->get('source_field');
+  $embed_code_field = $form_state->get('unstructured_field_name');
   $user = \Drupal::currentUser();
   $authorized = $user->hasPermission('create field_media_embeddable_code')
     || $user->hasPermission('edit field_media_embeddable_code');
 
-  if (isset($form['container']['field_media_embeddable_code'])) {
-    $form['container']['field_media_embeddable_code']['#access'] = $authorized;
+  if (isset($form['container'][$embed_code_field])) {
+    $form['container'][$embed_code_field]['#access'] = $authorized;
+  }
+
+  if (isset($form['container'][$source_field])) {
+    if (!$authorized) {
+      $new_desc = 'Allowed providers: @providers. For custom embeds, please <a href="@snow_form">request support.</a>';
+      $args = $form['container'][$source_field]['#description']->getArguments();
+      $args['@snow_form'] = 'https://stanford.service-now.com/it_services?id=sc_cat_item&sys_id=83daed294f4143009a9a97411310c70a';
+      $form['container'][$source_field]['#description'] = t($new_desc, $args);
+    }
+    $form['container'][$source_field]['#title'] = t('oEmbed URL');
+  }
+
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function stanford_profile_helper_form_media_embeddable_add_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $user = \Drupal::currentUser();
+  $authorized = $user->hasPermission('create field_media_embeddable_code')
+    || $user->hasPermission('edit field_media_embeddable_code');
+  if (!$authorized) {
+    $source_config = $form_state
+      ->getFormObject()
+      ->getEntity()
+      ->getSource()
+      ->getConfiguration();
+    $source_field = $source_config['source_field'];
+    $new_desc = 'Allowed providers: @providers. For custom embeds, please <a href="@snow_form">request support.</a>';
+    $args = $form[$source_field]['widget'][0]['value']['#description']->getArguments();
+    $args['@snow_form'] = 'https://stanford.service-now.com/it_services?id=sc_cat_item&sys_id=83daed294f4143009a9a97411310c70a';
+    $form[$source_field]['widget'][0]['value']['#description'] = t($new_desc, $args);
+  }
+
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function stanford_profile_helper_form_media_embeddable_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  stanford_profile_helper_form_media_embeddable_add_form_alter($form, $form_state, $form_id);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ */
+function stanford_profile_helper_field_storage_config_presave(FieldStorageConfigInterface $field_storage) {
+  // If a field is saved and the field permissions are public, lets just remove
+  // those third party settings before save so that it keeps the config clean.
+  if ($field_storage->getThirdPartySetting('field_permissions', 'permission_type') === 'public') {
+    $field_storage->unsetThirdPartySetting('field_permissions', 'permission_type');
+    $field_storage->calculateDependencies();
   }
 }
