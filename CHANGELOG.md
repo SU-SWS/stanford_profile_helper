@@ -1,5 +1,13 @@
 # Stanford Profile Helper
 
+8.x-1.4
+--------------------------------------------------------------------------------
+_Release Date: 2020-10-05_
+
+- D8CORE-2613: Delete taxonomy menu links when the parents change (#28) (98aa957)
+- D8CORE-2644: Added additional help text and snow form links (#27) (2be1dee)
+- Added presave to remove all field permissions from field storage that arent needed (#26) (3c0dca8)
+
 8.x-1.2
 --------------------------------------------------------------------------------
 _Release Date: 2020-09-14_
