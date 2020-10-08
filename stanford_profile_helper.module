@@ -34,6 +34,18 @@ function stanford_profile_helper_form_alter(&$form, FormStateInterface $form_sta
 }
 
 /**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ */
+function stanford_profile_helper_form_taxonomy_term_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Tweak the taxonomy term add/edit form.
+  if (!empty($form['relations']['parent'])) {
+    $form['relations']['parent']['#multiple'] = FALSE;
+    $form['relations']['parent']['#title'] = t('Parent term');
+    $form['relations']['parent']['#description'] = t('Select the appropriate parent item for this term.');
+  }
+}
+
+/**
  * Implements hook_menu_links_discovered_alter().
  */
 function stanford_profile_helper_menu_links_discovered_alter(&$links) {
