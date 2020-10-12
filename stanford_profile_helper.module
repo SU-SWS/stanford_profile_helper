@@ -42,7 +42,28 @@ function stanford_profile_helper_form_taxonomy_term_form_alter(&$form, FormState
     $form['relations']['parent']['#multiple'] = FALSE;
     $form['relations']['parent']['#title'] = t('Parent term');
     $form['relations']['parent']['#description'] = t('Select the appropriate parent item for this term.');
+    $form['relations']['parent']['#element_validate'][] = '_stanford_profile_helper_term_form_validate';
   }
+}
+
+/**
+ * Tweak the taxonomy term parent form value after submitting.
+ *
+ * Because we are changing the form to not allow multiple parents, the form
+ * value needs to be changed into an array so the TermForm can still manage
+ * it correctly.
+ *
+ * @param array $element
+ *   Form element.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   Current form state object.
+ * @param array $form
+ *   Complete form.
+ *
+ * @see stanford_profile_helper_form_taxonomy_term_form_alter()
+ */
+function _stanford_profile_helper_term_form_validate(array $element, FormStateInterface $form_state, array $form) {
+  $form_state->setValueForElement($element, [$element['#value']]);
 }
 
 /**
@@ -94,7 +115,7 @@ function stanford_profile_helper_menu_link_content_presave(MenuLinkContent $enti
   // by the menu cache tags.
   $parent_id = $entity->getParentId();
   if (!empty($parent_id)) {
-    list($entity_name, $uuid) = explode(':', $parent_id);
+    [$entity_name, $uuid] = explode(':', $parent_id);
     $menu_link_content = \Drupal::entityTypeManager()->getStorage($entity_name)->loadByProperties(['uuid' => $uuid]);
     if (is_array($menu_link_content)) {
       $parent_item = array_pop($menu_link_content);
