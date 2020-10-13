@@ -1,7 +1,13 @@
 <?php
 
+/**
+ * Class ContentCest.
+ */
 class ContentCest {
 
+  /**
+   * If the parent item is external or absolute, child items shouldn't break.
+   */
   public function testExternalParentLinks(AcceptanceTester $I) {
    $I->createEntity([
       'title' => 'Foo',
