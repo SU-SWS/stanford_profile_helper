@@ -116,12 +116,19 @@ function stanford_profile_helper_menu_link_content_presave(MenuLinkContent $enti
   $parent_id = $entity->getParentId();
   if (!empty($parent_id)) {
     [$entity_name, $uuid] = explode(':', $parent_id);
-    $menu_link_content = \Drupal::entityTypeManager()->getStorage($entity_name)->loadByProperties(['uuid' => $uuid]);
+    $menu_link_content = \Drupal::entityTypeManager()
+      ->getStorage($entity_name)
+      ->loadByProperties(['uuid' => $uuid]);
+
     if (is_array($menu_link_content)) {
       $parent_item = array_pop($menu_link_content);
-      $params = $parent_item->getUrlObject()->getRouteParameters();
-      if (isset($params['node'])) {
-        Cache::invalidateTags(['node:' . $params['node']]);
+      /** @var \Drupal\Core\Url $url */
+      $url = $parent_item->getUrlObject();
+      if (!$url->isExternal()) {
+        $params = $url->getRouteParameters();
+        if (isset($params['node'])) {
+          Cache::invalidateTags(['node:' . $params['node']]);
+        }
       }
     }
   }
