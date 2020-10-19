@@ -15,6 +15,7 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\Url;
 use Drupal\config_pages\ConfigPagesInterface;
+use Drupal\field\FieldConfigInterface;
 use Drupal\field\FieldStorageConfigInterface;
 use Drupal\menu_link_content\Entity\MenuLinkContent;
 use Drupal\node\NodeInterface;
@@ -726,5 +727,34 @@ function stanford_profile_helper_field_storage_config_presave(FieldStorageConfig
   if ($field_storage->getThirdPartySetting('field_permissions', 'permission_type') === 'public') {
     $field_storage->unsetThirdPartySetting('field_permissions', 'permission_type');
     $field_storage->calculateDependencies();
+  }
+}
+
+/**
+ * Implements hook_react_paragraphs_form_field_data_alter().
+ */
+function stanford_profile_helper_react_paragraphs_form_field_data_alter(array &$info, array $field_element, FieldConfigInterface $field_config) {
+  if ($field_config->getName() != 'su_list_view') {
+    return;
+  }
+  $remove = [
+    'stanford_events' => ['list_page_filtered', 'more_events_block'],
+    'stanford_news' => [
+      'term_block',
+      'topics_list',
+      'vertical_teaser_term_list',
+    ],
+  ];
+  foreach ($remove as $view_id => $remove_displays) {
+    if (isset($info['displays'][$view_id])) {
+      $info['displays'][$view_id] = array_filter($info['displays'][$view_id], function ($display) use ($remove_displays) {
+        return !in_array($display['value'], $remove_displays);
+      });
+      $info['displays'][$view_id] = array_values($info['displays'][$view_id]);
+
+      if (empty($info['displays'][$view_id])) {
+        unset($info['displays'][$view_id]);
+      }
+    }
   }
 }
