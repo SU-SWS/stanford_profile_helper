@@ -12,7 +12,8 @@
     &.ptype-stanford-cta-list,
     &.ptype-stanford-stories,
     &.ptype-stanford-image-cta,
-    &.ptype-stanford-lists {
+    &.ptype-stanford-lists,
+    &.ptype-stanford-entity {
       max-width: 980px;
 
       @include grid-media-only('lg') {
