@@ -29,6 +29,19 @@
       }
     }
   }
+
+  .ptype-stanford-lists:not([data-react-columns="12"]) {
+    .views-row,
+    .more-news-view > div {
+      width: 100%;
+    }
+
+    .su-news-list__item-date + .su-news-list__item {
+      .media {
+        margin-top: 0;
+      }
+    }
+  }
 }
 
 .jumpstart-ui {
