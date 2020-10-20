@@ -758,3 +758,18 @@ function stanford_profile_helper_react_paragraphs_form_field_data_alter(array &$
     }
   }
 }
+
+/**
+ * Implements hook_field_widget_WIDGET_TYPE_form_alter().
+ */
+function stanford_profile_helper_field_widget_react_paragraphs_form_alter(&$element, FormStateInterface $form_state, $context) {
+  // To limit which sites get the lists and entity reference paragraphs, use
+  // state. This will eventually not be needed.
+  if (\Drupal::state()->get('stanford_profile_allow_all_paragraphs')) {
+    return;
+  }
+  $tools = &$element['container']['value']['#attached']['drupalSettings']['reactParagraphs'][0]['tools'];
+  $tools = array_filter($tools, function ($tool) {
+    return !in_array($tool['id'], ['stanford_lists', 'stanford_entity']);
+  });
+}
