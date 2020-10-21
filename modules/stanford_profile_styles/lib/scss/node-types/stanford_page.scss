@@ -11,7 +11,9 @@
     &.ptype-stanford-media-caption,
     &.ptype-stanford-cta-list,
     &.ptype-stanford-stories,
-    &.ptype-stanford-image-cta {
+    &.ptype-stanford-image-cta,
+    &.ptype-stanford-lists,
+    &.ptype-stanford-entity {
       max-width: 980px;
 
       @include grid-media-only('lg') {
@@ -24,6 +26,19 @@
     &.ptype-stanford-card {
       img {
         width: 100%;
+      }
+    }
+  }
+
+  .ptype-stanford-lists:not([data-react-columns="12"]) {
+    .views-row,
+    .more-news-view > div {
+      width: 100%;
+    }
+
+    .su-news-list__item-date + .su-news-list__item {
+      .media {
+        margin-top: 0;
       }
     }
   }
