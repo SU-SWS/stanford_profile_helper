@@ -31,9 +31,14 @@
   }
 
   .ptype-stanford-lists:not([data-react-columns="12"]) {
+    // Views-row for non-grid displays.
+    // Views-view-grid has some different markup, so it needs some different work.
     .views-row,
-    .more-news-view > div {
+    .views-view-grid .views-row > div {
       width: 100%;
+      max-width: 100%;
+      flex: none;
+      margin-bottom: 2rem;
     }
 
     .su-news-list__item-date + .su-news-list__item {
