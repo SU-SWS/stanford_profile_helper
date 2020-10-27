@@ -6,8 +6,8 @@
 // Exception: if we need additional spacing on top,
 // use padding-top, not margin-top.
 
-.su-wysiwyg-text {
 
+.su-wysiwyg-text {
   .media {
     @include padding(null null 2em null);
   }
@@ -239,3 +239,4 @@
 
   }
 }
+
