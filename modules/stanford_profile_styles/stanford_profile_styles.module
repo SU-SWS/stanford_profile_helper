@@ -137,17 +137,6 @@ function stanford_profile_styles_node_form_wide(array $form, FormStateInterface 
 /**
  * Implements hook_preprocess_HOOK().
  */
-function stanford_profile_styles_preprocess_field(&$variables) {
-  $wysiwyg_fields = ['text', 'text_with_summary', 'text_long'];
-  if (in_array($variables['field_type'], $wysiwyg_fields)) {
-    $variables['attributes']['class'][] = 'su-wysiwyg-text';
-    $variables['#attached']['library'][] = 'stanford_profile_styles/paragraph_stanford_wysiwyg';
-  }
-}
-
-/**
- * Implements hook_preprocess_HOOK().
- */
 function stanford_profile_styles_preprocess_field__react_paragraph_row(&$variables) {
   $count = count($variables['items']);
   $variables['attributes']['class'][] = "container-$count-items";
