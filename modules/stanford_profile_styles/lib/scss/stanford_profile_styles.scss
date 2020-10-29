@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import './config';
+@import './config', 'modular_spacing';
 
 .toolbar-oriented {
   .toolbar-bar {
@@ -96,28 +96,4 @@ a {
       }
     }
   }
-}
-
-.su-margin-bottom {
-  @include modular-spacing('margin', null null 0 null);
-}
-
-.su-margin-bottom-1 {
-  @include modular-spacing('margin', null null 1 null);
-}
-
-.su-margin-bottom-2 {
-  @include modular-spacing('margin', null null 2 null);
-}
-
-.su-margin-bottom-3 {
-  @include modular-spacing('margin', null null 3 null);
-}
-
-.su-margin-bottom-4 {
-  @include modular-spacing('margin', null null 4 null);
-}
-
-.su-margin-bottom-5 {
-  @include modular-spacing('margin', null null 5 null);
 }
