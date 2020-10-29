@@ -744,6 +744,7 @@ function stanford_profile_helper_react_paragraphs_form_field_data_alter(array &$
       'term_block',
       'topics_list',
       'vertical_teaser_term_list',
+      'vertical_teaser_term',
     ],
   ];
   foreach ($remove as $view_id => $remove_displays) {
