@@ -90,7 +90,7 @@
 
   .su-entity-headline {
     h2 {
-      margin: 0;
+      @include margin(0);
     }
   }
 }
