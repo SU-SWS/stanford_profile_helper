@@ -98,7 +98,7 @@
 .ptype-stanford-lists {
   .su-list-headline {
     h2 {
-      margin: 0;
+      @include margin(0);
     }
   }
 }
