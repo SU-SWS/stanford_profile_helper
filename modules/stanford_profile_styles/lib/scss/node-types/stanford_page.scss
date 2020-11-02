@@ -75,4 +75,30 @@
   @include modular-spacing('margin-bottom', 4);
 }
 
+.ptype-stanford-entity {
 
+  // Make the people referenced entity pictures circles.
+  .su-person-photo {
+    margin: 0 20px;
+
+    picture,
+    img {
+      @inlcude margin(30px auto 0);
+      border-radius: 50%;
+    }
+  }
+
+  .su-entity-headline {
+    h2 {
+      @include margin(0);
+    }
+  }
+}
+
+.ptype-stanford-lists {
+  .su-list-headline {
+    h2 {
+      @include margin(0);
+    }
+  }
+}

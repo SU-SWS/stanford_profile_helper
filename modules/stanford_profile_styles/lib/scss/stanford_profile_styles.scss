@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import './config';
+@import './config', 'modular_spacing';
 
 .toolbar-oriented {
   .toolbar-bar {
@@ -129,4 +129,3 @@ a {
     }
   }
 }
-
