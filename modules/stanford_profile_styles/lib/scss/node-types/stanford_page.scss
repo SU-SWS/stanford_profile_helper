@@ -99,6 +99,12 @@
   .su-list-headline {
     h2 {
       @include margin(0);
+      text-align: center;
     }
+  }
+
+  .su-list-button {
+    display:flex;
+    justify-content: center;
   }
 }
