@@ -98,16 +98,7 @@ a {
 
 
     // Style Buttons.
-    &.su-button {
-      svg {
-        fill: $su-color-white;
-      }
-
-      path {
-        stroke: $su-color-white;
-      }
-    }
-
+    &.su-button,
     &.su-button--big {
       svg {
         fill: $su-color-white;
