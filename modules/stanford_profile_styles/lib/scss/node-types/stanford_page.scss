@@ -98,19 +98,25 @@
   }
 
   &[data-react-columns="12"] {
-    .ds-entity--stanford-person {
-      @include grid-media('sm') {
-        .su-card {
-          display: flex;
-        }
+    .su-entity-item {
+      & > div:first-child:last-child {
+        .ds-entity--stanford-person {
+          @include grid-media('sm') {
+            .su-card {
+              display: flex;
+            }
 
-        .su-person-photo {
-          width: 25%;
-          @include margin(3rem);
-        }
+            .su-person-photo {
+              width: 25%;
+              flex: 1;
+              @include margin(3rem);
+            }
 
-        .su-card__contents {
-          @include margin(auto);
+            .su-card__contents {
+              flex: 1;
+              @include margin(auto);
+            }
+          }
         }
       }
     }
