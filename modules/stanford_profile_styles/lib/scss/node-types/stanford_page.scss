@@ -61,11 +61,11 @@
 
   // Make the people referenced entity pictures circles.
   .su-person-photo {
-    margin: 0 20px;
+    @include margin(30px auto);
+    max-width: 300px;
 
     picture,
     img {
-      @include margin(30px auto 0);
       border-radius: 50%;
     }
   }
@@ -80,9 +80,47 @@
     > div {
       @include modular-spacing('margin-bottom', 4);
     }
+
+    a {
+      color: $su-color-bright-red;
+
+      &:active,
+      &:focus,
+      &:hover {
+        color: $su-color-black;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .ds-entity--stanford-person {
+    text-align: center;
   }
 
   &[data-react-columns="12"] {
+    .su-entity-item {
+      & > div:first-child:last-child {
+        .ds-entity--stanford-person {
+          @include grid-media('sm') {
+            .su-card {
+              display: flex;
+            }
+
+            .su-person-photo {
+              width: 25%;
+              flex: 1;
+              @include margin(3rem);
+            }
+
+            .su-card__contents {
+              flex: 1;
+              @include margin(auto);
+            }
+          }
+        }
+      }
+    }
+
     @include grid-media('lg') {
       .su-entity-item {
         display: flex;
