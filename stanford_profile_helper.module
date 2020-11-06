@@ -774,4 +774,5 @@ function stanford_profile_helper_field_widget_react_paragraphs_form_alter(&$elem
   $tools = array_filter($tools, function ($tool) {
     return !in_array($tool['id'], ['stanford_lists', 'stanford_entity']);
   });
+  $tools = array_values($tools);
 }
