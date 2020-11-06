@@ -1,5 +1,24 @@
 # Stanford Profile Helper
 
+8.x-1.6
+--------------------------------------------------------------------------------
+_Release Date: 2020-11-06_
+
+- Reset react tools to a basic array (29a9bfa)
+- D8CORE-2951 D8CORE-2952 Style adjustments for people cards (#46) (00764d9)
+- D8CORE-2570 Update hook to create the intro blocks (#45) (04b0413)
+- V1.5.0 tweaks (#43) (78f37af)
+- D8core-2765 Styles and icons for mailto buttons (#39) (b84b521)
+- D8CORE-000 List and content reference paragraph style helpers (#42) (9c386a5)
+- D8CORE-2183 Keep the relations fieldset open by default on term form (#41) (24dd121)
+- D8CORE-2780 People card images are circles (#40) (56fe706)
+- D8CORE-2285: adding the css to the pages that need the ckeditor style… (#38) (a6a416c)
+- Adjusted the list paragraph styles for grid displays (#37) (3a9c06a)
+- D8CORE-2738 Reduce list paragraph max width (#36) (dcb9a46)
+- D8CORE-2875: Limit paragraph choices for now (#35) (73efcc5)
+- D8CORE-2856 Remove unwanted views from the list paragraph type (#34) (96203a3)
+- D8CORE-000 Fixed breaking if the parent menu item is external (#33) (ba7d3b8)
+
 8.x-1.5
 --------------------------------------------------------------------------------
 _Release Date: 2020-10-12_
