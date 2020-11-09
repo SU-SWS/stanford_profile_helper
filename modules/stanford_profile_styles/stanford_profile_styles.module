@@ -5,6 +5,8 @@
  * stanford_profile_styles.module
  */
 
+use Drupal\Component\Utility\Html;
+use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Template\Attribute;
 use Drupal\editor\Entity\Editor;
@@ -137,6 +139,17 @@ function stanford_profile_styles_node_form_wide(array $form, FormStateInterface 
 /**
  * Implements hook_preprocess_HOOK().
  */
+function stanford_profile_styles_preprocess_field(&$variables) {
+  $wysiwyg_fields = ['text', 'text_with_summary', 'text_long'];
+  if (in_array($variables['field_type'], $wysiwyg_fields)) {
+    $variables['attributes']['class'][] = 'su-wysiwyg-text';
+    $variables['#attached']['library'][] = 'stanford_profile_styles/paragraph_stanford_wysiwyg';
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
 function stanford_profile_styles_preprocess_field__react_paragraph_row(&$variables) {
   $count = count($variables['items']);
   $variables['attributes']['class'][] = "container-$count-items";
@@ -172,4 +185,16 @@ function stanford_profile_styles_preprocess_block__config_pages_block(&$variable
     $variables['#attached']['library'][] = 'stanford_profile_styles/stanford_super_footer';
   }
 
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function stanford_profile_styles_preprocess_ds_entity_view(&$variables) {
+  if (empty($variables['content']['#entity']) || !($variables['content']['#entity'] instanceof ContentEntityInterface)) {
+    return;
+  }
+  $entity = $variables['content']['#entity'];
+  $variables['attributes']['class'][] = Html::cleanCssIdentifier('ds-entity--' . $entity->getEntityTypeId());
+  $variables['attributes']['class'][] = Html::cleanCssIdentifier('ds-entity--' . $entity->bundle());
 }

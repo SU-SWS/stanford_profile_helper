@@ -11,7 +11,9 @@
     &.ptype-stanford-media-caption,
     &.ptype-stanford-cta-list,
     &.ptype-stanford-stories,
-    &.ptype-stanford-image-cta {
+    &.ptype-stanford-image-cta,
+    &.ptype-stanford-lists,
+    &.ptype-stanford-entity {
       max-width: 980px;
 
       @include grid-media-only('lg') {
@@ -55,4 +57,138 @@
   @include modular-spacing('margin-bottom', 4);
 }
 
+.ptype-stanford-entity {
 
+  // Make the people referenced entity pictures circles.
+  .su-person-photo {
+    @include margin(30px auto);
+    max-width: 300px;
+
+    picture,
+    img {
+      border-radius: 50%;
+    }
+  }
+
+  .su-entity-headline {
+    h2 {
+      @include margin(0);
+    }
+  }
+
+  .su-entity-item {
+    > div {
+      @include modular-spacing('margin-bottom', 4);
+    }
+
+    a {
+      color: $su-color-bright-red;
+
+      &:active,
+      &:focus,
+      &:hover {
+        color: $su-color-black;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .ds-entity--stanford-person {
+    text-align: center;
+  }
+
+  &[data-react-columns="12"] {
+    .su-entity-item {
+      & > div:first-child:last-child {
+        .ds-entity--stanford-person {
+          @include grid-media('sm') {
+            .su-card {
+              display: flex;
+            }
+
+            .su-person-photo {
+              width: 25%;
+              flex: 1;
+              @include margin(3rem);
+            }
+
+            .su-card__contents {
+              flex: 1;
+              @include margin(auto);
+            }
+          }
+        }
+      }
+    }
+
+    @include grid-media('lg') {
+      .su-entity-item {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        > div {
+          @include margin(0);
+          width: calc(33% - 40px);
+
+          &:nth-child(1):nth-last-child(1) {
+            width: 100%;
+          }
+
+          &:nth-child(1):nth-last-child(2),
+          &:nth-child(2):nth-last-child(1) {
+            width: calc(50% - 40px);
+          }
+
+          &:nth-child(n+4) {
+            @include modular-spacing('margin-top', 4);
+          }
+        }
+      }
+    }
+  }
+}
+
+.ptype-stanford-lists {
+  .su-list-headline {
+    h2 {
+      @include margin(0);
+      text-align: center;
+    }
+  }
+
+  .su-list-button {
+    display: flex;
+    justify-content: center;
+  }
+
+  &:not([data-react-columns="12"]) {
+    // Views-row for non-grid displays.
+    // Views-view-grid has some different markup, so it needs some different work.
+    .views-row,
+    .views-view-grid .views-row > div {
+      width: 100%;
+      max-width: 100%;
+      flex: none;
+      margin-bottom: 2rem;
+    }
+
+    .su-news-list__item-date + .su-news-list__item {
+      .media {
+        margin-top: 0;
+      }
+    }
+
+    // Stack the date above the title on the events lists.
+    .su-event-list-item {
+      display: block;
+    }
+
+    .su-news-list {
+      img,
+      picture {
+        display: none;
+      }
+    }
+  }
+}

@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import './config';
+@import './config', 'modular_spacing';
 
 .toolbar-oriented {
   .toolbar-bar {
@@ -80,10 +80,10 @@ a {
     }
   }
 
-  svg {
 
-    // Style the SVG for mailto.
-    &.mailto {
+  // Style the SVG for mailto.
+  &.mailto {
+    svg {
       @include margin(null 0 null 0.25em);
       @include padding(null 0.01em null null);
       fill: $su-color-bright-blue;
@@ -95,6 +95,28 @@ a {
         stroke-width: 0;
       }
     }
+
+
+    // Style Buttons.
+    &.su-button,
+    &.su-button--big {
+      svg {
+        fill: $su-color-white;
+      }
+
+      path {
+        stroke: $su-color-white;
+      }
+    }
+
+    &.su-button--secondary {
+      svg {
+        fill: $su-color-bright-red;
+      }
+
+      path {
+        stroke: $su-color-bright-red;
+      }
+    }
   }
 }
-
