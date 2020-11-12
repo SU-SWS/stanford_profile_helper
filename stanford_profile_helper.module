@@ -35,6 +35,16 @@ function stanford_profile_helper_form_alter(&$form, FormStateInterface $form_sta
 }
 
 /**
+ * Implements hook_preprocess_ds_entity_view().
+ */
+function stanford_profile_helper_preprocess_ds_entity_view(&$variables) {
+  $variables['content']['#pre_render'][] = [
+    'Drupal\stanford_profile_helper\StanfordPreRenderer',
+    'preRenderDsEntity',
+  ];
+}
+
+/**
  * Implements hook_form_BASE_FORM_ID_alter().
  */
 function stanford_profile_helper_form_taxonomy_term_form_alter(&$form, FormStateInterface $form_state, $form_id) {
