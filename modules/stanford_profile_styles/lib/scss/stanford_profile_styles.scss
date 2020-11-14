@@ -77,6 +77,29 @@ a {
       &::after {
         background-color: $su-color-bright-red;
       }
+
+      &:active,
+      &:focus,
+      &:hover {
+        &::after {
+          background-color: $su-color-black;
+
+        }
+      }
+    }
+    
+    &.su-secondary-nav__link {
+      &::after {
+        background-color: $su-color-bright-red;
+      }
+
+      &:active,
+      &:focus,
+      &:hover {
+        &::after {
+          background-color: $su-color-bright-red;
+        }
+      }
     }
   }
 
@@ -120,13 +143,12 @@ a {
           fill: $su-color-white;
 
           path {
-            fill: $su-color-white;
             stroke: $su-color-white;
           }
         }
 
         path {
-          fill: $su-color-white;
+          stroke: $su-color-white;
         }
       }
     }
@@ -141,8 +163,12 @@ a {
           fill: $su-color-black;
 
           path {
-            fill: $su-color-black;
+            stroke: $su-color-black;
           }
+        }
+
+        path {
+          stroke: $su-color-bright-red;
         }
       }
     }
