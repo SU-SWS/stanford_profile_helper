@@ -87,8 +87,9 @@ a {
         }
       }
     }
-    
+
     &.su-secondary-nav__link {
+
       &::after {
         background-color: $su-color-bright-red;
       }
@@ -137,6 +138,7 @@ a {
     &.su-button--big {
       svg {
         fill: $su-color-white;
+        
         &:active,
         &:focus,
         &:hover {
