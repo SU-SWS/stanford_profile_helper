@@ -136,9 +136,10 @@ a {
     // Style Buttons.
     &.su-button,
     &.su-button--big {
+
       svg {
         fill: $su-color-white;
-        
+
         &:active,
         &:focus,
         &:hover {
