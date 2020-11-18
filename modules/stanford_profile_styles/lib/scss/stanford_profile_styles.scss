@@ -77,6 +77,29 @@ a {
       &::after {
         background-color: $su-color-bright-red;
       }
+
+      &:active,
+      &:focus,
+      &:hover {
+        &::after {
+          background-color: $su-color-black;
+        }
+      }
+    }
+
+    &.su-secondary-nav__link {
+
+      &::after {
+        background-color: $su-color-bright-red;
+      }
+
+      &:active,
+      &:focus,
+      &:hover {
+        &::after {
+          background-color: $su-color-bright-red;
+        }
+      }
     }
   }
 
@@ -87,6 +110,7 @@ a {
       @include margin(null 0 null 0.25em);
       @include padding(null 0.01em null null);
       fill: $su-color-bright-blue;
+      transition: transform 0.2s ease-in-out;
       height: 19px;
       width: 22px;
 
@@ -94,28 +118,70 @@ a {
         stroke: $su-color-bright-blue;
         stroke-width: 0;
       }
+
+      &:active,
+      &:focus,
+      &:hover {
+        fill: $su-color-black;
+        transform: translateX(0.2em);
+
+        path {
+          stroke: $su-color-black;
+        }
+      }
     }
 
 
     // Style Buttons.
     &.su-button,
     &.su-button--big {
+
       svg {
         fill: $su-color-white;
-      }
 
-      path {
-        stroke: $su-color-white;
+        &:active,
+        &:focus,
+        &:hover {
+          fill: $su-color-white;
+
+          path {
+            stroke: $su-color-white;
+          }
+        }
+
+        path {
+          stroke: $su-color-white;
+        }
       }
     }
 
     &.su-button--secondary {
       svg {
         fill: $su-color-bright-red;
-      }
 
-      path {
-        stroke: $su-color-bright-red;
+        &:active,
+        &:focus,
+        &:hover {
+          fill: $su-color-black;
+
+          path {
+            stroke: $su-color-black;
+          }
+        }
+
+        path {
+          stroke: $su-color-bright-red;
+        }
+      }
+    }
+
+    // Style mailto for action links.
+    &.su-link--action {
+      text-decoration: underline;
+
+      &::after {
+        margin: 0;
+        mask-size: 0;
       }
     }
   }
