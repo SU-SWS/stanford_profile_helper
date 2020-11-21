@@ -7,4 +7,20 @@
 // acceptable amount of bloat for maintaining styles automatically.
 body {
   @extend .su-wysiwyg-text;
+
+  a[href^="mailto:"] {
+    &::after {
+      @include padding(null null null 0.1rem);
+      content: "\f0e0";
+      color: $su-color-bright-blue;
+      font-family: "Font Awesome 5 Free";
+      font-size: 20px;
+
+      &:active,
+      &:focus,
+      &:hover {
+        color: $su-color-black;
+      }
+    }
+  }
 }
