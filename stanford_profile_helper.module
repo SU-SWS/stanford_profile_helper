@@ -20,6 +20,7 @@ use Drupal\field\FieldStorageConfigInterface;
 use Drupal\menu_link_content\Entity\MenuLinkContent;
 use Drupal\node\NodeInterface;
 use Drupal\taxonomy\TermInterface;
+use Drupal\taxonomy_menu\Plugin\Menu\TaxonomyMenuMenuLink;
 
 /**
  * Implements hook_form_alter().
@@ -785,4 +786,20 @@ function stanford_profile_helper_field_widget_react_paragraphs_form_alter(&$elem
     return !in_array($tool['id'], ['stanford_lists', 'stanford_entity']);
   });
   $tools = array_values($tools);
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function stanford_profile_helper_preprocess_menu(&$variables) {
+  foreach ($variables['items'] as &$item) {
+    // Taxonomy menu link items use the description from the term as the title
+    // attribute. The description can be very long and could contain HTML. To
+    // Make things easiest, just remove the title attribute.
+    if ($item['original_link'] instanceof TaxonomyMenuMenuLink) {
+      $attributes = $item['url']->getOption('attributes');
+      unset($attributes['title']);
+      $item['url']->setOption('attributes', $attributes);
+    }
+  }
 }
