@@ -10,17 +10,23 @@ body {
 
   a[href^="mailto:"] {
     &::after {
-      @include padding(null null null 0.1rem);
-      content: "\f0e0";
+      @include margin(null 0.1em null 0.25em);
+      @include padding(null 0.01em null null);
+      background-image: url("#{$su-image-path}/arrow-down.png");
+      background-size: 100%;
+      content: "";
       color: $su-color-bright-blue;
-      font-family: "Font Awesome 5 Free";
-      font-size: 20px;
+      display: inline-block;
+      height: 19px;
+      transition: transform 0.2s ease-in-out;
+      width: 22px;
+    }
 
-      &:active,
-      &:focus,
-      &:hover {
-        color: $su-color-black;
-      }
+    &:active::after,
+    &:focus::after,
+    &:hover::after {
+      color: $su-color-black;
+      transform: translateX(0.2em);
     }
   }
 }
