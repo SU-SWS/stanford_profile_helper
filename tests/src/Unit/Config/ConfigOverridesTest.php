@@ -35,7 +35,7 @@ class ConfigOverridesTest extends UnitTestCase {
   /**
    * {@inheritDoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     $state = $this->createMock(StateInterface::class);
     $state->method('get')->will($this->returnCallback([
