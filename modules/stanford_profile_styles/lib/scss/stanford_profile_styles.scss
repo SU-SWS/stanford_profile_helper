@@ -50,13 +50,14 @@ svg {
   }
 }
 
-// Style the icons with external links.
 a {
   text-decoration: underline;
 
+  // Style the icons with external links.
   &.su-link--external {
     // Add the underline back to external links.
     text-decoration: underline;
+
 
     // Style Buttons.
     &.su-button {
@@ -182,6 +183,23 @@ a {
       &::after {
         margin: 0;
         mask-size: 0;
+      }
+    }
+  }
+
+}
+
+// Menu styles
+nav {
+  a {
+    &,
+    &.su-link--external {
+      text-decoration: none;
+
+      &:hover,
+      &:focus,
+      &:active {
+        text-decoration: underline;
       }
     }
   }
