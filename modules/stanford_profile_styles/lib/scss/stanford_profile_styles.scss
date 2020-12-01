@@ -58,7 +58,6 @@ a {
     // Add the underline back to external links.
     text-decoration: underline;
 
-
     // Style Buttons.
     &.su-button {
       &::after {
@@ -89,7 +88,6 @@ a {
     }
 
     &.su-secondary-nav__link {
-
       &::after {
         background-color: $su-color-bright-red;
       }
@@ -103,7 +101,6 @@ a {
       }
     }
   }
-
 
   // Style the SVG for mailto.
   &.mailto {
@@ -132,11 +129,9 @@ a {
       }
     }
 
-
     // Style Buttons.
     &.su-button,
     &.su-button--big {
-
       svg {
         fill: $su-color-white;
 
@@ -186,20 +181,22 @@ a {
       }
     }
   }
-
 }
 
 // Menu styles
 nav {
-  a {
-    &,
-    &.su-link--external {
-      text-decoration: none;
+  &.su-secondary-nav,
+  &.footer {
+    a {
+      &,
+      &.su-link--external {
+        text-decoration: none;
 
-      &:hover,
-      &:focus,
-      &:active {
-        text-decoration: underline;
+        &:hover,
+        &:focus,
+        &:active {
+          text-decoration: underline;
+        }
       }
     }
   }
