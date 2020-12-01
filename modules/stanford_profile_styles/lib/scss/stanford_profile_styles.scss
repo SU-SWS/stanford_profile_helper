@@ -184,19 +184,17 @@ a {
 }
 
 // Menu styles
-nav {
-  &.su-secondary-nav,
-  &.footer {
-    a {
-      &,
-      &.su-link--external {
-        text-decoration: none;
+[class^="su-local-footer__"],
+.su-secondary-nav {
+  a {
+    &,
+    &.su-link--external {
+      text-decoration: none;
 
-        &:hover,
-        &:focus,
-        &:active {
-          text-decoration: underline;
-        }
+      &:hover,
+      &:focus,
+      &:active {
+        text-decoration: underline;
       }
     }
   }
