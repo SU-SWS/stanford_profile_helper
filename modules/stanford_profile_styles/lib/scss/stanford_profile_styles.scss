@@ -183,18 +183,34 @@ a {
   }
 }
 
-// Menu styles
-[class^="su-local-footer__"],
+// Menu styles and footer action links
+nav[aria-label^='footer'],
+.su-local-footer__action-links,
 .su-secondary-nav {
   a {
     &,
     &.su-link--external {
       text-decoration: none;
 
-      &:hover,
+      &:active,
       &:focus,
-      &:active {
+      &:hover {
+        color: $su-color-black;
         text-decoration: underline;
+      }
+    }
+  }
+}
+
+.su-secondary-nav--light {
+  a {
+    &.su-secondary-nav__link {
+      &:active,
+      &:hover {
+        &::after,
+        &::before {
+          background-color: $su-color-black;
+        }
       }
     }
   }
