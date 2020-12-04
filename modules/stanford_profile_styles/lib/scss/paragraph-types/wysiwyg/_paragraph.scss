@@ -49,9 +49,6 @@
       font-weight: $su-font-bold;
       line-height: 3.3rem;
 
-      // 60 character line length.
-      max-width: 48ch;
-
       &:first-child {
         // Remove margin-top and padding-top when it is the first item on the page
         @include margin(0 null null null);
@@ -111,8 +108,6 @@
       @include intro-text;
       @include modular-typography(2);
       @include modular-spacing('margin-bottom', 2);
-      // 70 character line length.
-      max-width: 55ch;
 
       &:last-child {
         // Remove margin-bottom when it is the last item on the paragraph
@@ -172,8 +167,6 @@
     & {
       @include quote-text;
       @include type-b;
-      // 54 character line length.
-      max-width: 42ch;
 
       &::after {
         @include sr-only;
@@ -223,8 +216,6 @@
     @at-root #{selector-unify(&, p)},
     & {
       @include subheading;
-      // 76 character line length.
-      max-width: 60ch;
     }
 
     &::after {
