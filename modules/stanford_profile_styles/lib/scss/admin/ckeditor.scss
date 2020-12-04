@@ -12,7 +12,7 @@ body {
     &::after {
       @include margin(null 0.1em null 0.25em);
       @include padding(null 0.01em null null);
-      background-image: url("#{$su-image-path}/arrow-down.png");
+      background-image: url("#{$su-image-path}/email-color-bright-blue.png");
       background-size: 100%;
       content: "";
       color: $su-color-bright-blue;
@@ -25,6 +25,7 @@ body {
     &:active::after,
     &:focus::after,
     &:hover::after {
+      background-image: url("#{$su-image-path}/email-color-black.png");
       color: $su-color-black;
       transform: translateX(0.2em);
     }
