@@ -61,7 +61,8 @@
 
   // Make the people referenced entity pictures circles.
   .su-person-photo {
-    @include margin(30px auto);
+    @include margin(0 auto);
+    @include padding(30px);
     max-width: 300px;
 
     picture,
