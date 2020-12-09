@@ -50,10 +50,9 @@ svg {
   }
 }
 
-// Style the icons with external links.
 a {
-  text-decoration: underline;
 
+  // Style the icons with external links.
   &.su-link--external {
     // Add the underline back to external links.
     text-decoration: underline;
@@ -88,7 +87,6 @@ a {
     }
 
     &.su-secondary-nav__link {
-
       &::after {
         background-color: $su-color-bright-red;
       }
@@ -102,7 +100,6 @@ a {
       }
     }
   }
-
 
   // Style the SVG for mailto.
   &.mailto {
@@ -131,11 +128,9 @@ a {
       }
     }
 
-
     // Style Buttons.
     &.su-button,
     &.su-button--big {
-
       svg {
         fill: $su-color-white;
 
@@ -182,6 +177,39 @@ a {
       &::after {
         margin: 0;
         mask-size: 0;
+      }
+    }
+  }
+}
+
+// Menu styles and footer action links
+nav[aria-label^='footer'],
+.su-local-footer__action-links,
+.su-secondary-nav {
+  a {
+    &,
+    &.su-link--external {
+      text-decoration: none;
+
+      &:active,
+      &:focus,
+      &:hover {
+        color: $su-color-black;
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.su-secondary-nav--light {
+  a {
+    &.su-secondary-nav__link {
+      &:active,
+      &:hover {
+        &::after,
+        &::before {
+          background-color: $su-color-black;
+        }
       }
     }
   }
