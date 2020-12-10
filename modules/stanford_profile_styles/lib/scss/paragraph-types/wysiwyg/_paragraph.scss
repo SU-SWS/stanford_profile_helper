@@ -235,7 +235,8 @@
 .su-intro {
   > div {
     &.paragraph-item {
-      &:last-of-type {
+      p:last-of-type,
+      .ds-entity--paragraph:last-of-type {
         @include responsive-spacing('margin-bottom', 5);
       }
     }
