@@ -231,3 +231,14 @@
   }
 }
 
+// Events, News, People intro content spacing.
+.su-intro {
+  > div {
+    &.paragraph-item {
+      &:last-of-type {
+        @include responsive-spacing('margin-bottom', 5);
+      }
+    }
+  }
+}
+
