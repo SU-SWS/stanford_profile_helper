@@ -235,11 +235,25 @@
 .su-intro {
   > div {
     &.paragraph-item {
+      // The clear is needed for the float on the media caption when stacked
+      // with other paragraphs
+      clear: right;
+
       p:last-of-type,
       .ds-entity--paragraph:last-of-type {
         @include responsive-spacing('margin-bottom', 5);
       }
     }
+  }
+}
+
+// The clear is needed for the float on the media caption when last and above
+// the grids.
+.su-person-grid-view,
+.section-events-list--content,
+.section-news-views-views {
+  .views-block {
+    clear: right;
   }
 }
 
