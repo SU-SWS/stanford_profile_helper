@@ -1,0 +1,147 @@
+@charset "UTF-8";
+
+.su-padding-top,
+.su-pt {
+  @include modular-spacing('padding', 0 null null null);
+}
+
+.su-padding-bottom,
+.su-pb {
+  @include modular-spacing('padding', null null 0 null);
+}
+
+// Vertical 0 amount (not none)
+.su-py-0 {
+  @include modular-spacing('padding', 0 null);
+}
+
+// Horizontal 0 amount (not none)
+.su-px-0 {
+  @include modular-spacing('padding', null 0);
+}
+
+.su-padding-right,
+.su-pr {
+  @include modular-spacing('padding', null 0 null null);
+}
+
+.su-padding-left,
+.su-pl {
+  @include modular-spacing('padding', null null null 0);
+}
+
+// positive decanter multipliers
+@for $i from 1 through 9 {
+  // Top.
+  .su-padding-top-#{$i},
+  .su-pt-#{$i} {
+    @include modular-spacing('padding', $i null null null);
+  }
+
+  // Right.
+  .su-padding-right-#{$i},
+  .su-pr-#{$i} {
+    @include modular-spacing('padding', null $i null null);
+  }
+
+  // Bottom.
+  .su-padding-bottom-#{$i},
+  .su-pb-#{$i} {
+    @include modular-spacing('padding', null null $i null);
+  }
+
+  // Left
+  .su-padding-left-#{$i},
+  .su-pl-#{$i} {
+    @include modular-spacing('padding', null null null $i);
+  }
+
+  // Horizontal.
+  .su-px-#{$i} {
+    @include modular-spacing('padding', null $i);
+  }
+
+  // Vertical.
+  .su-py-#{$i} {
+    @include modular-spacing('padding', $i null);
+  }
+}
+
+// Auto and 0 decanter paddings and paddings  // shouldn't be called none = this 0 is the 0 decanter value, not 0px
+
+.su {
+  &-px {
+    &-auto {
+      @include padding(null auto);
+    }
+  }
+
+  &-pt {
+    &-default {  // shouldn't be called none = this 0 is the 0 decanter value, not 0px
+      @include padding(0 null null);
+    }
+  }
+
+  &-pb {
+    &-default { // shouldn't be called none = this 0 is the 0 decanter value, not 0px
+      @include padding(null null 0);
+    }
+  }
+
+  &-pl {
+    &-default { // shouldn't be called none = this 0 is the 0 decanter value, not 0px
+      @include padding(null null null 0);
+    }
+
+    &-auto {
+      @include padding(null null null auto);
+    }
+  }
+
+  &-pr {
+    &-default { // shouldn't be called none = this 0 is the 0 decanter value, not 0px
+      @include padding(null 0 null null);
+    }
+
+    &-auto {
+      @include padding(null auto null null);
+    }
+  }
+
+  // negative values for the modular spacing multiplier are for smaller amounts (NOT negative padding, which doesn't exist)
+  @for $i from -4 through -1 {
+    &-pt-small#{$i} {  // top
+      @include modular-spacing('padding', $i null null null);
+    }
+
+    &-pr-small#{$i} {  // right
+      @include modular-spacing('padding', null $i null null);
+
+    }
+
+    &-pb-small#{$i} {  // bottom
+      @include modular-spacing('padding', null null $i null);
+
+    }
+
+    &-pl-small#{$i} {  // left
+      @include modular-spacing('padding', null null null $i);
+    }
+
+    // horizontal padding
+    &-px-small#{$i} {
+      @include modular-spacing('padding', null $i null $i);
+    }
+
+    // vertical padding
+    &-py-small#{$i} {
+      @include modular-spacing('padding', $i null $i null);
+    }
+
+    // auto-generate for all sides padding
+    &-p-small#{$i} {
+      @include modular-spacing('padding', $i $i $i $i);
+    }
+  }
+
+}
