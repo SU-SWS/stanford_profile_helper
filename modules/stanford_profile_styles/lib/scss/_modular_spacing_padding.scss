@@ -108,40 +108,4 @@
     }
   }
 
-  // negative values for the modular spacing multiplier are for smaller amounts (NOT negative padding, which doesn't exist)
-  @for $i from -4 through -1 {
-    &-pt-small#{$i} {  // top
-      @include modular-spacing('padding', $i null null null);
-    }
-
-    &-pr-small#{$i} {  // right
-      @include modular-spacing('padding', null $i null null);
-
-    }
-
-    &-pb-small#{$i} {  // bottom
-      @include modular-spacing('padding', null null $i null);
-
-    }
-
-    &-pl-small#{$i} {  // left
-      @include modular-spacing('padding', null null null $i);
-    }
-
-    // horizontal padding
-    &-px-small#{$i} {
-      @include modular-spacing('padding', null $i null $i);
-    }
-
-    // vertical padding
-    &-py-small#{$i} {
-      @include modular-spacing('padding', $i null $i null);
-    }
-
-    // auto-generate for all sides padding
-    &-p-small#{$i} {
-      @include modular-spacing('padding', $i $i $i $i);
-    }
-  }
-
 }

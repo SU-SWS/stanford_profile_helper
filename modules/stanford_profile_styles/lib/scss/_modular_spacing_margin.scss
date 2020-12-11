@@ -148,40 +148,4 @@
       @include margin(null auto null null);
     }
   }
-
-  // negative values for the modular spacing multiplier are for smaller amounts (NOT negative margin)
-  @for $i from -4 through -1 {
-    &-mt-small#{$i} {  // top
-      @include modular-spacing('margin', $i null null null);
-    }
-
-    &-mr-small#{$i} {  // right
-      @include modular-spacing('margin', null $i null null);
-
-    }
-
-    &-mb-small#{$i} {  // bottom
-      @include modular-spacing('margin', null null $i null);
-
-    }
-
-    &-ml-small#{$i} {  // left
-      @include modular-spacing('margin', null null null $i);
-    }
-
-    // horizontal margin
-    &-mx-small#{$i} {
-      @include modular-spacing('margin', null $i null $i);
-    }
-
-    // vertical margin
-    &-my-small#{$i} {
-      @include modular-spacing('margin', $i null $i null);
-    }
-
-    // auto-generate for all sides margin
-    &-m-small#{$i} {
-      @include modular-spacing('margin', $i $i $i $i);
-    }
-  }
 }
