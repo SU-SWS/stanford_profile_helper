@@ -17,6 +17,7 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const WebpackAssetsManifest = require("webpack-assets-manifest");
 const ExtraWatchWebpackPlugin = require("extra-watch-webpack-plugin");
 const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
+const glob = require('glob')
 
 // /////////////////////////////////////////////////////////////////////////////
 // Paths ///////////////////////////////////////////////////////////////////////
@@ -38,6 +39,21 @@ const distJS = path.resolve(__dirname, distDir, "js");
 // Config //////////////////////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////
 
+
+const entryPoints = glob.sync('./lib/scss/**/*.scss').reduce((acc, filePath) => {
+  const filePathParts = filePath.replace('./lib/scss/', '').split('/');
+  let fileName = filePathParts.pop();
+  if (fileName.indexOf('_') === 0) {
+    return acc;
+  }
+  if (fileName === 'index.scss') {
+    fileName = filePathParts.pop();
+  }
+  const entry = filePathParts.length >= 1 ? filePathParts.join('/') + '/' + fileName : fileName;
+  acc[entry.replace('.scss', '')] = filePath
+  return acc
+}, {});
+
 // Start configuring webpack.
 var webpackConfig = {
   // What am i?
@@ -45,18 +61,8 @@ var webpackConfig = {
   // Allows for map files.
   devtool: 'source-map',
   // What build?
-  entry: {
-    "stanford_profile_styles.admin.node_form":            path.resolve(srcSass, "admin/node_forms.scss"),
-    "stanford_profile_styles.ckeditor":                   path.resolve(srcSass, "admin/ckeditor.scss"),
-    "stanford_profile_styles.field_widgets":              path.resolve(srcSass, "admin/field_widgets.scss"),
-    "stanford_profile_styles.layout.stanford_page.full":  path.resolve(srcSass, "node-types/stanford_page.layout.full-width.scss"),
-    "stanford_profile_styles.node.stanford_page":         path.resolve(srcSass, "node-types/stanford_page.scss"),
-    "stanford_profile_styles.paragraph.wysiwyg":          path.resolve(srcSass, "paragraph-types/wysiwyg/index.scss"),
-    "stanford_profile_styles.paragraph.spacer":           path.resolve(srcSass, "paragraph-types/spacer/index.scss"),
-    "stanford_profile_styles.react_paragraphs":           path.resolve(srcSass, "paragraph-types/react_paragraphs/index.scss"),
-    "stanford_profile_styles":                            path.resolve(srcSass, "stanford_profile_styles.scss"),
-    "stanford_profile_styles.footer.super-footer":        path.resolve(srcSass, "blocks/config_pages.super-footer.scss"),
-  },
+  entry: entryPoints,
+
   // Where put build?
   output: {
     filename: "[name].js",
