@@ -74,6 +74,8 @@
   .su-entity-headline {
     h2 {
       @include margin(0);
+
+      text-align: center;
     }
   }
 
@@ -147,6 +149,11 @@
         }
       }
     }
+  }
+
+  .su-entity-button {
+    display: flex;
+    justify-content: center;
   }
 }
 
