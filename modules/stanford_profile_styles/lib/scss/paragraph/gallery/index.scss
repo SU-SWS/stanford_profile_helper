@@ -2,12 +2,19 @@
 @import '../../config';
 
 .su-gallery-images {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
 
   > div {
-    width: calc(33% - 20px);
-    margin-bottom: 2em;
+    @include margin(null null 4rem null);
+  }
+
+  @include grid-media('md') {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, calc(33% - 4rem));
+    justify-content: space-between;
+    row-gap: 4rem;
+
+    > div {
+      @include margin(0);
+    }
   }
 }
