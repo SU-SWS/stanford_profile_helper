@@ -9,7 +9,7 @@
 
   @include grid-media('md') {
     display: grid;
-    grid-template-columns: repeat(auto-fill, calc(33% - 4rem));
+    grid-template-columns: repeat(auto-fill, calc(33% - 2rem));
     justify-content: space-between;
     row-gap: 4rem;
 
