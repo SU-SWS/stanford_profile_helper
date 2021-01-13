@@ -68,13 +68,14 @@ function stanford_profile_styles_library_info_build() {
     unset($path_parts[0], $path_parts[1]);
 
     // This is the directory the file lives in.
-    $bucket = reset($path_parts);
+    $library_level = reset($path_parts);
+    $bucket = next($path_parts);
     $lib = basename($file->getFilename(), '.css');
 
     // Build the library definition.
     $libraries[trim("$bucket.$lib", '. ')] = [
       'css' => [
-        'component' => [
+        $library_level => [
           "$local_path/{$file->getFileName()}" => [],
         ],
       ],
