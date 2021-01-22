@@ -11,19 +11,18 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Template\Attribute;
 use Drupal\editor\Entity\Editor;
 use Drupal\node\NodeInterface;
+use Symfony\Component\Finder\Finder;
 
 /**
  * Implements hook_page_attachments().
  */
 function stanford_profile_styles_page_attachments(array &$attachments) {
 
-  // Always attach to a page.
-  $attachments['#attached']['library'][] = 'stanford_profile_styles/stanford_profile_styles';
-
-  // Attach admin styles to admin pages.
+  // Attach styles to front end pages.
   $is_admin = \Drupal::service('router.admin_context')->isAdminRoute();
-  if ($is_admin) {
-    $attachments['#attached']['library'][] = 'stanford_profile_styles/admin';
+  if (!$is_admin) {
+    $attachments['#attached']['library'][] = 'stanford_profile_styles/stanford_profile_styles';
+    $attachments['#attached']['library'][] = 'stanford_profile_styles/react_paragraphs';
   }
 
   // Get the node from the route.
@@ -34,16 +33,56 @@ function stanford_profile_styles_page_attachments(array &$attachments) {
     return;
   }
 
+  $node_type = $node->getType();
+  $attachments['#attached']['library'][] = "stanford_profile_styles/node.$node_type";
+
   // Check for our type and add library if a match.
-  if ($node->getType() == "stanford_page") {
-    $attachments['#attached']['library'][] = 'stanford_profile_styles/stanford_page';
+  if ($node_type == "stanford_page") {
 
     // Check if stanford page is using a particular layout.
     $layout_target = $node->get('layout_selection')->getValue();
     if (isset($layout_target[0]['target_id']) && $layout_target[0]['target_id'] == "stanford_basic_page_full") {
-      $attachments['#attached']['library'][] = "stanford_profile_styles/stanford_page_layout_full";
+      $attachments['#attached']['library'][] = "stanford_profile_styles/node.stanford_page.layout.full-width";
     }
   }
+}
+
+/**
+ * Implements hook_library_info_build().
+ */
+function stanford_profile_styles_library_info_build() {
+  $libraries = [];
+  $module_path = drupal_get_path('module', 'stanford_profile_styles');
+
+  // Find all css files in the dist/css directory.
+  $finder = new Finder();
+  $finder->in("$module_path/dist/css")
+    ->files()
+    ->name('/.css$/');
+
+  foreach ($finder->getIterator() as $file) {
+    $local_path = str_replace("$module_path/", '', $file->getPath());
+
+    $path_parts = explode('/', $local_path);
+    // Remove `dist` and `css` parts.
+    unset($path_parts[0], $path_parts[1]);
+
+    // This is the directory the file lives in.
+    $library_level = reset($path_parts);
+    $bucket = next($path_parts);
+    $lib = basename($file->getFilename(), '.css');
+
+    // Build the library definition.
+    $libraries[trim("$bucket.$lib", '. ')] = [
+      'css' => [
+        $library_level => [
+          "$local_path/{$file->getFileName()}" => [],
+        ],
+      ],
+    ];
+  }
+
+  return $libraries;
 }
 
 /**
@@ -61,7 +100,7 @@ function stanford_profile_styles_library_info_alter(&$libraries, $extension) {
  * Implements hook_field_widget_multivalue_WIDGET_TYPE_form_alter().
  */
 function stanford_profile_styles_field_widget_multivalue_paragraphs_form_alter(array &$elements, FormStateInterface $form_state, array $context) {
-  $elements['#attached']['library'][] = 'stanford_profile_styles/field_widgets';;
+  $elements['#attached']['library'][] = 'stanford_profile_styles/admin.field_widgets';;
 }
 
 /**
@@ -71,10 +110,10 @@ function stanford_profile_styles_entity_display_build_alter(&$build, $context) {
   if ($context['entity']->getEntityTypeId() != 'paragraph') {
     return;
   }
-  $bundle = $context['entity']->bundle();
+  $bundle = str_replace('stanford_', '', $context['entity']->bundle());
   // Add libraries that correspond to the current paragraph type. No need to
   // check for the existing library. No message is created if no library exists.
-  $build['#attached']['library'][] = "stanford_profile_styles/paragraph_$bundle";
+  $build['#attached']['library'][] = "stanford_profile_styles/paragraph.$bundle";
 }
 
 /**
@@ -91,7 +130,7 @@ function stanford_profile_styles_ckeditor_css_alter(array &$css, Editor $editor)
   ];
 
   if (in_array($editor->getFilterFormat()->id(), $known_formats)) {
-    $css[] = drupal_get_path('module', 'stanford_profile_styles') . '/dist/css/stanford_profile_styles.ckeditor.css';
+    $css[] = drupal_get_path('module', 'stanford_profile_styles') . '/dist/css/admin/ckeditor.css';
   }
 }
 
@@ -131,7 +170,8 @@ function stanford_profile_styles_node_form_wide(array $form, FormStateInterface 
   $form['layout_selection']['#title'] = t('Layout Options');
   $form['layout_selection']['#group'] = "advanced";
   $form['layout_selection']['#weight'] = -11;
-  $form['#attached']['library'][] = 'stanford_profile_styles/node_form';
+  $form['#attached']['library'][] = 'stanford_profile_styles/admin.node_forms';
+  $form['#attached']['library'][] = 'stanford_media/admin';
 
   return $form;
 }
@@ -143,7 +183,7 @@ function stanford_profile_styles_preprocess_field(&$variables) {
   $wysiwyg_fields = ['text', 'text_with_summary', 'text_long'];
   if (in_array($variables['field_type'], $wysiwyg_fields)) {
     $variables['attributes']['class'][] = 'su-wysiwyg-text';
-    $variables['#attached']['library'][] = 'stanford_profile_styles/paragraph_stanford_wysiwyg';
+    $variables['#attached']['library'][] = 'stanford_profile_styles/paragraph.wysiwyg';
   }
 }
 
@@ -182,7 +222,7 @@ function stanford_profile_styles_preprocess_block__config_pages_block(&$variable
   // SUPER! Footer!
   if ($type == "stanford_super_footer") {
     $variables['attributes']['class'][] = 'block-config-pages-super-footer';
-    $variables['#attached']['library'][] = 'stanford_profile_styles/stanford_super_footer';
+    $variables['#attached']['library'][] = 'stanford_profile_styles/blocks.config_pages.super-footer';
   }
 
 }

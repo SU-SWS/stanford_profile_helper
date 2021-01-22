@@ -1,5 +1,15 @@
 # Stanford Profile Helper
 
+8.x-1.7
+--------------------------------------------------------------------------------
+_Release Date: 2020-12-04_
+
+- D8CORE-2899: removing the character limits on the wysiwyg text field (#44) (3efdc37)
+- D8CORE-2668 Removed title attribute from taxonomy menu items (#54) (68baf99)
+- D9 Ready (#50) (aab94a8)
+- D8CORE-2765: removing action link and changing colors for mailto links (#51) (1bd15eb)
+- Change the github actions to tag PRs on master (#49) (6bfeb4c)
+
 8.x-1.6
 --------------------------------------------------------------------------------
 _Release Date: 2020-11-06_

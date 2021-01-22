@@ -1,0 +1,57 @@
+@charset 'UTF-8';
+// This stylesheet creates a css file that is attached to the CKEDITOR WYSIWYG.
+@import "../../component/paragraph/wysiwyg";
+
+// This extend will duplicate the su-wysiwyg-text styles in to this stylesheet
+// and add a secondary set of children selectors under the body tag. This is an
+// acceptable amount of bloat for maintaining styles automatically.
+body {
+  @extend .su-wysiwyg-text;
+
+  a[href^='mailto:'] {
+
+    // Text.
+    &::after {
+      @include margin(null 0.1em null 0.25em);
+      @include padding(null 0.01em null null);
+      background-image: url('#{$su-image-path}/email-24px-bright-blue.png');
+      background-size: 100%;
+      content: '';
+      color: $su-color-bright-blue;
+      display: inline-block;
+      height: 19px;
+      transition: transform 0.2s ease-in-out;
+      width: 22px;
+
+      // Buttons.
+      &.su-button,
+      &.su-button--big {
+        background-image: url('#{$su-image-path}/email-24px-white.png');
+
+        &:active::after,
+        &:focus::after,
+        &:hover::after {
+          transform: translateX(0.2em);
+        }
+      }
+
+      &.su-button--secondary {
+        background-image: url('#{$su-image-path}/email-24px-bright-red.png');
+
+        &:active::after,
+        &:focus::after,
+        &:hover::after {
+          transform: translateX(0.2em);
+        }
+      }
+
+      &:active::after,
+      &:focus::after,
+      &:hover::after {
+        background-image: url('#{$su-image-path}/email-24px-black.png');
+        color: $su-color-black;
+        transform: translateX(0.2em);
+      }
+    }
+  }
+}
