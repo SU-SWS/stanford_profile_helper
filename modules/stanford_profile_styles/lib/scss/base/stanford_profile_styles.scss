@@ -214,3 +214,18 @@ nav[aria-label^='footer'],
     }
   }
 }
+
+.react-paragraphs-row {
+  .horizontal {
+    .flex-container {
+      justify-content: flex-start;
+
+      &.views-row {
+        > div:not(:last-of-type) {
+          border: 3px solid bisque;
+          margin-right: 45px;
+        }
+      }
+    }
+  }
+}
