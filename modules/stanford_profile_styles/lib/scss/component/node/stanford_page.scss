@@ -199,4 +199,14 @@
       }
     }
   }
+  // Removes the padding top for the first item.
+  .stanford-news--list {
+    div:first-child {
+      .su-news-list {
+        @include grid-media-min('xl') {
+          padding-top: 0;
+        }
+      }
+    }
+  }
 }
