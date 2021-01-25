@@ -215,15 +215,28 @@ nav[aria-label^='footer'],
   }
 }
 
+// Creating a pseudo element to force the flex children to align.
 .react-paragraphs-row {
   .horizontal {
     .flex-container {
-      justify-content: flex-start;
-
       &.views-row {
         > div:not(:last-of-type) {
-          border: 3px solid bisque;
-          margin-right: 45px;
+
+          @include grid-media-between('md', 'lg') {
+            @include responsive-spacing('margin-right', 1);
+          }
+
+          @include grid-media('xl') {
+            @include responsive-spacing('margin-right', 2);
+          }
+
+        }
+      }
+
+      &.views-row:last-of-type {
+        &::after {
+          content: '';
+          flex: auto;
         }
       }
     }
