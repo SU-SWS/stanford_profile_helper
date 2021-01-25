@@ -200,3 +200,16 @@
     }
   }
 }
+
+@include grid-media-min('lg') {
+  .container-2-items,
+  .container-3-items {
+    .ptype-stanford-lists {
+      .field--name-su-list-view {
+        //@include responsive-spacing('margin-bottom', 5);
+        @include responsive-spacing('padding', 2 0);
+        //padding: 0 30px 0 20px;
+      }
+    }
+  }
+}
