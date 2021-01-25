@@ -130,7 +130,7 @@ function stanford_profile_styles_ckeditor_css_alter(array &$css, Editor $editor)
   ];
 
   if (in_array($editor->getFilterFormat()->id(), $known_formats)) {
-    $css[] = drupal_get_path('module', 'stanford_profile_styles') . '/dist/css/admin/ckeditor.css';
+    $css[] = drupal_get_path('module', 'stanford_profile_styles') . '/dist/css/base/admin/ckeditor.css';
   }
 }
 
