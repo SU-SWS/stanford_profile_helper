@@ -175,15 +175,22 @@
     // Views-view-grid has some different markup, so it needs some different work.
     .views-row,
     .views-view-grid .views-row > div {
+      @include responsive-spacing('margin-bottom', 4);
+
       width: 100%;
       max-width: 100%;
       flex: none;
-      margin-bottom: 2rem;
     }
 
     .su-news-list__item-date + .su-news-list__item {
       .media {
         margin-top: 0;
+      }
+    }
+
+    .su-news-vertical-teaser {
+      &.su-card {
+        margin-bottom: inherit;
       }
     }
 
@@ -196,6 +203,17 @@
       img,
       picture {
         display: none;
+      }
+    }
+  }
+
+  // Removes the padding top for the first item.
+  .stanford-news--list {
+    div:first-child {
+      .su-news-list {
+        @include grid-media-min('xl') {
+          padding-top: 0;
+        }
       }
     }
   }
