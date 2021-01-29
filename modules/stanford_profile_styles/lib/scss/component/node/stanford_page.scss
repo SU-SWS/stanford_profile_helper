@@ -207,13 +207,27 @@
     }
   }
 
-  // Removes the padding top for the first item.
-  .stanford-news--list {
-    div:first-child {
-      .su-news-list {
-        @include grid-media-min('xl') {
-          padding-top: 0;
+  // Removes the padding top for the first item
+  // but not on 12 across.
+  &:not(.flex-12-of-12) {
+    .stanford-news--list {
+      div:first-child {
+        .su-news-list {
+          @include grid-media-min('xl') {
+            padding-top: 0;
+          }
         }
+      }
+    }
+  }
+}
+
+@include grid-media-min('lg') {
+  .container-2-items,
+  .container-3-items {
+    .ptype-stanford-lists {
+      .field--name-su-list-view {
+        @include responsive-spacing('padding', 2 0);
       }
     }
   }
