@@ -757,6 +757,7 @@ function stanford_profile_helper_react_paragraphs_form_field_data_alter(array &$
       'vertical_teaser_term_list',
       'vertical_teaser_term',
     ],
+    'stanford_publications' => ['related', 'term_list_chicago'],
   ];
   foreach ($remove as $view_id => $remove_displays) {
     if (isset($info['displays'][$view_id])) {
