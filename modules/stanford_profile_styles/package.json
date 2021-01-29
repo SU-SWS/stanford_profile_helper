@@ -2,6 +2,10 @@
   "name": "stanford_profile_styles",
   "version": "0.1.0",
   "repository": "https://github.com/SU-SWS/stanford_profile",
+  "config": {
+    "srcAssets": "src/assets",
+    "distAssets": "dist/assets"
+  },
   "scripts": {
     "build": "webpack --mode=development --display-error-details",
     "publish": "webpack --mode=production",

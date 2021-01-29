@@ -30,6 +30,8 @@ const srcSass = path.resolve(__dirname, srcDir, "scss");
 const distSass = path.resolve(__dirname, distDir, "css");
 const srcJS = path.resolve(__dirname, srcDir, "js");
 const distJS = path.resolve(__dirname, distDir, "js");
+const srcAssets = path.resolve(__dirname, process.env.npm_package_config_srcAssets);
+const distAssets = path.resolve(__dirname, process.env.npm_package_config_distAssets);
 
 // /////////////////////////////////////////////////////////////////////////////
 // Functions ///////////////////////////////////////////////////////////////////
@@ -159,8 +161,8 @@ var webpackConfig = {
             loader: "file-loader",
             options: {
               name: "[name].[ext]",
-              publicPath: "../../assets/img",
-              outputPath: "../../assets/img"
+              publicPath: "../assets/img",
+              outputPath: "../assets/img"
             }
           }
         ]
@@ -173,8 +175,8 @@ var webpackConfig = {
             loader: "file-loader",
             options: {
               name: "[name].[ext]",
-              publicPath: "../../assets/svg",
-              outputPath: "../../assets/svg"
+              publicPath: "../assets/svg",
+              outputPath: "../assets/svg"
             }
           }
         ]
