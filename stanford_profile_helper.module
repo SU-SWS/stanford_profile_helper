@@ -28,7 +28,7 @@ use Drupal\taxonomy_menu\Plugin\Menu\TaxonomyMenuMenuLink;
  * Implements hook_entity_presave().
  */
 function stanford_profile_helper_entity_presave(EntityInterface $entity) {
-  if ($entity instanceof ConfigEntityInterface) {
+  if ($entity instanceof ConfigEntityInterface && $entity->isNew()) {
     /** @var \Drupal\Core\Config\StorageInterface $config_storage */
     $config_storage = \Drupal::service('config.storage.sync');
 
