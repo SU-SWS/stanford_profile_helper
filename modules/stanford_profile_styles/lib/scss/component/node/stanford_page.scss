@@ -13,7 +13,8 @@
     &.ptype-stanford-stories,
     &.ptype-stanford-image-cta,
     &.ptype-stanford-lists,
-    &.ptype-stanford-entity {
+    &.ptype-stanford-entity,
+    &.ptype-stanford-gallery {
       max-width: 980px;
 
       @include grid-media-only('lg') {
@@ -55,6 +56,14 @@
 
 .node-stanford-page-su-page-banner {
   @include modular-spacing('margin-bottom', 4);
+}
+
+.ptype-stanford-gallery {
+  h2 {
+    @include margin(0);
+
+    text-align: center;
+  }
 }
 
 .ptype-stanford-entity {
