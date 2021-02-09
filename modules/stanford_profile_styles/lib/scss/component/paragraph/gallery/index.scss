@@ -1,0 +1,20 @@
+@charset "UTF-8";
+@import '../../../config';
+
+.su-gallery-images {
+
+  > div {
+    @include margin(null null 4rem null);
+  }
+
+  @include grid-media('md') {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, calc(33% - 2rem));
+    justify-content: space-between;
+    row-gap: 4rem;
+
+    > div {
+      @include margin(0);
+    }
+  }
+}

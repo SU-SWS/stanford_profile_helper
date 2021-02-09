@@ -1,0 +1,243 @@
+@charset 'UTF-8';
+@import '../../config';
+
+//
+// Custom Styles For Stanford Page Content Type.
+//
+.su-page-components {
+  div[data-react-columns="12"] {
+    &.ptype-stanford-card,
+    &.ptype-stanford-wysiwyg,
+    &.ptype-stanford-media-caption,
+    &.ptype-stanford-cta-list,
+    &.ptype-stanford-stories,
+    &.ptype-stanford-image-cta,
+    &.ptype-stanford-lists,
+    &.ptype-stanford-entity,
+    &.ptype-stanford-gallery {
+      max-width: 980px;
+
+      @include grid-media-only('lg') {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 880px;
+      }
+    }
+
+    &.ptype-stanford-card {
+      img {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.jumpstart-ui {
+  &--three-column,
+  &--two-column {
+
+    // Hide secondary navigation on mobile.
+    .left-region {
+      .menu--main {
+        @include grid-media-max('md') {
+          display: none;
+        }
+      }
+    }
+
+    // Add some extra space between the main-region and the left-region.
+    > .left-region + .main-region {
+      @include grid-media('xl') {
+        @include padding(null null null 80px);
+      }
+    }
+  }
+}
+
+.node-stanford-page-su-page-banner {
+  @include modular-spacing('margin-bottom', 4);
+}
+
+.ptype-stanford-gallery {
+  h2 {
+    @include margin(0);
+
+    text-align: center;
+  }
+}
+
+.ptype-stanford-entity {
+
+  // Make the people referenced entity pictures circles.
+  .su-person-photo {
+    @include margin(0 auto);
+    @include padding(30px);
+    max-width: 300px;
+
+    picture,
+    img {
+      border-radius: 50%;
+    }
+  }
+
+  .su-entity-headline {
+    h2 {
+      @include margin(0);
+
+      text-align: center;
+    }
+  }
+
+  .su-entity-item {
+    > div {
+      @include modular-spacing('margin-bottom', 4);
+    }
+
+    a {
+      color: $su-color-bright-red;
+
+      &:active,
+      &:focus,
+      &:hover {
+        color: $su-color-black;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .ds-entity--stanford-person {
+    text-align: center;
+  }
+
+  &[data-react-columns="12"] {
+    .su-entity-item {
+      & > div:first-child:last-child {
+        .ds-entity--stanford-person {
+          @include grid-media('sm') {
+            .su-card {
+              display: flex;
+            }
+
+            .su-person-photo {
+              width: 25%;
+              flex: 1;
+              @include margin(3rem);
+            }
+
+            .su-card__contents {
+              flex: 1;
+              @include margin(auto);
+            }
+          }
+        }
+      }
+    }
+
+    @include grid-media('lg') {
+      .su-entity-item {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        > div {
+          @include margin(0);
+          width: calc(33% - 40px);
+
+          &:nth-child(1):nth-last-child(1) {
+            width: 100%;
+          }
+
+          &:nth-child(1):nth-last-child(2),
+          &:nth-child(2):nth-last-child(1) {
+            width: calc(50% - 40px);
+          }
+
+          &:nth-child(n+4) {
+            @include modular-spacing('margin-top', 4);
+          }
+        }
+      }
+    }
+  }
+
+  .su-entity-button {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.ptype-stanford-lists {
+  .su-list-headline {
+    h2 {
+      @include margin(0);
+      text-align: center;
+    }
+  }
+
+  .su-list-button {
+    display: flex;
+    justify-content: center;
+  }
+
+  &:not([data-react-columns="12"]) {
+    // Views-row for non-grid displays.
+    // Views-view-grid has some different markup, so it needs some different work.
+    .views-row,
+    .views-view-grid .views-row > div {
+      @include responsive-spacing('margin-bottom', 4);
+
+      width: 100%;
+      max-width: 100%;
+      flex: none;
+    }
+
+    .su-news-list__item-date + .su-news-list__item {
+      .media {
+        margin-top: 0;
+      }
+    }
+
+    .su-news-vertical-teaser {
+      &.su-card {
+        margin-bottom: inherit;
+      }
+    }
+
+    // Stack the date above the title on the events lists.
+    .su-event-list-item {
+      display: block;
+    }
+
+    .su-news-list {
+      img,
+      picture {
+        display: none;
+      }
+    }
+  }
+
+  // Removes the padding top for the first item
+  // but not on 12 across.
+  &:not(.flex-12-of-12) {
+    .stanford-news--list {
+      div:first-child {
+        .su-news-list {
+          @include grid-media-min('xl') {
+            padding-top: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+@include grid-media-min('lg') {
+  .container-2-items,
+  .container-3-items {
+    .ptype-stanford-lists {
+      .field--name-su-list-view {
+        @include responsive-spacing('padding', 2 0);
+      }
+    }
+  }
+}
