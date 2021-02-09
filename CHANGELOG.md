@@ -1,5 +1,24 @@
 # Stanford Profile Helper
 
+8.x-1.8
+--------------------------------------------------------------------------------
+_Release Date: 2021-02-08_
+
+- D8CORE-3438 Adjusted styles for full width page gallery items (#71) (8fc9196)
+- Set config entity uuids when they are created if they dont match (#70) (edfd548)
+- limit the publication views in the viewfield (#68) (2ecf612)
+- D8CORE-3163: adding a little space on lists in columns (#69) (602fadb)
+- D8CORE-3164: fixing news list alignment. (#64) (92d7d2a)
+- D8CORE-3053: fixing margin bottom on lists as cards (#65) (2aa14f2)
+- fixed react paragraphs library name (a9c3ab5)
+- Fixed ckeditor styles path (#67) (298c1ce)
+- D8CORE-3263 Gallery paragraph styling & better scss file structure (#62) (7cb4749)
+- D8CORE-3052: Centering the title and button for teasers. (#63) (8a2ac19)
+- D8CORE-3142: Styling some padding for the su-intro (#60) (a5b109e)
+- Updated circleci testing (#59) (e890c66)
+- Updated field_formatter_class module (9e02372)
+- D8CORE-2764: menu underline fix (#55) (2a9d914)
+
 8.x-1.7
 --------------------------------------------------------------------------------
 _Release Date: 2020-12-04_
