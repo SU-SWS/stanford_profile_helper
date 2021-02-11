@@ -105,6 +105,31 @@ function _stanford_profile_helper_term_form_validate(array $element, FormStateIn
 }
 
 /**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ */
+function stanford_profile_helper_form_config_pages_stanford_global_message_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $form['#validate'][] = '_stanford_profile_helper_form_config_pages_stanford_global_message_form_validate';
+}
+
+/**
+ * You may not enable a global message unless message fields have values in them.
+ *
+ * @param array $form
+ *   Complete form.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   Current form state object.
+ */
+function _stanford_profile_helper_form_config_pages_stanford_global_message_form_validate(&$form, \Drupal\Core\Form\FormStateInterface $form_state) {
+  if ( $form_state->getValue('su_global_msg_enabled')['value'] &&
+    empty($form_state->getValue('su_global_msg_label')[0]['value']) &&
+    empty($form_state->getValue('su_global_msg_header')[0]['value']) &&
+    empty($form_state->getValue('su_global_msg_message')[0]['value']) &&
+    empty($form_state->getValue('su_global_msg_link')[0]['uri']) ) {
+      $form_state->setErrorByName('su_global_msg_enabled', t('To enable a global message, at least one field must have a value: Label, Headline, Message, Action Link.'));
+  }
+}
+
+/**
  * Implements hook_menu_links_discovered_alter().
  */
 function stanford_profile_helper_menu_links_discovered_alter(&$links) {
