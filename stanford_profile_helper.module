@@ -10,6 +10,7 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -19,6 +20,8 @@ use Drupal\Core\Url;
 use Drupal\config_pages\ConfigPagesInterface;
 use Drupal\field\FieldConfigInterface;
 use Drupal\field\FieldStorageConfigInterface;
+use Drupal\layout_builder\Section;
+use Drupal\layout_builder\SectionComponent;
 use Drupal\menu_link_content\Entity\MenuLinkContent;
 use Drupal\node\NodeInterface;
 use Drupal\taxonomy\TermInterface;
@@ -45,6 +48,50 @@ function stanford_profile_helper_entity_presave(EntityInterface $entity) {
       }
     }
   }
+
+  if ($entity->getEntityTypeId() == 'node' && $entity->uuid() == 'ce9cb7ca-6c59-4eea-9934-0a33057a7ff2') {
+    $entity->set('layout_builder__layout', _stanford_profile_helper_get_publications_layout());
+  }
+}
+
+
+function _stanford_profile_helper_get_publications_layout() {
+  /** @var \Drupal\Core\Entity\Display\EntityViewDisplayInterface $view_display */
+  $view_display = EntityViewDisplay::load('node.stanford_page.default');
+  $layout_builder_sections = $view_display->getThirdPartySetting('layout_builder', 'sections');
+  /** @var Section $section */
+  foreach ($layout_builder_sections as $section) {
+    if ($section->getLayoutId() == 'jumpstart_ui_two_column') {
+      $section->removeComponent('582a6898-7096-40c2-bb65-99a556ada919');
+      $uuid = \Drupal::service('uuid')->generate();
+      $config = [
+        'id' => 'system_menu_block:stanford-publication-topics',
+        'label' => 'Publication Topics',
+        'provider' => 'system',
+        'label_display' => 0,
+        'level' => 1,
+        'depth ' => 0,
+        'expand_all_items' => 0,
+        'context_mapping' => [],
+      ];
+      $sidebar_compontent = new SectionComponent($uuid, 'left', $config);
+      $section->insertComponent(0, $sidebar_compontent);
+
+      $config = [
+        'id' => 'views_block:stanford_publications-chicago_list',
+        'label' => '',
+        'provider' => 'views',
+        'label_display' => 0,
+        'views_label' => '',
+        'items_per_page' => 'none',
+        'context_mapping' => [],
+      ];
+      $uuid = \Drupal::service('uuid')->generate();
+      $view_component = new SectionComponent($uuid, 'main', $config);
+      $section->insertAfterComponent('9ec5b37b-33a4-4aca-b787-7f0584234d1a', $view_component);
+    }
+  }
+  return $layout_builder_sections;
 }
 
 /**
