@@ -5,6 +5,7 @@ namespace Drupal\stanford_profile_helper\EventSubscriber;
 use Drupal\Core\Config\ConfigEvents;
 use Drupal\Core\Config\ConfigImporterEvent;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\State\StateInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -22,6 +23,13 @@ class EventSubscriber implements EventSubscriberInterface {
   protected $entityTypeManager;
 
   /**
+   * State service.
+   *
+   * @var \Drupal\Core\State\StateInterface
+   */
+  protected $state;
+
+  /**
    * {@inheritDoc}
    */
   public static function getSubscribedEvents() {
@@ -33,9 +41,12 @@ class EventSubscriber implements EventSubscriberInterface {
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   Entity type manager service.
+   * @param \Drupal\Core\State\StateInterface $state
+   *   Drupal State service.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, StateInterface $state) {
     $this->entityTypeManager = $entity_type_manager;
+    $this->state = $state;
   }
 
   /**
@@ -67,8 +78,14 @@ class EventSubscriber implements EventSubscriberInterface {
 
     $existing_page = $node_storage->loadByProperties(['title' => 'Publications']);
     $existing_uuid = $node_storage->loadByProperties(['uuid' => 'ce9cb7ca-6c59-4eea-9934-0a33057a7ff2']);
-    // If a publications node already exists, leave it be.
-    if (!empty($existing_page) || !empty($existing_uuid)) {
+    // If a publications node already exists, leave it be. Or if we have already
+    // done this before, leave.
+    if (
+      !empty($existing_page) ||
+      !empty($existing_uuid) ||
+      $this->state->get('stanford_profile_publication_list')
+    ) {
+      $this->state->set('stanford_profile_publication_list', TRUE);
       return;
     }
 
@@ -109,7 +126,7 @@ class EventSubscriber implements EventSubscriberInterface {
         ],
       ],
     ])->save();
-
+    $this->state->set('stanford_profile_publication_list', TRUE);
   }
 
 }
