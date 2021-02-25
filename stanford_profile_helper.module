@@ -49,12 +49,21 @@ function stanford_profile_helper_entity_presave(EntityInterface $entity) {
     }
   }
 
-  if ($entity->getEntityTypeId() == 'node' && $entity->uuid() == 'ce9cb7ca-6c59-4eea-9934-0a33057a7ff2') {
+  if (
+    $entity->getEntityTypeId() == 'node' &&
+    $entity->uuid() == 'ce9cb7ca-6c59-4eea-9934-0a33057a7ff2' &&
+    $entity->isNew()
+  ) {
     $entity->set('layout_builder__layout', _stanford_profile_helper_get_publications_layout());
   }
 }
 
-
+/**
+ * Get the layout settings to be saved on the publications node.
+ *
+ * @return array
+ *   Array of sections for layout builder to be saved in the field.
+ */
 function _stanford_profile_helper_get_publications_layout() {
   /** @var \Drupal\Core\Entity\Display\EntityViewDisplayInterface $view_display */
   $view_display = EntityViewDisplay::load('node.stanford_page.default');
@@ -76,19 +85,6 @@ function _stanford_profile_helper_get_publications_layout() {
       ];
       $sidebar_compontent = new SectionComponent($uuid, 'left', $config);
       $section->insertComponent(0, $sidebar_compontent);
-
-      $config = [
-        'id' => 'views_block:stanford_publications-chicago_list',
-        'label' => '',
-        'provider' => 'views',
-        'label_display' => 0,
-        'views_label' => '',
-        'items_per_page' => 'none',
-        'context_mapping' => [],
-      ];
-      $uuid = \Drupal::service('uuid')->generate();
-      $view_component = new SectionComponent($uuid, 'main', $config);
-      $section->insertAfterComponent('9ec5b37b-33a4-4aca-b787-7f0584234d1a', $view_component);
     }
   }
   return $layout_builder_sections;
@@ -843,22 +839,6 @@ function stanford_profile_helper_react_paragraphs_form_field_data_alter(array &$
       }
     }
   }
-}
-
-/**
- * Implements hook_field_widget_WIDGET_TYPE_form_alter().
- */
-function stanford_profile_helper_field_widget_react_paragraphs_form_alter(&$element, FormStateInterface $form_state, $context) {
-  // To limit which sites get the lists and entity reference paragraphs, use
-  // state. This will eventually not be needed.
-  if (\Drupal::state()->get('stanford_profile_allow_all_paragraphs')) {
-    return;
-  }
-  $tools = &$element['container']['value']['#attached']['drupalSettings']['reactParagraphs'][0]['tools'];
-  $tools = array_filter($tools, function ($tool) {
-    return !in_array($tool['id'], ['stanford_lists', 'stanford_entity']);
-  });
-  $tools = array_values($tools);
 }
 
 /**

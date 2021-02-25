@@ -27,6 +27,8 @@ function stanford_profile_helper_post_update_8000(&$sandbox) {
  * Implements hook_post_update_NAME().
  */
 function stanford_profile_helper_post_update_8001() {
+  \Drupal::state()->delete('stanford_profile_allow_all_paragraphs');
+
   $node_storage = \Drupal::entityTypeManager()->getStorage('node');
   $existing = $node_storage->loadByProperties(['title' => 'Publications']);
   // If a publications node already exists, leave it be.
