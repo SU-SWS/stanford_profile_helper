@@ -24,19 +24,8 @@ function stanford_profile_helper_post_update_8000(&$sandbox) {
 }
 
 /**
- * Implements hook_post_update_NAME().
+ * Clear out the state that limits the paragraph types.
  */
 function stanford_profile_helper_post_update_8001() {
   \Drupal::state()->delete('stanford_profile_allow_all_paragraphs');
-
-  $node_storage = \Drupal::entityTypeManager()->getStorage('node');
-  $existing = $node_storage->loadByProperties(['title' => 'Publications']);
-  // If a publications node already exists, leave it be.
-  if (empty($existing)) {
-    $node_storage->create([
-      'type' => 'stanford_page',
-      'title' => 'Publications',
-      'uuid' => 'ce9cb7ca-6c59-4eea-9934-0a33057a7ff2',
-    ])->save();
-  }
 }
