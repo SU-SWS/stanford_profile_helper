@@ -20,7 +20,6 @@ use Drupal\Core\Url;
 use Drupal\config_pages\ConfigPagesInterface;
 use Drupal\field\FieldConfigInterface;
 use Drupal\field\FieldStorageConfigInterface;
-use Drupal\layout_builder\Section;
 use Drupal\layout_builder\SectionComponent;
 use Drupal\menu_link_content\Entity\MenuLinkContent;
 use Drupal\node\NodeInterface;
@@ -60,9 +59,11 @@ function stanford_profile_helper_entity_presave(EntityInterface $entity) {
 }
 
 /**
- * Get the layout settings to be saved on the publications node.
+ * Get the layout settings to be saved on the /publications node.
  *
- * @return array
+ * Todo: this can be removed after the March 2021 code release.
+ *
+ * @return array|null
  *   Array of sections for layout builder to be saved in the field.
  */
 function _stanford_profile_helper_get_publications_layout() {
@@ -72,7 +73,7 @@ function _stanford_profile_helper_get_publications_layout() {
     return;
   }
   $layout_builder_sections = $view_display->getThirdPartySetting('layout_builder', 'sections');
-  /** @var Section $section */
+  /** @var \Drupal\layout_builder\Section $section */
   foreach ($layout_builder_sections as $section) {
     if ($section->getLayoutId() == 'jumpstart_ui_two_column') {
       $section->removeComponent('582a6898-7096-40c2-bb65-99a556ada919');
