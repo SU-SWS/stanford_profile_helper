@@ -775,14 +775,18 @@ function stanford_profile_helper_react_paragraphs_form_field_data_alter(array &$
     return;
   }
   $remove = [
-    'stanford_events' => ['list_page_filtered', 'more_events_block'],
+    'stanford_events' => [
+      'list_page_filtered',
+      'more_events_block',
+      'schedule',
+    ],
     'stanford_news' => [
       'term_block',
       'topics_list',
       'vertical_teaser_term_list',
       'vertical_teaser_term',
     ],
-    'stanford_publications' => ['related', 'term_list_chicago'],
+    'stanford_publications' => ['related', 'term_list_chicago', 'pub_type'],
   ];
   foreach ($remove as $view_id => $remove_displays) {
     if (isset($info['displays'][$view_id])) {
