@@ -768,41 +768,6 @@ function stanford_profile_helper_field_storage_config_presave(FieldStorageConfig
 }
 
 /**
- * Implements hook_react_paragraphs_form_field_data_alter().
- */
-function stanford_profile_helper_react_paragraphs_form_field_data_alter(array &$info, array $field_element, FieldConfigInterface $field_config) {
-  if ($field_config->getName() != 'su_list_view') {
-    return;
-  }
-  $remove = [
-    'stanford_events' => [
-      'list_page_filtered',
-      'more_events_block',
-      'schedule',
-    ],
-    'stanford_news' => [
-      'term_block',
-      'topics_list',
-      'vertical_teaser_term_list',
-      'vertical_teaser_term',
-    ],
-    'stanford_publications' => ['related', 'term_list_chicago', 'pub_type'],
-  ];
-  foreach ($remove as $view_id => $remove_displays) {
-    if (isset($info['displays'][$view_id])) {
-      $info['displays'][$view_id] = array_filter($info['displays'][$view_id], function ($display) use ($remove_displays) {
-        return !in_array($display['value'], $remove_displays);
-      });
-      $info['displays'][$view_id] = array_values($info['displays'][$view_id]);
-
-      if (empty($info['displays'][$view_id])) {
-        unset($info['displays'][$view_id]);
-      }
-    }
-  }
-}
-
-/**
  * Implements hook_field_widget_WIDGET_TYPE_form_alter().
  */
 function stanford_profile_helper_field_widget_react_paragraphs_form_alter(&$element, FormStateInterface $form_state, $context) {
