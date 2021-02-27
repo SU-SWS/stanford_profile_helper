@@ -25,6 +25,17 @@ use Drupal\taxonomy\TermInterface;
 use Drupal\taxonomy_menu\Plugin\Menu\TaxonomyMenuMenuLink;
 
 /**
+ * Implements hook_theme().
+ */
+function stanford_profile_helper_theme($existing, $type, $theme, $path) {
+  $themes['block__stanford_basic_search'] = [
+    'template' => 'block--stanford-basic-search',
+    'original hook' => 'block',
+  ];
+  return $themes;
+}
+
+/**
  * Implements hook_entity_presave().
  */
 function stanford_profile_helper_entity_presave(EntityInterface $entity) {
