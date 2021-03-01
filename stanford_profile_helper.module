@@ -80,7 +80,7 @@ function _stanford_profile_helper_get_publications_layout() {
       $uuid = \Drupal::service('uuid')->generate();
       $config = [
         'id' => 'system_menu_block:stanford-publication-topics',
-        'label' => 'Topics Menu',
+        'label' => 'Filter by Topic',
         'provider' => 'system',
         'label_display' => 'visible',
         'level' => 1,
