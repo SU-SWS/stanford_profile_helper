@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * stanford_intranet.module
+ */
+
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Session\AccountInterface;
+
+/**
+ * Implements hook_entity_access().
+ */
+function stanford_intranet_entity_access(EntityInterface $entity, $operation, AccountInterface $account) {
+  if (
+    $account->isAnonymous() &&
+    \Drupal::state()->get('stanford_intranet', FALSE)
+  ) {
+    // Prevent all access to non-authenticated users.
+    return AccessResult::forbidden();
+  }
+  return AccessResult::neutral();
+}
