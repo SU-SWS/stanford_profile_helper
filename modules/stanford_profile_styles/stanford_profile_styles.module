@@ -11,6 +11,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Template\Attribute;
 use Drupal\editor\Entity\Editor;
 use Drupal\node\NodeInterface;
+use Drupal\views\ViewExecutable;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -236,4 +237,13 @@ function stanford_profile_styles_preprocess_ds_entity_view(&$variables) {
   $entity = $variables['content']['#entity'];
   $variables['attributes']['class'][] = Html::cleanCssIdentifier('ds-entity--' . $entity->getEntityTypeId());
   $variables['attributes']['class'][] = Html::cleanCssIdentifier('ds-entity--' . $entity->bundle());
+}
+
+/**
+ * Implements hook_views_pre_render().
+ */
+function stanford_profile_styles_views_pre_render(ViewExecutable $view) {
+  if ($view->id() == 'search') {
+    $view->element['#attached']['library'][] = 'stanford_profile_styles/views.search';
+  }
 }
