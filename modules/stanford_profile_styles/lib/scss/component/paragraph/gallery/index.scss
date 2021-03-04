@@ -12,7 +12,7 @@
     text-align: right;
 
     @include caption;
-    @include padding(.4em null null null);
+    @include padding(0.4em null null null);
 
     @include grid-media-between('sm', 'md') {
       float: none;
