@@ -86,7 +86,7 @@ class EntityAccessFieldWidget extends WidgetBase {
   public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
     $new_values = [];
     foreach (array_filter($values['roles']) as $role) {
-      $new_values[] = ['role' => $role, 'access' => serialize(['view'])];
+      $new_values[] = ['role' => $role, 'access' => ['view']];
     }
     return $new_values;
   }

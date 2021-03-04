@@ -6,12 +6,12 @@
  */
 
 use Drupal\Core\Access\AccessResult;
-use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\node\NodeInterface;
 use Drupal\stanford_intranet\Plugin\Field\FieldType\EntityAccessFieldType;
+use Drupal\user\RoleInterface ;
 
 /**
  * Implements hook_entity_access().
@@ -32,27 +32,42 @@ function stanford_intranet_entity_access(EntityInterface $entity, $operation, Ac
  */
 function stanford_intranet_node_access_records(NodeInterface $node) {
   $grants = [];
-  if ($node->hasField(EntityAccessFieldType::FIELD_NAME)) {
-    $rids = \Drupal::state()->get('stanford_intranet.rids');
-    $node_field_values = $node->get(EntityAccessFieldType::FIELD_NAME)
-      ->getValue();
 
-    foreach ($node_field_values as $value) {
-      $value['access'] = unserialize($value['access']);
-      $grant = [
-        'realm' => 'stanford_intranet_roles',
-        'gid' => $rids[$value['role']],
-        'grant_view' => 0,
-        'grant_update' => 0,
-        'grant_delete' => 0,
-      ];
-
-      foreach ($value['access'] as $access) {
-        $grant["grant_$access"] = 1;
-      }
-      $grants[] = $grant;
-    }
+  // If intranet is disabled or the node is not published, we don't want to
+  // adjust any access.
+  if (
+    !$node->isPublished() ||
+    !\Drupal::state()->get('stanford_intranet', FALSE) ||
+    !$node->hasField(EntityAccessFieldType::FIELD_NAME)
+  ) {
+    return $grants;
   }
+
+  $rids = \Drupal::state()->get('stanford_intranet.rids');
+  $node_field_values = $node->get(EntityAccessFieldType::FIELD_NAME)
+    ->getValue();
+
+  // If the node has no access settings configured, we can say that it is
+  // visible to all authenticated users.
+  if (empty($node_field_values)) {
+    $node_field_values = [['role' => 'authenticated', 'access' => ['view']]];
+  }
+
+  foreach ($node_field_values as $value) {
+    $grant = [
+      'realm' => 'stanford_intranet_roles',
+      'gid' => $rids[$value['role']],
+      'grant_view' => 0,
+      'grant_update' => 0,
+      'grant_delete' => 0,
+    ];
+
+    foreach ($value['access'] as $access) {
+      $grant["grant_$access"] = 1;
+    }
+    $grants[] = $grant;
+  }
+
   return $grants;
 }
 
@@ -68,11 +83,21 @@ function stanford_intranet_node_grants(AccountInterface $account, $op) {
 
   $gids = [];
   $roles = $account->getRoles();
-  foreach ($roles as $role) {
-    $gids[] = $rids[$role->id()];
+  foreach ($roles as $role_name) {
+    $gids[] = $rids[$role_name];
   }
 
   return ['stanford_intranet_roles' => $gids];
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_insert().
+ */
+function stanford_intranet_user_role_insert(RoleInterface $role) {
+  $rids = array_flip(\Drupal::state()->get('stanford_intranet.rids', []));
+  ksort($rids);
+  $rids[] = $role->id();
+  \Drupal::state()->set('stanford_intranet.rids', array_flip($rids));
 }
 
 /**

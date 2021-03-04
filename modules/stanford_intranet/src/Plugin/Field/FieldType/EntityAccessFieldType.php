@@ -31,10 +31,6 @@ class EntityAccessFieldType extends FieldItemBase {
     $properties['role'] = DataDefinition::create('string')
       ->setLabel(new TranslatableMarkup('User Role'))
       ->setRequired(TRUE);
-    $properties['access'] = DataDefinition::create('string')
-      ->setLabel(new TranslatableMarkup('Text value'))
-      ->setSetting('case_sensitive', $field_definition->getSetting('case_sensitive'))
-      ->setRequired(TRUE);
 
     return $properties;
   }
