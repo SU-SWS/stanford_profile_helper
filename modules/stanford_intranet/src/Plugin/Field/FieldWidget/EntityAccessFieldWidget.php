@@ -2,13 +2,11 @@
 
 namespace Drupal\stanford_intranet\Plugin\Field\FieldWidget;
 
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\State\StateInterface;
-use Drupal\user\Entity\Role;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -34,12 +32,8 @@ class EntityAccessFieldWidget extends WidgetBase {
   protected $state;
 
   /**
-   * Entity Type Manager service.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   * {@inheritDoc}
    */
-  protected $entityTypeManager;
-
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     return new static(
       $plugin_id,
@@ -47,15 +41,16 @@ class EntityAccessFieldWidget extends WidgetBase {
       $configuration['field_definition'],
       $configuration['settings'],
       $configuration['third_party_settings'],
-      $container->get('state'),
-      $container->get('entity_type.manager')
+      $container->get('state')
     );
   }
 
-  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, array $third_party_settings, StateInterface $state, EntityTypeManagerInterface $entity_type_manager) {
+  /**
+   * {@inheritDoc}
+   */
+  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, array $third_party_settings, StateInterface $state) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $third_party_settings);
     $this->state = $state;
-    $this->entityTypeManager = $entity_type_manager;
   }
 
   /**
@@ -74,7 +69,7 @@ class EntityAccessFieldWidget extends WidgetBase {
     $element['roles'] = [
       '#type' => 'checkboxes',
       '#title' => $this->t('Allow users with the following roles to view this content.'),
-      '#options' => $this->getUserRoleOptions(),
+      '#options' => self::getUserRoleOptions(),
       '#default_value' => $default_value ?: ['authenticated'],
     ];
     return $element;
@@ -96,17 +91,14 @@ class EntityAccessFieldWidget extends WidgetBase {
    *
    * @return array
    *   Keyed array of user role ids to labels.
-   *
-   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
-   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  protected function getUserRoleOptions() {
-    $roles = $this->entityTypeManager->getStorage('user_role')->loadMultiple();
-    $options = [];
-    foreach ($roles as $user_role) {
-      $options[$user_role->id()] = $user_role->label();
+  protected static function getUserRoleOptions() {
+    if (\Drupal::moduleHandler()->moduleExists('role_delegation')) {
+      /** @var \Drupal\role_delegation\DelegatableRolesInterface $role_delegation */
+      $role_delegation = \Drupal::service('delegatable_roles');
+      return $role_delegation->getAssignableRoles(\Drupal::currentUser());
     }
-    return $options;
+    return user_role_names(TRUE);
   }
 
 }
