@@ -6,8 +6,12 @@
  */
 
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\node\NodeInterface;
+use Drupal\stanford_intranet\Plugin\Field\FieldType\EntityAccessFieldType;
 
 /**
  * Implements hook_entity_access().
@@ -21,4 +25,61 @@ function stanford_intranet_entity_access(EntityInterface $entity, $operation, Ac
     return AccessResult::forbidden();
   }
   return AccessResult::neutral();
+}
+
+/**
+ * Implements hook_node_access_records().
+ */
+function stanford_intranet_node_access_records(NodeInterface $node) {
+  $grants = [];
+  if ($node->hasField(EntityAccessFieldType::FIELD_NAME)) {
+    $rids = \Drupal::state()->get('stanford_intranet.rids');
+    $node_field_values = $node->get(EntityAccessFieldType::FIELD_NAME)
+      ->getValue();
+
+    foreach ($node_field_values as $value) {
+      $value['access'] = unserialize($value['access']);
+      $grant = [
+        'realm' => 'stanford_intranet_roles',
+        'gid' => $rids[$value['role']],
+        'grant_view' => 0,
+        'grant_update' => 0,
+        'grant_delete' => 0,
+      ];
+
+      foreach ($value['access'] as $access) {
+        $grant["grant_$access"] = 1;
+      }
+      $grants[] = $grant;
+    }
+  }
+  return $grants;
+}
+
+/**
+ * Implements hook_node_grants().
+ */
+function stanford_intranet_node_grants(AccountInterface $account, $op) {
+  if ($op != 'view') {
+    return [];
+  }
+
+  $rids = \Drupal::state()->get('stanford_intranet.rids');
+
+  $gids = [];
+  $roles = $account->getRoles();
+  foreach ($roles as $role) {
+    $gids[] = $rids[$role->id()];
+  }
+
+  return ['stanford_intranet_roles' => $gids];
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ */
+function stanford_intranet_form_node_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if (isset($form[EntityAccessFieldType::FIELD_NAME])) {
+    $form[EntityAccessFieldType::FIELD_NAME]['#group'] = 'revision_information';
+  }
 }
