@@ -11,7 +11,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\node\NodeInterface;
 use Drupal\stanford_intranet\Plugin\Field\FieldType\EntityAccessFieldType;
-use Drupal\user\RoleInterface ;
+use Drupal\user\RoleInterface;
 
 /**
  * Implements hook_entity_access().
@@ -67,6 +67,13 @@ function stanford_intranet_node_access_records(NodeInterface $node) {
     }
     $grants[] = $grant;
   }
+  $grants[] = [
+    'realm' => 'stanford_intranet_author',
+    'gid' => $node->getOwner()->id(),
+    'grant_view' => 1,
+    'grant_update' => 1,
+    'grant_delete' => 1,
+  ];
 
   return $grants;
 }
@@ -75,10 +82,6 @@ function stanford_intranet_node_access_records(NodeInterface $node) {
  * Implements hook_node_grants().
  */
 function stanford_intranet_node_grants(AccountInterface $account, $op) {
-  if ($op != 'view') {
-    return [];
-  }
-
   $rids = \Drupal::state()->get('stanford_intranet.rids');
 
   $gids = [];
@@ -87,7 +90,10 @@ function stanford_intranet_node_grants(AccountInterface $account, $op) {
     $gids[] = $rids[$role_name];
   }
 
-  return ['stanford_intranet_roles' => $gids];
+  return [
+    'stanford_intranet_author' => [$account->id()],
+    'stanford_intranet_roles' => $gids,
+  ];
 }
 
 /**

@@ -65,11 +65,13 @@ class EntityAccessFieldWidget extends WidgetBase {
     foreach ($items as $item) {
       $default_value[] = $item->getValue()['role'];
     }
+    if (empty($options = self::getUserRoleOptions())) {
+      return $element;
+    }
 
-    $element['roles'] = [
+    $element += [
       '#type' => 'checkboxes',
-      '#title' => $this->t('Allow users with the following roles to view this content.'),
-      '#options' => self::getUserRoleOptions(),
+      '#options' => $options,
       '#default_value' => $default_value ?: ['authenticated'],
     ];
     return $element;
@@ -80,7 +82,7 @@ class EntityAccessFieldWidget extends WidgetBase {
    */
   public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
     $new_values = [];
-    foreach (array_filter($values['roles']) as $role) {
+    foreach (array_filter($values) as $role) {
       $new_values[] = ['role' => $role, 'access' => ['view']];
     }
     return $new_values;
