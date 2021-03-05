@@ -38,3 +38,26 @@
     @include modular-spacing('margin', null null null $i);
   }
 }
+
+// positive decanter multipliers
+@for $i from 1 through 9 {
+  // Top.
+  .su-padding-top-#{$i} {
+    @include modular-spacing('padding', $i null null null);
+  }
+
+  // Right.
+  .su-padding-right-#{$i} {
+    @include modular-spacing('padding', null $i null null);
+  }
+
+  // Bottom.
+  .su-padding-bottom-#{$i} {
+    @include modular-spacing('padding', null null $i null);
+  }
+
+  // Left
+  .su-padding-left-#{$i} {
+    @include modular-spacing('padding', null null null $i);
+  }
+}

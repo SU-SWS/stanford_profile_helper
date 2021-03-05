@@ -72,7 +72,7 @@
         }
     ],
     "require": {
-        "drupal/admin_toolbar": "^2.2",
+        "drupal/admin_toolbar": "^3.0",
         "drupal/config_pages": "^2.6",
         "drupal/config_pages_overrides": "^1.0",
         "drupal/core": "^8.9 || ^9.0",

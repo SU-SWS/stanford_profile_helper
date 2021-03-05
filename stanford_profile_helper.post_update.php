@@ -22,3 +22,10 @@ function stanford_profile_helper_post_update_8000(&$sandbox) {
     'info' => 'News Intro',
   ])->save();
 }
+
+/**
+ * Clear out the state that limits the paragraph types.
+ */
+function stanford_profile_helper_post_update_8001() {
+  \Drupal::state()->delete('stanford_profile_allow_all_paragraphs');
+}
