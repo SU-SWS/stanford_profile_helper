@@ -232,6 +232,7 @@
 }
 
 @include grid-media-min('lg') {
+  .container-1-items,
   .container-2-items,
   .container-3-items {
     .ptype-stanford-lists {
