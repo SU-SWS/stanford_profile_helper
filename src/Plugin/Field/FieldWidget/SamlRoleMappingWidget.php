@@ -15,6 +15,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Plugin implementation of the 'saml_role_mapping' widget.
  *
+ * The majority of this widget was taken from stanford_ssp with some adjustments
+ * to work as a field widget.
+ *
  * @FieldWidget(
  *   id = "saml_role_mapping",
  *   module = "stanford_profile_helper",
@@ -69,10 +72,7 @@ class SamlRoleMappingWidget extends WidgetBase {
    */
   public static function isApplicable(FieldDefinitionInterface $field_definition) {
     // This widget should only be allowed on a specific field.
-    if ($field_definition->getName() != 'su_simplesaml_roles') {
-      return FALSE;
-    }
-    return parent::isApplicable($field_definition);
+    return $field_definition->getName() == 'su_simplesaml_roles';
   }
 
   /**
