@@ -840,3 +840,14 @@ function stanford_profile_helper_preprocess_menu(&$variables) {
     }
   }
 }
+
+/**
+ * Implements hook_field_widget_form_alter().
+ */
+function stanford_profile_helper_field_widget_form_alter(&$element, FormStateInterface $form_state, $context) {
+  if ($context['items']->getName() == 'su_page_components') {
+    // Push pages to only allow 3 items per row but don't break any existing
+    // pages that have 4 per row.
+    $element['container']['value']['#attached']['drupalSettings']['reactParagraphs'][0]['itemsPerRow'] = 3;
+  }
+}
