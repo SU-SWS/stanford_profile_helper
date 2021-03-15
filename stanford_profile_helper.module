@@ -24,6 +24,7 @@ use Drupal\menu_link_content\Entity\MenuLinkContent;
 use Drupal\node\NodeInterface;
 use Drupal\taxonomy\TermInterface;
 use Drupal\taxonomy_menu\Plugin\Menu\TaxonomyMenuMenuLink;
+use Drupal\user\RoleInterface;
 
 /**
  * Implements hook_theme().
@@ -34,6 +35,17 @@ function stanford_profile_helper_theme($existing, $type, $theme, $path) {
     'original hook' => 'block',
   ];
   return $themes;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ */
+function stanford_profile_helper_user_role_presave(RoleInterface $role) {
+  /** @var \Drupal\Core\Config\StorageInterface $config_storage */
+  $config_storage = \Drupal::service('config.storage.sync');
+  if (!in_array($role->getConfigDependencyName(), $config_storage->listAll())) {
+    $role->set('id', 'custm_' . $role->id());
+  }
 }
 
 /**
