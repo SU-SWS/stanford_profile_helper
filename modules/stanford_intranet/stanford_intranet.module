@@ -12,6 +12,54 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\node\NodeInterface;
 use Drupal\stanford_intranet\Plugin\Field\FieldType\EntityAccessFieldType;
 use Drupal\user\RoleInterface;
+use Symfony\Component\Finder\Finder;
+
+/**
+ * Implements hook_page_attachments().
+ */
+function stanford_intranet_page_attachments(array &$attachments) {
+  if (\Drupal::state()->get('stanford_intranet', FALSE)) {
+    $attachments['#attached']['library'][] = "stanford_intranet/intranet";
+  }
+}
+
+/**
+ * Implements hook_library_info_build().
+ */
+function stanford_intranet_library_info_build() {
+  $libraries = [];
+  $module_path = drupal_get_path('module', 'stanford_intranet');
+
+  // Find all css files in the dist/css directory.
+  $finder = new Finder();
+  $finder->in("$module_path/dist/css")
+    ->files()
+    ->name('/.css$/');
+
+  foreach ($finder->getIterator() as $file) {
+    $local_path = str_replace("$module_path/", '', $file->getPath());
+
+    $path_parts = explode('/', $local_path);
+    // Remove `dist` and `css` parts.
+    unset($path_parts[0], $path_parts[1]);
+
+    // This is the directory the file lives in.
+    $library_level = reset($path_parts);
+    $bucket = next($path_parts);
+    $lib = basename($file->getFilename(), '.css');
+
+    // Build the library definition.
+    $libraries[trim("$bucket.$lib", '. ')] = [
+      'css' => [
+        $library_level => [
+          "$local_path/{$file->getFileName()}" => [],
+        ],
+      ],
+    ];
+  }
+
+  return $libraries;
+}
 
 /**
  * Implements hook_entity_access().
