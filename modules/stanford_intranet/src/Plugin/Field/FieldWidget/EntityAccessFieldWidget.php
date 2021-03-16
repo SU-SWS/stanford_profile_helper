@@ -96,9 +96,11 @@ class EntityAccessFieldWidget extends WidgetBase {
    */
   protected static function getUserRoleOptions() {
     if (\Drupal::moduleHandler()->moduleExists('role_delegation')) {
+      // @codeCoverageIgnoreStart
       /** @var \Drupal\role_delegation\DelegatableRolesInterface $role_delegation */
       $role_delegation = \Drupal::service('delegatable_roles');
       return $role_delegation->getAssignableRoles(\Drupal::currentUser());
+      // @codeCoverageIgnoreEnd
     }
     return user_role_names(TRUE);
   }
