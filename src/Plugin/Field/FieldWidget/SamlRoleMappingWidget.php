@@ -141,7 +141,6 @@ class SamlRoleMappingWidget extends WidgetBase {
     return NestedArray::getValue($form, $form_keys);
   }
 
-
   /**
    * Add a new workgroup mapping submit callback.
    *
