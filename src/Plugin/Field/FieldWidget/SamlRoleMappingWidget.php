@@ -98,7 +98,7 @@ class SamlRoleMappingWidget extends WidgetBase {
     $element['role_population']['add']['role_id'] = [
       '#type' => 'select',
       '#title' => $this->t('Add Role'),
-      '#options' => _stanford_profile_get_assignable_roles(),
+      '#options' => _stanford_profile_helper_get_assignable_roles(),
     ];
 
     $element['role_population']['add']['workgroup'] = [

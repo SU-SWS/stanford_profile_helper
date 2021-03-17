@@ -65,7 +65,7 @@ class EntityAccessFieldWidget extends WidgetBase {
     foreach ($items as $item) {
       $default_value[] = $item->getValue()['role'];
     }
-    if (empty($options = _stanford_profile_get_assignable_roles())) {
+    if (empty($options = _stanford_profile_helper_get_assignable_roles())) {
       return $element;
     }
 

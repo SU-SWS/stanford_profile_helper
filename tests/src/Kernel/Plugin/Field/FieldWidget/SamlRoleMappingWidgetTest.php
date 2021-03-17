@@ -4,6 +4,7 @@ namespace Drupal\Tests\stanford_profile_helper\Kernel\Plugin\Field\FieldWidget;
 
 use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\Form\FormState;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\KernelTests\KernelTestBase;
@@ -98,6 +99,34 @@ class SamlRoleMappingWidgetTest extends KernelTestBase {
     $this->assertArrayHasKey('su_simplesaml_roles', $form);
 
     $this->assertArrayHasKey('student:eduPersonEntitlement,=,foo:bar', $form['su_simplesaml_roles']['widget'][0]['role_population']);
+
+    $form_state = new FormState();
+    $form_state->setTriggeringElement([
+      '#parents' => [
+        'su_simplesaml_roles',
+        0,
+        'role_population',
+        'add',
+        'add_mapping',
+      ],
+    ]);
+    $this->assertArrayHasKey('widget', SamlRoleMappingWidget::addMapping($form, $form_state));
+    $form_state->setValues([
+      'su_simplesaml_roles' => [
+        [
+          'role_population' => [
+            'add' => ['workgroup' => 'bar', 'role_id' => 'foo'],
+          ],
+        ],
+      ],
+    ]);
+
+    SamlRoleMappingWidget::addMappingCallback($form, $form_state);
+    $this->assertTrue(in_array('foo:eduPersonEntitlement,=,bar', $form_state->get('mappings')));
+
+    $form_state->setTriggeringElement(['#mapping' => 'foo:eduPersonEntitlement,=,bar']);
+    SamlRoleMappingWidget::removeMappingCallback($form, $form_state);
+    $this->assertFalse(in_array('foo:eduPersonEntitlement,=,bar', $form_state->get('mappings')));
   }
 
 }
