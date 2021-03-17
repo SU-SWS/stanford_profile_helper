@@ -78,4 +78,24 @@
   .flex-12-of-12 {
     @include margin(null auto);
   }
+
+  // Single Event card per row on screens less than and equal to md.
+  // For the single per paragraph row.
+  @include grid-media-max('md') {
+
+    .flex-12-of-12 {
+
+      .flex-container {
+        display: block;
+
+        > div {
+          max-width: 100%;
+        }
+
+        .ds-entity--stanford-event {
+          @include responsive-spacing('padding', null null 3 null);
+        }
+      }
+    }
+  }
 }
