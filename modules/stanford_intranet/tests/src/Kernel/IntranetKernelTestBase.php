@@ -22,6 +22,8 @@ abstract class IntranetKernelTestBase extends KernelTestBase {
     'node',
     'file',
     'user',
+    'config_pages',
+    'stanford_profile_helper',
   ];
 
   /**

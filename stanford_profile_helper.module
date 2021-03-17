@@ -43,7 +43,15 @@ function stanford_profile_helper_theme($existing, $type, $theme, $path) {
 function stanford_profile_helper_user_role_presave(RoleInterface $role) {
   /** @var \Drupal\Core\Config\StorageInterface $config_storage */
   $config_storage = \Drupal::service('config.storage.sync');
-  if (!in_array($role->getConfigDependencyName(), $config_storage->listAll())) {
+
+  // Only modify new roles if they are created through the UI and don't exist in
+  // the config management - Prefix them with "custm_" so they can be easily
+  // identifiable.
+  if (
+    PHP_SAPI != 'cli' &&
+    $role->isNew() &&
+    !in_array($role->getConfigDependencyName(), $config_storage->listAll())
+  ) {
     $role->set('id', 'custm_' . $role->id());
   }
 }
@@ -862,4 +870,20 @@ function stanford_profile_helper_field_widget_form_alter(&$element, FormStateInt
     // pages that have 4 per row.
     $element['container']['value']['#attached']['drupalSettings']['reactParagraphs'][0]['itemsPerRow'] = 3;
   }
+}
+
+/**
+ * Get available roles, limited if the role_delegation module is enabled.
+ *
+ * @return array
+ *   Keyed array of role id and role label.
+ */
+function _stanford_profile_get_assignable_roles(): array {
+  if (\Drupal::moduleHandler()->moduleExists('role_delegation')) {
+    /** @var \Drupal\role_delegation\DelegatableRolesInterface $role_delegation */
+    $role_delegation = \Drupal::service('delegatable_roles');
+    return $role_delegation->getAssignableRoles(\Drupal::currentUser());
+  }
+
+  return user_role_names(TRUE);
 }

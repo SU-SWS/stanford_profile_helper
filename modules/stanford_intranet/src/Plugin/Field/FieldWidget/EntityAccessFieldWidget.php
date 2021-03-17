@@ -65,7 +65,7 @@ class EntityAccessFieldWidget extends WidgetBase {
     foreach ($items as $item) {
       $default_value[] = $item->getValue()['role'];
     }
-    if (empty($options = self::getUserRoleOptions())) {
+    if (empty($options = _stanford_profile_get_assignable_roles())) {
       return $element;
     }
 
@@ -86,23 +86,6 @@ class EntityAccessFieldWidget extends WidgetBase {
       $new_values[] = ['role' => $role, 'access' => ['view']];
     }
     return $new_values;
-  }
-
-  /**
-   * Get the list of user roles for checkbox form input.
-   *
-   * @return array
-   *   Keyed array of user role ids to labels.
-   */
-  protected static function getUserRoleOptions() {
-    if (\Drupal::moduleHandler()->moduleExists('role_delegation')) {
-      // @codeCoverageIgnoreStart
-      /** @var \Drupal\role_delegation\DelegatableRolesInterface $role_delegation */
-      $role_delegation = \Drupal::service('delegatable_roles');
-      return $role_delegation->getAssignableRoles(\Drupal::currentUser());
-      // @codeCoverageIgnoreEnd
-    }
-    return user_role_names(TRUE);
   }
 
 }

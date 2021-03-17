@@ -98,7 +98,7 @@ class SamlRoleMappingWidget extends WidgetBase {
     $element['role_population']['add']['role_id'] = [
       '#type' => 'select',
       '#title' => $this->t('Add Role'),
-      '#options' => self::getAvailableRoles(),
+      '#options' => _stanford_profile_get_assignable_roles(),
     ];
 
     $element['role_population']['add']['workgroup'] = [
@@ -255,21 +255,6 @@ class SamlRoleMappingWidget extends WidgetBase {
 
     $values = [implode('|', array_unique($mappings))];
     return parent::massageFormValues($values, $form, $form_state);
-  }
-
-  /**
-   * Get available roles, limited if the role_delegation module is enabled.
-   *
-   * @return array
-   *   Keyed array of role id and role label.
-   */
-  protected static function getAvailableRoles() {
-    if (\Drupal::moduleHandler()->moduleExists('role_delegation')) {
-      /** @var \Drupal\role_delegation\DelegatableRolesInterface $role_delegation */
-      $role_delegation = \Drupal::service('delegatable_roles');
-      return $role_delegation->getAssignableRoles(\Drupal::currentUser());
-    }
-    return user_role_names(TRUE);
   }
 
 }
