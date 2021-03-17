@@ -129,4 +129,28 @@ class SamlRoleMappingWidgetTest extends KernelTestBase {
     $this->assertFalse(in_array('foo:eduPersonEntitlement,=,bar', $form_state->get('mappings')));
   }
 
+  /**
+   * The widget massage form values will change the resulting values.
+   */
+  public function testMassageFormValues() {
+    $config = [
+      'field_definition' => FieldConfig::load('node.page.su_simplesaml_roles'),
+      'settings' => [],
+      'third_party_settings' => [],
+    ];
+    $widget = SamlRoleMappingWidget::create(\Drupal::getContainer(), $config, '', []);
+    $values = [
+      [
+        'role_population' => [
+          'foo:eduPersonEntitlement,=,bar' => 'foo:eduPersonEntitlement,=,bar',
+          'add' => ['workgroup' => 'foo', 'role_id' => 'bar'],
+        ],
+      ],
+    ];
+    $form = [];
+    $form_state = new FormState();
+    $massaged_values = $widget->massageFormValues($values, $form, $form_state);
+    $this->assertEquals('administrator:eduPersonEntitlement,=,uit:sws|foo:eduPersonEntitlement,=,bar|bar:eduPersonEntitlement,=,foo', $massaged_values[0]);
+  }
+
 }
