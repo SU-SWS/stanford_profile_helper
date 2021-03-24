@@ -1,1 +1,20 @@
 @charset "UTF-8";
+@import "./stanford_intranet.config";
+
+body {
+  .page-content {
+    background-color: #eaeaea;
+  }
+
+  .su-local-footer {
+    .su-local-footer__cell3 {
+      p:first-of-type {
+        @include link-icon(lock-solid, 13px, none, -0.03em);
+
+        font-weight: $su-font-semi-bold;
+
+      }
+
+    }
+  }
+}
