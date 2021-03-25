@@ -3,16 +3,22 @@
 
 body {
   .page-content {
-    background-color: #eaeaea;
+    background-color: $su-color-fog;
   }
 
   .su-local-footer {
+    background-color: #eaeaea;
+
     .su-local-footer__cell3 {
+
       p:first-of-type {
-        @include link-icon(lock-solid, 13px, none, -0.03em);
+        @include link-icon-before(lock-solid, 13px, none, -0.03em);
 
         font-weight: $su-font-semi-bold;
 
+        &:before {
+          background-color: $su-color-black;
+        }
       }
 
     }
