@@ -90,6 +90,7 @@ class ConfigOverrides implements ConfigFactoryOverrideInterface {
 
     // Theme settings override.
     $this->setLockupOverrides($names, $overrides);
+    $this->setRolePermissionOverrides($names, $overrides);
 
     // Overrides.
     return $overrides;
@@ -186,6 +187,32 @@ class ConfigOverrides implements ConfigFactoryOverrideInterface {
     $file_path = $wrapper->getExternalUrl();
 
     $overrides[$theme_name . '.settings']['logo']['path'] = $file_path;
+  }
+
+  /**
+   * Add permissions to the role configs.
+   *
+   * @param array $names
+   *   Array of config names.
+   * @param array $overrides
+   *   Keyed array of config overrides.
+   */
+  protected function setRolePermissionOverrides(array $names, array &$overrides) {
+    if (in_array('user.role.site_manager', $names)) {
+      // Arbitrary number that should be larger than the original permission
+      // count. This allows the functionality to ADD permissions but not have
+      // any affect on existing permissions. If we don't have this number high
+      // enough, it will replace permissions instead of adding them.
+      $counter = 500;
+      foreach (array_keys($this->state->get('stanford_intranet.rids')) as $role_id) {
+        // We only care about the custom roles.
+        if (strpos($role_id, 'custm_') === FALSE) {
+          continue;
+        }
+        $overrides['user.role.site_manager']['permissions'][$counter] = "assign $role_id role";
+        $counter++;
+      }
+    }
   }
 
   /**
