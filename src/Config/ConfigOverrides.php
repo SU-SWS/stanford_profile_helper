@@ -204,7 +204,7 @@ class ConfigOverrides implements ConfigFactoryOverrideInterface {
       // any affect on existing permissions. If we don't have this number high
       // enough, it will replace permissions instead of adding them.
       $counter = 500;
-      foreach (array_keys($this->state->get('stanford_intranet.rids')) as $role_id) {
+      foreach (array_keys($this->state->get('stanford_intranet.rids', [])) as $role_id) {
         // We only care about the custom roles.
         if (strpos($role_id, 'custm_') === FALSE) {
           continue;

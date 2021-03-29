@@ -10,9 +10,7 @@ use Drupal\stanford_profile_helper\Config\ConfigOverrides;
 use Drupal\Tests\UnitTestCase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\config_pages\ConfigPagesLoaderServiceInterface;
-use Drupal\config_pages\ConfigPagesInterface;
 use Drupal\config_pages\Entity\ConfigPages;
-use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\file\Entity\File;
 use Drupal\Core\Field\FieldItemListInterface;
@@ -28,7 +26,7 @@ use Drupal\Core\StreamWrapper\StreamWrapperInterface;
 class ConfigOverridesTest extends UnitTestCase {
 
   /**
-   * @var \Drupal\stanford_profile_helper_helper\Config\ConfigOverrides
+   * @var \Drupal\stanford_profile_helper\Config\ConfigOverrides
    */
   protected $overrideService;
 
@@ -55,15 +53,36 @@ class ConfigOverridesTest extends UnitTestCase {
   }
 
   /**
+   * Custom roles can be assigned by the site managers.
+   */
+  public function testConfigRolesOverrides() {
+    $overrides = $this->overrideService->loadOverrides(['user.role.site_manager']);
+    $expected['user.role.site_manager']['permissions'][500] = 'assign custm_foo_bar role';
+    $expected['user.role.site_manager']['permissions'][501] = 'assign custm_bar_foo role';
+    $this->assertEquals($expected, $overrides);
+  }
+
+  /**
+   * Mock state service callback.
+   */
+  public function getStateCallback($state_name, $default_value = NULL) {
+    switch ($state_name) {
+      case 'stanford_intranet.rids':
+        return array_flip([
+          'custm_foo_bar',
+          'site_manager',
+          'contributor',
+          'custm_bar_foo',
+        ]);
+    }
+    return $default_value;
+  }
+
+  /**
    * Lockup custom overrides through config form.
    */
   public function testConfigLockupOverrides() {
-
     $state = $this->createMock(StateInterface::class);
-    $state->method('get')->will($this->returnCallback([
-      $this,
-      'getStateCallback',
-    ]));
 
     $config_pages = $this->createMock(ConfigPagesLoaderServiceInterface::class);
     $config_factory = $this->createMock(ConfigFactoryInterface::class);
@@ -89,29 +108,31 @@ class ConfigOverridesTest extends UnitTestCase {
     $entity_storage->method('load')->willReturn($file);
     $entity_manager->method('getStorage')->willReturn($entity_storage);
 
-    $stream_wrapper->method('getExternalUrl')->willReturn('/sites/default/files/logo.jpg');
+    $stream_wrapper->method('getExternalUrl')
+      ->willReturn('/sites/default/files/logo.jpg');
     $stream_wrapper_manager->method('getViaUri')->willReturn($stream_wrapper);
 
     $overrideService = new ConfigOverrides($state, $config_pages, $config_factory, $entity_manager, $stream_wrapper_manager);
 
     $overrides = $overrideService->loadOverrides(['stanford_basic.settings']);
-    $expected = ['stanford_basic.settings' =>
-      [
-        'lockup' => [
-          'option' => 'a',
-          'line1' => 'Line 1',
-          'line2' => 'Line 2',
-          'line3' => 'Line 3',
-          'line4' => 'Line 4',
-          'line5' => 'Line 5',
+    $expected = [
+      'stanford_basic.settings' =>
+        [
+          'lockup' => [
+            'option' => 'a',
+            'line1' => 'Line 1',
+            'line2' => 'Line 2',
+            'line3' => 'Line 3',
+            'line4' => 'Line 4',
+            'line5' => 'Line 5',
+          ],
+          'logo' => [
+            'path' => '/sites/default/files/logo.jpg',
+            'use_default' => TRUE,
+          ],
         ],
-        'logo' => [
-          'path' => '/sites/default/files/logo.jpg',
-          'use_default' => TRUE,
-        ],
-      ],
     ];
-    $this->assertArrayEquals($expected, $overrides);
+    $this->assertEquals($expected, $overrides);
 
     // TEST SOME FAILURES FOR MORE COVERAGE.
     // -------------------------------------------------------------------------
@@ -150,7 +171,9 @@ class ConfigOverridesTest extends UnitTestCase {
 
   /**
    * [getConfigCallback description]
+   *
    * @param  [type] $name [description]
+   *
    * @return [type]       [description]
    */
   public function getConfigCallback($name) {
@@ -173,6 +196,7 @@ class ConfigOverridesTest extends UnitTestCase {
 
   /**
    * [getConfigPageLockup description]
+   *
    * @return [type] [description]
    */
   function getConfigPageLockup($name) {
@@ -187,7 +211,9 @@ class ConfigOverridesTest extends UnitTestCase {
 
   /**
    * [getFieldValue description]
+   *
    * @param  [type] $name [description]
+   *
    * @return [type]       [description]
    */
   public function getFieldValue($name) {
@@ -232,6 +258,7 @@ class ConfigOverridesTest extends UnitTestCase {
 
   /**
    * [testCreateConfigObject description]
+   *
    * @return [type] [description]
    */
   function testDefaultFunctions() {
