@@ -875,7 +875,6 @@ function stanford_profile_helper_field_widget_form_alter(&$element, FormStateInt
 
 /**
  * Implements hook_entity_bundle_field_info_alter().
- *
  */
 function stanford_profile_helper_entity_bundle_field_info_alter(&$fields, EntityTypeInterface $entity_type, $bundle) {
 
