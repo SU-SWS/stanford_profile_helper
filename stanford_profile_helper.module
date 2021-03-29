@@ -895,9 +895,11 @@ function _stanford_profile_helper_get_assignable_roles(): array {
  * Implements hook_metatags_alter().
  */
 function stanford_profile_helper_metatags_alter(array &$metatags, array $context) {
+  //dpm(get_class($context['entity']));
+
 
   $entity = $context['entity'];
-  if ($entity->getType() == 'stanford_page') {
+  if (get_class($entity) == "Drupal\node\Entity\Node" && $entity->getType() == 'stanford_page') {
     // If we have something in the page description field,
     // we want that to take over the description metatag.
     if (!empty($entity->get('su_page_description')->getString())) {
@@ -906,7 +908,6 @@ function stanford_profile_helper_metatags_alter(array &$metatags, array $context
     // If we have a page image, we want to use that for
     // image-related metatags.
     if (isset($entity->get('su_page_image')->getValue()[0])) {
-      dpm('it should be modified.');
       $metatags['og_image'] = "[node:su_page_image:entity:field_media_image:large]";
       $metatags['og_image_url'] = "[node:su_page_image:entity:field_media_image:large]";
     }
