@@ -1,23 +1,32 @@
 @charset "UTF-8";
 @import "./stanford_intranet.config";
 
-.page-content {
-  background-color: $su-color-fog;
-}
+body {
+  .su-brand-bar {
+    &.su-brand-bar--default {
+      background-color: $su-color-black;
+    }
+  }
 
-.su-local-footer {
-  background-color: #eaeaea;
 
-  .su-local-footer__cell3 {
+  .page-content {
+    background-color: $su-color-fog;
+  }
 
-    p {
-      &:first-of-type {
-        @include link-icon-before(lock-solid, 13px, none, -0.03em);
+  .su-local-footer {
+    background-color: $su-color-white;
 
-        font-weight: $su-font-semi-bold;
+    .su-local-footer__cell3 {
 
-        &::before {
-          background-color: $su-color-black;
+      p {
+        &:first-of-type {
+          @include link-icon-before(lock-solid, 13px, none, -0.03em);
+
+          font-weight: $su-font-semi-bold;
+
+          &::before {
+            background-color: $su-color-black;
+          }
         }
       }
     }
