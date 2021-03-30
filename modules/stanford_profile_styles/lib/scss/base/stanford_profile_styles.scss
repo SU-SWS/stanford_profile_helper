@@ -139,8 +139,8 @@ a {
       @include padding(null 0.01em null null);
       fill: $su-color-bright-blue;
       transition: transform 0.2s ease-in-out;
-      height: 19px;
-      width: 22px;
+      height: 1.7rem;
+      width: 2rem;
 
       path {
         stroke: $su-color-bright-blue;
@@ -183,8 +183,8 @@ a {
 
     &.su-button--big {
       svg {
-        height: 26px;
-        width: 30px;
+        height: 2.75rem;
+        width: 3rem;
       }
     }
 
