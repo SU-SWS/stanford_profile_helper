@@ -31,7 +31,7 @@ svg {
       }
 
       &.su-link--mailto {
-        &::after {
+        &::before {
           @include hide-visually;
         }
       }
@@ -120,7 +120,7 @@ a {
       &:focus,
       &:hover {
         fill: $su-color-black;
-        transform: translateX(0.2em);
+        transform: translateX(-0.2em);
 
         path {
           stroke: $su-color-black;
