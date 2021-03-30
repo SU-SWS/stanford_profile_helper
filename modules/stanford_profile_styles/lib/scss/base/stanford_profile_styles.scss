@@ -51,7 +51,6 @@ svg {
 }
 
 a {
-
   // Style the icons with external links.
   &.su-link--external {
     // Add the underline back to external links.
@@ -66,8 +65,8 @@ a {
 
     &.su-button--big {
       &::after {
-        height: 15px;
-        width: 15px;
+        height: 1.5rem;
+        width: 1.5rem;
         background-color: $su-color-white;
       }
     }
@@ -97,6 +96,38 @@ a {
         &::after {
           background-color: $su-color-bright-red;
         }
+      }
+    }
+
+    // Style external link for splash font.
+    .su-font-splash & {
+      &::after {
+        height: 2rem;
+        width: 2rem;
+      }
+    }
+
+    .su-quote-text & {
+      &::after {
+        height: 1.75rem;
+        width: 1.75rem;
+      }
+    }
+
+    // Style mailto callout text.
+    .su-callout-text & {
+      &::after {
+        height: 1.25rem;
+        width: 1.25rem;
+      }
+    }
+
+    // Style external link for intro and quote text.
+    .su-drop-cap &,
+    .su-intro-text & {
+      &::after {
+        height: 1.5rem;
+        width: 1.5rem;
       }
     }
   }
@@ -150,6 +181,13 @@ a {
       }
     }
 
+    &.su-button--big {
+      svg {
+        height: 26px;
+        width: 30px;
+      }
+    }
+
     &.su-button--secondary {
       svg {
         fill: $su-color-bright-red;
@@ -177,6 +215,33 @@ a {
       &::after {
         margin: 0;
         mask-size: 0;
+      }
+    }
+
+    // Style mailto for splash font.
+    & svg {
+      .su-font-splash & {
+        height: 3.5rem;
+        width: 3.75rem;
+      }
+
+      // Style mailto for quote text.
+      .su-quote-text & {
+        height: 3rem;
+        width: 3.25rem;
+      }
+
+      // Style mailto for drop cap and quote text.
+      .su-drop-cap &,
+      .su-intro-text & {
+        height: 2.5rem;
+        width: 3rem;
+      }
+
+      // Style mailto callout text.
+      .su-callout-text & {
+        height: 2.25rem;
+        width: 2.75rem;
       }
     }
   }
