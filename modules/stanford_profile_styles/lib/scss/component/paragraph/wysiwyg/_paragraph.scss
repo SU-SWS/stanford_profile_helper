@@ -74,6 +74,9 @@
   }
 
   // Drop cap styles.
+  // ::first-letter and content: won't work together here
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/::first-letter
+
   .su-drop-cap {
     @include intro-text;
 
@@ -88,16 +91,6 @@
       font-size: 3.5em;
       line-height: 0.6;
       text-transform: uppercase;
-    }
-
-    &::after {
-      @include sr-only;
-      content: "End Intro";
-    }
-
-    &::before {
-      @include sr-only;
-      content: "Begin Intro";
     }
   }
 
