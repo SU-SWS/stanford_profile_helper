@@ -264,6 +264,16 @@ function stanford_profile_helper_preprocess_input__submit__paragraph_action(&$va
  * Implements hook_entity_field_access().
  */
 function stanford_profile_helper_entity_field_access($operation, FieldDefinitionInterface $field_definition, AccountInterface $account, FieldItemListInterface $items = NULL) {
+  if (
+    $field_definition->getName() == 'status' &&
+    $field_definition->getTargetEntityTypeId() == 'node' &&
+    $items &&
+    $items->getEntity()->id()
+  ) {
+    // Prevent unpublishing the home, 404 and 403 pages.
+    return stanford_profile_helper_node_access($items->getEntity(), 'delete', $account);
+  }
+
   if ($field_definition->getType() == 'entity_reference' && $field_definition->getSetting('handler') == 'layout_library') {
     $entity_type = $field_definition->getTargetEntityTypeId();
     $bundle = $field_definition->getTargetBundle();
