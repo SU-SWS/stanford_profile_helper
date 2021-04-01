@@ -22,7 +22,8 @@
     .ptype-stanford-cta-list,
     .ptype-stanford-stories,
     .ptype-stanford-lists,
-    .ptype-stanford-entity {
+    .ptype-stanford-entity,
+    .ptype-stanford-gallery {
 
       @include grid-media('xs') {
         @include margin(null map-get($su-screen-margins, 'xs'));

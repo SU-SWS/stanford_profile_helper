@@ -1,5 +1,49 @@
 # Stanford Profile Helper
 
+8.x-1.11
+--------------------------------------------------------------------------------
+_Release Date: 2021-03-17_
+
+- Adjusted event card style widths.
+
+8.x-1.10
+--------------------------------------------------------------------------------
+_Release Date: 2021-03-09_
+
+- Allow only 3 items per row on basic pages.
+
+8.x-1.9
+--------------------------------------------------------------------------------
+_Release Date: 2021-03-05_
+
+- D8CORE-3540: fixing the caption styling on the gallery. (#80) (30fbadf)
+- Template and styles for search results (#78) (47e0670)
+- Updated admin toolbar module (#79) (3042933)
+- D8CORE-3520 All Publications list page (#74) (322432b)
+- D8CORE-3476 Create a new view display mode specific for viewfields (#77) (3ad05e3)
+- D8CORE-3564 Dont allow the new pub type view in the view paragraph type (#76) (dc18d1b)
+- D8CORE-3516: fixing the missing arrow icon (#75) (d92a762)
+- Added update hook to enable the stable9 theme (58e0ac3)
+
+8.x-1.8
+--------------------------------------------------------------------------------
+_Release Date: 2021-02-08_
+
+- D8CORE-3438 Adjusted styles for full width page gallery items (#71) (8fc9196)
+- Set config entity uuids when they are created if they dont match (#70) (edfd548)
+- limit the publication views in the viewfield (#68) (2ecf612)
+- D8CORE-3163: adding a little space on lists in columns (#69) (602fadb)
+- D8CORE-3164: fixing news list alignment. (#64) (92d7d2a)
+- D8CORE-3053: fixing margin bottom on lists as cards (#65) (2aa14f2)
+- fixed react paragraphs library name (a9c3ab5)
+- Fixed ckeditor styles path (#67) (298c1ce)
+- D8CORE-3263 Gallery paragraph styling & better scss file structure (#62) (7cb4749)
+- D8CORE-3052: Centering the title and button for teasers. (#63) (8a2ac19)
+- D8CORE-3142: Styling some padding for the su-intro (#60) (a5b109e)
+- Updated circleci testing (#59) (e890c66)
+- Updated field_formatter_class module (9e02372)
+- D8CORE-2764: menu underline fix (#55) (2a9d914)
+
 8.x-1.7
 --------------------------------------------------------------------------------
 _Release Date: 2020-12-04_

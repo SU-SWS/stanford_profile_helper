@@ -8,6 +8,9 @@
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\Config\Entity\ConfigEntityInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -15,12 +18,112 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\Url;
 use Drupal\config_pages\ConfigPagesInterface;
-use Drupal\field\FieldConfigInterface;
 use Drupal\field\FieldStorageConfigInterface;
+use Drupal\layout_builder\SectionComponent;
 use Drupal\menu_link_content\Entity\MenuLinkContent;
 use Drupal\node\NodeInterface;
 use Drupal\taxonomy\TermInterface;
 use Drupal\taxonomy_menu\Plugin\Menu\TaxonomyMenuMenuLink;
+use Drupal\user\RoleInterface;
+
+/**
+ * Implements hook_theme().
+ */
+function stanford_profile_helper_theme($existing, $type, $theme, $path) {
+  $themes['block__stanford_basic_search'] = [
+    'template' => 'block--stanford-basic-search',
+    'original hook' => 'block',
+  ];
+  return $themes;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ */
+function stanford_profile_helper_user_role_presave(RoleInterface $role) {
+  /** @var \Drupal\Core\Config\StorageInterface $config_storage */
+  $config_storage = \Drupal::service('config.storage.sync');
+
+  // Only modify new roles if they are created through the UI and don't exist in
+  // the config management - Prefix them with "custm_" so they can be easily
+  // identifiable.
+  if (
+    PHP_SAPI != 'cli' &&
+    $role->isNew() &&
+    !in_array($role->getConfigDependencyName(), $config_storage->listAll())
+  ) {
+    $role->set('id', 'custm_' . $role->id());
+  }
+}
+
+/**
+ * Implements hook_entity_presave().
+ */
+function stanford_profile_helper_entity_presave(EntityInterface $entity) {
+  if ($entity instanceof ConfigEntityInterface && $entity->isNew()) {
+    /** @var \Drupal\Core\Config\StorageInterface $config_storage */
+    $config_storage = \Drupal::service('config.storage.sync');
+
+    // The entity exists in the config sync directory, lets check if it's uuid
+    // matches.
+    if (in_array($entity->getConfigDependencyName(), $config_storage->listAll())) {
+      $staged_config = $config_storage->read($entity->getConfigDependencyName());
+
+      // The uuid of the entity doesn't match that of the config in the sync
+      // directory. Make sure they match so that we don't get config sync
+      // issues.
+      if (isset($staged_config['uuid']) && $staged_config['uuid'] != $entity->uuid()) {
+        $entity->set('uuid', $staged_config['uuid']);
+      }
+    }
+  }
+
+  if (
+    $entity->getEntityTypeId() == 'node' &&
+    $entity->uuid() == 'ce9cb7ca-6c59-4eea-9934-0a33057a7ff2' &&
+    $entity->isNew() &&
+    $entity->hasField('layout_builder__layout')
+  ) {
+    $entity->set('layout_builder__layout', _stanford_profile_helper_get_publications_layout());
+  }
+}
+
+/**
+ * Get the layout settings to be saved on the /publications node.
+ *
+ * Todo: this can be removed after the March 2021 code release.
+ *
+ * @return array|null
+ *   Array of sections for layout builder to be saved in the field.
+ */
+function _stanford_profile_helper_get_publications_layout() {
+  /** @var \Drupal\Core\Entity\Display\EntityViewDisplayInterface $view_display */
+  $view_display = EntityViewDisplay::load('node.stanford_page.default');
+  if (!$view_display) {
+    return;
+  }
+  $layout_builder_sections = $view_display->getThirdPartySetting('layout_builder', 'sections');
+  /** @var \Drupal\layout_builder\Section $section */
+  foreach ($layout_builder_sections as $section) {
+    if ($section->getLayoutId() == 'jumpstart_ui_two_column') {
+      $section->removeComponent('582a6898-7096-40c2-bb65-99a556ada919');
+      $uuid = \Drupal::service('uuid')->generate();
+      $config = [
+        'id' => 'system_menu_block:stanford-publication-topics',
+        'label' => 'Filter by Topic',
+        'provider' => 'system',
+        'label_display' => 'visible',
+        'level' => 1,
+        'depth ' => 0,
+        'expand_all_items' => 0,
+        'context_mapping' => [],
+      ];
+      $sidebar_compontent = new SectionComponent($uuid, 'left', $config);
+      $section->insertComponent(0, $sidebar_compontent);
+    }
+  }
+  return $layout_builder_sections;
+}
 
 /**
  * Implements hook_form_alter().
@@ -161,6 +264,16 @@ function stanford_profile_helper_preprocess_input__submit__paragraph_action(&$va
  * Implements hook_entity_field_access().
  */
 function stanford_profile_helper_entity_field_access($operation, FieldDefinitionInterface $field_definition, AccountInterface $account, FieldItemListInterface $items = NULL) {
+  if (
+    $field_definition->getName() == 'status' &&
+    $field_definition->getTargetEntityTypeId() == 'node' &&
+    $items &&
+    $items->getEntity()->id()
+  ) {
+    // Prevent unpublishing the home, 404 and 403 pages.
+    return stanford_profile_helper_node_access($items->getEntity(), 'delete', $account);
+  }
+
   if ($field_definition->getType() == 'entity_reference' && $field_definition->getSetting('handler') == 'layout_library') {
     $entity_type = $field_definition->getTargetEntityTypeId();
     $bundle = $field_definition->getTargetBundle();
@@ -743,52 +856,6 @@ function stanford_profile_helper_field_storage_config_presave(FieldStorageConfig
 }
 
 /**
- * Implements hook_react_paragraphs_form_field_data_alter().
- */
-function stanford_profile_helper_react_paragraphs_form_field_data_alter(array &$info, array $field_element, FieldConfigInterface $field_config) {
-  if ($field_config->getName() != 'su_list_view') {
-    return;
-  }
-  $remove = [
-    'stanford_events' => ['list_page_filtered', 'more_events_block'],
-    'stanford_news' => [
-      'term_block',
-      'topics_list',
-      'vertical_teaser_term_list',
-      'vertical_teaser_term',
-    ],
-  ];
-  foreach ($remove as $view_id => $remove_displays) {
-    if (isset($info['displays'][$view_id])) {
-      $info['displays'][$view_id] = array_filter($info['displays'][$view_id], function ($display) use ($remove_displays) {
-        return !in_array($display['value'], $remove_displays);
-      });
-      $info['displays'][$view_id] = array_values($info['displays'][$view_id]);
-
-      if (empty($info['displays'][$view_id])) {
-        unset($info['displays'][$view_id]);
-      }
-    }
-  }
-}
-
-/**
- * Implements hook_field_widget_WIDGET_TYPE_form_alter().
- */
-function stanford_profile_helper_field_widget_react_paragraphs_form_alter(&$element, FormStateInterface $form_state, $context) {
-  // To limit which sites get the lists and entity reference paragraphs, use
-  // state. This will eventually not be needed.
-  if (\Drupal::state()->get('stanford_profile_allow_all_paragraphs')) {
-    return;
-  }
-  $tools = &$element['container']['value']['#attached']['drupalSettings']['reactParagraphs'][0]['tools'];
-  $tools = array_filter($tools, function ($tool) {
-    return !in_array($tool['id'], ['stanford_lists', 'stanford_entity']);
-  });
-  $tools = array_values($tools);
-}
-
-/**
  * Implements hook_preprocess_HOOK().
  */
 function stanford_profile_helper_preprocess_menu(&$variables) {
@@ -802,4 +869,31 @@ function stanford_profile_helper_preprocess_menu(&$variables) {
       $item['url']->setOption('attributes', $attributes);
     }
   }
+}
+
+/**
+ * Implements hook_field_widget_form_alter().
+ */
+function stanford_profile_helper_field_widget_form_alter(&$element, FormStateInterface $form_state, $context) {
+  if ($context['items']->getName() == 'su_page_components') {
+    // Push pages to only allow 3 items per row but don't break any existing
+    // pages that have 4 per row.
+    $element['container']['value']['#attached']['drupalSettings']['reactParagraphs'][0]['itemsPerRow'] = 3;
+  }
+}
+
+/**
+ * Get available roles, limited if the role_delegation module is enabled.
+ *
+ * @return array
+ *   Keyed array of role id and role label.
+ */
+function _stanford_profile_helper_get_assignable_roles(): array {
+  if (\Drupal::moduleHandler()->moduleExists('role_delegation')) {
+    /** @var \Drupal\role_delegation\DelegatableRolesInterface $role_delegation */
+    $role_delegation = \Drupal::service('delegatable_roles');
+    return $role_delegation->getAssignableRoles(\Drupal::currentUser());
+  }
+
+  return user_role_names(TRUE);
 }

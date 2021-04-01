@@ -13,7 +13,8 @@
     &.ptype-stanford-stories,
     &.ptype-stanford-image-cta,
     &.ptype-stanford-lists,
-    &.ptype-stanford-entity {
+    &.ptype-stanford-entity,
+    &.ptype-stanford-gallery {
       max-width: 980px;
 
       @include grid-media-only('lg') {
@@ -55,6 +56,14 @@
 
 .node-stanford-page-su-page-banner {
   @include modular-spacing('margin-bottom', 4);
+}
+
+.ptype-stanford-gallery {
+  h2 {
+    @include margin(0);
+
+    text-align: center;
+  }
 }
 
 .ptype-stanford-entity {
@@ -175,15 +184,22 @@
     // Views-view-grid has some different markup, so it needs some different work.
     .views-row,
     .views-view-grid .views-row > div {
+      @include responsive-spacing('margin-bottom', 4);
+
       width: 100%;
       max-width: 100%;
       flex: none;
-      margin-bottom: 2rem;
     }
 
     .su-news-list__item-date + .su-news-list__item {
       .media {
         margin-top: 0;
+      }
+    }
+
+    .su-news-vertical-teaser {
+      &.su-card {
+        margin-bottom: inherit;
       }
     }
 
@@ -196,6 +212,32 @@
       img,
       picture {
         display: none;
+      }
+    }
+  }
+
+  // Removes the padding top for the first item
+  // but not on 12 across.
+  &:not(.flex-12-of-12) {
+    .stanford-news--list {
+      div:first-child {
+        .su-news-list {
+          @include grid-media-min('xl') {
+            padding-top: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+@include grid-media-min('lg') {
+  .container-1-items,
+  .container-2-items,
+  .container-3-items {
+    .ptype-stanford-lists {
+      .field--name-su-list-view {
+        @include responsive-spacing('padding', 2 0);
       }
     }
   }
