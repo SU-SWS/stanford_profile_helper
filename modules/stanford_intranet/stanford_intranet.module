@@ -21,6 +21,9 @@ function stanford_intranet_page_attachments(array &$attachments) {
   if (\Drupal::state()->get('stanford_intranet', FALSE)) {
     $attachments['#attached']['library'][] = "stanford_intranet/intranet";
   }
+  if (\Drupal::service('router.admin_context')->isAdminRoute() == FALSE) {
+    $page['#attached']['library'][] = 'stanford_intranet/base';
+  }
 }
 
 /**
