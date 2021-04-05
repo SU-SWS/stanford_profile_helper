@@ -903,7 +903,7 @@ function stanford_profile_helper_metatags_alter(array &$metatags, array $context
     }
     // If we have a page image, we want to use that for
     // image-related metatags.
-    if (isset($entity->get('su_page_image')->getValue()[0])) {
+    if ($entity->get('su_page_image')->count()) {
       $metatags['og_image'] = "[node:su_page_image:entity:field_media_image:large]";
       $metatags['og_image_url'] = "[node:su_page_image:entity:field_media_image:large]";
     }
