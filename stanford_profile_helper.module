@@ -894,8 +894,8 @@ function _stanford_profile_helper_get_assignable_roles(): array {
  */
 function stanford_profile_helper_metatags_alter(array &$metatags, array $context) {
 
-  $entity = $context['entity'];
-  if (!is_null($entity) && get_class($entity) == "Drupal\node\Entity\Node" && $entity->getType() == 'stanford_page') {
+  if (!empty($context['entity']) && $context['entity'] instance of Drupal\node\Entity\Node && $context['entity']->bundle() == 'stanford_page') {
+    $entity = $context['entity'];
     // If we have something in the page description field,
     // we want that to take over the description metatag.
     if (!empty($entity->get('su_page_description')->getString())) {
