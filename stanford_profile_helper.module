@@ -98,8 +98,6 @@ function stanford_profile_helper_entity_presave(EntityInterface $entity) {
  */
 function _stanford_profile_helper_get_publications_layout() {
 
-  // IDM check this out.
-
   /** @var \Drupal\Core\Entity\Display\EntityViewDisplayInterface $view_display */
   $view_display = EntityViewDisplay::load('node.stanford_page.default');
   if (!$view_display) {
@@ -895,11 +893,9 @@ function _stanford_profile_helper_get_assignable_roles(): array {
  * Implements hook_metatags_alter().
  */
 function stanford_profile_helper_metatags_alter(array &$metatags, array $context) {
-  //dpm(get_class($context['entity']));
-
 
   $entity = $context['entity'];
-  if (get_class($entity) == "Drupal\node\Entity\Node" && $entity->getType() == 'stanford_page') {
+  if (!is_null($entity) && get_class($entity) == "Drupal\node\Entity\Node" && $entity->getType() == 'stanford_page') {
     // If we have something in the page description field,
     // we want that to take over the description metatag.
     if (!empty($entity->get('su_page_description')->getString())) {
