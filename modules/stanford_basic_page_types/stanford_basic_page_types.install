@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * @file
+ * stanford_basic_page_types.install
+ */
+
+/**
+ * Implements hook_install().
+ */
+function stanford_basic_page_types_install() { }
+
+/**
+ * Implements hook_uninstall().
+ */
+function stanford_basic_page_types_uninstall() { }
