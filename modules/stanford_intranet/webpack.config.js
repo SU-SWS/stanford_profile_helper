@@ -175,7 +175,7 @@ var webpackConfig = {
             loader: "file-loader",
             options: {
               name: "[name].[ext]",
-              publicPath: "../../../assets/svg",
+              publicPath: "../../assets/svg",
               outputPath: "../assets/svg"
             }
           }

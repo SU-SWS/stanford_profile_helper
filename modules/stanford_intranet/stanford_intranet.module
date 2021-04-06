@@ -18,7 +18,7 @@ use Symfony\Component\Finder\Finder;
  * Implements hook_page_attachments().
  */
 function stanford_intranet_page_attachments(array &$attachments) {
-  if (\Drupal::state()->get('stanford_intranet', FALSE)) {
+  if ((\Drupal::state()->get('stanford_intranet', FALSE)) && !\Drupal::service('router.admin_context')->isAdminRoute()) {
     $attachments['#attached']['library'][] = "stanford_intranet/intranet";
   }
 }
