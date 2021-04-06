@@ -11,6 +11,11 @@ use Symfony\Component\Validator\ConstraintValidator;
 class GlobalMessageConstraintValidator extends ConstraintValidator {
 
   /**
+   * Global message enabling field name.
+   */
+  const ENABLER_FIELD = 'su_global_msg_enabled';
+
+  /**
    * {@inheritdoc}
    */
   public function validate($value, Constraint $constraint) {
@@ -24,8 +29,10 @@ class GlobalMessageConstraintValidator extends ConstraintValidator {
       'su_global_msg_link',
     ];
 
-    if ($value->getEntity()->hasField('su_global_msg_enabled') &&
-    $value->getEntity()->get('su_global_msg_enabled')->getValue()[0]['value']) {
+    if (
+      $value->getEntity()->hasField(self::ENABLER_FIELD) &&
+      $value->getEntity()->get(self::ENABLER_FIELD)->getString()
+    ) {
 
       foreach ($resource_fields as $field) {
         if (!empty($value->getEntity()->get($field)->getString())) {
