@@ -28,7 +28,7 @@ class GlobalMessageConstraintValidator extends ConstraintValidator {
     $value->getEntity()->get('su_global_msg_enabled')->getValue()[0]['value']) {
 
       foreach ($resource_fields as $field) {
-        if (!empty($value->getEntity()->get($field)->getValue())) {
+        if (!empty($value->getEntity()->get($field)->getString())) {
           $is_valid = TRUE;
         }
       }

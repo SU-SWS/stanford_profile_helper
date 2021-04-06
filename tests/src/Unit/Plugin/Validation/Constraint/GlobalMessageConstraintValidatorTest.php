@@ -6,6 +6,7 @@ use Drupal\stanford_profile_helper\Plugin\Validation\Constraint\GlobalMessageCon
 use Drupal\stanford_profile_helper\Plugin\Validation\Constraint\GlobalMessageConstraintValidator;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Field\FieldItemInterface;
 use Drupal\Tests\UnitTestCase;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Context\ExecutionContext;
@@ -34,13 +35,7 @@ class GlobalMessageConstraintValidatorTest extends UnitTestCase {
     $validator->initialize($this->getContext());
 
     $field_value = $this->createMock(FieldItemListInterface::class);
-    $field_value->method('count')->willReturn(1);
-
-    $entity = $this->createMock(FieldableEntityInterface::class);
-    $entity->method('hasField')->willReturn(TRUE);
-    $entity->method('get')->willReturn($field_value);
-
-    $field_value->method('getEntity')->willReturn($entity);
+    $field_value->method('getEntity')->willReturn($this->createMockFieldedEntity('legit_value'));
 
     $constraint = new GlobalMessageConstraint();
     $validator->validate($field_value, $constraint);
@@ -55,13 +50,7 @@ class GlobalMessageConstraintValidatorTest extends UnitTestCase {
     $validator->initialize($this->getContext());
 
     $field_value = $this->createMock(FieldItemListInterface::class);
-    $field_value->method('count')->willReturn(NULL);
-
-    $entity = $this->createMock(FieldableEntityInterface::class);
-    $entity->method('hasField')->willReturn(TRUE);
-    $entity->method('get')->willReturn($field_value);
-
-    $field_value->method('getEntity')->willReturn($entity);
+    $field_value->method('getEntity')->willReturn($this->createMockFieldedEntity());
 
     $constraint = new GlobalMessageConstraint();
     $validator->validate($field_value, $constraint);
@@ -69,25 +58,43 @@ class GlobalMessageConstraintValidatorTest extends UnitTestCase {
   }
 
   /**
-   * At least 1 field is not populated while the others are.
+   * At least 1 field is populated, but the others are not.
    */
   public function testErrorValidation() {
     $validator = new TestGlobalMessageConstraintValidator();
     $validator->initialize($this->getContext());
 
     $field_value = $this->createMock(FieldItemListInterface::class);
-    $field_value->method('count')
-      ->will($this->returnCallback([$this, 'getFieldCallback']));;
-
-    $entity = $this->createMock(FieldableEntityInterface::class);
-    $entity->method('hasField')->willReturn(TRUE);
-    $entity->method('get')->willReturn($field_value);
-
-    $field_value->method('getEntity')->willReturn($entity);
+    $field_value->method('getEntity')->willReturn($this->createMockFieldedEntity(NULL, TRUE));
 
     $constraint = new GlobalMessageConstraint();
     $validator->validate($field_value, $constraint);
     $this->assertFalse($validator->hasErrors());
+  }
+
+  /**
+   * Create a mock that we can use for our tests.
+   */
+  protected function createMockFieldedEntity($value = NULL, bool $return_single = FALSE) {
+    $field_value = [
+      0 => [
+        'value' => 1,
+      ],
+    ];
+    $field = $this->createMock(FieldItemInterface::class);
+    $field->method('getValue')->willReturn($field_value);
+    if ($return_single) {
+      $field->method('getString')->willReturn($this->getFieldCallback());
+    }
+    else {
+      $field->method('getString')->willReturn($value);
+    }
+    $field->method('getString')->willReturn($value);
+    $entity = $this->createMock(FieldableEntityInterface::class);
+    $entity->method('get')->willReturn($field);
+    $entity->method('hasField')->willReturn(TRUE);
+    return $entity;
+
   }
 
   /**
@@ -97,7 +104,7 @@ class GlobalMessageConstraintValidatorTest extends UnitTestCase {
    *   Field list count.
    */
   public function getFieldCallback() {
-    $value = $this->fieldValueReturned ? 0 : 1;
+    $value = $this->fieldValueReturned ? NULL : 'legit_value';
     $this->fieldValueReturned = TRUE;
     return $value;
   }
@@ -114,7 +121,9 @@ class GlobalMessageConstraintValidatorTest extends UnitTestCase {
   }
 
 }
-
+/**
+ *
+ */
 class TestGlobalMessageConstraintValidator extends GlobalMessageConstraintValidator {
 
   /**
