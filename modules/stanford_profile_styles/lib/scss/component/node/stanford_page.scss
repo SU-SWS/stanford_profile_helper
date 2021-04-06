@@ -164,6 +164,83 @@
     display: flex;
     justify-content: center;
   }
+
+  // Publication teasers
+  .ds-entity--stanford-publication {
+    .su-card__contents {
+      > h2 {
+        margin: 0;
+        @include responsive-spacing('margin-bottom', 2);
+
+        color: $su-color-black;
+        display: inline-block;
+        font-weight: $su-font-bold;
+
+        &::after {
+          @include modular-spacing('margin-left', -1);
+          background-color: $su-color-bright-red;
+        }
+
+        a {
+          @include link-icon(caret-right, 1.2rem, right);
+
+          color: $su-color-black;
+
+          &::after {
+            background-color: $su-color-bright-red;
+          }
+
+          &:hover,
+          &:focus {
+            text-decoration: underline;
+
+            &::after {
+              background-color: $su-color-bright-red;
+            }
+          }
+        }
+      }
+
+      .su-publication-topics {
+
+        ul {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+
+          li {
+            display: inline-block;
+          }
+        }
+
+        a {
+          @include small-paragraph;
+
+          color: $su-color-bright-red;
+          font-weight: $su-font-regular;
+          text-decoration: none;
+
+          &:active,
+          &:focus,
+          &:hover {
+            color: $su-color-bright-red;
+            text-decoration: underline;
+          }
+        }
+
+        // adding commas conditionally
+        li {
+          &:not(:last-of-type) {
+            &::after {
+              content: ",";
+              padding-right: 5px;
+            }
+          }
+        }
+
+      }
+    }
+  }
 }
 
 .ptype-stanford-lists {
