@@ -6,3 +6,6 @@ type: module
 project: Stanford
 dependencies:
   - drupal:node
+components:
+  namespaces:
+    basic-page-types: templates

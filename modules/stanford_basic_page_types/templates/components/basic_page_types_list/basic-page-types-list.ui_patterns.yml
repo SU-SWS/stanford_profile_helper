@@ -27,4 +27,9 @@ basic-page-types-list:
       label: "Basic page actions"
       description: "Actions site editors and managers can use"
       preview: "<div class='su-news-edit-article'>Edit</div>"
-  use: "@basic/components/basic_page_types_list/basic-page-types-list.twig"
+  use: "@basic-page-types/components/basic_page_types_list/basic-page-types-list.twig"
+  libraries:
+    - basicpagetypes:
+        css:
+          component:
+            ../../../dist/css/components/stanford-page.css: { weight: 1000 }
