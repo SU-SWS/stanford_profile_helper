@@ -10,6 +10,7 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
@@ -880,6 +881,17 @@ function stanford_profile_helper_field_widget_form_alter(&$element, FormStateInt
     // pages that have 4 per row.
     $element['container']['value']['#attached']['drupalSettings']['reactParagraphs'][0]['itemsPerRow'] = 3;
   }
+}
+
+/**
+ * Implements hook_entity_bundle_field_info_alter().
+ */
+function stanford_profile_helper_entity_bundle_field_info_alter(&$fields, EntityTypeInterface $entity_type, $bundle) {
+
+  if ($bundle === 'stanford_global_message') {
+    $fields['su_global_msg_enabled']->addConstraint('global_message_constraint', []);
+  }
+
 }
 
 /**
