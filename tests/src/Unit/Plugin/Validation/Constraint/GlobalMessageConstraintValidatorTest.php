@@ -20,6 +20,13 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class GlobalMessageConstraintValidatorTest extends UnitTestCase {
 
   /**
+   * Has the field value already been returned via the mock?
+   *
+   * @var bool
+   */
+  protected $fieldValueReturned = FALSE;
+
+  /**
    * All fields are populated.
    */
   public function testNoErrorValidation() {
@@ -40,23 +47,7 @@ class GlobalMessageConstraintValidatorTest extends UnitTestCase {
   }
 
   /**
-   * None of the field are populated.
-   */
-  public function testEmptyFieldsValidation() {
-    $validator = new TestGlobalMessageConstraintValidator();
-    $validator->initialize($this->getContext());
-
-    $entity = $this->createMock(FieldableEntityInterface::class);
-    $field_value = $this->createMock(FieldItemListInterface::class);
-    $field_value->method('getEntity')->willReturn($entity);
-
-    $constraint = new GlobalMessageConstraint();
-    $validator->validate($field_value, $constraint);
-    $this->assertFalse($validator->hasErrors());
-  }
-
-  /**
-   * At least 1 field is populated, but the others are not.
+   * The message is turned on, but there are no content field values.
    */
   public function testErrorValidation() {
     $validator = new TestGlobalMessageConstraintValidator();
@@ -76,6 +67,26 @@ class GlobalMessageConstraintValidatorTest extends UnitTestCase {
   }
 
   /**
+   * The message is turned on, and there is only one content field with a value.
+   */
+  public function testValidValidation() {
+    $validator = new TestGlobalMessageConstraintValidator();
+    $validator->initialize($this->getContext());
+
+    $entity = $this->createMock(FieldableEntityInterface::class);
+    $entity->method('get')
+      ->will($this->returnCallback([$this, 'getValidFieldCallback']));
+    $entity->method('hasField')->willReturn(TRUE);
+
+    $field_value = $this->createMock(FieldItemListInterface::class);
+    $field_value->method('getEntity')->willReturn($entity);
+
+    $constraint = new GlobalMessageConstraint();
+    $validator->validate($field_value, $constraint);
+    $this->assertFalse($validator->hasErrors());
+  }
+
+  /**
    * Mock entity get field callback.
    *
    * @param string $field_name
@@ -84,10 +95,30 @@ class GlobalMessageConstraintValidatorTest extends UnitTestCase {
    * @return \Drupal\Core\Field\FieldItemListInterface|\PHPUnit\Framework\MockObject\MockObject
    *   Mocked field list object.
    */
-  public function getFieldCallback($field_name) {
+  public function getFieldCallback($field_name, bool $validTester = FALSE) {
     $field = $this->createMock(FieldItemListInterface::class);
     if ($field_name == 'su_global_msg_enabled') {
       $field->method('getString')->wilLReturn('foo');
+    }
+    return $field;
+  }
+
+  /**
+   * Mock entity get valid field callback.
+   *
+   * @param string $field_name
+   *   Field machine name.
+   *
+   * @return \Drupal\Core\Field\FieldItemListInterface|\PHPUnit\Framework\MockObject\MockObject
+   *   Mocked field list object.
+   */
+  public function getValidFieldCallback($field_name) {
+    $field = $this->createMock(FieldItemListInterface::class);
+    if ($field_name == 'su_global_msg_enabled') {
+      $field->method('getString')->wilLReturn('foo');
+    } elseif (!$this->fieldValueReturned) {
+      $field->method('getString')->wilLReturn('foo');
+      $this->fieldValueReturned = TRUE;
     }
     return $field;
   }
