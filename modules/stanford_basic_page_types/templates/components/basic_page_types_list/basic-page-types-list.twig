@@ -24,11 +24,11 @@
 
 {%- block block_basic_page_types_title  %}
 {% if basic_page_types_title|render|striptags('<drupal-render-placeholder>') is not empty %}
-    <li class="su-basic-page-list__title">
+    <li>
         {% if basic_page_types_page_image|render|striptags('<drupal-render-placeholder><img><picture>') is not empty %}
-            <li class="su-basic-page-list__image">{{- basic_page_types_page_image -}}</li>
+            <div class="su-basic-page-list__image">{{- basic_page_types_page_image -}}</div>
         {% endif %}
-        <h2>{{- basic_page_types_title -}}</h2>
+        <h2 class="su-basic-page-list__title">{{- basic_page_types_title -}}</h2>
     </li>
 {% endif %}
 {% endblock -%}

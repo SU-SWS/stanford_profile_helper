@@ -6,40 +6,50 @@
 
 .stanford-page {
   &.su-page-description {
-    @include modular-spacing('margin-top', 0);
-    @include modular-spacing('margin-bottom', 2);
+    margin-bottom: 46px;
+
+    @include grid-media-min("l") {
+      max-width: 85ch;
+    }
+  }
+
+  @include grid-media-min("l") {
+    .field--name-su-list-view {
+      &.field--type-viewfield {
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
   }
 }
-
 
 // basic list styles
 .su-basic-page-types-list {
   @include margin(0);
   @include padding(0);
-  @include modular-spacing('padding', 4 null);
+  @include modular-spacing("padding", 4 null);
 
   list-style: none;
   overflow: auto;
   border-bottom: 1px solid $su-color-cool-grey-25;
 
   a {
-    @include link;
+    //@include link;
 
     color: $su-color-bright-red;
-    text-decoration: none;
   }
 
   h2 {
-    @include modular-spacing('margin-bottom', 1);
+    @include modular-spacing("margin-bottom", 1);
 
     display: inline;
   }
 
   .media {
-    @include modular-spacing('margin-left', 3);
+    @include modular-spacing("margin-left", 3);
     float: right;
 
-    @include grid-media-max('lg') {
+    @include grid-media-max("lg") {
       display: none;
     }
   }
@@ -48,14 +58,37 @@
     @include small-paragraph;
   }
 
-  .su-basic-page-list__title {}
+  .su-basic-page-list__title {
+    @include type-c;
+    margin-left: 0;
+    margin-right: 0;
+
+    a {
+      display: inline-block;
+      font-weight: $su-font-bold;
+
+      &::after {
+        @include modular-spacing("margin-left", -1);
+        background-color: $su-color-bright-red;
+      }
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
 
   .su-basic-page-list__description {
     @include big-paragraph;
-    @include modular-spacing('margin-bottom', 2);
+    @include modular-spacing("margin-bottom", 2);
   }
 
-  .su-basic-page-list__image {}
+  .su-basic-page-list__image {
+  }
 
   .su-basic-page-list__footer {
     a {
@@ -65,23 +98,19 @@
   }
 
   .views-infinite-scroll-content-wrapper {
-    @include modular-spacing('margin-bottom', 5);
+    @include modular-spacing("margin-bottom", 5);
 
     & + .js-pager__items {
-      @include modular-spacing('margin-bottom', 8);
+      @include modular-spacing("margin-bottom", 8);
     }
   }
-
-
-
 }
 
 // basic card styles
 .su-basic-page-types-vertical-teaser {
   &.su-card {
-
-    @include modular-spacing('margin-bottom', 2);
-    @include margin(0 auto);
+    @include modular-spacing("margin-bottom", 2);
+    margin: 0;
     max-width: 980px;
     overflow: auto;
 
@@ -89,51 +118,56 @@
     &:focus-within {
       outline: -webkit-focus-ring-color auto 1px;
     }
+  }
 
+  .su-card__link {
+    @include type-c;
+    @include grid-media-max("sm") {
+      @include modular-spacing("margin-top", 1);
+    }
+
+    margin-left: 0;
+    margin-right: 0;
+
+    a {
+      color: $su-color-black;
+      display: inline-block;
+      font-weight: $su-font-bold;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      &:focus {
+        outline: none;
+      }
+
+      &::after {
+        @include modular-spacing("margin-left", -1);
+        background-color: $su-color-bright-red;
+      }
+    }
   }
 
   .su-media__wrapper {
-    @include modular-spacing('margin-bottom', 0);
-
-    @include grid-media-max('sm') {
-      // display: none;
-    }
+    @include modular-spacing("margin-bottom", 0);
 
     img,
     picture {
       min-width: 100%;
       width: 100%;
     }
-
   }
 
-  .su-basic-page-types__header{
-    @include modular-spacing('margin-left', 2);
-    @include modular-spacing('margin-right', 2);
+  .su-basic-page-types__header {
+    @include modular-spacing("margin-left", 2);
+    @include modular-spacing("margin-right", 2);
 
-    .su-basic-page-types__categories{
+    .su-basic-page-types__categories {
       @include big-paragraph;
-      @include grid-media-max('sm') {
-        @include modular-spacing('padding-top', 0);
+      @include grid-media-max("sm") {
+        @include modular-spacing("padding-top", 0);
       }
-    }
-
-    .su-card__link {
-      @include type-c;
-      margin-left: 0;
-      margin-right: 0;
-
-      a {
-        color: $su-color-black;
-        display: inline-block;
-        font-weight: $su-font-bold;
-
-        &::after {
-           @include modular-spacing('margin-left', -1);
-           background-color: $su-color-bright-red;
-        }
-      }
-
     }
   }
 
@@ -143,36 +177,7 @@
     }
   }
 
-  .su-basic-page-types-vertical-teaser__link{
-    @include grid-media-max('sm') {
-      @include modular-spacing('margin-top', 1);
-    }
-
-    display: block;
-
-    &:hover {
-      h2 {
-        text-decoration: underline;
-      }
-    }
-
-    &:focus {
-      outline: none;
-    }
-  }
-
   // more-basic-page-types-view
-
-
-}
-
-// wrappers for blocks with cards
-.su-basic-page-types--cards {
-
-  &.su-basic-page-types--cards-filtered {
-    //
-  }
-
 }
 
 // Load more button.
@@ -191,31 +196,47 @@
 // List Items.
 // Removes the padding top for the first item.
 .views-infinite-scroll-content-wrapper {
-
-  @include modular-spacing('margin-bottom', 5);
+  @include modular-spacing("margin-bottom", 5);
 
   & + .js-pager__items {
-    @include modular-spacing('margin-bottom', 8);
+    @include modular-spacing("margin-bottom", 8);
   }
 
   div:first-child {
     .su-basic-page-types-list {
-      @include grid-media-min('xl') {
+      @include grid-media-min("xl") {
         padding-top: 0;
       }
     }
   }
 }
 
-.su-basic-page-types-view-column {
+.su-basic-page-types-view-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
 
-  @include grid-media-between('xs', 'md') {
+.su-basic-page-types-view-column {
+  @include grid-media-between("xs", "md") {
     @include flex-column(12);
   }
 
-  @include grid-media-min('l') {
-    @include flex-column(4, $su-gutter-xl);
+  @include grid-media-min("l") {
+    @include margin(0);
+    width: calc(33% - 40px);
+
+    &:nth-child(1):nth-last-child(1) {
+      width: 100%;
+    }
+
+    &:nth-child(1):nth-last-child(2),
+    &:nth-child(2):nth-last-child(1) {
+      width: calc(50% - 40px);
+    }
+
+    &:nth-child(n + 4) {
+      @include modular-spacing("margin-top", 4);
+    }
   }
-
 }
-
