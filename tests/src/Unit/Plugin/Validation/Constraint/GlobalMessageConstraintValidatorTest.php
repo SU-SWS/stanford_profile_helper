@@ -95,7 +95,7 @@ class GlobalMessageConstraintValidatorTest extends UnitTestCase {
    * @return \Drupal\Core\Field\FieldItemListInterface|\PHPUnit\Framework\MockObject\MockObject
    *   Mocked field list object.
    */
-  public function getFieldCallback($field_name, bool $validTester = FALSE) {
+  public function getFieldCallback($field_name) {
     $field = $this->createMock(FieldItemListInterface::class);
     if ($field_name == 'su_global_msg_enabled') {
       $field->method('getString')->wilLReturn('foo');
