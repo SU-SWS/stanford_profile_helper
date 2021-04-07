@@ -24,7 +24,7 @@ class GlobalMessageConstraintValidatorTest extends UnitTestCase {
    *
    * @var bool
    */
-  protected $fieldValueReturned = TRUE;
+  protected $fieldValueReturned = FALSE;
 
   /**
    * All fields are populated.
@@ -70,7 +70,7 @@ class GlobalMessageConstraintValidatorTest extends UnitTestCase {
    * The message is turned on, and there is only one content field with a value.
    */
   public function testValidValidation() {
-    $this->fieldValueReturned = FALSE;
+    $this->fieldValueReturned = TRUE;
     $validator = new TestGlobalMessageConstraintValidator();
     $validator->initialize($this->getContext());
 
@@ -101,7 +101,7 @@ class GlobalMessageConstraintValidatorTest extends UnitTestCase {
     if ($field_name == 'su_global_msg_enabled') {
       $field->method('getString')->wilLReturn('foo');
     }
-    elseif (!$this->fieldValueReturned) {
+    elseif ($this->fieldValueReturned) {
       $field->method('getString')->wilLReturn('foo');
       $this->fieldValueReturned = TRUE;
     }
