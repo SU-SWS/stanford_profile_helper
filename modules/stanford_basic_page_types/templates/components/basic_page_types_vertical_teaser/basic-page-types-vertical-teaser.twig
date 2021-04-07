@@ -57,7 +57,7 @@
 
     <h2 class="su-link su-card__link">
       {%- if content_url is not empty -%}
-        <a {{ news_url_attributes.addClass(' su-basic-page-types-vertical-teaser__link su-link--action') }} href="{{ content_url }}">
+        <a class="su-basic-page-types-vertical-teaser__link" href="{{ content_url }}">
       {%- endif -%}
         {{ basic_page_types_title }}
       {%- if content_url is not empty -%}

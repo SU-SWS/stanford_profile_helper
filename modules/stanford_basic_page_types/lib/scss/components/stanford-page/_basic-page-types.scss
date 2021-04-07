@@ -148,6 +148,8 @@
       @include modular-spacing('margin-top', 1);
     }
 
+    @include link-icon(caret-right, 0.65em, right);
+
     display: block;
 
     &:hover {

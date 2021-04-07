@@ -247,6 +247,7 @@
   padding-top: 0; }
 
 .su-basic-page-types-vertical-teaser .su-basic-page-types-vertical-teaser__link {
+  text-decoration: none;
   display: block; }
 
 @media only screen and (max-width: 767px) and (min-width: 0) {
@@ -260,6 +261,27 @@
 @media only screen and (max-width: 767px) and (min-width: 1500px) {
   .su-basic-page-types-vertical-teaser .su-basic-page-types-vertical-teaser__link {
     margin-top: 2.74rem; } }
+  @supports ((-webkit-mask-repeat: no-repeat) or (mask-repeat: no-repeat)) {
+    .su-basic-page-types-vertical-teaser .su-basic-page-types-vertical-teaser__link::after {
+      margin-right: 0.3em;
+      margin-left: 0.4em;
+      height: 0.65em;
+      width: 0.65em;
+      display: inline-block;
+      content: '';
+      -webkit-mask: url(../../../assets/svg/caret-right.svg) no-repeat 0 0;
+              mask: url(../../../assets/svg/caret-right.svg) no-repeat 0 0;
+      -webkit-mask-size: contain;
+              mask-size: contain;
+      background-color: #006cb8;
+      -webkit-transition: -webkit-transform 0.2s ease-in-out, -webkit-mask-image 0.2s ease-in-out;
+      transition: -webkit-transform 0.2s ease-in-out, -webkit-mask-image 0.2s ease-in-out;
+      transition: transform 0.2s ease-in-out, mask-image 0.2s ease-in-out;
+      transition: transform 0.2s ease-in-out, mask-image 0.2s ease-in-out, -webkit-transform 0.2s ease-in-out, -webkit-mask-image 0.2s ease-in-out; }
+    .su-basic-page-types-vertical-teaser .su-basic-page-types-vertical-teaser__link:hover::after, .su-basic-page-types-vertical-teaser .su-basic-page-types-vertical-teaser__link:focus::after {
+      background-color: #2e2d29;
+      -webkit-transform: translateX(0.2em);
+              transform: translateX(0.2em); } }
   .su-basic-page-types-vertical-teaser .su-basic-page-types-vertical-teaser__link:hover h2 {
     text-decoration: underline; }
   .su-basic-page-types-vertical-teaser .su-basic-page-types-vertical-teaser__link:focus {
