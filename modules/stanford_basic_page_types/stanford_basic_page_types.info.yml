@@ -9,3 +9,6 @@ dependencies:
 components:
   namespaces:
     basic-page-types: templates
+default_content:
+  taxonomy_term:
+    - 94320f2a-3bf4-4d29-8fc7-5bb97eedf10f

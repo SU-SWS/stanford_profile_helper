@@ -87,9 +87,6 @@
     @include modular-spacing("margin-bottom", 2);
   }
 
-  .su-basic-page-list__image {
-  }
-
   .su-basic-page-list__footer {
     a {
       @include button-secondary;

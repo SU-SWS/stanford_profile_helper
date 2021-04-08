@@ -15,8 +15,6 @@
  */
 #}
 
-
-
 {%-
   set classes = [
     'su-card',
@@ -36,7 +34,6 @@
 {%- endif -%}
 
 <article{{ attributes.addClass(classes) }}>
-
   {%- if content_url is not empty -%}
   <a href="{{ content_url }}">
   {%- endif -%}
@@ -53,8 +50,6 @@
 
   <div class="su-basic-page-types__header">
     <p class="su-basic-page-list__category">{{- basic_page_types_category -}}</p>
-
-
     <h2 class="su-link su-card__link">
       {%- if content_url is not empty -%}
         <a class="su-basic-page-types-vertical-teaser__link" href="{{ content_url }}">
@@ -64,7 +59,6 @@
       </a>
       {%- endif -%}
     </h2>
-
   </div>
 
   <div class="su-card__contents">
@@ -74,5 +68,4 @@
    {%- if basic_page_types_footer is not empty -%}
     <div class="su-basic-page-types-vertical-teaser__footer">{{- basic_page_types_footer -}}</div>
   {%- endif -%}
-
 </article>
