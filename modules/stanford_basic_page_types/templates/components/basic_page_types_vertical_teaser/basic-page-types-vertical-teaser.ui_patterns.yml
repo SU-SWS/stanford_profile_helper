@@ -42,4 +42,4 @@ basic-page-types-vertical-teaser:
   - basicpagetypes:
       css:
         component:
-          ../../../dist/css/component/stanford-page.css: { weight: 1000 }
+          ../../../dist/css/component/stanford-page.css: { }
