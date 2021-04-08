@@ -3,8 +3,8 @@
 /**
  * @file
  * stanford_basic_page_types.module
- *
  */
+
 use Drupal\node\NodeInterface;
 use Symfony\Component\Finder\Finder;
 
@@ -12,7 +12,7 @@ use Symfony\Component\Finder\Finder;
  * Implements hook_metatags_alter().
  */
 function stanford_basic_page_types_metatags_alter(array &$metatags, array $context) {
-  if (!empty($context['entity']) && $context['entity'] instanceof Drupal\node\Entity\Node && $context['entity']->bundle() == 'stanford_page') {
+  if (!empty($context['entity']) && $context['entity'] instanceof NodeInterface && $context['entity']->bundle() == 'stanford_page') {
     $entity = $context['entity'];
     // If we have something in the page description field,
     // we want that to take over the description metatag.
