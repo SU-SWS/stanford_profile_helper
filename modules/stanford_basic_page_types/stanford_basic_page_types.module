@@ -14,11 +14,7 @@ use Symfony\Component\Finder\Finder;
 function stanford_basic_page_types_metatags_alter(array &$metatags, array $context) {
   if (!empty($context['entity']) && $context['entity'] instanceof NodeInterface && $context['entity']->bundle() == 'stanford_page') {
     $entity = $context['entity'];
-    // If we have something in the page description field,
-    // we want that to take over the description metatag.
-    if (!empty($entity->get('su_page_description')->getString())) {
-      $metatags['description'] = "[node:su_page_description]";
-    }
+
     // If we have a page image, we want to use that for
     // image-related metatags.
     if ($entity->get('su_page_image')->count()) {
