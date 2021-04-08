@@ -14,39 +14,36 @@
 #}
 {%- set attributes = attributes.addClass(['su-basic-page-types-list', modifier_class]) -%}
 
-<ul{{ attributes }}>
+<div{{ attributes }}>
 
 {%- block block_basic_page_types_category  %}
-{% if basic_page_types_category|render|striptags('<drupal-render-placeholder>') is not empty %}
-    <li class="su-basic-page-list__category">{{- basic_page_types_category -}}</li>
+{% if basic_page_types_category|render_clean is not empty %}
+    <div class="su-basic-page-list__category">{{- basic_page_types_category -}}</div>
 {% endif %}
 {% endblock -%}
 
 {%- block block_basic_page_types_title  %}
-{% if basic_page_types_title|render|striptags('<drupal-render-placeholder>') is not empty %}
-    <li>
+{% if basic_page_types_title|render_clean is not empty %}
+    <div>
         {% if basic_page_types_page_image|render|striptags('<drupal-render-placeholder><img><picture>') is not empty %}
             <div class="su-basic-page-list__image">{{- basic_page_types_page_image -}}</div>
         {% endif %}
         <h2 class="su-basic-page-list__title">{{- basic_page_types_title -}}</h2>
-    </li>
+    </div>
 {% endif %}
 {% endblock -%}
 
 {%- block block_basic_page_types_description  %}
-{% if basic_page_types_description|render|striptags('<drupal-render-placeholder>') is not empty %}
-    <li class="su-basic-page-list__description">{{- basic_page_types_description -}}</li>
+{% if basic_page_types_description|render_clean is not empty %}
+    <div class="su-basic-page-list__description">{{- basic_page_types_description -}}</div>
 {% endif %}
 {% endblock -%}
 
-{%- block block_basic_page_types_image  %}
-
-{% endblock -%}
 
 {%- block block_basic_page_types_footer  %}
-{% if basic_page_types_footer|render|striptags('<drupal-render-placeholder>') is not empty %}
-    <li class="su-basic-page-list__footer">{{- basic_page_types_footer -}}</li>
+{% if basic_page_types_footer|render_clean is not empty %}
+    <div class="su-basic-page-list__footer">{{- basic_page_types_footer -}}</div>
 {% endif %}
 {% endblock -%}
 
-</ul>
+</div>

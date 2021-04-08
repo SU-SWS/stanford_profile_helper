@@ -21,21 +21,24 @@
       }
     }
   }
+
+  .basic-page-type-list {
+    & :first-child {
+      & :first-child {
+        padding-top: 0;
+      }
+    }
+  }
 }
 
 // basic list styles
 .su-basic-page-types-list {
-  @include margin(0);
-  @include padding(0);
-  @include modular-spacing("padding", 4 null);
-
-  list-style: none;
+  @include modular-spacing("padding-top", 4);
+  @include modular-spacing("padding-bottom", 4);
   overflow: auto;
   border-bottom: 1px solid $su-color-cool-grey-25;
 
   a {
-    //@include link;
-
     color: $su-color-bright-red;
   }
 
@@ -79,6 +82,10 @@
       &:focus {
         outline: none;
       }
+
+      @include grid-media-max("lg") {
+        @include modular-spacing("margin-bottom", 0);
+      }
     }
   }
 
@@ -88,6 +95,8 @@
   }
 
   .su-basic-page-list__footer {
+    width: 100%;
+    clear: both;
     a {
       @include button-secondary;
       text-align: right;
@@ -163,8 +172,9 @@
     .su-basic-page-types__categories {
       @include big-paragraph;
       @include grid-media-max("sm") {
-        @include modular-spacing("padding-top", 0);
+        @include modular-spacing("padding-top", 1);
       }
+      display: inline-block;
     }
   }
 

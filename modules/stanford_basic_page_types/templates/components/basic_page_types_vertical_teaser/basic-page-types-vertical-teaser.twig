@@ -23,8 +23,8 @@
   ]
 -%}
 
-{%- if basic_page_types_content_url|render|striptags("<drupal-render-placeholder>")|trim|raw is not empty -%}
-  {%- set content_url = basic_page_types_content_url|render|striptags("<drupal-render-placeholder>")|trim|raw -%}
+{%- if basic_page_types_content_url|render_clean is not empty -%}
+  {%- set content_url = basic_page_types_content_url|render_clean -%}
 {%- endif -%}
 
 {%-  if basic_page_types_page_image_primary|render is not empty -%}
@@ -52,7 +52,7 @@
     <p class="su-basic-page-list__category">{{- basic_page_types_category -}}</p>
     <h2 class="su-link su-card__link">
       {%- if content_url is not empty -%}
-        <a class="su-basic-page-types-vertical-teaser__link" href="{{ content_url }}">
+        <a class="su-basic-page-types-vertical-teaser__link su-link--action" href="{{ content_url }}">
       {%- endif -%}
         {{ basic_page_types_title }}
       {%- if content_url is not empty -%}
