@@ -6,18 +6,18 @@
   border-bottom: 1px solid $su-color-cool-grey-25;
 
   a {
-   color: $su-color-bright-red;
+    color: $su-color-bright-red;
   }
 
   h2 {
-   @include modular-spacing("margin-bottom", 1);
+    @include modular-spacing("margin-bottom", 1);
 
-   display: inline;
+    display: inline;
   }
 
   .media {
-   @include modular-spacing("margin-left", 3);
-   float: right;
+    @include modular-spacing("margin-left", 3);
+    float: right;
 
     @include grid-media-max("lg") {
       display: none;
