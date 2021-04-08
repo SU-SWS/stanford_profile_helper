@@ -2,34 +2,34 @@ basic-page-types-list:
   label: Basic Page Types List
   description: "Building block component for the basic page types list page."
   fields:
-    basic_page_types_category:
+    category:
       type: text
       label: "Topic"
       description: "The term from the basic page types taxonomy."
       preview: "Research Project"
-    basic_page_types_title:
+    title:
       type: text
       label: "Title"
       description: "The title of the page"
       preview: "Page Title"
-    basic_page_types_description:
+    description:
       type: text
       label: "Page Description"
       description: "The page description"
       preview: "This is my page description"
-    basic_page_types_page_image:
+    page_image:
       type: text
       label: "Page Image"
       description: "The page image from the page metadata."
       preview: "<img src='https://picsum.photos/900/900/' alt='Example Image' />"
-    basic_page_types_footer:
+    footer:
       type: text
-      label: "Basic page actions"
-      description: "Actions site editors and managers can use"
+      label: "Footer"
+      description: "An open footer area."
       preview: "<div class='su-news-edit-article'>Edit</div>"
   use: "@basic-page-types/components/basic_page_types_list/basic-page-types-list.twig"
   libraries:
-    - basicpagetypes:
+    - basic_page_types:
         css:
           component:
             ../../../dist/css/component/basic-page-type-list.css: { }
