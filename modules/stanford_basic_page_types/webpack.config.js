@@ -43,7 +43,7 @@ const distAssets = path.resolve(__dirname, distDir, "assets");
 
 
 const entryPoints = glob.sync('./lib/scss/**/*.scss').reduce((acc, filePath) => {
-  const filePathParts = filePath.replace('./lib/scss/', '').split('/');
+  const filePathParts = filePath.replace('./lib/scss', '').split('/');
   let fileName = filePathParts.pop();
   if (fileName.indexOf('_') === 0) {
     return acc;
@@ -203,7 +203,7 @@ var webpackConfig = {
     new FixStyleOnlyEntriesPlugin(),
     // Output css files.
     new MiniCssExtractPlugin({
-      filename:  "../css/[name].css"
+      filename: "../css/[name].css"
     }),
     // A webpack plugin to manage files before or after the build.
     // https://www.npmjs.com/package/filemanager-webpack-plugin
@@ -216,4 +216,4 @@ var webpackConfig = {
 };
 
 // Add the configuration.
-module.exports = [ webpackConfig ];
+module.exports = [webpackConfig];

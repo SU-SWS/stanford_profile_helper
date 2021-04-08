@@ -32,4 +32,4 @@ basic-page-types-list:
     - basicpagetypes:
         css:
           component:
-            ../../../dist/css/components/stanford-page.css: { weight: 1000 }
+            ../../../dist/css/component/stanford-page.css: { weight: 1000 }
