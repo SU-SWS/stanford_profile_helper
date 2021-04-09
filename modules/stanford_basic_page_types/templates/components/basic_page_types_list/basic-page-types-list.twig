@@ -25,7 +25,7 @@
 {%- block block_title  %}
 {% if title|render_clean is not empty %}
     <div>
-        {% if page_image|render|striptags('<drupal-render-placeholder><img><picture>') is not empty %}
+        {% if page_image|render_clean('<img><picture>') is not empty %}
             <div class="su-basic-page-list__image">{{- page_image -}}</div>
         {% endif %}
         <h2 class="su-basic-page-list__title">{{- title -}}</h2>
