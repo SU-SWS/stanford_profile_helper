@@ -8,17 +8,8 @@
   &.su-page-description {
     margin-bottom: 46px;
 
-    @include grid-media-min("l") {
+    @include grid-media-min("lg") {
       max-width: 85ch;
-    }
-  }
-
-  @include grid-media-min("l") {
-    .field--name-su-list-view {
-      &.field--type-viewfield {
-        padding-left: 0;
-        padding-right: 0;
-      }
     }
   }
 
@@ -31,79 +22,61 @@
   }
 }
 
-// basic card styles
-.su-basic-page-types-vertical-teaser {
-  &.su-card {
+// Card styles
+.ds-entity--stanford-page {
+  & .su-card {
     @include modular-spacing("margin-bottom", 2);
-    margin: 0;
-    max-width: 980px;
-    overflow: auto;
 
-    // Put the focus on the whole card
-    &:focus-within {
-      outline: -webkit-focus-ring-color auto 1px;
+    .su-card__contents {
+      @include modular-spacing("padding", 1);
+
+      h2 {
+        @include type-c;
+        @include grid-media-max("sm") {
+          @include modular-spacing("margin-top", 1);
+        }
+
+        margin-left: 0;
+        margin-right: 0;
+
+        a {
+          //@extend .su-link--action;
+          color: $su-color-black;
+          display: inline-block;
+          font-weight: $su-font-bold;
+
+          @include link-icon(caret-right);
+
+          @include modular-spacing("margin-bottom", 0);
+
+          &:hover {
+            text-decoration: underline;
+            color: $su-color-black;
+          }
+
+          &:focus {
+            outline: none;
+          }
+
+          &:after {
+            height: 1.2rem;
+            width: 1.2rem;
+            background-color: $su-color-digital-red;
+          }
+
+          &:hover:after {
+            background-color: $su-color-digital-red;
+          }
+        }
+      }
     }
-  }
 
-  .su-card__link {
-    @include type-c;
     @include grid-media-max("sm") {
-      @include modular-spacing("margin-top", 1);
-    }
-
-    margin-left: 0;
-    margin-right: 0;
-
-    a {
-      color: $su-color-black;
-      display: inline-block;
-      font-weight: $su-font-bold;
-
-      &:hover {
-        text-decoration: underline;
-      }
-
-      &:focus {
-        outline: none;
-      }
-
-      &::after {
-        @include modular-spacing("margin-left", -1);
-        background-color: $su-color-bright-red;
+      img {
+        display: flex;
       }
     }
   }
-
-  .su-media__wrapper {
-    @include modular-spacing("margin-bottom", 0);
-
-    img,
-    picture {
-      min-width: 100%;
-      width: 100%;
-    }
-  }
-
-  .su-basic-page-types__header {
-    @include modular-spacing("margin-left", 2);
-    @include modular-spacing("margin-right", 2);
-
-    .su-basic-page-types__categories {
-      @include big-paragraph;
-      @include grid-media-max("sm") {
-        @include modular-spacing("padding-top", 1);
-      }
-      display: inline-block;
-    }
-  }
-
-  .su-card__contents {
-    &:not(.su-card--icon) {
-      padding-top: 0;
-    }
-  }
-
-  // more-basic-page-types-view
 }
 
 // Load more button.
@@ -149,7 +122,8 @@
   }
 
   @include grid-media-min("l") {
-    @include margin(0);
+    //@include margin(0);
+    margin: 0;
     width: calc(33% - 40px);
 
     &:nth-child(1):nth-last-child(1) {

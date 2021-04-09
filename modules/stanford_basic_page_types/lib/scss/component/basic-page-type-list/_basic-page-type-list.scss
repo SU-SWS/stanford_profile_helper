@@ -26,6 +26,11 @@
 
   .su-basic-page-list__category {
     @include small-paragraph;
+    clear: both;
+    font-weight: 700;
+    line-height: 1.2;
+    font-size: .9em;
+    display: block;
   }
 
   .su-basic-page-list__title {
