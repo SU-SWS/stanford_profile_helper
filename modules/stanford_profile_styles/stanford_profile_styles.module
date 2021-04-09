@@ -82,7 +82,6 @@ function stanford_profile_styles_library_info_build() {
       ],
     ];
   }
-
   return $libraries;
 }
 
@@ -101,7 +100,14 @@ function stanford_profile_styles_library_info_alter(&$libraries, $extension) {
  * Implements hook_field_widget_multivalue_WIDGET_TYPE_form_alter().
  */
 function stanford_profile_styles_field_widget_multivalue_paragraphs_form_alter(array &$elements, FormStateInterface $form_state, array $context) {
-  $elements['#attached']['library'][] = 'stanford_profile_styles/admin.field_widgets';;
+  $elements['#attached']['library'][] = 'stanford_profile_styles/admin.field_widgets';
+}
+
+/**
+ * Implements hook_field_widget_WIDGET_TYPE_form_alter().
+ */
+function stanford_profile_styles_field_widget_smartdate_timezone_form_alter(array &$elements, FormStateInterface $form_state, array $context) {
+  $elements['#attached']['library'][] = 'stanford_profile_styles/admin.field_widgets';
 }
 
 /**
