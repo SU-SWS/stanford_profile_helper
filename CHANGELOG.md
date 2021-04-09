@@ -1,5 +1,19 @@
 # Stanford Profile Helper
 
+8.x-1.12
+--------------------------------------------------------------------------------
+_Release Date: 2021-04-09_
+
+- D8CORE-3254: basic page plus functionality (#90) (2cc9e5a)
+- D8CORE-2766: adding constraint for global message validation (#88) (11d09a9)
+- D8CORE-3686: Intranet styles. (#89) (54bd930)
+- D8CORE-4020: Styles for publication teaser displays (#96) (2f89062)
+- D8CORE-2942: Removed dropcap pseudo content: so that dropcap displays (#95) (4b01951)
+- D8CORE-2853 Prevent unpublishing home, 403, or 404 pages (#93) (12dd3c7)
+- D8CORE-4021 Give site managers permission to assign custom roles (#91) (f91a648)
+- D8CORE-2600: visually hide duration dropdown in smartdate fields (#85) (0b5d1d4)
+- D8CORE-3126 intranet functionality (#86) (267aa53)
+
 8.x-1.11
 --------------------------------------------------------------------------------
 _Release Date: 2021-03-17_
