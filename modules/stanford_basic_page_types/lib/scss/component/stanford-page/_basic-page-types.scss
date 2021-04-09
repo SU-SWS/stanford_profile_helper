@@ -38,35 +38,35 @@
 
         margin-left: 0;
         margin-right: 0;
+      }
 
-        a {
-          //@extend .su-link--action;
+      a {
+        //@extend .su-link--action;
+        color: $su-color-black;
+        display: inline-block;
+        font-weight: $su-font-bold;
+
+        @include link-icon(caret-right);
+
+        @include modular-spacing("margin-bottom", 0);
+
+        &:hover {
+          text-decoration: underline;
           color: $su-color-black;
-          display: inline-block;
-          font-weight: $su-font-bold;
+        }
 
-          @include link-icon(caret-right);
+        &:focus {
+          outline: none;
+        }
 
-          @include modular-spacing("margin-bottom", 0);
+        &::after {
+          height: 1.2rem;
+          width: 1.2rem;
+          background-color: $su-color-digital-red;
+        }
 
-          &:hover {
-            text-decoration: underline;
-            color: $su-color-black;
-          }
-
-          &:focus {
-            outline: none;
-          }
-
-          &:after {
-            height: 1.2rem;
-            width: 1.2rem;
-            background-color: $su-color-digital-red;
-          }
-
-          &:hover:after {
-            background-color: $su-color-digital-red;
-          }
+        &:hover::after {
+          background-color: $su-color-digital-red;
         }
       }
     }
