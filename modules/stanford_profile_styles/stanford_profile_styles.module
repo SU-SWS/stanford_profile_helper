@@ -82,7 +82,6 @@ function stanford_profile_styles_library_info_build() {
       ],
     ];
   }
-
   return $libraries;
 }
 

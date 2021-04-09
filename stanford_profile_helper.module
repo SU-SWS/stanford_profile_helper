@@ -98,6 +98,7 @@ function stanford_profile_helper_entity_presave(EntityInterface $entity) {
  *   Array of sections for layout builder to be saved in the field.
  */
 function _stanford_profile_helper_get_publications_layout() {
+
   /** @var \Drupal\Core\Entity\Display\EntityViewDisplayInterface $view_display */
   $view_display = EntityViewDisplay::load('node.stanford_page.default');
   if (!$view_display) {
