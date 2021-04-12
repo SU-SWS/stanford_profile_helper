@@ -1,5 +1,11 @@
 # Stanford Profile Helper
 
+8.x-1.13
+--------------------------------------------------------------------------------
+_Release Date: 2021-04-12_
+
+- Add preprocess to display only one basic page image in the card.
+
 8.x-1.12
 --------------------------------------------------------------------------------
 _Release Date: 2021-04-09_
