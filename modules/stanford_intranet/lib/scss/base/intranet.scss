@@ -19,20 +19,22 @@ div {
   }
 }
 
-.su-local-footer {
-  background-color: #eaeaea;
+div {
+  &.su-local-footer {
+    background-color: #eaeaea;
 
-  .su-local-footer__cell3 {
+    .su-local-footer__cell3 {
 
-    p {
-      &:first-of-type {
-        @include link-icon-before(lock-solid, 13px);
+      p {
+        &:first-of-type {
+          @include link-icon-before(lock-solid, 13px);
 
-        font-weight: $su-font-semi-bold;
+          font-weight: $su-font-semi-bold;
 
-        &::before {
-          background-color: $su-color-black;
-          margin-left: 0;
+          &::before {
+            background-color: $su-color-black;
+            margin-left: 0;
+          }
         }
       }
     }
