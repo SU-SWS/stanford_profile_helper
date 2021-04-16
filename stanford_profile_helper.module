@@ -22,6 +22,7 @@ use Drupal\config_pages\ConfigPagesInterface;
 use Drupal\field\FieldStorageConfigInterface;
 use Drupal\layout_builder\SectionComponent;
 use Drupal\menu_link_content\Entity\MenuLinkContent;
+use Drupal\node\NodeForm;
 use Drupal\node\NodeInterface;
 use Drupal\taxonomy\TermInterface;
 use Drupal\taxonomy_menu\Plugin\Menu\TaxonomyMenuMenuLink;
@@ -131,6 +132,9 @@ function _stanford_profile_helper_get_publications_layout() {
  * Implements hook_form_alter().
  */
 function stanford_profile_helper_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if ($form_state->getFormObject() instanceof NodeForm) {
+    unset($form['actions']['unlock']);
+  }
   if (strpos($form_id, 'views_form_') === 0) {
     // Remove the select all since it selects every node, not just the ones
     // from the active filters.
