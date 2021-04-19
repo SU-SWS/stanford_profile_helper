@@ -314,7 +314,7 @@
   .container-3-items {
     .ptype-stanford-lists {
       .field--name-su-list-view {
-        @include responsive-spacing('padding', 2 0);
+        @include responsive-spacing('padding', null 2 null 0);
       }
     }
   }
