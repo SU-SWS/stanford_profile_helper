@@ -1,5 +1,13 @@
 # Stanford Profile Helper
 
+8.x-1.14
+--------------------------------------------------------------------------------
+_Release Date: 2021-04-19_
+
+- D8CORE-4092: fixing up the padding to be on left and right (#103) (3949fe5)
+- D8CORE-4115 Remove the "Unlock" button on node form (#102) (274bee7)
+- Basic pages+ styling fix (#101) (453befa)
+
 8.x-1.13
 --------------------------------------------------------------------------------
 _Release Date: 2021-04-12_
