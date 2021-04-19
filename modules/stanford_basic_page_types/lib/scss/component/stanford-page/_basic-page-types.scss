@@ -6,6 +6,8 @@
 
 .stanford-page {
   &.su-page-description {
+    @include big-paragraph
+
     margin-bottom: 46px;
 
     @include grid-media-min("lg") {
