@@ -19,11 +19,16 @@ div {
   }
 }
 
+// For the footer background color.
+div {
+  &.su-local-footer {
+    background-color: #eaeaea;
+  }
+}
+
+// For the text in cell 3.
 .su-local-footer {
-  background-color: #eaeaea;
-
   .su-local-footer__cell3 {
-
     p {
       &:first-of-type {
         @include link-icon-before(lock-solid, 13px);
@@ -38,4 +43,3 @@ div {
     }
   }
 }
-
