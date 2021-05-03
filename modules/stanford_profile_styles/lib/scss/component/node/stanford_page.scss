@@ -328,18 +328,14 @@
       display: none;
     }
 
-    h2 {
-      @include modular-typography(1);
+    a {
+      color: $su-color-black;
+      text-decoration: none;
 
-      a {
-        color: $su-color-black;
-        text-decoration: none;
-
-        &:hover,
-        &:focus  {
-          color: $su-color-bright-red;
-          text-decoration: underline;
-        }
+      &:hover,
+      &:focus  {
+        color: $su-color-bright-red;
+        text-decoration: underline;
       }
     }
   }
