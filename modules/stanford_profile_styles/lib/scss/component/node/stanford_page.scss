@@ -319,3 +319,24 @@
     }
   }
 }
+
+.ds-entity--stanford-event-series {
+  .su-card {
+    @include modular-typography(0);
+
+    .su-event-series-dek {
+      display: none;
+    }
+
+    a {
+      color: $su-color-black;
+      text-decoration: none;
+
+      &:hover,
+      &:focus  {
+        color: $su-color-bright-red;
+        text-decoration: underline;
+      }
+    }
+  }
+}
