@@ -1,5 +1,12 @@
 # Stanford Profile Helper
 
+8.x-1.15
+--------------------------------------------------------------------------------
+_Release Date: 2021-05-07_
+
+- D8CORE-3970: adding teaser styles for event series (#106) (a40d5fb)
+- D8CORE-4097: Fixup the specificity problem for the local footer color (#105) (b07bdf9)
+
 8.x-1.14
 --------------------------------------------------------------------------------
 _Release Date: 2021-04-19_
