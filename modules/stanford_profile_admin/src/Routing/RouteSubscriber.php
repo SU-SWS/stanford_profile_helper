@@ -21,7 +21,9 @@ class RouteSubscriber extends RouteSubscriberBase {
         $route->setPath(str_replace('/admin/people', '/admin/users', $route->getPath()));
       }
     }
-    $collection->get('entity.user.collection')->setDefault('_title', 'Users');
+    if ($route = $collection->get('entity.user.collection')) {
+      $route->setDefault('_title', 'Users');
+    }
   }
 
 }

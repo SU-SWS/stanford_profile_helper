@@ -5,7 +5,6 @@
  * Contains stanford_profile_admin.module.
  */
 
-
 /**
  * Implements hook_link_alter().
  */
