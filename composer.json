@@ -95,7 +95,9 @@
             "Drupal\\stanford_profile_helper\\": "src/",
             "Drupal\\stanford_intranet\\": "modules/stanford_intranet/src/",
             "Drupal\\Tests\\stanford_intranet\\": "modules/stanford_intranet/tests/src/",
-            "Drupal\\stanford_profile_drush\\": "modules/stanford_profile_drush/src/"
+            "Drupal\\stanford_profile_drush\\": "modules/stanford_profile_drush/src/",
+            "Drupal\\stanford_profile_admin\\": "modules/stanford_profile_admin/src/",
+            "Drupal\\Tests\\stanford_profile_admin\\": "modules/stanford_profile_admin/tests/src/"
         }
     },
     "extra": {
