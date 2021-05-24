@@ -397,6 +397,10 @@ function stanford_profile_helper_config_pages_presave(ConfigPagesInterface $enti
     // Set the xml sitemap module state to the new domain.
     \Drupal::state()->set('xmlsitemap_base_url', $url_field[0]['uri']);
   }
+
+  // Invalidate cache tags on config pages save. This is a blanket cache clear
+  // since config pages mostly affect the entire site.
+  Cache::invalidateTags(['system.site', 'block_view', 'node_view']);
 }
 
 /**
