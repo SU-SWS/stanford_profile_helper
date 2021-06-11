@@ -246,6 +246,13 @@ function stanford_profile_styles_preprocess_ds_entity_view(&$variables) {
 }
 
 /**
+ * Implements hook_preprocess_HOOK().
+ */
+function stanford_profile_styles_preprocess_colorbox_formatter(&$variables) {
+  $variables['#attached']['library'][] = 'stanford_profile_styles/colorbox';
+}
+
+/**
  * Implements hook_views_pre_render().
  */
 function stanford_profile_styles_views_pre_render(ViewExecutable $view) {

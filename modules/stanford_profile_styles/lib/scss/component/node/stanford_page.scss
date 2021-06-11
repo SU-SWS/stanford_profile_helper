@@ -306,6 +306,16 @@
       }
     }
   }
+
+  // Grid removal for people lists in cols
+  &[data-react-columns='4'],
+  &[data-react-columns='6'] {
+    .stanford-people-grid {
+      .flex-container {
+        display: unset;
+      }
+    }
+  }
 }
 
 @include grid-media-min('lg') {
