@@ -1,5 +1,15 @@
 # Stanford Profile Helper
 
+8.x-1.16
+--------------------------------------------------------------------------------
+_Release Date: 2021-06-11_
+
+- D8CORE-4341: Disable the grid style for people lists in rows (#118) (ac970c5)
+- D8CORE-3566 Invalidate cache when saving config pages (e2032ec)
+- D8CORE-4178: Fixing the h2 that wasn't wrapping (#114) (eb9652f)
+- D8CORE-4104 Improve colorbox with javascript (#113) (60b8208)
+- D8CORE-2028 Change "People" to "Users" in the admin toolbar (#110) (6f9a64a)
+
 8.x-1.15
 --------------------------------------------------------------------------------
 _Release Date: 2021-05-07_
