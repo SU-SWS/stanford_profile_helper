@@ -307,9 +307,13 @@
     }
   }
 
-  // Grid removal for people lists in cols
+  // Grid removal for news and people lists in cols
   &[data-react-columns='4'],
   &[data-react-columns='6'] {
+    .su-news-list__header {
+      grid-template-columns: 1fr;
+    }
+
     .stanford-people-grid {
       .flex-container {
         display: unset;
