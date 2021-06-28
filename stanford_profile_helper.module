@@ -12,9 +12,11 @@ use Drupal\Core\Config\Entity\ConfigEntityInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
+use Drupal\Core\Extension\Extension;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Serialization\Yaml;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\Url;
@@ -917,4 +919,59 @@ function _stanford_profile_helper_get_assignable_roles(): array {
   }
 
   return user_role_names(TRUE);
+}
+
+/**
+ * Implements hook_component_info_alter().
+ */
+function stanford_profile_helper_component_info_alter(&$components) {
+  foreach ($components as $id => $component) {
+    // Check if the provider of the PDB component is enabled.
+    if (!_stanford_profile_helper_extension_enabled($component)) {
+      unset($components[$id]);
+    }
+  }
+}
+
+/**
+ * Traverse the PDB extension to see if it's module/theme/profile is enabled.
+ *
+ * @param \Drupal\Core\Extension\Extension $extension
+ *   Discovered PDB extension object.
+ *
+ * @return bool
+ *   If the PDB extension's provider is enabled.
+ */
+function _stanford_profile_helper_extension_enabled(Extension $extension) {
+  $path = $extension->getPath();
+
+  // Traverse down the path of the extension to find a module/theme/profile
+  // that can be checked for existance.
+  while ($path) {
+
+    // An info.yml file exists in the current path, check if it's enabled as
+    // a theme, profile, or module.
+    if ($info_files = glob("$path/*.info.yml")) {
+      $info_file_path = $info_files[0];
+      $name = basename($info_file_path, '.info.yml');
+      $info_file = Yaml::decode(file_get_contents($info_file_path));
+
+      if (isset($info_file['type'])) {
+        switch ($info_file['type']) {
+          case 'theme':
+            return \Drupal::service('theme_handler')->themeExists($name);
+
+          case 'module':
+          case 'profile':
+            return \Drupal::moduleHandler()->moduleExists($name);
+        }
+      }
+    }
+
+    // Pop off the last part of the path to go one level higher.
+    $path = explode('/', $path);
+    array_pop($path);
+    $path = implode('/', $path);
+  }
+  return FALSE;
 }

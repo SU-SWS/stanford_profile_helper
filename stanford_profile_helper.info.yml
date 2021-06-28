@@ -16,5 +16,6 @@ dependencies:
   - 'drupal:help'
   - 'drupal:media'
   - 'drupal:media_library'
+  - 'pdb:pdb'
   - 'xmlsitemap:xmlsitemap'
   - 'xmlsitemap:xmlsitemap_engines'
