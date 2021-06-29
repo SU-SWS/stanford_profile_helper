@@ -320,6 +320,11 @@
       }
     }
   }
+
+  .su-event-list-item__date {
+    align-items: center;
+    display: flex;
+  }
 }
 
 @include grid-media-min('lg') {
