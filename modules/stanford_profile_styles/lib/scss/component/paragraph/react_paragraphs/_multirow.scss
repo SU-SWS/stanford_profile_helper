@@ -38,8 +38,9 @@
   // Single item per row on screens less than and equal to md.
   // Added the clear for when media items are floated (right or left) within the wysiwyg.
   &.flex-container {
+    clear: both;
+
     @include grid-media-max('md') {
-      clear: both;
       display: block;
 
       .paragraph-item {
