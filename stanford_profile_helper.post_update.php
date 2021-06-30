@@ -60,7 +60,7 @@ function stanford_profile_helper_post_update_8100() {
       }
 
       // Absolute external url, fetch the contents of the page and grab the
-      // `<title>` value
+      // `<title>` value.
       if ($url->isExternal()) {
         $page = file_get_contents($url->toString());
         $title = preg_match('/<title[^>]*>(.*?)<\/title>/ims', $page, $match) ? $match[1] : NULL;
@@ -77,7 +77,8 @@ function stanford_profile_helper_post_update_8100() {
           throw new \Exception('Trigger log');
         }
       }
-    } catch (\Exception $e) {
+    }
+    catch (\Exception $e) {
       \Drupal::logger('stanford_profile_helper')
         ->error('Unable to set link title for paragraph %id with url %url', [
           '%id' => $paragraph->id(),
