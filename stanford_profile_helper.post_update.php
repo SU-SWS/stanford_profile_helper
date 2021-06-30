@@ -87,7 +87,7 @@ function stanford_profile_helper_post_update_8100() {
     }
 
     if ($title) {
-      $value['title'] = $title;
+      $value['title'] = trim($title);
       $paragraph->set('su_media_caption_link', [$value])->save();
     }
   }
