@@ -11,3 +11,10 @@
 function stanford_profile_helper_update_8190() {
   \Drupal::service('theme_installer')->install(['stable9']);
 }
+
+/**
+ * Enable the PDB module.
+ */
+function stanford_profile_helper_update_8191() {
+  \Drupal::service('module_installer')->install(['pdb']);
+}
