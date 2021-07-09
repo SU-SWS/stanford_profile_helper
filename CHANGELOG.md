@@ -1,5 +1,11 @@
 # Stanford Profile Helper
 
+8.x-1.19
+--------------------------------------------------------------------------------
+_Release Date: 2021-07-09_
+
+- D8CORE-4225: clearing the floats if used in the wysiwyg for the medium and down breakpoint (#125) (c98060a)
+
 8.x-1.18
 --------------------------------------------------------------------------------
 _Release Date: 2021-06-16_
