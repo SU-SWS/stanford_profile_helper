@@ -308,6 +308,7 @@
   }
 
   // Grid removal for news and people lists in cols
+  // Grid removal for event spanning dates in cols
   &[data-react-columns='4'],
   &[data-react-columns='6'] {
     .su-news-list__header {
@@ -319,11 +320,11 @@
         display: unset;
       }
     }
-  }
 
-  .su-event-list-item__date {
-    align-items: center;
-    display: flex;
+    .su-event-list-item__date {
+      align-items: center;
+      display: flex;
+    }
   }
 }
 
