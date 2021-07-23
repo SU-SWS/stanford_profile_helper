@@ -42,6 +42,15 @@ function stanford_profile_helper_theme($existing, $type, $theme, $path) {
 }
 
 /**
+ * Implements hook_library_info_alter().
+ */
+function stanford_profile_helper_library_info_alter(&$libraries, $extension) {
+  if ($extension == 'mathjax') {
+    unset($libraries['setup']);
+  }
+}
+
+/**
  * Implements hook_ENTITY_TYPE_presave().
  */
 function stanford_profile_helper_user_role_presave(RoleInterface $role) {

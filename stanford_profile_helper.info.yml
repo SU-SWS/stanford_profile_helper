@@ -19,5 +19,3 @@ dependencies:
   - 'pdb:pdb'
   - 'xmlsitemap:xmlsitemap'
   - 'xmlsitemap:xmlsitemap_engines'
-libraries:
-  mathjax/setup: false
