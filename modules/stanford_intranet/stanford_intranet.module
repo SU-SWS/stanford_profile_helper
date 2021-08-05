@@ -9,6 +9,7 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\StreamWrapper\StreamWrapperManager;
 use Drupal\node\NodeInterface;
 use Drupal\stanford_intranet\Plugin\Field\FieldType\EntityAccessFieldType;
 use Drupal\user\RoleInterface;
@@ -20,6 +21,23 @@ use Symfony\Component\Finder\Finder;
 function stanford_intranet_page_attachments(array &$attachments) {
   if ((\Drupal::state()->get('stanford_intranet', FALSE)) && !\Drupal::service('router.admin_context')->isAdminRoute()) {
     $attachments['#attached']['library'][] = "stanford_intranet/intranet";
+  }
+}
+
+/**
+ * Implements hook_file_download().
+ */
+function stanford_intranet_file_download($uri) {
+  // When viewing images that were converted to PNG files, the Image Effects
+  // module appends the `.png` extension onto the end of the existing uri.
+  // When a user visits a page with an image that was converted to PNG, Drupal
+  // core throws an access-denied error because it's unable to find the original
+  // image because of the extension changing. We simply need to remove the
+  // ending png extension and then pass it back to the core hook.
+  // @see \Drupal\image\Controller\ImageStyleDownloadController::deliver().
+  // @see file_file_download().
+  if (preg_match('/.jp[e]?g.png$/', $uri) && StreamWrapperManager::getScheme($uri) == 'private') {
+    return file_file_download(str_replace('.png', '', $uri));
   }
 }
 
