@@ -4,8 +4,9 @@
   //
   // Margin overrides.
   //
-  > {
-    * {
+
+  > div {
+    > * {
       &:first-child {
         // Remove margin-top and padding-top when it is the first item on the page
         @include margin(0 null null null);
