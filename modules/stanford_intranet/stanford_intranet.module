@@ -37,7 +37,7 @@ function stanford_intranet_file_download($uri) {
   // @see \Drupal\image\Controller\ImageStyleDownloadController::deliver().
   // @see file_file_download().
   if (preg_match('/.jp[e]?g.png$/', $uri) && StreamWrapperManager::getScheme($uri) == 'private') {
-    return file_file_download(str_replace('.png', '', $uri));
+    return \Drupal::moduleHandler()->invokeAll('file_download', [str_replace('.png', '', $uri)]);
   }
 }
 
