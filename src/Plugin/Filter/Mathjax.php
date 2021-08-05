@@ -46,7 +46,7 @@ class Mathjax extends MathjaxFilter implements ContainerFactoryPluginInterface {
   public function process($text, $langcode) {
     $result = new FilterProcessResult($text);
     $config_type = $this->config->get('config_type');
-    if ($config_type == 0 && preg_match('/((\$\$.*\$\$)|(\\\(.*\\\))|(\\\[.*\\\]))/', $text )) {
+    if ($config_type == 0 && preg_match('/((\$\$.*\$\$)|(\\\(.*\\\))|(\\\[.*\\\]))/', $text)) {
       $result->setAttachments(['library' => ['mathjax/source']]);
     }
     return $result;
