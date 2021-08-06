@@ -31,6 +31,18 @@ use Drupal\taxonomy_menu\Plugin\Menu\TaxonomyMenuMenuLink;
 use Drupal\user\RoleInterface;
 
 /**
+ * Implements hook_filter_info_alter().
+ */
+function stanford_profile_helper_filter_info_alter(&$info) {
+  if (
+    isset($info['filter_mathjax']) &&
+    \Drupal::moduleHandler()->moduleExists('mathjax')
+  ) {
+    $info['filter_mathjax']['class'] = 'Drupal\stanford_profile_helper\Plugin\Filter\Mathjax';
+  }
+}
+
+/**
  * Implements hook_theme().
  */
 function stanford_profile_helper_theme($existing, $type, $theme, $path) {
