@@ -1,5 +1,13 @@
 # Stanford Profile Helper
 
+8.x-1.22
+--------------------------------------------------------------------------------
+_Release Date: 2021-08-11_
+
+- D8CORE-4696 Fix the access for private images that were converted to png files via styles (#131)
+- D8CORE-4690 Modify mathjax filter plugin to fix media and spacing issues (#133)
+- Unset mathjax setup library using a hook due to ajax
+
 8.x-1.21
 --------------------------------------------------------------------------------
 _Release Date: 2021-07-19_
