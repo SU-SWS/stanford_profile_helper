@@ -43,3 +43,19 @@ div {
     }
   }
 }
+
+// Table dividing line color
+.su-wysiwyg-text {
+  table {
+    tbody,
+    thead {
+      tr {
+        border-top: 1px solid #ababa9;
+      }
+    }
+ 
+    thead {
+        border-bottom: 1px solid #ababa9;
+    }
+  }
+}
