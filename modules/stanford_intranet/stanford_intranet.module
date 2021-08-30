@@ -10,6 +10,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StreamWrapper\StreamWrapperManager;
+use Drupal\file\FileInterface;
 use Drupal\node\NodeInterface;
 use Drupal\stanford_intranet\Plugin\Field\FieldType\EntityAccessFieldType;
 use Drupal\user\RoleInterface;
@@ -19,7 +20,7 @@ use Symfony\Component\Finder\Finder;
  * Implements hook_page_attachments().
  */
 function stanford_intranet_page_attachments(array &$attachments) {
-  if ((\Drupal::state()->get('stanford_intranet', FALSE)) && !\Drupal::service('router.admin_context')->isAdminRoute()) {
+  if (\Drupal::state()->get('stanford_intranet', FALSE) && !\Drupal::service('router.admin_context')->isAdminRoute()) {
     $attachments['#attached']['library'][] = "stanford_intranet/intranet";
   }
 }
@@ -39,6 +40,22 @@ function stanford_intranet_file_download($uri) {
   if (preg_match('/.jp[e]?g.png$/', $uri) && StreamWrapperManager::getScheme($uri) == 'private') {
     return \Drupal::moduleHandler()->invokeAll('file_download', [str_replace('.png', '', $uri)]);
   }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_access().
+ */
+function stanford_intranet_file_access(FileInterface $file, $operation, AccountInterface $account) {
+  $usage = \Drupal::service('file.usage')->listUsage($file);
+
+  // Allow the user to "download" the file if it meets the conditions. This
+  // allows images that are saved on config pages to be viewed by authenticated
+  // users. Such fields like the logo field.
+  $allowed = \Drupal::state()->get('stanford_intranet', FALSE) &&
+    $account->isAuthenticated() &&
+    isset($usage['file']['config_pages']) &&
+    $operation == 'download';
+  return AccessResult::allowedIf($allowed);
 }
 
 /**
