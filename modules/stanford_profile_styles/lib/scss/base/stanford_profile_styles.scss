@@ -54,6 +54,7 @@ a {
 
   // Style the icons with external links.
   &.su-link--external {
+    font-weight: $su-font-bold;
     // Add the underline back to external links.
     text-decoration: underline;
 
