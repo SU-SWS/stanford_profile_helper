@@ -1,5 +1,12 @@
 # Stanford Profile Helper
 
+
+8.x-1.23
+--------------------------------------------------------------------------------
+_Release Date: 2021-09-03
+
+- D8CORE-4098: correcting the line contrast for the intranet wysiwyg table (#137)
+
 8.x-1.22
 --------------------------------------------------------------------------------
 _Release Date: 2021-08-11_
