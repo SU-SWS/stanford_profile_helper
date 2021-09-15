@@ -5,8 +5,9 @@
  * stanford_profile_helper.post_update.php
  */
 
-use Drupal\block_content\Entity\BlockContent;
 use Drupal\Core\Url;
+use Drupal\block_content\Entity\BlockContent;
+use Drupal\user\Entity\Role;
 
 /**
  * Create the events and news intro block content.
@@ -90,6 +91,43 @@ function stanford_profile_helper_post_update_8100() {
     if ($title) {
       $value['title'] = trim($title);
       $paragraph->set('su_media_caption_link', [$value])->save();
+    }
+  }
+}
+
+/**
+ * Add layout builder user role if content has custom LB settings.
+ */
+function stanford_profile_helper_post_update_8101() {
+  // Create the new role. It'll get updated via config import later.
+  Role::create(['id' => 'layout_builder_user', 'label' => 'LB User'])->save();
+  $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+
+  // Find all nodes that have a custom layout builder layout.
+  $nids = $node_storage->getQuery()
+    ->accessCheck(FALSE)
+    ->condition('layout_builder__layout', NULL, 'IS NOT NULL')
+    ->execute();
+
+  $user_ids = [];
+
+  // Gather all of the user ids that have created or last edited the node.
+  foreach ($nids as $nid) {
+    /** @var \Drupal\node\NodeInterface $node */
+    $node = $node_storage->load($nid);
+    $user_ids[] = (int) $node->get('uid')->getString();
+    $user_ids[] = (int) $node->get('revision_uid')->getString();
+  }
+  $users = \Drupal::entityTypeManager()
+    ->getStorage('user')
+    ->loadMultiple(array_unique($user_ids));
+
+  // If the users have a site manager role, add the layout builder role.
+  /** @var \Drupal\user\UserInterface $user */
+  foreach ($users as $user) {
+    if ($user->hasRole('site_manager')) {
+      $user->addRole('layout_builder_user');
+      $user->save();
     }
   }
 }
