@@ -920,8 +920,10 @@ function stanford_profile_helper_field_widget_form_alter(&$element, FormStateInt
  */
 function stanford_profile_helper_entity_bundle_field_info_alter(&$fields, EntityTypeInterface $entity_type, $bundle) {
 
-  if ($bundle === 'stanford_global_message'
-      && !is_null($fields['su_global_msg_enabled'])) {
+  if (
+    $bundle == 'stanford_global_message' &&
+    !empty($fields['su_global_msg_enabled'])
+  ) {
     $fields['su_global_msg_enabled']->addConstraint('global_message_constraint', []);
   }
 
