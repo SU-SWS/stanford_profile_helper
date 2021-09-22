@@ -58,7 +58,8 @@ function stanford_profile_helper_theme($existing, $type, $theme, $path) {
  */
 function stanford_profile_helper_library_info_alter(&$libraries, $extension) {
   if ($extension == 'mathjax') {
-    unset($libraries['setup']);
+    $libraries['source']['dependencies'][] = 'stanford_profile_helper/mathjax';
+    unset($libraries['setup'], $libraries['config']);
   }
 }
 
