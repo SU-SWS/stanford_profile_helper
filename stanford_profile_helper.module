@@ -999,3 +999,12 @@ function _stanford_profile_helper_extension_enabled(Extension $extension) {
   }
   return FALSE;
 }
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ */
+function stanford_profile_helper_node_presave(NodeInterface $node) {
+  // Invalidate any search result cached so the updated/new content will be
+  // displayed for previously searched terms.
+  Cache::invalidateTags(['config:views.view.search']);
+}
