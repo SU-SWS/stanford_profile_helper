@@ -1,0 +1,4 @@
+mathjax:
+  version: VERSION
+  js:
+    js/stanford_profile_helper.mathjax.js: {}
