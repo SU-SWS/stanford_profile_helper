@@ -31,6 +31,21 @@ use Drupal\taxonomy_menu\Plugin\Menu\TaxonomyMenuMenuLink;
 use Drupal\user\RoleInterface;
 
 /**
+ * Implements hook_page_attachments().
+ */
+function stanford_profile_helper_page_attachments(array &$attachments) {
+  $env = getenv('AH_SITE_ENVIRONMENT');
+  // Add SiteImprove analytics for anonymous users on prod sites.
+  // ACE prod is 'prod'; ACSF can be '01live', '02live', ...
+  if (
+    \Drupal::currentUser()->isAnonymous() &&
+    ($env === 'prod' || preg_match('/^\d*live$/', $env))
+  ) {
+    $attachments['#attached']['library'][] = 'stanford_profile_helper/siteimprove.analytics';
+  }
+}
+
+/**
  * Implements hook_filter_info_alter().
  */
 function stanford_profile_helper_filter_info_alter(&$info) {
