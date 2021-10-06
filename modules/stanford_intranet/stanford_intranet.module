@@ -12,6 +12,7 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StreamWrapper\StreamWrapperManager;
 use Drupal\file\FileInterface;
 use Drupal\node\NodeInterface;
+use Drupal\paragraphs\ParagraphInterface;
 use Drupal\stanford_intranet\Plugin\Field\FieldType\EntityAccessFieldType;
 use Drupal\user\RoleInterface;
 use Symfony\Component\Finder\Finder;
@@ -117,9 +118,12 @@ function stanford_intranet_entity_create_access(AccountInterface $account, array
  * Implements hook_entity_access().
  */
 function stanford_intranet_entity_access(EntityInterface $entity, $operation, AccountInterface $account) {
+  // Paragraphs inherit their access from the parents they live on, so we can
+  // ignore them.
   if (
     $account->isAnonymous() &&
-    \Drupal::state()->get('stanford_intranet', FALSE)
+    \Drupal::state()->get('stanford_intranet', FALSE) &&
+    !($entity instanceof ParagraphInterface)
   ) {
     // Prevent all access to non-authenticated users.
     return AccessResult::forbidden();
