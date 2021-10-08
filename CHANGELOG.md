@@ -1,6 +1,19 @@
 # Stanford Profile Helper
 
 
+8.x-1.25
+--------------------------------------------------------------------------------
+_Release Date: 2021-10-08_
+
+- Allow paragraphs to be indexed when intranet is enabled (#146)
+- D8CORE-4679 Add site improve analytics js (#145)
+- D8CORE-4691: adding bold to the external links (#139)
+- D8CORE-4793 Configure mathjax to only target equations in <p> tags (#144)
+- D8CORE-4759 Clear search results cache after a node saves
+- Update hook to add role for users with custom LB content (#142)
+- Added check to make sure field exists before adding constraint (#143)
+
+
 8.x-1.24
 --------------------------------------------------------------------------------
 _Release Date: 2021-09-07_
