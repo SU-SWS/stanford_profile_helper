@@ -31,6 +31,21 @@ use Drupal\taxonomy_menu\Plugin\Menu\TaxonomyMenuMenuLink;
 use Drupal\user\RoleInterface;
 
 /**
+ * Implements hook_page_attachments().
+ */
+function stanford_profile_helper_page_attachments(array &$attachments) {
+  $env = getenv('AH_SITE_ENVIRONMENT');
+  // Add SiteImprove analytics for anonymous users on prod sites.
+  // ACE prod is 'prod'; ACSF can be '01live', '02live', ...
+  if (
+    \Drupal::currentUser()->isAnonymous() &&
+    ($env === 'prod' || preg_match('/^\d*live$/', $env))
+  ) {
+    $attachments['#attached']['library'][] = 'stanford_profile_helper/siteimprove.analytics';
+  }
+}
+
+/**
  * Implements hook_filter_info_alter().
  */
 function stanford_profile_helper_filter_info_alter(&$info) {
@@ -58,7 +73,8 @@ function stanford_profile_helper_theme($existing, $type, $theme, $path) {
  */
 function stanford_profile_helper_library_info_alter(&$libraries, $extension) {
   if ($extension == 'mathjax') {
-    unset($libraries['setup']);
+    $libraries['source']['dependencies'][] = 'stanford_profile_helper/mathjax';
+    unset($libraries['setup'], $libraries['config']);
   }
 }
 
@@ -920,7 +936,10 @@ function stanford_profile_helper_field_widget_form_alter(&$element, FormStateInt
  */
 function stanford_profile_helper_entity_bundle_field_info_alter(&$fields, EntityTypeInterface $entity_type, $bundle) {
 
-  if ($bundle === 'stanford_global_message') {
+  if (
+    $bundle == 'stanford_global_message' &&
+    !empty($fields['su_global_msg_enabled'])
+  ) {
     $fields['su_global_msg_enabled']->addConstraint('global_message_constraint', []);
   }
 
@@ -995,4 +1014,13 @@ function _stanford_profile_helper_extension_enabled(Extension $extension) {
     $path = implode('/', $path);
   }
   return FALSE;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ */
+function stanford_profile_helper_node_presave(NodeInterface $node) {
+  // Invalidate any search result cached so the updated/new content will be
+  // displayed for previously searched terms.
+  Cache::invalidateTags(['config:views.view.search']);
 }
