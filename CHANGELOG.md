@@ -1,5 +1,14 @@
 # Stanford Profile Helper
 
+
+8.x-1.27
+--------------------------------------------------------------------------------
+_Release Date: 2021-10-21_
+
+- Hotfix: do not require event date and time in bulk edit form
+- Ignore home, 404, and 403 pages from indexing (#149)
+- Merge branch 'master' into 8.x-1.x
+
 8.x-1.26
 --------------------------------------------------------------------------------
 _Release Date: 2021-10-11_
