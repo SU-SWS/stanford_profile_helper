@@ -90,7 +90,7 @@
         "su-sws/stanford_date_formats": "dev-8.x-1.x",
         "su-sws/stanford_fields": "dev-8.x-1.x",
         "su-sws/stanford_image_styles": "dev-8.x-1.x",
-        "su-sws/stanford_text_editor": "dev-8.x-1.x"
+        "su-sws/stanford_text_editor": "dev-D8CORE-4878"
     },
     "autoload": {
         "psr-4": {
@@ -103,7 +103,7 @@
         }
     },
     "config": {
-        "sort-packages": true  
+        "sort-packages": true
     },
     "extra": {
         "drush": {
