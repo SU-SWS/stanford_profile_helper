@@ -54,6 +54,15 @@
       @include link-icon(caret-right, 0.65em, right);
       color: $su-color-bright-red;
 
+      &.su-link--external {
+        @include link-icon(arrow-up-right, 0.65em, topright);
+        font-weight: $su-font-bold;
+
+        &::after {
+          background-color: $su-color-bright-red;
+        }
+      }
+
       &:active,
       &:focus,
       &:hover {
