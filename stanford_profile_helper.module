@@ -1001,35 +1001,6 @@ function stanford_profile_helper_form_media_library_add_form_embeddable_alter(ar
 }
 
 /**
- * Implements hook_form_FORM_ID_alter().
- */
-function stanford_profile_helper_form_media_embeddable_add_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  $user = \Drupal::currentUser();
-  $authorized = $user->hasPermission('create field_media_embeddable_code')
-    || $user->hasPermission('edit field_media_embeddable_code');
-  if (!$authorized) {
-    $source_config = $form_state
-      ->getFormObject()
-      ->getEntity()
-      ->getSource()
-      ->getConfiguration();
-    $source_field = $source_config['source_field'];
-    $new_desc = 'Allowed providers: @providers. For custom embeds, please <a href="@snow_form">request support.</a>';
-    $args = $form[$source_field]['widget'][0]['value']['#description']['#items'][1]->getArguments();
-    $args['@snow_form'] = 'https://stanford.service-now.com/it_services?id=sc_cat_item&sys_id=83daed294f4143009a9a97411310c70a';
-    $form[$source_field]['widget'][0]['value']['#description'] = t($new_desc, $args);
-  }
-
-}
-
-/**
- * Implements hook_form_FORM_ID_alter().
- */
-function stanford_profile_helper_form_media_embeddable_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  stanford_profile_helper_form_media_embeddable_add_form_alter($form, $form_state, $form_id);
-}
-
-/**
  * Implements hook_ENTITY_TYPE_presave().
  */
 function stanford_profile_helper_field_storage_config_presave(FieldStorageConfigInterface $field_storage) {
@@ -1065,6 +1036,18 @@ function stanford_profile_helper_field_widget_form_alter(&$element, FormStateInt
     // Push pages to only allow 3 items per row but don't break any existing
     // pages that have 4 per row.
     $element['container']['value']['#attached']['drupalSettings']['reactParagraphs'][0]['itemsPerRow'] = 3;
+  }
+
+  if ($context['items']->getName() == 'field_media_embeddable_oembed') {
+    $user = \Drupal::currentUser();
+    $authorized = $user->hasPermission('create field_media_embeddable_code')
+    || $user->hasPermission('edit field_media_embeddable_code');
+    if (!$authorized) {
+      $args = $element['value']['#description']['#items'][1]->getArguments();
+      $args['@snow_form'] = 'https://stanford.service-now.com/it_services?id=sc_cat_item&sys_id=83daed294f4143009a9a97411310c70a';
+      $new_desc = 'Allowed providers: @providers. For custom embeds, please <a href="@snow_form">request support.</a>';
+      $element['value']['#description'] = t($new_desc, $args);
+    }
   }
 }
 
