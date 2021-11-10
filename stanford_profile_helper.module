@@ -94,6 +94,14 @@ function stanford_profile_helper_library_info_alter(&$libraries, $extension) {
     $libraries['source']['dependencies'][] = 'stanford_profile_helper/mathjax';
     unset($libraries['setup'], $libraries['config']);
   }
+
+  // Rely on the fontawesome module to provide the library.
+  if (
+    $extension == 'stanford_basic' &&
+    \Drupal::moduleHandler()->moduleExists('fontawesome')
+  ) {
+    unset($libraries['fontawesome']);
+  }
 }
 
 /**
