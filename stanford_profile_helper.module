@@ -963,7 +963,9 @@ function stanford_profile_helper_preprocess_pattern_localfooter(&$variables) {
     // Check if there is a link and patch it through.
     $link = $entity->get('su_local_foot_loc_link')->getString();
     if ($link) {
-      $variables['lockup_link'] = URL::fromUri($link);
+      $variables['lockup_link'] = [
+        '#markup' => URL::fromUri($link)->toString(),
+      ];
     }
 
     // Pass through the lockup option.
