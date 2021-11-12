@@ -313,7 +313,7 @@ function stanford_profile_helper_menu_link_content_presave(MenuLinkContent $enti
       $parent_item = array_pop($menu_link_content);
       /** @var \Drupal\Core\Url $url */
       $url = $parent_item->getUrlObject();
-      if (!$url->isExternal()) {
+      if (!$url->isExternal() && $url->isRouted() ) {
         $params = $url->getRouteParameters();
         if (isset($params['node'])) {
           Cache::invalidateTags(['node:' . $params['node']]);
