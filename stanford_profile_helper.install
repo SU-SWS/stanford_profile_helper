@@ -6,6 +6,13 @@
  */
 
 /**
+ * Implements hook_install().
+ */
+function stanford_profile_helper_install() {
+  module_set_weight('stanford_profile_helper', 10);
+}
+
+/**
  * Enable the new stable 9 theme.
  */
 function stanford_profile_helper_update_8190() {
@@ -17,4 +24,11 @@ function stanford_profile_helper_update_8190() {
  */
 function stanford_profile_helper_update_8191() {
   \Drupal::service('module_installer')->install(['pdb']);
+}
+
+/**
+ * Update stanford_profile_helper weight.
+ */
+function stanford_profile_helper_update_8192() {
+  module_set_weight('stanford_profile_helper', 10);
 }
