@@ -1,6 +1,19 @@
 # Stanford Profile Helper
 
 
+8.x-1.28
+--------------------------------------------------------------------------------
+_Release Date: 2021-11-19_
+
+- Increase the module weight to take more priority over other modules
+- D8CORE-4246 unset stanford_basic FA library if the FA module exists (#155)
+- D8CORE-4843: updating external link icon on headings (#154)
+- D8CORE-4548 Prevent fatal error when menu items arent routed during save
+- Convert url object into a string for better rendering (#156)
+-  D8CORE-4878 Updated hook to work with recent config changes.  (#153)
+- D8CORE-3166: removing the extra space about the button in lists (#152)
+
+
 8.x-1.27
 --------------------------------------------------------------------------------
 _Release Date: 2021-10-21_

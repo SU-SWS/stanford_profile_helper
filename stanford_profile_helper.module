@@ -16,6 +16,7 @@ use Drupal\Core\Extension\Extension;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
 use Drupal\Core\Serialization\Yaml;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Site\Settings;
@@ -30,6 +31,19 @@ use Drupal\search_api\IndexInterface;
 use Drupal\taxonomy\TermInterface;
 use Drupal\taxonomy_menu\Plugin\Menu\TaxonomyMenuMenuLink;
 use Drupal\user\RoleInterface;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function stanford_profile_helper_form_taxonomy_overview_terms_alter(&$form, FormStateInterface $form_state) {
+  if ($form_state->get('taxonomy')['vocabulary']->id() == 'stanford_publication_topics') {
+    $url = Url::fromUri('https://userguide.sites.stanford.edu/tour/publications#publications-list-page');
+    $link = Link::fromTextAndUrl(t('default Publications List Page'), $url)
+      ->toString();
+    $form['citation_format']['#title'] = t('Citation Style');
+    $form['citation_format']['#description'] = t('Select citation format for the %link. *<strong>CAUTION</strong>: The default Publication list page uses Chicago as the citation style. If you select a different citation format here, you should also update the citation format on the default Publications List Page that uses a "filter by topics" menu.', ['%link' => $link]);
+  }
+}
 
 /**
  * Implements hook_search_api_index_items_alter().
@@ -93,6 +107,14 @@ function stanford_profile_helper_library_info_alter(&$libraries, $extension) {
   if ($extension == 'mathjax') {
     $libraries['source']['dependencies'][] = 'stanford_profile_helper/mathjax';
     unset($libraries['setup'], $libraries['config']);
+  }
+
+  // Rely on the fontawesome module to provide the library.
+  if (
+    $extension == 'stanford_basic' &&
+    \Drupal::moduleHandler()->moduleExists('fontawesome')
+  ) {
+    unset($libraries['fontawesome']);
   }
 }
 
@@ -313,7 +335,7 @@ function stanford_profile_helper_menu_link_content_presave(MenuLinkContent $enti
       $parent_item = array_pop($menu_link_content);
       /** @var \Drupal\Core\Url $url */
       $url = $parent_item->getUrlObject();
-      if (!$url->isExternal()) {
+      if (!$url->isExternal() && $url->isRouted() ) {
         $params = $url->getRouteParameters();
         if (isset($params['node'])) {
           Cache::invalidateTags(['node:' . $params['node']]);
@@ -963,7 +985,9 @@ function stanford_profile_helper_preprocess_pattern_localfooter(&$variables) {
     // Check if there is a link and patch it through.
     $link = $entity->get('su_local_foot_loc_link')->getString();
     if ($link) {
-      $variables['lockup_link'] = URL::fromUri($link);
+      $variables['lockup_link'] = [
+        '#markup' => URL::fromUri($link)->toString(),
+      ];
     }
 
     // Pass through the lockup option.
@@ -998,35 +1022,6 @@ function stanford_profile_helper_form_media_library_add_form_embeddable_alter(ar
     $form['container'][$source_field]['#title'] = t('oEmbed URL');
   }
 
-}
-
-/**
- * Implements hook_form_FORM_ID_alter().
- */
-function stanford_profile_helper_form_media_embeddable_add_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  $user = \Drupal::currentUser();
-  $authorized = $user->hasPermission('create field_media_embeddable_code')
-    || $user->hasPermission('edit field_media_embeddable_code');
-  if (!$authorized) {
-    $source_config = $form_state
-      ->getFormObject()
-      ->getEntity()
-      ->getSource()
-      ->getConfiguration();
-    $source_field = $source_config['source_field'];
-    $new_desc = 'Allowed providers: @providers. For custom embeds, please <a href="@snow_form">request support.</a>';
-    $args = $form[$source_field]['widget'][0]['value']['#description']->getArguments();
-    $args['@snow_form'] = 'https://stanford.service-now.com/it_services?id=sc_cat_item&sys_id=83daed294f4143009a9a97411310c70a';
-    $form[$source_field]['widget'][0]['value']['#description'] = t($new_desc, $args);
-  }
-
-}
-
-/**
- * Implements hook_form_FORM_ID_alter().
- */
-function stanford_profile_helper_form_media_embeddable_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  stanford_profile_helper_form_media_embeddable_add_form_alter($form, $form_state, $form_id);
 }
 
 /**
@@ -1065,6 +1060,18 @@ function stanford_profile_helper_field_widget_form_alter(&$element, FormStateInt
     // Push pages to only allow 3 items per row but don't break any existing
     // pages that have 4 per row.
     $element['container']['value']['#attached']['drupalSettings']['reactParagraphs'][0]['itemsPerRow'] = 3;
+  }
+
+  if ($context['items']->getName() == 'field_media_embeddable_oembed') {
+    $user = \Drupal::currentUser();
+    $authorized = $user->hasPermission('create field_media_embeddable_code')
+    || $user->hasPermission('edit field_media_embeddable_code');
+    if (!$authorized) {
+      $args = $element['value']['#description']['#items'][1]->getArguments();
+      $args['@snow_form'] = 'https://stanford.service-now.com/it_services?id=sc_cat_item&sys_id=83daed294f4143009a9a97411310c70a';
+      $new_desc = 'Allowed providers: @providers. For custom embeds, please <a href="@snow_form">request support.</a>';
+      $element['value']['#description'] = t($new_desc, $args);
+    }
   }
 }
 

@@ -259,13 +259,16 @@
   &:not([data-react-columns="12"]) {
     // Views-row for non-grid displays.
     // Views-view-grid has some different markup, so it needs some different work.
-    .views-row,
     .views-view-grid .views-row > div {
       @include responsive-spacing('margin-bottom', 4);
 
       width: 100%;
       max-width: 100%;
       flex: none;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
     }
 
     .su-news-list__item-date + .su-news-list__item {
