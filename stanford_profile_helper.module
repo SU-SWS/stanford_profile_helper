@@ -16,7 +16,6 @@ use Drupal\Core\Extension\Extension;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Link;
 use Drupal\Core\Serialization\Yaml;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Site\Settings;
@@ -31,19 +30,6 @@ use Drupal\search_api\IndexInterface;
 use Drupal\taxonomy\TermInterface;
 use Drupal\taxonomy_menu\Plugin\Menu\TaxonomyMenuMenuLink;
 use Drupal\user\RoleInterface;
-
-/**
- * Implements hook_form_FORM_ID_alter().
- */
-function stanford_profile_helper_form_taxonomy_overview_terms_alter(&$form, FormStateInterface $form_state) {
-  if ($form_state->get('taxonomy')['vocabulary']->id() == 'stanford_publication_topics') {
-    $url = Url::fromUri('https://userguide.sites.stanford.edu/tour/publications#publications-list-page');
-    $link = Link::fromTextAndUrl(t('default Publications List Page'), $url)
-      ->toString();
-    $form['citation_format']['#title'] = t('Citation Style');
-    $form['citation_format']['#description'] = t('Select citation format for the %link. *<strong>CAUTION</strong>: The default Publication list page uses Chicago as the citation style. If you select a different citation format here, you should also update the citation format on the default Publications List Page that uses a "filter by topics" menu.', ['%link' => $link]);
-  }
-}
 
 /**
  * Implements hook_search_api_index_items_alter().
@@ -219,7 +205,21 @@ function stanford_profile_helper_form_alter(&$form, FormStateInterface $form_sta
     // from the active filters.
     // @link https://www.drupal.org/project/views_bulk_operations/issues/3055770#comment-13116724
     unset($form['header']['views_bulk_operations_bulk_form']['select_all']);
+
+    // Sort the action menu options alphabetically.
+    $actions_array = $form['header']['views_bulk_operations_bulk_form']['action']['#options'];
+    uasort($actions_array, '_stanford_profile_helper_action_sort');
+    $form['header']['views_bulk_operations_bulk_form']['action']['#options'] = $actions_array;
   }
+}
+
+/**
+ * A sorting function for the action array
+ */
+function _stanford_profile_helper_action_sort($a, $b) {
+  $a = is_a($a, "Drupal\Core\StringTranslation\TranslatableMarkup") ? $a->render() : (string) $a;
+  $b = is_a($b, "Drupal\Core\StringTranslation\TranslatableMarkup") ? $b->render() : (string) $b;
+  return strcasecmp($a, $b);
 }
 
 /**
