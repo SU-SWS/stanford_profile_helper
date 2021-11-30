@@ -259,9 +259,39 @@
   &:not([data-react-columns="12"]) {
     // Views-row for non-grid displays.
     // Views-view-grid has some different markup, so it needs some different work.
-    .views-view-grid .views-row > div {
-      @include responsive-spacing('margin-bottom', 4);
+    // this is to remove spacing from the last col and to keep MS4 between the cards.
+    .stanford-news--cards,
+    .stanford-events {
+      .views-view-grid {
+        .views-col,
+        .views-row {
+          @include responsive-spacing('margin-bottom', 4);
+          padding-top: 0; //for the event padding top on the first item
 
+          &:last-of-type {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+
+    // Person grid has a little different need.
+    .stanford-people-grid {
+      .views-view-grid {
+        .views-col,
+        .views-row {
+          @include responsive-spacing('margin-bottom', 4);
+        }
+      }
+
+      .views-view-grid {
+        .views-row:last-of-type {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .views-view-grid .views-row > div {
       width: 100%;
       max-width: 100%;
       flex: none;
