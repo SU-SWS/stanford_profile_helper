@@ -1,6 +1,6 @@
 name: 'Stanford Basic Page Types'
 description: 'Provides support for basic page types in stanford_page nodes'
-version: 8.x-1.30
+version: 8.x-1.31-dev
 core_version_requirement: '^8.8 || ^9'
 type: module
 project: Stanford
