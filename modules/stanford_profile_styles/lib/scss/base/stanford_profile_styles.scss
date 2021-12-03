@@ -50,6 +50,27 @@ svg {
   }
 }
 
+// Hide the SVG in localist widgets
+.localist-widget {
+  a {
+    &.su-link--external {
+      &::after {
+        @include hide-visually;
+      }
+    }
+  }
+}
+
+#lclst_widget_footer {
+  a {
+    &.su-link--external {
+      &::after {
+        @include hide-visually;
+      }
+    }
+  }
+}
+
 a {
 
   // Style the icons with external links.
