@@ -219,6 +219,13 @@ function stanford_profile_helper_form_alter(&$form, FormStateInterface $form_sta
     // from the active filters.
     // @link https://www.drupal.org/project/views_bulk_operations/issues/3055770#comment-13116724
     unset($form['header']['views_bulk_operations_bulk_form']['select_all']);
+
+    // Sort the action menu options alphabetically.
+    $actions_array = $form['header']['views_bulk_operations_bulk_form']['action']['#options'];
+    uasort($actions_array, function ($a, $b) {
+      return strcasecmp((string) $a, (string) $b);
+    });
+    $form['header']['views_bulk_operations_bulk_form']['action']['#options'] = $actions_array;
   }
 }
 
