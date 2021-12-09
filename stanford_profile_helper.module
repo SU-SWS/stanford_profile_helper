@@ -223,7 +223,7 @@ function stanford_profile_helper_form_alter(&$form, FormStateInterface $form_sta
 
     // Sort the action menu options alphabetically.
     $actions_array = $form['header']['views_bulk_operations_bulk_form']['action']['#options'];
-    uasort($actions_array, function($a, $b){
+    uasort($actions_array, function ($a, $b) {
       $a = is_a($a, "TranslatableMarkup") ? $a->render() : (string) $a;
       $b = is_a($b, "TranslatableMarkup") ? $b->render() : (string) $b;
       return strcasecmp($a, $b);
