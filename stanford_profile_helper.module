@@ -20,7 +20,6 @@ use Drupal\Core\Link;
 use Drupal\Core\Serialization\Yaml;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Site\Settings;
-use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
 use Drupal\config_pages\ConfigPagesInterface;
 use Drupal\field\FieldStorageConfigInterface;
@@ -224,9 +223,7 @@ function stanford_profile_helper_form_alter(&$form, FormStateInterface $form_sta
     // Sort the action menu options alphabetically.
     $actions_array = $form['header']['views_bulk_operations_bulk_form']['action']['#options'];
     uasort($actions_array, function ($a, $b) {
-      $a = is_a($a, "TranslatableMarkup") ? $a->render() : (string) $a;
-      $b = is_a($b, "TranslatableMarkup") ? $b->render() : (string) $b;
-      return strcasecmp($a, $b);
+      return strcasecmp((string) $a, (string) $b);
     });
     $form['header']['views_bulk_operations_bulk_form']['action']['#options'] = $actions_array;
   }
