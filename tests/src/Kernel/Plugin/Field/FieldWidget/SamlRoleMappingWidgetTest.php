@@ -65,7 +65,7 @@ class SamlRoleMappingWidgetTest extends KernelTestBase {
     ])->setComponent('su_simplesaml_roles', ['type' => 'saml_role_mapping'])
       ->save();
 
-    Role::create(['id' => 'student'])->save();
+    Role::create(['id' => 'student', 'label' => 'Student'])->save();
   }
 
   /**
