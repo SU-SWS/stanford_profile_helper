@@ -64,7 +64,7 @@ class EntityAccessFieldWidgetTest extends IntranetKernelTestBase {
     $form = $entity_form_builder->getForm($this->node);
     $this->assertArrayNotHasKey('#options', $form['stanford_intranet__access']['widget']);
 
-    Role::create(['id' => 'student'])->save();
+    Role::create(['id' => 'student', 'label' => 'Student'])->save();
     $form = $entity_form_builder->getForm($this->node);
     $this->assertArrayHasKey('student', $form['stanford_intranet__access']['widget']['#options']);
   }
@@ -74,7 +74,7 @@ class EntityAccessFieldWidgetTest extends IntranetKernelTestBase {
    */
   public function testFieldWidgetSubmit() {
     \Drupal::state()->set('stanford_intranet', TRUE);
-    Role::create(['id' => 'student'])->save();
+    Role::create(['id' => 'student', 'label' => 'Student'])->save();
     /** @var \Drupal\Core\Entity\EntityFormBuilderInterface $entity_form_builder */
     $entity_form_builder = \Drupal::service('entity.form_builder');
     $form = $entity_form_builder->getForm($this->node);
