@@ -75,5 +75,36 @@
       }
     }
   }
+
+
+  .localist-widget {
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+
+
+      a {
+        &:active,
+        &:focus,
+        &:hover {
+          color: transparent;
+          text-decoration: none;
+        }
+
+        &::after {
+          background-color: transparent;
+          margin: inherit;
+          height: inherit;
+          width: inherit;
+          display: inherit;
+          mask: none;
+          transition: none;
+
+        }
+      }
+    }
+  }
 }
 
