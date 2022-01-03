@@ -76,7 +76,8 @@
     }
   }
 
-
+  // Overide the heading link icons for the new Localist widget replacing the old
+  // Event calendar. This is to keep the whole card clickable.
   .localist-widget {
     h2,
     h3,
