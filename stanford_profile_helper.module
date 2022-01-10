@@ -221,11 +221,13 @@ function stanford_profile_helper_form_alter(&$form, FormStateInterface $form_sta
     unset($form['header']['views_bulk_operations_bulk_form']['select_all']);
 
     // Sort the action menu options alphabetically.
-    $actions_array = $form['header']['views_bulk_operations_bulk_form']['action']['#options'];
-    uasort($actions_array, function ($a, $b) {
-      return strcasecmp((string) $a, (string) $b);
-    });
-    $form['header']['views_bulk_operations_bulk_form']['action']['#options'] = $actions_array;
+    if (!empty($form['header']['views_bulk_operations_bulk_form']['action']['#options'])) {
+      $actions_array = $form['header']['views_bulk_operations_bulk_form']['action']['#options'];
+      uasort($actions_array, function ($a, $b) {
+        return strcasecmp((string) $a, (string) $b);
+      });
+      $form['header']['views_bulk_operations_bulk_form']['action']['#options'] = $actions_array;
+    }
   }
 }
 
