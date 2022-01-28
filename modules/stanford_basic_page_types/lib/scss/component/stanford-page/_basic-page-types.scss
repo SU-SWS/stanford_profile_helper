@@ -27,7 +27,6 @@
 // Card styles
 .ds-entity--stanford-page {
   & .su-card {
-    @include modular-spacing("margin-bottom", 2);
 
     .su-card__contents {
       @include modular-spacing("padding", 1);

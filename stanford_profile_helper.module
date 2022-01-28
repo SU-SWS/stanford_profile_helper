@@ -46,6 +46,62 @@ function stanford_profile_helper_form_taxonomy_overview_terms_alter(&$form, Form
 }
 
 /**
+ * Implements hook_ENTITY_TYPE_presave().
+ */
+function stanford_profile_helper_redirect_presave(EntityInterface $redirect) {
+  $destination = $redirect->get('redirect_redirect')->getString();
+
+  // If a redirect is added to go to the aliased path of a node (often from
+  // importing redirect), change the destination to target the node instead.
+  // This works if the destination is `/about` or `/node/9`.
+  if (preg_match('/^internal:(\/.*)/', $destination, $matches)) {
+    // Find the internal path from the alias.
+    $path = \Drupal::service('path_alias.manager')->getPathByAlias($matches[1]);
+
+    // Grab the node id from the internal path and use that as the destination.
+    if (preg_match('/node\/(\d+)/', $path, $matches)) {
+      $redirect->set('redirect_redirect', 'entity:node/' . $matches[1]);
+    }
+  }
+
+  // Purge everything for the source url so that it can redirect without any
+  // intervention.
+  if (\Drupal::moduleHandler()->moduleExists('purge_processor_lateruntime')) {
+    $source = $redirect->get('redirect_source')->getString();
+    _stanford_profile_helper_purge_path($source);
+  }
+}
+
+/**
+ * Purges a relative path using the generated absolute url.
+ *
+ * @param string $path
+ *   Drupal site relative path.
+ *
+ * @throws \Drupal\purge\Plugin\Purge\Invalidation\Exception\InvalidExpressionException
+ * @throws \Drupal\purge\Plugin\Purge\Invalidation\Exception\MissingExpressionException
+ * @throws \Drupal\purge\Plugin\Purge\Invalidation\Exception\TypeUnsupportedException
+ */
+function _stanford_profile_helper_purge_path($path) {
+  $url = Url::fromUserInput('/' . trim($path, '/'), ['absolute' => TRUE])
+    ->toString();
+
+  $purgeInvalidationFactory = \Drupal::service('purge.invalidation.factory');
+  $purgeProcessors = \Drupal::service('purge.processors');
+  $purgePurgers = \Drupal::service('purge.purgers');
+
+  $processor = $purgeProcessors->get('lateruntime');
+  $invalidations = [$purgeInvalidationFactory->get('url', $url)];
+
+  try {
+    $purgePurgers->invalidate($processor, $invalidations);
+  }
+  catch (\Exception $e) {
+    \Drupal::logger('stanford_profile_helper')->error($e->getMessage());
+  }
+}
+
+/**
  * Implements hook_search_api_index_items_alter().
  */
 function stanford_profile_helper_search_api_index_items_alter(IndexInterface $index, array &$items) {
@@ -219,6 +275,15 @@ function stanford_profile_helper_form_alter(&$form, FormStateInterface $form_sta
     // from the active filters.
     // @link https://www.drupal.org/project/views_bulk_operations/issues/3055770#comment-13116724
     unset($form['header']['views_bulk_operations_bulk_form']['select_all']);
+
+    // Sort the action menu options alphabetically.
+    if (!empty($form['header']['views_bulk_operations_bulk_form']['action']['#options'])) {
+      $actions_array = $form['header']['views_bulk_operations_bulk_form']['action']['#options'];
+      uasort($actions_array, function ($a, $b) {
+        return strcasecmp((string) $a, (string) $b);
+      });
+      $form['header']['views_bulk_operations_bulk_form']['action']['#options'] = $actions_array;
+    }
   }
 }
 

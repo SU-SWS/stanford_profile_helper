@@ -326,6 +326,32 @@
     }
   }
 
+  //adds margin for the basic page plus when a card in 12 across.
+  .stanford-basic-pages {
+    .views-view-grid {
+      .su-basic-page-types-view-row {
+        @include responsive-spacing('margin-bottom', 4);
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  //adds margin for the basic page plus when a card in 2 or 3 cols.
+  &.flex-6-of-12,
+  &.flex-4-of-12 {
+    .su-basic-page-types-view-column {
+      @include responsive-spacing('margin-bottom', 4);
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+
+  }
+
   // Removes the padding top for the first item
   // but not on 12 across.
   &:not(.flex-12-of-12) {
