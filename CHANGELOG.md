@@ -1,6 +1,19 @@
 # Stanford Profile Helper
 
 
+8.x-1.31
+--------------------------------------------------------------------------------
+_Release Date: 2022-01-27_
+
+- Purge the source url when a redirect is saved (#169)
+- Modify the imported redirects to point at the node instead of the alias (#168)
+- Check if the form as VBO before sorting actions (#167)
+- D8CORE-5183: fixes to the after in a heading for the new localist work (#166)
+- D8CORE-5106: fixing the spacing between basic cards when in a list (#165)
+- D8CORE-4833: Added sorting to the node actions (#159)
+- updated tests for D9.3 (#164)
+
+
 8.x-1.30
 --------------------------------------------------------------------------------
 _Release Date: 2021-12-03_
