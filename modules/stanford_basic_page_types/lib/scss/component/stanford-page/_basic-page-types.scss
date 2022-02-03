@@ -6,7 +6,7 @@
 
 .stanford-page {
   &.su-page-description {
-    @include big-paragraph
+    @include big-paragraph;
 
     margin-bottom: 46px;
 
@@ -27,6 +27,10 @@
 // Card styles
 .ds-entity--stanford-page {
   & .su-card {
+
+    @include grid-media-max("md") {
+      @include modular-spacing("margin-bottom", 2);
+    }
 
     .su-card__contents {
       @include modular-spacing("padding", 1);
