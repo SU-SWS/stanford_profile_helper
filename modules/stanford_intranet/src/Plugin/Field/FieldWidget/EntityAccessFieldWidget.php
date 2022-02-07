@@ -94,7 +94,7 @@ class EntityAccessFieldWidget extends WidgetBase {
    * @return array
    *   Keyed array of role id and role label.
    */
-  protected function getAssignableRoles(): array {
+  protected static function getAssignableRoles(): array {
     if (\Drupal::moduleHandler()->moduleExists('role_delegation')) {
       /** @var \Drupal\role_delegation\DelegatableRolesInterface $role_delegation */
       $role_delegation = \Drupal::service('delegatable_roles');

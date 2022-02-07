@@ -7,7 +7,7 @@ use Drupal\preprocess_event_dispatcher\Event\BlockPreprocessEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Class PreprocessEventSubscriber.
+ * Preprocess event subscribers.
  */
 class PreprocessEventSubscriber implements EventSubscriberInterface {
 
@@ -44,8 +44,7 @@ class PreprocessEventSubscriber implements EventSubscriberInterface {
    * @param \Drupal\preprocess_event_dispatcher\Event\BlockPreprocessEvent $event
    *   Triggered event.
    *
-   * @see hook_preprocess_HOOK().
-   *
+   * @see hook_preprocess_HOOK()
    */
   public function preprocessBlock(BlockPreprocessEvent $event) {
     $variables = $event->getVariables();

@@ -12,7 +12,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Class BaseEventSubscriber.
+ * Hook event dispatcher base class with some helpful methods.
  *
  * @codeCoverageIgnore
  */

@@ -5,7 +5,6 @@ namespace Drupal\stanford_profile_helper\EventSubscriber;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
-use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\Url;
 use Drupal\core_event_dispatcher\Event\Form\FormAlterEvent;
@@ -97,8 +96,6 @@ class FormEventSubscriber extends BaseEventSubscriber {
     ];
   }
 
-
-
   /**
    * Alter the embeddable media form.
    *
@@ -111,8 +108,10 @@ class FormEventSubscriber extends BaseEventSubscriber {
 
     $source_field = $form_state->get('source_field');
     $embed_code_field = $form_state->get('unstructured_field_name');
-    $authorized = $this->currentUser()->hasPermission('create field_media_embeddable_code')
-      || $this->currentUser()->hasPermission('edit field_media_embeddable_code');
+    $authorized = $this->currentUser()
+        ->hasPermission('create field_media_embeddable_code')
+      || $this->currentUser()
+        ->hasPermission('edit field_media_embeddable_code');
 
     if (isset($form['container'][$embed_code_field])) {
       $form['container'][$embed_code_field]['#access'] = $authorized;
@@ -120,12 +119,11 @@ class FormEventSubscriber extends BaseEventSubscriber {
 
     if (isset($form['container'][$source_field])) {
       if (!$authorized) {
-        $new_desc = 'Allowed providers: @providers. For custom embeds, please <a href="@snow_form">request support.</a>';
         $args = $form['container'][$source_field]['#description']->getArguments();
         $args['@snow_form'] = 'https://stanford.service-now.com/it_services?id=sc_cat_item&sys_id=83daed294f4143009a9a97411310c70a';
-        $form['container'][$source_field]['#description'] = t($new_desc, $args);
+        $form['container'][$source_field]['#description'] = $this->t('Allowed providers: @providers. For custom embeds, please <a href="@snow_form">request support.</a>', $args);
       }
-      $form['container'][$source_field]['#title'] = t('oEmbed URL');
+      $form['container'][$source_field]['#title'] = $this->t('oEmbed URL');
     }
   }
 
@@ -230,9 +228,10 @@ class FormEventSubscriber extends BaseEventSubscriber {
       return;
     }
 
-    // If the form is locked, hide the config you cannot change from users without
-    // the know how.
-    $access = $this->currentUser()->hasPermission('administer menus and menu items');
+    // If the form is locked, hide the config you cannot change from users
+    // without the know how.
+    $access = $this->currentUser()
+      ->hasPermission('administer menus and menu items');
     $form['label']['#access'] = $access;
     $form['description']['#access'] = $access;
     $form['id']['#access'] = $access;

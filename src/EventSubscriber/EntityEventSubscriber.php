@@ -108,7 +108,7 @@ class EntityEventSubscriber extends BaseEventSubscriber {
    * @param \Drupal\core_event_dispatcher\Event\Entity\EntityPresaveEvent $event
    *   Triggered event.
    *
-   * @see hook_entity_presave().
+   * @see hook_entity_presave()
    */
   public function onEntityPreSave(EntityPresaveEvent $event) {
     $method_name = $this->getMethodName('preSave', $event);
@@ -138,7 +138,7 @@ class EntityEventSubscriber extends BaseEventSubscriber {
    * @param \Drupal\core_event_dispatcher\Event\Entity\EntityAccessEvent $event
    *   Triggered event.
    *
-   * @see hook_entity_access().
+   * @see hook_entity_access()
    */
   public function onEntityAccess(EntityAccessEvent $event) {
     $method_name = $this->getMethodName('access', $event);
@@ -153,7 +153,7 @@ class EntityEventSubscriber extends BaseEventSubscriber {
    * @param \Drupal\core_event_dispatcher\Event\Entity\EntityFieldAccessEvent $event
    *   Triggered event.
    *
-   * @see hook_entity_field_access().
+   * @see hook_entity_field_access()
    */
   public function onFieldAccess(EntityFieldAccessEvent $event) {
     $field_definition = $event->getFieldDefinition();
@@ -212,7 +212,7 @@ class EntityEventSubscriber extends BaseEventSubscriber {
    * @return \Drupal\Core\Access\AccessResultForbidden|\Drupal\Core\Access\AccessResultNeutral
    *   Access result object.
    *
-   * @see hook_entity_access().
+   * @see hook_entity_access()
    */
   protected function accessNode(NodeInterface $node, $op, AccountInterface $account) {
     if ($op == 'delete') {
@@ -237,7 +237,7 @@ class EntityEventSubscriber extends BaseEventSubscriber {
    * @param \Drupal\taxonomy\TermInterface $original_term
    *   The original taxonomy term entity before update.
    *
-   * @see hook_entity_update().
+   * @see hook_entity_update()
    */
   protected function updateTaxonomyTerm(TermInterface $term, TermInterface $original_term) {
     // https://www.drupal.org/project/taxonomy_menu/issues/2867626
@@ -269,7 +269,7 @@ class EntityEventSubscriber extends BaseEventSubscriber {
    * @param \Drupal\node\NodeInterface $node
    *   Node entity.
    *
-   * @see hook_entity_presave().
+   * @see hook_entity_presave()
    */
   protected function preSaveNode(NodeInterface $node) {
     // Invalidate any search result cached so the updated/new content will be
@@ -283,11 +283,12 @@ class EntityEventSubscriber extends BaseEventSubscriber {
    * @param \Drupal\field\FieldStorageConfigInterface $field_storage
    *   Field storage entity.
    *
-   * @see hook_entity_presave().
+   * @see hook_entity_presave()
    */
   protected function preSaveFieldStorageConfig(FieldStorageConfigInterface $field_storage) {
-    // If a field is saved and the field permissions are public, lets just remove
-    // those third party settings before save so that it keeps the config clean.
+    // If a field is saved and the field permissions are public, lets just
+    // remove those third party settings before save so that it keeps the config
+    // clean.
     if ($field_storage->getThirdPartySetting('field_permissions', 'permission_type') === 'public') {
       $field_storage->unsetThirdPartySetting('field_permissions', 'permission_type');
       $field_storage->calculateDependencies();
@@ -300,11 +301,13 @@ class EntityEventSubscriber extends BaseEventSubscriber {
    * @param \Drupal\config_pages\ConfigPagesInterface $config_page
    *   Config page entity.
    *
-   * @see hook_node_presave().
+   * @see hook_node_presave()
    */
   protected function preSaveConfigPages(ConfigPagesInterface $config_page) {
-    if ($config_page->hasField('su_site_url') && ($url_field = $config_page->get('su_site_url')
-        ->getValue())) {
+    if (
+      $config_page->hasField('su_site_url') &&
+      ($url_field = $config_page->get('su_site_url')->getValue())
+    ) {
       // Set the xml sitemap module state to the new domain.
       $this->state->set('xmlsitemap_base_url', $url_field[0]['uri']);
     }
@@ -320,18 +323,18 @@ class EntityEventSubscriber extends BaseEventSubscriber {
    * @param \Drupal\menu_link_content\MenuLinkContentInterface $menu_link
    *   Menu link entity.
    *
-   * @see hook_entity_presave().
+   * @see hook_entity_presave()
    */
   protected function preSaveMenuLinkContent(MenuLinkContentInterface $menu_link) {
-    // For new menu link items created on a node form (normally), set the expanded
-    // attribute so all menu items are expanded by default.
+    // For new menu link items created on a node form (normally), set the
+    // expanded attribute so all menu items are expanded by default.
     if ($menu_link->isNew()) {
       $menu_link->set('expanded', TRUE);
     }
 
-    // When a menu item is added as a child of another menu item clear the parent
-    // pages cache so that the block shows up as it doesn't get invalidated just
-    // by the menu cache tags.
+    // When a menu item is added as a child of another menu item clear the
+    // parent pages cache so that the block shows up as it doesn't get
+    // invalidated just by the menu cache tags.
     $parent_id = $menu_link->getParentId();
     if (!empty($parent_id)) {
       [$entity_name, $uuid] = explode(':', $parent_id);
@@ -358,13 +361,12 @@ class EntityEventSubscriber extends BaseEventSubscriber {
    * @param \Drupal\user\RoleInterface $role
    *   The role entity.
    *
-   * @see hook_entity_presave().
+   * @see hook_entity_presave()
    */
   protected function preSaveRole(RoleInterface $role) {
-    // Only modify new roles if they are created through the UI and don't exist in
-    // the config management - Prefix them with "custm_" so they can be easily
-    // identifiable.
-
+    // Only modify new roles if they are created through the UI and don't exist
+    // in the config management - Prefix them with "custm_" so they can be
+    // easily identifiable.
     if (
       PHP_SAPI != 'cli' &&
       $role->isNew() &&
@@ -380,7 +382,7 @@ class EntityEventSubscriber extends BaseEventSubscriber {
    * @param \Drupal\Core\Entity\ContentEntityInterface $redirect
    *   Redirect entity.
    *
-   * @see hook_entity_presave().
+   * @see hook_entity_presave()
    */
   protected function preSaveRedirect(ContentEntityInterface $redirect) {
     $destination = $redirect->get('redirect_redirect')->getString();
@@ -392,7 +394,7 @@ class EntityEventSubscriber extends BaseEventSubscriber {
       // Find the internal path from the alias.
       $path = $this->aliasManager->getPathByAlias($matches[1]);
 
-      // Grab the node id from the internal path and use that as the destination.
+      // Grab the node id from the internal path and use that as destination.
       if (preg_match('/node\/(\d+)/', $path, $matches)) {
         $redirect->set('redirect_redirect', 'entity:node/' . $matches[1]);
       }

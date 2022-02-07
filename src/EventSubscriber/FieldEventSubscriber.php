@@ -7,7 +7,7 @@ use Drupal\field_event_dispatcher\Event\Field\WidgetSingleElementTypeFormAlterEv
 use Drupal\hook_event_dispatcher\HookEventDispatcherInterface;
 
 /**
- * Class FieldEventSubscriber.
+ * Field event subscribers.
  *
  * @package Drupal\stanford_profile\EventSubscriber
  */
@@ -29,7 +29,7 @@ class FieldEventSubscriber extends BaseEventSubscriber {
    * @param \Drupal\field_event_dispatcher\Event\Field\WidgetSingleElementFormAlterEvent $event
    *   Triggered Event.
    *
-   * @see hook_field_widget_single_element_form_alter().
+   * @see hook_field_widget_single_element_form_alter()
    */
   public function singleElementFormAlter(WidgetSingleElementFormAlterEvent $event) {
     $context = $event->getContext();
@@ -48,8 +48,7 @@ class FieldEventSubscriber extends BaseEventSubscriber {
       if (!$authorized) {
         $args = $element['value']['#description']['#items'][1]->getArguments();
         $args['@snow_form'] = 'https://stanford.service-now.com/it_services?id=sc_cat_item&sys_id=83daed294f4143009a9a97411310c70a';
-        $new_desc = 'Allowed providers: @providers. For custom embeds, please <a href="@snow_form">request support.</a>';
-        $element['value']['#description'] = $this->t($new_desc, $args);
+        $element['value']['#description'] = $this->t('Allowed providers: @providers. For custom embeds, please <a href="@snow_form">request support.</a>', $args);
       }
     }
   }
@@ -60,13 +59,13 @@ class FieldEventSubscriber extends BaseEventSubscriber {
    * @param \Drupal\field_event_dispatcher\Event\Field\WidgetSingleElementTypeFormAlterEvent $event
    *   Triggered Event.
    *
-   * @see hook_field_widget_single_element_WIDGET_TYPE_form_alter().
+   * @see hook_field_widget_single_element_WIDGET_TYPE_form_alter()
    */
   public function entityReferenceWidgetFormAlter(WidgetSingleElementTypeFormAlterEvent $event) {
     $context = $event->getContext();
+    $field_definition = $context['items']->getFieldDefinition();
     $element = &$event->getElement();
-    if ($context['items']->getFieldDefinition()
-        ->getName() == 'layout_selection') {
+    if ($field_definition->getName() == 'layout_selection') {
       $element['#description'] = $this->t('Choose a layout to display the page as a whole. Choose "- None -" to keep the default layout setting.');
     }
   }

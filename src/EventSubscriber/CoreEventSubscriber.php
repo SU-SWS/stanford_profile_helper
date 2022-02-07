@@ -31,7 +31,7 @@ class CoreEventSubscriber extends BaseEventSubscriber {
    * @param \Drupal\core_event_dispatcher\Event\Theme\LibraryInfoAlterEvent $event
    *   Triggered Event.
    *
-   * @see hook_library_info_alter().
+   * @see hook_library_info_alter()
    */
   public function libraryInfoAlter(LibraryInfoAlterEvent $event) {
     $extension = $event->getExtension();
@@ -57,7 +57,7 @@ class CoreEventSubscriber extends BaseEventSubscriber {
    * @param \Drupal\core_event_dispatcher\Event\Theme\PageAttachmentsEvent $event
    *   Triggered event.
    *
-   * @see hook_page_attachments().
+   * @see hook_page_attachments()
    */
   public function pageAttachments(PageAttachmentsEvent $event) {
     $attachments = &$event->getAttachments();
@@ -78,7 +78,7 @@ class CoreEventSubscriber extends BaseEventSubscriber {
    * @param \Drupal\core_event_dispatcher\Event\Entity\EntityBundleFieldInfoAlterEvent $event
    *   Triggered Event.
    *
-   * @see hook_entity_bundle_field_info_alter().
+   * @see hook_entity_bundle_field_info_alter()
    */
   public function entityBundleFieldInfoAlter(EntityBundleFieldInfoAlterEvent $event) {
     $bundle = $event->getBundle();
