@@ -5,12 +5,9 @@ namespace Drupal\stanford_profile_helper\EventSubscriber;
 use Drupal\config_pages\ConfigPagesInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Cache\Cache;
-use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\StorageInterface;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Routing\RouteBuilderInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\State\StateInterface;
@@ -27,23 +24,14 @@ use Drupal\node\NodeInterface;
 use Drupal\path_alias\AliasManagerInterface;
 use Drupal\taxonomy\TermInterface;
 use Drupal\user\RoleInterface;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class EntityEventSubscriber implements EventSubscriberInterface {
-
-  /**
-   * Core entity type manager service.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
-
-  /**
-   * Core config factory service.
-   *
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
-   */
-  protected $configFactory;
+/**
+ * Class EntityEventSubscriber.
+ *
+ * Entity hooks event listeners, triggered from the core_event_dispatcher
+ * module. This includes presave, update, delete, etc methods.
+ */
+class EntityEventSubscriber extends BaseEventSubscriber {
 
   /**
    * Core state service.
@@ -81,31 +69,25 @@ class EntityEventSubscriber implements EventSubscriberInterface {
   protected $aliasManager;
 
   /**
-   * Core module handler service.
+   * EntityEventSubscriber constructor.
    *
-   * @var \Drupal\Core\Extension\ModuleHandlerInterface
-   */
-  protected $moduleHandler;
-
-  /**
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    * @param \Drupal\Core\State\StateInterface $state
+   *   State service.
    * @param \Drupal\Core\Database\Connection $database
+   *   Database connection service.
    * @param \Drupal\Core\Routing\RouteBuilderInterface $route_builder
+   *   Route builder service.
    * @param \Drupal\Core\Config\StorageInterface $config_storage
+   *   Config storage service.
    * @param \Drupal\path_alias\AliasManagerInterface $alias_manager
-   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
+   *   Path alias manager service.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, ConfigFactoryInterface $config_factory, StateInterface $state, Connection $database, RouteBuilderInterface $route_builder, StorageInterface $config_storage, AliasManagerInterface $alias_manager, ModuleHandlerInterface $module_handler) {
-    $this->entityTypeManager = $entity_type_manager;
-    $this->configFactory = $config_factory;
+  public function __construct(StateInterface $state, Connection $database, RouteBuilderInterface $route_builder, StorageInterface $config_storage, AliasManagerInterface $alias_manager) {
     $this->state = $state;
     $this->database = $database;
     $this->routeBuilder = $route_builder;
     $this->configStorage = $config_storage;
     $this->aliasManager = $alias_manager;
-    $this->moduleHandler = $module_handler;
   }
 
   /**
@@ -121,7 +103,12 @@ class EntityEventSubscriber implements EventSubscriberInterface {
   }
 
   /**
+   * Entity pre-save event action, calls a method for each entity type.
+   *
    * @param \Drupal\core_event_dispatcher\Event\Entity\EntityPresaveEvent $event
+   *   Triggered event.
+   *
+   * @see hook_entity_presave().
    */
   public function onEntityPreSave(EntityPresaveEvent $event) {
     $method_name = $this->getMethodName('preSave', $event);
@@ -131,9 +118,12 @@ class EntityEventSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * @param \Drupal\core_event_dispatcher\Event\Entity\EntityUpdateEvent $event
+   * Entity update event action, calls a method for each entity type.
    *
-   * @return void
+   * @param \Drupal\core_event_dispatcher\Event\Entity\EntityUpdateEvent $event
+   *   Triggered event.
+   *
+   * @see hook_entity_update()
    */
   public function onEntityUpdate(EntityUpdateEvent $event) {
     $method_name = $this->getMethodName('update', $event);
@@ -143,23 +133,29 @@ class EntityEventSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * @param \Drupal\core_event_dispatcher\Event\Entity\EntityAccessEvent $event
+   * Entity access event action, calls a method for each entity type.
    *
-   * @return void
+   * @param \Drupal\core_event_dispatcher\Event\Entity\EntityAccessEvent $event
+   *   Triggered event.
+   *
+   * @see hook_entity_access().
    */
   public function onEntityAccess(EntityAccessEvent $event) {
     $method_name = $this->getMethodName('access', $event);
     if (method_exists($this, $method_name)) {
-      $event->setAccessResult($this->$method_name($event->getEntity(), $event->getOperation(), $event->getAccount()));
+      $event->addAccessResult($this->$method_name($event->getEntity(), $event->getOperation(), $event->getAccount()));
     }
   }
 
   /**
-   * @param \Drupal\core_event_dispatcher\Event\Entity\EntityFieldAccessEvent $event
+   * Entity field access event action.
    *
-   * @throws \Drupal\Core\Entity\EntityMalformedException
+   * @param \Drupal\core_event_dispatcher\Event\Entity\EntityFieldAccessEvent $event
+   *   Triggered event.
+   *
+   * @see hook_entity_field_access().
    */
-  public function onFieldAccess(EntityFieldAccessEvent $event){
+  public function onFieldAccess(EntityFieldAccessEvent $event) {
     $field_definition = $event->getFieldDefinition();
     $items = $event->getItems();
     $account = $event->getAccount();
@@ -187,10 +183,15 @@ class EntityEventSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * @param $prefix
+   * Get the Camel-Case method name for the event entity.
+   *
+   * @param string $prefix
+   *   Method prefix before the entity type.
    * @param \Drupal\core_event_dispatcher\Event\Entity\AbstractEntityEvent $event
+   *   Triggered event.
    *
    * @return string
+   *   Camel Case method name.
    */
   protected function getMethodName($prefix, AbstractEntityEvent $event): string {
     $entity_type = $event->getEntity()->getEntityTypeId();
@@ -199,16 +200,23 @@ class EntityEventSubscriber implements EventSubscriberInterface {
   }
 
   /**
+   * Check the access on the `node` entity.
+   *
    * @param \Drupal\node\NodeInterface $node
-   * @param $op
+   *   Node entity.
+   * @param string $op
+   *   Operation
    * @param \Drupal\Core\Session\AccountInterface $account
+   *   Triggered event.
    *
    * @return \Drupal\Core\Access\AccessResultForbidden|\Drupal\Core\Access\AccessResultNeutral
-   * @throws \Drupal\Core\Entity\EntityMalformedException
+   *   Access result object.
+   *
+   * @see hook_entity_access().
    */
   protected function accessNode(NodeInterface $node, $op, AccountInterface $account) {
     if ($op == 'delete') {
-      $site_config = $this->configFactory->get('system.site');
+      $site_config = $this->configFactory()->get('system.site');
       $node_urls = [$node->toUrl()->toString(), "/node/{$node->id()}"];
 
       // If the node is configured to be the home page, 404, or 403, prevent the
@@ -222,10 +230,14 @@ class EntityEventSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * @param \Drupal\taxonomy\TermInterface $term
-   * @param \Drupal\taxonomy\TermInterface $original_term
+   * During `taxonomy_term` update, do some action.
    *
-   * @return void
+   * @param \Drupal\taxonomy\TermInterface $term
+   *   The modified taxonomy term entity.
+   * @param \Drupal\taxonomy\TermInterface $original_term
+   *   The original taxonomy term entity before update.
+   *
+   * @see hook_entity_update().
    */
   protected function updateTaxonomyTerm(TermInterface $term, TermInterface $original_term) {
     // https://www.drupal.org/project/taxonomy_menu/issues/2867626
@@ -252,9 +264,12 @@ class EntityEventSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * @param \Drupal\node\NodeInterface $node
+   * On `node` save, perform some actions.
    *
-   * @return void
+   * @param \Drupal\node\NodeInterface $node
+   *   Node entity.
+   *
+   * @see hook_entity_presave().
    */
   protected function preSaveNode(NodeInterface $node) {
     // Invalidate any search result cached so the updated/new content will be
@@ -263,9 +278,12 @@ class EntityEventSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * @param \Drupal\field\FieldStorageConfigInterface $field_storage
+   * Pre `field_storage_config` entity save, perform some actions.
    *
-   * @return void
+   * @param \Drupal\field\FieldStorageConfigInterface $field_storage
+   *   Field storage entity.
+   *
+   * @see hook_entity_presave().
    */
   protected function preSaveFieldStorageConfig(FieldStorageConfigInterface $field_storage) {
     // If a field is saved and the field permissions are public, lets just remove
@@ -277,9 +295,12 @@ class EntityEventSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * @param \Drupal\config_pages\ConfigPagesInterface $config_page
+   * Pre-Save `config_pages`, perform some actions.
    *
-   * @return void
+   * @param \Drupal\config_pages\ConfigPagesInterface $config_page
+   *   Config page entity.
+   *
+   * @see hook_node_presave().
    */
   protected function preSaveConfigPages(ConfigPagesInterface $config_page) {
     if ($config_page->hasField('su_site_url') && ($url_field = $config_page->get('su_site_url')
@@ -294,11 +315,12 @@ class EntityEventSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * @param \Drupal\menu_link_content\MenuLinkContentInterface $menu_link
+   * Pre-save `menu_link_content` entity, perform some action.
    *
-   * @return void
-   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
-   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   * @param \Drupal\menu_link_content\MenuLinkContentInterface $menu_link
+   *   Menu link entity.
+   *
+   * @see hook_entity_presave().
    */
   protected function preSaveMenuLinkContent(MenuLinkContentInterface $menu_link) {
     // For new menu link items created on a node form (normally), set the expanded
@@ -313,7 +335,7 @@ class EntityEventSubscriber implements EventSubscriberInterface {
     $parent_id = $menu_link->getParentId();
     if (!empty($parent_id)) {
       [$entity_name, $uuid] = explode(':', $parent_id);
-      $menu_link_content = $this->entityTypeManager->getStorage($entity_name)
+      $menu_link_content = $this->entityTypeManager()->getStorage($entity_name)
         ->loadByProperties(['uuid' => $uuid]);
 
       if (is_array($menu_link_content)) {
@@ -331,14 +353,18 @@ class EntityEventSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * @param \Drupal\user\RoleInterface $role
+   * On `user_role` pre-save, perform some actions.
    *
-   * @return void
+   * @param \Drupal\user\RoleInterface $role
+   *   The role entity.
+   *
+   * @see hook_entity_presave().
    */
   protected function preSaveRole(RoleInterface $role) {
     // Only modify new roles if they are created through the UI and don't exist in
     // the config management - Prefix them with "custm_" so they can be easily
     // identifiable.
+
     if (
       PHP_SAPI != 'cli' &&
       $role->isNew() &&
@@ -349,9 +375,12 @@ class EntityEventSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * @param \Drupal\Core\Entity\ContentEntityInterface $redirect
+   * Pre-save `redirect`, perform some action.
    *
-   * @return void
+   * @param \Drupal\Core\Entity\ContentEntityInterface $redirect
+   *   Redirect entity.
+   *
+   * @see hook_entity_presave().
    */
   protected function preSaveRedirect(ContentEntityInterface $redirect) {
     $destination = $redirect->get('redirect_redirect')->getString();
@@ -371,16 +400,17 @@ class EntityEventSubscriber implements EventSubscriberInterface {
 
     // Purge everything for the source url so that it can redirect without any
     // intervention.
-    if ($this->moduleHandler->moduleExists('purge_processor_lateruntime')) {
+    if ($this->moduleHandler()->moduleExists('purge_processor_lateruntime')) {
       $source = $redirect->get('redirect_source')->getString();
       self::purgePath($source);
     }
   }
 
   /**
-   * @param $path
+   * Purge the given path using purge processors.
    *
-   * @return void
+   * @param string $path
+   *   Relative path to the drupal application.
    */
   protected static function purgePath($path) {
     $url = Url::fromUserInput('/' . trim($path, '/'), ['absolute' => TRUE])

@@ -65,7 +65,7 @@ class EntityAccessFieldWidget extends WidgetBase {
     foreach ($items as $item) {
       $default_value[] = $item->getValue()['role'];
     }
-    if (empty($options = _stanford_profile_helper_get_assignable_roles())) {
+    if (empty($options = self::getAssignableRoles())) {
       return $element;
     }
 
@@ -86,6 +86,22 @@ class EntityAccessFieldWidget extends WidgetBase {
       $new_values[] = ['role' => $role, 'access' => ['view']];
     }
     return $new_values;
+  }
+
+  /**
+   * Get available roles, limited if the role_delegation module is enabled.
+   *
+   * @return array
+   *   Keyed array of role id and role label.
+   */
+  protected function getAssignableRoles(): array {
+    if (\Drupal::moduleHandler()->moduleExists('role_delegation')) {
+      /** @var \Drupal\role_delegation\DelegatableRolesInterface $role_delegation */
+      $role_delegation = \Drupal::service('delegatable_roles');
+      return $role_delegation->getAssignableRoles(\Drupal::currentUser());
+    }
+
+    return user_role_names(TRUE);
   }
 
 }

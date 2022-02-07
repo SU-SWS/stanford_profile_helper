@@ -5,51 +5,19 @@ namespace Drupal\stanford_profile_helper\EventSubscriber;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
-use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Site\Settings;
-use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\core_event_dispatcher\Event\Form\FormAlterEvent;
 use Drupal\core_event_dispatcher\Event\Form\FormBaseAlterEvent;
 use Drupal\core_event_dispatcher\Event\Form\FormIdAlterEvent;
 use Drupal\hook_event_dispatcher\HookEventDispatcherInterface;
 use Drupal\node\NodeForm;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class FormEventSubscriber for all form altering events.
  */
-class FormEventSubscriber implements EventSubscriberInterface {
-
-  use StringTranslationTrait;
-
-  /**
-   * Current active user.
-   *
-   * @var \Drupal\Core\Session\AccountInterface
-   */
-  protected $currentUser;
-
-  /**
-   * Messenger service.
-   *
-   * @var \Drupal\Core\Messenger\MessengerInterface
-   */
-  protected $messenger;
-
-  /**
-   * FormEventSubscriber Constructor.
-   *
-   * @param \Drupal\Core\Session\AccountInterface $current_user
-   *   Current active user.
-   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
-   *   Messenger service.
-   */
-  public function __construct(AccountInterface $current_user, MessengerInterface $messenger) {
-    $this->currentUser = $current_user;
-    $this->messenger = $messenger;
-  }
+class FormEventSubscriber extends BaseEventSubscriber {
 
   /**
    * {@inheritDoc}
@@ -70,7 +38,10 @@ class FormEventSubscriber implements EventSubscriberInterface {
   }
 
   /**
+   * Alter the config pages site settings form.
+   *
    * @param \Drupal\core_event_dispatcher\Event\Form\FormIdAlterEvent $event
+   *   Triggered event.
    */
   public function siteSettingFormAlter(FormIdAlterEvent $event) {
     $form = &$event->getForm();
@@ -78,10 +49,12 @@ class FormEventSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * @param array $form
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   * Site settings form validation.
    *
-   * @return void
+   * @param array $form
+   *   Complete form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Submitted form state.
    */
   public static function siteSettingFormValidate(array $form, FormStateInterface $form_state) {
     $element = $form_state->getValue('su_site_url');
@@ -96,9 +69,10 @@ class FormEventSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * @param \Drupal\core_event_dispatcher\Event\Form\FormIdAlterEvent $event
+   * Alter the config pages lockup settings form.
    *
-   * @return void
+   * @param \Drupal\core_event_dispatcher\Event\Form\FormIdAlterEvent $event
+   *   Triggered event.
    */
   public function lockupSettingFormAlter(FormIdAlterEvent $event) {
     $form = &$event->getForm();
@@ -110,9 +84,10 @@ class FormEventSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * @param \Drupal\core_event_dispatcher\Event\Form\FormIdAlterEvent $event
+   * Alter the config pages local footer form.
    *
-   * @return void
+   * @param \Drupal\core_event_dispatcher\Event\Form\FormIdAlterEvent $event
+   *   Triggered Event.
    */
   public function localFooterFormAlter(FormIdAlterEvent $event) {
     $form = &$event->getForm();
@@ -122,20 +97,13 @@ class FormEventSubscriber implements EventSubscriberInterface {
     ];
   }
 
-  /**
-   * @param array $form
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *
-   * @return void
-   */
-  public static function invalidateSystemCache(array &$form, FormStateInterface $form_state) {
-    Cache::invalidateTags(['config:system.site']);
-  }
+
 
   /**
-   * @param \Drupal\core_event_dispatcher\Event\Form\FormIdAlterEvent $event
+   * Alter the embeddable media form.
    *
-   * @return void
+   * @param \Drupal\core_event_dispatcher\Event\Form\FormIdAlterEvent $event
+   *   Triggered event.
    */
   public function embeddableMediaFormAlter(FormIdAlterEvent $event) {
     $form = &$event->getForm();
@@ -143,8 +111,8 @@ class FormEventSubscriber implements EventSubscriberInterface {
 
     $source_field = $form_state->get('source_field');
     $embed_code_field = $form_state->get('unstructured_field_name');
-    $authorized = $this->currentUser->hasPermission('create field_media_embeddable_code')
-      || $this->currentUser->hasPermission('edit field_media_embeddable_code');
+    $authorized = $this->currentUser()->hasPermission('create field_media_embeddable_code')
+      || $this->currentUser()->hasPermission('edit field_media_embeddable_code');
 
     if (isset($form['container'][$embed_code_field])) {
       $form['container'][$embed_code_field]['#access'] = $authorized;
@@ -162,9 +130,10 @@ class FormEventSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * @param \Drupal\core_event_dispatcher\Event\Form\FormBaseAlterEvent $event
+   * Alter the taxonomy term form.
    *
-   * @return void
+   * @param \Drupal\core_event_dispatcher\Event\Form\FormBaseAlterEvent $event
+   *   Triggered Event.
    */
   public function taxonomyTermFormAlter(FormBaseAlterEvent $event) {
     // Tweak the taxonomy term add/edit form.
@@ -202,9 +171,10 @@ class FormEventSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * @param \Drupal\core_event_dispatcher\Event\Form\FormIdAlterEvent $event
+   * Alter the VBO config action form.
    *
-   * @return void
+   * @param \Drupal\core_event_dispatcher\Event\Form\FormIdAlterEvent $event
+   *   Triggered Event.
    */
   public function vboConfigActionFormAlter(FormIdAlterEvent $event) {
     $form = &$event->getForm();
@@ -216,9 +186,10 @@ class FormEventSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * @param \Drupal\core_event_dispatcher\Event\Form\FormAlterEvent $event
+   * Alter any form, provide some logic to identify the desired forms.
    *
-   * @return void
+   * @param \Drupal\core_event_dispatcher\Event\Form\FormAlterEvent $event
+   *   Triggered Event.
    */
   public function formAlter(FormAlterEvent $event) {
     $form = &$event->getForm();
@@ -246,9 +217,10 @@ class FormEventSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * @param \Drupal\core_event_dispatcher\Event\Form\FormIdAlterEvent $event
+   * Alter the menu edit form.
    *
-   * @return void
+   * @param \Drupal\core_event_dispatcher\Event\Form\FormIdAlterEvent $event
+   *   Triggered Event.
    */
   public function menuEditFormAlter(FormIdAlterEvent $event) {
     $form = &$event->getForm();
@@ -260,21 +232,22 @@ class FormEventSubscriber implements EventSubscriberInterface {
 
     // If the form is locked, hide the config you cannot change from users without
     // the know how.
-    $access = $this->currentUser->hasPermission('administer menus and menu items');
+    $access = $this->currentUser()->hasPermission('administer menus and menu items');
     $form['label']['#access'] = $access;
     $form['description']['#access'] = $access;
     $form['id']['#access'] = $access;
 
     // Remove the warning message if the user does not have access.
     if (!$access) {
-      $this->messenger->deleteByType("warning");
+      $this->messenger()->deleteByType("warning");
     }
   }
 
   /**
-   * @param \Drupal\core_event_dispatcher\Event\Form\FormIdAlterEvent $event
+   * Alter the taxonomy overview terms form.
    *
-   * @return void
+   * @param \Drupal\core_event_dispatcher\Event\Form\FormIdAlterEvent $event
+   *   Triggered Event.
    */
   public function taxonomyOverviewTermsFormAlter(FormIdAlterEvent $event) {
     $form = &$event->getForm();
@@ -287,6 +260,18 @@ class FormEventSubscriber implements EventSubscriberInterface {
       $form['citation_format']['#title'] = $this->t('Citation Style');
       $form['citation_format']['#description'] = $this->t('Select citation format for the %link. *<strong>CAUTION</strong>: The default Publication list page uses Chicago as the citation style. If you select a different citation format here, you should also update the citation format on the default Publications List Page that uses a "filter by topics" menu.', ['%link' => $link]);
     }
+  }
+
+  /**
+   * Invalidate cache tags when submitting a form.
+   *
+   * @param array $form
+   *   Complete form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Submitted form state.
+   */
+  public static function invalidateSystemCache(array &$form, FormStateInterface $form_state) {
+    Cache::invalidateTags(['config:system.site']);
   }
 
 }

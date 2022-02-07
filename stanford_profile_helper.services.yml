@@ -1,22 +1,27 @@
 services:
   stanford_profile_helper.preprocess_event_subscriber:
     class: Drupal\stanford_profile_helper\EventSubscriber\PreprocessEventSubscriber
+    arguments: ['@current_route_match']
+    tags:
+      - { name: 'event_subscriber' }
+  stanford_profile_helper.field_event_subscriber:
+    class: Drupal\stanford_profile_helper\EventSubscriber\FieldEventSubscriber
     arguments: []
     tags:
       - { name: 'event_subscriber' }
   stanford_profile_helper.core_event_subscriber:
     class: Drupal\stanford_profile_helper\EventSubscriber\CoreEventSubscriber
-    arguments: ['@current_user']
+    arguments: []
     tags:
       - { name: 'event_subscriber' }
   stanford_profile_helper.entity_event_subscriber:
     class: Drupal\stanford_profile_helper\EventSubscriber\EntityEventSubscriber
-    arguments: ['@entity_type.manager', '@config.factory', '@state', '@database', '@router.builder', '@config.storage.sync', '@path_alias.manager', '@module_handler']
+    arguments: ['@state', '@database', '@router.builder', '@config.storage.sync', '@path_alias.manager']
     tags:
       - { name: 'event_subscriber' }
   stanford_profile_helper.form_event_subscriber:
     class: Drupal\stanford_profile_helper\EventSubscriber\FormEventSubscriber
-    arguments: ['@current_user', '@messenger']
+    arguments: []
     tags:
       - { name: 'event_subscriber' }
   stanford_profile_helper.config_overrider:
