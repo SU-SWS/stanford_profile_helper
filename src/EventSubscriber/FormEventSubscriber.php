@@ -108,17 +108,18 @@ class FormEventSubscriber extends BaseEventSubscriber {
 
     $source_field = $form_state->get('source_field');
     $embed_code_field = $form_state->get('unstructured_field_name');
-    $authorized = $this->currentUser()
-        ->hasPermission('create field_media_embeddable_code')
-      || $this->currentUser()
-        ->hasPermission('edit field_media_embeddable_code');
+
+    $create_perm = $this->currentUser()
+      ->hasPermission('create field_media_embeddable_code');
+    $edit_perm = $this->currentUser()
+      ->hasPermission('edit field_media_embeddable_code');
 
     if (isset($form['container'][$embed_code_field])) {
-      $form['container'][$embed_code_field]['#access'] = $authorized;
+      $form['container'][$embed_code_field]['#access'] = $create_perm || $edit_perm;
     }
 
     if (isset($form['container'][$source_field])) {
-      if (!$authorized) {
+      if (!($create_perm || $edit_perm)) {
         $args = $form['container'][$source_field]['#description']->getArguments();
         $args['@snow_form'] = 'https://stanford.service-now.com/it_services?id=sc_cat_item&sys_id=83daed294f4143009a9a97411310c70a';
         $form['container'][$source_field]['#description'] = $this->t('Allowed providers: @providers. For custom embeds, please <a href="@snow_form">request support.</a>', $args);

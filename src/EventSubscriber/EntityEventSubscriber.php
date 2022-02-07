@@ -205,7 +205,7 @@ class EntityEventSubscriber extends BaseEventSubscriber {
    * @param \Drupal\node\NodeInterface $node
    *   Node entity.
    * @param string $op
-   *   Operation
+   *   Operation.
    * @param \Drupal\Core\Session\AccountInterface $account
    *   Triggered event.
    *
