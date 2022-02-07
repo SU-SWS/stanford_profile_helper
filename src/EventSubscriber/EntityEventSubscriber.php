@@ -17,6 +17,7 @@ use Drupal\Core\State\StateInterface;
 use Drupal\Core\Url;
 use Drupal\core_event_dispatcher\Event\Entity\AbstractEntityEvent;
 use Drupal\core_event_dispatcher\Event\Entity\EntityAccessEvent;
+use Drupal\core_event_dispatcher\Event\Entity\EntityFieldAccessEvent;
 use Drupal\core_event_dispatcher\Event\Entity\EntityPresaveEvent;
 use Drupal\core_event_dispatcher\Event\Entity\EntityUpdateEvent;
 use Drupal\field\FieldStorageConfigInterface;
@@ -31,45 +32,71 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class EntityEventSubscriber implements EventSubscriberInterface {
 
   /**
+   * Core entity type manager service.
+   *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected $entityTypeManager;
 
   /**
+   * Core config factory service.
+   *
    * @var \Drupal\Core\Config\ConfigFactoryInterface
    */
   protected $configFactory;
 
   /**
+   * Core state service.
+   *
    * @var \Drupal\Core\State\StateInterface
    */
   protected $state;
 
   /**
+   * Core database connection service.
+   *
    * @var \Drupal\Core\Database\Connection
    */
   protected $database;
 
   /**
+   * Core route builder service.
+   *
    * @var \Drupal\Core\Routing\RouteBuilderInterface
    */
   protected $routeBuilder;
 
   /**
+   * Core config storage service.
+   *
    * @var \Drupal\Core\Config\StorageInterface
    */
   protected $configStorage;
 
   /**
+   * Core path alias manager service.
+   *
    * @var \Drupal\path_alias\AliasManagerInterface
    */
   protected $aliasManager;
 
   /**
+   * Core module handler service.
+   *
    * @var \Drupal\Core\Extension\ModuleHandlerInterface
    */
   protected $moduleHandler;
 
+  /**
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   * @param \Drupal\Core\State\StateInterface $state
+   * @param \Drupal\Core\Database\Connection $database
+   * @param \Drupal\Core\Routing\RouteBuilderInterface $route_builder
+   * @param \Drupal\Core\Config\StorageInterface $config_storage
+   * @param \Drupal\path_alias\AliasManagerInterface $alias_manager
+   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
+   */
   public function __construct(EntityTypeManagerInterface $entity_type_manager, ConfigFactoryInterface $config_factory, StateInterface $state, Connection $database, RouteBuilderInterface $route_builder, StorageInterface $config_storage, AliasManagerInterface $alias_manager, ModuleHandlerInterface $module_handler) {
     $this->entityTypeManager = $entity_type_manager;
     $this->configFactory = $config_factory;
@@ -81,14 +108,21 @@ class EntityEventSubscriber implements EventSubscriberInterface {
     $this->moduleHandler = $module_handler;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public static function getSubscribedEvents() {
     return [
       HookEventDispatcherInterface::ENTITY_PRE_SAVE => 'onEntityPreSave',
       HookEventDispatcherInterface::ENTITY_UPDATE => 'onEntityUpdate',
       HookEventDispatcherInterface::ENTITY_ACCESS => 'onEntityAccess',
+      HookEventDispatcherInterface::ENTITY_FIELD_ACCESS => 'onFieldAccess',
     ];
   }
 
+  /**
+   * @param \Drupal\core_event_dispatcher\Event\Entity\EntityPresaveEvent $event
+   */
   public function onEntityPreSave(EntityPresaveEvent $event) {
     $method_name = $this->getMethodName('preSave', $event);
     if (method_exists($this, $method_name)) {
@@ -96,6 +130,11 @@ class EntityEventSubscriber implements EventSubscriberInterface {
     }
   }
 
+  /**
+   * @param \Drupal\core_event_dispatcher\Event\Entity\EntityUpdateEvent $event
+   *
+   * @return void
+   */
   public function onEntityUpdate(EntityUpdateEvent $event) {
     $method_name = $this->getMethodName('update', $event);
     if (method_exists($this, $method_name)) {
@@ -103,6 +142,11 @@ class EntityEventSubscriber implements EventSubscriberInterface {
     }
   }
 
+  /**
+   * @param \Drupal\core_event_dispatcher\Event\Entity\EntityAccessEvent $event
+   *
+   * @return void
+   */
   public function onEntityAccess(EntityAccessEvent $event) {
     $method_name = $this->getMethodName('access', $event);
     if (method_exists($this, $method_name)) {
@@ -110,12 +154,58 @@ class EntityEventSubscriber implements EventSubscriberInterface {
     }
   }
 
+  /**
+   * @param \Drupal\core_event_dispatcher\Event\Entity\EntityFieldAccessEvent $event
+   *
+   * @throws \Drupal\Core\Entity\EntityMalformedException
+   */
+  public function onFieldAccess(EntityFieldAccessEvent $event){
+    $field_definition = $event->getFieldDefinition();
+    $items = $event->getItems();
+    $account = $event->getAccount();
+
+    if (
+      $field_definition->getName() == 'status' &&
+      $field_definition->getTargetEntityTypeId() == 'node' &&
+      $items &&
+      $items->getEntity()->id()
+    ) {
+      // Prevent unpublishing the home, 404 and 403 pages.
+      $event->setAccessResult($this->accessNode($items->getEntity(), 'delete', $account));
+      return;
+    }
+
+    if ($field_definition->getType() == 'entity_reference' && $field_definition->getSetting('handler') == 'layout_library') {
+      $entity_type = $field_definition->getTargetEntityTypeId();
+      $bundle = $field_definition->getTargetBundle();
+      if (!$account->hasPermission("choose layout for $entity_type $bundle")) {
+        $event->setAccessResult(AccessResult::forbidden());
+        return;
+      }
+    }
+    $event->setAccessResult(AccessResult::neutral());
+  }
+
+  /**
+   * @param $prefix
+   * @param \Drupal\core_event_dispatcher\Event\Entity\AbstractEntityEvent $event
+   *
+   * @return string
+   */
   protected function getMethodName($prefix, AbstractEntityEvent $event): string {
     $entity_type = $event->getEntity()->getEntityTypeId();
     $entity_type = str_replace(' ', '', ucwords(str_replace('_', ' ', $entity_type)));
     return "$prefix$entity_type";
   }
 
+  /**
+   * @param \Drupal\node\NodeInterface $node
+   * @param $op
+   * @param \Drupal\Core\Session\AccountInterface $account
+   *
+   * @return \Drupal\Core\Access\AccessResultForbidden|\Drupal\Core\Access\AccessResultNeutral
+   * @throws \Drupal\Core\Entity\EntityMalformedException
+   */
   protected function accessNode(NodeInterface $node, $op, AccountInterface $account) {
     if ($op == 'delete') {
       $site_config = $this->configFactory->get('system.site');
@@ -131,6 +221,12 @@ class EntityEventSubscriber implements EventSubscriberInterface {
     return AccessResult::neutral();
   }
 
+  /**
+   * @param \Drupal\taxonomy\TermInterface $term
+   * @param \Drupal\taxonomy\TermInterface $original_term
+   *
+   * @return void
+   */
   protected function updateTaxonomyTerm(TermInterface $term, TermInterface $original_term) {
     // https://www.drupal.org/project/taxonomy_menu/issues/2867626
     $original_parent = $original_term->get('parent')->getString();
@@ -155,12 +251,22 @@ class EntityEventSubscriber implements EventSubscriberInterface {
     }
   }
 
+  /**
+   * @param \Drupal\node\NodeInterface $node
+   *
+   * @return void
+   */
   protected function preSaveNode(NodeInterface $node) {
     // Invalidate any search result cached so the updated/new content will be
     // displayed for previously searched terms.
     Cache::invalidateTags(['config:views.view.search']);
   }
 
+  /**
+   * @param \Drupal\field\FieldStorageConfigInterface $field_storage
+   *
+   * @return void
+   */
   protected function preSaveFieldStorageConfig(FieldStorageConfigInterface $field_storage) {
     // If a field is saved and the field permissions are public, lets just remove
     // those third party settings before save so that it keeps the config clean.
@@ -170,6 +276,11 @@ class EntityEventSubscriber implements EventSubscriberInterface {
     }
   }
 
+  /**
+   * @param \Drupal\config_pages\ConfigPagesInterface $config_page
+   *
+   * @return void
+   */
   protected function preSaveConfigPages(ConfigPagesInterface $config_page) {
     if ($config_page->hasField('su_site_url') && ($url_field = $config_page->get('su_site_url')
         ->getValue())) {
@@ -182,6 +293,13 @@ class EntityEventSubscriber implements EventSubscriberInterface {
     Cache::invalidateTags(['system.site', 'block_view', 'node_view']);
   }
 
+  /**
+   * @param \Drupal\menu_link_content\MenuLinkContentInterface $menu_link
+   *
+   * @return void
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   */
   protected function preSaveMenuLinkContent(MenuLinkContentInterface $menu_link) {
     // For new menu link items created on a node form (normally), set the expanded
     // attribute so all menu items are expanded by default.
@@ -212,6 +330,11 @@ class EntityEventSubscriber implements EventSubscriberInterface {
     }
   }
 
+  /**
+   * @param \Drupal\user\RoleInterface $role
+   *
+   * @return void
+   */
   protected function preSaveRole(RoleInterface $role) {
     // Only modify new roles if they are created through the UI and don't exist in
     // the config management - Prefix them with "custm_" so they can be easily
@@ -225,6 +348,11 @@ class EntityEventSubscriber implements EventSubscriberInterface {
     }
   }
 
+  /**
+   * @param \Drupal\Core\Entity\ContentEntityInterface $redirect
+   *
+   * @return void
+   */
   protected function preSaveRedirect(ContentEntityInterface $redirect) {
     $destination = $redirect->get('redirect_redirect')->getString();
 
@@ -249,6 +377,11 @@ class EntityEventSubscriber implements EventSubscriberInterface {
     }
   }
 
+  /**
+   * @param $path
+   *
+   * @return void
+   */
   protected static function purgePath($path) {
     $url = Url::fromUserInput('/' . trim($path, '/'), ['absolute' => TRUE])
       ->toString();

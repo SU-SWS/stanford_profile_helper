@@ -15,10 +15,18 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class CoreEventSubscriber implements EventSubscriberInterface {
 
   /**
+   * Current active user.
+   *
    * @var \Drupal\Core\Session\AccountInterface
    */
   protected $currentUser;
 
+  /**
+   * CoreEventSubscriber constructor.
+   *
+   * @param \Drupal\Core\Session\AccountInterface $current_user
+   *   Current active user.
+   */
   public function __construct(AccountInterface $current_user) {
     $this->currentUser = $current_user;
   }
@@ -32,6 +40,14 @@ class CoreEventSubscriber implements EventSubscriberInterface {
     ];
   }
 
+  /**
+   * Add library attachments to the pages.
+   *
+   * @see hook_page_attachments().
+   *
+   * @param \Drupal\core_event_dispatcher\Event\Theme\PageAttachmentsEvent $event
+   *   Triggered event.
+   */
   public function pageAttachments(PageAttachmentsEvent $event) {
     $attachments = &$event->getAttachments();
     $env = getenv('AH_SITE_ENVIRONMENT');

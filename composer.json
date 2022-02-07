@@ -111,6 +111,11 @@
             "services": {
                 "drush.services.yml": "^9"
             }
+        },
+        "patches": {
+            "drupal/hook_event_dispatcher": {
+                "https://www.drupal.org/project/hook_event_dispatcher/issues/3224608": "https://git.drupalcode.org/project/hook_event_dispatcher/-/merge_requests/8.patch"
+            }
         }
     }
 }
