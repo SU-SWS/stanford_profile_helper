@@ -1,11 +1,26 @@
 services:
+  stanford_profile_helper.preprocess_event_subscriber:
+    class: Drupal\stanford_profile_helper\EventSubscriber\PreprocessEventSubscriber
+    arguments: []
+    tags:
+      - { name: 'event_subscriber' }
+  stanford_profile_helper.core_event_subscriber:
+    class: Drupal\stanford_profile_helper\EventSubscriber\CoreEventSubscriber
+    arguments: ['@current_user']
+    tags:
+      - { name: 'event_subscriber' }
+  stanford_profile_helper.entity_event_subscriber:
+    class: Drupal\stanford_profile_helper\EventSubscriber\EntityEventSubscriber
+    arguments: ['@entity_type.manager', '@config.factory', '@state', '@database', '@router.builder', '@config.storage.sync', '@path_alias.manager', '@module_handler']
+    tags:
+      - { name: 'event_subscriber' }
+  stanford_profile_helper.form_event_subscriber:
+    class: Drupal\stanford_profile_helper\EventSubscriber\FormEventSubscriber
+    arguments: ['@current_user', '@messenger']
+    tags:
+      - { name: 'event_subscriber' }
   stanford_profile_helper.config_overrider:
     class: Drupal\stanford_profile_helper\Config\ConfigOverrides
     arguments: ['@state', '@config_pages.loader', '@config.factory', '@entity_type.manager', '@stream_wrapper_manager']
     tags:
       - {name: config.factory.override, priority: 5}
-  stanford_profile_helper.event_subscriber:
-    class: '\Drupal\stanford_profile_helper\EventSubscriber\EventSubscriber'
-    arguments: ['@entity_type.manager', '@state']
-    tags:
-      - { name: 'event_subscriber' }
