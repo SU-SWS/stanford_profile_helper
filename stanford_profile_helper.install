@@ -32,3 +32,16 @@ function stanford_profile_helper_update_8191() {
 function stanford_profile_helper_update_8192() {
   module_set_weight('stanford_profile_helper', 10);
 }
+
+/**
+ * Install hook_event_dispatcher modules.
+ */
+function stanford_profile_helper_update_8200() {
+  \Drupal::service('module_installer')->install([
+    'field_event_dispatcher',
+    'hook_event_dispatcher',
+    'preprocess_event_dispatcher',
+    'user_event_dispatcher',
+    'views_event_dispatcher',
+  ]);
+}
