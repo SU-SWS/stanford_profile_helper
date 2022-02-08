@@ -112,7 +112,7 @@ abstract class BaseEventSubscriber implements EventSubscriberInterface {
    */
   protected function entityTypeManager(): EntityTypeManagerInterface {
     if (!$this->entityTypeManager) {
-      $this->configFactory = \Drupal::entityTypeManager();
+      $this->entityTypeManager = \Drupal::entityTypeManager();
     }
     return $this->entityTypeManager;
   }
