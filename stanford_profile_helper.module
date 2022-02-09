@@ -36,6 +36,9 @@ use Drupal\user\RoleInterface;
  * Implements hook_local_tasks_alter().
  */
 function stanford_profile_helper_local_tasks_alter(&$local_tasks) {
+  // Remove this when a new release for the scheduler module comes out above
+  // 2.0.0-alpha1.
+  // @see https://www.drupal.org/project/scheduler/issues/3224340.
   unset($local_tasks['scheduler.scheduled_content'], $local_tasks['scheduler.scheduled_media'], $local_tasks['scheduler.media_overview']);
 }
 
