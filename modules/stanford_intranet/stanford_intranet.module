@@ -107,7 +107,8 @@ function stanford_intranet_entity_create_access(AccountInterface $account, array
     $context['entity_type_id'] == 'media' &&
     $entity_bundle == 'file' &&
     $account->id() != 1 &&
-    \Drupal::state()->get('stanford_intranet', FALSE)
+    \Drupal::state()->get('stanford_intranet', FALSE) &&
+    !\Drupal::state()->get('stanford_intranet.allow_file_uploads', FALSE)
   ) {
     return AccessResult::forbidden();
   }
