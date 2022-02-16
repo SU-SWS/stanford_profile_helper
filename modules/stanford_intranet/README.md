@@ -28,7 +28,7 @@ It is possible to disable the intranet later, but it is not recommended due to t
 ## Allow File Uploads
 **IMPORTANT:** Media content does not have role specified access and allowing file uploads can open up security risks. All files are accessible by anyone with access to the site (any authenticated user). Allowing file uploads should only be enabled in specific and highly-vetted circumstances.
 
-1. `drush10 sset stanford_intranet.allow_file_uploads`
+1. `drush sset stanford_intranet.allow_file_uploads 1`
 1. `drush @<site_alias> cr`
 
 ## Additional Resources
