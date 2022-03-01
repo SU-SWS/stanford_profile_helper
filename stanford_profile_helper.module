@@ -1024,6 +1024,32 @@ function stanford_profile_helper_preprocess_pattern_localfooter(&$variables) {
   $bundle = $variables['context']->getProperty('bundle');
   $entity = $variables['context']->getProperty('entity');
 
+  $second_content = $variables['cell2']['su_local_foot_se_co'] ?? [];
+  $third_content = $variables['cell2']['su_local_foot_tr2_co'] ?? [];
+
+  // The local footer pattern from Decanter doesn't have equal columns for each
+  // of the 3 content blocks. To avoid having to completely rewrite the
+  // template, we can use some special markup to wrap a couple fields with the
+  // necessary classes to simulate the 4 equal columns. If the user populates
+  // 1, 2, and 4 content blocks, then the 2nd block will stretch to fill take
+  // the area of the missing 3rd block.
+  if (\Drupal::service('renderer')->render($third_content)) {
+    $variables['cell2'] = [
+      '#type' => 'container',
+      '#attributes' => ['class' => ['flex-container']],
+      'second' => [
+        '#type' => 'container',
+        '#attributes' => ['class' => ['flex-md-6-of-12', 'su-margin-bottom-1']],
+        'contents' => $second_content,
+      ],
+      'third' => [
+        '#type' => 'container',
+        '#attributes' => ['class' => ['flex-md-6-of-12']],
+        'contents' => $variables['cell2']['su_local_foot_tr2_co'],
+      ],
+    ];
+  }
+
   // Local Footer!
   if ($entity_type == "config_pages" && $bundle == "stanford_local_footer") {
 
