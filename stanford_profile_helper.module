@@ -1024,6 +1024,11 @@ function stanford_profile_helper_preprocess_pattern_localfooter(&$variables) {
   $bundle = $variables['context']->getProperty('bundle');
   $entity = $variables['context']->getProperty('entity');
 
+  // If the pattern has already been rendered and the 2nd cell is already a
+  // markup object or other, we can't manipulate it.
+  if (!is_array($variables['cell2'])) {
+    return;
+  }
   $second_content = $variables['cell2']['su_local_foot_se_co'] ?? [];
   $third_content = $variables['cell2']['su_local_foot_tr2_co'] ?? [];
 
