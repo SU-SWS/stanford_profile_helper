@@ -9,3 +9,8 @@ services:
     arguments: ['@entity_type.manager', '@state']
     tags:
       - { name: 'event_subscriber' }
+  stanford_profile_helper.menu_link_tree:
+    class: Drupal\stanford_profile_helper\MenuLinkTreeOverride
+    decorates: menu.link_tree
+    public: false
+    arguments: ['@stanford_profile_helper.menu_link_tree.inner']

@@ -25,6 +25,7 @@ use Drupal\config_pages\ConfigPagesInterface;
 use Drupal\field\FieldStorageConfigInterface;
 use Drupal\layout_builder\SectionComponent;
 use Drupal\menu_link_content\Entity\MenuLinkContent;
+use Drupal\menu_link_content\MenuLinkContentInterface;
 use Drupal\node\NodeForm;
 use Drupal\node\NodeInterface;
 use Drupal\search_api\IndexInterface;
@@ -1273,4 +1274,44 @@ function stanford_profile_helper_node_presave(NodeInterface $node) {
   // Invalidate any search result cached so the updated/new content will be
   // displayed for previously searched terms.
   Cache::invalidateTags(['config:views.view.search']);
+}
+
+
+/**
+ * Implements hook_ENTITY_TYPE_insert().
+ */
+function stanford_profile_helper_menu_link_content_insert(MenuLinkContentInterface $entity) {
+  Cache::invalidateTags(['stanford_profile_helper:menu_links']);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_delete().
+ */
+function stanford_profile_helper_menu_link_content_delete(MenuLinkContentInterface $entity) {
+  Cache::invalidateTags(['stanford_profile_helper:menu_links']);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update().
+ */
+function stanford_profile_helper_menu_link_content_update(MenuLinkContentInterface $entity) {
+  $original = [
+    $entity->original->get('title')->getValue(),
+    $entity->original->get('description')->getValue(),
+    $entity->original->get('link')->getValue(),
+    $entity->original->get('parent')->getValue(),
+    $entity->original->get('weight')->getValue(),
+    $entity->original->get('expanded')->getValue(),
+  ];
+  $updated = [
+    $entity->get('title')->getValue(),
+    $entity->get('description')->getValue(),
+    $entity->get('link')->getValue(),
+    $entity->get('parent')->getValue(),
+    $entity->get('weight')->getValue(),
+    $entity->get('expanded')->getValue(),
+  ];
+  if (md5(json_encode($original)) != md5(json_encode($updated))) {
+    Cache::invalidateTags(['stanford_profile_helper:menu_links']);
+  }
 }
