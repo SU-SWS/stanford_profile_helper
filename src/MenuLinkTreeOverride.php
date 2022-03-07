@@ -34,10 +34,7 @@ class MenuLinkTreeOverride implements MenuLinkTreeInterface {
     $build = $this->menuTree->build($tree);
     $build['#cache']['tags'][] = 'stanford_profile_helper:menu_links';
     // Remove node cache tags since we'll use our own cache tag above.
-    $build['#cache']['tags'] = array_filter($build['#cache']['tags'], function ($tag) {
-      return strpos($tag, 'node:') === FALSE && strpos($tag, 'config:system.menu.') === FALSE;
-    });
-    $build['#cache']['tags'] = array_values($build['#cache']['tags']);
+    StanfordProfileHelper::removeCacheTags($build, ['node:*', 'config:system.menu.*']);
     return $build;
   }
 

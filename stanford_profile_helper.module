@@ -32,6 +32,7 @@ use Drupal\search_api\IndexInterface;
 use Drupal\taxonomy\TermInterface;
 use Drupal\taxonomy_menu\Plugin\Menu\TaxonomyMenuMenuLink;
 use Drupal\user\RoleInterface;
+use Drupal\stanford_profile_helper\StanfordProfileHelper;
 
 /**
  * Implements hook_local_tasks_alter().
@@ -314,7 +315,7 @@ function stanford_profile_helper_form_views_bulk_operations_configure_action_alt
  */
 function stanford_profile_helper_preprocess_ds_entity_view(&$variables) {
   $variables['content']['#pre_render'][] = [
-    'Drupal\stanford_profile_helper\StanfordPreRenderer',
+    'Drupal\stanford_profile_helper\StanfordProfileHelper',
     'preRenderDsEntity',
   ];
 }
@@ -411,7 +412,7 @@ function stanford_profile_helper_menu_link_content_presave(MenuLinkContent $enti
       $parent_item = array_pop($menu_link_content);
       /** @var \Drupal\Core\Url $url */
       $url = $parent_item->getUrlObject();
-      if (!$url->isExternal() && $url->isRouted() ) {
+      if (!$url->isExternal() && $url->isRouted()) {
         $params = $url->getRouteParameters();
         if (isset($params['node'])) {
           Cache::invalidateTags(['node:' . $params['node']]);
@@ -1172,7 +1173,7 @@ function stanford_profile_helper_field_widget_form_alter(&$element, FormStateInt
   if ($context['items']->getName() == 'field_media_embeddable_oembed') {
     $user = \Drupal::currentUser();
     $authorized = $user->hasPermission('create field_media_embeddable_code')
-    || $user->hasPermission('edit field_media_embeddable_code');
+      || $user->hasPermission('edit field_media_embeddable_code');
     if (!$authorized) {
       $args = $element['value']['#description']['#items'][1]->getArguments();
       $args['@snow_form'] = 'https://stanford.service-now.com/it_services?id=sc_cat_item&sys_id=83daed294f4143009a9a97411310c70a';
@@ -1313,4 +1314,38 @@ function stanford_profile_helper_menu_link_content_update(MenuLinkContentInterfa
   if (md5(json_encode($original)) != md5(json_encode($updated))) {
     Cache::invalidateTags(['stanford_profile_helper:menu_links']);
   }
+}
+
+/**
+ * Implements hook_block_build_alter().
+ */
+function stanford_profile_helper_block_build_alter(array &$build, \Drupal\Core\Block\BlockPluginInterface $block) {
+  if ($block->getBaseId() == 'system_menu_block') {
+    $build['#cache']['tags'][] = 'stanford_profile_helper:menu_links';
+    StanfordProfileHelper::removeCacheTags($build, [
+      'node:*',
+      'config:system.menu.*',
+    ]);
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function stanford_profile_helper_preprocess_block__system_main_block(&$variables) {
+  $variables['content']['#cache']['tags'][] = 'stanford_profile_helper:menu_links';
+  // Remove node cache tags since we'll use our own cache tag above.
+  StanfordProfileHelper::removeCacheTags($variables['content'], ['config:system.menu.*']);
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function stanford_profile_helper_preprocess_block__system_menu_block(&$variables) {
+  $variables['content']['#cache']['tags'][] = 'stanford_profile_helper:menu_links';
+  // Remove node cache tags since we'll use our own cache tag above.
+  StanfordProfileHelper::removeCacheTags($variables['content'], [
+    'node:*',
+    'config:system.menu.*',
+  ]);
 }

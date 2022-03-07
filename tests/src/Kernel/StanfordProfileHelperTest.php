@@ -4,14 +4,14 @@ namespace Drupal\Tests\stanford_profile_helper\Kernel;
 
 use Drupal\Core\Render\RenderContext;
 use Drupal\KernelTests\KernelTestBase;
-use Drupal\stanford_profile_helper\StanfordPreRenderer;
+use Drupal\stanford_profile_helper\StanfordProfileHelper;
 
 /**
- * Class StanfordPreRendererTest.
+ * Class StanfordProfileHelperTest.
  *
  * @group stanford_profile_helper
  */
-class StanfordPreRendererTest extends KernelTestBase {
+class StanfordProfileHelperTest extends KernelTestBase {
 
   /**
    * {@inheritdoc}
@@ -22,7 +22,7 @@ class StanfordPreRendererTest extends KernelTestBase {
    * Trusted callbacks exist.
    */
   public function testTrustedCallbacks() {
-    $callbacks = StanfordPreRenderer::trustedCallbacks();
+    $callbacks = StanfordProfileHelper::trustedCallbacks();
     $this->assertTrue(in_array('preRenderDsEntity', $callbacks));
   }
 
@@ -34,7 +34,7 @@ class StanfordPreRendererTest extends KernelTestBase {
 
     $output = \Drupal::service('renderer')
       ->executeInRenderContext(new RenderContext(), function () use ($element) {
-        return $modified = StanfordPreRenderer::preRenderDsEntity($element);
+        return StanfordProfileHelper::preRenderDsEntity($element);
       });
     $this->assertArrayHasKey('#prefix', $output);
     $this->assertStringContainsString('data-contextual-id', (string) $output['#prefix']);
