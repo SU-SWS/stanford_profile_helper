@@ -6,7 +6,7 @@ use Drupal\Core\Menu\MenuLinkTreeInterface;
 use Drupal\Core\Menu\MenuTreeParameters;
 
 /**
- * Service overrider for the menu.link_tree service.
+ * Service decorator for the menu.link_tree service.
  */
 class MenuLinkTreeOverride implements MenuLinkTreeInterface {
 
@@ -34,7 +34,10 @@ class MenuLinkTreeOverride implements MenuLinkTreeInterface {
     $build = $this->menuTree->build($tree);
     $build['#cache']['tags'][] = 'stanford_profile_helper:menu_links';
     // Remove node cache tags since we'll use our own cache tag above.
-    StanfordProfileHelper::removeCacheTags($build, ['node:*', 'config:system.menu.*']);
+    StanfordProfileHelper::removeCacheTags($build, [
+      'node:*',
+      'config:system.menu.*',
+    ]);
     return $build;
   }
 
