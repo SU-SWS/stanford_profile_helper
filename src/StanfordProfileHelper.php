@@ -15,7 +15,7 @@ class StanfordProfileHelper implements TrustedCallbackInterface {
    * @param array|mixed $item
    *   Render array.
    * @param array $tags
-   *   Cache tags to be removed from the render array using regex
+   *   Cache tags to be removed from the render array using regex.
    */
   public static function removeCacheTags(&$item, array $tags = []) {
     if (!is_array($item) || empty($item['#cache']['tags'])) {

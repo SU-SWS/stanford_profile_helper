@@ -36,6 +36,6 @@ function stanford_profile_helper_update_8192() {
 /**
  * Enable views_custom_cache_tag module.
  */
-function stanford_profile_helper_update_8193(){
+function stanford_profile_helper_update_8193() {
   \Drupal::service('module_installer')->install(['views_custom_cache_tag']);
 }

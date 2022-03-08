@@ -7,6 +7,7 @@
 
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Block\BlockPluginInterface;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
 use Drupal\Core\Entity\EntityInterface;
@@ -29,10 +30,11 @@ use Drupal\menu_link_content\MenuLinkContentInterface;
 use Drupal\node\NodeForm;
 use Drupal\node\NodeInterface;
 use Drupal\search_api\IndexInterface;
+use Drupal\stanford_profile_helper\StanfordProfileHelper;
 use Drupal\taxonomy\TermInterface;
 use Drupal\taxonomy_menu\Plugin\Menu\TaxonomyMenuMenuLink;
 use Drupal\user\RoleInterface;
-use Drupal\stanford_profile_helper\StanfordProfileHelper;
+use Drupal\views\ViewExecutable;
 
 /**
  * Implements hook_local_tasks_alter().
@@ -1271,7 +1273,7 @@ function _stanford_profile_helper_extension_enabled(Extension $extension) {
 /**
  * Implements hook_views_pre_view().
  */
-function stanford_profile_helper_views_pre_view(\Drupal\views\ViewExecutable $view, $display_id, array &$args) {
+function stanford_profile_helper_views_pre_view(ViewExecutable $view, $display_id, array &$args) {
   $display_options = &$view->getDisplay()->options;
   $default_options = &$view->getDisplay()->default_display->options;
   $filters = !empty($display_options['filters']) ? $display_options['filters'] : $default_options['filters'];
@@ -1292,7 +1294,6 @@ function stanford_profile_helper_views_pre_view(\Drupal\views\ViewExecutable $vi
     $default_options['cache'] = $cache;
   }
 }
-
 
 /**
  * Implements hook_ENTITY_TYPE_presave().
@@ -1345,7 +1346,7 @@ function stanford_profile_helper_menu_link_content_update(MenuLinkContentInterfa
 /**
  * Implements hook_block_build_alter().
  */
-function stanford_profile_helper_block_build_alter(array &$build, \Drupal\Core\Block\BlockPluginInterface $block) {
+function stanford_profile_helper_block_build_alter(array &$build, BlockPluginInterface $block) {
   if ($block->getBaseId() == 'system_menu_block') {
     $build['#cache']['tags'][] = 'stanford_profile_helper:menu_links';
     StanfordProfileHelper::removeCacheTags($build, [
