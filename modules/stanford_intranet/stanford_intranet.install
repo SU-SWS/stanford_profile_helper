@@ -46,4 +46,5 @@ function stanford_intranet_install() {
 function stanford_intranet_uninstall() {
   \Drupal::state()->delete('stanford_intranet');
   \Drupal::state()->delete('stanford_intranet.rids');
+  \Drupal::state()->delete('stanford_intranet.allow_file_uploads');
 }

@@ -33,6 +33,16 @@ use Drupal\taxonomy_menu\Plugin\Menu\TaxonomyMenuMenuLink;
 use Drupal\user\RoleInterface;
 
 /**
+ * Implements hook_local_tasks_alter().
+ */
+function stanford_profile_helper_local_tasks_alter(&$local_tasks) {
+  // Remove this when a new release for the scheduler module comes out above
+  // 2.0.0-alpha1.
+  // @see https://www.drupal.org/project/scheduler/issues/3224340.
+  unset($local_tasks['scheduler.scheduled_content'], $local_tasks['scheduler.scheduled_media'], $local_tasks['scheduler.media_overview']);
+}
+
+/**
  * Implements hook_form_FORM_ID_alter().
  */
 function stanford_profile_helper_form_taxonomy_overview_terms_alter(&$form, FormStateInterface $form_state) {
@@ -1013,6 +1023,37 @@ function stanford_profile_helper_preprocess_pattern_localfooter(&$variables) {
   $entity_type = $variables['context']->getProperty('entity_type');
   $bundle = $variables['context']->getProperty('bundle');
   $entity = $variables['context']->getProperty('entity');
+
+  // If the pattern has already been rendered and the 2nd cell is already a
+  // markup object or other, we can't manipulate it.
+  if (!is_array($variables['cell2'])) {
+    return;
+  }
+  $second_content = $variables['cell2']['su_local_foot_se_co'] ?? [];
+  $third_content = $variables['cell2']['su_local_foot_tr2_co'] ?? [];
+
+  // The local footer pattern from Decanter doesn't have equal columns for each
+  // of the 3 content blocks. To avoid having to completely rewrite the
+  // template, we can use some special markup to wrap a couple fields with the
+  // necessary classes to simulate the 4 equal columns. If the user populates
+  // 1, 2, and 4 content blocks, then the 2nd block will stretch to fill take
+  // the area of the missing 3rd block.
+  if (\Drupal::service('renderer')->render($third_content)) {
+    $variables['cell2'] = [
+      '#type' => 'container',
+      '#attributes' => ['class' => ['flex-container']],
+      'second' => [
+        '#type' => 'container',
+        '#attributes' => ['class' => ['flex-md-6-of-12', 'su-margin-bottom-1']],
+        'contents' => $second_content,
+      ],
+      'third' => [
+        '#type' => 'container',
+        '#attributes' => ['class' => ['flex-md-6-of-12']],
+        'contents' => $variables['cell2']['su_local_foot_tr2_co'],
+      ],
+    ];
+  }
 
   // Local Footer!
   if ($entity_type == "config_pages" && $bundle == "stanford_local_footer") {

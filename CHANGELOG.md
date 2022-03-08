@@ -1,6 +1,16 @@
 # Stanford Profile Helper
 
 
+8.x-1.33
+--------------------------------------------------------------------------------
+_Release Date: 2022-03-08_
+
+- Check the local footer 2nd cell is an array we can manipulate
+- D8CORE-4974 Process the local footer to wrap the second and thrid local footer contents (#175)
+- BOT-8: Add intranet state to allow file uploads (#176)
+- D8CORE-5278 Removed unwanted menu links from scheduler (#174)
+
+
 8.x-1.32
 --------------------------------------------------------------------------------
 _Release Date: 2022-02-03_
