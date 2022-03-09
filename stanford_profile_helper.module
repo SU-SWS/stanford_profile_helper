@@ -1350,8 +1350,8 @@ function stanford_profile_helper_block_build_alter(array &$build, BlockPluginInt
   if ($block->getBaseId() == 'system_menu_block') {
     $build['#cache']['tags'][] = 'stanford_profile_helper:menu_links';
     StanfordProfileHelper::removeCacheTags($build, [
-      'node:*',
-      'config:system.menu.*',
+      '^node:*',
+      '^config:system.menu.*',
     ]);
   }
 }
@@ -1362,7 +1362,7 @@ function stanford_profile_helper_block_build_alter(array &$build, BlockPluginInt
 function stanford_profile_helper_preprocess_block__system_main_block(&$variables) {
   $variables['content']['#cache']['tags'][] = 'stanford_profile_helper:menu_links';
   // Remove node cache tags since we'll use our own cache tag above.
-  StanfordProfileHelper::removeCacheTags($variables['content'], ['config:system.menu.*']);
+  StanfordProfileHelper::removeCacheTags($variables['content'], ['^config:system.menu.*']);
 }
 
 /**
@@ -1372,7 +1372,7 @@ function stanford_profile_helper_preprocess_block__system_menu_block(&$variables
   $variables['content']['#cache']['tags'][] = 'stanford_profile_helper:menu_links';
   // Remove node cache tags since we'll use our own cache tag above.
   StanfordProfileHelper::removeCacheTags($variables['content'], [
-    'node:*',
-    'config:system.menu.*',
+    '^node:*',
+    '^config:system.menu.*',
   ]);
 }

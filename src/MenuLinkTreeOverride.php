@@ -35,14 +35,16 @@ class MenuLinkTreeOverride implements MenuLinkTreeInterface {
     $build['#cache']['tags'][] = 'stanford_profile_helper:menu_links';
     // Remove node cache tags since we'll use our own cache tag above.
     StanfordProfileHelper::removeCacheTags($build, [
-      'node:*',
-      'config:system.menu.*',
+      '^node:*',
+      '^config:system.menu.*',
     ]);
     return $build;
   }
 
   /**
    * {@inheritDoc}
+   *
+   * @codeCoverageIgnore
    */
   public function getCurrentRouteMenuTreeParameters($menu_name) {
     return $this->menuTree->getCurrentRouteMenuTreeParameters($menu_name);
@@ -57,6 +59,8 @@ class MenuLinkTreeOverride implements MenuLinkTreeInterface {
 
   /**
    * {@inheritDoc}
+   *
+   * @codeCoverageIgnore
    */
   public function transform(array $tree, array $manipulators) {
     return $this->menuTree->transform($tree, $manipulators);
@@ -71,6 +75,8 @@ class MenuLinkTreeOverride implements MenuLinkTreeInterface {
 
   /**
    * {@inheritDoc}
+   *
+   * @codeCoverageIgnore
    */
   public function getSubtreeHeight($id) {
     return $this->menuTree->getSubtreeHeight($id);
@@ -78,6 +84,8 @@ class MenuLinkTreeOverride implements MenuLinkTreeInterface {
 
   /**
    * {@inheritDoc}
+   *
+   * @codeCoverageIgnore
    */
   public function getExpanded($menu_name, array $parents) {
     return $this->menuTree->getExpanded($menu_name, $parents);

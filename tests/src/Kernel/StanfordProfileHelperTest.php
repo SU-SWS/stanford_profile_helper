@@ -40,4 +40,34 @@ class StanfordProfileHelperTest extends KernelTestBase {
     $this->assertStringContainsString('data-contextual-id', (string) $output['#prefix']);
   }
 
+  public function testCacheTagRemoval() {
+    $variable = [];
+    StanfordProfileHelper::removeCacheTags($variable, ['^foo$']);
+    $this->assertEquals([], $variable);
+
+    $variable = ['#cache' => ['tags' => []]];
+    StanfordProfileHelper::removeCacheTags($variable, ['^foo$']);
+    $this->assertEquals(['#cache' => ['tags' => []]], $variable);
+
+    $variable = ['#cache' => ['tags' => ['bar']]];
+    StanfordProfileHelper::removeCacheTags($variable, ['^foo$']);
+    $this->assertEquals(['#cache' => ['tags' => ['bar']]], $variable);
+
+    $variable = ['#cache' => ['tags' => ['foo','bar']]];
+    StanfordProfileHelper::removeCacheTags($variable, ['^foo$']);
+    $this->assertEquals(['#cache' => ['tags' => ['bar']]], $variable);
+
+    $variable = ['#cache' => ['tags' => ['foo:bar','bar']]];
+    StanfordProfileHelper::removeCacheTags($variable, ['^foo$']);
+    $this->assertEquals(['#cache' => ['tags' => ['foo:bar', 'bar']]], $variable);
+
+    $variable = ['#cache' => ['tags' => ['foo:bar','bar']]];
+    StanfordProfileHelper::removeCacheTags($variable, ['foo']);
+    $this->assertEquals(['#cache' => ['tags' => ['bar']]], $variable);
+
+    $variable = ['#cache' => ['tags' => ['foo:bar','bar']]];
+    StanfordProfileHelper::removeCacheTags($variable, ['bar']);
+    $this->assertEquals(['#cache' => ['tags' => []]], $variable);
+  }
+
 }
