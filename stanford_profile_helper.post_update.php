@@ -143,7 +143,7 @@ function stanford_profile_helper_post_update_8102() {
 
   $pathauto_storage = \Drupal::entityTypeManager()
     ->getStorage('pathauto_pattern');
-  foreach ($configs as $name => $data) {
+  foreach ($configs as $data) {
     /** @var \Drupal\pathauto\PathautoPatternInterface $pathauto_pattern */
     $pathauto_pattern = $pathauto_storage->load($data['id']);
     if ($pathauto_pattern->getPattern() != $data['pattern']) {
@@ -160,7 +160,7 @@ function stanford_profile_helper_post_update_8102() {
         'stanford_publication_topics',
       ],
     ]);
-  foreach($terms as $term){
+  foreach ($terms as $term) {
     $term->save();
   }
 }
