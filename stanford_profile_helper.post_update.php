@@ -131,3 +131,62 @@ function stanford_profile_helper_post_update_8101() {
     }
   }
 }
+
+/**
+ * Modify path auto patterns.
+ */
+function stanford_profile_helper_post_update_8102() {
+  /** @var \Drupal\Core\Config\StorageInterface $config_storage */
+  $config_storage = \Drupal::service('config.storage.sync');
+  $pathauto_configs = $config_storage->listAll('pathauto.pattern.');
+  $configs = $config_storage->readMultiple($pathauto_configs);
+
+  $pathauto_storage = \Drupal::entityTypeManager()
+    ->getStorage('pathauto_pattern');
+  foreach ($configs as $name => $data) {
+    /** @var \Drupal\pathauto\PathautoPatternInterface $pathauto_pattern */
+    $pathauto_pattern = $pathauto_storage->load($data['id']);
+    if ($pathauto_pattern->getPattern() != $data['pattern']) {
+      $pathauto_pattern->setPattern($data['pattern'])->save();
+    }
+  }
+
+  $terms = \Drupal::entityTypeManager()
+    ->getStorage('taxonomy_term')
+    ->loadByProperties([
+      'vid' => [
+        'stanford_event_types',
+        'stanford_news_topics',
+        'stanford_publication_topics',
+      ],
+    ]);
+  foreach($terms as $term){
+    $term->save();
+  }
+}
+
+/**
+ * Re-save all event, publications, and people nodes and terms.
+ */
+function stanford_profile_helper_post_update_8103(&$sandbox) {
+  $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+  if (empty($sandbox['ids'])) {
+    $sandbox['ids'] = $node_storage->getQuery()
+      ->accessCheck(FALSE)
+      ->condition('type', [
+        'stanford_event',
+        'stanford_person',
+        'stanford_publication',
+      ], 'IN')
+      ->execute();
+    $sandbox['total'] = count($sandbox['ids']);
+  }
+  $node_ids = array_splice($sandbox['ids'], 0, 10);
+
+  /** @var \Drupal\node\NodeInterface $node */
+  foreach ($node_storage->loadMultiple($node_ids) as $node) {
+    $node->save();
+  }
+
+  $sandbox['#finished'] = count($sandbox['ids']) ? 1 - count($sandbox['ids']) / $sandbox['total'] : 1;
+}
