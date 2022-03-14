@@ -286,6 +286,12 @@ function stanford_profile_helper_form_alter(&$form, FormStateInterface $form_sta
       $status_element['#states'] = [
         'disabled' => [':input[name="publish_on[0][value][time]"]' => ['filled' => TRUE]],
       ];
+      $help_text = [
+        t('Select a date and time to publish this content in the future.'),
+        t('After scheduling the publish, it will automatically publish to your site after the selected time.'),
+        t('<em>For example, if you select 8:00am as the publish time, the content will be published between 8am-10am (<strong>estimated</strong>).</em>'),
+      ];
+      $form['publish_on']['widget'][0]['value']['#description'] = implode(' ', $help_text);
     }
   }
   if (strpos($form_id, 'views_form_') === 0) {
