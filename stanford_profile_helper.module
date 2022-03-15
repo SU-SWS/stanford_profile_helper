@@ -282,7 +282,21 @@ function _stanford_profile_helper_get_publications_layout() {
  */
 function stanford_profile_helper_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   if ($form_state->getFormObject() instanceof NodeForm) {
-    unset($form['actions']['unlock']);
+    unset($form['actions']['unlock'], $form['scheduler_settings']);
+    if (!empty($form['publish_on'])) {
+      $form['publish_on']['#group'] = 'revision_information';
+      $form['publish_on']['#weight'] = -100;
+      $status_element = &$form['status']['widget']['value'];
+      $status_element['#states'] = [
+        'disabled' => [':input[name="publish_on[0][value][time]"]' => ['filled' => TRUE]],
+      ];
+      $help_text = [
+        t('Select a date and time to publish this content in the future.'),
+        t('After scheduling the publish, it will automatically publish to your site after the selected time.'),
+        t('<em>For example, if you select 8:00am as the publish time, the content will be published between 8am-10am (<strong>estimated</strong>).</em>'),
+      ];
+      $form['publish_on']['widget'][0]['value']['#description'] = implode(' ', $help_text);
+    }
   }
   if (strpos($form_id, 'views_form_') === 0) {
     // Remove the select all since it selects every node, not just the ones
@@ -887,6 +901,15 @@ function stanford_profile_helper_field_widget_form_alter(&$element, FormStateInt
       $element['value']['#description'] = t($new_desc, $args);
     }
   }
+}
+
+/**
+ * Implements hook_field_widget_WIDGET_TYPE_form_alter().
+ */
+function stanford_profile_helper_field_widget_datetime_timestamp_no_default_form_alter(&$element, FormStateInterface $form_state, $context) {
+  // Set the date increment for scheduler settings.
+  $state = \Drupal::state();
+  $element['value']['#date_increment'] = $state->get('stanford_profile_helper.scheduler_increment', 60 * 60 * 4);
 }
 
 /**
