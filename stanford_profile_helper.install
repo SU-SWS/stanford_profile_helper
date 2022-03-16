@@ -41,8 +41,9 @@ function stanford_profile_helper_update_8193() {
 }
 
 /**
- * Enable minimally_branded_subtheme theme.
+ * Enable minimally_branded_subtheme theme & 2 modules.
  */
 function stanford_profile_helper_update_8194() {
   \Drupal::service('theme_installer')->install(['minimally_branded_subtheme']);
+  \Drupal::service('module_installer')->install(['views_custom_cache_tag', 'ctools_views']);
 }
