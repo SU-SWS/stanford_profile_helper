@@ -9,3 +9,13 @@ services:
     arguments: ['@entity_type.manager', '@state']
     tags:
       - { name: 'event_subscriber' }
+  stanford_profile_helper.menu_link_tree:
+    class: Drupal\stanford_profile_helper\MenuLinkTreeOverride
+    decorates: menu.link_tree
+    public: false
+    arguments: ['@stanford_profile_helper.menu_link_tree.inner']
+  stanford_profile_helper.cache_context.route.menu_active_trails:
+    class: Drupal\stanford_profile_helper\MenuActiveTrailsCacheContextOverride
+    decorates: cache_context.route.menu_active_trails
+    plubic: false
+    arguments: ['@stanford_profile_helper.cache_context.route.menu_active_trails.inner']

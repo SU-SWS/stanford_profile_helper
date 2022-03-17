@@ -1,6 +1,18 @@
 # Stanford Profile Helper
 
 
+8.x-1.34
+--------------------------------------------------------------------------------
+_Release Date: 2022-03-17_
+
+- Changed order of module & theme enabling
+- Enable minimally branded theme for easier switching (#185)
+- D8CORE-3345 Update hook to update paths for terms and content. (#183)
+- D8CORE-5574 D8CORE-5575 D8CORE-5576 Adjustments to the schedule module form displays (#184)
+- D8CORE-5583 Improve menu tree cache tags (#179)
+- Switch to conditional fields instead of form alter (#182)
+
+
 8.x-1.33
 --------------------------------------------------------------------------------
 _Release Date: 2022-03-08_

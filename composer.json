@@ -84,6 +84,7 @@
         "drupal/paragraphs": "^1.11",
         "drupal/pdb": "^1.0@alpha",
         "drupal/ui_patterns": "~1.0",
+        "drupal/views_custom_cache_tag": "^1.2",
         "drupal/xmlsitemap": "~1.0",
         "su-sws/jumpstart_ui": "^8.1",
         "su-sws/react_paragraphs": "^8.2",

@@ -7,6 +7,7 @@
 
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Block\BlockPluginInterface;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
 use Drupal\Core\Entity\EntityInterface;
@@ -25,12 +26,15 @@ use Drupal\config_pages\ConfigPagesInterface;
 use Drupal\field\FieldStorageConfigInterface;
 use Drupal\layout_builder\SectionComponent;
 use Drupal\menu_link_content\Entity\MenuLinkContent;
+use Drupal\menu_link_content\MenuLinkContentInterface;
 use Drupal\node\NodeForm;
 use Drupal\node\NodeInterface;
 use Drupal\search_api\IndexInterface;
+use Drupal\stanford_profile_helper\StanfordProfileHelper;
 use Drupal\taxonomy\TermInterface;
 use Drupal\taxonomy_menu\Plugin\Menu\TaxonomyMenuMenuLink;
 use Drupal\user\RoleInterface;
+use Drupal\views\ViewExecutable;
 
 /**
  * Implements hook_local_tasks_alter().
@@ -278,7 +282,21 @@ function _stanford_profile_helper_get_publications_layout() {
  */
 function stanford_profile_helper_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   if ($form_state->getFormObject() instanceof NodeForm) {
-    unset($form['actions']['unlock']);
+    unset($form['actions']['unlock'], $form['scheduler_settings']);
+    if (!empty($form['publish_on'])) {
+      $form['publish_on']['#group'] = 'revision_information';
+      $form['publish_on']['#weight'] = -100;
+      $status_element = &$form['status']['widget']['value'];
+      $status_element['#states'] = [
+        'disabled' => [':input[name="publish_on[0][value][time]"]' => ['filled' => TRUE]],
+      ];
+      $help_text = [
+        t('Select a date and time to publish this content in the future.'),
+        t('After scheduling the publish, it will automatically publish to your site after the selected time.'),
+        t('<em>For example, if you select 8:00am as the publish time, the content will be published between 8am-10am (<strong>estimated</strong>).</em>'),
+      ];
+      $form['publish_on']['widget'][0]['value']['#description'] = implode(' ', $help_text);
+    }
   }
   if (strpos($form_id, 'views_form_') === 0) {
     // Remove the select all since it selects every node, not just the ones
@@ -313,7 +331,7 @@ function stanford_profile_helper_form_views_bulk_operations_configure_action_alt
  */
 function stanford_profile_helper_preprocess_ds_entity_view(&$variables) {
   $variables['content']['#pre_render'][] = [
-    'Drupal\stanford_profile_helper\StanfordPreRenderer',
+    'Drupal\stanford_profile_helper\StanfordProfileHelper',
     'preRenderDsEntity',
   ];
 }
@@ -410,7 +428,7 @@ function stanford_profile_helper_menu_link_content_presave(MenuLinkContent $enti
       $parent_item = array_pop($menu_link_content);
       /** @var \Drupal\Core\Url $url */
       $url = $parent_item->getUrlObject();
-      if (!$url->isExternal() && $url->isRouted() ) {
+      if (!$url->isExternal() && $url->isRouted()) {
         $params = $url->getRouteParameters();
         if (isset($params['node'])) {
           Cache::invalidateTags(['node:' . $params['node']]);
@@ -608,302 +626,6 @@ function stanford_profile_helper_config_readonly_whitelist_patterns() {
   $default_theme = \Drupal::config('system.theme')->get('default');
   // Allow the theme settings to be changed in the UI.
   return ["$default_theme.settings"];
-}
-
-/**
- * Implements hook_form_FORM_ID_alter().
- */
-function stanford_profile_helper_form_config_pages_lockup_settings_form_alter(array &$form, FormStateInterface $form_state) {
-
-  // This alter function adds an image above the settings and provides
-  // the visibility states for the line input field elements.
-  $form['group_lockup_options']['intro'] = [
-    'image' => [
-      '#theme' => 'image',
-      '#uri' => drupal_get_path('theme', 'stanford_basic') . '/dist/assets/img/lockup-example.png',
-    ],
-    'text' => [
-      '#type' => 'link',
-      '#url' => Url::fromUri('https://decanter.stanford.edu/component/identity-lockup/'),
-      '#title' => t('Decanter Lockup Component'),
-      '#prefix' => '<p>',
-      '#suffix' => '</p>',
-    ],
-  ];
-
-  // Change the label for none/disabled.
-  $form['su_upload_logo_image']['#states'] = [
-    'invisible' => [
-      ':input[name="su_use_theme_logo[value]"]' => ['checked' => TRUE],
-    ],
-    'visible' => [
-      ':input[name="su_use_theme_logo[value]"]' => ['checked' => FALSE],
-    ],
-  ];
-
-  // LINE 1.
-  $form['su_line_1']['widget']['0']['value']['#states'] = [
-    'invisible' => _stanford_profile_helper_get_lockup_states(
-      ['_none', 'none', 'o', 'r'],
-      ':input[name="su_lockup_options"]'
-    ),
-  ];
-
-  // LINE 2.
-  $form['su_line_2']['widget']['0']['value']['#states'] = [
-    'invisible' => _stanford_profile_helper_get_lockup_states(
-      ['_none', 'none', 'a', 'd', 'h', 'i', 'k', 'l', 'n', 'o', 'p', 'q', 'r'],
-      ':input[name="su_lockup_options"]'
-    ),
-  ];
-
-  // LINE 3.
-  $form['su_line_3']['widget']['0']['value']['#states'] = [
-    'invisible' => _stanford_profile_helper_get_lockup_states(
-      [
-        '_none',
-        'none',
-        'a',
-        'b',
-        'c',
-        'f',
-        'g',
-        'j',
-        'k',
-        'l',
-        'm',
-        'n',
-        'o',
-        'p',
-        'q',
-        'r',
-        's',
-      ],
-      ':input[name="su_lockup_options"]'
-    ),
-  ];
-
-  // LINE 4.
-  $form['su_line_4']['widget']['0']['value']['#states'] = [
-    'invisible' => _stanford_profile_helper_get_lockup_states(
-      [
-        '_none',
-        'none',
-        'a',
-        'b',
-        'c',
-        'd',
-        'e',
-        'f',
-        'g',
-        'j',
-        'k',
-        'l',
-        'm',
-        'n',
-        'r',
-      ],
-      ':input[name="su_lockup_options"]'
-    ),
-  ];
-
-  // LINE 5.
-  $form['su_line_5']['widget']['0']['value']['#states'] = [
-    'invisible' => _stanford_profile_helper_get_lockup_states(
-      [
-        '_none',
-        'none',
-        'b',
-        'd',
-        'e',
-        'f',
-        'h',
-        'i',
-        'l',
-        'm',
-        'n',
-        'o',
-        'p',
-        'q',
-        's',
-        't',
-      ],
-      ':input[name="su_lockup_options"]'
-    ),
-  ];
-
-  // Clear caches on submit.
-  $form['actions']["submit"]['#submit'][] = "stanford_profile_helper_form_config_pages_lockup_settings_form_alter_submit";
-}
-
-/**
- * Implements hook_form_FORM_ID_alter().
- */
-function stanford_profile_helper_form_config_pages_stanford_local_footer_form_alter(array &$form, FormStateInterface $form_state) {
-
-  // This alter function adds an image above the settings and provides
-  // the visibility states for the line input field elements.
-  $form['group_local_lockup']['intro'] = [
-    'image' => [
-      '#theme' => 'image',
-      '#uri' => drupal_get_path('theme', 'stanford_basic') . '/dist/assets/img/lockup-example.png',
-    ],
-    'text' => [
-      '#type' => 'link',
-      '#url' => Url::fromUri('https://decanter.stanford.edu/component/identity-lockup/'),
-      '#title' => t('Decanter Lockup Component'),
-      '#prefix' => '<p>',
-      '#suffix' => '</p>',
-    ],
-  ];
-
-  // Hide show logo checkbox.
-  $form['su_local_foot_use_logo']['#states'] = [
-    'invisible' => [
-      '#edit-su-local-foot-use-loc-value' => ['checked' => TRUE],
-    ],
-    'visible' => [
-      '#edit-su-local-foot-use-loc-value' => ['checked' => FALSE],
-    ],
-  ];
-
-  // Lockup options field.
-  $form['su_local_foot_loc_op']['#states'] = [
-    'invisible' => [
-      '#edit-su-local-foot-use-loc-value' => ['checked' => TRUE],
-    ],
-    'visible' => [
-      '#edit-su-local-foot-use-loc-value' => ['checked' => FALSE],
-    ],
-  ];
-  // Lockup Link.
-  $form['su_local_foot_loc_link']['#states'] = [
-    'invisible' => [
-      '#edit-su-local-foot-use-loc-value' => ['checked' => TRUE],
-    ],
-    'visible' => [
-      '#edit-su-local-foot-use-loc-value' => ['checked' => FALSE],
-    ],
-  ];
-
-  // Logo upload field.
-  $form['su_local_foot_loc_img']['#states'] = [
-    'invisible' => [
-      [
-        ':input[name="su_local_foot_use_logo[value]"]' => ['checked' => TRUE],
-      ],
-      [
-        ':input[name="su_local_foot_use_logo[value]"]' => ['checked' => TRUE],
-        '#edit-su-local-foot-use-loc-value' => ['checked' => TRUE],
-      ],
-    ],
-    'visible' => [
-      [
-        ':input[name="su_local_foot_use_logo[value]"]' => ['checked' => FALSE],
-        '#edit-su-local-foot-use-loc-value' => ['checked' => FALSE],
-      ],
-    ],
-  ];
-
-  // LINE 1.
-  $form['su_local_foot_line_1']['widget']['0']['value']['#states'] = [
-    'invisible' => _stanford_profile_helper_get_lockup_states(
-      ['_none', 'none', 'o', 'r'],
-      ':input[name="su_local_foot_loc_op"]'
-    ),
-  ];
-  // Disable on enable.
-  $form['su_local_foot_line_1']['widget']['0']['value']['#states']['invisible'][] = ['#edit-su-local-foot-use-loc-value' => ['checked' => TRUE]];
-
-  // LINE 2.
-  $form['su_local_foot_line_2']['widget']['0']['value']['#states'] = [
-    'invisible' => _stanford_profile_helper_get_lockup_states(
-      ['_none', 'none', 'a', 'd', 'h', 'i', 'k', 'l', 'n', 'o', 'p', 'q', 'r'],
-      ':input[name="su_local_foot_loc_op"]'
-    ),
-  ];
-  $form['su_local_foot_line_2']['widget']['0']['value']['#states']['invisible'][] = ['#edit-su-local-foot-use-loc-value' => ['checked' => TRUE]];
-
-  // LINE 3.
-  $form['su_local_foot_line_3']['widget']['0']['value']['#states'] = [
-    'invisible' => _stanford_profile_helper_get_lockup_states(
-      [
-        '_none',
-        'none',
-        'a',
-        'b',
-        'c',
-        'f',
-        'g',
-        'j',
-        'k',
-        'l',
-        'm',
-        'n',
-        'o',
-        'p',
-        'q',
-        'r',
-        's',
-      ],
-      ':input[name="su_local_foot_loc_op"]'
-    ),
-  ];
-  $form['su_local_foot_line_3']['widget']['0']['value']['#states']['invisible'][] = ['#edit-su-local-foot-use-loc-value' => ['checked' => TRUE]];
-
-  // LINE 4.
-  $form['su_local_foot_line_4']['widget']['0']['value']['#states'] = [
-    'invisible' => _stanford_profile_helper_get_lockup_states(
-      [
-        '_none',
-        'none',
-        'a',
-        'b',
-        'c',
-        'd',
-        'e',
-        'f',
-        'g',
-        'j',
-        'k',
-        'l',
-        'm',
-        'n',
-        'r',
-      ],
-      ':input[name="su_local_foot_loc_op"]'
-    ),
-  ];
-  $form['su_local_foot_line_4']['widget']['0']['value']['#states']['invisible'][] = ['#edit-su-local-foot-use-loc-value' => ['checked' => TRUE]];
-
-  // LINE 5.
-  $form['su_local_foot_line_5']['widget']['0']['value']['#states'] = [
-    'invisible' => _stanford_profile_helper_get_lockup_states(
-      [
-        '_none',
-        'none',
-        'b',
-        'd',
-        'e',
-        'f',
-        'h',
-        'i',
-        'l',
-        'm',
-        'n',
-        'o',
-        'p',
-        'q',
-        's',
-        't',
-      ],
-      ':input[name="su_local_foot_loc_op"]'
-    ),
-  ];
-  $form['su_local_foot_line_5']['widget']['0']['value']['#states']['invisible'][] = ['#edit-su-local-foot-use-loc-value' => ['checked' => TRUE]];
-
-  // Clear caches on submit.
-  $form['actions']["submit"]['#submit'][] = "stanford_profile_helper_form_config_pages_lockup_settings_form_alter_submit";
 }
 
 /**
@@ -1171,7 +893,7 @@ function stanford_profile_helper_field_widget_form_alter(&$element, FormStateInt
   if ($context['items']->getName() == 'field_media_embeddable_oembed') {
     $user = \Drupal::currentUser();
     $authorized = $user->hasPermission('create field_media_embeddable_code')
-    || $user->hasPermission('edit field_media_embeddable_code');
+      || $user->hasPermission('edit field_media_embeddable_code');
     if (!$authorized) {
       $args = $element['value']['#description']['#items'][1]->getArguments();
       $args['@snow_form'] = 'https://stanford.service-now.com/it_services?id=sc_cat_item&sys_id=83daed294f4143009a9a97411310c70a';
@@ -1179,6 +901,15 @@ function stanford_profile_helper_field_widget_form_alter(&$element, FormStateInt
       $element['value']['#description'] = t($new_desc, $args);
     }
   }
+}
+
+/**
+ * Implements hook_field_widget_WIDGET_TYPE_form_alter().
+ */
+function stanford_profile_helper_field_widget_datetime_timestamp_no_default_form_alter(&$element, FormStateInterface $form_state, $context) {
+  // Set the date increment for scheduler settings.
+  $state = \Drupal::state();
+  $element['value']['#date_increment'] = $state->get('stanford_profile_helper.scheduler_increment', 60 * 60 * 4);
 }
 
 /**
@@ -1267,10 +998,108 @@ function _stanford_profile_helper_extension_enabled(Extension $extension) {
 }
 
 /**
+ * Implements hook_views_pre_view().
+ */
+function stanford_profile_helper_views_pre_view(ViewExecutable $view, $display_id, array &$args) {
+  $display_options = &$view->getDisplay()->options;
+  $default_options = &$view->getDisplay()->default_display->options;
+  $filters = !empty($display_options['filters']) ? $display_options['filters'] : $default_options['filters'];
+
+  // Change the default cache mechanism to use custom tags that we generate
+  // using the node type filters that exist on the view.
+  // @see \Drupal\Core\Entity\EntityBase::getListCacheTagsToInvalidate().
+  if (!empty($filters['type']['entity_type']) && $filters['type']['entity_type'] == 'node') {
+    $tags = [];
+    foreach ($filters['type']['value'] as $node_type) {
+      $tags[] = 'node_list:' . $node_type;
+    }
+    $cache = [
+      'type' => 'custom_tag',
+      'options' => ['custom_tag' => implode(' ', $tags)],
+    ];
+    $display_options['cache'] = $cache;
+    $default_options['cache'] = $cache;
+  }
+}
+
+/**
  * Implements hook_ENTITY_TYPE_presave().
  */
 function stanford_profile_helper_node_presave(NodeInterface $node) {
   // Invalidate any search result cached so the updated/new content will be
   // displayed for previously searched terms.
   Cache::invalidateTags(['config:views.view.search']);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_insert().
+ */
+function stanford_profile_helper_menu_link_content_insert(MenuLinkContentInterface $entity) {
+  Cache::invalidateTags(['stanford_profile_helper:menu_links']);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_delete().
+ */
+function stanford_profile_helper_menu_link_content_delete(MenuLinkContentInterface $entity) {
+  Cache::invalidateTags(['stanford_profile_helper:menu_links']);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update().
+ */
+function stanford_profile_helper_menu_link_content_update(MenuLinkContentInterface $entity) {
+  $original = [
+    $entity->original->get('title')->getValue(),
+    $entity->original->get('description')->getValue(),
+    $entity->original->get('link')->getValue(),
+    $entity->original->get('parent')->getValue(),
+    $entity->original->get('weight')->getValue(),
+    $entity->original->get('expanded')->getValue(),
+  ];
+  $updated = [
+    $entity->get('title')->getValue(),
+    $entity->get('description')->getValue(),
+    $entity->get('link')->getValue(),
+    $entity->get('parent')->getValue(),
+    $entity->get('weight')->getValue(),
+    $entity->get('expanded')->getValue(),
+  ];
+  if (md5(json_encode($original)) != md5(json_encode($updated))) {
+    Cache::invalidateTags(['stanford_profile_helper:menu_links']);
+  }
+}
+
+/**
+ * Implements hook_block_build_alter().
+ */
+function stanford_profile_helper_block_build_alter(array &$build, BlockPluginInterface $block) {
+  if ($block->getBaseId() == 'system_menu_block') {
+    $build['#cache']['tags'][] = 'stanford_profile_helper:menu_links';
+    StanfordProfileHelper::removeCacheTags($build, [
+      '^node:*',
+      '^config:system.menu.*',
+    ]);
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function stanford_profile_helper_preprocess_block__system_main_block(&$variables) {
+  $variables['content']['#cache']['tags'][] = 'stanford_profile_helper:menu_links';
+  // Remove node cache tags since we'll use our own cache tag above.
+  StanfordProfileHelper::removeCacheTags($variables['content'], ['^config:system.menu.*']);
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function stanford_profile_helper_preprocess_block__system_menu_block(&$variables) {
+  $variables['content']['#cache']['tags'][] = 'stanford_profile_helper:menu_links';
+  // Remove node cache tags since we'll use our own cache tag above.
+  StanfordProfileHelper::removeCacheTags($variables['content'], [
+    '^node:*',
+    '^config:system.menu.*',
+  ]);
 }
