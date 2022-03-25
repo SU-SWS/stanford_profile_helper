@@ -340,8 +340,12 @@ function stanford_profile_helper_preprocess_ds_entity_view(&$variables) {
  * Implements hook_form_BASE_FORM_ID_alter().
  */
 function stanford_profile_helper_form_taxonomy_term_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  /** @var \Drupal\taxonomy\VocabularyInterface $vocabulary */
+  $vocabulary = $form_state->get(['taxonomy', 'vocabulary']);
+  $flat_taxonomy = $vocabulary->getThirdPartySetting('flat_taxonomy', 'flat');
+
   // Tweak the taxonomy term add/edit form.
-  if (!empty($form['relations']['parent'])) {
+  if (!empty($form['relations']['parent']) && !$flat_taxonomy) {
     $form['relations']['#open'] = TRUE;
     $form['relations']['parent']['#multiple'] = FALSE;
     $form['relations']['parent']['#title'] = t('Parent term');
