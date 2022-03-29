@@ -16,8 +16,8 @@
   }
 
   .basic-page-type-list {
-    & :first-child {
-      & :first-child {
+    & div:first-child {
+      & div:first-child {
         padding-top: 0;
       }
     }
