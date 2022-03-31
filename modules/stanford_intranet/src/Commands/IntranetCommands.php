@@ -43,7 +43,7 @@ class IntranetCommands extends DrushCommands {
   protected $passwordGenerator;
 
   /**
-   * Drush command constructor
+   * Drush command constructor.
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   Entity Type Manager Service.
