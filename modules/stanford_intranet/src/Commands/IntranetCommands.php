@@ -43,12 +43,16 @@ class IntranetCommands extends DrushCommands {
   protected $passwordGenerator;
 
   /**
-   * Commands constructor.
+   * Drush command constructor
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   Entity Type Manager Service.
    * @param \Drupal\Core\State\StateInterface $state
    *   State service.
+   * @param \Drupal\externalauth\AuthmapInterface $authmap
+   *   External Authentication map service.
+   * @param \Drupal\Core\Password\PasswordGeneratorInterface $password_generator
+   *   Core password generator service.
    */
   public function __construct(EntityTypeManagerInterface $entity_type_manager, StateInterface $state, AuthmapInterface $authmap, PasswordGeneratorInterface $password_generator) {
     $this->entityTypeManager = $entity_type_manager;
@@ -111,7 +115,7 @@ class IntranetCommands extends DrushCommands {
 
     // Restrict login access to specific affiliations.
     if (!empty($options['affiliations'])) {
-      $config_page->set('su_simplesaml_affil', explode(',', $options['affiliations']));
+      $config_page->set('su_simplesaml_affil', array_unique(explode(',', $options['affiliations'])));
     }
     // Restrict login access to specific workgroups..
     if (!empty($options['workgroups'])) {
@@ -129,7 +133,7 @@ class IntranetCommands extends DrushCommands {
     // If there are specific login restrictions, but there are also users that
     // were created, make sure they are added to the allowed list to login.
     if ((!empty($options['affiliations']) || !empty($options['workgroups'])) && !empty($options['users'])) {
-      $config_page->set('su_simplesaml_users', explode(',', $options['users']));
+      $config_page->set('su_simplesaml_users', array_unique(explode(',', $options['users'])));
     }
 
     $config_page->save();
@@ -215,7 +219,7 @@ class IntranetCommands extends DrushCommands {
         ->load($role_name);
 
       // If no role was found by the ID, let's try to find it using the label.
-      // ex: 'Site Manager'
+      // ex: 'Site Manager'.
       if (!$role) {
         $roles = $this->entityTypeManager->getStorage('user_role')
           ->loadByProperties(['label' => $role_name]);
@@ -235,7 +239,7 @@ class IntranetCommands extends DrushCommands {
     // The field widget uses pipe delimited values, same as the
     // simplesamlphp_auth module. So implode the array of role mappings into a
     // string.
-    return implode("|", $values);
+    return implode("|", array_unique($values));
   }
 
 }
