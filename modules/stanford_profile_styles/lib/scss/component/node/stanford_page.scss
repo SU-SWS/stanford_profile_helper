@@ -275,6 +275,10 @@
       }
     }
 
+    .view [class*="grid-container"] {
+      grid-template-columns: 1fr;
+    }
+
     // Person grid has a little different need.
     .stanford-people-grid {
       .views-view-grid {
