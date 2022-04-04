@@ -93,6 +93,9 @@
         "su-sws/stanford_image_styles": "dev-8.x-1.x",
         "su-sws/stanford_text_editor": "dev-8.x-1.x"
     },
+    "require-dev": {
+        "drupal/externalauth": "^1.0 || ^2.0"
+    },
     "autoload": {
         "psr-4": {
             "Drupal\\stanford_profile_helper\\": "src/",
