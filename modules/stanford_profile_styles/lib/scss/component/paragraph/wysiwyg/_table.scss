@@ -8,3 +8,47 @@
     }
   }
 }
+
+.vertical-align-top {
+  vertical-align: top;
+}
+
+.vertical-align-bottom {
+  vertical-align: bottom;
+}
+
+.su-table-striped-rows-odd {
+  tr {
+    &:nth-child(odd) {
+      background-color: $su-color-black-10;
+    }
+  }
+}
+
+.su-table-striped-cols-odd {
+  tr {
+    td {
+      &:nth-child(odd) {
+        background-color: $su-color-black-10;
+      }
+    }
+  }
+}
+
+.su-table-striped-rows-even {
+  tr {
+    &:nth-child(even) {
+      background-color: $su-color-black-10;
+    }
+  }
+}
+
+.su-table-striped-cols-even {
+  tr {
+    td {
+      &:nth-child(even) {
+        background-color: $su-color-black-10;
+      }
+    }
+  }
+}
