@@ -5,16 +5,16 @@
     th,
     td {
       line-height: 1.2em;
+
+      &.vertical-align-top {
+        vertical-align: top;
+      }
+
+      &.vertical-align-bottom {
+        vertical-align: bottom;
+      }
     }
   }
-}
-
-.vertical-align-top {
-  vertical-align: top;
-}
-
-.vertical-align-bottom {
-  vertical-align: bottom;
 }
 
 .su-table-striped-rows-odd {
