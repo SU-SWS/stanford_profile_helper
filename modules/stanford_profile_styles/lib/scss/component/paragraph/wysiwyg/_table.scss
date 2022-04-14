@@ -15,34 +15,6 @@
       }
     }
 
-    &.horizontal-border {
-      td,
-      th {
-        border-bottom: 1px solid $su-color-black-60;
-      }
-    }
-
-    &.vertical-border {
-      td,
-      th {
-        border-right: 1px solid $su-color-black-60;
-      }
-
-      td:first-of-type,
-      th:first-of-type {
-        border-left: 1px solid $su-color-black-60;
-      }
-    }
-
-    &.vertical-border {
-      &.horizontal-border {
-        td,
-        th {
-          border-top: 1px solid $su-color-black-60;
-        }
-      }
-    }
-
     &.su-table-striped-rows-odd {
       tr {
         &:nth-child(odd) {
@@ -74,6 +46,36 @@
         td {
           &:nth-child(even) {
             background-color: $su-color-black-10;
+          }
+        }
+      }
+    }
+
+    @media (min-width: 40em) {
+      &.horizontal-border {
+        td,
+        th {
+          border-bottom: 1px solid $su-color-black-60;
+        }
+      }
+
+      &.vertical-border {
+        td,
+        th {
+          border-right: 1px solid $su-color-black-60;
+        }
+
+        td:first-of-type,
+        th:first-of-type {
+          border-left: 1px solid $su-color-black-60;
+        }
+      }
+
+      &.vertical-border {
+        &.horizontal-border {
+          td,
+          th {
+            border-top: 1px solid $su-color-black-60;
           }
         }
       }
