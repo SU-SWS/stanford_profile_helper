@@ -16,9 +16,11 @@
     }
 
     &.su-table-striped-rows-odd {
-      tr {
-        &:nth-child(odd) {
-          background-color: $su-color-black-10;
+      tbody {
+        tr {
+          &:nth-child(odd) {
+            background-color: $su-color-black-10;
+          }
         }
       }
     }
@@ -34,9 +36,11 @@
     }
 
     &.su-table-striped-rows-even {
-      tr {
-        &:nth-child(even) {
-          background-color: $su-color-black-10;
+      tbody {
+        tr {
+          &:nth-child(even) {
+            background-color: $su-color-black-10;
+          }
         }
       }
     }
