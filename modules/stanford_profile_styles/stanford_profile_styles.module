@@ -265,4 +265,3 @@ function stanford_profile_styles_views_pre_render(ViewExecutable $view) {
     $view->element['#attached']['library'][] = 'stanford_person/views';
   }
 }
-
