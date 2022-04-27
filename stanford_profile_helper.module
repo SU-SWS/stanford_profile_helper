@@ -290,11 +290,20 @@ function stanford_profile_helper_form_alter(&$form, FormStateInterface $form_sta
       $status_element['#states'] = [
         'disabled' => [':input[name="publish_on[0][value][time]"]' => ['filled' => TRUE]],
       ];
+
+      $scheduler_increment = \Drupal::state()
+        ->get('stanford_profile_helper.scheduler_increment', 60 * 60 * 4);
+      $hours = (int) floor($scheduler_increment / 3600);
+      $mins = (int) floor($scheduler_increment / 60 % 60);
+      $scheduler_increment = $hours ? "$hours hour(s)" : "$mins minute(s)";
+
       $help_text = [
-        t('Select a date and time to publish this content in the future.'),
-        t('After scheduling the publish, it will automatically publish to your site after the selected time.'),
-        t('<em>For example, if you select 8:00am as the publish time, the content will be published between 8am-10am (<strong>estimated</strong>).</em>'),
+        t('Select a date and time* to publish this content in the future.'),
+        t('After scheduling the publish, it will automatically publish to your site on the scheduled date within four hours of the selected time.'),
+        t('For example, if you select 8:00am as the publish time, the content will be published between 8am-12pm.'),
+        t('<p><strong>*Note</strong>: You must select a time that is increments of @times, starting with 12AM.</p>', ['@times' =>  $scheduler_increment]),
       ];
+
       $form['publish_on']['widget'][0]['value']['#description'] = implode(' ', $help_text);
     }
   }
