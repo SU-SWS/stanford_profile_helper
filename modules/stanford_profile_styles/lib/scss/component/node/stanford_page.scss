@@ -209,7 +209,9 @@
           }
 
           &:hover,
-          &:focus {
+          &:focus,
+          &:active {
+            color: $su-color-bright-red;
             text-decoration: underline;
 
             &::after {
@@ -241,7 +243,7 @@
           &:active,
           &:focus,
           &:hover {
-            color: $su-color-bright-red;
+            color: $su-color-black;
             text-decoration: underline;
           }
         }
