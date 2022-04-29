@@ -1142,7 +1142,8 @@ function stanford_profile_helper_entity_view(array &$build, EntityInterface $ent
   // First, move the items from the list render array into the build of the
   // field. Store the list render array for re-use later.
   foreach ($components as $field => $component) {
-    if (isset($component['type']) &&
+    if (
+      isset($component['type']) &&
       in_array($component['type'], $list_types) &&
       !empty($component['third_party_settings']['ds']['ds_limit']) &&
       !empty($build[$field][0]['#items'])
