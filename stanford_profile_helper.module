@@ -10,6 +10,7 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Block\BlockPluginInterface;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
@@ -18,6 +19,7 @@ use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
+use Drupal\Core\Render\Element;
 use Drupal\Core\Serialization\Yaml;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Site\Settings;
@@ -1117,4 +1119,58 @@ function stanford_profile_helper_preprocess_block__system_menu_block(&$variables
     '^node:*',
     '^config:system.menu.*',
   ]);
+}
+
+/**
+ * Implements hook_entity_view().
+ *
+ * Modifies entity render arrays for fields that are of a certain type. The DS
+ * module provides a limit option, but it doesn't work for all field formatters
+ * because of the way the render array is structured. We'll move around the
+ * field items, call the DS module function, and then correct the render array
+ * back so that it still functions as expected.
+ */
+function stanford_profile_helper_entity_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  $list_types = [
+    'entity_reference_list_label_class',
+    'link_list_class',
+    'list_string_list_class',
+    'string_list_class',
+  ];
+  $components = $display->getComponents();
+  $list_render_arrays = [];
+  // First, move the items from the list render array into the build of the
+  // field. Store the list render array for re-use later.
+  foreach ($components as $field => $component) {
+    if (isset($component['type']) &&
+      in_array($component['type'], $list_types) &&
+      !empty($component['third_party_settings']['ds']['ds_limit']) &&
+      !empty($build[$field][0]['#items'])
+    ) {
+      $list_render_arrays[$field] = $build[$field][0];
+      // Pull out the items to be placed higher in the build array.
+      $items = $list_render_arrays[$field]['#items'];
+      unset($list_render_arrays[$field]['#items']);
+      foreach ($items as $delta => $item) {
+        $build[$field][$delta] = $item;
+      }
+    }
+  }
+  // We must have modified some stuff, so call the DS module function.
+  if ($list_render_arrays) {
+    ds_entity_view_alter($build, $entity, $display, $view_mode);
+  }
+
+  foreach ($list_render_arrays as $field => $render_array) {
+    $deltas = Element::children($build[$field]);
+    $items = [];
+    // Pull the field items back out that have been limited by DS module and
+    // put those back into the render array from earlier.
+    foreach ($deltas as $delta) {
+      $items[$delta] = $build[$field][$delta];
+      unset($build[$field][$delta]);
+    }
+    $render_array['#items'] = $items;
+    $build[$field][0] = $render_array;
+  }
 }
