@@ -24,6 +24,7 @@ function stanford_profile_styles_page_attachments(array &$attachments) {
   if (!$is_admin) {
     $attachments['#attached']['library'][] = 'stanford_profile_styles/stanford_profile_styles';
     $attachments['#attached']['library'][] = 'stanford_profile_styles/paragraph.react_paragraphs';
+    $attachments['#attached']['library'][] = 'stanford_profile_styles/layout';
   }
 
   // Get the node from the route.
@@ -258,5 +259,9 @@ function stanford_profile_styles_preprocess_colorbox_formatter(&$variables) {
 function stanford_profile_styles_views_pre_render(ViewExecutable $view) {
   if ($view->id() == 'search') {
     $view->element['#attached']['library'][] = 'stanford_profile_styles/views.search';
+  }
+
+  if (isset($view) && ($view->storage->id() == 'taxonomy_term_pages')) {
+    $view->element['#attached']['library'][] = 'stanford_person/views';
   }
 }

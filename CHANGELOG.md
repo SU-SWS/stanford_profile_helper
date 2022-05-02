@@ -1,6 +1,26 @@
 # Stanford Profile Helper
 
 
+8.x-2.0
+--------------------------------------------------------------------------------
+_Release Date: 2022-05-02_
+
+- Updated dev dependencies (#199)
+- D8CORE-5750 Modify field render arrays to better suite the DS module limits (#198)
+- D8CORE-5686 Adjusted scheduler help text (#197)
+- D8CORE-5748: adding unstyle list to the term list (#196)
+- D8CORE-5729: People term list style fixes (#194)
+- D8CORE-5771: limited stripes to tbody only (#195)
+- D8CORE-5567: utility classes for tables (#192)
+- D8CORE-5749: updating styles for shared tags (#193)
+- D8CORE-4728: updating decanter (#191)
+- D8CORE-4842: removing the image when in 2-col (#188)
+- Improved cache tags for views when no filters are available
+- D8CORE-4128 Adjusted styles to change views to HTML lists (#190)
+- Drush command to easily set up intranets (#189)
+- D8CORE-5615 Styles for shared tags view (#187)
+
+
 8.x-1.34
 --------------------------------------------------------------------------------
 _Release Date: 2022-03-17_
