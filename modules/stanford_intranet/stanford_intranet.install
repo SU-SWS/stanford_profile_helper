@@ -5,6 +5,7 @@
  * stanford_intranet.install
  */
 
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\node\Entity\NodeType;
@@ -47,4 +48,35 @@ function stanford_intranet_uninstall() {
   \Drupal::state()->delete('stanford_intranet');
   \Drupal::state()->delete('stanford_intranet.rids');
   \Drupal::state()->delete('stanford_intranet.allow_file_uploads');
+}
+
+/**
+ * Move files to private storage if the intranet is enabled.
+ */
+function stanford_intranet_update_8001() {
+  if (!\Drupal::state()->get('stanford_intranet', FALSE)) {
+    return;
+  }
+
+  $storage = \Drupal::entityTypeManager()->getStorage('file');
+  $fids = $storage->getQuery()
+    ->accessCheck(FALSE)
+    ->condition('uri', 'public://%', 'LIKE')
+    ->execute();
+
+  /** @var \Drupal\file\FileRepository $file_repo */
+  $file_repo = \Drupal::service('file.repository');
+  /** @var \Drupal\Core\File\FileSystem $file_system */
+  $file_system = \Drupal::service('file_system');
+  foreach ($fids as $fid) {
+    /** @var \Drupal\file\FileInterface $file */
+    $file = $storage->load($fid);
+
+    $uri = $file->getFileUri();
+    $new_uri = str_replace('public://', 'private://', $uri);
+    $directory = dirname($new_uri);
+
+    $file_system->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS);
+    $file_repo->move($file, str_replace('public://', 'private://', $uri));
+  }
 }
