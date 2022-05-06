@@ -83,6 +83,11 @@ class StanfordIntranetManager implements StanfordIntranetManagerInterface {
       $this->fileSystem->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS);
       $this->fileRepository->move($file, str_replace('public://', 'private://', $uri));
     }
+
+    $image_styles = $this->entityTypeManager->getStorage('image_style')->loadMultiple();
+    foreach ($image_styles as $style) {
+      $style->flush();
+    }
   }
 
 }

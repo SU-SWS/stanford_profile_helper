@@ -54,8 +54,5 @@ function stanford_intranet_uninstall() {
  * Move files to private storage if the intranet is enabled.
  */
 function stanford_intranet_update_8001() {
-  $kernel = \Drupal::service('kernel');
-  $kernel->invalidateContainer();
-  $kernel->rebuildContainer();
   \Drupal::service('stanford_intranet.manager')->moveIntranetFiles();
 }
