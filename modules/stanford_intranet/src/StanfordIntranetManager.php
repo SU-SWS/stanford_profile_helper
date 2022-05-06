@@ -84,7 +84,8 @@ class StanfordIntranetManager implements StanfordIntranetManagerInterface {
       $this->fileRepository->move($file, str_replace('public://', 'private://', $uri));
     }
 
-    $image_styles = $this->entityTypeManager->getStorage('image_style')->loadMultiple();
+    $image_styles = $this->entityTypeManager->getStorage('image_style')
+      ->loadMultiple();
     foreach ($image_styles as $style) {
       $style->flush();
     }

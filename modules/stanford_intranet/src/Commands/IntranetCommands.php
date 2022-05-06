@@ -77,7 +77,7 @@ class IntranetCommands extends DrushCommands {
    *
    * @command stanford-intranet:move-files
    */
-  public function moveIntranetFiles(){
+  public function moveIntranetFiles() {
     $this->intranetManager->moveIntranetFiles();
   }
 
