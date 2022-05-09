@@ -1,5 +1,11 @@
 # Stanford Profile Helper
 
+8.x-2.1
+--------------------------------------------------------------------------------
+_Release Date: 2022-05-09_
+
+- Update hook and drush command to move all public files into private file system. (#202)
+- D8CORE-5829: set up the footer text to inherit the smaller size (#201)
 
 8.x-2.0
 --------------------------------------------------------------------------------
