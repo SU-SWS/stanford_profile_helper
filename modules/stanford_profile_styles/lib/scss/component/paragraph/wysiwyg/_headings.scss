@@ -87,12 +87,6 @@
 
 
       a {
-        &:active,
-        &:focus,
-        &:hover {
-          color: transparent;
-          text-decoration: none;
-        }
 
         &::after {
           background-color: transparent;
