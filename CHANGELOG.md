@@ -1,5 +1,11 @@
 # Stanford Profile Helper
 
+8.2.3
+--------------------------------------------------------------------------------
+_Release Date: 2022-05-24_
+
+- Adjusted VBO form for event date fields that are required
+- D8CORE-5837: fixup for the transparent hover
 
 8.x-2.2
 --------------------------------------------------------------------------------
