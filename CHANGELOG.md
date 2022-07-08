@@ -1,5 +1,14 @@
 # Stanford Profile Helper
 
+
+8.2.4
+--------------------------------------------------------------------------------
+_Release Date: 2022-07-08_
+
+- fixed composer namespace to lowercase
+- D8CORE-5598 D8CORE-5592: making margins even (#209)
+- Merge branch 'master' into 8.x
+
 8.2.3
 --------------------------------------------------------------------------------
 _Release Date: 2022-05-24_
