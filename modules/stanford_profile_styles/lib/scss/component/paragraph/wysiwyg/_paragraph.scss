@@ -21,7 +21,8 @@
   }
 
   // Remove any existing top and bottom margin and padding.
-  p {
+  p,
+  .tablesaw-cell-content {
     @include big-paragraph;
     @include margin(0 null null null);
     @include modular-spacing('margin', null null 2 null);
