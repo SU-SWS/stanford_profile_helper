@@ -101,7 +101,7 @@
         "ckeditor-plugin/a11ychecker": "^1.1.1",
         "ckeditor-plugin/balloonpanel": "^4.14.0",
         "ckeditor-plugin/fakeobjects": "^4.14.0",
-        "ckeditor-plugin/link": "^4.14.0"
+        "ckeditor-plugin/link": "^4.14.0",
         "drupal/admin_toolbar": "^3.2",
         "drupal/allowed_formats": "^1.5",
         "drupal/auto_entitylabel": "^3.0@beta",
@@ -141,7 +141,7 @@
         "su-sws/react_paragraphs": "^8.2",
         "su-sws/stanford_fields": "^8.2",
         "su-sws/stanford_media": "^8.3",
-        "su-sws/stanford_migrate": "^8.3",
+        "su-sws/stanford_migrate": "^8.3"
     },
     "autoload": {
         "psr-4": {
