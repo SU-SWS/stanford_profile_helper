@@ -87,6 +87,12 @@
 
 
       a {
+        &:active,
+        &:focus,
+        &:hover {
+          color: $su-color-bright-blue;
+          text-decoration: underline;
+        }
 
         &::after {
           background-color: transparent;
