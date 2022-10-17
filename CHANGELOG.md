@@ -1,5 +1,11 @@
 # Stanford Profile Helper
 
+9.0.0
+--------------------------------------------------------------------------------
+_Release Date: 2022-10-17_
+
+- Revived the need for this package
+- Consolidated all submodules from `stanford_profile` into the modules subdir.
 
 8.2.4
 --------------------------------------------------------------------------------
