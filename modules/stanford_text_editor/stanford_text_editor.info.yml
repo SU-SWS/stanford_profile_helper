@@ -4,11 +4,11 @@ type: module
 core_version_requirement: ^8.8 || ^9
 dependencies:
   - anchor_link:anchor_link
+  - ckeditor_a11ychecker:ckeditor_a11ychecker
+  - ckeditor_a11ychecker:ckeditor_balloonpanel
   - drupal:ckeditor
   - drupal:editor
   - drupal:filter
-  - ckeditor_a11ychecker:ckeditor_a11ychecker
-  - ckeditor_a11ychecker:ckeditor_balloonpanel
   - linkit:linkit
   - stanford_media:stanford_media
 version: 9.x-1.4-dev

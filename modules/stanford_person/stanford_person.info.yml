@@ -28,7 +28,7 @@ dependencies:
   - pathauto:pathauto
   - shs:shs
   - stanford_media:stanford_media
-  - stanford_text_editor:stanford_text_editor
+  - stanford_profile_helper:stanford_text_editor
   - taxonomy_menu:taxonomy_menu
   - view_unpublished:view_unpublished
   - views_contextual_filters_or:views_contextual_filters_or

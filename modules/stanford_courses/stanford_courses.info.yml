@@ -38,9 +38,9 @@ dependencies:
   - scheduler:scheduler
   - shs:shs
   - smart_trim:smart_trim
-  - stanford_courses_importer:stanford_courses_importer
   - stanford_fields:stanford_fields
   - stanford_migrate:stanford_migrate
+  - stanford_profile_helper:stanford_courses_importer
   - taxonomy_menu:taxonomy_menu
   - ui_patterns:ui_patterns
   - ui_patterns:ui_patterns_layouts

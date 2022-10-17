@@ -8,9 +8,9 @@ dependencies:
   - allowed_formats:allowed_formats
   - auto_entitylabel:auto_entitylabel
   - components:components
-  - drual:field
   - drupal:breakpoint
   - drupal:datetime
+  - drupal:field
   - drupal:file
   - drupal:image
   - drupal:layout_builder
@@ -35,7 +35,7 @@ dependencies:
   - rabbit_hole:rabbit_hole
   - rabbit_hole:rh_node
   - stanford_media:stanford_media
-  - stanford_text_editor:stanford_text_editor
+  - stanford_profile_helper:stanford_text_editor
   - taxonomy_menu:taxonomy_menu
   - ui_patterns:ui_patterns
   - ui_patterns:ui_patterns_layouts

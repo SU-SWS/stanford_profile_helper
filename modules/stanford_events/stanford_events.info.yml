@@ -10,9 +10,9 @@ dependencies:
   - auto_entitylabel:auto_entitylabel
   - components:components
   - default_content:default_content
+  - drual:field
   - drupal:breakpoint
   - drupal:datetime
-  - drual:field
   - drupal:file
   - drupal:image
   - drupal:layout_builder
@@ -40,11 +40,10 @@ dependencies:
   - rabbit_hole:rabbit_hole
   - rabbit_hole:rh_node
   - smart_date:smart_date
-  - stanford_date_formats:stanford_date_formats
   - stanford_fields:stanford_fields
   - stanford_media:stanford_media
   - stanford_migrate:stanford_migrate
-  - stanford_text_editor:stanford_text_editor
+  - stanford_profile_helper:stanford_text_editor
   - taxonomy_menu:taxonomy_menu
   - ui_patterns:ui_patterns
   - ui_patterns:ui_patterns_layouts
