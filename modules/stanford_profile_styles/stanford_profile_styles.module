@@ -95,6 +95,10 @@ function stanford_profile_styles_library_info_alter(&$libraries, $extension) {
     unset($libraries['field_formatter']['css']['component']['js/build/css/react_paragraphs.field_formatter.css']);
     $libraries['field_formatter']['dependencies'][] = "stanford_profile_styles/paragraph.react_paragraphs";
   }
+  // Disable confirm leave library during testing.
+  if ($extension == 'confirm_leave' && getenv('CI')) {
+    unset($libraries['confirm-leave']);
+  }
 }
 
 /**
@@ -207,7 +211,7 @@ function stanford_profile_styles_preprocess_field__react_paragraph_row(&$variabl
     /** @var \Drupal\paragraphs\ParagraphInterface $entity */
     $entity = $item['content']['#paragraph'];
 
-    if ($width = $entity->getBehaviorSetting('react', 'width')) {
+    if ($width = $entity->getBehaviorSetting('react', 'width', 12)) {
       if ($item['attributes'] instanceof Attribute) {
         $item['attributes']->addClass("flex-$width-of-12");
         continue;
@@ -263,5 +267,16 @@ function stanford_profile_styles_views_pre_render(ViewExecutable $view) {
 
   if (isset($view) && ($view->storage->id() == 'taxonomy_term_pages')) {
     $view->element['#attached']['library'][] = 'stanford_person/views';
+  }
+}
+
+/**
+ * Variant setting for the External Links.
+ */
+function stanford_profile_helper_extlink_settings_alter(array &$settings) {
+  $no_ext_links = \Drupal::service('config_pages.loader')
+    ->getValue('stanford_basic_site_settings', 'su_hide_ext_link_icons', 0, 'value');
+  if ($no_ext_links) {
+    $settings['extlink_class'] = '';
   }
 }

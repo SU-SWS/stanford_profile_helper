@@ -21,6 +21,7 @@
   }
 
   // Remove any existing top and bottom margin and padding.
+  // The .tablesaw-cell-content class catches the spans in tables the module adds.
   p,
   .tablesaw-cell-content {
     @include big-paragraph;
