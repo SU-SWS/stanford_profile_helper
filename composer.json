@@ -174,7 +174,7 @@
             "Drupal\\Tests\\stanford_profile_drush\\": "modules/stanford_profile_drush/tests/src",
             "Drupal\\Tests\\stanford_profile_helper\\": "src",
             "Drupal\\Tests\\stanford_publication\\": "modules/stanford_publication/tests/src",
-            "Drupal\\Tests\\stanford_text_editor\\": "modules/stanford_text_editor/tests/src",
+            "Drupal\\Tests\\stanford_text_editor\\": "modules/stanford_text_editor/tests/src"
         }
     },
     "config": {
