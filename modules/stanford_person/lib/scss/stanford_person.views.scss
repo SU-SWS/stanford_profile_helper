@@ -41,7 +41,11 @@
   // Name field
   .views-field-title {
     h2 {
-      @include type-d;
+      @include type-e;
+
+      font-weight: $su-font-semi-bold;
+      margin-bottom: 0;
+      line-height: 1.4;
     }
 
     h3 {
