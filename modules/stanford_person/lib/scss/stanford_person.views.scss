@@ -20,9 +20,6 @@
 .stanford-people-grid,
 .taxonomy-term-pages.people-terms {
   .su-list-unstyled {
-    li {
-      @include modular-spacing('margin-bottom', 3);
-    }
 
     // Short title
     .views-field-su-person-short-title {
