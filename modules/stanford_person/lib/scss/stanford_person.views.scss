@@ -70,6 +70,21 @@
   }
 }
 
+// filtered People grid.
+.taxonomy-term-pages.people-terms {
+  .su-list-unstyled {
+    padding-bottom: 45px;
+  }
+
+  // Load more set up
+  .views-infinite-scroll-content-wrapper {
+    &,
+    + .js-pager__items {
+      @include modular-spacing('margin-bottom', 6);
+    }
+  }
+}
+
 // Edit this person node link
 .su-people-edit-article,
 .views-field-edit-node {
