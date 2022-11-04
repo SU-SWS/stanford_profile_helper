@@ -47,6 +47,9 @@
 
     h3 {
       @include type-e;
+
+      font-weight: $su-font-semi-bold;
+      margin-bottom: 0;
     }
 
     a {
