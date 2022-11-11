@@ -20,9 +20,6 @@
 .stanford-people-grid,
 .taxonomy-term-pages.people-terms {
   .su-list-unstyled {
-    li {
-      @include modular-spacing('margin-bottom', 3);
-    }
 
     // Short title
     .views-field-su-person-short-title {
@@ -50,6 +47,9 @@
 
     h3 {
       @include type-e;
+
+      font-weight: $su-font-semi-bold;
+      margin-bottom: 0;
     }
 
     a {
@@ -69,6 +69,21 @@
 
     .field-media-image {
       @include responsive-spacing('padding-bottom', 0);
+    }
+  }
+}
+
+// filtered People grid.
+.taxonomy-term-pages.people-terms {
+  .su-list-unstyled {
+    padding-bottom: 45px;
+  }
+
+  // Load more set up
+  .views-infinite-scroll-content-wrapper {
+    &,
+    + .js-pager__items {
+      @include modular-spacing('margin-bottom', 6);
     }
   }
 }
