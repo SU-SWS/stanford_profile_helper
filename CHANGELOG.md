@@ -1,5 +1,13 @@
 # Stanford Profile Helper
 
+9.0.3
+--------------------------------------------------------------------------------
+_Release Date: 2022-11-11_
+
+- Override page_cache_query_ignore settings with view queries (#219)
+- D8CORE-2932: removing extra spacing on people unstyled lists (#217)
+- D8CORE-5865: Prevented spaces from being stripped from course code (#218)
+
 9.0.2
 --------------------------------------------------------------------------------
 _Release Date: 2022-10-19_
