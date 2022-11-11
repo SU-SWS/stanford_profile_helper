@@ -332,12 +332,14 @@ function _stanford_profile_helper_fix_menu_items(int $node_id, string $destinati
  * Install new modules.
  */
 function stanford_profile_helper_post_update_9001() {
-  $consumers = \Drupal::entityTypeManager()
-    ->getStorage('consumer')
-    ->loadMultiple();
-  foreach ($consumers as $consumer) {
-    $consumer->set('secret', md5(random_int(0, 99999)));
-    $consumer->save();
+  if (\Drupal::moduleHandler()->moduleExists('consumers')) {
+    $consumers = \Drupal::entityTypeManager()
+      ->getStorage('consumer')
+      ->loadMultiple();
+    foreach ($consumers as $consumer) {
+      $consumer->set('secret', md5(random_int(0, 99999)));
+      $consumer->save();
+    }
   }
 
   try {
