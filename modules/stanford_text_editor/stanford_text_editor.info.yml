@@ -11,5 +11,5 @@ dependencies:
   - drupal:filter
   - linkit:linkit
   - stanford_media:stanford_media
-version: 9.0.4-dev
+version: 9.0.4
 package: Stanford
