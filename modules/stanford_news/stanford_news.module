@@ -58,11 +58,15 @@ function stanford_news_page_attachments(array &$attachments) {
   // Get the node from the route.
   $node = \Drupal::routeMatch()->getParameter('node');
 
-  // Not a node.. Then just continue.
+  // Not a node. Then just continue.
   if (!$node instanceof NodeInterface || $node->bundle() != 'stanford_news') {
     return;
   }
-
+  if ($node->hasField('su_news_hide_social')) {
+    $attachments['#attached']['drupalSettings']['stanfordNews'] = [
+      'hideSocial' => (bool) $node->get('su_news_hide_social')->getString(),
+    ];
+  }
   $attachments['#attached']['library'][] = 'stanford_news/news_node';
 }
 

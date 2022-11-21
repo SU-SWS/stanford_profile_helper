@@ -12,7 +12,9 @@ export default {
   // Attach Drupal Behavior.
   attach(context, settings) {
     (function ($) {
-
+      if (settings?.stanfordNews?.hideSocial) {
+        return;
+      }
 
       $('.news-social-media', context).prepend('<div class="widget-wrapper-print"><a href="" class="share-print su-news-header__social-print"><i class="fas fa-print" aria-hidden="true"></i><span>' + Drupal.t('Print Article') + '</span></a></div>');
       $('.news-social-media', context).prepend('<div class="widget-wrapper-forward"><a href="" class="share-forward su-news-header__social-forward"><i class="fas fa-envelope" aria-hidden="true"></i><span>' + Drupal.t('Forward Email') + '</span></a></div>');
