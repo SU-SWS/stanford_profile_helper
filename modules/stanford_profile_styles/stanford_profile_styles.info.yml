@@ -1,6 +1,6 @@
 name: 'Stanford Profile Styles'
 description: 'A module for theming'
-version: 9.0.5-dev
+version: 9.0.6-dev
 core_version_requirement: '^8 || ^9'
 type: module
 project: Stanford
