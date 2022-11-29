@@ -112,6 +112,9 @@ h1 {
       // Align multirow text with the icon.
       display: flex;
 
+      // Often this is a long zoom link, so overflow-wrap it.
+      overflow-wrap: anywhere;
+
       > .map-icon {
         @include modular-spacing('padding', null -2 null null);
 
