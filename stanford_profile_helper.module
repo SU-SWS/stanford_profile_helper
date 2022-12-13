@@ -27,6 +27,37 @@ use Drupal\stanford_profile_helper\StanfordProfileHelper;
 use Drupal\taxonomy\TermInterface;
 use Drupal\taxonomy_menu\Plugin\Menu\TaxonomyMenuMenuLink;
 use Drupal\Core\Render\Element;
+use Drupal\views\ViewEntityInterface;
+
+/**
+ * Implements hook_cache_flush().
+ */
+function stanford_profile_helper_cache_flush() {
+  $queries = [];
+  /** @var \Drupal\views\Entity\View[] $views */
+  $views = \Drupal::entityTypeManager()->getStorage('view')
+    ->loadByProperties(['status' => TRUE]);
+  foreach ($views as $view) {
+    foreach ($view->get('display') as $display) {
+      $filters = $display['display_options']['filters'] ?? [];
+      foreach ($filters as $filter) {
+        $queries[] = $filter['expose']['identifier'] ?? NULL;
+      }
+    }
+  }
+  $queries = array_unique(array_filter($queries));
+  asort($queries);
+  \Drupal::state()
+    ->set('page_cache_query_ignore.view_params', array_values($queries));
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update().
+ */
+function stanford_profile_helper_view_update(ViewEntityInterface $view) {
+  // After updating a view, reset the page_cache_query_ignore state.
+  stanford_profile_helper_cache_flush();
+}
 
 /**
  * Implements hook_entity_type_alter().
