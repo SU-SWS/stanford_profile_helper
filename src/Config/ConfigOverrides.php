@@ -113,7 +113,7 @@ class ConfigOverrides implements ConfigFactoryOverrideInterface {
       'sort_order',
       'url',
     ];
-    $view_params = $this->getViewQueryParams();
+    $view_params = $this->state->get('page_cache_query_ignore.view_params') ?: [];
     $params = [
       ...$original_setting,
       ...$allowed_parameters,
@@ -121,30 +121,6 @@ class ConfigOverrides implements ConfigFactoryOverrideInterface {
     ];
     asort($params);
     $overrides['page_cache_query_ignore.settings']['query_parameters'] = array_values(array_unique($params));
-  }
-
-  /**
-   * Get all the query parameters for exposed filters in all views.
-   *
-   * @return array
-   *   Associative array of query keys.
-   */
-  public function getViewQueryParams(): array {
-    $queries = [];
-    /** @var \Drupal\views\Entity\View[] $views */
-    $views = $this->entityTypeManager->getStorage('view')
-      ->loadByProperties(['status' => TRUE]);
-    foreach ($views as $view) {
-      foreach ($view->get('display') as $display) {
-        $filters = $display['display_options']['filters'] ?? [];
-        foreach ($filters as $filter) {
-          $queries[] = $filter['expose']['identifier'] ?? NULL;
-        }
-      }
-    }
-    $queries = array_unique(array_filter($queries));
-    asort($queries);
-    return array_values($queries);
   }
 
   /**
