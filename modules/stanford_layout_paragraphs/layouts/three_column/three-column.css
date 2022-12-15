@@ -1,0 +1,11 @@
+@media screen and (min-width: 1200px) {
+  .layout--layout-paragraphs-three-column {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 30px;
+  }
+}
+
+.layout--layout-paragraphs-three-column > * {
+  min-width: 0;
+}
