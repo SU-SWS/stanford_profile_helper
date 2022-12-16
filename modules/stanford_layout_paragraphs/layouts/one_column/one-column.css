@@ -12,6 +12,13 @@
 
 .layout--layout-paragraphs-one-column .paragraph.paragraph--type--stanford-wysiwyg,
 .layout--layout-paragraphs-one-column .ds-entity--paragraph.ds-entity--stanford-card {
-  max-width: 980px;
-  margin: 0 auto;
+  margin: 0 30px;
+}
+
+@media screen and (min-width: 980px) {
+  .layout--layout-paragraphs-one-column .paragraph.paragraph--type--stanford-wysiwyg,
+  .layout--layout-paragraphs-one-column .ds-entity--paragraph.ds-entity--stanford-card {
+    max-width: 980px;
+    margin: 0 auto;
+  }
 }
