@@ -194,7 +194,7 @@ class StanfordPolicySubscriber implements EventSubscriberInterface {
    */
   public function modifyPolicyEntity(NodeInterface $node): void {
     // Book settings not set.
-    if (empty($node->book['pid'])) {
+    if ($node->bundle() != 'stanford_policy' || empty($node->book['pid'])) {
       return;
     }
 

@@ -1,5 +1,11 @@
 # Stanford Profile Helper
 
+9.0.8
+--------------------------------------------------------------------------------
+_Release Date: 2023-01-17_
+
+- Fixed bug by checking for node type before setting policy prefix.
+
 9.0.7
 --------------------------------------------------------------------------------
 _Release Date: 2022-12-13_
