@@ -73,13 +73,34 @@ class PreprocessEventSubscriber implements EventSubscriberInterface {
         $content = $event->getVariables()->getByReference('content');
         $message = [
           '#theme' => 'rabbit_hole_message',
-          '#destination' => $redirect_response->getTargetUrl(),
+          '#destination' => self::getTargetUrl($redirect_response),
         ];
         $event->getVariables()
           ->set('content', ['rh_message' => $message] + $content);
       }
     }
   }
+
+  /**
+   * Get the absolute target url from the rabbit hole settings.
+   *
+   * @param \Drupal\Core\Routing\TrustedRedirectResponse $redirect_response
+   *   Rabbit hole redirect response.
+   *
+   * @return string
+   *   Absolute url.
+   */
+  protected static function getTargetUrl(TrustedRedirectResponse $redirect_response): string {
+    $target_url = $redirect_response->getTargetUrl();
+    try {
+      $url = Url::fromUserInput($target_url, ['absolute' => TRUE]);
+    }
+    catch (\Exception $e) {
+      $url = Url::fromUri($target_url, ['absolute' => TRUE]);
+    }
+    return $url->toString();
+  }
+
 
   /**
    * Get the rabbit hole behavior plugin for the given node.
