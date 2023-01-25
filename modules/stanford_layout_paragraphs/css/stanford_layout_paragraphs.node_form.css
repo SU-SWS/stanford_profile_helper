@@ -4,7 +4,6 @@
   grid-template-columns: 1fr;
 }
 
-
 .layout-node-form > div {
   min-width: initial;
   width: 100%;
@@ -22,3 +21,4 @@
   float: none;
   max-width: 100%;
 }
+

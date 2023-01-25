@@ -19,7 +19,7 @@ function stanford_layout_paragraphs_theme($existing, $type, $theme, $path) {
 /**
  * Implements hook_library_info_alter().
  */
-function sul_helper_library_info_alter(&$libraries, $extension) {
+function stanford_layout_paragraphs_library_info_alter(&$libraries, $extension) {
   if ($extension == 'layout_paragraphs') {
     $libraries['builder']['dependencies'][] = 'stanford_layout_paragraphs/layout_paragraphs';
   }
