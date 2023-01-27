@@ -1,11 +1,11 @@
 <?php
 
-use Drupal\Core\Template\Attribute;
-
 /**
  * @file
  * Primary module hooks for stanford_layout_paragraphs module.
  */
+
+use Drupal\Core\Template\Attribute;
 
 /**
  * Implements hook_theme().

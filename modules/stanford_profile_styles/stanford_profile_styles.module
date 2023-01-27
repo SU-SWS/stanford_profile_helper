@@ -143,8 +143,9 @@ function stanford_profile_styles_ckeditor_css_alter(array &$css, Editor $editor)
   ];
 
   if (in_array($editor->getFilterFormat()->id(), $known_formats)) {
-    $css[] = \Drupal::service('extension.list.module')
-        ->getPath('stanford_profile_styles') . '/dist/css/base/admin/ckeditor.css';
+    $module_path = \Drupal::service('extension.list.module')
+      ->getPath('stanford_profile_styles');
+    $css[] = $module_path . '/dist/css/base/admin/ckeditor.css';
   }
 }
 

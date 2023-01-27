@@ -4,6 +4,7 @@ namespace Drupal\stanford_image_styles_preview\Form;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ExtensionList;
+use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
@@ -38,23 +39,32 @@ class PreviewForm extends FormBase {
   protected $extensionList;
 
   /**
+   * File url generator service.
+   *
+   * @var \Drupal\Core\File\FileUrlGeneratorInterface
+   */
+  protected $fileUrlGen;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('entity_type.manager'),
       $container->get('renderer'),
-      $container->get('extension.list.module')
+      $container->get('extension.list.module'),
+      $container->get('file_url_generator')
     );
   }
 
   /**
    * {@inheritdoc}
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, RendererInterface $renderer, ExtensionList $extension_list) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, RendererInterface $renderer, ExtensionList $extension_list, FileUrlGeneratorInterface $file_url_gen) {
     $this->entityTypeManager = $entity_type_manager;
     $this->renderer = $renderer;
     $this->extensionList = $extension_list;
+    $this->fileUrlGen = $file_url_gen;
   }
 
   /**
@@ -126,7 +136,7 @@ class PreviewForm extends FormBase {
       '#type' => 'fieldset',
       '#title' => $this->t('Original'),
     ];
-    $url = \Drupal::service('file_url_generator')->generateAbsoluteString($file_uri);
+    $url = $this->fileUrlGen->generateAbsoluteString($file_uri);
     $form['styles']['original']['preview'] = [
       '#markup' => '<img src="' . $url . '" />',
     ];

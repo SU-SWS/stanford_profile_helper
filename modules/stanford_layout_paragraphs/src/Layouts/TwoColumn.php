@@ -5,7 +5,7 @@ namespace Drupal\stanford_layout_paragraphs\Layouts;
 use Drupal\layout_builder\Plugin\Layout\MultiWidthLayoutBase;
 
 /**
- * Two column layout class
+ * Two column layout class.
  */
 class TwoColumn extends MultiWidthLayoutBase {
 
