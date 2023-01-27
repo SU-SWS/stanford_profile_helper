@@ -98,7 +98,6 @@ class CapTest extends UnitTestCase {
    */
   protected function getEntityTypeManager() {
     $entity_query = $this->createMock(QueryInterface::class);
-    $entity_query->method('accessCheck')->willReturnSelf();
     $entity_query->method('condition')->willReturnSelf();
     $entity_query->method('execute')->willReturn([]);
 

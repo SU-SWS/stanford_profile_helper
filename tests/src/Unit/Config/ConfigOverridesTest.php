@@ -122,7 +122,7 @@ class ConfigOverridesTest extends UnitTestCase {
    * Mock state service callback.
    */
   public function getStateCallback($state_name, $default_value = NULL) {
-    return match($state_name) {
+    return match ($state_name) {
       'stanford_intranet.rids' => array_flip([
         'custm_foo_bar',
         'site_manager',

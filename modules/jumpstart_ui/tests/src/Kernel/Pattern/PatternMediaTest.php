@@ -42,12 +42,7 @@ class PatternMediaTest extends KernelTestBase {
    */
   protected function setUp(): void {
     parent::setUp();
-    $this->container->get('theme_installer')->install(['stable9']);
-    $this->container->get('config.factory')
-      ->getEditable('system.theme')
-      ->set('default', 'stable9')
-      ->save();
-
+    \Drupal::service('theme_installer')->install(['bartik']);
     $this->twig = \Drupal::service('twig');
 
     require_once DRUPAL_ROOT . '/core/themes/engines/twig/twig.engine';

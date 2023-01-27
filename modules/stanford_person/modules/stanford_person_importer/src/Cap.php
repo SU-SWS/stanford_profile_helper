@@ -235,7 +235,6 @@ class Cap implements CapInterface {
 
     $term_storage = $this->entityTypeManager->getStorage('taxonomy_term');
     $tids = $term_storage->getQuery()
-      ->accessCheck(FALSE)
       ->condition('vid', 'cap_org_codes')
       ->condition('su_cap_org_code', $org_data['orgCodes'], 'IN')
       ->execute();

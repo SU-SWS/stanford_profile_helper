@@ -45,7 +45,6 @@ class HeroPatternBehaviorTest extends UnitTestCase {
     $display_ids = [];
 
     $query = $this->createMock(QueryInterface::class);
-    $query->method('accessCheck')->willReturnSelf();
     $query->method('condition')->willReturnSelf();
     $query->method('execute')->willReturnReference($display_ids);
 

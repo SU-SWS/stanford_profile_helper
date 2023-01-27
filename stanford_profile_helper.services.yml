@@ -17,11 +17,6 @@ services:
     arguments: ['@rabbit_hole.behavior_invoker', '@plugin.manager.rabbit_hole_behavior_plugin']
     tags:
       - { name: 'event_subscriber' }
-  stanford_profile_helper.event_subscriber.form:
-    class: Drupal\stanford_profile_helper\EventSubscriber\FormEventSubscriber
-    arguments: ['@current_user']
-    tags:
-      - { name: event_subscriber }
   stanford_profile_helper.config_overrider:
     class: Drupal\stanford_profile_helper\Config\ConfigOverrides
     arguments: ['@state', '@config_pages.loader', '@config.factory', '@entity_type.manager', '@stream_wrapper_manager']

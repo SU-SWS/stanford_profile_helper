@@ -194,7 +194,7 @@ class StanfordPolicySubscriber implements EventSubscriberInterface {
    */
   public function modifyPolicyEntity(NodeInterface $node): void {
     // Book settings not set.
-    if ($node->bundle() != 'stanford_policy' || empty($node->book['pid'])) {
+    if (empty($node->book['pid'])) {
       return;
     }
 
@@ -305,13 +305,14 @@ class StanfordPolicySubscriber implements EventSubscriberInterface {
 
     $letters = range('A', 'Z');
 
-    return match($prefix_set) {
+    return match ($prefix_set) {
       'alpha_uppercase' => $letters[$position - 1],
       'alpha_lowercase' => strtolower($letters[$position - 1]),
       'roman_numeral_uppercase' => $this->getRomanNumeral($position),
       'roman_numeral_lowercase' => strtolower($this->getRomanNumeral($position)),
       default => $position,
     };
+
   }
 
   /**
