@@ -1,7 +1,7 @@
 name: 'Stanford Text Editor'
 description: 'Input formats and WYSIWYG settings'
 type: module
-core_version_requirement: ^8.8 || ^9
+core_version_requirement: ^9 || ^10
 dependencies:
   - anchor_link:anchor_link
   - ckeditor_a11ychecker:ckeditor_a11ychecker

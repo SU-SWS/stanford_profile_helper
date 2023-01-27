@@ -80,7 +80,7 @@ function jumpstart_ui_preprocess(&$variables, $hook) {
 
   // Match the hook with a strpos because it is not consistent.
   foreach (UiPatterns::getPatternDefinitions() as $pattern_id => $pattern) {
-    if (strpos($hook, $pattern_id) !== FALSE) {
+    if (str_contains($hook, $pattern_id)) {
 
       if (isset($variables['attributes']['id'])) {
         $variables['attributes']['id'] = Html::getUniqueId($variables['attributes']['id']);
@@ -124,8 +124,8 @@ function jumpstart_ui_preprocess_pattern_localfooter(&$variables) {
  */
 function jumpstart_ui_preprocess_layout(&$variables) {
   $current_route = \Drupal::routeMatch()->getRouteName();
-  if (strpos($current_route, 'layout_builder.') === 0) {
-    // Add a flag if the user is currently in layout builder. This allow the
+  if (str_starts_with($current_route, 'layout_builder.')) {
+    // Add a flag if the user is currently in layout builder. This allows the
     // template to make it easier for users to move blocks in layout builder.
     $variables['layout_builder_admin'] = TRUE;
   }

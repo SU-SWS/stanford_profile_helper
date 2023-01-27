@@ -3,6 +3,7 @@
 namespace Drupal\stanford_image_styles_preview\Form;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Extension\ExtensionList;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
@@ -30,21 +31,30 @@ class PreviewForm extends FormBase {
   protected $renderer;
 
   /**
+   * Module extension list service.
+   *
+   * @var \Drupal\Core\Extension\ExtensionList
+   */
+  protected $extensionList;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('entity_type.manager'),
-      $container->get('renderer')
+      $container->get('renderer'),
+      $container->get('extension.list.module')
     );
   }
 
   /**
    * {@inheritdoc}
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, RendererInterface $renderer) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, RendererInterface $renderer, ExtensionList $extension_list) {
     $this->entityTypeManager = $entity_type_manager;
     $this->renderer = $renderer;
+    $this->extensionList = $extension_list;
   }
 
   /**
@@ -101,10 +111,9 @@ class PreviewForm extends FormBase {
     $styles = $this->entityTypeManager->getStorage('image_style')
       ->loadMultiple();
 
-    $file_uri = drupal_get_path('module', 'stanford_image_styles_preview') . '/img/preview_image.jpg';
-    $file = NULL;
+    $file_uri = $this->extensionList->getPath('stanford_image_styles_preview') . '/img/preview_image.jpg';
 
-    // If the form is being rebuild, we can grab the image and load it.
+    // If the form is being rebuilt, we can grab the image and load it.
     if ($image = $form_state->getValue('image')) {
       $file = $this->entityTypeManager->getStorage('file')
         ->load(is_array($image) ? reset($image) : $image);
@@ -117,8 +126,9 @@ class PreviewForm extends FormBase {
       '#type' => 'fieldset',
       '#title' => $this->t('Original'),
     ];
+    $url = \Drupal::service('file_url_generator')->generateAbsoluteString($file_uri);
     $form['styles']['original']['preview'] = [
-      '#markup' => '<img src="' . file_create_url($file_uri) . '" />',
+      '#markup' => '<img src="' . $url . '" />',
     ];
 
     foreach ($styles as $style) {
@@ -158,7 +168,8 @@ class PreviewForm extends FormBase {
     $element['edit'] = [
       '#prefix' => '<div class="clearfix">',
       '#suffix' => '</div>',
-      '#markup' => Link::fromTextAndUrl($this->t('Edit Style'), $style->toUrl())->toString(),
+      '#markup' => Link::fromTextAndUrl($this->t('Edit Style'), $style->toUrl())
+        ->toString(),
     ];
 
     $element['image'] = [

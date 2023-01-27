@@ -36,12 +36,13 @@ class ThreeColLayoutTest extends KernelTestBase {
   }
 
   /**
-   * Layout should render when values are passed..
+   * Layout should render when values are passed.
    */
   public function testThreeColLayoutFullProps() {
     // Boot twig environment.
-    $twig =  \Drupal::service('twig');
-    $template = drupal_get_path('module', 'jumpstart_ui') . '/templates/layouts/three-column.html.twig';
+    $twig = \Drupal::service('twig');
+    $template = \Drupal::service('extension.list.module')
+        ->getPath('jumpstart_ui') . '/templates/layouts/three-column.html.twig';
     $props = $this->getProps();
     $this->setRawContent((string) twig_render_template($template, $props));
     $this->assertText("Somebody once told me php unit is gonna rule me");
@@ -63,7 +64,7 @@ class ThreeColLayoutTest extends KernelTestBase {
         'right' => "Im looking for the right class to base my tests off of and I wanna go straight to bed.",
       ],
       'region_attributes' => [
-        'main' =>  new Attribute(['class' => 'main-region-attribute']),
+        'main' => new Attribute(['class' => 'main-region-attribute']),
       ],
       'settings' => [
         'extra_classes' => "boy-is-this-a-neat-class",

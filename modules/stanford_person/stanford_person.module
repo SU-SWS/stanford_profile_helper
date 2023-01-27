@@ -164,7 +164,7 @@ function _stanford_person_install_default_photo_file() {
   // Save the file to public.
   $destination = 'public://media/image';
   $source = $file_system->realpath(
-    drupal_get_path("module", "stanford_person") .
+    \Drupal::service('extension.list.module')->getPath('stanford_person') .
     "/lib/assets/img/stanford-person-default-profile-image.png"
   );
   $file_system->prepareDirectory($destination, FileSystemInterface::CREATE_DIRECTORY);

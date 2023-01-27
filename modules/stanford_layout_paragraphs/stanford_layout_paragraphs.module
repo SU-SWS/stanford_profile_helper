@@ -30,8 +30,8 @@ function stanford_layout_paragraphs_library_info_alter(&$libraries, $extension) 
  */
 function stanford_layout_paragraphs_theme_suggestions_alter(array &$suggestions, array $variables, $hook) {
   if (
-    strpos($hook, 'pattern_') === 0 &&
-    strpos($hook, 'pattern_view') === FALSE &&
+    str_starts_with($hook, 'pattern_') &&
+    !str_contains($hook, 'pattern_view') &&
     _stanford_layout_paragraphs_is_editing_layout_paragraphs()
   ) {
     // Add the theme suggestion when we're editing layout builder components.
@@ -64,7 +64,7 @@ function stanford_layout_paragraphs_preprocess(&$variables, $hook) {
     unset($variables['attributes']);
   }
 
-  if (strpos($hook, 'pattern_') === 0 && !empty($variables['context'])) {
+  if (str_starts_with($hook, 'pattern_') && !empty($variables['context'])) {
 
     // Grab the layout paragraphs parts from the context that we saved above,
     // and put them into a variable for use in the patterns_use_wrapper_admin
@@ -92,5 +92,5 @@ function stanford_layout_paragraphs_ckeditor_plugin_info_alter(array &$plugins) 
 function _stanford_layout_paragraphs_is_editing_layout_paragraphs() {
   $layout_paragraphs_routes = ['entity.node.edit_form'];
   $route_name = \Drupal::routeMatch()->getRouteName();
-  return in_array($route_name, $layout_paragraphs_routes) || strpos($route_name, 'layout_paragraphs.') === 0;
+  return in_array($route_name, $layout_paragraphs_routes) || str_starts_with($route_name, 'layout_paragraphs.');
 }

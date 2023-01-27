@@ -305,21 +305,14 @@ class StanfordPolicySubscriber implements EventSubscriberInterface {
 
     $letters = range('A', 'Z');
 
-    switch ($prefix_set) {
-      case 'alpha_uppercase':
-        return $letters[$position - 1];
+    return match ($prefix_set) {
+      'alpha_uppercase' => $letters[$position - 1],
+      'alpha_lowercase' => strtolower($letters[$position - 1]),
+      'roman_numeral_uppercase' => $this->getRomanNumeral($position),
+      'roman_numeral_lowercase' => strtolower($this->getRomanNumeral($position)),
+      default => $position,
+    };
 
-      case 'alpha_lowercase':
-        return strtolower($letters[$position - 1]);
-
-      case 'roman_numeral_uppercase':
-        return $this->getRomanNumeral($position);
-
-      case 'roman_numeral_lowercase':
-        return strtolower($this->getRomanNumeral($position));
-    }
-
-    return $position;
   }
 
   /**
