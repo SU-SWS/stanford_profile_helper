@@ -1,0 +1,8 @@
+stanford_text_editor_block_image_paste:
+  ckeditor5:
+    plugins:
+      - drupalForcePlainText.DrupalForcePlainText
+  drupal:
+    label: Block Image Paste
+    library: stanford_text_editor/ckeditor5.block_image_paste
+    elements: false

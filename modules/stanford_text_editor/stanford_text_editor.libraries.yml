@@ -1,0 +1,7 @@
+ckeditor5.block_image_paste:
+  version: VERSION
+  js:
+    js/ckeditor5.block_image_paste.js: {}
+  dependencies:
+    - core/ckeditor5
+    - core/ckeditor5.basic
