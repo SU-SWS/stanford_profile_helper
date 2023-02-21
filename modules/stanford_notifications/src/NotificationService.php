@@ -130,7 +130,9 @@ class NotificationService implements NotificationServiceInterface {
    * {@inheritDoc}
    */
   public function addNotification($message, array $roles = [], $status = Messenger::TYPE_STATUS) {
-    $user_query = $this->entityTypeManager->getStorage('user')->getQuery();
+    $user_query = $this->entityTypeManager->getStorage('user')
+      ->getQuery()
+      ->accessCheck();
     if ($roles) {
       $user_query->condition('roles', $roles, 'IN');
     }

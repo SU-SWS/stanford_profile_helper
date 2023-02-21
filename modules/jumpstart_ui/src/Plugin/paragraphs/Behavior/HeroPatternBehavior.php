@@ -26,6 +26,7 @@ class HeroPatternBehavior extends ParagraphsBehaviorBase {
     $display_storage = \Drupal::entityTypeManager()
       ->getStorage('entity_view_display');
     $display_ids = $display_storage->getQuery()
+      ->accessCheck()
       ->condition('id', "paragraph.{$paragraphs_type->id()}.", 'STARTS_WITH')
       ->execute();
 

@@ -16,7 +16,6 @@ dependencies:
   - node_revision_delete:node_revision_delete
   - pathauto:pathauto
   - rabbit_hole:rabbit_hole
-  - react_paragraphs:react_paragraphs
   - taxonomy_menu:taxonomy_menu
   - ui_patterns:ui_patterns_views
   - views_infinite_scroll:views_infinite_scroll

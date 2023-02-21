@@ -144,7 +144,7 @@ function stanford_events_cron() {
   $last_cron = \Drupal::state()->get('system.cron_last');
   $now = time();
   $query = \Drupal::entityQuery('node');
-
+  $query->accessCheck(FALSE);
   // Conditions.
   $query->condition('type', 'stanford_event');
   $query->condition('status', 1);
