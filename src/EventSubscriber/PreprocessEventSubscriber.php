@@ -3,6 +3,7 @@
 namespace Drupal\stanford_profile_helper\EventSubscriber;
 
 use Drupal\Core\Routing\TrustedRedirectResponse;
+use Drupal\Core\Url;
 use Drupal\node\NodeInterface;
 use Drupal\preprocess_event_dispatcher\Event\NodePreprocessEvent;
 use Drupal\rabbit_hole\BehaviorInvokerInterface;
