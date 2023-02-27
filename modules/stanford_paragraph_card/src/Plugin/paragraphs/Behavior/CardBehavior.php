@@ -4,7 +4,6 @@ namespace Drupal\stanford_paragraph_card\Plugin\paragraphs\Behavior;
 
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\paragraphs\Entity\ParagraphsType;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\paragraphs\ParagraphsBehaviorBase;
@@ -34,7 +33,7 @@ class CardBehavior extends ParagraphsBehaviorBase {
     $element = parent::buildBehaviorForm($paragraph, $form, $form_state);
     $element['link_style'] = [
       '#title' => $this->t('Link Style'),
-      '#description' => $this->t('Choose how you would like the link to display. '),
+      '#description' => $this->t('Choose how you would like the link to display.'),
       '#type' => 'select',
       '#empty_option' => $this->t('Button'),
       '#options' => [
