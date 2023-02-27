@@ -221,8 +221,13 @@ function stanford_events_preprocess_field_multiple_value_form(&$variables) {
 function stanford_events_preprocess_pattern_events_list(&$variables) {
   $renderer = \Drupal::service('renderer');
   $values = $variables;
-  $start_month = !empty($values['start_month']) ? strtolower(trim(strip_tags((string) $renderer->render($values['start_month'])))) : NULL;
-  $end_month = !empty($values['end_month']) ? strtolower(trim(strip_tags((string) $renderer->render($values['end_month'])))) : NULL;
+
+  // Make sure we have a string, not a Markup or array.
+  $start = (string) (is_array($values['start_month']) ? $renderer->render($values['start_month']) : $values['start_month']);
+  $end = (string) is_array($values['end_month']) ? $renderer->render($values['end_month']) : $values['end_month'];
+
+  $start_month = strtolower(trim(strip_tags($start))) ?: NULL;
+  $end_month = strtolower(trim(strip_tags($end))) ?: NULL;
 
   if ($start_month) {
     $variables['start_month_full'] = date('F', strtotime($start_month));
