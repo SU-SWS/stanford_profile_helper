@@ -22,18 +22,16 @@ class SuPolicyLogAccessControlHandler extends EntityAccessControlHandler {
         return AccessResult::allowedIfHasPermission($account, 'view policy log');
 
       case 'update':
-        return AccessResult::allowedIfHasPermissions(
-          $account,
-          ['edit policy log', 'administer policy log'],
-          'OR',
-        );
+        return AccessResult::allowedIfHasPermissions($account, [
+          'edit policy log',
+          'administer policy log',
+        ], 'OR');
 
       case 'delete':
-        return AccessResult::allowedIfHasPermissions(
-          $account,
-          ['delete policy log', 'administer policy log'],
-          'OR',
-        );
+        return AccessResult::allowedIfHasPermissions($account, [
+          'delete policy log',
+          'administer policy log',
+        ], 'OR');
 
       default:
         // No opinion.
@@ -46,11 +44,10 @@ class SuPolicyLogAccessControlHandler extends EntityAccessControlHandler {
    * {@inheritdoc}
    */
   protected function checkCreateAccess(AccountInterface $account, array $context, $entity_bundle = NULL) {
-    return AccessResult::allowedIfHasPermissions(
-      $account,
-      ['create policy log', 'administer policy log'],
-      'OR',
-    );
+    return AccessResult::allowedIfHasPermissions($account, [
+      'create policy log',
+      'administer policy log',
+    ], 'OR');
   }
 
 }
