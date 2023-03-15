@@ -177,6 +177,12 @@ class EntityEventSubscriber implements EventSubscriberInterface {
    *   The configuration page being saved.
    */
   protected static function preSaveConfigPages(ConfigPagesInterface $config_page) {
+    if (InstallerKernel::installationAttempted()) {
+      // Rebuild the routes so that the config pages will save from the default
+      // content import at site installation.
+      \Drupal::service('router.builder')->rebuildIfNeeded();
+    }
+
     if (
       $config_page->hasField('su_site_url') &&
       $config_page->get('su_site_url')->count()
