@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * stanford_policy.install
+ */
+
+/**
+ * Install new policy content type.
+ */
+function stanford_policy_update_8001() {
+  $entity_type_manager = \Drupal::entityTypeManager();
+  if ($entity_type_manager->hasDefinition('log')) {
+    $old_logs = $entity_type_manager->getStorage('log')->loadMultiple();
+    foreach ($old_logs as $log) {
+      $log->delete();
+    }
+  }
+
+  $log_type = \Drupal::entityTypeManager()->getDefinition('su_policy_log');
+  \Drupal::entityDefinitionUpdateManager()
+    ->installEntityType($log_type);
+}

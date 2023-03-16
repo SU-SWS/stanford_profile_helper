@@ -1,0 +1,4 @@
+entity.su_policy_log.settings:
+  title: 'Settings'
+  route_name: entity.su_policy_log.settings
+  base_route: entity.su_policy_log.settings

@@ -1,0 +1,11 @@
+administer policy log:
+  title: 'Administer policy log settings'
+  restrict access: true
+delete policy log:
+  title: Delete policy log
+create policy log:
+  title: Create policy log
+view policy log:
+  title: View policy log
+edit policy log:
+  title: Edit policy log
