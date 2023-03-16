@@ -1,0 +1,5 @@
+entity.su_policy_log.settings:
+  title: 'Policy Log'
+  description: 'Configure a Policy Log entity type.'
+  route_name:  entity.su_policy_log.settings
+  parent: system.admin_structure

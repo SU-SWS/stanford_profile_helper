@@ -1,0 +1,7 @@
+entity.su_policy_log.settings:
+  path: 'admin/structure/policy-log'
+  defaults:
+    _form: '\Drupal\stanford_policy\Form\SuPolicyLogSettingsForm'
+    _title: 'Policy Log'
+  requirements:
+    _permission: 'administer policy log'
