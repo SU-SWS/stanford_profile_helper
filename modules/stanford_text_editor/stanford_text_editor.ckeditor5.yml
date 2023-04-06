@@ -1,8 +1,0 @@
-stanford_text_editor_plain_paste:
-  ckeditor5:
-    plugins:
-      - plainPaste.PlainPaste
-  drupal:
-    label: Plain Paste
-    library: stanford_text_editor/plain_paste
-    elements: false

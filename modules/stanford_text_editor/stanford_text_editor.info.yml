@@ -4,5 +4,3 @@ type: module
 core_version_requirement: ^9 || ^10
 version: 9.0.8-dev
 package: Stanford
-dependencies:
-  - drupal:ckeditor5
