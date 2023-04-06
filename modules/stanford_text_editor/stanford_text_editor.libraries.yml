@@ -1,0 +1,5 @@
+plain_paste:
+  js:
+    js/build/plainPaste.js: { preprocess: false, minified: true }
+  dependencies:
+    - core/ckeditor5
