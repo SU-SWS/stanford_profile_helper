@@ -3,7 +3,7 @@ type: module
 description: 'Provides Image Styles'
 core_version_requirement: ^9 || ^10
 package: Stanford
-version: 9.0.8-dev
+version: 9.2.0
 dependencies:
   - drupal:image
   - drupal:responsive_image
