@@ -17,7 +17,7 @@ class RouteSubscriber extends RouteSubscriberBase {
    */
   protected function alterRoutes(RouteCollection $collection) {
     foreach ($collection as $route) {
-      if (strpos($route->getPath(), '/admin/people') === 0) {
+      if (str_starts_with($route->getPath(), '/admin/people')) {
         $route->setPath(str_replace('/admin/people', '/admin/users', $route->getPath()));
       }
     }

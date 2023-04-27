@@ -1,5 +1,14 @@
 # Stanford Profile Helper
 
+9.2.0
+--------------------------------------------------------------------------------
+_Release Date: 2023-04-27_
+
+- NEW layout paragraphs enhancer module for LP layouts and styles.
+- Removed all deprecated code for D10 Prep.
+- Move card link field to paragraph behaviors.
+-
+
 9.1.0
 --------------------------------------------------------------------------------
 _Release Date: 2023-01-17_

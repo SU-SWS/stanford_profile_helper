@@ -58,7 +58,7 @@ function stanford_profile_helper_post_update_8100() {
         $node = \Drupal::entityTypeManager()
           ->getStorage('node')
           ->load($parameters['node']);
-        $title = $node ? $node->label() : NULL;
+        $title = $node?->label();
       }
 
       // Absolute external url, fetch the contents of the page and grab the
@@ -89,10 +89,8 @@ function stanford_profile_helper_post_update_8100() {
       continue;
     }
 
-    if ($title) {
-      $value['title'] = trim($title);
-      $paragraph->set('su_media_caption_link', [$value])->save();
-    }
+    $value['title'] = trim($title);
+    $paragraph->set('su_media_caption_link', [$value])->save();
   }
 }
 

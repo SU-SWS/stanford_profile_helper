@@ -41,7 +41,7 @@ class SignupBlock extends BlockBase implements BlockPluginInterface {
       '#type' => 'textfield',
       '#title' => $this->t('Stanford Mailing List Subscribe URL'),
       '#description' => $this->t('Example: Get a mailchimp url to be placed here'),
-      '#default_value' => isset($config['form_action']) ? $config['form_action'] : '',
+      '#default_value' => $config['form_action'] ?? '',
     ];
 
     return $form;

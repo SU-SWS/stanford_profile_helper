@@ -53,7 +53,7 @@ class ConfigOverrider implements ConfigFactoryOverrideInterface {
     }
     $overrides['system.file']['default_scheme'] = 'private';
     foreach ($names as $name) {
-      if (strpos($name, 'field.storage.') === 0) {
+      if (str_starts_with($name, 'field.storage.')) {
         $scheme = $this->configFactory->getEditable($name)
           ->getOriginal('settings.uri_scheme', FALSE);
         // If the field isn't an file or image field, it won't have a upload

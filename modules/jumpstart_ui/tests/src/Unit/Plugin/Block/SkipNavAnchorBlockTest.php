@@ -61,7 +61,7 @@ class SkipNavAnchorBlockTest extends UnitTestCase {
       ->getMock();
     $container->set('cache_contexts_manager', $this->cacheContextsManager);
 
-    $this->account = $this->prophesize(AccountInterface::class);
+    $this->account = $this->createMock(AccountInterface::class);
 
     $this->block = new SkipNavAnchorBlock([], 'jumpstart_ui_skipnav_main_anchor', ['provider' => 'jumpstart_ui']);
     \Drupal::setContainer($container);
@@ -72,7 +72,7 @@ class SkipNavAnchorBlockTest extends UnitTestCase {
    */
   public function testAccess() {
     $this->cacheContextsManager->method('assertValidTokens')->willReturn(TRUE);
-    $this->assertTrue($this->block->access($this->account->reveal()));
+    $this->assertTrue($this->block->access($this->account));
   }
 
   /**

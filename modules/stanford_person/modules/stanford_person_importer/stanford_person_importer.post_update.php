@@ -41,6 +41,7 @@ function stanford_person_importer_post_update_8002(&$sandbox) {
   }
   $media_storage = \Drupal::entityTypeManager()->getStorage('media');
   $mids = $media_storage->getQuery()
+    ->accessCheck(FALSE)
     ->condition('bundle', 'image')
     ->condition('field_media_image.width', 2, '<')
     ->condition('field_media_image.height', 2, '<')
@@ -50,6 +51,7 @@ function stanford_person_importer_post_update_8002(&$sandbox) {
   }
   $node_storage = \Drupal::entityTypeManager()->getStorage('node');
   $nids = $node_storage->getQuery()
+    ->accessCheck(FALSE)
     ->condition('su_person_photo', $mids, 'IN')
     ->execute();
   if (empty($nids)) {

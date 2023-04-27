@@ -5,7 +5,7 @@
  * stanford_courses.post_update.php
  */
 
-use \Drupal\menu_link_content\Entity\MenuLinkContent;
+use Drupal\menu_link_content\Entity\MenuLinkContent;
 
 /**
  * Create the "All" courses menu link.

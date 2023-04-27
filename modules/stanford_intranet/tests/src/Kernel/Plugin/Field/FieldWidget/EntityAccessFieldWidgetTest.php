@@ -6,7 +6,6 @@ use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\Core\Form\FormState;
 use Drupal\node\Entity\Node;
 use Drupal\stanford_intranet\Plugin\Field\FieldType\EntityAccessFieldType;
-use Drupal\stanford_intranet\Plugin\Field\FieldWidget\EntityAccessFieldWidget;
 use Drupal\Tests\stanford_intranet\Kernel\IntranetKernelTestBase;
 use Drupal\user\Entity\Role;
 use Drupal\user\Entity\User;

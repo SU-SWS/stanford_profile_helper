@@ -296,7 +296,7 @@ TAGS;
     $this->assertEquals('', $translated);
     // Throws an exception if you feed it a string without exactly two values.
     $this->expectException(\Exception::class);
-    $translated = $plugin->transform('-1-8-9', $migrate, $row, '');
+    $plugin->transform('-1-8-9', $migrate, $row, '');
   }
 
 }

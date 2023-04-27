@@ -214,7 +214,7 @@ class ConfigOverrides implements ConfigFactoryOverrideInterface {
       $counter = 500;
       foreach (array_keys($this->state->get('stanford_intranet.rids', [])) as $role_id) {
         // We only care about the custom roles.
-        if (strpos($role_id, 'custm_') === FALSE) {
+        if (!str_contains($role_id, 'custm_')) {
           continue;
         }
         $overrides['user.role.site_manager']['permissions'][$counter] = "assign $role_id role";

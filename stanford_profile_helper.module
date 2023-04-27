@@ -20,7 +20,6 @@ use Drupal\Core\Serialization\Yaml;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\Url;
-use Drupal\node\NodeForm;
 use Drupal\node\NodeInterface;
 use Drupal\search_api\IndexInterface;
 use Drupal\stanford_profile_helper\StanfordProfileHelper;
@@ -213,35 +212,57 @@ function stanford_profile_helper_library_info_alter(&$libraries, $extension) {
 }
 
 /**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ */
+function stanford_profile_helper_form_node_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  unset($form['actions']['unlock'], $form['scheduler_settings']);
+  $node = $form_state->getBuildInfo()['callback_object']->getEntity();
+  $system_pages = \Drupal::config('system.site')->get('page');
+  $access = !in_array('/node/' . $node->id(), $system_pages);
+
+  $scheduler_increment = \Drupal::state()
+    ->get('stanford_profile_helper.scheduler_increment', 60 * 60 * 4);
+  $hours = (int) floor($scheduler_increment / 3600);
+  $mins = (int) floor($scheduler_increment / 60 % 60);
+  $scheduler_increment = $hours ? "$hours hour(s)" : "$mins minute(s)";
+  $help_text = [
+    t('Select a date and time* to publish this content in the future.'),
+    t('After scheduling the publish, it will automatically publish to your site on the scheduled date within four hours of the selected time.'),
+    t('For example, if you select 8:00am as the publish time, the content will be published between 8am-12pm.'),
+    t('<p><strong>*Note</strong>: You must select a time that is increments of @times, starting with 12AM.</p>', ['@times' => $scheduler_increment]),
+  ];
+
+  $form['scheduling'] = [
+    '#type' => 'container',
+    '#group' => 'revision_information',
+    '#access' => (isset($form['unpublish_on']) || isset($form['unpublish_on'])) && !in_array('/node/' . $node->id(), $system_pages),
+    'help' => ['#markup' => implode(' ', $help_text)],
+    '#weight' => 999,
+  ];
+
+  if (isset($form['unpublish_on'])) {
+    $form['unpublish_on']['#group'] = 'revision_information';
+    $form['unpublish_on']['#weight'] = 55;
+    $form['scheduling']['unpublish_on'] = $form['unpublish_on'];
+  }
+
+  if (isset($form['publish_on'])) {
+    $form['publish_on']['#group'] = 'revision_information';
+    $form['publish_on']['#weight'] = 50;
+    $form['unpublish_on']['#access'] = $access;
+    $status_element = &$form['status']['widget']['value'];
+    $status_element['#states'] = [
+      'disabled' => [':input[name="publish_on[0][value][time]"]' => ['filled' => TRUE]],
+    ];
+    $form['scheduling']['publish_on'] = $form['publish_on'];
+  }
+  unset($form['publish_on'], $form['unpublish_on']);
+}
+
+/**
  * Implements hook_form_alter().
  */
 function stanford_profile_helper_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  if ($form_state->getFormObject() instanceof NodeForm) {
-    unset($form['actions']['unlock'], $form['scheduler_settings']);
-    if (!empty($form['publish_on'])) {
-      $form['publish_on']['#group'] = 'revision_information';
-      $form['publish_on']['#weight'] = -100;
-      $status_element = &$form['status']['widget']['value'];
-      $status_element['#states'] = [
-        'disabled' => [':input[name="publish_on[0][value][time]"]' => ['filled' => TRUE]],
-      ];
-
-      $scheduler_increment = \Drupal::state()
-        ->get('stanford_profile_helper.scheduler_increment', 60 * 60 * 4);
-      $hours = (int) floor($scheduler_increment / 3600);
-      $mins = (int) floor($scheduler_increment / 60 % 60);
-      $scheduler_increment = $hours ? "$hours hour(s)" : "$mins minute(s)";
-
-      $help_text = [
-        t('Select a date and time* to publish this content in the future.'),
-        t('After scheduling the publish, it will automatically publish to your site on the scheduled date within four hours of the selected time.'),
-        t('For example, if you select 8:00am as the publish time, the content will be published between 8am-12pm.'),
-        t('<p><strong>*Note</strong>: You must select a time that is increments of @times, starting with 12AM.</p>', ['@times' => $scheduler_increment]),
-      ];
-
-      $form['publish_on']['widget'][0]['value']['#description'] = implode(' ', $help_text);
-    }
-  }
   if (strpos($form_id, 'views_form_') === 0) {
     // Remove the select all since it selects every node, not just the ones
     // from the active filters.
@@ -703,7 +724,7 @@ function stanford_profile_helper_preprocess_pattern_localfooter(&$variables) {
     // Check if there is a file.
     if (isset($file_field->entity)) {
       $file_uri = $file_field->entity->getFileUri();
-      $variables['site_logo'] = file_create_url($file_uri);
+      $variables['site_logo'] = \Drupal::service('file_url_generator')->generateAbsoluteString($file_uri);
     }
     else {
       $variables['use_logo'] = "1";
@@ -752,9 +773,41 @@ function stanford_profile_helper_form_media_library_add_form_embeddable_alter(ar
 }
 
 /**
+ * Check the access for certain admin menu items and remove them if needed.
+ *
+ * @param array $menu_items
+ *   Keyed array of menu item from preprocess_menu.
+ */
+function stanford_profile_helper_check_admin_menu_access(array &$menu_items): void {
+  $current_user = \Drupal::currentUser();
+  foreach ($menu_items as $key => &$item) {
+    /** @var \Drupal\Core\Url $url */
+    $url = $item['url'];
+
+    $vid = $url->getRouteParameters()['taxonomy_vocabulary'] ?? FALSE;
+    if (
+      $vid &&
+      !$current_user->hasPermission('administer taxonomy') &&
+      !$current_user->hasPermission("create terms in $vid") &&
+      !$current_user->hasPermission("delete terms in $vid") &&
+      !$current_user->hasPermission("edit terms in $vid")
+    ) {
+      unset($menu_items[$key]);
+      continue;
+    }
+
+    stanford_profile_helper_check_admin_menu_access($item['below']);
+  }
+}
+
+/**
  * Implements hook_preprocess_HOOK().
  */
 function stanford_profile_helper_preprocess_menu(&$variables) {
+  if ($variables['menu_name'] == 'admin') {
+    stanford_profile_helper_check_admin_menu_access($variables['items']);
+  }
+
   $cache_tags = $variables['#cache']['tags'] ?? [];
   foreach ($variables['items'] as &$item) {
     // Taxonomy menu link items use the description from the term as the title

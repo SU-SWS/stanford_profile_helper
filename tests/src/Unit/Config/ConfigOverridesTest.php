@@ -122,16 +122,15 @@ class ConfigOverridesTest extends UnitTestCase {
    * Mock state service callback.
    */
   public function getStateCallback($state_name, $default_value = NULL) {
-    switch ($state_name) {
-      case 'stanford_intranet.rids':
-        return array_flip([
-          'custm_foo_bar',
-          'site_manager',
-          'contributor',
-          'custm_bar_foo',
-        ]);
-    }
-    return $default_value;
+    return match($state_name) {
+      'stanford_intranet.rids' => array_flip([
+        'custm_foo_bar',
+        'site_manager',
+        'contributor',
+        'custm_bar_foo',
+      ]),
+      default => $default_value,
+    };
   }
 
   protected function getOverrideService(array $configs = []) {

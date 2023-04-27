@@ -56,8 +56,8 @@ class Citation extends ContentEntityBase implements CitationInterface {
   /**
    * {@inheritdoc}
    */
-  public function setLabel($name): CitationInterface {
-    $this->set('title', $name);
+  public function setLabel($title): CitationInterface {
+    $this->set('title', $title);
     return $this;
   }
 
@@ -129,8 +129,7 @@ class Citation extends ContentEntityBase implements CitationInterface {
 
     // Return current translation of parent entity, if it exists.
     if (
-      $parent != NULL &&
-      ($parent instanceof TranslatableInterface) &&
+      $parent instanceof TranslatableInterface &&
       $parent->hasTranslation($this->language()->getId())
     ) {
       return $parent->getTranslation($this->language()->getId());
@@ -365,7 +364,7 @@ class Citation extends ContentEntityBase implements CitationInterface {
   protected function getFieldName($attribute) {
     $field_name = "su_$attribute";
     // Later versions this will be a field mapping on the entity type config.
-    if ($field_name && $this->hasField($field_name)) {
+    if ($this->hasField($field_name)) {
       return $field_name;
     }
   }

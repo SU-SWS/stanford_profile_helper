@@ -105,7 +105,7 @@
         "drupal/admin_toolbar": "^3.2",
         "drupal/allowed_formats": "^1.5",
         "drupal/auto_entitylabel": "^3.0@beta",
-        "drupal/components": "^2.4",
+        "drupal/components": "^3.0",
         "drupal/config_pages": "^2.10",
         "drupal/config_pages_overrides": "^2.0",
         "drupal/default_content": "^2.0@alpha",

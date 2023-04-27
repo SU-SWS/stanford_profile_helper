@@ -9,7 +9,6 @@ use Drupal\ui_patterns\Element\PatternContext;
 use Drupal\Component\Utility\Html;
 
 
-
 /**
  * Class PatternMediaTest.
  *
@@ -43,7 +42,12 @@ class PatternMediaTest extends KernelTestBase {
    */
   protected function setUp(): void {
     parent::setUp();
-    \Drupal::service('theme_installer')->install(['bartik']);
+    $this->container->get('theme_installer')->install(['stable9']);
+    $this->container->get('config.factory')
+      ->getEditable('system.theme')
+      ->set('default', 'stable9')
+      ->save();
+
     $this->twig = \Drupal::service('twig');
 
     require_once DRUPAL_ROOT . '/core/themes/engines/twig/twig.engine';
@@ -74,7 +78,8 @@ class PatternMediaTest extends KernelTestBase {
    * Pattern should not produce duplicate ids.
    */
   public function testMediaPatternIds() {
-    $template = drupal_get_path('module', 'jumpstart_ui') . "/templates/components/media/media.html.twig";
+    $template = \Drupal::service('extension.list.module')
+        ->getPath('jumpstart_ui') . "/templates/components/media/media.html.twig";
     $props = $this->getProps();
     $this->setRawContent((string) twig_render_template($template, $props));
 
@@ -93,6 +98,7 @@ class PatternMediaTest extends KernelTestBase {
 
   /**
    * [getProps description]
+   *
    * @return [type] [description]
    */
   protected function getProps() {

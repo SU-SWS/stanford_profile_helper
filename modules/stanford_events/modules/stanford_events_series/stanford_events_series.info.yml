@@ -1,8 +1,8 @@
 name: 'Stanford Events Series'
-core_version_requirement: ^8.8 || ^9
+core_version_requirement: ^9 || ^10
 description: 'A series is a collection of events.'
 type: module
-version: 9.0.8-dev
+version: 9.2.0
 package: 'Stanford'
 dependencies:
   - stanford_events:stanford_events

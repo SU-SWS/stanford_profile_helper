@@ -1,0 +1,47 @@
+layout_paragraphs_1_column:
+  label: '1 Column'
+  category: 'Stanford Layout Paragraphs'
+  class: '\Drupal\stanford_layout_paragraphs\Layouts\OneColumn'
+  path: layouts/one_column
+  template: layout-paragraphs-one-column
+  library: stanford_layout_paragraphs/one_column
+  regions:
+    main:
+      label: Main content
+  default_region: main
+  icon_map:
+    - [main]
+
+layout_paragraphs_2_column:
+  label: '2 Column'
+  category: 'Stanford Layout Paragraphs'
+  class: '\Drupal\stanford_layout_paragraphs\Layouts\TwoColumn'
+  path: layouts/two_column
+  template: layout-paragraphs-two-column
+  library: stanford_layout_paragraphs/two_column
+  regions:
+    left:
+      label: Left
+    right:
+      label: Right
+  default_region: left
+  icon_map:
+    - [left, right]
+
+layout_paragraphs_3_column:
+  label: '3 Column'
+  category: 'Stanford Layout Paragraphs'
+  class: '\Drupal\stanford_layout_paragraphs\Layouts\ThreeColumn'
+  path: layouts/three_column
+  template: layout-paragraphs-three-column
+  library: stanford_layout_paragraphs/three_column
+  regions:
+    left:
+      label: Left
+    main:
+      label: Main content
+    right:
+      label: Right
+  default_region: main
+  icon_map:
+    - [left, main, right]
