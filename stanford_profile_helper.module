@@ -724,7 +724,7 @@ function stanford_profile_helper_preprocess_pattern_localfooter(&$variables) {
     // Check if there is a file.
     if (isset($file_field->entity)) {
       $file_uri = $file_field->entity->getFileUri();
-      $variables['site_logo'] = file_create_url($file_uri);
+      $variables['site_logo'] = \Drupal::service('file_url_generator')->generateAbsoluteString($file_uri);
     }
     else {
       $variables['use_logo'] = "1";
@@ -773,9 +773,41 @@ function stanford_profile_helper_form_media_library_add_form_embeddable_alter(ar
 }
 
 /**
+ * Check the access for certain admin menu items and remove them if needed.
+ *
+ * @param array $menu_items
+ *   Keyed array of menu item from preprocess_menu.
+ */
+function stanford_profile_helper_check_admin_menu_access(array &$menu_items): void {
+  $current_user = \Drupal::currentUser();
+  foreach ($menu_items as $key => &$item) {
+    /** @var \Drupal\Core\Url $url */
+    $url = $item['url'];
+
+    $vid = $url->getRouteParameters()['taxonomy_vocabulary'] ?? FALSE;
+    if (
+      $vid &&
+      !$current_user->hasPermission('administer taxonomy') &&
+      !$current_user->hasPermission("create terms in $vid") &&
+      !$current_user->hasPermission("delete terms in $vid") &&
+      !$current_user->hasPermission("edit terms in $vid")
+    ) {
+      unset($menu_items[$key]);
+      continue;
+    }
+
+    stanford_profile_helper_check_admin_menu_access($item['below']);
+  }
+}
+
+/**
  * Implements hook_preprocess_HOOK().
  */
 function stanford_profile_helper_preprocess_menu(&$variables) {
+  if ($variables['menu_name'] == 'admin') {
+    stanford_profile_helper_check_admin_menu_access($variables['items']);
+  }
+
   $cache_tags = $variables['#cache']['tags'] ?? [];
   foreach ($variables['items'] as &$item) {
     // Taxonomy menu link items use the description from the term as the title

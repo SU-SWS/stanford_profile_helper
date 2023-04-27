@@ -145,6 +145,20 @@ class EntityEventSubscriber implements EventSubscriberInterface {
   }
 
   /**
+   * Force the menu link to clear when a node is deleted.
+   *
+   * @param \Drupal\node\NodeInterface $node
+   *   Node being deleted.
+   */
+  protected static function deleteNode(NodeInterface $node): void {
+    \Drupal::database()->delete('menu_tree')
+      ->condition('id', 'menu_link_field:%', 'LIKE')
+      ->condition('route_param_key', 'node=' . $node->id())
+      ->execute();
+    \Drupal::service('router.builder')->rebuildIfNeeded();
+  }
+
+  /**
    * For configuration entities, make sure the uuid matches the config file.
    *
    * @param \Drupal\Core\Entity\EntityInterface $entity

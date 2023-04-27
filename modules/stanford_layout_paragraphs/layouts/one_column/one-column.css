@@ -1,0 +1,26 @@
+.layout--layout-paragraphs-one-column .layout__region {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 30px;
+}
+
+.layout--layout-paragraphs-one-column .paragraph,
+.layout--layout-paragraphs-one-column .ds-entity--paragraph:not(.ds-entity--stanford-banner) {
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.layout--layout-paragraphs-one-column .paragraph.paragraph--type--stanford-wysiwyg,
+.layout--layout-paragraphs-one-column .ds-entity--paragraph.ds-entity--stanford-card {
+  margin: 0 30px;
+}
+
+@media screen and (min-width: 992px) {
+  .layout--layout-paragraphs-one-column .paragraph.paragraph--type--stanford-wysiwyg,
+  .layout--layout-paragraphs-one-column .ds-entity--paragraph.ds-entity--stanford-card {
+    width: 100%;
+    max-width: 980px;
+    margin: 0 auto;
+  }
+}

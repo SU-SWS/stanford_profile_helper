@@ -13,14 +13,35 @@ use Drupal\views\Views;
  */
 class ViewsEventSubscriberTest extends SuProfileHelperKernelTestBase {
 
-  protected function setUp() {
-    parent::setUp();
-    \Drupal::service('module_installer')->install([
-      'views',
-      'views_event_dispatcher',
-      'views_custom_cache_tag',
-    ]);
-  }
+  /**
+   * {@inheritDoc}
+   */
+  protected static $modules = [
+    'config_pages',
+    'core_event_dispatcher',
+    'hook_event_dispatcher',
+    'preprocess_event_dispatcher',
+    'default_content',
+    'hal',
+    'node',
+    'serialization',
+    'stanford_profile_helper',
+    'system',
+    'user',
+    'path_alias',
+    'rabbit_hole',
+    'rh_node',
+    'menu_link_content',
+    'link',
+    'redirect',
+    'text',
+    'field',
+    'config_pages',
+    'link',
+    'views',
+    'views_event_dispatcher',
+    'views_custom_cache_tag',
+  ];
 
   public function testCacheTags() {
     $view_id = $this->randomMachineName();

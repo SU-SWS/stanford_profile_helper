@@ -1,7 +1,7 @@
 name: 'Stanford Events'
 type: module
 description: 'Event content type, views, and importer.'
-core_version_requirement: ^8.8 || ^9
+core_version_requirement: ^9 || ^10
 package: Stanford
 version: 9.0.8-dev
 dependencies:
@@ -43,7 +43,6 @@ dependencies:
   - stanford_fields:stanford_fields
   - stanford_media:stanford_media
   - stanford_migrate:stanford_migrate
-  - stanford_profile_helper:stanford_text_editor
   - taxonomy_menu:taxonomy_menu
   - ui_patterns:ui_patterns
   - ui_patterns:ui_patterns_layouts

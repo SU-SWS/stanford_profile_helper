@@ -120,11 +120,11 @@ function stanford_news_preprocess_field_multiple_value_form(&$variables) {
     $child_element = &$variables['element'][$child];
     if (isset($child_element['#stanford_news_topics_add_more'])) {
 
-      if (isset($child_element['#stanford_news_topics_add_more']) && isset($variables['element']['add_more']['#value']) && $variables['element']['add_more']['#value'] != $child_element['#stanford_news_topics_add_more']) {
+      if (isset($variables['element']['add_more']['#value']) && $variables['element']['add_more']['#value'] != $child_element['#stanford_news_topics_add_more']) {
         $variables['element']['add_more']['#value'] = $child_element['#stanford_news_topics_add_more'];
       }
 
-      if (isset($child_element['#stanford_news_topics_add_more']) && isset($variables['button']['#value']) && $variables['button']['#value'] != $child_element['#stanford_news_topics_add_more']) {
+      if (isset($variables['button']['#value']) && $variables['button']['#value'] != $child_element['#stanford_news_topics_add_more']) {
         $variables['button']['#value'] = $child_element['#stanford_news_topics_add_more'];
       }
     }

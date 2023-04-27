@@ -78,6 +78,7 @@ function stanford_person_importer_config_pages_presave(ConfigPagesInterface $ent
     $terms = \Drupal::entityTypeManager()
       ->getStorage('taxonomy_term')
       ->getQuery()
+      ->accessCheck(FALSE)
       ->condition('vid', 'cap_org_codes')
       ->execute();
 

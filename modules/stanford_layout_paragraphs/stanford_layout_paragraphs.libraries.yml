@@ -1,0 +1,22 @@
+# Custom module library for general purposes.
+layout_paragraphs:
+  css:
+    component:
+      css/stanford_layout_paragraphs.node_form.css: { }
+  js:
+    js/stanford_layout_paragraphs.layout_paragraphs.js: {}
+
+one_column:
+  css:
+    component:
+      layouts/one_column/one-column.css: {}
+
+two_column:
+  css:
+    component:
+      layouts/two_column/two-column.css: {}
+
+three_column:
+  css:
+    component:
+      layouts/three_column/three-column.css: {}

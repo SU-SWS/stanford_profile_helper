@@ -35,12 +35,13 @@ class TwoColLayoutTest extends KernelTestBase {
   }
 
   /**
-   * Layout should render when values are passed..
+   * Layout should render when values are passed.
    */
   public function testTwoColLayoutFullProps() {
     // Boot twig environment.
-    $twig =  \Drupal::service('twig');
-    $template = drupal_get_path('module', 'jumpstart_ui') . '/templates/layouts/two-column.html.twig';
+    $twig = \Drupal::service('twig');
+    $template = \Drupal::service('extension.list.module')
+        ->getPath('jumpstart_ui') . '/templates/layouts/two-column.html.twig';
     $props = $this->getProps();
     $this->setRawContent((string) twig_render_template($template, $props));
     $this->assertText("Somebody once told me php unit is gonna rule me");
@@ -54,8 +55,9 @@ class TwoColLayoutTest extends KernelTestBase {
    */
   public function testTwoColLayoutNoProps() {
     // Boot twig environment.
-    $twig =  \Drupal::service('twig');
-    $template = drupal_get_path('module', 'jumpstart_ui') . '/templates/layouts/two-column.html.twig';
+    $twig = \Drupal::service('twig');
+    $template = \Drupal::service('extension.list.module')
+        ->getPath('jumpstart_ui') . '/templates/layouts/two-column.html.twig';
     $this->setRawContent((string) twig_render_template($template, []));
     $this->assertNotEmpty($this->getRawContent());
     $this->assertStringNotContainsString("boy-is-this-a-neat-class", $this->getRawContent());
@@ -68,8 +70,9 @@ class TwoColLayoutTest extends KernelTestBase {
    */
   public function testTwoColLayoutBadProps() {
     // Boot twig environment.
-    $twig =  \Drupal::service('twig');
-    $template = drupal_get_path('module', 'jumpstart_ui') . '/templates/layouts/two-column.html.twig';
+    $twig = \Drupal::service('twig');
+    $template = \Drupal::service('extension.list.module')
+        ->getPath('jumpstart_ui') . '/templates/layouts/two-column.html.twig';
     $props = $this->getProps();
     unset($props['region_attributes']);
     $this->setRawContent((string) twig_render_template($template, $props));
@@ -86,7 +89,7 @@ class TwoColLayoutTest extends KernelTestBase {
     return [
       'content' => ['main' => "Somebody once told me php unit is gonna rule me"],
       'region_attributes' => [
-        'main' =>  new Attribute(['class' => 'main-region-attribute']),
+        'main' => new Attribute(['class' => 'main-region-attribute']),
       ],
       'settings' => [
         'extra_classes' => "boy-is-this-a-neat-class",
