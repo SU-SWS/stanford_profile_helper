@@ -19,8 +19,7 @@ class FormEventSubscriber implements EventSubscriberInterface {
    * @param \Drupal\Core\Session\AccountProxyInterface $currentUser
    *   Current user account.
    */
-  public function __construct(protected AccountProxyInterface $currentUser) {
-  }
+  public function __construct(protected AccountProxyInterface $currentUser) {}
 
   /**
    * {@inheritdoc}

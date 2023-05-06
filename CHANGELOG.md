@@ -1,5 +1,13 @@
 # Stanford Profile Helper
 
+
+9.2.1
+--------------------------------------------------------------------------------
+_Release Date: 2023-05-05_
+
+- Fixed bug when saving menu items.
+- Added support to clear caches when saving the menu link field module.
+
 9.2.0
 --------------------------------------------------------------------------------
 _Release Date: 2023-04-27_
