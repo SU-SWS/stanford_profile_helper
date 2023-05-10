@@ -55,7 +55,7 @@ class FormEventSubscriber implements EventSubscriberInterface {
         'visible' => [
           ':input[name="arg_helper"]' => ['filled' => TRUE],
         ],
-      ]
+      ],
     ];
     $form['name']['widget']['0']['value']['#ajax'] = [
       'callback' => [self::class, 'argHelperAjaxCallback'],
