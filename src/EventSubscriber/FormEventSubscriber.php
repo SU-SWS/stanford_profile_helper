@@ -47,7 +47,7 @@ class FormEventSubscriber implements EventSubscriberInterface {
       '#type' => 'textfield',
       '#title' => $this->t('List Filtering Argument'),
       '#description' => $this->t('Use this string in the list paragraph to filter for content tagged with this term.'),
-      '#default_value' => self::cleanString($form['name']['widget']['0']['value']['#default_value']),
+      '#default_value' => self::cleanString($form['name']['widget']['0']['value']['#default_value'] ?? ''),
       '#attributes' => ['disabled' => TRUE],
       '#prefix' => '<div id="arg-helper">',
       '#suffix' => '</div>',
@@ -77,7 +77,7 @@ class FormEventSubscriber implements EventSubscriberInterface {
    */
   public static function argHelperAjaxCallback(array &$form, FormStateInterface $form_state):array {
     $term_name = $form_state->getValue(['name', '0', 'value']);
-    $form['name']['arg_helper']['#value'] = self::cleanString($term_name);
+    $form['name']['arg_helper']['#value'] = self::cleanString($term_name ?: '');
     return $form['name']['arg_helper'];
   }
 
@@ -90,7 +90,7 @@ class FormEventSubscriber implements EventSubscriberInterface {
    * @return string
    *   Cleaned string.
    */
-  protected static function cleanString(string $string):string {
+  protected static function cleanString(string $string): string {
     return \Drupal::service('pathauto.alias_cleaner')->cleanString($string);
   }
 
