@@ -1,5 +1,11 @@
 # Stanford Profile Helper
 
+9.2.2
+--------------------------------------------------------------------------------
+_Release Date: 2023-05-10_
+
+- Fixed intranet background not stretching.
+- Added to taxonomy form to display the argument format of the term name.
 
 9.2.1
 --------------------------------------------------------------------------------
