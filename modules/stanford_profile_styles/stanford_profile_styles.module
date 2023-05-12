@@ -130,26 +130,6 @@ function stanford_profile_styles_entity_display_build_alter(&$build, $context) {
 }
 
 /**
- * Implements hook_ckeditor_css_alter().
- */
-function stanford_profile_styles_ckeditor_css_alter(array &$css, Editor $editor) {
-  if (!$editor->hasAssociatedFilterFormat()) {
-    return;
-  }
-
-  $known_formats = [
-    'stanford_html',
-    'stanford_minimal_html',
-  ];
-
-  if (in_array($editor->getFilterFormat()->id(), $known_formats)) {
-    $module_path = \Drupal::service('extension.list.module')
-      ->getPath('stanford_profile_styles');
-    $css[] = $module_path . '/dist/css/base/admin/ckeditor.css';
-  }
-}
-
-/**
  * Implements hook_form_FORM_ID_alter().
  *
  * Move your field or group of fields to the node form options vertical tabs.

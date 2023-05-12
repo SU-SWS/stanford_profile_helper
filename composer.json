@@ -13,66 +13,6 @@
         {
             "type": "package",
             "package": {
-                "name": "ckeditor-plugin/a11ychecker",
-                "version": "1.1.1",
-                "type": "drupal-library",
-                "dist": {
-                    "url": "https://download.ckeditor.com/a11ychecker/releases/a11ychecker_1.1.1.zip",
-                    "type": "zip"
-                },
-                "require": {
-                    "composer/installers": "~1.0"
-                }
-            }
-        },
-        {
-            "type": "package",
-            "package": {
-                "name": "ckeditor-plugin/balloonpanel",
-                "version": "4.14.0",
-                "type": "drupal-library",
-                "dist": {
-                    "url": "https://download.ckeditor.com/balloonpanel/releases/balloonpanel_4.14.0.zip",
-                    "type": "zip"
-                },
-                "require": {
-                    "composer/installers": "~1.0"
-                }
-            }
-        },
-        {
-            "type": "package",
-            "package": {
-                "name": "ckeditor-plugin/link",
-                "version": "4.14.0",
-                "type": "drupal-library",
-                "dist": {
-                    "url": "https://download.ckeditor.com/link/releases/link_4.14.0.zip",
-                    "type": "zip"
-                },
-                "require": {
-                    "composer/installers": "~1.0"
-                }
-            }
-        },
-        {
-            "type": "package",
-            "package": {
-                "name": "ckeditor-plugin/fakeobjects",
-                "version": "4.14.0",
-                "type": "drupal-library",
-                "dist": {
-                    "url": "https://download.ckeditor.com/fakeobjects/releases/fakeobjects_4.14.0.zip",
-                    "type": "zip"
-                },
-                "require": {
-                    "composer/installers": "~1.0"
-                }
-            }
-        },
-        {
-            "type": "package",
-            "package": {
                 "name": "citation-style-language/locales",
                 "version": "1.0.0",
                 "source": {
@@ -98,10 +38,6 @@
     "require-dev": {
         "citation-style-language/locales": "1.0.0",
         "citation-style-language/styles-distribution": "1.0.0",
-        "ckeditor-plugin/a11ychecker": "^1.1.1",
-        "ckeditor-plugin/balloonpanel": "^4.14.0",
-        "ckeditor-plugin/fakeobjects": "^4.14.0",
-        "ckeditor-plugin/link": "^4.14.0",
         "drupal/admin_toolbar": "^3.2",
         "drupal/allowed_formats": "^1.5",
         "drupal/auto_entitylabel": "^3.0@beta",
@@ -147,7 +83,6 @@
         "psr-4": {
             "Drupal\\jumpstart_ui\\": "modules/jumpstart_ui/src",
             "Drupal\\stanford_events_importer\\": "modules/stanford_events/modules/stanford_events_importer/src",
-            "Drupal\\stanford_image_styles_preview\\": "modules/stanford_image_styles/modules/stanford_image_styles_preview/src",
             "Drupal\\stanford_intranet\\": "modules/stanford_intranet/src",
             "Drupal\\stanford_news\\": "modules/stanford_news/src",
             "Drupal\\stanford_notifications\\": "modules/stanford_notifications/src",
@@ -156,15 +91,13 @@
             "Drupal\\stanford_profile_admin\\": "modules/stanford_profile_admin/src",
             "Drupal\\stanford_profile_drush\\": "modules/stanford_profile_drush/src",
             "Drupal\\stanford_profile_helper\\": "src",
-            "Drupal\\stanford_publication\\": "modules/stanford_publication/src",
-            "Drupal\\stanford_text_editor\\": "modules/stanford_text_editor/src"
+            "Drupal\\stanford_publication\\": "modules/stanford_publication/src"
         }
     },
     "autoload-dev": {
         "psr-4": {
             "Drupal\\Tests\\jumpstart_ui\\": "modules/jumpstart_ui/tests/src",
             "Drupal\\Tests\\stanford_events_importer\\": "modules/stanford_events/modules/stanford_events_importer/tests/src",
-            "Drupal\\Tests\\stanford_image_styles_preview\\": "modules/stanford_image_styles/modules/stanford_image_styles_preview/tests/src",
             "Drupal\\Tests\\stanford_intranet\\": "modules/stanford_intranet/tests/src",
             "Drupal\\Tests\\stanford_news\\": "modules/stanford_news/tests/src",
             "Drupal\\Tests\\stanford_notifications\\": "modules/stanford_notifications/tests/src",
@@ -173,8 +106,7 @@
             "Drupal\\Tests\\stanford_profile_admin\\": "modules/stanford_profile_admin/tests/src",
             "Drupal\\Tests\\stanford_profile_drush\\": "modules/stanford_profile_drush/tests/src",
             "Drupal\\Tests\\stanford_profile_helper\\": "src",
-            "Drupal\\Tests\\stanford_publication\\": "modules/stanford_publication/tests/src",
-            "Drupal\\Tests\\stanford_text_editor\\": "modules/stanford_text_editor/tests/src"
+            "Drupal\\Tests\\stanford_publication\\": "modules/stanford_publication/tests/src"
         }
     },
     "config": {
