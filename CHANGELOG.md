@@ -1,5 +1,11 @@
 # Stanford Profile Helper
 
+9.2.4
+--------------------------------------------------------------------------------
+_Release Date: 2023-05-12_
+
+- Provide some hooks to improve or fix parts when the site is inteneded to be decoupled.
+
 9.2.3
 --------------------------------------------------------------------------------
 _Release Date: 2023-05-10_
