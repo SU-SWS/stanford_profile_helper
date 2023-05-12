@@ -30,7 +30,7 @@ function stanford_profile_styles_page_attachments(array &$attachments) {
   // Get the node from the route.
   $node = \Drupal::routeMatch()->getParameter('node');
 
-  // Not a node.. Then just continue.
+  // Not a node. Then just continue.
   if (!$node instanceof NodeInterface) {
     return;
   }
