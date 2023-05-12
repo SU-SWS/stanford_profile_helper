@@ -396,7 +396,11 @@ function stanford_profile_helper_entity_field_access($operation, FieldDefinition
     return stanford_profile_helper_node_access($items->getEntity(), 'delete', $account);
   }
 
-  if ($field_definition->getType() == 'entity_reference' && $field_definition->getSetting('handler') == 'layout_library') {
+  if (
+    $field_definition->getType() == 'entity_reference' &&
+    $field_definition->getSetting('handler') == 'layout_library' &&
+    $operation == 'edit'
+  ) {
     $entity_type = $field_definition->getTargetEntityTypeId();
     $bundle = $field_definition->getTargetBundle();
     if (!$account->hasPermission("choose layout for $entity_type $bundle")) {
@@ -1035,4 +1039,40 @@ function stanford_profile_helper_entity_view(array &$build, EntityInterface $ent
     $render_array['#items'] = $items;
     $build[$field][0] = $render_array;
   }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function stanford_profile_helper_preprocess_image(&$variables) {
+  $decoupled = _stanford_profile_is_decoupled();
+
+  if ($decoupled && (empty($variables['width']) || empty($variables['height']))) {
+    $path = str_starts_with($variables['uri'], '/') ? DRUPAL_ROOT . $variables['uri'] : $variables['uri'];
+    $path = preg_replace('/\?.*$/', '', $path);
+    if ($size = @getimagesize($path)) {
+      $variables['attributes']['data-width'] = $size[0];
+      $variables['attributes']['data-height'] = $size[1];
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function stanford_profile_helper_preprocess_file_link(&$variables) {
+  if (_stanford_profile_is_decoupled()) {
+    $variables['link']['#url']->setAbsolute();
+  }
+}
+
+/**
+ * Check if the site is configured to be decoupled.
+ *
+ * @return bool
+ *   True if it's intended to be decoupled.
+ */
+function _stanford_profile_is_decoupled(): bool {
+  return (bool) \Drupal::state()
+    ->get('stanford_profile_helper.decoupled', FALSE);
 }
