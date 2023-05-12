@@ -14,6 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @Filter(
  *   id = "su_clean_html",
  *   title = @Translation("Clean Html"),
+ *   description = @Translation("Remove line breaks, html comments, and white space between tags. Requires <code>stanford_profile_helper.decoupled</code> state to be true."),
  *   type = Drupal\filter\Plugin\FilterInterface::TYPE_TRANSFORM_IRREVERSIBLE,
  *   weight = 99
  * )
@@ -43,11 +44,10 @@ class SuCleanHtml extends FilterBase implements ContainerFactoryPluginInterface 
    * {@inheritdoc}
    */
   public function process($text, $langcode) {
-    $decoupled = (bool) \Drupal::state()
-      ->get('stanford_profile_helper.decoupled', FALSE);
+    $decoupled = (bool) $this->state->get('stanford_profile_helper.decoupled', FALSE);
 
     if ($decoupled) {
-      // Remove line breaks
+      // Remove line breaks.
       $text = preg_replace('/(\r\n)+|\r+|\n+|\t+/', ' ', $text);
       // Remove html comments.
       $text = preg_replace('/<!--.*?>/', '', $text);

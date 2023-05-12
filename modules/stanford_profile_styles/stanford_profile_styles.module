@@ -30,7 +30,7 @@ function stanford_profile_styles_page_attachments(array &$attachments) {
   // Get the node from the route.
   $node = \Drupal::routeMatch()->getParameter('node');
 
-  // Not a node.. Then just continue.
+  // Not a node. Then just continue.
   if (!$node instanceof NodeInterface) {
     return;
   }
@@ -127,6 +127,26 @@ function stanford_profile_styles_entity_display_build_alter(&$build, $context) {
   // Add libraries that correspond to the current paragraph type. No need to
   // check for the existing library. No message is created if no library exists.
   $build['#attached']['library'][] = "stanford_profile_styles/paragraph.$bundle";
+}
+
+/**
+ * Implements hook_ckeditor_css_alter().
+ */
+function stanford_profile_styles_ckeditor_css_alter(array &$css, Editor $editor) {
+  if (!$editor->hasAssociatedFilterFormat()) {
+    return;
+  }
+
+  $known_formats = [
+    'stanford_html',
+    'stanford_minimal_html',
+  ];
+
+  if (in_array($editor->getFilterFormat()->id(), $known_formats)) {
+    $module_path = \Drupal::service('extension.list.module')
+      ->getPath('stanford_profile_styles');
+    $css[] = $module_path . '/dist/css/base/admin/ckeditor.css';
+  }
 }
 
 /**
