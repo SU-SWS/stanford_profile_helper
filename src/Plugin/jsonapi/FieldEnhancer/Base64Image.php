@@ -51,12 +51,15 @@ class Base64Image extends ResourceFieldEnhancerBase implements ContainerFactoryP
    */
   public function getSettingsForm(array $resource_field_info) {
     $form = parent::getSettingsForm($resource_field_info);
-    $config = $this->getConfiguration();
+    $settings = empty($resource_field_info['enhancer']['settings'])
+      ? $this->getConfiguration()
+      : $resource_field_info['enhancer']['settings'];
+
     $form['style'] = [
       '#type' => 'select',
       '#title' => $this->t('Image style'),
       '#options' => image_style_options(FALSE),
-      '#default_value' => $config['enhancer']['settings']['style'] ?? 'thumbnail',
+      '#default_value' => $settings['style'] ?? 'thumbnail',
     ];
     return $form;
   }
