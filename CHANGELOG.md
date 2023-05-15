@@ -1,5 +1,12 @@
 # Stanford Profile Helper
 
+9.2.5
+--------------------------------------------------------------------------------
+_Release Date: 2023-05-15_
+
+- Base64 json api processor for image urls.
+- Added styles for paragraphs and layout paragraphs.
+
 9.2.4
 --------------------------------------------------------------------------------
 _Release Date: 2023-05-12_
