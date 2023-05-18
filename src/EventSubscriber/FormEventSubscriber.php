@@ -51,16 +51,15 @@ class FormEventSubscriber implements EventSubscriberInterface {
       '#attributes' => ['disabled' => TRUE],
       '#prefix' => '<div id="arg-helper">',
       '#suffix' => '</div>',
-      '#states' => [
-        'visible' => [
-          ':input[name="arg_helper"]' => ['filled' => TRUE],
-        ],
-      ],
     ];
-    $form['name']['widget']['0']['value']['#ajax'] = [
-      'callback' => [self::class, 'argHelperAjaxCallback'],
-      'wrapper' => 'arg-helper',
-      'event' => 'change',
+    $form['name']['arg_helper_refresh'] = [
+      '#type' => 'button',
+      '#value' => $this->t('Refresh Argument'),
+      '#ajax' => [
+        'callback' => [self::class, 'argHelperAjaxCallback'],
+        'wrapper' => 'arg-helper',
+        'event' => 'focus',
+      ],
     ];
   }
 
