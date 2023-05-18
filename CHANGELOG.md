@@ -1,5 +1,11 @@
 # Stanford Profile Helper
 
+9.2.6
+--------------------------------------------------------------------------------
+_Release Date: 2023-05-17_
+
+- Fixed AJAX issue on taxonomy form related to the argument helper.
+
 9.2.5
 --------------------------------------------------------------------------------
 _Release Date: 2023-05-15_
