@@ -154,6 +154,14 @@
       }
 
     }
+    
+    a {
+      &:hover,
+      &:focus,
+      &:active {
+        text-decoration: underline;
+      }
+    }
   }
 
   // A quote that looks similar to h2.
