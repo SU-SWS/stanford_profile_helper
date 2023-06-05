@@ -11,11 +11,6 @@
   margin: 0 auto;
 }
 
-.layout--layout-paragraphs-one-column .paragraph.paragraph--type--stanford-wysiwyg,
-.layout--layout-paragraphs-one-column .ds-entity--paragraph.ds-entity--stanford-card {
-  margin: 0 30px;
-}
-
 @media screen and (min-width: 992px) {
   .layout--layout-paragraphs-one-column .paragraph.paragraph--type--stanford-wysiwyg,
   .layout--layout-paragraphs-one-column .ds-entity--paragraph.ds-entity--stanford-card {
