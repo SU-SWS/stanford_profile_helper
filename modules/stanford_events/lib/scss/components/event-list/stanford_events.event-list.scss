@@ -230,11 +230,10 @@ h1 {
 
 // Past Event text
 .su-event--past-events-text {
-  @include caption;
+  font-size: 2.1rem;
   font-weight: 600;
   color: #544948;
-  font-style: italic;
-  line-height: 0;
+  line-height: 1.5;
   margin-top: 0.6em;
   margin-bottom: 1em;
 }
