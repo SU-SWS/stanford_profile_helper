@@ -253,16 +253,21 @@ class EntityEventSubscriber implements EventSubscriberInterface {
       \Drupal::service('router.builder')->rebuildIfNeeded();
     }
 
+    $state = \Drupal::state();
+    if ($config_page->hasField('su_site_nobots')) {
+      $enable_nobots = (bool) $config_page->get('su_site_nobots')->getString();
+      $enable_nobots ? $state->set('nobots', TRUE) : $state->delete('nobots');
+    }
+
     if (
       $config_page->hasField('su_site_url') &&
       $config_page->get('su_site_url')->count()
     ) {
       // Set the xml sitemap module state to the new domain.
-      \Drupal::state()
-        ->set('xmlsitemap_base_url', $config_page->get('su_site_url')
-          ->get(0)
-          ->get('uri')
-          ->getString());
+      $state->set('xmlsitemap_base_url', $config_page->get('su_site_url')
+        ->get(0)
+        ->get('uri')
+        ->getString());
     }
 
     // Invalidate cache tags on config pages save. This is a blanket cache clear

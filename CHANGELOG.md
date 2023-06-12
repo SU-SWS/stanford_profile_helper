@@ -1,5 +1,16 @@
 # Stanford Profile Helper
 
+9.2.7
+--------------------------------------------------------------------------------
+_Release Date: 2023-06-12_
+
+- Use a better github action for releases
+- Set minimum height to Layout Builder component
+- Additional check for route name
+- Fixed styles for cards on giant screen full width
+- Fixed styles for two column different widths
+- Fixed error when page_cache_query_ignore module is disabled
+
 9.2.6
 --------------------------------------------------------------------------------
 _Release Date: 2023-05-17_

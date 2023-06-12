@@ -41,11 +41,11 @@
   min-width: 0;
 }
 
-.layout--layout-paragraphs-two-column.sul-two-column--33-67 {
+.layout-paragraphs-two-column--33-67 {
   grid-template-columns: 1fr 2fr;
 }
 
-.layout--layout-paragraphs-two-column.sul-two-column--67-33 {
+.layout-paragraphs-two-column--67-33 {
   grid-template-columns: 2fr 1fr;
 }
 

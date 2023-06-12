@@ -103,7 +103,7 @@ class ConfigOverrides implements ConfigFactoryOverrideInterface {
       return;
     }
     $original_setting = $this->configFactory->getEditable('page_cache_query_ignore.settings')
-      ->getOriginal('query_parameters', FALSE);
+      ->getOriginal('query_parameters', FALSE) ?? [];
     $allowed_parameters = [
       'hash',
       'offset',

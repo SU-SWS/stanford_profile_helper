@@ -22,3 +22,6 @@
   max-width: 100%;
 }
 
+.js-lpb-component {
+  min-height: 50px;
+}

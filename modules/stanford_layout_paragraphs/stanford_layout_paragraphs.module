@@ -85,5 +85,5 @@ function stanford_layout_paragraphs_preprocess(&$variables, $hook) {
 function _stanford_layout_paragraphs_is_editing_layout_paragraphs() {
   $layout_paragraphs_routes = ['entity.node.edit_form'];
   $route_name = \Drupal::routeMatch()->getRouteName();
-  return in_array($route_name, $layout_paragraphs_routes) || str_starts_with($route_name, 'layout_paragraphs.');
+  return $route_name && (in_array($route_name, $layout_paragraphs_routes) || str_starts_with($route_name, 'layout_paragraphs.'));
 }
