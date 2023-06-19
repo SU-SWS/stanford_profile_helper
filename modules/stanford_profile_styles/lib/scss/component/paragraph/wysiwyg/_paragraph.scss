@@ -155,7 +155,13 @@
     }
 
     a {
-      text-decoration: underline !important;
+      text-decoration: underline;
+    }
+  }
+
+  p.su-font-splash {
+    a {
+      text-decoration: underline;
     }
   }
 
