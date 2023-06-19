@@ -159,9 +159,11 @@
     }
   }
 
-  p.su-font-splash {
-    a {
-      text-decoration: underline;
+  p {
+    &.su-font-splash {
+      a {
+        text-decoration: underline;
+      }
     }
   }
 
@@ -268,4 +270,3 @@
     line-height: inherit;
   }
 }
-
