@@ -155,12 +155,7 @@
     }
 
     a {
-
-      &:hover,
-      &:focus,
-      &:active {
-        text-decoration: underline;
-      }
+      text-decoration: underline !important;
     }
   }
 
