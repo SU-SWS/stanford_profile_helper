@@ -5,9 +5,12 @@ namespace Drupal\stanford_profile_helper\EventSubscriber;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Session\AccountProxyInterface;
+use Drupal\Core\State\StateInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\core_event_dispatcher\Event\Form\FormBaseAlterEvent;
 use Drupal\core_event_dispatcher\Event\Form\FormIdAlterEvent;
+use Drupal\field_event_dispatcher\Event\Field\WidgetCompleteFormAlterEvent;
+use Drupal\field_event_dispatcher\FieldHookEvents;
 use Drupal\hook_event_dispatcher\HookEventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -23,7 +26,7 @@ class FormEventSubscriber implements EventSubscriberInterface {
    * @param \Drupal\Core\Session\AccountProxyInterface $currentUser
    *   Current user account.
    */
-  public function __construct(protected AccountProxyInterface $currentUser) {}
+  public function __construct(protected AccountProxyInterface $currentUser, protected StateInterface $state) {}
 
   /**
    * {@inheritdoc}
@@ -32,7 +35,23 @@ class FormEventSubscriber implements EventSubscriberInterface {
     return [
       HookEventDispatcherInterface::PREFIX . 'form_taxonomy_overview_vocabularies.alter' => ['taxonomyOverviewFormAlter'],
       HookEventDispatcherInterface::PREFIX . 'form_base_taxonomy_term_form.alter' => ['taxonomyFormAlter'],
+      FieldHookEvents::WIDGET_COMPLETE_FORM_ALTER => ['fieldWidgetFormAlter'],
     ];
+  }
+
+  /**
+   * Alter the field widget form.
+   *
+   * @param \Drupal\field_event_dispatcher\Event\Field\WidgetCompleteFormAlterEvent $event
+   *   Triggered hook event.
+   */
+  public function fieldWidgetFormAlter(WidgetCompleteFormAlterEvent $event): void {
+    /** @var \Drupal\Core\Field\FieldItemList $items */
+    $items = $event->getContext()['items'];
+    if ($items->getFieldDefinition()->getName() == 'su_site_nobots') {
+      $form = &$event->getWidgetCompleteForm();
+      $form['widget']['value']['#default_value'] = (bool) $this->state->get('nobots');
+    }
   }
 
   /**
