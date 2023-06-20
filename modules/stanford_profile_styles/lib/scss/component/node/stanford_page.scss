@@ -6,24 +6,40 @@
 //
 .su-page-components {
   // New layout paragraphs styles.
-  .layout--layout-paragraphs-one-column {
-    .paragraph--type--stanford-entity,
-    .paragraph--type--stanford-card,
-    .paragraph--type--stanford-wysiwyg,
-    .paragraph--type--stanford-media-caption,
-    .paragraph--type--stanford-cta-list,
-    .paragraph--type--stanford-stories,
-    .paragraph--type--stanford-lists,
-    .paragraph--type--stanford-gallery {
-      max-width: 980px;
+  .paragraph--type--stanford-entity,
+  .paragraph--type--stanford-card,
+  .paragraph--type--stanford-wysiwyg,
+  .paragraph--type--stanford-media-caption,
+  .paragraph--type--stanford-cta-list,
+  .paragraph--type--stanford-stories,
+  .paragraph--type--stanford-lists,
+  .paragraph--type--stanford-gallery,
+  .ptype-stanford-card,
+  .ptype-stanford-wysiwyg,
+  .ptype-stanford-media-caption,
+  .ptype-stanford-cta-list,
+  .ptype-stanford-stories,
+  .ptype-stanford-image-cta,
+  .ptype-stanford-lists,
+  .ptype-stanford-entity,
+  .ptype-stanford-gallery{
+    margin: 0 auto;
+    width: 100%;
+    max-width: calc(100vw - #{map-get($su-screen-margins, 'xs') * 2});
 
-      @include grid-media-only('lg') {
-        margin-left: auto;
-        margin-right: auto;
-        max-width: 880px;
-      }
+    @include grid-media('sm') {
+      max-width: calc(100vw - #{map-get($su-screen-margins, 'sm') * 2});
+    }
+
+    @include grid-media('md') {
+      max-width: calc(100vw - #{map-get($su-screen-margins, 'md') * 2});
+    }
+
+    @include grid-media('lg') {
+      max-width: 980px;
     }
   }
+
 
   // Old react paragraphs styles.
   div[data-react-columns="12"] {
@@ -302,7 +318,7 @@
     justify-content: center;
   }
 
-  @container paragraph (max-width: 550px) {
+  @container paragraph (max-width: 600px) {
   .stanford-news--cards,
   .stanford-events {
     .views-view-grid {

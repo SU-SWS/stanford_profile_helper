@@ -1,12 +1,11 @@
 .layout--layout-paragraphs-three-column {
   display: grid;
-  grid-gap: 90px;
-  margin: 0 30px;
+  grid-gap: 50px;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .layout--layout-paragraphs-three-column {
-    margin: 0 50px;
+    margin: 0 25px;
   }
 }
 
