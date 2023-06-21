@@ -99,6 +99,7 @@
   @include modular-spacing('margin-bottom', 4);
 }
 
+.paragraph--type--stanford-gallery,
 .ptype-stanford-gallery {
   h2 {
     @include margin(0);
