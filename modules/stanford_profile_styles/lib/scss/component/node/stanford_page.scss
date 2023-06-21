@@ -99,6 +99,7 @@
   @include modular-spacing('margin-bottom', 4);
 }
 
+.paragraph--type--stanford-gallery,
 .ptype-stanford-gallery {
   h2 {
     @include margin(0);
@@ -394,7 +395,7 @@
   }
 }
 
-  &[data-react-columns]:not([data-react-columns="12"]), {
+  &[data-react-columns]:not([data-react-columns="12"]) {
     // Views-row for non-grid displays.
     // Views-view-grid has some different markup, so it needs some different work.
     // this is to remove spacing from the last col and to keep MS4 between the cards.

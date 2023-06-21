@@ -18,9 +18,10 @@ dependencies:
   - drupal:media
   - drupal:media_library
   - hook_event_dispatcher:core_event_dispatcher
+  - hook_event_dispatcher:field_event_dispatcher
   - hook_event_dispatcher:preprocess_event_dispatcher
   - hook_event_dispatcher:views_event_dispatcher
-  - hook_event_dispatcher:views_event_dispatcher
+  - pathauto:pathauto
   - pdb:pdb
   - rabbit_hole:rabbit_hole
   - xmlsitemap:xmlsitemap
