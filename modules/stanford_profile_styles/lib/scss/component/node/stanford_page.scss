@@ -36,6 +36,10 @@
     }
 
     @include grid-media('lg') {
+      max-width: 880px;
+    }
+
+    @include grid-media('xl') {
       max-width: 980px;
     }
   }
