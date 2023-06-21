@@ -39,6 +39,9 @@ abstract class SuProfileHelperKernelTestBase extends KernelTestBase {
     'field',
     'config_pages',
     'link',
+    'taxonomy',
+    'pathauto',
+    'token',
   ];
 
   /**
@@ -53,6 +56,7 @@ abstract class SuProfileHelperKernelTestBase extends KernelTestBase {
     $this->installEntitySchema('redirect');
     $this->installEntitySchema('field_storage_config');
     $this->installEntitySchema('config_pages');
+    $this->installEntitySchema('taxonomy_term');
     $this->installConfig('system');
     $this->setInstallProfile('test_stanford_profile_helper');
 
