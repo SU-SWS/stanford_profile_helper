@@ -2,7 +2,7 @@
 layout_paragraphs:
   css:
     component:
-      css/stanford_layout_paragraphs.node_form.css: { }
+      dist/css/node_form.css: { }
   js:
     js/stanford_layout_paragraphs.layout_paragraphs.js: {}
 
