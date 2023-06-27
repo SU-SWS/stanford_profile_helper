@@ -136,7 +136,8 @@ function _stanford_profile_helper_purge_path($path) {
  */
 function stanford_profile_helper_search_api_index_items_alter(IndexInterface $index, array &$items) {
   $exclude_pages = \Drupal::config('system.site')->get('page');
-  // Remove the 404, 403, and home page from indexing for search results.
+  unset($exclude_pages['front']);
+  // Remove the 404, and 403 from indexing for search results.
   /** @var \Drupal\search_api\Item\Item $item */
   foreach ($items as $item_id => $item) {
     $entity = $item->getOriginalObject()->getValue();
