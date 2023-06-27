@@ -4,7 +4,7 @@
   // Buttons
   a {
     &[href] {
-      color: #006cb8
+      color: #006cb8;
     }
 
     &.su-button[href] {
@@ -28,14 +28,18 @@
       color: #830000;
     }
 
-    &.su-link--action[href]:after {
-      content: '>';
+    &.su-link--action[href] {
+      &::after {
+          content: '>';
+      }
     }
   }
 
   // Banner
-  .su-card .su-card__contents {
-    padding: 3.8rem;
+  .su-card {
+    .su-card__contents {
+      padding: 3.8rem;
+    }
   }
 }
 
