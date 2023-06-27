@@ -3,3 +3,8 @@ services:
     class: Drupal\stanford_layout_paragraphs\EventSubscriber\StanfordLayoutParagraphsSubscriber
     tags:
       - { name: event_subscriber }
+
+  stanford_layout_paragraphs.route_subscriber:
+    class: Drupal\stanford_layout_paragraphs\EventSubscriber\StanfordLayoutParagraphsRouteSubscriber
+    tags:
+      - { name: event_subscriber }

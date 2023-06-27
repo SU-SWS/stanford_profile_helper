@@ -1,3 +1,51 @@
+.lp-builder {
+  a {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .js-lpb-region {
+    min-height: 80px;
+    margin: 20px 0;
+
+    .lpb-btn--add {
+      border-bottom: 1px solid transparent;
+
+      &:hover {
+        border-bottom: 1px solid black;
+      }
+    }
+  }
+}
+
+.choose-layout-field legend,
+.lpb-component-list__search {
+  display: none;
+}
+
+.lpb-component-list__group--content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+}
+
+.lpb-component-list__item a {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  text-decoration: none;
+
+  &:hover, &:focus {
+    text-decoration: underline;
+  }
+
+  img {
+    width: 75px;
+    max-width: 75px;
+  }
+}
+
 .layout-node-form {
   display: grid;
   gap: 40px;
