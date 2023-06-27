@@ -18,7 +18,6 @@ class LayoutParagraphs extends LayoutParagraphsBehavior {
     $form = parent::buildBehaviorForm($paragraph, $form, $form_state);
     $form['layout']['#attributes']['class'][] = 'choose-layout-field';
     if (isset($form['config'])) {
-//      dpm($form);
       $form['config']['#open'] = TRUE;
     }
     return $form;

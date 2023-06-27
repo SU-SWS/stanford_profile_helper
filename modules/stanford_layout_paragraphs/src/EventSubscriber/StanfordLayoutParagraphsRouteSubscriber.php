@@ -25,9 +25,9 @@ class StanfordLayoutParagraphsRouteSubscriber extends RouteSubscriberBase {
    * {@inheritdoc}
    */
   protected function alterRoutes(RouteCollection $collection) {
-if($route = $collection->get('layout_paragraphs.builder.choose_component')){
-  $route->setDefault('_controller', SuChooseComponentController::class . '::list');
-}
+    if ($route = $collection->get('layout_paragraphs.builder.choose_component')) {
+      $route->setDefault('_controller', SuChooseComponentController::class . '::list');
+    }
   }
 
 }
