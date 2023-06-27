@@ -1,0 +1,39 @@
+
+#edit-su-page-components {
+
+    // Buttons
+    a[href] {
+        color: #006cb8
+      }
+
+    a.su-button[href] {
+    display: inline-block;
+    padding: 13px 26px;
+    background-color: #830000;
+    color: white;
+    }
+
+    a.su-button--big[href] {
+    display: inline-block;
+    padding: 16px 36px;
+    background-color: #830000;
+    color: white;
+    }
+
+    a.su-button--secondary[href] {
+    display: inline-block;
+    border: 2px solid #830000;
+    padding: 13px 26px;
+    color: #830000;
+    }
+
+    a.su-link--action[href]:after {
+    content: '>'
+    }
+
+    // Banner
+    .su-card .su-card__contents {
+        padding: 3.8rem;
+    }
+
+}
