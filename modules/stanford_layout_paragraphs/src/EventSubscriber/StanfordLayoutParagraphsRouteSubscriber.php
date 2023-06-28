@@ -9,6 +9,8 @@ use Symfony\Component\Routing\RouteCollection;
 
 /**
  * Route subscriber.
+ *
+ * @codeCoverageIgnore Difficult to test.
  */
 class StanfordLayoutParagraphsRouteSubscriber extends RouteSubscriberBase {
 

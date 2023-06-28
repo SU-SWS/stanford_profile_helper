@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Overrides and adds to the LP choose component controller.
+ *
+ * @codeCoverageIgnore Unable to test the controller, rely on acceptance tests.
  */
 class SuChooseComponentController extends ChooseComponentController {
 
