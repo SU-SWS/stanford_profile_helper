@@ -12,7 +12,7 @@
     <div {{ region_attributes.quote_media.addClass(['su-quote__media', 'flex-2-of-12']) }}>
       {{- content.quote_media -}}
     </div>
-    <section class="su-quote__body flex-10-of-12">
+    <div class="su-quote__body flex-10-of-12">
       {%- if content.quote_title|render is not empty -%}
       <div {{ region_attributes.quote_title.addClass(['su-quote__bio']) }}>
         {{- content.quote_title -}}
@@ -28,7 +28,7 @@
         {{- content.quote_long_title -}}
       </div>
       {%- endif -%}
-    </section>
+    </div>
     {%- if content.content|render is not empty -%}
     <div {{ region_attributes.content.addClass(['su-quote__content']) }}>
       {{- content.content -}}
