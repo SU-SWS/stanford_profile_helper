@@ -152,7 +152,18 @@
         @include sr-only;
         content: "Begin Splash text";
       }
+    }
 
+    a {
+      text-decoration: underline;
+    }
+  }
+
+  p {
+    &.su-font-splash {
+      a {
+        text-decoration: underline;
+      }
     }
   }
 
@@ -259,4 +270,3 @@
     line-height: inherit;
   }
 }
-
