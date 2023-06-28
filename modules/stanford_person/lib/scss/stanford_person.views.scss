@@ -33,6 +33,14 @@
     + .js-pager__items {
       @include modular-spacing('margin-bottom', 8);
     }
+
+    > div {
+      margin-bottom: 45px;
+
+      &:last-child {
+        margin-bottom:0;
+      }
+    }
   }
 
   // Name field
