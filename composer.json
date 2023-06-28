@@ -118,5 +118,8 @@
                 "drush.services.yml": "^9"
             }
         }
+    },
+    "require": {
+        "drupal/layout_paragraphs": "^2.0"
     }
 }

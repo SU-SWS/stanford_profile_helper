@@ -11,6 +11,8 @@ class TwoColumn extends MultiWidthLayoutBase {
 
   /**
    * {@inheritDoc}
+   *
+   * @codeCoverageIgnore Nothing to test.
    */
   protected function getWidthOptions() {
     return [
