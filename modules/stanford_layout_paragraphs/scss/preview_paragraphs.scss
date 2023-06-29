@@ -5,7 +5,7 @@
 
 
 .js-lpb-region {
-  font-family: Source Sans Pro,Helvetica Neue,Helvetica,Arial,sans-serif;
+  font-family: Source Sans Pro, Helvetica Neue, Helvetica, Arial, sans-serif;
 
   // Buttons
   a {
@@ -91,7 +91,7 @@
   }
 
   .jumpstart-accordion {
-    summary:after {
+    summary::after {
       font-size: 18px;
     }
   }
@@ -100,7 +100,7 @@
     max-width: 100%;
   }
 
-// Cards
+  // Cards
   .su-card {
     margin: 0 auto;
     max-width: 980px;
@@ -113,7 +113,7 @@
 }
 
 .js-lpb-region {
-  outline: 1px dotted rgba(0, 0, 255, 0.5)
+  outline: 1px dotted rgba(0, 0, 255, 0.5);
 }
 
 .lpb-component-list__group--content {
@@ -129,9 +129,11 @@
   padding: 5px 0;
 }
 
-.lpb-component-list__item img {
-  max-height: 50px;
-  display: block;
-  margin: 0 auto;
+.lpb-component-list__item {
+  img {
+    max-height: 50px;
+    display: block;
+    margin: 0 auto;
+  }
 }
 
