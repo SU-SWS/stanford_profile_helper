@@ -7,6 +7,8 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 var webpackConfig = {
   entry: {
     "css/node_form": ["./scss/node_form.scss"],
+    "css/preview_paragraphs": ["./scss/preview_paragraphs.scss"],
+
   },
   output: {
     path: config.distFolder,

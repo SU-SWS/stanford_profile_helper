@@ -1,0 +1,187 @@
+// Import Decanter Library:
+@import 'decanter/core/src/scss/decanter-no-markup';
+
+@import 'decanter/core/src/scss/core/flex-grid';
+
+
+.js-lpb-region {
+  font-family: Source Sans Pro, Helvetica Neue, Helvetica, Arial, sans-serif;
+
+  // Buttons
+  a {
+    &[href] {
+      color: #006cb8;
+    }
+
+    &.su-button[href] {
+      display: inline-block;
+      padding: 13px 26px;
+      background-color: #b1040e;
+      color: #ffffff;
+    }
+
+    &.su-button--big[href] {
+      display: inline-block;
+      padding: 16px 36px;
+      background-color: #b1040e;
+      color: #ffffff;
+    }
+
+    &.su-button--secondary[href] {
+      display: inline-block;
+      border: 2px solid #b1040e;
+      padding: 13px 26px;
+      color: #b1040e;
+    }
+
+    &.su-link--action[href] {
+      &::after {
+        content: '>';
+      }
+    }
+  }
+
+  .views-field-su-event-edit {
+    a {
+      font-size: 21px;
+    }
+  }
+
+  // Banner
+  .su-card {
+    .su-card__contents {
+      padding: 3.8rem;
+    }
+  }
+
+  // Text
+  p,
+  .views-field-su-event-date-time {
+    font-size: 21px;
+  }
+
+  ul,
+  ol,
+  li {
+    font-size: 21px;
+  }
+
+  .su-list-unstyled {
+    list-style-type: none;
+  }
+
+  h2 {
+    font-size: 30px;
+    line-height: 1.5;
+  }
+
+  h3 {
+    font-size: 20px;
+    line-height: 1.5;
+  }
+
+  h4 {
+    font-size: 19px;
+    line-height: 1.5;
+  }
+
+  h5 {
+    font-size: 19px;
+    line-height: 1.5;
+  }
+
+  .jumpstart-accordion {
+    summary::after {
+      font-size: 18px;
+    }
+  }
+
+  .su-media__caption {
+    max-width: 100%;
+  }
+
+}
+
+.lpb-layout {
+  padding: 40px 0;
+}
+
+.js-lpb-region {
+  outline: 1px dotted rgba(0, 0, 255, 0.5);
+}
+
+.lpb-component-list__group--content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+  margin-top: 20px;
+}
+
+.lpb-component-list__item {
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+  padding: 5px 0;
+}
+
+.lpb-component-list__item {
+  img {
+    max-height: 50px;
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+// New layout paragraphs styles.
+.js-lpb-component {
+  &[data-type="stanford_entity"],
+  &[data-type="stanford_wysiwyg"],
+  &[data-type="stanford_media_caption"],
+  &[data-type="stanford_cta_list"],
+  &[data-type="stanford_stories"],
+  &[data-type="stanford_lists"],
+  &[data-type="stanford_gallery"],
+  &[data-type="stanford_card"]{
+    margin: 0 auto;
+    width: 100%;
+    max-width: 880px;
+
+    @include grid-media('xl') {
+      max-width: 980px;
+    }
+  }
+
+  &[data-type="stanford_gallery"] {
+    container-type: inline-size;
+
+    .field--name-su-gallery-images {
+    @container (min-width: 700px) {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 20px;
+    }
+    }
+
+    .field--name-su-gallery-button {
+      text-align: center;
+    }
+  }
+
+  &[data-type="stanford_lists"] {
+    container-type: inline-size;
+
+    @container (min-width: 700px) {
+    .grid-container-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 20px;
+    }
+
+    .grid-container-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 20px;
+    }
+  }
+  }
+
+}
