@@ -100,12 +100,6 @@
     max-width: 100%;
   }
 
-  // Cards
-  .su-card {
-    margin: 0 auto;
-    max-width: 980px;
-  }
-
 }
 
 .lpb-layout {
@@ -137,3 +131,57 @@
   }
 }
 
+// New layout paragraphs styles.
+.js-lpb-component {
+  &[data-type="stanford_entity"],
+  &[data-type="stanford_wysiwyg"],
+  &[data-type="stanford_media_caption"],
+  &[data-type="stanford_cta_list"],
+  &[data-type="stanford_stories"],
+  &[data-type="stanford_lists"],
+  &[data-type="stanford_gallery"],
+  &[data-type="stanford_card"]{
+    margin: 0 auto;
+    width: 100%;
+    max-width: 880px;
+
+    @include grid-media('xl') {
+      max-width: 980px;
+    }
+  }
+
+  &[data-type="stanford_gallery"] {
+    container-type: inline-size;
+
+    .field--name-su-gallery-images {
+    @container (min-width: 700px) {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 20px;
+    }
+    }
+
+    .field--name-su-gallery-button {
+      text-align: center;
+    }
+  }
+
+  &[data-type="stanford_lists"] {
+    container-type: inline-size;
+
+    @container (min-width: 700px) {
+    .grid-container-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 20px;
+    }
+
+    .grid-container-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 20px;
+    }
+  }
+  }
+
+}
