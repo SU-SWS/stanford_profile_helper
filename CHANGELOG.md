@@ -1,5 +1,31 @@
 # Stanford Profile Helper
 
+9.2.9
+--------------------------------------------------------------------------------
+_Release Date: 2023-06-29_
+
+- D8CORE-4778: adding the underline to splash in theme (#253)
+- D8CORE-6761: added button and link styles to the layout paragraph preview (#251)
+- D8CORE-4850 add space between people rows after load more
+- D8CORE-2005 Refactor section to div tag for people page sections
+- D8CORE-6463 Prevent encoded subject names in course listing
+- Margin 0 on the paragraph icons for layout paragraphs
+- Various tweaks to layout paragraphs form displays (#252)
+- D8CORE-6541 Index home page for search
+- HSD8-6476 Increase authority field for policy
+- D8CORE-6758 | Fixup gallery h2 for layout paragraphs (#249)
+- added webpack scss compiler
+- added max width for paragraphs on large screens
+- Set max width for media captions
+- Fixed some styles for responsive paragraphs
+- Corrected gallery grid display
+- alter nobots field widget with state default value
+- D8CORE-4495 Update past events list styles (#248)
+- Adjusted styles for the list paragraph in the new layout paragraphs
+- Revert "D8CORE-4495: changing lineheight of past event note (#245)" (#247)
+- D8CORE-4495: changing lineheight of past event note (#245)
+
+
 9.2.8
 --------------------------------------------------------------------------------
 _Release Date: 2023-06-23_
