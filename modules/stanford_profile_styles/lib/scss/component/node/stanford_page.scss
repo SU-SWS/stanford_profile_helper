@@ -6,24 +6,44 @@
 //
 .su-page-components {
   // New layout paragraphs styles.
-  .layout--layout-paragraphs-one-column {
-    .paragraph--type--stanford-entity,
-    .paragraph--type--stanford-card,
-    .paragraph--type--stanford-wysiwyg,
-    .paragraph--type--stanford-media-caption,
-    .paragraph--type--stanford-cta-list,
-    .paragraph--type--stanford-stories,
-    .paragraph--type--stanford-lists,
-    .paragraph--type--stanford-gallery {
-      max-width: 980px;
+  .paragraph--type--stanford-entity,
+  .paragraph--type--stanford-card,
+  .paragraph--type--stanford-wysiwyg,
+  .paragraph--type--stanford-media-caption,
+  .paragraph--type--stanford-cta-list,
+  .paragraph--type--stanford-stories,
+  .paragraph--type--stanford-lists,
+  .paragraph--type--stanford-gallery,
+  .ptype-stanford-card,
+  .ptype-stanford-wysiwyg,
+  .ptype-stanford-media-caption,
+  .ptype-stanford-cta-list,
+  .ptype-stanford-stories,
+  .ptype-stanford-image-cta,
+  .ptype-stanford-lists,
+  .ptype-stanford-entity,
+  .ptype-stanford-gallery{
+    margin: 0 auto;
+    width: 100%;
+    max-width: calc(100vw - #{map-get($su-screen-margins, 'xs') * 2});
 
-      @include grid-media-only('lg') {
-        margin-left: auto;
-        margin-right: auto;
-        max-width: 880px;
-      }
+    @include grid-media('sm') {
+      max-width: calc(100vw - #{map-get($su-screen-margins, 'sm') * 2});
+    }
+
+    @include grid-media('md') {
+      max-width: calc(100vw - #{map-get($su-screen-margins, 'md') * 2});
+    }
+
+    @include grid-media('lg') {
+      max-width: 880px;
+    }
+
+    @include grid-media('xl') {
+      max-width: 980px;
     }
   }
+
 
   // Old react paragraphs styles.
   div[data-react-columns="12"] {
@@ -79,6 +99,7 @@
   @include modular-spacing('margin-bottom', 4);
 }
 
+.paragraph--type--stanford-gallery,
 .ptype-stanford-gallery {
   h2 {
     @include margin(0);
@@ -286,7 +307,10 @@
   }
 }
 
-.ptype-stanford-lists {
+.ptype-stanford-lists,
+.paragraph--type--stanford-lists {
+  container: paragraph / inline-size;
+
   .su-list-headline {
     h2 {
       @include margin(0);
@@ -299,7 +323,79 @@
     justify-content: center;
   }
 
-  &:not([data-react-columns="12"]) {
+  @container paragraph (max-width: 600px) {
+  .stanford-news--cards,
+  .stanford-events {
+    .views-view-grid {
+      .views-col,
+      .views-row {
+        @include responsive-spacing('margin-bottom', 4);
+        padding-top: 0; //for the event padding top on the first item
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  .view [class*="grid-container"] {
+    grid-template-columns: 1fr;
+  }
+
+  // Person grid has a little different need.
+  .stanford-people-grid {
+    .views-view-grid {
+      .views-col,
+      .views-row {
+        @include responsive-spacing('margin-bottom', 4);
+      }
+    }
+
+    .views-view-grid {
+      .views-row:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .views-view-grid .views-row > div {
+    width: 100%;
+    max-width: 100%;
+    flex: none;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+
+  .su-news-list__item-date + .su-news-list__item {
+    .media {
+      margin-top: 0;
+    }
+  }
+
+  .su-news-vertical-teaser {
+    &.su-card {
+      margin-bottom: inherit;
+    }
+  }
+
+  // Stack the date above the title on the events lists.
+  .su-event-list-item {
+    display: block;
+  }
+
+  .su-news-list,
+  .su-basic-page-types-list {
+    img,
+    picture {
+      display: none;
+    }
+  }
+}
+
+  &[data-react-columns]:not([data-react-columns="12"]) {
     // Views-row for non-grid displays.
     // Views-view-grid has some different markup, so it needs some different work.
     // this is to remove spacing from the last col and to keep MS4 between the cards.

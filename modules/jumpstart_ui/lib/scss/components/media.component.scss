@@ -20,6 +20,7 @@
   .su-media__caption {
     float: right;
     text-align: right;
+    max-width: 100%;
 
     @include grid-media("lg") {
       width: ceil($su-screen-lg * 0.6);

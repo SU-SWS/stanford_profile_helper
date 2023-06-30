@@ -22,9 +22,9 @@
 
   @include grid-media('md') {
     display: grid;
-    grid-template-columns: repeat(auto-fill, calc(33% - 2rem));
+    grid-template-columns: 1fr 1fr 1fr;
     justify-content: space-between;
-    row-gap: 4rem;
+    grid-gap: 4rem;
 
     > div {
       @include margin(0);

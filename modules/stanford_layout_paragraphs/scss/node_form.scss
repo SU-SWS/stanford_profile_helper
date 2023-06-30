@@ -1,0 +1,76 @@
+.lp-builder {
+  a {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .js-lpb-region {
+    min-height: 80px;
+    margin: 20px 0;
+
+    .lpb-btn--add {
+      border-bottom: 1px solid transparent;
+
+      &:hover {
+        border-bottom: 1px solid #000000;
+      }
+    }
+  }
+}
+
+.choose-layout-field legend,
+.lpb-component-list__search {
+  display: none;
+}
+
+.lpb-component-list__group--content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+}
+
+.lpb-component-list__item a {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  img {
+    width: 75px;
+    max-width: 75px;
+    margin: 0;
+  }
+}
+
+.layout-node-form {
+  display: grid;
+  gap: 40px;
+  grid-template-columns: 1fr;
+}
+
+.layout-node-form > div {
+  min-width: initial;
+  width: 100%;
+  float: none;
+}
+
+
+.layout-node-form .layout-region--node-main .layout-region__content,
+.layout-node-form .layout-region--node-footer .layout-region__content {
+  max-width: 100%;
+  width: 100%;
+}
+
+.ds-entity--paragraph .su-media .su-media__caption {
+  float: none;
+  max-width: 100%;
+}
+
+.js-lpb-component {
+  min-height: 50px;
+}
