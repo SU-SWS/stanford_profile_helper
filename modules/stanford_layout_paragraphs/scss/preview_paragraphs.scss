@@ -1,133 +1,128 @@
 // Import Decanter Library:
 @import 'decanter/core/src/scss/decanter-no-markup';
 
-@import 'decanter/core/src/scss/core/flex-grid';
-
-
 .js-lpb-region {
-  font-family: Source Sans Pro, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family: Source Sans Pro, Helvetica Neue, Helvetica, Arial, sans-serif !important;
 
   // Buttons
   a {
     &[href] {
-      color: #006cb8;
+      color: #006cb8 !important;
     }
 
     &.su-button[href] {
-      display: inline-block;
-      padding: 13px 26px;
-      background-color: #b1040e;
-      color: #ffffff;
+      display: inline-block !important;
+      padding: 13px 26px !important;
+      background-color: #b1040e !important;
+      color: #ffffff !important;
     }
 
     &.su-button--big[href] {
-      display: inline-block;
-      padding: 16px 36px;
-      background-color: #b1040e;
-      color: #ffffff;
+      display: inline-block !important;
+      padding: 16px 36px !important;
+      background-color: #b1040e !important;
+      color: #ffffff !important;
     }
 
     &.su-button--secondary[href] {
-      display: inline-block;
-      border: 2px solid #b1040e;
-      padding: 13px 26px;
-      color: #b1040e;
+      display: inline-block !important;
+      border: 2px solid #b1040e !important;
+      padding: 13px 26px !important;
+      color: #b1040e !important;
     }
 
     &.su-link--action[href] {
       &::after {
-        content: '>';
+        content: '>' !important;
       }
     }
   }
 
   .views-field-su-event-edit {
     a {
-      font-size: 21px;
+      font-size: 21px !important;
     }
   }
 
   // Banner
   .su-card {
     .su-card__contents {
-      padding: 3.8rem;
+      padding: 3.8rem !important;
     }
   }
 
   // Text
-  p,
-  .views-field-su-event-date-time {
-    font-size: 21px;
+  p, .views-field-su-event-date-time {
+    font-size: 21px !important;
   }
 
   ul,
   ol,
   li {
-    font-size: 21px;
+    font-size: 21px !important;
   }
 
   .su-list-unstyled {
-    list-style-type: none;
+    list-style-type: none !important;
   }
 
   h2 {
-    font-size: 30px;
-    line-height: 1.5;
+    font-size: 30px !important;
+    line-height: 1.5 !important;
   }
 
   h3 {
-    font-size: 20px;
-    line-height: 1.5;
+    font-size: 20px !important;
+    line-height: 1.5 !important;
   }
 
   h4 {
-    font-size: 19px;
-    line-height: 1.5;
+    font-size: 19px !important;
+    line-height: 1.5 !important;
   }
 
   h5 {
-    font-size: 19px;
-    line-height: 1.5;
+    font-size: 19px !important;
+    line-height: 1.5 !important;
   }
 
   .jumpstart-accordion {
     summary::after {
-      font-size: 18px;
+      font-size: 18px !important;
     }
   }
 
   .su-media__caption {
-    max-width: 100%;
+    max-width: 100% !important;
   }
-
 }
 
 .lpb-layout {
-  padding: 40px 0;
+  padding: 40px 0 !important;
 }
 
 .js-lpb-region {
-  outline: 1px dotted rgba(0, 0, 255, 0.5);
+  outline: 1px dotted rgba(0, 0, 255, 0.5) !important;
 }
 
 .lpb-component-list__group--content {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 20px;
-  margin-top: 20px;
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  grid-gap: 20px !important;
+  margin-top: 20px !important;
 }
 
 .lpb-component-list__item {
-  text-align: center;
-  border-bottom: 1px solid #ccc;
-  padding: 5px 0;
+  text-align: center !important;
+  border-bottom: 1px solid #ccc !important;
+  padding: 5px 0 !important;
 }
 
 .lpb-component-list__item {
   img {
-    max-height: 50px;
-    display: block;
-    margin: 0 auto;
+    max-height: 50px !important;
+    display: block !important;
+    margin: 0 auto !important;
   }
 }
 
@@ -141,47 +136,54 @@
   &[data-type="stanford_lists"],
   &[data-type="stanford_gallery"],
   &[data-type="stanford_card"]{
-    margin: 0 auto;
-    width: 100%;
-    max-width: 880px;
+    margin: 0 auto !important;
+    width: 100% !important;
+    max-width: 880px !important;
 
     @include grid-media('xl') {
-      max-width: 980px;
+      max-width: 980px !important;
     }
   }
 
   &[data-type="stanford_gallery"] {
-    container-type: inline-size;
+    container-type: inline-size !important;
 
     .field--name-su-gallery-images {
-    @container (min-width: 700px) {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-gap: 20px;
-    }
+      .layout--layout-paragraphs-one-column & {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        grid-gap: 20px !important;
+      }
     }
 
     .field--name-su-gallery-button {
-      text-align: center;
+      text-align: center !important;
     }
   }
 
   &[data-type="stanford_lists"] {
-    container-type: inline-size;
 
-    @container (min-width: 700px) {
-    .grid-container-2 {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-gap: 20px;
+    .layout--layout-paragraphs-two-column &,
+    .layout--layout-paragraphs-three-column & {
+      .grid-container-2,
+      .grid-container-3 {
+        display: grid;
+        grid-template-columns: 1fr !important;
+      }
     }
 
-    .grid-container-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-gap: 20px;
+    .layout--layout-paragraphs-one-column & {
+      .grid-container-2 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr) ;
+      }
+
+      .grid-container-3 {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr);
+      }
     }
-  }
+
   }
 
 }

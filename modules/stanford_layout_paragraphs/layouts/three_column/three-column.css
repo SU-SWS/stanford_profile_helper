@@ -1,38 +1,38 @@
 .layout--layout-paragraphs-three-column {
   display: grid;
   grid-gap: 50px;
+  max-width: calc(100vw - 40px);
+  margin: 0 auto;
 }
 
-@media only screen and (min-width: 768px) and (max-width: 991px) {
+@media screen and (min-width: 576px) {
   .layout--layout-paragraphs-three-column {
-    margin: 0 25px;
+    max-width: calc(100vw - 60px);
   }
 }
 
+@media screen and (min-width: 768px) {
+  .layout--layout-paragraphs-three-column {
+    max-width: calc(100vw - 100px);
+  }
+}
 
 @media screen and (min-width: 992px) {
   .layout--layout-paragraphs-three-column {
     grid-template-columns: 1fr 1fr 1fr;
+    max-width: calc(100vw - 160px);
   }
 }
 
-@media only screen and (min-width: 992px) and (max-width: 1199px) {
+@media screen and (min-width: 1200px) {
   .layout--layout-paragraphs-three-column {
-    margin: 0 80px;
-  }
-
-  .flex-lg-9-of-12 .layout--layout-paragraphs-three-column {
-    margin: 0;
+    max-width: calc(100vw - 200px);
   }
 }
 
-@media only screen and (min-width: 1200px) {
+@media screen and (min-width: 1700px) {
   .layout--layout-paragraphs-three-column {
-    margin: 0 100px;
-  }
-
-  .flex-lg-9-of-12 .layout--layout-paragraphs-three-column {
-    margin: 0;
+    max-width: 1500px;
   }
 }
 
