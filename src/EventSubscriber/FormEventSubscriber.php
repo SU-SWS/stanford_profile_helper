@@ -46,11 +46,22 @@ class FormEventSubscriber implements EventSubscriberInterface {
    *   Triggered hook event.
    */
   public function fieldWidgetFormAlter(WidgetCompleteFormAlterEvent $event): void {
+    $context = $event->getContext();
+
     /** @var \Drupal\Core\Field\FieldItemList $items */
-    $items = $event->getContext()['items'];
+    $items = $context['items'];
     if ($items->getFieldDefinition()->getName() == 'su_site_nobots') {
       $form = &$event->getWidgetCompleteForm();
       $form['widget']['value']['#default_value'] = (bool) $this->state->get('nobots');
+    }
+
+    // Hide token help in the viewfield widget.
+    if ($context['widget']->getPluginId() == 'viewfield_select') {
+      $widget_form = &$event->getWidgetCompleteForm();
+      $widget_form['widget'][0]['view_options']['arguments']['#description'] = '';
+      foreach (Element::children($widget_form['widget']) as $delta) {
+        unset($widget_form['widget'][$delta]['view_options']['token_help']);
+      }
     }
   }
 

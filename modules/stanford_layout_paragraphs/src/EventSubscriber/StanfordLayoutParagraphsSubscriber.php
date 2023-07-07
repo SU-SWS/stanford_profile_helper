@@ -35,7 +35,7 @@ class StanfordLayoutParagraphsSubscriber implements EventSubscriberInterface {
       $layout_settings = $parent_component->getSettings();
       if ($layout_settings['layout'] != 'layout_paragraphs_1_column') {
         $types = $event->getTypes();
-        unset($types['stanford_banner']);
+        unset($types['stanford_banner'], $types['stanford_gallery']);
         $event->setTypes($types);
       }
     }

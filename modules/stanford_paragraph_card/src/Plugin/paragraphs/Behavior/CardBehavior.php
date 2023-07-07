@@ -49,7 +49,7 @@ class CardBehavior extends ParagraphsBehaviorBase {
    */
   public function view(array &$build, ParagraphInterface $paragraph, EntityViewDisplayInterface $display, $view_mode): void {
     $link_style = $paragraph->getBehaviorSetting('su_card_styles', 'link_style');
-    if ($link_style) {
+    if ($link_style ==  'action') {
       // Change the DS config going in to the render.
       $build['#ds_configuration']['regions']['card_cta_label'] = $build['#ds_configuration']['regions']['card_button_label'];
       unset($build['#ds_configuration']['regions']['card_button_label']);
