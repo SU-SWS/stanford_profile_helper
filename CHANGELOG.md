@@ -1,5 +1,14 @@
 # Stanford Profile Helper
 
+9.2.10
+--------------------------------------------------------------------------------
+_Release Date: 2023-07-07_
+
+- reverted language change for layout paragraphs
+- Handle the action link behavior better
+- Prevent gallery from 2 and 3 column layouts
+- D8CORE-6800 D8CORE-6803 fix gutters on rows and remove token link on list paragraph field
+
 9.2.9
 --------------------------------------------------------------------------------
 _Release Date: 2023-06-29_
