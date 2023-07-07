@@ -1,6 +1,10 @@
 @charset "UTF-8";
 @import '../../../config';
 
+.paragraph--type--stanford-gallery {
+  container: paragraph / inline-size;
+}
+
 .su-gallery-images {
 
   > div {
@@ -29,5 +33,9 @@
     > div {
       @include margin(0);
     }
+  }
+
+  @container paragraph (max-width: 768px){
+    grid-template-columns: 1fr;
   }
 }
