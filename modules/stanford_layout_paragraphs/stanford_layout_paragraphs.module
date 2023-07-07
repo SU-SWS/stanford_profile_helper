@@ -95,10 +95,3 @@ function _stanford_layout_paragraphs_is_editing_layout_paragraphs() {
 function stanford_layout_paragraphs_paragraphs_behavior_info_alter(&$paragraphs_behavior) {
   $paragraphs_behavior['layout_paragraphs']['class'] = 'Drupal\stanford_layout_paragraphs\Plugin\paragraphs\Behavior\LayoutParagraphs';
 }
-
-/**
- * Implements hook_form_FORM_ID_alter().
- */
-function stanford_layout_paragraphs_form_layout_paragraphs_component_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  $form['#title'] = t('Choose a @type', $form['#title']->getArguments());
-}
