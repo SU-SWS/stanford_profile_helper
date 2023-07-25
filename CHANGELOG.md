@@ -1,5 +1,12 @@
 # Stanford Profile Helper
 
+9.2.13
+--------------------------------------------------------------------------------
+_Release Date: 2023-07-25_
+- D8CORE-6838 fix responsive two column layout
+- 100% image in cards
+- D8CORE-6791 Remove access to sitemap.xml for intranet sites
+
 9.2.12
 --------------------------------------------------------------------------------
 _Release Date: 2023-07-18_

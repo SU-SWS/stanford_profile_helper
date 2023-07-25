@@ -7,3 +7,9 @@ services:
   stanford_intranet.manager:
     class: \Drupal\stanford_intranet\StanfordIntranetManager
     arguments: ['@entity_type.manager', '@file.repository', '@file_system', '@state', '@file.usage']
+
+  stanford_intranet.route_subscriber:
+    class: Drupal\stanford_intranet\EventSubscriber\IntranetRouteSubscriber
+    arguments: ['@state']
+    tags:
+      - { name: event_subscriber }

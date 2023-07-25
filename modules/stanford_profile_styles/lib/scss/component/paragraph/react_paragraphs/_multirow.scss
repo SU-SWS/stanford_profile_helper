@@ -1,5 +1,12 @@
 @charset 'UTF-8';
 
+.su-card {
+  img,
+  picture {
+    width: 100%;
+  }
+}
+
 // For full width pages
 .jumpstart-ui--one-column {
   .container-2-items,
