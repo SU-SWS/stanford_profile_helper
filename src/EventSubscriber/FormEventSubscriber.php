@@ -31,7 +31,7 @@ class FormEventSubscriber implements EventSubscriberInterface {
   /**
    * {@inheritdoc}
    */
-  public static function getSubscribedEvents() {
+  public static function getSubscribedEvents(): array {
     return [
       HookEventDispatcherInterface::PREFIX . 'form_taxonomy_overview_vocabularies.alter' => ['taxonomyOverviewFormAlter'],
       HookEventDispatcherInterface::PREFIX . 'form_base_taxonomy_term_form.alter' => ['taxonomyFormAlter'],

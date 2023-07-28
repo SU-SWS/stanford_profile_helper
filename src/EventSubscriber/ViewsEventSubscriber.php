@@ -14,7 +14,7 @@ class ViewsEventSubscriber implements EventSubscriberInterface {
   /**
    * {@inheritDoc}
    */
-  public static function getSubscribedEvents() {
+  public static function getSubscribedEvents(): array {
     $events = [];
     $events[ViewsHookEvents::VIEWS_PRE_VIEW] = 'viewsPreView';
     return $events;

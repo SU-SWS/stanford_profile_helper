@@ -58,7 +58,7 @@ class EntityEventSubscriber implements EventSubscriberInterface {
   /**
    * {@inheritDoc}
    */
-  public static function getSubscribedEvents() {
+  public static function getSubscribedEvents(): array {
     return [
       EntityHookEvents::ENTITY_PRE_SAVE => 'onEntityPresave',
       EntityHookEvents::ENTITY_INSERT => 'onEntityInsert',
