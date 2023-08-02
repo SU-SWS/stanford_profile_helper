@@ -34,7 +34,7 @@ class StanfordLayoutParagraphsSubscriber implements EventSubscriberInterface {
 
       $layout_settings = $parent_component->getSettings();
       $layout_regions = \Drupal::service('plugin.manager.core.layout')
-      ->getDefinition($layout_settings['layout'])->getRegions();
+        ->getDefinition($layout_settings['layout'])->getRegions();
       if (count($layout_regions) > 1) {
         $types = $event->getTypes();
         unset($types['stanford_banner'], $types['stanford_gallery']);
