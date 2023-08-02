@@ -63,3 +63,26 @@ jumpstart_ui:
     dist/js/jumpstart_ui.js: {}
   dependencies:
     - core/jquery
+
+components.hero:
+  version: VERSION
+  css:
+    base:
+      dist/css/hero.css: {}
+components.card:
+  version: VERSION
+  css:
+    base:
+      dist/css/card.css: {}
+
+components.date_stacked:
+  version: VERSION
+  css:
+    base:
+      dist/date-stacked/date-stacked.css: {}
+
+components.media:
+  version: VERSION
+  css:
+    base:
+      dist/css/media.css: {}

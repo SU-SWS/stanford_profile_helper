@@ -63,6 +63,5 @@ hero:
   use: "@jumpstart_ui/components/hero/hero.html.twig"
   libraries:
     - hero:
-       css:
-         component:
-           ../../../dist/css/hero.css: {}
+       dependencies:
+         - jumpstart_ui/components.hero

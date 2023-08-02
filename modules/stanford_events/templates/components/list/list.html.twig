@@ -18,7 +18,7 @@
   * - location: Where it is being held.
 #}
 
-{%- set attributes = attributes.addClass(['su-event-list-item', modifier_class]) -%}
+{%- set attributes = attributes.addClass(['su-card', 'su-event-card', 'su-event-list-item', modifier_class]) -%}
 {%- set event_url = event_url|render_clean -%}
 
 {# Clean up the date fields. #}

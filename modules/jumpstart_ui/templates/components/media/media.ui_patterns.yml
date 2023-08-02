@@ -61,6 +61,5 @@ media:
   use: "@jumpstart_ui/components/media/media.html.twig"
   libraries:
     - media:
-       css:
-         component:
-           ../../../dist/css/media.css: {}
+       dependencies:
+         - jumpstart_ui/components.media

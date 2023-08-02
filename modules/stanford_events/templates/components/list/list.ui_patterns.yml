@@ -113,7 +113,6 @@ events_list:
       preview: "http://www.stanford.edu"
   use: "@events/list/list.html.twig"
   libraries:
-    - eventslist:
-        css:
-          component:
-            ../../../dist/css/stanford_events.event-list.css: { }
+    - events_list:
+        dependencies:
+          - stanford_events/events_list

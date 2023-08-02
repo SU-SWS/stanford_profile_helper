@@ -109,6 +109,5 @@ events_card:
   use: "@events/card/card.html.twig"
   libraries:
     - eventslist:
-        css:
-          component:
-            ../../../dist/css/stanford_events.event-card.css: { }
+        dependencies:
+          - stanford_events/event_card

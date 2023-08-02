@@ -74,3 +74,5 @@ news_vertical_teaser:
   css:
     base:
       dist/css/news-vertical-teaser.css: {}
+  dependencies:
+    - jumpstart_ui/components.card

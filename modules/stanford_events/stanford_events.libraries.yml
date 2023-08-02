@@ -63,3 +63,18 @@ event_views:
     dist/js/stanford_events.node.behaviors.js: {}
   dependencies:
     - core/jquery
+
+event_card:
+  version: VERSION
+  css:
+    base:
+      dist/css/stanford_events.event-card.css: {}
+  dependencies:
+    - jumpstart_ui/components.card
+events_list:
+  version: VERSION
+  css:
+    base:
+      dist/css/stanford_events.event-list.css: {}
+  dependencies:
+    - stanford_events/event_card
