@@ -2,7 +2,7 @@
 
 namespace Drupal\stanford_layout_paragraphs\EventSubscriber;
 
-use Drupal\Core\Layout\LayoutPluginManager;
+use Drupal\Core\Layout\LayoutPluginManagerInterface;
 use Drupal\layout_paragraphs\Event\LayoutParagraphsAllowedTypesEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -12,11 +12,11 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class StanfordLayoutParagraphsSubscriber implements EventSubscriberInterface {
 
   /**
-   * Drupal core layout plugin manager.
+   * The layout manager.
    *
-   * @var \Drupal\Core\Layout\LayoutPluginManager
+   * @var \Drupal\Core\Layout\LayoutPluginManagerInterface
    */
-  protected $layoutPluginManager;
+  protected $layoutManager;
 
   /**
    * {@inheritdoc}
@@ -30,11 +30,11 @@ class StanfordLayoutParagraphsSubscriber implements EventSubscriberInterface {
   /**
    * Event subscriber constructor.
    *
-   * @param \Drupal\Core\Layout\LayoutPluginManager $layoutPluginManager
-   *   Drupal core layout plugin manager.
+   * @param \Drupal\Core\Layout\LayoutPluginManagerInterface $layout_manager
+   *   The layout manager.
    */
-  public function __construct(LayoutPluginManager $layoutPluginManager) {
-    $this->layoutPluginManager = $layoutPluginManager;
+  public function __construct(LayoutPluginManagerInterface $layout_manager) {
+    $this->layoutManager = $layout_manager;
   }
 
   /**
@@ -51,7 +51,7 @@ class StanfordLayoutParagraphsSubscriber implements EventSubscriberInterface {
     if ($parent_component) {
 
       $layout_settings = $parent_component->getSettings();
-      $layout_regions = $this->layoutPluginManager
+      $layout_regions = $this->layoutManager
         ->getDefinition($layout_settings['layout'])->getRegions();
       if (count($layout_regions) > 1) {
         $types = $event->getTypes();
