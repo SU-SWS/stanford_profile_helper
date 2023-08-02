@@ -1,6 +1,7 @@
 services:
   stanford_layout_paragraphs.event_subscriber:
     class: Drupal\stanford_layout_paragraphs\EventSubscriber\StanfordLayoutParagraphsSubscriber
+    arguments: ['@plugin.manager.core.layout']
     tags:
       - { name: event_subscriber }
 
