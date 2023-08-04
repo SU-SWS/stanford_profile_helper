@@ -2,6 +2,7 @@
 
 namespace Drupal\stanford_layout_paragraphs\EventSubscriber;
 
+use Drupal\Core\Layout\LayoutPluginManagerInterface;
 use Drupal\layout_paragraphs\Event\LayoutParagraphsAllowedTypesEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -11,12 +12,29 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class StanfordLayoutParagraphsSubscriber implements EventSubscriberInterface {
 
   /**
+   * The layout manager.
+   *
+   * @var \Drupal\Core\Layout\LayoutPluginManagerInterface
+   */
+  protected $layoutManager;
+
+  /**
    * {@inheritdoc}
    */
   public static function getSubscribedEvents(): array {
     return [
       LayoutParagraphsAllowedTypesEvent::EVENT_NAME => 'layoutParagraphsAllowedTypes',
     ];
+  }
+
+  /**
+   * Event subscriber constructor.
+   *
+   * @param \Drupal\Core\Layout\LayoutPluginManagerInterface $layout_manager
+   *   The layout manager.
+   */
+  public function __construct(LayoutPluginManagerInterface $layout_manager) {
+    $this->layoutManager = $layout_manager;
   }
 
   /**
@@ -33,7 +51,9 @@ class StanfordLayoutParagraphsSubscriber implements EventSubscriberInterface {
     if ($parent_component) {
 
       $layout_settings = $parent_component->getSettings();
-      if ($layout_settings['layout'] != 'layout_paragraphs_1_column') {
+      $layout_regions = $this->layoutManager
+        ->getDefinition($layout_settings['layout'])->getRegions();
+      if (count($layout_regions) > 1) {
         $types = $event->getTypes();
         unset($types['stanford_banner'], $types['stanford_gallery']);
         $event->setTypes($types);
