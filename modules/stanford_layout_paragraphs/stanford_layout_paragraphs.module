@@ -75,7 +75,6 @@ function stanford_layout_paragraphs_preprocess(&$variables, $hook) {
     $wrapper_attributes = $variables['context']->getProperty('lpBuilder') ?? [];
 
     // Use the same classes that are output on the front end.
-
     $entity_type = Html::cleanCssIdentifier($variables['context']->getProperty('entity_type'));
     $bundle = Html::cleanCssIdentifier($variables['context']->getProperty('bundle'));
     if ($entity_type || $bundle) {

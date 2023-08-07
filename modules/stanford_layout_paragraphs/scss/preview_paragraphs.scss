@@ -8,7 +8,7 @@
   background-color: $su-color-digital-red;
   color: $su-color-white !important;
   text-decoration: none;
-  transition: background-color .25s ease-in-out ease-in-out;
+  transition: background-color 0.25s ease-in-out ease-in-out;
   margin: 0 19px 19px 0;
 
   &:hover {
@@ -18,7 +18,11 @@
 }
 
 .js-lpb-region {
-  font-family: Source Sans Pro, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family: Source Sans Pro,
+  Helvetica Neue,
+  Helvetica,
+  Arial,
+  sans-serif;
 
   .su-wysiwyg-text {
     p {
@@ -64,12 +68,18 @@
     }
 
     blockquote {
-      &:before, &:after {
+      &::before,
+      &::after {
         content: "";
       }
     }
 
-    div, ul, ol, li, td, .tablesaw-cell-content {
+    div,
+    ul,
+    ol,
+    li,
+    td,
+    .tablesaw-cell-content {
       font-size: 21px;
     }
 
@@ -105,8 +115,10 @@
       padding-top: 13px;
     }
 
-    table thead + tbody {
-      border-top: 1px solid #d2d3d4;
+    table {
+      thead + tbody {
+        border-top: 1px solid #d2d3d4;
+      }
     }
 
     th {
@@ -143,7 +155,7 @@
     }
 
     .su-link--action {
-      &:after {
+      &::after {
         font-family: "Font Awesome 5 Free";
         font-weight: 900;
         content: "\f054";
@@ -217,8 +229,8 @@
     }
   }
 
-  &[data-type="stanford_media_caption"]{
-    .su-media__caption{
+  &[data-type="stanford_media_caption"] {
+    .su-media__caption {
       width: 100%;
       font-size: 16px;
     }
@@ -235,7 +247,7 @@
     a {
       color: $su-color-digital-red;
       text-decoration: none;
-      font-weigth: 700;
+      font-weight: 700;
 
       &:hover {
         color: $su-color-black;
@@ -246,12 +258,11 @@
       display: grid;
       gap: 40px;
 
-    @container entity-list (min-width: 550px) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    @container entity-list (min-width: 800px) {
-      grid-template-columns: repeat(3, 1fr);
-    }
+      @container entity-list (min-width: 550px) {
+        grid-template-columns: repeat(2, 1fr);
+      } @container entity-list (min-width: 800px) {
+        grid-template-columns: repeat(3, 1fr);
+      }
     }
   }
 
@@ -261,7 +272,8 @@
     .field--name-su-gallery-images {
       .layout--layout-paragraphs-one-column & {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3,
+          1fr);
         grid-gap: 20px;
       }
     }
@@ -290,32 +302,39 @@
     .layout--layout-paragraphs-one-column & {
       .grid-container-2 {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2,
+          1fr);
         grid-gap: 20px;
       }
 
       .grid-container-3 {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3,
+          1fr);
         grid-gap: 20px;
       }
     }
 
     .view-content {
-      ul.su-list-unstyled {
-        margin: 0;
-        padding: 0;
+      ul {
+        &.su-list-unstyled {
+          margin: 0;
+          padding: 0;
+        }
       }
     }
+
     .views-infinite-scroll-content-wrapper {
       margin: 0;
     }
   }
 
-  a.button {
-    @include button;
-    font-size: 21px !important;
-    padding: 10px 20px !important;
+  a {
+    &.button {
+      @include button;
+      font-size: 21px !important;
+      padding: 10px 20px !important;
+    }
   }
 
   // People Cards & views
@@ -323,12 +342,13 @@
     container: person / inline-size;
 
     .su-card {
-    @container person (min-width: 550px) {
-      display: flex;
-      align-items: center;
-    }
+      @container person (min-width: 550px) {
+        display: flex;
+        align-items: center;
+      }
     }
   }
+
   .field--name-su-person-photo {
     max-width: 330px;
     padding: 30px;
@@ -415,14 +435,18 @@
     .su-news-list__topics {
       font-size: 19px;
 
-      ul, li {
+      ul,
+      li {
         margin: 0;
         padding: 0;
       }
     }
   }
-  .su-news-list .su-news-article {
-    padding: 60px 0;
+
+  .su-news-list {
+    .su-news-article {
+      padding: 60px 0;
+    }
   }
 
   // Event Cards and Views
@@ -433,9 +457,9 @@
 
   .su-event-list-item {
     margin-bottom: 0;
-  @container event (max-width: 550px) {
-    display: block;
-  }
+    @container event (max-width: 550px) {
+      display: block;
+    }
   }
 
   .event-list-item__type a,
@@ -452,8 +476,8 @@
     font-size: 21px;
 
     .csl-entry {
-      margin-left: .9em;
-      text-indent: -.9em;
+      margin-left: 19px;
+      text-indent: -19px;
     }
   }
 }
