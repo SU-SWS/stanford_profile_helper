@@ -33,15 +33,18 @@ abstract class SuProfileHelperKernelTestBase extends KernelTestBase {
     'rabbit_hole',
     'rh_node',
     'menu_link_content',
-    'link',
     'redirect',
     'text',
     'field',
+    'field_ui',
     'config_pages',
     'link',
     'taxonomy',
     'pathauto',
     'token',
+    'paragraphs',
+    'options',
+    'file',
   ];
 
   /**
