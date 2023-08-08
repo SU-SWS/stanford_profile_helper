@@ -49,7 +49,7 @@ export default {
 
       const pastText =
         $('<div class="su-event-text-past">' +
-          Drupal.t('This event has passed.') + '</div>');
+          Drupal.t('This event has already occurred.') + '</div>');
 
       // Apply past label and text
       if (eventDate < todayBegin) {
