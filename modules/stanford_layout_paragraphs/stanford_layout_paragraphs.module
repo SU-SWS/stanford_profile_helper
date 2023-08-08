@@ -95,4 +95,3 @@ function _stanford_layout_paragraphs_is_editing_layout_paragraphs() {
 function stanford_layout_paragraphs_paragraphs_behavior_info_alter(&$paragraphs_behavior) {
   $paragraphs_behavior['layout_paragraphs']['class'] = 'Drupal\stanford_layout_paragraphs\Plugin\paragraphs\Behavior\LayoutParagraphs';
 }
-
