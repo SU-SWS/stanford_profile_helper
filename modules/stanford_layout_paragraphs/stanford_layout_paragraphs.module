@@ -96,12 +96,3 @@ function stanford_layout_paragraphs_paragraphs_behavior_info_alter(&$paragraphs_
   $paragraphs_behavior['layout_paragraphs']['class'] = 'Drupal\stanford_layout_paragraphs\Plugin\paragraphs\Behavior\LayoutParagraphs';
 }
 
-/**
- * Implements hook_form_layout_paragraphs_component_form_alter().
- */
-function stanford_layout_paragraphs_form_layout_paragraphs_component_form_alter(&$form, &$form_state) {
-  // Modify the labels on the Spacer paragraph select list.
-  if (!empty($form['su_spacer_size'])) {
-    $form['su_spacer_size']['widget']['#options']['_none'] = 'Standard';
-  }
-}

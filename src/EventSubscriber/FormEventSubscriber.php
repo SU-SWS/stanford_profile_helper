@@ -55,6 +55,12 @@ class FormEventSubscriber implements EventSubscriberInterface {
       $form['widget']['value']['#default_value'] = (bool) $this->state->get('nobots');
     }
 
+    // Change the default value label in the Spacer paragraph.
+    if ($items->getFieldDefinition()->getName() == 'su_spacer_size') {
+      $form = &$event->getWidgetCompleteForm();
+      $form['widget']['#options']['_none'] = 'Standard';
+    }
+
     // Hide token help in the viewfield widget.
     if ($context['widget']->getPluginId() == 'viewfield_select') {
       $widget_form = &$event->getWidgetCompleteForm();
