@@ -101,7 +101,7 @@ function stanford_layout_paragraphs_paragraphs_behavior_info_alter(&$paragraphs_
  */
 function stanford_layout_paragraphs_form_layout_paragraphs_component_form_alter(&$form, &$form_state) {
   // Modify the labels on the Spacer paragraph select list.
-  if (!empty($form['su_spacer_size'])){
+  if (!empty($form['su_spacer_size'])) {
     $form['su_spacer_size']['widget']['#options']['_none'] = 'Standard';
   }
 }
