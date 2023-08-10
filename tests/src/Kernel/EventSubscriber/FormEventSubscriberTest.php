@@ -70,10 +70,9 @@ class FormEventSubscriberTest extends SuProfileHelperKernelTestBase {
         ],
       ])->save();
 
+      //Maybe needs a cache clear?
       $entity_type_manager = \Drupal::service('entity_type.manager');
       $entity_type_manager->clearCachedDefinitions();
-
-      echo(var_export($paragraph_field_storage, true));
 
       FieldConfig::create([
         'field_storage' => $paragraph_field_storage,
@@ -89,9 +88,6 @@ class FormEventSubscriberTest extends SuProfileHelperKernelTestBase {
 
       $entity_form_builder = \Drupal::service('entity.form_builder');
       $form_object = $entity_form_builder->getForm($paragraph, 'default');
-
-      echo(var_export(array_keys($form_object), true));
-      die();
 
       $field_widget_structure = $form_object['su_spacer_size'];
       $this->assertEquals('Standard', $field_widget_structure['#options']['_none']);
