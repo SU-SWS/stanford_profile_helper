@@ -35,6 +35,5 @@ news-vertical-teaser:
   use: "@news/news-vertical-teaser/news-vertical-teaser.twig"
   libraries:
     - newsverteaser:
-        css:
-          component:
-            ../../../dist/css/news-vertical-teaser.css: { weight: 1000 }
+        dependencies:
+          - stanford_news/news_vertical_teaser

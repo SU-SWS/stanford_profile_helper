@@ -112,6 +112,5 @@ card:
   use: "@jumpstart_ui/components/card/card.html.twig"
   libraries:
     - card:
-       css:
-         component:
-           ../../../dist/css/card.css: {}
+       dependencies:
+         - jumpstart_ui/components.card

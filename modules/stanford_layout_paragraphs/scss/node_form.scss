@@ -24,6 +24,35 @@
   }
 }
 
+.lpb-layout {
+  padding: 40px 0;
+}
+
+.js-lpb-region {
+  outline: 1px dotted rgba(0, 0, 255, 0.5);
+}
+
+.lpb-component-list__group--content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+  margin-top: 20px;
+}
+
+.lpb-component-list__item {
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+  padding: 5px 0;
+}
+
+.lpb-component-list__item {
+  img {
+    max-height: 50px;
+    display: block;
+    margin: 0 auto;
+  }
+}
+
 .choose-layout-field legend,
 .lpb-component-list__search {
   display: none;

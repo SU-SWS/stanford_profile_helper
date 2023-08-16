@@ -23,6 +23,5 @@ date-stacked:
   use: "@jumpstart_ui/components/date-stacked/date-stacked.html.twig"
   libraries:
     - date-stacked:
-       css:
-         component:
-           ../../../dist/date-stacked/date-stacked.css: {}
+       dependencies:
+         - jumpstart_ui/components.date_stacked

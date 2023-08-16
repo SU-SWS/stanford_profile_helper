@@ -6,7 +6,8 @@
  */
 
 use Drupal\Core\Template\Attribute;
-use Drupal\Core\Form\FormStateInterface;
+use Drupal\views\ViewExecutable;
+use Drupal\Component\Utility\Html;
 
 /**
  * Implements hook_theme().
@@ -72,6 +73,15 @@ function stanford_layout_paragraphs_preprocess(&$variables, $hook) {
     // template. Also remove the normal attributes to a wrapper so that they
     // don't somehow get passed down into the pattern and cause chaos.
     $wrapper_attributes = $variables['context']->getProperty('lpBuilder') ?? [];
+
+    // Use the same classes that are output on the front end.
+    $entity_type = Html::cleanCssIdentifier($variables['context']->getProperty('entity_type'));
+    $bundle = Html::cleanCssIdentifier($variables['context']->getProperty('bundle'));
+    if ($entity_type || $bundle) {
+      $wrapper_attributes['class'][] = "ds-entity--$entity_type";
+      $wrapper_attributes['class'][] = "ds-entity--$bundle";
+    }
+
     $variables['wrapper_attributes'] = new Attribute($wrapper_attributes);
     $variables['attributes'] = new Attribute();
   }
@@ -94,4 +104,16 @@ function _stanford_layout_paragraphs_is_editing_layout_paragraphs() {
  */
 function stanford_layout_paragraphs_paragraphs_behavior_info_alter(&$paragraphs_behavior) {
   $paragraphs_behavior['layout_paragraphs']['class'] = 'Drupal\stanford_layout_paragraphs\Plugin\paragraphs\Behavior\LayoutParagraphs';
+}
+
+/**
+ * Implements hook_views_pre_execute().
+ */
+function stanford_layout_paragraphs_views_pre_execute(ViewExecutable $view) {
+  if (_stanford_layout_paragraphs_is_editing_layout_paragraphs()) {
+    $current_limit = $view->query->getLimit();
+    if ($current_limit <= 0 || $current_limit > 5) {
+      $view->query->setLimit(6);
+    }
+  }
 }

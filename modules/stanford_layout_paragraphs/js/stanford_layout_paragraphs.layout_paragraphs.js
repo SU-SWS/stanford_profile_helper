@@ -8,6 +8,10 @@
           })
         })
       }
+
+      // For some reason in the edit view, the two classes don't get added via
+      // the template when in editing mode.
+      $('.ds-entity--stanford-event .su-event-list-item', context).addClass(['su-card', 'su-event-card']);
     },
   };
 })(jQuery, Drupal);
