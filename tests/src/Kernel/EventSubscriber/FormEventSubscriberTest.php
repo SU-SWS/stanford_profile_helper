@@ -98,7 +98,9 @@ class FormEventSubscriberTest extends SuProfileHelperKernelTestBase {
     ]);
     $paragraph->save();
 
+    $entity_type_manager = \Drupal::service('entity_type.manager');
     $entity_form_builder = \Drupal::service('entity.form_builder');
+
     // This creates the form array, but is not a form object.
     $complete_form_array = $entity_form_builder->getForm($paragraph);
 
