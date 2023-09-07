@@ -1,5 +1,13 @@
 # Stanford Profile Helper
 
+9.3.0
+--------------------------------------------------------------------------------
+_Release Date: 2023-09-07_
+
+- Add response_code_condition replacing the contrib module (#266)
+- D8CORE-6802 Update preview styles with most of the front end styles (#262)
+- D8CORE-4495 Update past events text on node page
+
 9.2.15
 --------------------------------------------------------------------------------
 _Release Date: 2023-08-04_
