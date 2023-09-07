@@ -108,9 +108,21 @@ function jumpstart_ui_preprocess_patterns_overview_page(&$variables) {
  * Implements hook_preprocess_HOOK().
  */
 function jumpstart_ui_preprocess_pattern_localfooter(&$variables) {
-  if (!empty($variables['weblogin_text']) && \Drupal::currentUser()->isAnonymous()) {
-    if (\Drupal::moduleHandler()->moduleExists('simplesamlphp_auth')) {
-      $route = Url::fromRoute('simplesamlphp_auth.saml_login');
+  if (
+    !empty($variables['weblogin_text']) &&
+    \Drupal::currentUser()->isAnonymous()
+  ) {
+    $module_handler = \Drupal::moduleHandler();
+    $destination = \Drupal::requestStack()->getCurrentRequest()?->getRequestUri() ?? '/';
+    $options = ['query' => ['destination' => $destination]];
+
+    if ($module_handler->moduleExists('simplesamlphp_auth')) {
+      $route = Url::fromRoute('simplesamlphp_auth.saml_login', [], $options);
+      $variables['#cache']['contexts'][] = 'url.path';
+    }
+    elseif ($module_handler->moduleExists('samlauth')) {
+      $route = Url::fromRoute('samlauth.saml_controller_login', [], $options);
+      $variables['#cache']['contexts'][] = 'url.path';
     }
     else {
       $route = Url::fromRoute('user.login');

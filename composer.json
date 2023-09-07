@@ -35,6 +35,9 @@
             }
         }
     ],
+    "require": {
+        "drupal/layout_paragraphs": "^2.0"
+    },
     "require-dev": {
         "citation-style-language/locales": "^1.0",
         "citation-style-language/styles-distribution": "^1.0",
@@ -79,6 +82,9 @@
         "su-sws/stanford_media": "^9.0",
         "su-sws/stanford_migrate": "^8.4"
     },
+    "replaces": {
+        "drupal/response_code_condition": "1.1.0"
+    },
     "autoload": {
         "psr-4": {
             "Drupal\\jumpstart_ui\\": "modules/jumpstart_ui/src",
@@ -118,8 +124,5 @@
                 "drush.services.yml": "^9"
             }
         }
-    },
-    "require": {
-        "drupal/layout_paragraphs": "^2.0"
     }
 }

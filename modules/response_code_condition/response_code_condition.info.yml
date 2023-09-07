@@ -1,0 +1,6 @@
+name: Response Code Conditions
+type: module
+description: 'Provides a condition to show or hide a block depending on the response code.'
+core_version_requirement: ^9 || ^10
+package: Custom
+
