@@ -82,7 +82,7 @@
         "su-sws/stanford_media": "^9.0",
         "su-sws/stanford_migrate": "^8.4"
     },
-    "replaces": {
+    "replace": {
         "drupal/response_code_condition": "1.1.0"
     },
     "autoload": {
