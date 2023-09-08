@@ -32,7 +32,7 @@ class FormEventSubscriberTest extends SuProfileHelperKernelTestBase {
   /**
    * {@inheritDoc}
    */
-  protected function setUp(): void {
+  public function setup(): void {
     parent::setUp();
     $this->installEntitySchema('paragraph');
     $this->installSchema('file', ['file_usage']);

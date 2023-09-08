@@ -20,7 +20,7 @@ class ConfigOverridesTest extends UnitTestCase {
   /**
    * {@inheritDoc}
    */
-  protected function setUp(): void {
+  public function setup(): void {
     parent::setUp();
     $this->configPages = $this->createMock(ConfigPagesLoaderServiceInterface::class);
     $this->configPages->method('getValue')->will($this->returnCallback([$this, 'getConfigPagesValue']));

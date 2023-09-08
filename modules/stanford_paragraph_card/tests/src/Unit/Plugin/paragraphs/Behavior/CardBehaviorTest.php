@@ -13,7 +13,7 @@ use Drupal\Tests\UnitTestCase;
 
 class CardBehaviorTest extends UnitTestCase {
 
-  protected function setUp(): void {
+  public function setup(): void {
     parent::setUp();
     $container = new ContainerBuilder();
     $container->set('string_translation', $this->getStringTranslationStub());

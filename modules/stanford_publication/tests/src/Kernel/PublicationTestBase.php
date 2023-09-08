@@ -38,7 +38,7 @@ abstract class PublicationTestBase extends KernelTestBase {
   /**
    * {@inheritDoc}
    */
-  protected function setUp(): void {
+  public function setup(): void {
     parent::setUp();
     $this->installEntitySchema('user');
     $this->installEntitySchema('node');

@@ -29,7 +29,7 @@ class ListParagraphBehaviorTest extends UnitTestCase {
   /**
    * {@inheritDoc}
    */
-  protected function setUp(): void {
+  public function setup(): void {
     parent::setUp();
 
     $field_manager = $this->createMock(EntityFieldManagerInterface::class);

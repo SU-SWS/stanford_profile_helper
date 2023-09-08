@@ -16,7 +16,7 @@ use Drupal\image\Entity\ImageStyle;
  */
 class StanfordIntranetManagerTest extends IntranetKernelTestBase {
 
-  protected function setUp(): void {
+  public function setup(): void {
     parent::setUp();
     $this->setSetting('file_private_path', $this->container->getParameter('site.path') . '/private');
     mkdir($this->container->getParameter('site.path') . '/private', 0777, TRUE);

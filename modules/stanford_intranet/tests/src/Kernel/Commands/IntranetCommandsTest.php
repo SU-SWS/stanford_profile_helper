@@ -27,7 +27,7 @@ class IntranetCommandsTest extends IntranetKernelTestBase {
   /**
    * {@inheritDoc}
    */
-  protected function setUp(): void {
+  public function setup(): void {
     parent::setUp();
     $this->installEntitySchema('config_pages');
     ConfigPagesType::create([

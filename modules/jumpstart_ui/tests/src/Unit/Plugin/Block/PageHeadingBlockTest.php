@@ -47,7 +47,7 @@ class PageHeadingBlockTest extends UnitTestCase {
   /**
    * {@inheritDoc}
    */
-  protected function setUp(): void {
+  public function setup(): void {
     parent::setUp();
 
     $container = new ContainerBuilder();
