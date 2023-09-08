@@ -23,7 +23,6 @@ abstract class SuProfileHelperKernelTestBase extends KernelTestBase {
     'hook_event_dispatcher',
     'preprocess_event_dispatcher',
     'default_content',
-    'hal',
     'node',
     'serialization',
     'stanford_profile_helper',

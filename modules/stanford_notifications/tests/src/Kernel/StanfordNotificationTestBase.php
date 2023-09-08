@@ -25,7 +25,7 @@ abstract class StanfordNotificationTestBase extends KernelTestBase {
   /**
    * {@inheritDoc}
    */
-  protected function setUp(): void {
+  public function setup(): void {
     parent::setUp();
     $this->installEntitySchema('notification');
     $this->installEntitySchema('user');

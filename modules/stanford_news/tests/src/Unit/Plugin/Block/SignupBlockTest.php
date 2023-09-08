@@ -24,7 +24,7 @@ class SignupBlockTest extends UnitTestCase {
   /**
    * {@inheritDoc}
    */
-  protected function setUp(): void {
+  public function setup(): void {
     parent::setUp();
     $config = [
       "id" => "signup_block",

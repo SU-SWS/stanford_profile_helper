@@ -40,7 +40,7 @@ class PatternMediaTest extends KernelTestBase {
   /**
    * Setup.
    */
-  protected function setUp(): void {
+  public function setup(): void {
     parent::setUp();
     $this->container->get('theme_installer')->install(['stable9']);
     $this->container->get('config.factory')

@@ -8,7 +8,7 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Exception\RequestException;
-
+use GuzzleHttp\Psr7\Stream;
 
 /**
  * Class StanfordEventsImporterTest
@@ -74,6 +74,12 @@ class StanfordEventsImporterTest extends UnitTestCase {
     if (isset($options['query']['category-list'])) {
       $body = $category;
     }
+
+    $resource = fopen('php://memory','r+');
+    fwrite($resource, $body);
+    rewind($resource);
+    $body = new Stream($resource);
+
     $response->method('getBody')
       ->willReturn($body);
     return $response;

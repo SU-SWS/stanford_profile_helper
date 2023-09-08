@@ -20,7 +20,7 @@ class ResponseCodeConditionTest extends UnitTestCase {
 
   protected $requestAttributes = [];
 
-  protected function setUp(): void {
+  public function setup(): void {
     parent::setUp();
 
     $request_stack = $this->createMock(RequestStack::class);

@@ -33,7 +33,6 @@ class StanfordProfileCommandsTest extends KernelTestBase {
     'field',
     'file',
     'entity_reference_revisions',
-    'entity_reference',
     'text',
     'link',
     'filter',
@@ -49,7 +48,7 @@ class StanfordProfileCommandsTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp(): void {
+  public function setup(): void {
     parent::setUp();
     $this->installEntitySchema('node');
     $this->installEntitySchema('user');

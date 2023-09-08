@@ -11,6 +11,7 @@ use Drupal\node\Entity\NodeType;
 use Drupal\node\Entity\Node;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Promise\PromiseInterface;
+use GuzzleHttp\Psr7\Stream;
 use Psr\Http\Message\ResponseInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 
@@ -39,7 +40,7 @@ class ExploreCoursesUrlWidgetTest extends KernelTestBase {
   /**
    * {@inheritDoc}.
    */
-  protected function setUp(): void {
+  public function setup(): void {
     parent::setUp();
     $this->installEntitySchema('user');
     $this->installEntitySchema('node');
@@ -191,8 +192,14 @@ class ExploreCoursesUrlWidgetTest extends KernelTestBase {
    */
   public function requestAsyncCallback($method, $uri, $options) {
     $data = "<xml><deprecated>false</deprecated><latestVersion>20200810</latestVersion></xml>";
+
+    $resource = fopen('php://memory','r+');
+    fwrite($resource, $data);
+    rewind($resource);
+    $body = new Stream($resource);
+
     $response = $this->createMock(ResponseInterface::class);
-    $response->method('getBody')->willReturn($data);
+    $response->method('getBody')->willReturn($body);
 
     $promise = $this->createMock(PromiseInterface::class);
     $promise->method('wait')->willReturn($response);

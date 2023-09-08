@@ -54,7 +54,7 @@ class ExploreCoursesMigrationPluginsTest extends EntityKernelTestBase {
   /**
    * {@inheritDoc}.
    */
-  protected function setUp(): void {
+  public function setup(): void {
     parent::setUp();
     $this->processManager = $this->container->get('plugin.manager.migrate.process');
     $this->section_xml = <<<DATA

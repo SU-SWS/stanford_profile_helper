@@ -57,7 +57,7 @@ class StanfordNotificationsCommands extends DrushCommands {
     ];
 
     if (!in_array($options['status'], $status_options)) {
-      throw new UserAbortException(new TranslatableMarkup('Invalid status. Please use one of the options: @options', ['@options' => implode(', ', $status_options)]));
+      throw new UserAbortException((string) new TranslatableMarkup('Invalid status. Please use one of the options: @options', ['@options' => implode(', ', $status_options)]));
     }
     $roles = explode(',', $options['roles']);
     array_walk($roles, 'trim');

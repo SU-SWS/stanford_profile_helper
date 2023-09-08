@@ -20,7 +20,7 @@ class EntityAccessFieldWidgetTest extends IntranetKernelTestBase {
   /**
    * {@inheritDoc}
    */
-  protected function setUp(): void {
+  public function setup(): void {
     parent::setUp();
 
     /** @var \Drupal\Core\Entity\Display\EntityFormDisplayInterface $form_display */
