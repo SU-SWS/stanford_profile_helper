@@ -1,5 +1,12 @@
 # Stanford Profile Helper
 
+9.3.1
+--------------------------------------------------------------------------------
+_Release Date: 2023-09-08_
+
+- Update unit tests for d10 (#268)
+- D8CORE-6824: Spacer paragraph - changed label of default value
+
 9.3.0
 --------------------------------------------------------------------------------
 _Release Date: 2023-09-07_
