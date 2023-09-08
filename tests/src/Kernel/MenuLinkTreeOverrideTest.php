@@ -33,7 +33,7 @@ class MenuLinkTreeOverrideTest extends KernelTestBase {
     'rabbit_hole',
   ];
 
-  protected function setUp() {
+  public function setUp(): void {
     parent::setUp();
     $this->installEntitySchema('user');
     $this->installEntitySchema('node');

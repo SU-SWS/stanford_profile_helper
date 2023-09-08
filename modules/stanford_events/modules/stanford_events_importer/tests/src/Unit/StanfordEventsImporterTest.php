@@ -33,7 +33,7 @@ class StanfordEventsImporterTest extends UnitTestCase {
    */
   public $xml;
 
-  public function setup() {
+  public function setup(): void {
     $this->client = $this->createMock(ClientInterface::class);
     $this->client->method('request')
       ->will($this->returnCallback([$this, 'getResponseCallback']));
