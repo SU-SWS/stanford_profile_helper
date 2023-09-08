@@ -33,7 +33,6 @@ class StanfordProfileCommandsTest extends KernelTestBase {
     'field',
     'file',
     'entity_reference_revisions',
-    'entity_reference',
     'text',
     'link',
     'filter',

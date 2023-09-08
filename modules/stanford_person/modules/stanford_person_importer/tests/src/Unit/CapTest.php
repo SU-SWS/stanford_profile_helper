@@ -18,6 +18,7 @@ use Drupal\stanford_person_importer\Cap;
 use Drupal\taxonomy\TermInterface;
 use Drupal\Tests\UnitTestCase;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Psr7\Stream;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -242,7 +243,13 @@ class CapTest extends UnitTestCase {
     $response = $this->createMock(ResponseInterface::class);
     $response->method('getStatusCode')
       ->willReturnReference($this->guzzleStatusCode);
-    $response->method('getBody')->willReturnReference($this->guzzleBody);
+
+    $resource = fopen('php://memory','r+');
+    fwrite($resource, $this->guzzleBody);
+    rewind($resource);
+    $body = new Stream($resource);
+
+    $response->method('getBody')->willReturnReference($body);
     return $response;
   }
 
