@@ -79,7 +79,7 @@
         "seboettg/citeproc-php": "^2.4",
         "su-sws/react_paragraphs": "^8.2",
         "su-sws/stanford_fields": "^8.2",
-        "su-sws/stanford_media": "^9.0",
+        "su-sws/stanford_media": "^9.0 || ^10.0",
         "su-sws/stanford_migrate": "^8.4"
     },
     "replace": {
