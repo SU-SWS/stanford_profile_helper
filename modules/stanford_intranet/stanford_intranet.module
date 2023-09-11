@@ -141,6 +141,18 @@ function stanford_intranet_entity_access(EntityInterface $entity, $operation, Ac
     \Drupal::state()->get('stanford_intranet', FALSE) &&
     !($entity instanceof ParagraphInterface)
   ) {
+    if ($entity->getEntityTypeId() == 'block') {
+      $default = ['system_main_block', 'help', 'system_messages_block'];
+      $allowed_blocks = \Drupal::config('stanford_intranet.settings')
+        ->get('public_blocks') ?: $default;
+
+      if (
+        in_array($entity->getPluginId(), $allowed_blocks) ||
+        in_array($entity->id(), $allowed_blocks)
+      ) {
+        return AccessResult::neutral();
+      }
+    }
     // Prevent all access to non-authenticated users.
     return AccessResult::forbidden();
   }
