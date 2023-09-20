@@ -81,10 +81,12 @@
   }
 }
 
-.layout-node-form {
-  display: grid;
-  gap: 40px;
-  grid-template-columns: 1fr;
+.node-form {
+  .layout-node-form {
+    display: grid;
+    gap: 40px;
+    grid-template-columns: 1fr;
+  }
 }
 
 .layout-node-form > div {
