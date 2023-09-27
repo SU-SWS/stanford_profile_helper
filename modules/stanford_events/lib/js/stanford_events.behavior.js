@@ -40,7 +40,7 @@ export default {
       // Has type at top
       const eventTypeLabel =
         $('<span class="su-event-label-past">' + Drupal.t('Past Event') +
-          '<span class="divider">' + Drupal.t('|') + '</span></span>');
+          '</span>');
 
       // Has no type at top
       const eventLabel =
