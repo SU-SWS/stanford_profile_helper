@@ -51,14 +51,16 @@ class ListParagraphBehavior extends ParagraphsBehaviorBase {
    * {@inheritDoc}
    */
   public function view(array &$build, ParagraphInterface $paragraph, EntityViewDisplayInterface $display, $view_mode) {
+
     if (!isset($build['su_list_view']) || !empty(Element::children($build['su_list_view']))) {
       return;
     }
-    if ($empty_message = $paragraph->getBehaviorSetting('list_paragraph', 'empty_message')) {
-      $build['su_list_view']['#markup'] = $empty_message;
-    }
+
+    // If there is no empty message set, it will be null.
+    $build['su_list_view']['#markup'] = $paragraph->getBehaviorSetting('list_paragraph', 'empty_message');
+
     if ($paragraph->getBehaviorSetting('list_paragraph', 'hide_empty')) {
-      // D8CORE-6715: If the list is empty, the paragraph is uneditable and orphaned
+      // D8CORE-6715: If the list is empty, the paragraph becomes uneditable.
       unset($build['su_list_button'], $build['su_list_description'], $build['su_list_headline'], $build['su_list_view']);
     }
   }
