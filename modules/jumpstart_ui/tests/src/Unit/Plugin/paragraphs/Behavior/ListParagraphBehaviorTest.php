@@ -72,7 +72,13 @@ class ListParagraphBehaviorTest extends UnitTestCase {
     $plugin->view($build, $paragraph, $display, 'default');
     $this->assertEquals(['su_list_view' => [], '#cache' => []], $build);
 
-    $build = ['su_list_view' => [], '#cache' => []];
+    $build = [
+      'su_list_view' => [],
+      'su_list_button' => [],
+      'su_list_description' => [],
+      'su_list_headline' => [],
+      '#cache' => []
+    ];
     $this->paragraphBehavior['hide_empty'] = TRUE;
     $plugin->view($build, $paragraph, $display, 'default');
     $this->assertEquals(['#cache' => []], $build);
