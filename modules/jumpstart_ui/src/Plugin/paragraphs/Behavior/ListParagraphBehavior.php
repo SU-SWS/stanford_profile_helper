@@ -58,8 +58,8 @@ class ListParagraphBehavior extends ParagraphsBehaviorBase {
       $build['su_list_view']['#markup'] = $empty_message;
     }
     if ($paragraph->getBehaviorSetting('list_paragraph', 'hide_empty')) {
-      // Unset everything, but keep the cache for any cache tags and keys.
-      $build = ['#cache' => $build['#cache']];
+      // D8CORE-6715: If the list is empty, the paragraph is uneditable and orphaned
+      unset($build['su_list_button'], $build['su_list_description'], $build['su_list_headline'], $build['su_list_view']);
     }
   }
 
