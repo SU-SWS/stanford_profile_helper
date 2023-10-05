@@ -31,6 +31,7 @@ var webpackConfig = {
   output: {
     path: config.distFolder,
     filename: '[name].js',
+    assetModuleFilename: '../assets/[name][ext][query]'
   },
   mode: config.isProd ? "production" : "development",
   resolve: {
