@@ -71,8 +71,15 @@ var webpackConfig = {
         ]
       },
       {
-        test: /\.(png|jpg|gif|svg|ttf|woff|woff2|eot)$/i,
-        type: "asset/resource"
+        test: /\.(png|jpg|gif|svg)$/i,
+        type: "asset"
+      },
+      {
+        test: /\.(woff|woff2|eot)$/i,
+        type: "asset",
+        generator: {
+          filename: '../assets/fonts/[name][ext][query]'
+        }
       }
     ]
   },

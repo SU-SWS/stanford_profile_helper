@@ -5,6 +5,7 @@ const Webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
+const FileManagerPlugin = require('filemanager-webpack-plugin');
 
 const seriesSrcSass = path.resolve(__dirname, "modules/stanford_events_series/lib/scss");
 
@@ -65,7 +66,7 @@ var webpackConfig = {
       },
       {
         test: /\.(png|jpg|gif|svg)$/i,
-        type: "asset/resource"
+        type: "asset"
       }
     ]
   },
@@ -73,6 +74,13 @@ var webpackConfig = {
     new FixStyleOnlyEntriesPlugin(),
     new MiniCssExtractPlugin({
       filename: '[name].css',
+    }),
+    new FileManagerPlugin({
+      events: {
+        onStart: {
+          delete: ['dist'],
+        },
+      },
     }),
   ],
   optimization: {
