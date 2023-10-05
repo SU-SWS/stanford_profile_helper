@@ -1,22 +1,36 @@
-const config = require("./scss/config");
+
+const path = require("path");
+const glob = require('glob')
 const Webpack = require("webpack");
-const AssetsWebpackPlugin = require('assets-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
+
+const config = {
+  isProd: process.env.NODE_ENV === "production",
+  hmrEnabled: process.env.NODE_ENV !== "production" && !process.env.NO_HMR,
+  distFolder: path.resolve(__dirname, "./dist/css"),
+  wdsPort: 3001,
+};
 
 var webpackConfig = {
   entry: {
-    "css/node_form": ["./scss/node_form.scss"],
-    "css/preview_paragraphs": ["./scss/preview_paragraphs.scss"],
-
+    "node_form": ["./scss/node_form.scss"],
+    "preview_paragraphs": ["./scss/preview_paragraphs.scss"],
   },
   output: {
     path: config.distFolder,
     filename: '[name].js',
-    publicPath: config.publicPath,
-    clean: true
   },
   mode: config.isProd ? "production" : "development",
+  resolve: {
+    alias: {
+      'decanter-assets': path.resolve('node_modules', 'decanter/core/src/img'),
+      'decanter-src': path.resolve('node_modules', 'decanter/core/src'),
+      '@fortawesome': path.resolve('node_modules', '@fortawesome'),
+      'fa-fonts': path.resolve('node_modules', '@fortawesome/fontawesome-free/webfonts')
+    }
+  },
   module: {
     rules: [
       {
@@ -33,15 +47,19 @@ var webpackConfig = {
         test: /\.(sa|sc|c)ss$/,
         use: [
           config.isProd ? { loader: MiniCssExtractPlugin.loader } : 'style-loader',
-          'css-loader',
-          'postcss-loader',
-          'sass-loader'
-        ],
+          {loader:'css-loader', options: {}},
+          {loader:'postcss-loader', options: {}},
+          {loader:'sass-loader', options: {}}
+        ]
+      },
+      {
+        test: /\.(png|jpg|gif|svg)$/i,
+        type: "asset/resource"
       }
     ]
   },
   plugins: [
-    new AssetsWebpackPlugin({path: config.distFolder}),
+    new FixStyleOnlyEntriesPlugin(),
     new MiniCssExtractPlugin({
       filename: '[name].css',
     }),
@@ -51,7 +69,6 @@ var webpackConfig = {
       new OptimizeCSSAssetsPlugin(),
     ]
   }
-
 };
 
 if (config.hmrEnabled) {

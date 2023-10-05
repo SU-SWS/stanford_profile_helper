@@ -48,7 +48,7 @@ news_node:
     base:
       dist/css/news-node.css: {}
   js:
-    dist/js/news-node.behaviors.js: {}
+    lib/js/news-node.js: {}
   dependencies:
     - core/jquery
     - core/drupal
@@ -59,7 +59,7 @@ news_list:
     base:
       dist/css/news-list-item.css: {}
   js:
-    dist/js/news-list.behaviors.js: {}
+    lib/js/news-list.js: {}
   dependencies:
     - core/jquery
 

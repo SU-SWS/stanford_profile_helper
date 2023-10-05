@@ -49,7 +49,7 @@ node:
     component:
       dist/css/stanford_person.node.css: {}
   js:
-    dist/js/stanford_person.script.js: {}
+    lib/js/stanford_person.js: {}
 
 views:
   version: VERSION
@@ -57,7 +57,7 @@ views:
     component:
       dist/css/stanford_person.views.css: {}
   js:
-    dist/js/stanford_person.script.js: {}
+    lib/js/stanford_person.js: {}
   dependencies:
     - core/jquery
     - core/drupal

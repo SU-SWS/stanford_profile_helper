@@ -1,17 +1,8 @@
-/**
- * Behavior Example that works with Webpack.
- *
- * @see: https://www.npmjs.com/package/drupal-behaviors-loader
- *
- * Webpack wraps everything in enclosures and hides the global variables from
- * scripts so special handling is needed.
- */
 
-export default {
+(($ ) => {
+  Drupal.behaviors.newsNode = {
+    attach: function attach(context, settings) {
 
-  // Attach Drupal Behavior.
-  attach(context, settings) {
-    (function ($) {
       if (settings?.stanfordNews?.hideSocial) {
         return;
       }
@@ -61,7 +52,6 @@ export default {
         onclick: prurl
       });
 
-    })(jQuery);
-  }
-
-};
+    },
+  };
+})(jQuery);
