@@ -110,7 +110,11 @@ function stanford_layout_paragraphs_paragraphs_behavior_info_alter(&$paragraphs_
  * Implements hook_views_pre_execute().
  */
 function stanford_layout_paragraphs_views_pre_execute(ViewExecutable $view) {
-  if (_stanford_layout_paragraphs_is_editing_layout_paragraphs()) {
+  $excluded_views = ['media_library'];
+  if (
+    _stanford_layout_paragraphs_is_editing_layout_paragraphs() &&
+    !in_array($view->id(), $excluded_views)
+  ) {
     $current_limit = $view->query->getLimit();
     if ($current_limit <= 0 || $current_limit > 5) {
       $view->query->setLimit(6);

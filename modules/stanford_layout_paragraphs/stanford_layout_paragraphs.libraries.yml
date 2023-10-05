@@ -5,7 +5,7 @@ layout_paragraphs:
       dist/css/node_form.css: { }
       dist/css/preview_paragraphs.css: { }
   js:
-    js/stanford_layout_paragraphs.layout_paragraphs.js: {}
+    lib/js/stanford_events.js: {}
 
 one_column:
   css:
