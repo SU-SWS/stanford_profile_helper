@@ -2,13 +2,13 @@
 @import '../../config';
 
 // Home page hack.
-.page-home {
-  .stanford-page {
-    &.title {
-      @include sr-only;
-    }
+body.front {
+  .node-stanford-page-title {
+    @include sr-only;
+    margin: 0
   }
 }
+
 
 // Styles for the full width page. Need to have margins on text elements and cards.
 // And need to have no margins on the full bleed banner images.

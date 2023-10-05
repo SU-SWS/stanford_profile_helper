@@ -60,7 +60,7 @@ jumpstart_ui:
     base:
       dist/css/jumpstart_ui.css: {}
   js:
-    dist/js/jumpstart_ui.js: {}
+    lib/js/jumpstart_ui.js: {}
   dependencies:
     - core/jquery
 
