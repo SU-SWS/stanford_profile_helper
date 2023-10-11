@@ -7,7 +7,6 @@ import Moment from "moment";
 
 import OutsideClickHandler from "./outside-click-handler";
 
-const dataFormatter = new Jsona()
 const islandName = 'event-calendar-island'
 
 const MonthNav = styled.nav`
@@ -66,7 +65,8 @@ const EventCalendar = () => {
   currentMonth.setSeconds(0);
 
   const fetchEvents = async () => {
-    const url = new URL(apiUrl);
+    const dataFormatter = new Jsona()
+    const url = new URL(apiUrl.startsWith('/') ? window.location.origin + apiUrl : apiUrl);
     const params = new DrupalJsonApiParams();
     params.addFilter('status', '1');
     params.addFilter('su_event_date_time.value', Math.floor(currentMonth.getTime() / 1000), '>=')
@@ -139,7 +139,10 @@ const EventCalendar = () => {
         </Button>
 
         {Moment(currentMonth).format('MMMM YY') != Moment(new Date()).format('MMMM YY') &&
-          <Button onClick={() => {setCurrentMonth(new Date()); nextButtonRef.current.focus()}}>
+          <Button onClick={() => {
+            setCurrentMonth(new Date());
+            nextButtonRef.current.focus()
+          }}>
             Today
           </Button>
         }
