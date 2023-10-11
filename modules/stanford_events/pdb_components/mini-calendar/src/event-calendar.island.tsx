@@ -66,7 +66,7 @@ const Table = styled.table`
 `
 
 const EventCalendar = () => {
-  const apiUrl = '/jsonapi/node/stanford_event';
+  const apiUrl = (process.env.LOCAL_DRUPAL ?? '') + '/jsonapi/node/stanford_event';
   const nextButtonRef = useRef(null);
 
   const [events, setEvents] = useState([])
@@ -209,6 +209,7 @@ const Dialog = styled.dialog`
   border-radius: 4px;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 5px -3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px, rgba(0, 0, 0, 0.12) 0px 3px 14px 2px;
   z-index: 10;
+  text-align: left;
 `
 
 const CloseButton = styled.button`

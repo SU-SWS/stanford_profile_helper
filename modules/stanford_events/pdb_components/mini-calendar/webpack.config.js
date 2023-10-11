@@ -1,6 +1,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
+const Dotenv = require('dotenv-webpack');
 
 module.exports = ({ dev, prod }) => {
   const isDev = dev === true
@@ -85,6 +86,7 @@ module.exports = ({ dev, prod }) => {
         publicPath: isDev ? '/' : '/islands',
         filename: isDev ? 'index.html' : '../index.html',
       }),
+      new Dotenv({path: isDev ? './.env.local': '', silent: true})
     ],
     stats: 'errors-warnings',
     optimization: {
