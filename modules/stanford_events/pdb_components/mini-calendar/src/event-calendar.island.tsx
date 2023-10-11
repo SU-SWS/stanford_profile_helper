@@ -13,11 +13,12 @@ const MonthNav = styled.nav`
   display: flex;
   justify-content: space-between;
 `
-const Button = styled.button`
+const Button = styled.button<{ $isTile?: boolean }>`
   background: #f4f4f4;
   color: #b1040e;
   cursor: pointer;
   padding: 10px 5px;
+  width: ${props => props.$isTile ? '100%' : 'auto'};
 
   &:hover, &:focus {
     background: #2e2d29;
@@ -49,6 +50,18 @@ const List = styled.ul`
       color: #2e2d29;
       text-decoration: underline;
     }
+  }
+`
+
+const Table = styled.table`
+  width: 100%;
+  border-spacing: 10px;
+  border-collapse: separate;
+
+  td, th {
+    padding: 0;
+    text-align: center;
+    width: 14.2%;
   }
 `
 
@@ -153,8 +166,13 @@ const EventCalendar = () => {
         </Button>
       </MonthNav>
 
-      <table>
-        <caption aria-live="polite">{Moment(currentMonth).format('MMMM YYYY')}</caption>
+      <Table>
+        <caption
+          aria-live="polite"
+          aria-current={Moment(currentMonth).format('MMMM YYYY') === Moment().format('MMMM YYYY') ? 'date' : undefined}
+        >
+          {Moment(currentMonth).format('MMMM YYYY')}
+        </caption>
         <thead>
         <th aria-label="Sunday">Sun</th>
         <th aria-label="Monday">Mon</th>
@@ -181,7 +199,7 @@ const EventCalendar = () => {
           </tr>
         ))}
         </tbody>
-      </table>
+      </Table>
     </div>
   )
 }
@@ -228,7 +246,11 @@ const DayTile = ({date, events}) => {
   if (dayEvents.length) {
     return (
       <OutsideClickHandler onOutsideFocus={closeDialog}>
-        <Button onClick={openDialog} aria-label={Moment(date).format('MMM Do YYYY')}>
+        <Button
+          $isTile
+          onClick={openDialog} aria-label={Moment(date).format('MMM Do YYYY')}
+          aria-current={date.toLocaleDateString() === new Date().toLocaleDateString() ? 'date' : undefined}
+        >
           {date.getDate()}
         </Button>
 
