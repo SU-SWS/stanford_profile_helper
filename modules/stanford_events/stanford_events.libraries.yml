@@ -48,7 +48,7 @@ event_node:
       dist/css/stanford_events.node.css: {}
 
   js:
-    dist/js/stanford_events.node.behaviors.js: {}
+    lib/js/stanford_events.js: {}
   dependencies:
     - core/jquery
     - core/drupal
@@ -60,7 +60,7 @@ event_views:
       dist/css/stanford_events.views.css: {}
       dist/css/stanford_events.event-filter-menu.css: {}
   js:
-    dist/js/stanford_events.node.behaviors.js: {}
+    lib/js/stanford_events.js: {}
   dependencies:
     - core/jquery
 
