@@ -13,17 +13,21 @@ const MonthNav = styled.nav`
   display: flex;
   justify-content: space-between;
 `
-const Button = styled.button<{ $isTile?: boolean }>`
+const Button = styled.button`
   background: #f4f4f4;
   color: #b1040e;
   cursor: pointer;
   padding: 10px 5px;
-  width: ${props => props.$isTile ? '100%' : 'auto'};
+  transition: background-color .25s ease-in-out,color .25s ease-in-out;
 
   &:hover, &:focus {
     background: #2e2d29;
     color: #ffffff;
   }
+`
+
+const TileButton = styled(Button)`
+  width: 100%;
 `
 
 const List = styled.ul`
@@ -210,6 +214,14 @@ const Dialog = styled.dialog`
   box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 5px -3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px, rgba(0, 0, 0, 0.12) 0px 3px 14px 2px;
   z-index: 10;
   text-align: left;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .3s;
+
+  &.open {
+    max-height: 100%;
+    overflow-y: scroll;
+  }
 `
 
 const CloseButton = styled.button`
@@ -230,6 +242,7 @@ const CloseButton = styled.button`
 `
 
 const DayTile = ({date, events}) => {
+  const [dialogOpen, setDialogOpen] = useState(false);
   const dayEvents = events.filter(event => {
     const start = new Date(event.su_event_date_time.value)
     return start.toLocaleDateString() === date.toLocaleDateString()
@@ -238,24 +251,29 @@ const DayTile = ({date, events}) => {
 
   const closeDialog = () => {
     dialogRef.current?.close()
+    setDialogOpen(false);
   }
 
   const openDialog = () => {
     dialogRef.current?.show()
+    setDialogOpen(true);
   }
 
   if (dayEvents.length) {
     return (
       <OutsideClickHandler onOutsideFocus={closeDialog}>
-        <Button
-          $isTile
-          onClick={openDialog} aria-label={Moment(date).format('MMM Do YYYY')}
+        <TileButton
+          onClick={openDialog}
+          aria-label={Moment(date).format('MMM Do YYYY')}
           aria-current={date.toLocaleDateString() === new Date().toLocaleDateString() ? 'date' : undefined}
         >
           {date.getDate()}
-        </Button>
+        </TileButton>
 
-        <Dialog ref={dialogRef} aria-label={Moment(date).format('MMM Do YYYY') + ' Events'}>
+        <Dialog
+          className={dialogOpen ? 'open' : 'closed'} ref={dialogRef}
+          aria-label={Moment(date).format('MMM Do YYYY') + ' Events'}
+        >
           <CloseButton onClick={closeDialog}>
             <i className="far fa-window-close"/>
             <span className="visually-hidden">Close Dialog</span>
