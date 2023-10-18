@@ -63,3 +63,17 @@ function stanford_intranet_update_8002() {
   \Drupal::moduleHandler()->loadInclude('media', 'install');
   media_install();
 }
+
+/**
+ * Update Role ids state for group access.
+ */
+function stanford_intranet_update_8003() {
+  $roles = array_keys(user_role_names());
+  $state = \Drupal::state()->get('stanford_intranet.rids', []);
+  foreach (array_keys($state) as $id) {
+    if (!in_array($id, $roles)) {
+      unset($state[$id]);
+    }
+  }
+  \Drupal::state()->set('stanford_intranet.rids', $state);
+}

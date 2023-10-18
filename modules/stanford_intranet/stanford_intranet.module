@@ -214,12 +214,14 @@ function stanford_intranet_node_access_records(NodeInterface $node) {
  * Implements hook_node_grants().
  */
 function stanford_intranet_node_grants(AccountInterface $account, $op) {
-  $rids = \Drupal::state()->get('stanford_intranet.rids');
+  $rids = \Drupal::state()->get('stanford_intranet.rids', []);
 
   $gids = [];
   $roles = $account->getRoles();
   foreach ($roles as $role_name) {
-    $gids[] = $rids[$role_name];
+    if (isset($rids[$role_name])) {
+      $gids[] = $rids[$role_name];
+    }
   }
 
   return [
@@ -232,10 +234,25 @@ function stanford_intranet_node_grants(AccountInterface $account, $op) {
  * Implements hook_ENTITY_TYPE_insert().
  */
 function stanford_intranet_user_role_insert(RoleInterface $role) {
-  $rids = array_flip(\Drupal::state()->get('stanford_intranet.rids', []));
-  ksort($rids);
-  $rids[] = $role->id();
-  \Drupal::state()->set('stanford_intranet.rids', array_flip($rids));
+  $state = \Drupal::state()->get('stanford_intranet.rids', []);
+  $state = array_flip($state);
+
+  foreach (array_keys(user_role_names()) as $role_id) {
+    if (!in_array($role_id, $state)) {
+      $state[] = $role_id;
+    }
+  }
+
+  \Drupal::state()->set('stanford_intranet.rids', array_flip($state));
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_predelete().
+ */
+function stanford_intranet_user_role_predelete(RoleInterface $role){
+  $state = \Drupal::state()->get('stanford_intranet.rids', []);
+  unset($state[$role->id()]);
+  \Drupal::state()->set('stanford_intranet.rids', $state);
 }
 
 /**
