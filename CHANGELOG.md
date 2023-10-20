@@ -1,5 +1,16 @@
 # Stanford Profile Helper
 
+9.3.5
+--------------------------------------------------------------------------------
+_Release Date: 2023-10-20_
+
+- D8CORE-6976: updating the Decanter version (#278)
+- Adjust intranet roles when deleting roles
+- Update layout paragraphs node grid (#276)
+- D8CORE-6968 Fix gap and update all webpack setups (#275)
+- D8CORE-6715 Better hiding of list paragraph (#274)
+- D8CORE-5952: removed pipe from past events on node page (#273
+
 9.3.4
 --------------------------------------------------------------------------------
 _Release Date: 2023-09-25_
