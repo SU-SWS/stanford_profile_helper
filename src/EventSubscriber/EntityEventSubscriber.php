@@ -21,6 +21,7 @@ use Drupal\core_event_dispatcher\Event\Entity\EntityPresaveEvent;
 use Drupal\core_event_dispatcher\Event\Entity\EntityUpdateEvent;
 use Drupal\field\FieldStorageConfigInterface;
 use Drupal\menu_link_content\MenuLinkContentInterface;
+use Drupal\next\Entity\NextSiteInterface;
 use Drupal\node\NodeInterface;
 use Drupal\stanford_profile_helper\StanfordDefaultContentInterface;
 use Drupal\user\RoleInterface;
@@ -157,6 +158,40 @@ class EntityEventSubscriber implements EventSubscriberInterface {
       !$node->get('field_menulink')->isEmpty()
     ) {
       Cache::invalidateTags(['stanford_profile_helper:menu_links']);
+    }
+  }
+
+  /**
+   * When a new Next site is created, create all Next node entity type configs.
+   *
+   * @param \Drupal\next\Entity\NextSiteInterface $next_site
+   *   Created next site config.
+   */
+  protected static function insertNextSite(NextSiteInterface $next_site): void {
+    $next_storage = \Drupal::entityTypeManager()
+      ->getStorage('next_entity_type_config');
+    $node_types = \Drupal::entityTypeManager()
+      ->getStorage('node_type')
+      ->loadMultiple();
+
+    // Create each of the node type bundle configs.
+    foreach (array_keys($node_types) as $node_bundle) {
+
+      // Make sure one doesn't already exist.
+      if (!$next_storage->load("node.$node_bundle")) {
+        $next_storage->create([
+          'id' => "node.$node_bundle",
+          'site_resolver' => 'site_selector',
+          'revalidator' => 'path',
+          'configuration' => [
+            'sites' => [$next_site->id() => $next_site->id()],
+          ],
+          'revalidator_configuration' => [
+            'revalidate_page' => TRUE,
+            'additional_paths' => FALSE,
+          ],
+        ])->save();
+      }
     }
   }
 

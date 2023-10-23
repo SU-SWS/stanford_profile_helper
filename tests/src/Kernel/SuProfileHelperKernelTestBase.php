@@ -44,6 +44,7 @@ abstract class SuProfileHelperKernelTestBase extends KernelTestBase {
     'paragraphs',
     'options',
     'file',
+    'next',
   ];
 
   /**
