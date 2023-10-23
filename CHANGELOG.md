@@ -1,5 +1,11 @@
 # Stanford Profile Helper
 
+9.4.0
+--------------------------------------------------------------------------------
+_Release Date: 2023-10-23_
+
+- New Next Preview plugin for draft mode and automatic entity type creation.
+
 9.3.5
 --------------------------------------------------------------------------------
 _Release Date: 2023-10-20_
