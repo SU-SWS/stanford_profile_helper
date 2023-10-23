@@ -59,6 +59,7 @@
         "drupal/mathjax": "^4.0",
         "drupal/menu_block": "^1.10",
         "drupal/name": "^1.0@RC",
+        "drupal/next": ">=1.6",
         "drupal/paragraphs": "^1.15",
         "drupal/pathauto": "^1.11",
         "drupal/pdb": "^1.0",

@@ -23,12 +23,11 @@ class SimplePreview extends PreviewUrlGeneratorBase {
    * {@inheritdoc}
    */
   public function generate(NextSiteInterface $next_site, EntityInterface $entity, string $resource_version = NULL): ?Url {
-    $query = [];
-    $query['slug'] = $entity->toUrl()->toString();
-    $query['secret'] = $next_site->getPreviewSecret();
-
     return Url::fromUri($next_site->getPreviewUrl(), [
-      'query' => $query,
+      'query' => [
+        'slug' => $entity->toUrl()->toString(),
+        'secret' => $next_site->getPreviewSecret(),
+      ],
     ]);
   }
 

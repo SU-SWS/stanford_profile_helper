@@ -7,7 +7,10 @@ use Drupal\config_pages\Entity\ConfigPagesType;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\menu_link_content\Entity\MenuLinkContent;
+use Drupal\next\Entity\NextEntityTypeConfig;
+use Drupal\next\Entity\NextSite;
 use Drupal\node\Entity\Node;
+use Drupal\node\Entity\NodeType;
 use Drupal\path_alias\Entity\PathAlias;
 use Drupal\redirect\Entity\Redirect;
 use Drupal\Tests\stanford_profile_helper\Kernel\SuProfileHelperKernelTestBase;
@@ -165,6 +168,18 @@ class EntityEventSubscriberTest extends SuProfileHelperKernelTestBase {
 
     $this->assertEquals('https://foo.bar', \Drupal::state()
       ->get('xmlsitemap_base_url'));
+  }
+
+  public function testNextSite() {
+    $this->assertEmpty(NextEntityTypeConfig::loadMultiple());
+    NextSite::create([
+      'label' => 'Blog',
+      'id' => 'blog',
+      'base_url' => 'https://blog.com',
+      'preview_url' => 'https://blog.com/api/preview',
+      'preview_secret' => 'one'
+    ])->save();
+    $this->assertNotEmpty(NextEntityTypeConfig::loadMultiple());
   }
 
 }

@@ -174,7 +174,10 @@ class EntityEventSubscriber implements EventSubscriberInterface {
       ->getStorage('node_type')
       ->loadMultiple();
 
+    // Create each of the node type bundle configs.
     foreach (array_keys($node_types) as $node_bundle) {
+
+      // Make sure one doesn't already exist.
       if (!$next_storage->load("node.$node_bundle")) {
         $next_storage->create([
           'id' => "node.$node_bundle",
