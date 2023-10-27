@@ -1,0 +1,79 @@
+id: cap_orgs
+migration_tags: {}
+label: 'CAP Organizations'
+deriver: Drupal\stanford_person_importer\Plugin\migrate\OrgCodeDeriver
+migration_group: su_stanford_person
+source:
+  authentication:
+    plugin: oauth2
+    base_uri: 'https://authz.stanford.edu'
+    token_url: /oauth/token
+    grant_type: client_credentials
+    client_id: '[client_id]'
+    client_secret: '[client_secret]'
+  urls:
+    - https://api.stanford.edu/cap/v1/orgs/AA00
+  track_changes: true
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: json
+  headers:
+    Accept: 'application/json; charset=utf-8'
+    Content-Type: application/json
+  orphan_action: delete
+  ids:
+    alias:
+      type: string
+  item_selector: children
+  constants:
+    vid: cap_org_codes
+    code_beginning: '('
+    code_ending: ')'
+  fields:
+    -
+      name: alias
+      label: alias
+      selector: alias
+    -
+      name: children
+      label: children
+      selector: children
+    -
+      name: name
+      label: name
+      selector: name
+    -
+      name: orgCodes
+      label: orgCodes
+      selector: orgCodes
+    -
+      name: type
+      label: type
+      selector: type
+process:
+  codes:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: orgCodes
+    -
+      plugin: concat
+      source: orgCodes
+      delimiter: ', '
+  code_title:
+    plugin: concat
+    source:
+      - constants/code_beginning
+      - '@codes'
+      - constants/code_ending
+  name:
+    plugin: concat
+    source:
+      - name
+      - '@code_title'
+    delimiter: ' '
+  vid: constants/vid
+  su_cap_org_code: orgCodes
+destination:
+  plugin: 'entity:taxonomy_term'
+migration_dependencies: null

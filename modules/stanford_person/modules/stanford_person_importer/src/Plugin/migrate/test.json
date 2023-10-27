@@ -1,0 +1,403 @@
+[
+  {
+    "alias": "department-of-athletics-physical-education-and-recreation",
+    "children": [
+      {
+        "alias": "department-of-athletics-physical-education-and-recreation\/external-relations",
+        "browsable": false,
+        "children": [
+          {
+            "alias": "department-of-athletics-physical-education-and-recreation\/external-relations\/student-affairs",
+            "browsable": false,
+            "name": "Student Affairs",
+            "onboarding": false,
+            "orgCodes": [
+              "LLDL"
+            ],
+            "type": "DIVISION"
+          }
+        ],
+        "name": "External Relations",
+        "onboarding": false,
+        "orgCodes": [
+          "LKJG",
+          "LKPZ",
+          "LLKE"
+        ],
+        "type": "DEPARTMENT"
+      },
+      {
+        "alias": "department-of-athletics-physical-education-and-recreation\/daper-departmentwide-operations",
+        "browsable": false,
+        "name": "DAPER Departmentwide Operations",
+        "onboarding": true,
+        "orgCodes": [
+          "LAGT"
+        ],
+        "type": "DEPARTMENT"
+      },
+      {
+        "alias": "department-of-athletics-physical-education-and-recreation\/mens-sport-programs",
+        "browsable": false,
+        "name": "Men's Sport Programs",
+        "onboarding": false,
+        "orgCodes": [
+          "LCWB",
+          "LBHR",
+          "LAUF",
+          "LBVD",
+          "LDCU",
+          "LEDS",
+          "LDQG",
+          "LBAY",
+          "LCBW",
+          "LERE",
+          "LCPM",
+          "LDWZ",
+          "LCIP",
+          "LDJN"
+        ],
+        "type": "DEPARTMENT"
+      },
+      {
+        "alias": "department-of-athletics-physical-education-and-recreation\/other-daper-administration",
+        "browsable": false,
+        "name": "Other DAPER Administration",
+        "onboarding": false,
+        "orgCodes": [
+          "LAJE"
+        ],
+        "type": "DEPARTMENT"
+      },
+      {
+        "alias": "department-of-athletics-physical-education-and-recreation\/business-and-operations",
+        "browsable": false,
+        "children": [
+          {
+            "alias": "department-of-athletics-physical-education-and-recreation\/business-and-operations\/driving-range",
+            "browsable": false,
+            "name": "Driving Range",
+            "onboarding": false,
+            "orgCodes": [
+              "LULT"
+            ],
+            "type": "DIVISION"
+          },
+          {
+            "alias": "department-of-athletics-physical-education-and-recreation\/business-and-operations\/home-game-management",
+            "browsable": false,
+            "name": "Home Game Management",
+            "onboarding": false,
+            "orgCodes": [
+              "LSQQ"
+            ],
+            "type": "DIVISION"
+          },
+          {
+            "alias": "department-of-athletics-physical-education-and-recreation\/business-and-operations\/golf-training-complex",
+            "browsable": false,
+            "name": "Golf Training Complex",
+            "onboarding": false,
+            "orgCodes": [
+              "LUTC"
+            ],
+            "type": "DIVISION"
+          }
+        ],
+        "name": "Business and Operations",
+        "onboarding": false,
+        "orgCodes": [
+          "LTKV",
+          "LOGF",
+          "LTYH",
+          "LTEC",
+          "LSJX",
+          "LORC",
+          "LTAA",
+          "LTAE"
+        ],
+        "type": "DEPARTMENT"
+      },
+      {
+        "alias": "department-of-athletics-physical-education-and-recreation\/coed-sports",
+        "browsable": false,
+        "name": "Coed Sports",
+        "onboarding": false,
+        "orgCodes": [
+          "LJVU"
+        ],
+        "type": "DEPARTMENT"
+      },
+      {
+        "alias": "department-of-athletics-physical-education-and-recreation\/directors-office",
+        "browsable": false,
+        "name": "Director's Office",
+        "onboarding": false,
+        "orgCodes": [
+          "LAHO"
+        ],
+        "type": "DEPARTMENT"
+      },
+      {
+        "alias": "department-of-athletics-physical-education-and-recreation\/athletic-services",
+        "browsable": false,
+        "name": "Athletic Services",
+        "onboarding": false,
+        "orgCodes": [
+          "LXHU",
+          "LXBB"
+        ],
+        "type": "DEPARTMENT"
+      },
+      {
+        "alias": "department-of-athletics-physical-education-and-recreation\/swa",
+        "browsable": false,
+        "name": "SWA",
+        "onboarding": false,
+        "orgCodes": [
+          "LAIJ"
+        ],
+        "type": "DEPARTMENT"
+      },
+      {
+        "alias": "department-of-athletics-physical-education-and-recreation\/physical-education-and-recreation",
+        "browsable": false,
+        "children": [
+          {
+            "alias": "department-of-athletics-physical-education-and-recreation\/physical-education-and-recreation\/wellness-programs",
+            "browsable": false,
+            "name": "Wellness Programs",
+            "onboarding": false,
+            "orgCodes": [
+              "LVBW"
+            ],
+            "type": "DIVISION"
+          },
+          {
+            "alias": "department-of-athletics-physical-education-and-recreation\/physical-education-and-recreation\/competitive-sports",
+            "browsable": false,
+            "name": "Competitive Sports",
+            "onboarding": false,
+            "orgCodes": [
+              "LCOM"
+            ],
+            "type": "DIVISION"
+          },
+          {
+            "alias": "department-of-athletics-physical-education-and-recreation\/physical-education-and-recreation\/rec-wellness-general",
+            "browsable": false,
+            "name": "Rec & Wellness General",
+            "onboarding": false,
+            "orgCodes": [
+              "LREC"
+            ],
+            "type": "DIVISION"
+          },
+          {
+            "alias": "department-of-athletics-physical-education-and-recreation\/physical-education-and-recreation\/rec-programs-general",
+            "browsable": false,
+            "name": "Rec Programs General",
+            "onboarding": false,
+            "orgCodes": [
+              "LRGE"
+            ],
+            "type": "DIVISION"
+          },
+          {
+            "alias": "department-of-athletics-physical-education-and-recreation\/physical-education-and-recreation\/recreation-services",
+            "browsable": false,
+            "name": "Recreation Services",
+            "onboarding": false,
+            "orgCodes": [
+              "LRSV"
+            ],
+            "type": "DIVISION"
+          },
+          {
+            "alias": "department-of-athletics-physical-education-and-recreation\/physical-education-and-recreation\/summer-camp-administration",
+            "browsable": false,
+            "name": "Summer Camp Administration",
+            "onboarding": false,
+            "orgCodes": [
+              "LWNP"
+            ],
+            "type": "DIVISION"
+          },
+          {
+            "alias": "department-of-athletics-physical-education-and-recreation\/physical-education-and-recreation\/fitness-centers",
+            "browsable": false,
+            "name": "Fitness Centers",
+            "onboarding": false,
+            "orgCodes": [
+              "LVAF"
+            ],
+            "type": "DIVISION"
+          },
+          {
+            "alias": "department-of-athletics-physical-education-and-recreation\/physical-education-and-recreation\/hhp-general",
+            "browsable": false,
+            "name": "HHP General",
+            "onboarding": false,
+            "orgCodes": [
+              "LHGE"
+            ],
+            "type": "DIVISION"
+          },
+          {
+            "alias": "department-of-athletics-physical-education-and-recreation\/physical-education-and-recreation\/adventure-programs",
+            "browsable": false,
+            "name": "Adventure Programs",
+            "onboarding": false,
+            "orgCodes": [
+              "LADV"
+            ],
+            "type": "DIVISION"
+          },
+          {
+            "alias": "department-of-athletics-physical-education-and-recreation\/physical-education-and-recreation\/leadership-institute",
+            "browsable": false,
+            "name": "Leadership Institute",
+            "onboarding": false,
+            "orgCodes": [
+              "LLED"
+            ],
+            "type": "DIVISION"
+          }
+        ],
+        "name": "Physical Education and Recreation",
+        "onboarding": false,
+        "orgCodes": [
+          "LVTK",
+          "LVRC",
+          "LWGW",
+          "LVMR",
+          "LWAD"
+        ],
+        "type": "DEPARTMENT"
+      },
+      {
+        "alias": "department-of-athletics-physical-education-and-recreation\/womens-sport-programs",
+        "browsable": false,
+        "children": [
+          {
+            "alias": "department-of-athletics-physical-education-and-recreation\/womens-sport-programs\/womens-fencing-program",
+            "browsable": false,
+            "name": "Women's Fencing Program",
+            "onboarding": false,
+            "orgCodes": [
+              "LIAS"
+            ],
+            "type": "DIVISION"
+          },
+          {
+            "alias": "department-of-athletics-physical-education-and-recreation\/womens-sport-programs\/womens-squash-program",
+            "browsable": false,
+            "name": "Women's Squash Program",
+            "onboarding": false,
+            "orgCodes": [
+              "LJWS"
+            ],
+            "type": "DIVISION"
+          }
+        ],
+        "name": "Women's Sport Programs",
+        "onboarding": false,
+        "orgCodes": [
+          "LFEQ",
+          "LFLJ",
+          "LFSC",
+          "LFYV",
+          "LGFO",
+          "LGMH",
+          "LGTA",
+          "LGZT",
+          "LHGM",
+          "LHNF",
+          "LHTY",
+          "LIHK",
+          "LIOD",
+          "LIUW",
+          "LJII"
+          "LJKA",
+        ],
+        "type": "DEPARTMENT"
+      },
+      {
+        "alias": "department-of-athletics-physical-education-and-recreation\/intercollegiate-sports",
+        "browsable": false,
+        "name": "Intercollegiate Sports",
+        "onboarding": false,
+        "orgCodes": [
+          "LYIS",
+          "LYBZ"
+        ],
+        "type": "DEPARTMENT"
+      }
+    ],
+    "name": "Department of Athletics, Physical Education and Recreation",
+    "orgCodes": [
+      "LAAA"
+    ],
+    "type": "SCHOOL",
+    "authentication": {
+      "plugin": "oauth2",
+      "base_uri": "https:\/\/authz.stanford.edu",
+      "token_url": "\/oauth\/token",
+      "grant_type": "client_credentials",
+      "client_id": "drupal-hackathon",
+      "client_secret": "WP3q9Cdytt2K@SD"
+    },
+    "urls": [
+      "https:\/\/api.stanford.edu\/cap\/v1\/orgs\/AA00"
+    ],
+    "track_changes": true,
+    "plugin": "url",
+    "data_fetcher_plugin": "http",
+    "data_parser_plugin": "json",
+    "headers": {
+      "Accept": "application\/json; charset=utf-8",
+      "Content-Type": "application\/json"
+    },
+    "orphan_action": "delete",
+    "ids": {
+      "alias": {
+        "type": "string"
+      }
+    },
+    "item_selector": "children",
+    "constants": {
+      "vid": "cap_org_codes",
+      "code_beginning": "(",
+      "code_ending": ")"
+    },
+    "fields": [
+      {
+        "name": "alias",
+        "label": "alias",
+        "selector": "alias"
+      },
+      {
+        "name": "children",
+        "label": "children",
+        "selector": "children"
+      },
+      {
+        "name": "name",
+        "label": "name",
+        "selector": "name"
+      },
+      {
+        "name": "orgCodes",
+        "label": "orgCodes",
+        "selector": "orgCodes"
+      },
+      {
+        "name": "type",
+        "label": "type",
+        "selector": "type"
+      }
+    ],
+    "current_feed_url": "https:\/\/api.stanford.edu\/cap\/v1\/orgs\/AA00",
+    "target_bundles": []
+  }
+]

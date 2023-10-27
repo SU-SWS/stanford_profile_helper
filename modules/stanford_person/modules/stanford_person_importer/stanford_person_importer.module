@@ -84,10 +84,10 @@ function stanford_person_importer_config_pages_presave(ConfigPagesInterface $ent
 
     // No org codes exist, lets load them up.
     if (empty($terms)) {
-      \Drupal::service('stanford_person_importer.cap')
-        ->setClientId($entity->get('su_person_cap_username')->getString())
-        ->setClientSecret($entity->get('su_person_cap_password')->getString())
-        ->updateOrganizations();
+//      \Drupal::service('stanford_person_importer.cap')
+//        ->setClientId($entity->get('su_person_cap_username')->getString())
+//        ->setClientSecret($entity->get('su_person_cap_password')->getString())
+//        ->updateOrganizations();
     }
 
     // Invalidate the migration cache since some of the org codes or workgroups
