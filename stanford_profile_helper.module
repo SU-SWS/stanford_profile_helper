@@ -1119,3 +1119,10 @@ function _stanford_profile_is_decoupled(): bool {
   return (bool) \Drupal::state()
     ->get('stanford_profile_helper.decoupled', FALSE);
 }
+
+/**
+ * Implements hook_search_api_processor_info_alter().
+ */
+function stanford_profile_helper_search_api_processor_info_alter(array &$processors) {
+  $processors['custom_value']['class'] = '\Drupal\stanford_profile_helper\Plugin\search_api\processor\CustomValue';
+}
