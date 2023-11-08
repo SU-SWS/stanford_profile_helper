@@ -8,14 +8,16 @@
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Block\BlockPluginInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
-use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Extension\Extension;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
+use Drupal\Core\Render\Element;
 use Drupal\Core\Serialization\Yaml;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Site\Settings;
@@ -25,8 +27,48 @@ use Drupal\search_api\IndexInterface;
 use Drupal\stanford_profile_helper\StanfordProfileHelper;
 use Drupal\taxonomy\TermInterface;
 use Drupal\taxonomy_menu\Plugin\Menu\TaxonomyMenuMenuLink;
-use Drupal\Core\Render\Element;
 use Drupal\views\ViewEntityInterface;
+
+/**
+ * Implements hook_cron().
+ */
+function stanford_profile_helper_cron() {
+  if (!\Drupal::hasService('config_pages.loader')) {
+    return;
+  }
+  /** @var \Drupal\config_pages\ConfigPagesLoaderServiceInterface $config_pages */
+  $config_pages = \Drupal::service('config_pages.loader');
+
+  $canonical_url = $config_pages->getValue('stanford_basic_site_settings', 'su_site_url', 0, 'value');
+  $owners = $config_pages->getValue('stanford_basic_site_settings', 'su_site_owner_contact', [], 'value');
+  $site_managers = $config_pages->getValue('stanford_basic_site_settings', 'su_site_tech_contact', [], 'value');
+  $ally = $config_pages->getValue('stanford_basic_site_settings', 'su_site_a11y_contact', [], 'value');
+  $org_ids = $config_pages->getValue('stanford_basic_site_settings', 'su_site_org', [], 'target_id');
+  $renewal_date = $config_pages->getValue('stanford_basic_site_settings', 'su_site_renewal_due', 0, 'value');
+
+  $orgs = \Drupal::entityTypeManager()
+    ->getStorage('taxonomy_term')
+    ->loadMultiple($org_ids);
+
+  foreach ($orgs as &$org) {
+    $org = $org->label();
+  }
+
+  $site_information = [
+    'siteName' => \Drupal::config('system.site')->get('name'),
+    'canonicalUrl' => $canonical_url,
+    'owners' => $owners ?: [],
+    'siteManagers' => $site_managers ?: [],
+    'accessibility' => $ally ?: [],
+    'organizations' => array_values($orgs) ?: [],
+    'renewalDate' => $renewal_date,
+  ];
+  $uri = 'private://stanford';
+  $directory = \Drupal::service('stream_wrapper_manager')->normalizeUri($uri);
+  $file_system = \Drupal::service('file_system');
+  $file_system->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS);
+  $file_system->saveData(json_encode($site_information, JSON_PRETTY_PRINT), "$directory/site-info.json", FileSystemInterface::EXISTS_REPLACE);
+}
 
 /**
  * Implements hook_cache_flush().

@@ -368,3 +368,17 @@ function stanford_profile_helper_post_update_9001() {
     ->set('types', [])
     ->save();
 }
+
+/**
+ * Create new ultimate cron job.
+ */
+function stanford_profile_helper_post_update_create_cron(&$sandbox) {
+  \Drupal::entityTypeManager()
+    ->getStorage('ultimate_cron_job')
+    ->create([
+      'id' => 'stanford_profile_helper_cron',
+      'label' => 'Stanford Profile Helper Cron',
+      'module' => 'stanford_profile_helper',
+      'callback' => 'stanford_profile_helper_cron',
+    ])->save();
+}
