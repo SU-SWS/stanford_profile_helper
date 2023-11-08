@@ -1126,3 +1126,12 @@ function _stanford_profile_is_decoupled(): bool {
 function stanford_profile_helper_search_api_processor_info_alter(array &$processors) {
   $processors['custom_value']['class'] = '\Drupal\stanford_profile_helper\Plugin\search_api\processor\CustomValue';
 }
+
+/**
+ * Implements hook_entity_view_display_alter().
+ */
+function stanford_profile_helper_entity_view_display_alter(EntityViewDisplayInterface $display, array $context) {
+  if ($context['view_mode'] == 'search_indexing' && $context['entity_type'] == 'node') {
+    $display->removeComponent('title');
+  }
+}
