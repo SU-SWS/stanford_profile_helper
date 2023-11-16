@@ -6,11 +6,13 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\search_api\Processor\FieldsProcessorPluginBase;
 
 /**
+ * Search API processor to remove only the desired html tags.
+ *
  * @SearchApiProcessor(
  *    id = "remove_tags",
  *    label = @Translation("Remove Specific HTML Tags"),
- *    description = @Translation("Similiar to 'strip_tags', but choose only
- *   which tags to strip from fields."), stages = {
+ *    description = @Translation("Similiar to 'strip_tags', but choose only which tags to strip from fields."),
+ *    stages = {
  *      "preprocess_index" = 0,
  *    }
  *  )
@@ -70,9 +72,9 @@ class RemoveTags extends FieldsProcessorPluginBase {
     $text = trim(preg_replace('/<!--(.*)-->/Uis', '', $text));
 
     preg_match_all('/<(\w+)/', $text, $tags_matched);
-    $text_tags = $tags_matched[1];
+    $text_tags = $tags_matched[1] ?? [];
     $keep_tags = array_diff($text_tags, $this->configuration['tags']);
-    $value = strip_tags($text, $keep_tags);
+    $value = trim(strip_tags($text, $keep_tags));
   }
 
 }

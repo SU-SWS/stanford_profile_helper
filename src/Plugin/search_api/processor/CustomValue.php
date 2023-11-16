@@ -16,7 +16,7 @@ class CustomValue extends SearchApiCustomValue {
   /**
    * {@inheritdoc}
    */
-  function getPropertyDefinitions(DatasourceInterface $datasource = NULL) {
+  public function getPropertyDefinitions(DatasourceInterface $datasource = NULL) {
     $properties = [];
 
     if (!$datasource) {
@@ -56,7 +56,7 @@ class CustomValue extends SearchApiCustomValue {
         continue;
       }
 
-      $field_value = $token->replace($config['value'], $data, ['clear' => TRUE]);
+      $field_value = trim($token->replace($config['value'], $data, ['clear' => TRUE]));
       if ($field_value !== '') {
         $field->addValue($field_value);
       }
