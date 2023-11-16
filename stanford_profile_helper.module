@@ -421,7 +421,9 @@ function stanford_profile_helper_help_section_info_alter(array &$info) {
 function stanford_profile_helper_preprocess_input__submit__paragraph_action(&$variables) {
   // Change the top banner field button from "Add @type" to "Add Top @type".
   if ($variables['element']['#name'] == 'su_page_banner_stanford_banner_add_more') {
-    $variables['attributes']['value'] = t('Add Top @type', $variables['attributes']['value']->getArguments());
+    if (!is_string($variables['attributes']['value'])) {
+      $variables['attributes']['value'] = t('Add Top @type', $variables['attributes']['value']->getArguments());
+    }
   }
 }
 
@@ -1118,4 +1120,20 @@ function stanford_profile_helper_preprocess_file_link(&$variables) {
 function _stanford_profile_is_decoupled(): bool {
   return (bool) \Drupal::state()
     ->get('stanford_profile_helper.decoupled', FALSE);
+}
+
+/**
+ * Implements hook_search_api_processor_info_alter().
+ */
+function stanford_profile_helper_search_api_processor_info_alter(array &$processors) {
+  $processors['custom_value']['class'] = '\Drupal\stanford_profile_helper\Plugin\search_api\processor\CustomValue';
+}
+
+/**
+ * Implements hook_entity_view_display_alter().
+ */
+function stanford_profile_helper_entity_view_display_alter(EntityViewDisplayInterface $display, array $context) {
+  if ($context['view_mode'] == 'search_indexing' && $context['entity_type'] == 'node') {
+    $display->removeComponent('title');
+  }
 }

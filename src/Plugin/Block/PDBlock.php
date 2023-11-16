@@ -17,6 +17,8 @@ class PDBlock extends PdbBlock {
 
   /**
    * {@inheritDoc}
+   *
+   * @codeCoverageIgnore
    */
   public function attachLibraries(array $component) {
     return ['library' => parent::attachLibraries($component)];
