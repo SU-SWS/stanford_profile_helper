@@ -69,12 +69,19 @@ class RemoveTags extends FieldsProcessorPluginBase {
    */
   protected function processFieldValue(&$value, $type) {
     $text = str_replace('><', '> <', $value);
+
+    // Remove all html comments.
     $text = trim(preg_replace('/<!--(.*)-->/Uis', '', $text));
 
+    // Find all the html tags.
     preg_match_all('/<(\w+)/', $text, $tags_matched);
     $text_tags = $tags_matched[1] ?? [];
+
+    // Find the difference of the allowed tags and the tags in the content.
     $keep_tags = array_diff($text_tags, $this->configuration['tags']);
-    $value = trim(strip_tags($text, $keep_tags));
+
+    // Remove the tags and clean up whitespace.
+    $value = preg_replace('/\s\s+/', "\n", trim(strip_tags($text, $keep_tags)));
   }
 
 }
