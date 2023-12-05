@@ -1,5 +1,12 @@
 # Stanford Profile Helper
 
+9.4.1
+--------------------------------------------------------------------------------
+_Release Date: 2023-12-05_
+
+- D8CORE-7074 Alter search api custom field to support better tokens (#282)
+- Added cron job to construct site information file
+
 9.4.0
 --------------------------------------------------------------------------------
 _Release Date: 2023-10-23_
