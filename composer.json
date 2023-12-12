@@ -36,7 +36,8 @@
         }
     ],
     "require": {
-        "drupal/layout_paragraphs": "^2.0"
+        "drupal/layout_paragraphs": "^2.0",
+        "seboettg/collection": "<4.0.0"
     },
     "require-dev": {
         "citation-style-language/locales": "^1.0",
@@ -86,9 +87,6 @@
     },
     "replace": {
         "drupal/response_code_condition": "1.1.0"
-    },
-    "conflict": {
-        "seboettg/collection": ">=4.0.0"
     },
     "autoload": {
         "psr-4": {
