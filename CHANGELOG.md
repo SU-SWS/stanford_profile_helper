@@ -1,5 +1,11 @@
 # Stanford Profile Helper
 
+9.4.2
+--------------------------------------------------------------------------------
+_Release Date: 2023-12-12_
+
+- Added composer conflict for seboettg/collection >= 4.0.0 since it breaks publications.
+
 9.4.1
 --------------------------------------------------------------------------------
 _Release Date: 2023-12-05_

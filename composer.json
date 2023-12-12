@@ -87,6 +87,9 @@
     "replace": {
         "drupal/response_code_condition": "1.1.0"
     },
+    "conflict": {
+        "seboettg/collection": ">=4.0.0"
+    },
     "autoload": {
         "psr-4": {
             "Drupal\\jumpstart_ui\\": "modules/jumpstart_ui/src",
