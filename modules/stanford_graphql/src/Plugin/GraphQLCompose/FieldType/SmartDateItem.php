@@ -18,7 +18,7 @@ use Drupal\graphql_compose\Plugin\GraphQLCompose\GraphQLComposeFieldTypeBase;
  *   type_sdl = "SmartDateType",
  * )
  */
-class SmartDateItem extends GraphQLComposeFieldTypeBase implements FieldProducerItemInterface{
+class SmartDateItem extends GraphQLComposeFieldTypeBase implements FieldProducerItemInterface {
 
   use FieldProducerTrait;
 

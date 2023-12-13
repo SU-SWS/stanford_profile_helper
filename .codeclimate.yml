@@ -75,6 +75,7 @@ plugins:
   phan:
     enabled: true
     config:
+      target_php_version: 8.1
       file_extensions: "php,module,profile,inc"
       # minimum-severity: 1
       ignore-undeclared: true

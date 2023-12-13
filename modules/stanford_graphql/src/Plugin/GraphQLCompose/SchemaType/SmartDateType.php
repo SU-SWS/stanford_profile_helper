@@ -24,7 +24,7 @@ class SmartDateType extends GraphQLComposeSchemaTypeBase {
     $types = [];
 
     if (!$this->moduleHandler->moduleExists('smart_date')) {
-      return [];
+      return $types;
     }
 
     $types[] = new ObjectType([
