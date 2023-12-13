@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * stanford_graphql.module
+ */
+
+use Drupal\graphql\GraphQL\Execution\FieldContext;
+use Drupal\graphql_compose\Plugin\GraphQLCompose\GraphQLComposeFieldTypeInterface;
+
+/**
+ * Implements hook_graphql_compose_field_results_alter().
+ */
+function stanford_graphql_graphql_compose_field_results_alter(array &$results, $entity, GraphQLComposeFieldTypeInterface $plugin, FieldContext $context) {
+  $field_definition = $plugin->getFieldDefinition();
+  if ($field_definition->getName() == 'layout_selection' && isset($results[0])) {
+    $results = [['id' => $results[0]?->id(), 'label' => $results[0]?->label()]];
+  }
+}
