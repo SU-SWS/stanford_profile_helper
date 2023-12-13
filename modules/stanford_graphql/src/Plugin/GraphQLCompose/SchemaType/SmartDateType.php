@@ -11,6 +11,8 @@ use GraphQL\Type\Definition\Type;
 /**
  * {@inheritdoc}
  *
+ * @codeCoverageIgnore Unclear how to test for this.
+ *
  * @GraphQLComposeSchemaType(
  *   id = "SmartDateType"
  * )

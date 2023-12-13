@@ -13,6 +13,8 @@ use Drupal\graphql_compose\Plugin\GraphQLCompose\GraphQLComposeFieldTypeBase;
 /**
  * {@inheritDoc}
  *
+ * @codeCoverageIgnore Unclear how to test for this.
+ *
  * @GraphQLComposeFieldType(
  *   id = "smartdate",
  *   type_sdl = "SmartDateType",
