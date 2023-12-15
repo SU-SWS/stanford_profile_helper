@@ -172,7 +172,7 @@ class ExploreCoursesUrlWidget extends LinkWidget {
         $url['query']['view'] = $xml_querystring;
 
         $massaged_url = Url::fromUri($url['path'], ['query' => $url['query']]);
-        $values[$delta]['uri'] = $massaged_url->toString();
+        $values[$delta]['uri'] = $massaged_url->toString(TRUE)->getGeneratedUrl();
       }
     }
     return parent::massageFormValues($values, $form, $form_state);

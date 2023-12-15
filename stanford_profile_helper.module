@@ -156,7 +156,7 @@ function stanford_profile_helper_redirect_presave(EntityInterface $redirect) {
  */
 function _stanford_profile_helper_purge_path($path) {
   $url = Url::fromUserInput('/' . trim($path, '/'), ['absolute' => TRUE])
-    ->toString();
+    ->toString(TRUE)->getGeneratedUrl();
 
   $purgeInvalidationFactory = \Drupal::service('purge.invalidation.factory');
   $purgeProcessors = \Drupal::service('purge.processors');
@@ -432,6 +432,7 @@ function stanford_profile_helper_preprocess_input__submit__paragraph_action(&$va
  */
 function stanford_profile_helper_entity_field_access($operation, FieldDefinitionInterface $field_definition, AccountInterface $account, FieldItemListInterface $items = NULL) {
   if (
+    $operation != 'view' &&
     $field_definition->getName() == 'status' &&
     $field_definition->getTargetEntityTypeId() == 'node' &&
     $items &&
@@ -494,7 +495,7 @@ function stanford_profile_helper_contextual_links_alter(array &$links, $group, a
 function stanford_profile_helper_node_access(NodeInterface $node, $op, AccountInterface $account) {
   if ($op == 'delete') {
     $site_config = \Drupal::config('system.site');
-    $node_urls = [$node->toUrl()->toString(), "/node/{$node->id()}"];
+    $node_urls = [$node->toUrl()->toString(TRUE)->getGeneratedUrl(), "/node/{$node->id()}"];
 
     // If the node is configured to be the home page, 404, or 403, prevent the
     // user from deleting. Unfortunately this only works for roles without the
@@ -783,7 +784,7 @@ function stanford_profile_helper_preprocess_pattern_localfooter(&$variables) {
     $link = $entity->get('su_local_foot_loc_link')->getString();
     if ($link) {
       $variables['lockup_link'] = [
-        '#markup' => URL::fromUri($link)->toString(),
+        '#markup' => URL::fromUri($link)->toString(TRUE)->getGeneratedUrl(),
       ];
     }
 

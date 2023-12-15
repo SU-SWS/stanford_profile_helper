@@ -146,7 +146,7 @@ class Cap implements CapInterface {
    */
   protected function getApiResponse(Url $url, array $options = []) {
     try {
-      $response = $this->client->request('GET', $url->toString(), $options);
+      $response = $this->client->request('GET', $url->toString(TRUE)->getGeneratedUrl(), $options);
     }
     catch (GuzzleException | \Exception $e) {
       $this->cache->delete('cap:access_token');

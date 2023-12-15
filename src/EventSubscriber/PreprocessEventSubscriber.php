@@ -99,7 +99,7 @@ class PreprocessEventSubscriber implements EventSubscriberInterface {
     catch (\Exception $e) {
       $url = Url::fromUri($target_url, ['absolute' => TRUE]);
     }
-    return $url->toString();
+    return $url->toString(TRUE)->getGeneratedUrl();
   }
 
 

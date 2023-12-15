@@ -138,7 +138,7 @@ class ConfigOverrides implements ConfigFactoryOverrideInterface {
     foreach ($urls as &$url) {
       $url = Url::fromUri($url);
       $url->mergeOptions(['query' => ['whitelist' => implode(',', $allowed_fields)]]);
-      $url = $url->toString();
+      $url = $url->toString(TRUE)->getGeneratedUrl();
     }
     return $urls;
   }
@@ -219,7 +219,7 @@ class ConfigOverrides implements ConfigFactoryOverrideInterface {
 
     $urls = [];
     foreach (array_chunk($sunets, self::URL_CHUNKS) as $chunk) {
-      $urls[] = $this->cap->getSunetUrl($chunk)->toString();
+      $urls[] = $this->cap->getSunetUrl($chunk)->toString(TRUE)->getGeneratedUrl();
     }
     return $urls;
   }
@@ -238,13 +238,13 @@ class ConfigOverrides implements ConfigFactoryOverrideInterface {
     $number_chunks = ceil($count / self::URL_CHUNKS);
     if ($number_chunks <= 1) {
       $url->mergeOptions(['query' => ['ps' => self::URL_CHUNKS]]);
-      return [$url->toString()];
+      return [$url->toString(TRUE)->getGeneratedUrl()];
     }
 
     $urls = [];
     for ($i = 1; $i <= $number_chunks; $i++) {
       $url->mergeOptions(['query' => ['p' => $i, 'ps' => self::URL_CHUNKS]]);
-      $urls[] = $url->toString();
+      $urls[] = $url->toString(TRUE)->getGeneratedUrl();
     }
     return $urls;
   }
