@@ -34,7 +34,8 @@ function stanford_graphql_graphql_compose_field_results_alter(array &$results, $
 
   foreach ($results as $result) {
     if ($result instanceof ParagraphInterface) {
-      $result->set('behavior_settings', json_encode($result->getAllBehaviorSettings()));
+      $behaviors = $result->getAllBehaviorSettings();
+      $result->set('behavior_settings', $behaviors ? json_encode($behaviors) : NULL);
     }
   }
 }
