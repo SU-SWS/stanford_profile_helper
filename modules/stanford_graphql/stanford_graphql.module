@@ -23,15 +23,6 @@ function stanford_graphql_graphql_compose_field_results_alter(array &$results, $
     }
   }
 
-  if ($field_definition->getType() == 'viewfield') {
-    /** @var \Drupal\views\ViewExecutable $result */
-    foreach ($results as $result) {
-      // Change the view display to use the graphql that should match the chosen
-      // view.
-      $result->setDisplay($result->current_display . '_graphql');
-    }
-  }
-
   foreach ($results as $result) {
     if ($result instanceof ParagraphInterface) {
       $behaviors = $result->getAllBehaviorSettings();
