@@ -97,8 +97,8 @@ class CitationViewBuilder extends EntityViewBuilder {
 
     $month['#label_display'] = 'hidden';
     $day['#label_display'] = 'hidden';
-    $month = (int) trim(strip_tags($this->renderer->render($month)));
-    $day = (int) trim(strip_tags($this->renderer->render($day)));
+    $month = (int) trim(strip_tags($this->renderer->renderPlain($month)));
+    $day = (int) trim(strip_tags($this->renderer->renderPlain($day)));
 
     if ($month) {
       $date = date('F', strtotime("1-$month-2000"));

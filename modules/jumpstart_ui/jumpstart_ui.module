@@ -127,7 +127,7 @@ function jumpstart_ui_preprocess_pattern_localfooter(&$variables) {
     else {
       $route = Url::fromRoute('user.login');
     }
-    $variables['weblogin_url'] = $route->toString();
+    $variables['weblogin_url'] = $route->toString(TRUE)->getGeneratedUrl();
   }
 }
 
