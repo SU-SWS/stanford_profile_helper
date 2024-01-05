@@ -1,0 +1,166 @@
+<?php
+
+/**
+ * @file
+ * stanford_decoupled.module
+ */
+
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\graphql\GraphQL\Execution\FieldContext;
+use Drupal\graphql_compose\Plugin\GraphQLCompose\GraphQLComposeFieldTypeInterface;
+use Drupal\paragraphs\ParagraphInterface;
+
+/**
+ * Implements hook_graphql_compose_field_results_alter().
+ */
+function stanford_decoupled_graphql_compose_field_results_alter(array &$results, $entity, GraphQLComposeFieldTypeInterface $plugin, FieldContext $context) {
+  $field_definition = $plugin->getFieldDefinition();
+  if ($field_definition->getName() == 'layout_selection') {
+    foreach ($results as &$result) {
+      $result = [
+        'id' => $results->id(),
+        'label' => $results->label(),
+      ];
+    }
+  }
+
+  foreach ($results as $result) {
+    if ($result instanceof ParagraphInterface) {
+      $behaviors = $result->getAllBehaviorSettings();
+      $result->set('behavior_settings', $behaviors ? json_encode($behaviors) : NULL);
+    }
+  }
+
+  $text_fields = ['text', 'text_long', 'text_with_summary'];
+  if (in_array($field_definition->getType(), $text_fields)) {
+    foreach ($results as &$result) {
+      foreach ($result as &$text) {
+        $text = preg_replace('/(\r\n)+|\r+|\n+|\t+/', ' ', (string) $text);
+        // Remove html comments.
+        $text = preg_replace('/<!--.*?>/', '', $text);
+        // Remove white space between tags.
+        $text = preg_replace('/> +?</', '><', $text);
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_graphql_compose_entity_base_fields_alter().
+ */
+function stanford_decoupled_graphql_compose_entity_base_fields_alter(array &$fields, string $entity_type_id) {
+  if ($entity_type_id == 'paragraph') {
+    $fields['behavior_settings'] = [
+      'field_type' => 'string',
+      'name_sdl' => 'behaviors',
+      'required' => FALSE,
+      'description' => t('Paragraph Behavior Settings.'),
+    ];
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_insert().
+ *
+ * When a new Next site is created, create all Next entity type configs.
+ */
+function stanford_decoupled_next_site_insert(EntityInterface $entity) {
+  $next_storage = \Drupal::entityTypeManager()
+    ->getStorage('next_entity_type_config');
+  $node_types = \Drupal::entityTypeManager()
+    ->getStorage('node_type')
+    ->loadMultiple();
+
+  // Create each of the node type bundle configs.
+  foreach (array_keys($node_types) as $node_bundle) {
+
+    // Make sure one doesn't already exist.
+    if (!$next_storage->load("node.$node_bundle")) {
+      $next_storage->create([
+        'id' => "node.$node_bundle",
+        'site_resolver' => 'site_selector',
+        'revalidator' => 'path',
+        'configuration' => [
+          'sites' => [$entity->id() => $entity->id()],
+        ],
+        'revalidator_configuration' => [
+          'revalidate_page' => TRUE,
+          'additional_paths' => FALSE,
+        ],
+      ])->save();
+    }
+  }
+
+  if (!$next_storage->load('redirect.redirect')) {
+    $next_storage->create([
+      'id' => 'redirect.redirect',
+      'site_resolver' => 'site_selector',
+      'revalidator' => 'path',
+      'configuration' => ['sites' => [$entity->id() => $entity->id()]],
+      'revalidator_configuration' => [],
+    ])->save();
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_access().
+ */
+function stanford_decoupled_redirect_access(EntityInterface $entity, $operation, AccountInterface $account) {
+  if ($operation == 'view') {
+    // Allowing viewing redirecting from JSON API.
+    return AccessResult::allowed();
+  }
+  return AccessResult::neutral();
+}
+
+/**
+ * Implements hook_next_site_preview_alter().
+ */
+function stanford_decoupled_next_site_preview_alter(array &$preview, array $context) {
+  // Only use the preview for nodes. Prevent the preview from any other entity
+  // type that might have a revalidation configured, like redirects.
+  if ($context['entity']->getEntityTypeid() != 'node') {
+    $preview = $context['original_build'][0]['content'];
+  }
+}
+
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function stanford_decoupled_preprocess_image(&$variables) {
+  $decoupled = _stanford_decoupled_is_decoupled();
+
+  if ($decoupled && (empty($variables['width']) || empty($variables['height']))) {
+    $path = str_starts_with($variables['uri'], '/') ? DRUPAL_ROOT . $variables['uri'] : $variables['uri'];
+    $path = preg_replace('/\?.*$/', '', $path);
+    if ($size = @getimagesize($path)) {
+      $variables['attributes']['data-width'] = $size[0];
+      $variables['attributes']['data-height'] = $size[1];
+    }
+  }
+}
+
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function stanford_decoupled_preprocess_file_link(&$variables) {
+  if (_stanford_decoupled_is_decoupled()) {
+    $variables['link']['#url']->setAbsolute();
+  }
+}
+
+/**
+ * Check if the site is configured to be decoupled.
+ *
+ * @return bool
+ *   True if it's intended to be decoupled.
+ */
+function _stanford_decoupled_is_decoupled(): bool {
+  $sites_count = \Drupal::entityTypeManager()->getStorage('next_site')->getQuery()->accessCheck(false)->count()->execute();
+  return $sites_count > 0;
+}
+

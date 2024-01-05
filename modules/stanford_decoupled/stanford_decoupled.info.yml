@@ -1,0 +1,11 @@
+name: 'Stanford Decoupled'
+type: module
+description: 'JsonAPI and GraphQL helper for decoupled sites.'
+core_version_requirement: ^9 || ^10
+package: Stanford
+version: 9.4.1
+dependencies:
+  - graphql_compose:graphql_compose_layout_paragraphs
+  - graphql_compose:graphql_compose_menus
+  - graphql_compose:graphql_compose_views
+  - next:next

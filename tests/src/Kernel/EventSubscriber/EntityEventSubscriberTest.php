@@ -170,16 +170,4 @@ class EntityEventSubscriberTest extends SuProfileHelperKernelTestBase {
       ->get('xmlsitemap_base_url'));
   }
 
-  public function testNextSite() {
-    $this->assertEmpty(NextEntityTypeConfig::loadMultiple());
-    NextSite::create([
-      'label' => 'Blog',
-      'id' => 'blog',
-      'base_url' => 'https://blog.com',
-      'preview_url' => 'https://blog.com/api/preview',
-      'preview_secret' => 'one'
-    ])->save();
-    $this->assertNotEmpty(NextEntityTypeConfig::loadMultiple());
-  }
-
 }
