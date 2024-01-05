@@ -1103,4 +1103,3 @@ function stanford_profile_helper_entity_view_display_alter(EntityViewDisplayInte
     $display->removeComponent('title');
   }
 }
-

@@ -20,8 +20,8 @@ function stanford_decoupled_graphql_compose_field_results_alter(array &$results,
   if ($field_definition->getName() == 'layout_selection') {
     foreach ($results as &$result) {
       $result = [
-        'id' => $results->id(),
-        'label' => $results->label(),
+        'id' => $result->id(),
+        'label' => $result->label(),
       ];
     }
   }
@@ -30,19 +30,6 @@ function stanford_decoupled_graphql_compose_field_results_alter(array &$results,
     if ($result instanceof ParagraphInterface) {
       $behaviors = $result->getAllBehaviorSettings();
       $result->set('behavior_settings', $behaviors ? json_encode($behaviors) : NULL);
-    }
-  }
-
-  $text_fields = ['text', 'text_long', 'text_with_summary'];
-  if (in_array($field_definition->getType(), $text_fields)) {
-    foreach ($results as &$result) {
-      foreach ($result as &$text) {
-        $text = preg_replace('/(\r\n)+|\r+|\n+|\t+/', ' ', (string) $text);
-        // Remove html comments.
-        $text = preg_replace('/<!--.*?>/', '', $text);
-        // Remove white space between tags.
-        $text = preg_replace('/> +?</', '><', $text);
-      }
     }
   }
 }
