@@ -54,6 +54,10 @@ plugins:
     checks:
       Design/WeightedMethodCount:
         enabled: false
+      CleanCode/IfStatementAssignment:
+        enabled: false
+      CleanCode/ErrorControlOperator:
+        enabled: false
       CleanCode/StaticAccess:
         enabled: false
       CleanCode/ElseExpression:
@@ -75,7 +79,7 @@ plugins:
   phan:
     enabled: true
     config:
-      target_php_version: 8.1
+      target_php_version: 8.2
       file_extensions: "php,module,profile,inc"
       # minimum-severity: 1
       ignore-undeclared: true
