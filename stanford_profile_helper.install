@@ -15,6 +15,6 @@ function stanford_profile_helper_update_last_removed() {
 /**
  * Install new submodule.
  */
-function stanford_profile_helper_update_8196(){
+function stanford_profile_helper_update_8196() {
   \Drupal::service('module_installer')->install(['stanford_decoupled']);
 }

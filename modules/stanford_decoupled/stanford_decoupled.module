@@ -83,7 +83,7 @@ function stanford_decoupled_next_site_insert(EntityInterface $entity) {
     $next_storage->create([
       'id' => 'redirect.redirect',
       'site_resolver' => 'site_selector',
-      'revalidator' => 'path',
+      'revalidator' => 'redirect_path',
       'configuration' => ['sites' => [$entity->id() => $entity->id()]],
       'revalidator_configuration' => [],
     ])->save();
