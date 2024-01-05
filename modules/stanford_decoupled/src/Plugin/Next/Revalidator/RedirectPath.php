@@ -22,6 +22,8 @@ class RedirectPath extends ConfigurableRevalidatorBase implements RevalidatorInt
 
   /**
    * {@inheritdoc}
+   *
+   * @codeCoverageIgnore Nothing to gets
    */
   public function defaultConfiguration() {
     return [];
@@ -29,6 +31,8 @@ class RedirectPath extends ConfigurableRevalidatorBase implements RevalidatorInt
 
   /**
    * {@inheritdoc}
+   *
+   * @codeCoverageIgnore Nothing to gets
    */
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
     return $form;

@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\stanford_decoupled\Unit\Plugin\Filter;
 
+use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\Query\QueryInterface;
@@ -31,7 +32,10 @@ class SuCleanHtmlTest extends UnitTestCase {
     $entity_type_manager = $this->createMock(EntityTypeManagerInterface::class);
     $entity_type_manager->method('getStorage')->willReturn($entity_storage);
 
-    $filter = new SuCleanHtml($config, '', $definition, $entity_type_manager);
+    $container = new ContainerBuilder();
+    $container->set('entity_type.manager', $entity_type_manager);
+
+    $filter = SuCleanHtml::create($container, $config, 'foo', $definition);
     $result = $filter->process("\r\n<!-- FOO BAR BAZ-->\n\n<div>foo</div>\n\n\n<div>\r\nbar\r\n\r\nbaz</div>\r\n", NULL);
 
     $this->assertEquals('<div>foo</div><div> bar baz</div>', (string) $result);
