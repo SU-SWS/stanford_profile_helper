@@ -1103,3 +1103,10 @@ function stanford_profile_helper_entity_view_display_alter(EntityViewDisplayInte
     $display->removeComponent('title');
   }
 }
+
+/**
+ * Implements hook_ENTITY_TYPE_access().
+ */
+function stanford_profile_helper_filter_format_access(EntityInterface $entity, $operation, AccountInterface $account) {
+  return AccessResult::forbiddenIf($entity->id() == 'administrative_html');
+}
