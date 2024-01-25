@@ -13,6 +13,14 @@ use Drupal\graphql_compose\Plugin\GraphQLCompose\GraphQLComposeFieldTypeInterfac
 use Drupal\paragraphs\ParagraphInterface;
 
 /**
+ * Implements hook_ENTITY_TYPE_access().
+ */
+function stanford_decoupled_layout_access(EntityInterface $entity, $operation, AccountInterface $account) {
+  // Only allow access if the site is decoupled. Otherwise, don't change access.
+  return AccessResult::allowedIf($operation == 'view' && _stanford_decoupled_is_decoupled());
+}
+
+/**
  * Implements hook_graphql_compose_field_results_alter().
  */
 function stanford_decoupled_graphql_compose_field_results_alter(array &$results, $entity, GraphQLComposeFieldTypeInterface $plugin, FieldContext $context) {
