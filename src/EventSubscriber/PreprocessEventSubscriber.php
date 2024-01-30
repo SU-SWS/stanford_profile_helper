@@ -70,7 +70,6 @@ class PreprocessEventSubscriber implements EventSubscriberInterface {
       // The action returned from the redirect plugin might be to show the
       // page. If it is, we don't want to display the message.
       if ($redirect_response instanceof TrustedRedirectResponse) {
-
         $content = $event->getVariables()->getByReference('content');
         $message = [
           '#theme' => 'rabbit_hole_message',
@@ -101,7 +100,6 @@ class PreprocessEventSubscriber implements EventSubscriberInterface {
     }
     return $url->toString(TRUE)->getGeneratedUrl();
   }
-
 
   /**
    * Get the rabbit hole behavior plugin for the given node.
