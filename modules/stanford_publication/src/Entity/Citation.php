@@ -8,6 +8,9 @@ use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Link;
+use Drupal\Core\Logger\LoggerChannelTrait;
+use Drupal\Core\Messenger\MessengerTrait;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\TypedData\TranslatableInterface;
 use Drupal\Core\Url;
 use Drupal\field\Entity\FieldStorageConfig;
@@ -52,6 +55,9 @@ use Seboettg\CiteProc\CiteProc;
 class Citation extends ContentEntityBase implements CitationInterface {
 
   use EntityChangedTrait;
+  use LoggerChannelTrait;
+  use MessengerTrait;
+  use StringTranslationTrait;
 
   /**
    * {@inheritdoc}
@@ -188,8 +194,24 @@ class Citation extends ContentEntityBase implements CitationInterface {
 
     // Load the style CSL file.
     $style = file_get_contents($local_csl);
-    $citeProc = new CiteProc($style);
-    return htmlspecialchars_decode($citeProc->render($data));
+    try {
+      $citeProc = new CiteProc($style);
+      return htmlspecialchars_decode($citeProc->render($data));
+    }
+    catch (\Throwable $e) {
+      // Let editors know the citation failed to generate.
+      if ($this->access('update')) {
+        $this->messenger()
+          ->addError($this->t('Unable to generate citation for %label', ['%label' => $this->label()]));
+      }
+      // Log the error message for any debugging.
+      $this->getLogger('stanford_publication')
+        ->error('Error generating citation. ID: %id, Message: %message', [
+          '%id' => $this->id(),
+          '%message' => $e->getMessage(),
+        ]);
+      return $this->label();
+    }
   }
 
   /**
