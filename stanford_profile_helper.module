@@ -37,6 +37,7 @@ function stanford_profile_helper_module_implements_alter(&$implementations, $hoo
     unset($implementations['menu_block']);
   }
 }
+
 /**
  * Implements hook_plugin_filter_TYPE__CONSUMER_alter().
  *

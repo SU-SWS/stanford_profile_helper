@@ -70,7 +70,7 @@ function stanford_intranet_file_access(FileInterface $file, $operation, AccountI
   $allowed = \Drupal::state()->get('stanford_intranet', FALSE) &&
     $account->isAuthenticated() &&
     isset($usage['file']['config_pages']) &&
-    $operation == 'download';
+    (in_array($operation, ['download', 'view']));
   return AccessResult::allowedIf($allowed);
 }
 
