@@ -38,4 +38,12 @@
   @container paragraph (max-width: 768px){
     grid-template-columns: 1fr;
   }
+
+  img {
+    margin-left: auto;
+
+    @include grid-media-between('sm', 'md') {
+      margin-left: 0;
+    }
+  }
 }
