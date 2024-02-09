@@ -11,11 +11,12 @@
   "license": "ISC",
   "dependencies": {
     "@babel/core": "^7.22.1",
+    "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.22.4",
+    "autoprefixer": "^10.4.16",
     "babel-loader": "^9.1.2",
     "css-loader": "^6.8.1",
     "decanter": "^6.2.14",
-    "file-loader": "^6.2.0",
     "filemanager-webpack-plugin": "^8.0.0",
     "mini-css-extract-plugin": "^2.7.6",
     "node-sass": "^9.0.0",

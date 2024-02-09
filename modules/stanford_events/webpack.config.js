@@ -1,12 +1,11 @@
 
 const path = require("path");
-const glob = require('glob')
 const Webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
-const FileManagerPlugin = require('filemanager-webpack-plugin');
 const autoprefixer = require('autoprefixer')({ grid: true });
+const FileManagerPlugin = require('filemanager-webpack-plugin');
 
 const seriesSrcSass = path.resolve(__dirname, "modules/stanford_events_series/lib/scss");
 
@@ -87,9 +86,9 @@ var webpackConfig = {
     new FileManagerPlugin({
       events: {
         onStart: {
-          delete: ['dist'],
-        },
-      },
+          delete: ["dist"]
+        }
+      }
     }),
   ],
   optimization: {
