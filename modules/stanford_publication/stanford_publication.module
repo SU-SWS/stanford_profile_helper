@@ -284,3 +284,12 @@ function _stanford_pubs_get_citation_entity(NodeInterface $node) {
       ->load($citation_id);
   }
 }
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function stanford_publication_preprocess_links__entity__printable(&$variables) {
+  if (isset($variables['links']['print']['link'])) {
+    $variables['links']['print']['link']['#attributes']['rel'] = 'nofollow';
+  }
+}
