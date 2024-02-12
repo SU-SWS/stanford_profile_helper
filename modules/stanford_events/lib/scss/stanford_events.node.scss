@@ -302,6 +302,10 @@
 .su-events-body {
   .main-region {
     @include modular-spacing('margin', null null 5 null);
+
+    display: flex;
+    flex-direction: column;
+    gap: 7.2rem;
   }
 }
 
