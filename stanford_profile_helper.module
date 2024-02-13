@@ -624,14 +624,17 @@ function stanford_profile_helper_config_readonly_whitelist_patterns() {
   // Allow the form to be submitted in the UI for specific routes that don't
   // alter the configuration, such as resetting the order of taxonomy terms.
   $routes_to_config = [
-    'entity.taxonomy_vocabulary.reset_form' => 'taxonomy.vocabulary.*',
+    'entity.taxonomy_vocabulary.reset_form' => ['taxonomy.vocabulary.*'],
+    'entity.search_api_index.rebuild_tracker' => ['search_api.index.*'],
+    'entity.search_api_index.clear' => ['search_api.index.*'],
+    'entity.search_api_index.reindex' => ['search_api.index.*'],
+    'xmlsitemap.admin_rebuild' => ['xmlsitemap.settings'],
   ];
-  foreach ($routes_to_config as $route => $config_pattern) {
-    if (\Drupal::routeMatch()->getRouteName() == $route) {
-      $patterns[] = $config_pattern;
-    }
-  }
 
+  $route_name = \Drupal::routeMatch()->getRouteName();
+  if (isset($routes_to_config[$route_name])) {
+    $patterns = [...$patterns, ...$routes_to_config[$route_name]];
+  }
   return $patterns;
 }
 
