@@ -136,7 +136,7 @@
     {# Card Headline #}
     {%- block block_card_headline  %}
       {%- if card_headline is not empty %}
-        <h2>
+        <{{ card_headline_tag|default('h2') }}{{ card_headline_attributes }}>
           {%- if card_allow_headline_link and allow_links -%}
             <a href="{{ card_link }}" {{ card_cta_attributes }}>
           {%- endif -%}
@@ -144,7 +144,7 @@
           {% if card_allow_headline_link and allow_links -%}
             </a>
           {%- endif -%}
-        </h2>
+        </{{ card_headline_tag|default('h2') }}>
       {% endif -%}
     {% endblock -%}
 
