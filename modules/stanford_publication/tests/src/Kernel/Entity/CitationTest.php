@@ -45,19 +45,19 @@ class CitationTest extends PublicationTestBase {
 
     // Nothing to link to.
     $biblio = $citation->getBibliography();
-    $expected = 'Doe, J. (2021). <i>Foo Bar</i> (5th ed.). Subtitle of Book. Awesome Publishing.';
+    $expected = 'Doe, J. (2021). <i>Foo Bar</i> (5th eds.). Subtitle of Book. Awesome Publishing.';
     $this->assertStringContainsString($expected, $biblio);
 
     // Links to the parent node.
     $citation->setParentEntity($this->parentNode, 'field_foo');
     $biblio = $citation->getBibliography();
-    $expected = 'Doe, J. (2021). <a href="/node/' . $this->parentNode->id() . '" hreflang="en"><i>Foo Bar</i></a> (5th ed.). Subtitle of Book. Awesome Publishing.';
+    $expected = 'Doe, J. (2021). <a href="/node/' . $this->parentNode->id() . '" hreflang="en"><i>Foo Bar</i></a> (5th eds.). Subtitle of Book. Awesome Publishing.';
     $this->assertStringContainsString($expected, $biblio);
 
     // Links to the url field.
     $citation->set('su_url', 'http://domain.org')->save();
     $biblio = $citation->getBibliography();
-    $expected = 'Doe, J. (2021). <a href="http://domain.org"><i>Foo Bar</i></a> (5th ed.). Subtitle of Book. Awesome Publishing.';
+    $expected = 'Doe, J. (2021). <a href="http://domain.org"><i>Foo Bar</i></a> (5th eds.). Subtitle of Book. Awesome Publishing.';
     $this->assertStringContainsString($expected, $biblio);
 
     // The DOI field does not get a link. The result should be the same as the
