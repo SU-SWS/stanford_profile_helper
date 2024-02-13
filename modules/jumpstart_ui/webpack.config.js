@@ -102,14 +102,14 @@ var webpackConfig = {
         onStart: {
           delete: ["dist"]
         },
-        onEnd: {
-          copy: [
-            {
-              source: "node_modules/decanter/core/src/templates/**/*.twig",
-              destination: "dist/templates/decanter/"
-            }
-          ],
-        },
+        // onEnd: {
+        //   copy: [
+        //     {
+        //       source: "node_modules/decanter/core/src/templates/**/*.twig",
+        //       destination: "dist/templates/decanter/"
+        //     }
+        //   ],
+        // },
       }
     }),
   ],
