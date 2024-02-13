@@ -26,11 +26,35 @@ class CardBehavior extends ParagraphsBehaviorBase {
     return $paragraphs_type->id() == 'stanford_card';
   }
 
+  public function defaultConfiguration() {
+    return [
+      'heading' => 'h2',
+      'hide_heading' => false,
+      'link_style' => null,
+    ];
+  }
+
   /**
    * {@inheritDoc}
    */
   public function buildBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state): array {
     $element = parent::buildBehaviorForm($paragraph, $form, $form_state);
+    $element['heading'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Heading Level'),
+      '#options' => [
+        'h2' => 'H2',
+        'h3' => 'H3',
+        'h4' => 'H4',
+        'div' => $this->t('Splash Text'),
+      ],
+      '#default_value' => $paragraph->getBehaviorSetting('su_card_styles', 'heading', 'h2'),
+    ];
+    $element['hide_heading'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Visually Hide Heading'),
+      '#default_value' => $paragraph->getBehaviorSetting('su_card_styles', 'hide_heading', FALSE),
+    ];
     $element['link_style'] = [
       '#title' => $this->t('Link Style'),
       '#description' => $this->t('Choose how you would like the link to display.'),

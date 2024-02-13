@@ -30,6 +30,11 @@ hero:
       label: "Headline"
       description: "The text headline"
       preview: "This is the headline"
+    hero_headline_tag:
+      type: text
+      label: "Headline Tag"
+      description: "Tag element for the headline"
+      preview: "h2"
     hero_body:
       type: text
       label: "Content"

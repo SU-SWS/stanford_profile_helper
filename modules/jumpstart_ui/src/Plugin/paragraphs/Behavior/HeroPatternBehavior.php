@@ -14,10 +14,19 @@ use Drupal\paragraphs\ParagraphsTypeInterface;
  * @ParagraphsBehavior(
  *   id = "hero_pattern",
  *   label = @Translation("Hero Pattern"),
- *   description = @Translation("Display options for the hero pattern paragraph.")
+ *   description = @Translation("Display options for the hero pattern
+ *   paragraph.")
  * )
  */
 class HeroPatternBehavior extends ParagraphsBehaviorBase {
+
+  public function defaultConfiguration() {
+    return [
+      'overlay_position' => 'left',
+      'heading' => 'h2',
+      'hide_heading' => FALSE,
+    ];
+  }
 
   /**
    * {@inheritDoc}
@@ -54,6 +63,22 @@ class HeroPatternBehavior extends ParagraphsBehaviorBase {
    */
   public function buildBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state) {
     $form = parent::buildBehaviorForm($paragraph, $form, $form_state);
+    $form['heading'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Heading Level'),
+      '#options' => [
+        'h2' => 'H2',
+        'h3' => 'H3',
+        'h4' => 'H4',
+        'div' => $this->t('Splash Text'),
+      ],
+      '#default_value' => $paragraph->getBehaviorSetting('hero_pattern', 'heading', 'h2'),
+    ];
+    $form['hide_heading'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Visually Hide Heading'),
+      '#default_value' => $paragraph->getBehaviorSetting('hero_pattern', 'hide_heading', FALSE),
+    ];
     $form['overlay_position'] = [
       '#type' => 'select',
       '#title' => $this->t('Text Overlay Position'),
