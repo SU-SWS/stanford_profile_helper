@@ -52,7 +52,8 @@
   }
 
   .su-course-link {
-    h2 {
+    h2,
+    h3 {
       @include type-c;
       @include modular-spacing("margin-bottom", 1);
       @include modular-spacing("margin-left", 2);

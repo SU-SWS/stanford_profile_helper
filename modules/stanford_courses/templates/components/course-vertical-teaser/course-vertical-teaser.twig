@@ -31,11 +31,12 @@
 {%- endif -%}
 
 {% set course_url = course_url|render|striptags("<drupal-render-placeholder>")|trim %}
+{% set header_tag = variant == 'h3_header' ? 'h3' : 'h2' %}
 
 <article{{ attributes.addClass(classes) }}>
 
   <div class="su-course-link">
-    <h2 class="su-link su-card__link {{ course_url_link_type }}">
+    <{{ header_tag }} class="su-link su-card__link {{ course_url_link_type }}">
     {%- if course_url is not empty -%}
       <a {{ course_url_attributes.addClass('su-course-vertical-teaser__link') }} href="{{ course_url }}" >
     {%- endif -%}
@@ -43,7 +44,7 @@
     {%- if course_url is not empty -%}
       </a>
     {%- endif -%}
-    </h2>
+    </{{ header_tag }}>
   </div>
 
   {%- if course_code|render_clean is not empty or course_academic_year|render_clean is not empty -%}

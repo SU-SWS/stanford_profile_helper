@@ -59,6 +59,10 @@ class TeaserParagraphBehavior extends ParagraphsBehaviorBase {
     }
     foreach (Element::children($build['su_entity_item']) as $delta) {
       $build['su_entity_item'][$delta]['#view_mode'] = 'stanford_h3_card';
+
+      // Replace the cache keys to match the view mode.
+      $cache_key = array_search('stanford_card', $build['su_entity_item'][$delta]['#cache']['keys']);
+      $build['su_entity_item'][$delta]['#cache']['keys'][$cache_key] = 'stanford_h3_card';
     }
   }
 

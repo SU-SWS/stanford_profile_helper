@@ -1,6 +1,11 @@
 course_list:
   label: Course List Item
   description: "Building block component for the Course list page."
+  variants:
+    default:
+      label: Default
+    h3_header:
+      label: H3 Header
   fields:
     course_list_code:
       type: text
