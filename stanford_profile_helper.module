@@ -21,10 +21,8 @@ use Drupal\Core\Render\Element;
 use Drupal\Core\Serialization\Yaml;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Site\Settings;
-use Drupal\Core\Template\Attribute;
 use Drupal\Core\Url;
 use Drupal\node\NodeInterface;
-use Drupal\paragraphs\ParagraphInterface;
 use Drupal\search_api\IndexInterface;
 use Drupal\stanford_profile_helper\StanfordProfileHelper;
 use Drupal\taxonomy\TermInterface;
@@ -736,23 +734,6 @@ function stanford_profile_helper_preprocess_pattern_alert(&$variables) {
     }
   }
 
-}
-
-/**
- * Implements hook_preprocess_HOOK().
- */
-function stanford_profile_helper_preprocess_pattern_hero(&$variables) {
-  /** @var \Drupal\ui_patterns\Element\PatternContext $context */
-  $context = $variables['context'];
-  $entity = $context->getProperty('entity');
-  if ($entity instanceof ParagraphInterface && $entity->bundle() == 'stanford_banner') {
-    $variables['card_headline_tag'] = $entity->getBehaviorSetting('hero_pattern', 'heading', 'h2');
-    $headline_attributes = new Attribute(['class' => ['headline']]);
-    if ($entity->getBehaviorSetting('hero_pattern', 'hide_heading', FALSE)) {
-      $headline_attributes->addClass('visually-hidden');
-    }
-    $variables['card_headline_attributes'] = $headline_attributes;
-  }
 }
 
 /**

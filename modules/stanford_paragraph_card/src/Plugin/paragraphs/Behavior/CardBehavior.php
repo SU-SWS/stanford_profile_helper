@@ -49,7 +49,7 @@ class CardBehavior extends ParagraphsBehaviorBase {
         'h2' => 'H2',
         'h3' => 'H3',
         'h4' => 'H4',
-        'div' => $this->t('Splash Text'),
+        'div.su-font-splash' => $this->t('Splash Text'),
       ],
       '#default_value' => $paragraph->getBehaviorSetting('su_card_styles', 'heading', 'h2'),
     ];
