@@ -20,6 +20,9 @@ use Drupal\paragraphs\ParagraphsTypeInterface;
  */
 class HeroPatternBehavior extends ParagraphsBehaviorBase {
 
+  /**
+   * {@inheritDoc}
+   */
   public function defaultConfiguration() {
     return [
       'overlay_position' => 'left',
