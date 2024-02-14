@@ -78,7 +78,8 @@
 }
 
 .su-news-vertical-teaser {
-  h2 {
+  h2,
+  h3 {
     @include modular-spacing('margin-bottom', 1);
     @include modular-spacing('margin-left', 2);
     @include modular-spacing('margin-right', 2);

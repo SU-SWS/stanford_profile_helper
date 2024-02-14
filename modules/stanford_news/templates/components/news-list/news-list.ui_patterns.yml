@@ -1,6 +1,11 @@
 news-list:
   label: News List Item
   description: "Building block component for the news list page."
+  variants:
+    default:
+      label: Default
+    h3_header:
+      label: H3 Header
   fields:
     news_list_image:
       type: text

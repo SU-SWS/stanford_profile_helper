@@ -37,6 +37,7 @@
 {%- endif -%}
 
 {% set news_url = news_url|render|striptags("<drupal-render-placeholder>")|trim %}
+{% set header_tag = variant == 'h3_header' ? 'h3' : 'h2' %}
 
 <article{{ attributes.addClass(classes) }}>
   {%- if news_url is not empty -%}
@@ -48,9 +49,9 @@
     </div>
   </figure>
   <div class="su-news-header">
-    <h2 class="su-link su-card__link {{ news_url_link_type }}">
+    <{{ header_tag }} class="su-link su-card__link {{ news_url_link_type }}">
       {{- news_vertical_teaser_headline -}}
-    </h2>
+    </{{ header_tag }}>
   </div>
   {%- if news_url is not empty -%}
     </a>

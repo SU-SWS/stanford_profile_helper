@@ -1,6 +1,11 @@
 news-vertical-teaser:
   label: News Vertical Teaser
   description: "News Vertical Teaser"
+  variants:
+    default:
+      label: Default
+    h3_header:
+      label: H3 Header
   fields:
     news_vertical_teaser_image:
       type: text

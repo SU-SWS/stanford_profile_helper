@@ -36,6 +36,7 @@
 {%- if news_list_image|render|striptags('<drupal-render-placeholder><img><picture>')|trim is empty -%}
   {%- set attributes = attributes.addClass('su-news-list-image__empty')  -%}
 {%- endif %}
+{% set header_tag = variant == 'h3_header' ? 'h3' : 'h2' %}
 
 <article{{ attributes }} {% if headingID %}aria-labelledby="{{ headingID }}"{% endif %}>
 
@@ -50,9 +51,9 @@
         {%- endif -%}
 
         {% if news_list_headline|render_clean %}
-          <h2 id="{{ headingID }}">
+          <{{ header_tag}} id="{{ headingID }}">
             {{- news_list_headline -}}
-          </h2>
+          </{{ header_tag}}>
         {% endif %}
 
         {%- if news_url is not empty -%}
