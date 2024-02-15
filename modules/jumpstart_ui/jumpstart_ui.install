@@ -1,0 +1,61 @@
+<?php
+
+/**
+ * @file
+ * jumpstart_ui.install
+ */
+
+/**
+ * Update list paragraphs that do not have headline fields.
+ */
+function jumpstart_ui_update_9001(&$sandbox) {
+  $paragraph_storage = \Drupal::entityTypeManager()->getStorage('paragraph');
+  if (empty($sandbox['ids'])) {
+    $sandbox['ids'] = $paragraph_storage->getQuery()
+      ->accessCheck(FALSE)
+      ->condition('type', 'stanford_lists')
+      ->condition('su_list_headline', '', 'IS NULL')
+      ->condition('su_list_view', '', '<>')
+      ->execute();
+    $sandbox['total'] = count($sandbox['ids']);
+  }
+  $ids = array_splice($sandbox['ids'], 0, 25);
+
+  /** @var \Drupal\paragraphs\ParagraphInterface $paragraph */
+  foreach ($paragraph_storage->loadMultiple($ids) as $paragraph) {
+    $behaviors = $paragraph->getAllBehaviorSettings();
+    $behaviors['list_paragraph']['hide_heading'] = TRUE;
+    $paragraph->setBehaviorSettings('list_paragraph', $behaviors['list_paragraph']);
+
+    $view = $paragraph->get('su_list_view')->get(0)->getValue();
+    $new_header = 'Site content';
+
+    switch ($view['target_id']) {
+      case 'stanford_basic_pages':
+        $new_header = 'Site Pages';
+        break;
+
+      case 'stanford_courses':
+        $new_header = 'Courses';
+        break;
+
+      case 'stanford_event_series':
+        $new_header = 'Event Series';
+        break;
+
+      case 'stanford_events':
+        $new_header = 'Events';
+        break;
+
+      case 'stanford_news':
+        $new_header = 'Site news';
+        break;
+
+      case 'stanford_person':
+        $new_header = 'People';
+        break;
+    }
+    $paragraph->set('su_list_headline', $new_header)->save();
+  }
+  $sandbox['#finished'] = count($sandbox['ids']) ? 1 - count($sandbox['ids']) / $sandbox['total'] : 1;
+}

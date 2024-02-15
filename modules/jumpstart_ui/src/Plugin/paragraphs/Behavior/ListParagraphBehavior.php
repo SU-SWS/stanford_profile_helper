@@ -44,6 +44,11 @@ class ListParagraphBehavior extends ParagraphsBehaviorBase {
       '#description' => $this->t('This message will appear for site visitors if there are no items displayed in the list.'),
       '#default_value' => $paragraph->getBehaviorSetting('list_paragraph', 'empty_message'),
     ];
+    $form['hide_heading'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Visually Hide Heading'),
+      '#default_value' => $paragraph->getBehaviorSetting('list_paragraph', 'hide_heading', FALSE),
+    ];
     return $form;
   }
 
@@ -51,6 +56,11 @@ class ListParagraphBehavior extends ParagraphsBehaviorBase {
    * {@inheritDoc}
    */
   public function view(array &$build, ParagraphInterface $paragraph, EntityViewDisplayInterface $display, $view_mode) {
+    // Visually hide the header.
+    if ($paragraph->getBehaviorSetting('list_paragraph', 'hide_heading', FALSE) && isset($build['su_list_headline'][0])) {
+      $build['su_list_headline']['#attributes']['class'][] = 'visually-hidden';
+    }
+
     if (!isset($build['su_list_view']) || !empty(Element::children($build['su_list_view']))) {
       return;
     }
