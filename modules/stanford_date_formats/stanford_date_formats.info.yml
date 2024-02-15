@@ -2,5 +2,5 @@ name: 'Stanford Date Formats'
 description: 'Date and time formats used by Stanford modules and Themes'
 type: module
 core_version_requirement: ^9 || ^10
-version: 9.4.2
+version: 9.5.1
 package: Stanford
