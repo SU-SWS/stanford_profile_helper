@@ -152,7 +152,7 @@ class Cap implements CapInterface {
       $this->cache->delete('cap:access_token');
       // Most errors originate from the API itself, log the error and let it
       // fall over.
-      $this->logger->error($this->t('An unexpected error came from the API: %message'), ['%message' => $e->getMessage()]);
+      $this->logger->error('An unexpected error came from the API: %message', ['%message' => $e->getMessage()]);
       throw new \Exception($e->getMessage());
     }
     return $response->getStatusCode() == 200 ? json_decode((string) $response->getBody(), TRUE, 512, JSON_THROW_ON_ERROR) : FALSE;
@@ -206,7 +206,7 @@ class Cap implements CapInterface {
       return !empty($this->getAccessToken());
     }
     catch (\Throwable $e) {
-      $this->logger->error($this->t('Unable to connect to CAP Api: %message'), ['%message' => $e->getMessage()]);
+      $this->logger->error('Unable to connect to CAP Api: %message', ['%message' => $e->getMessage()]);
     }
     return FALSE;
   }
