@@ -1,0 +1,17 @@
+@charset 'UTF-8';
+
+.su-card {
+  .su-card__contents {
+    > h3 {
+      font-size: 1.4em;
+    }
+
+    > h4 {
+      @include type-e;
+    }
+
+    .su-font-splash {
+      font-size: 1.4em;
+    }
+  }
+}
