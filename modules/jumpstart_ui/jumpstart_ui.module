@@ -10,6 +10,7 @@
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Template\Attribute;
 use Drupal\Core\Url;
+use Drupal\paragraphs\ParagraphInterface;
 use Drupal\ui_patterns\Element\PatternContext;
 use Drupal\ui_patterns\UiPatterns;
 
@@ -149,4 +150,30 @@ function jumpstart_ui_preprocess_layout(&$variables) {
 function jumpstart_ui_preprocess_media(&$variables) {
   $variables['attributes']['class'][] = 'media-entity-wrapper';
   $variables['attributes']['class'][] = $variables['elements']['#media']->bundle();
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function jumpstart_ui_preprocess_pattern_hero(&$variables) {
+  /** @var \Drupal\ui_patterns\Element\PatternContext $context */
+  $context = $variables['context'];
+  $entity = $context->getProperty('entity');
+  if ($entity instanceof ParagraphInterface && $entity->bundle() == 'stanford_banner') {
+    $headline_attributes = new Attribute();
+
+    $header_behavior = $entity->getBehaviorSetting('hero_pattern', 'heading', 'h2');
+    preg_match('/^(\w+)(.*)$/', $header_behavior, $header_tag);
+    $variables['card_headline_tag'] = $header_tag[1];
+
+    if ($header_tag[2]) {
+      $headline_attributes->addClass(trim(str_replace('.', ' ', $header_tag[2])));
+    }
+
+    if ($entity->getBehaviorSetting('hero_pattern', 'hide_heading', FALSE)) {
+      $headline_attributes->addClass('visually-hidden');
+    }
+
+    $variables['card_headline_attributes'] = $headline_attributes;
+  }
 }

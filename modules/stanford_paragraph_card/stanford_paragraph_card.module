@@ -5,6 +5,9 @@
  * stanford_paragraph_card.module
  */
 
+use Drupal\Core\Template\Attribute;
+use Drupal\paragraphs\ParagraphInterface;
+
 /**
  * Implements hook_preprocess_HOOK().
  */
@@ -62,5 +65,32 @@ function stanford_paragraph_card_preprocess_ds_entity_view(array &$variables) {
     // Unset the cruft.
     unset($variables['content']['#fields']['card_button_label']);
     unset($variables['content']['#ds_configuration']['regions']['card_button_label']);
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function stanford_paragraph_card_preprocess_pattern_card(&$variables) {
+  /** @var \Drupal\ui_patterns\Element\PatternContext $context */
+  $context = $variables['context'];
+  $entity = $context->getProperty('entity');
+
+  if ($entity instanceof ParagraphInterface && $entity->bundle() == 'stanford_card') {
+    $headline_attributes = new Attribute();
+
+    $header_behavior = $entity->getBehaviorSetting('su_card_styles', 'heading', 'h2');
+    preg_match('/^(\w+)(.*)$/', $header_behavior, $header_tag);
+    $variables['card_headline_tag'] = $header_tag[1];
+
+    if ($header_tag[2]) {
+      $headline_attributes->addClass(trim(str_replace('.', ' ', $header_tag[2])));
+    }
+
+    if ($entity->getBehaviorSetting('su_card_styles', 'hide_heading', FALSE)) {
+      $headline_attributes->addClass('visually-hidden');
+    }
+
+    $variables['card_headline_attributes'] = $headline_attributes;
   }
 }
