@@ -2,11 +2,15 @@
 
 .su-card {
   .su-card__contents {
-    > h3 {
+    h2 {
+      @include type-c;
+    }
+
+    h3 {
       font-size: 1.4em;
     }
 
-    > h4 {
+    h4 {
       @include type-e;
     }
 
