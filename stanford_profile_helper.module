@@ -455,18 +455,6 @@ function stanford_profile_helper_help_section_info_alter(array &$info) {
 }
 
 /**
- * Implements hook_preprocess_HOOK().
- */
-function stanford_profile_helper_preprocess_input__submit__paragraph_action(&$variables) {
-  // Change the top banner field button from "Add @type" to "Add Top @type".
-  if ($variables['element']['#name'] == 'su_page_banner_stanford_banner_add_more') {
-    if (!is_string($variables['attributes']['value'])) {
-      $variables['attributes']['value'] = t('Add Top @type', $variables['attributes']['value']->getArguments());
-    }
-  }
-}
-
-/**
  * Implements hook_entity_field_access().
  */
 function stanford_profile_helper_entity_field_access($operation, FieldDefinitionInterface $field_definition, AccountInterface $account, FieldItemListInterface $items = NULL) {
@@ -492,6 +480,26 @@ function stanford_profile_helper_entity_field_access($operation, FieldDefinition
       return AccessResult::forbidden();
     }
   }
+  $route_match = \Drupal::routeMatch();
+  // When the page title banner is in use on the page, disable the node title
+  // field access because the field title will be used in the banner.
+  if (
+    $operation == 'view' &&
+    $field_definition->getName() == 'title' &&
+    $items?->getEntity()->getEntityTypeId() == 'node' &&
+    $items->getEntity()->bundle() == 'stanford_page' &&
+    $items->getEntity()->get('su_page_banner')->count() &&
+    $route_match->getRouteName() == 'entity.node.canonical' &&
+    $route_match->getParameter('node')->id() == $items->getEntity()->id()
+  ) {
+    // Now we know we are on the node page and the node has a banner paragraph
+    // of some sort. If the banner paragraph is the correct type, we can prevent
+    // the original node title from displaying.
+    /** @var \Drupal\paragraphs\ParagraphInterface $banner_paragraph */
+    $banner_paragraph = $items->getEntity()->get('su_page_banner')->get(0)->entity;
+    return AccessResult::forbiddenIf($banner_paragraph->bundle() == 'stanford_page_title_banner');
+  }
+
   return AccessResult::neutral();
 }
 
