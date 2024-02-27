@@ -36,6 +36,7 @@
         }
     ],
     "require": {
+        "drupal/graphql_compose": "^2.0",
         "drupal/layout_paragraphs": "^2.0",
         "seboettg/collection": "~3.1"
     },
