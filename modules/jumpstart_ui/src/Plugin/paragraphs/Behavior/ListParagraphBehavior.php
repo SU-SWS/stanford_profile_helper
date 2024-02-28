@@ -30,6 +30,17 @@ class ListParagraphBehavior extends ParagraphsBehaviorBase {
   /**
    * {@inheritDoc}
    */
+  public function defaultConfiguration() {
+    return [
+      'hide_empty' => FALSE,
+      'empty_message' => '',
+      'hide_heading' => FALSE,
+    ];
+  }
+
+  /**
+   * {@inheritDoc}
+   */
   public function buildBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state) {
     $form = parent::buildBehaviorForm($paragraph, $form, $form_state);
     $form['hide_empty'] = [
