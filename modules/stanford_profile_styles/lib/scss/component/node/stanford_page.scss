@@ -122,6 +122,10 @@
 
 .ds-entity--stanford-person {
   text-align: center;
+
+  h3 {
+    font-size: 1.4em;
+  }
 }
 
 .su-list-unstyled {
@@ -230,7 +234,8 @@
   // Publication teasers
   .ds-entity--stanford-publication {
     .su-card__contents {
-      > h2 {
+      > h2,
+      h3 {
         margin: 0;
         @include responsive-spacing('margin-bottom', 2);
 
@@ -263,6 +268,10 @@
             }
           }
         }
+      }
+
+      h3 {
+        font-size: 1.4em;
       }
 
       .su-publication-topics {
@@ -303,6 +312,17 @@
         }
 
       }
+    }
+  }
+
+  // Policy teasers
+  .ds-entity--stanford-policy {
+    h2 {
+      @include type-c;
+    }
+
+    h3 {
+      font-size: 1.4em;
     }
   }
 }
@@ -549,6 +569,10 @@
 
     .su-event-series-dek {
       display: none;
+    }
+
+    h3 {
+      font-size: 1.4em;
     }
 
     a {

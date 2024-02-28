@@ -132,7 +132,8 @@
     }
   }
 
-  h2 {
+  h2,
+  h3 {
     @include modular-spacing('margin-bottom', 1);
     @include modular-typography(2);
 

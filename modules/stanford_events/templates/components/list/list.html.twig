@@ -36,6 +36,7 @@
     {%- set link_attributes = link_attributes.addClass('su-link--external') -%}
   {%- endif %}
 {%- endif -%}
+{% set header_tag = variant == 'h3_header' ? 'h3' : 'h2' %}
 
 <div {{ attributes }}>
   <div class="su-event-list-item__date">
@@ -66,7 +67,7 @@
     {%- if url|render_clean is empty -%}
       {{- headline -}}
     {%- else -%}
-      <h2><a {{ link_attributes }} href="{{ url|render_clean }}">{{ headline|render_clean }}</a></h2>
+      <{{ header_tag }}><a {{ link_attributes }} href="{{ url|render_clean }}">{{ headline|render_clean }}</a></{{ header_tag }}>
     {%- endif -%}
 
     {# Event Subheadline  #}

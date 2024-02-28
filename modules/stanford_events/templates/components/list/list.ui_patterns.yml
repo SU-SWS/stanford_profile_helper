@@ -1,6 +1,11 @@
 events_list:
   label: Events List Item
   description: "Building block component for the events list page."
+  variants:
+    default:
+      label: Default
+    h3_header:
+      label: H3 Header
   fields:
     start_month:
       type: text

@@ -27,7 +27,7 @@
 {% if headline is not empty %}
   {% set headingID = getUniqueId(headline|render) %}
 {% endif %}
-
+{% set header_tag = variant == 'h3_header' ? 'h3' : 'h2' %}
 
 <article{{ attributes }} {% if headingID %}aria-labelledby="{{ headingID }}"{% endif %}>
 
@@ -38,9 +38,9 @@
         {%- endif -%}
 
         {% if course_list_title|render_clean %}
-          <h2 id="{{ headingID }}">
+          <{{ header_tag }} id="{{ headingID }}">
             {{- course_list_title -}}
-          </h2>
+          </{{ header_tag }}>
         {% endif %}
 
         {%- if course_list_url is not empty -%}

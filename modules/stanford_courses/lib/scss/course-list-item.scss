@@ -32,7 +32,8 @@
   }
 
   .su-course-list__title {
-    h2 {
+    h2,
+    h3 {
       @include type-c;
     }
 

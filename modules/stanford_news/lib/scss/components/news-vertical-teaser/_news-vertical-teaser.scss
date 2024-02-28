@@ -78,7 +78,8 @@
 }
 
 .su-news-vertical-teaser {
-  h2 {
+  h2,
+  h3 {
     @include modular-spacing('margin-bottom', 1);
     @include modular-spacing('margin-left', 2);
     @include modular-spacing('margin-right', 2);
@@ -114,13 +115,18 @@
       display: block;
 
       &:hover {
-        h2 {
+        h2,
+        h3 {
           text-decoration: underline;
         }
       }
 
       &:focus {
         outline: none;
+      }
+
+      @include grid-media-max("xs") {
+        padding-top: 3rem;
       }
     }
 
@@ -137,8 +143,15 @@
         @include modular-spacing('margin-left', -1);
         background-color: $su-color-bright-red;
       }
+
     }
 
+    h3 {
+      &.su-link {
+        font-size: 1.4em;
+      }
+    }
+    
     .su-link--external {
       &::after {
         height: 1.2rem;

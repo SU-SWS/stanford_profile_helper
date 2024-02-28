@@ -1,6 +1,11 @@
 course_vertical_teaser:
   label: Course Vertical Teaser
   description: "Course Vertical Teaser"
+  variants:
+    default:
+      label: Default
+    h3_header:
+      label: H3 Header
   fields:
     course_code:
       type: text
