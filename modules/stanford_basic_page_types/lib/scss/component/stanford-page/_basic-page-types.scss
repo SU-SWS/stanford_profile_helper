@@ -25,7 +25,8 @@
     }
 
     .su-card__contents {
-      @include modular-spacing("padding", 1);
+      padding: 3rem;
+      // @include modular-spacing("padding", 1);
 
       h2 {
         @include type-c;
@@ -33,8 +34,16 @@
           @include modular-spacing("margin-top", 1);
         }
 
-        margin-left: 0;
-        margin-right: 0;
+        // margin-left: 0;
+        // margin-right: 0;
+      }
+
+      h3 {
+        font-size: 1.4em;
+
+        @include grid-media-max("sm") {
+          @include modular-spacing("margin-top", 1);
+        }
       }
 
       a {

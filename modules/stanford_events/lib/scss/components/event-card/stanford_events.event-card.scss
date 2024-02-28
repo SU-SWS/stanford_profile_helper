@@ -43,7 +43,8 @@
         }
       }
 
-      h2 {
+      h2,
+      h3 {
         @include modular-typography(2);
 
         > a {
@@ -56,6 +57,10 @@
             text-decoration: underline;
           }
         }
+      }
+
+      h3 {
+        font-size: 1.4em;
       }
     }
   }
