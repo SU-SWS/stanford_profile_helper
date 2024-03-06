@@ -1,0 +1,6 @@
+services:
+  stanford_decoupled.commands:
+    class: Drupal\stanford_decoupled\Drush\Commands\StanfordDecoupledCommands
+    arguments: [ '@entity_type.manager', '@uuid' ]
+    tags:
+      - { name: drush.command }

@@ -81,7 +81,7 @@ function stanford_decoupled_next_site_insert(EntityInterface $entity) {
         ],
         'revalidator_configuration' => [
           'revalidate_page' => TRUE,
-          'additional_paths' => FALSE,
+          'additional_paths' => "/tags/views:all\n/tags/views:$node_bundle",
         ],
       ])->save();
     }
@@ -95,6 +95,32 @@ function stanford_decoupled_next_site_insert(EntityInterface $entity) {
       'configuration' => ['sites' => [$entity->id() => $entity->id()]],
       'revalidator_configuration' => [],
     ])->save();
+  }
+
+  $config_page_types = [
+    'lockup_settings',
+    'stanford_global_message',
+    'stanford_local_footer',
+    'stanford_basic_site_settings',
+    'stanford_super_footer',
+  ];
+  // Create each of the node type bundle configs.
+  foreach ($config_page_types as $config_page_type) {
+    // Make sure one doesn't already exist.
+    if (!$next_storage->load("config_pages_type.$config_page_type")) {
+      $next_storage->create([
+        'id' => "config_pages.$config_page_type",
+        'site_resolver' => 'site_selector',
+        'revalidator' => 'path',
+        'configuration' => [
+          'sites' => [$entity->id() => $entity->id()],
+        ],
+        'revalidator_configuration' => [
+          'revalidate_page' => false,
+          'additional_paths' => "/tags/config-pages",
+        ],
+      ])->save();
+    }
   }
 }
 
