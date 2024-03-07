@@ -92,10 +92,8 @@ h1 {
 
     .event-list-item__subheadline {
       @include modular-spacing('margin', null null 1 null);
-
-      h3 {
-        @include modular-typography(1);
-      }
+      @include modular-typography(1);
+      font-weight: $su-font-bold;
     }
 
     .views-field-su-event-dek {
