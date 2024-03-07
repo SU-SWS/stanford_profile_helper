@@ -24,6 +24,10 @@ class RouteSubscriber extends RouteSubscriberBase {
     if ($route = $collection->get('entity.user.collection')) {
       $route->setDefault('_title', 'Users');
     }
+    if ($route = $collection->get('ui_patterns.patterns.overview')) {
+      $route->setPath('/admin/patterns');
+      $route->setOption('_admin_route', FALSE);
+    }
   }
 
 }
