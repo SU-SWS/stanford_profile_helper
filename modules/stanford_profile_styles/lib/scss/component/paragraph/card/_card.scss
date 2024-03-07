@@ -14,8 +14,15 @@
       @include type-e;
     }
 
-    .su-font-splash {
-      font-size: 1.4em;
+    // Overwrite conflicting decanter styles for splash font card headline
+    >div {
+      &:not(.su-card__button) {
+        &.su-font-splash {
+          @include modular-spacing('margin-bottom', -1);
+
+          font-size: 1.4em;
+        }
+      }
     }
   }
 }
