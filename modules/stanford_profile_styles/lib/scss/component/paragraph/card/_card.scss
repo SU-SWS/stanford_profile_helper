@@ -19,7 +19,7 @@
       &:not(.su-card__button) {
         &.su-font-splash {
           @include modular-spacing('margin-bottom', -1);
-    
+
           font-size: 1.4em;
         }
       }
