@@ -65,8 +65,8 @@ class ListParagraphBehavior extends ParagraphsBehaviorBase {
       '#type' => 'radios',
       '#title' => $this->t('Headline Behavior'),
       '#options' => [
-        self::SHOW_HEADING => $this->t('<strong>Display heading</strong>: This displays the paragraph headline as an H2. You’ll usually want to choose this option. '),
-        self::HIDE_HEADING => $this->t('<strong>Visually hide heading</strong>: For improved accessibility, this keeps the headline in the page structure as an H2, but you won’t see it. '),
+        self::SHOW_HEADING => $this->t('<strong>Display heading</strong>: This displays the paragraph headline as an H2. You’ll usually want to choose this option.'),
+        self::HIDE_HEADING => $this->t('<strong>Visually hide heading</strong>: For improved accessibility, this keeps the headline in the page structure as an H2, but you won’t see it.'),
         self::REMOVE_HEADING => $this->t('<strong>Remove heading</strong>: This completely removes the headline from the page and assumes you have placed an H2 on the page above this paragraph.'),
       ],
       '#default_value' => $paragraph->getBehaviorSetting('list_paragraph', 'heading_behavior', self::SHOW_HEADING),

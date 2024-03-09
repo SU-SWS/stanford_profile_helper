@@ -54,27 +54,29 @@ class TeaserParagraphBehaviorTest extends UnitTestCase {
   public function testForm() {
     $plugin = TeaserParagraphBehavior::create(\Drupal::getContainer(), [], '', []);
     $paragraph = $this->createMock(ParagraphInterface::class);
-    $paragraph->method('getBehaviorSetting')->willReturn(FALSE);
+    $paragraph->method('getBehaviorSetting')->willReturn('show');
     $form = [];
     $form_state = new FormState();
     $form = $plugin->buildBehaviorForm($paragraph, $form, $form_state);
-    $this->assertArrayHasKey('hide_heading', $form);
-    $this->assertFalse($form['hide_heading']['#default_value']);
+    $this->assertArrayHasKey('heading_behavior', $form);
+    $this->assertEquals('show', $form['heading_behavior']['#default_value']);
   }
 
   public function testView() {
     $plugin = TeaserParagraphBehavior::create(\Drupal::getContainer(), [], '', []);
-    $build = ['su_entity_headline' => ['foo']];
-    $paragraph = $this->createMock(Paragraph::class);
-    $paragraph->method('getBehaviorSetting')->willReturn(TRUE);
-    $display = $this->createMock(EntityViewDisplayInterface::class);
-    $plugin->view($build, $paragraph, $display, 'foo');
-    // No changes with no items.
-    $this->assertEquals(['su_entity_headline' => ['foo']], $build);
 
-    $build['su_entity_item'][0] = [
-      '#view_mode' => 'foobar',
-      '#cache' => ['keys' => ['foobar']]
+    $paragraph = $this->createMock(Paragraph::class);
+    $paragraph->method('getBehaviorSetting')->willReturn('hide');
+    $display = $this->createMock(EntityViewDisplayInterface::class);
+
+    $build = [
+      'su_entity_headline' => ['foo'],
+      'su_entity_item' => [
+        [
+          '#view_mode' => 'foobar',
+          '#cache' => ['keys' => ['foobar']],
+        ],
+      ],
     ];
     $plugin->view($build, $paragraph, $display, 'foo');
     $this->assertContains('visually-hidden', $build['su_entity_headline']['#attributes']['class']);

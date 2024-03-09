@@ -37,7 +37,7 @@ class TeaserParagraphBehavior extends ParagraphsBehaviorBase {
    * {@inheritDoc}
    */
   public function defaultConfiguration() {
-    return ['heading_behavior' => 'show',];
+    return ['heading_behavior' => 'show'];
   }
 
   /**
@@ -49,8 +49,8 @@ class TeaserParagraphBehavior extends ParagraphsBehaviorBase {
       '#type' => 'radios',
       '#title' => $this->t('Headline Behavior'),
       '#options' => [
-        self::SHOW_HEADING => $this->t('<strong>Display heading</strong>: This displays the paragraph headline as an H2. You’ll usually want to choose this option. '),
-        self::HIDE_HEADING => $this->t('<strong>Visually hide heading</strong>: For improved accessibility, this keeps the headline in the page structure as an H2, but you won’t see it. '),
+        self::SHOW_HEADING => $this->t('<strong>Display heading</strong>: This displays the paragraph headline as an H2. You’ll usually want to choose this option.'),
+        self::HIDE_HEADING => $this->t('<strong>Visually hide heading</strong>: For improved accessibility, this keeps the headline in the page structure as an H2, but you won’t see it.'),
         self::REMOVE_HEADING => $this->t('<strong>Remove heading</strong>: This completely removes the headline from the page and assumes you have placed an H2 on the page above this paragraph.'),
       ],
       '#default_value' => $paragraph->getBehaviorSetting('stanford_teaser', 'heading_behavior', self::SHOW_HEADING),
@@ -64,8 +64,12 @@ class TeaserParagraphBehavior extends ParagraphsBehaviorBase {
   public function view(array &$build, ParagraphInterface $paragraph, EntityViewDisplayInterface $display, $view_mode) {
     $heading_behavior = $paragraph->getBehaviorSetting('stanford_teaser', 'heading_behavior', self::SHOW_HEADING);
 
-    // Heading is populated or to be removed, change the display mode of the entities.
-    if (isset($build['su_entity_headline'][0]) || $heading_behavior == self::REMOVE_HEADING) {
+    // Heading is populated or configured to be removed, change the display mode
+    // of the entities.
+    if (
+      isset($build['su_entity_item']) &&
+      (isset($build['su_entity_headline'][0]) || $heading_behavior == self::REMOVE_HEADING)
+    ) {
       foreach (Element::children($build['su_entity_item']) as $delta) {
         $build['su_entity_item'][$delta]['#view_mode'] = 'stanford_h3_card';
 
