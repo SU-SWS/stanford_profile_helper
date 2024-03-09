@@ -20,6 +20,12 @@ use Drupal\paragraphs\ParagraphsTypeInterface;
  */
 class TeaserParagraphBehavior extends ParagraphsBehaviorBase {
 
+  const SHOW_HEADING = 'show';
+
+  const HIDE_HEADING = 'hide';
+
+  const REMOVE_HEADING = 'remove';
+
   /**
    * {@inheritDoc}
    */
@@ -31,7 +37,7 @@ class TeaserParagraphBehavior extends ParagraphsBehaviorBase {
    * {@inheritDoc}
    */
   public function defaultConfiguration() {
-    return ['hide_heading' => FALSE];
+    return ['heading_behavior' => 'show',];
   }
 
   /**
@@ -39,10 +45,15 @@ class TeaserParagraphBehavior extends ParagraphsBehaviorBase {
    */
   public function buildBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state) {
     $form = parent::buildBehaviorForm($paragraph, $form, $form_state);
-    $form['hide_heading'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Visually Hide Heading'),
-      '#default_value' => $paragraph->getBehaviorSetting('stanford_teaser', 'hide_heading', FALSE),
+    $form['heading_behavior'] = [
+      '#type' => 'radios',
+      '#title' => $this->t('Headline Behavior'),
+      '#options' => [
+        self::SHOW_HEADING => $this->t('<strong>Display heading</strong>: This displays the paragraph headline as an H2. You’ll usually want to choose this option. '),
+        self::HIDE_HEADING => $this->t('<strong>Visually hide heading</strong>: For improved accessibility, this keeps the headline in the page structure as an H2, but you won’t see it. '),
+        self::REMOVE_HEADING => $this->t('<strong>Remove heading</strong>: This completely removes the headline from the page and assumes you have placed an H2 on the page above this paragraph.'),
+      ],
+      '#default_value' => $paragraph->getBehaviorSetting('stanford_teaser', 'heading_behavior', self::SHOW_HEADING),
     ];
     return $form;
   }
@@ -51,18 +62,25 @@ class TeaserParagraphBehavior extends ParagraphsBehaviorBase {
    * {@inheritDoc}
    */
   public function view(array &$build, ParagraphInterface $paragraph, EntityViewDisplayInterface $display, $view_mode) {
-    if (!isset($build['su_entity_headline'][0]) || !isset($build['su_entity_item'][0])) {
-      return;
+    $heading_behavior = $paragraph->getBehaviorSetting('stanford_teaser', 'heading_behavior', self::SHOW_HEADING);
+
+    // Heading is populated or to be removed, change the display mode of the entities.
+    if (isset($build['su_entity_headline'][0]) || $heading_behavior == self::REMOVE_HEADING) {
+      foreach (Element::children($build['su_entity_item']) as $delta) {
+        $build['su_entity_item'][$delta]['#view_mode'] = 'stanford_h3_card';
+
+        // Replace the cache keys to match the view mode.
+        $cache_key = array_search('stanford_card', $build['su_entity_item'][$delta]['#cache']['keys']);
+        $build['su_entity_item'][$delta]['#cache']['keys'][$cache_key] = 'stanford_h3_card';
+      }
     }
-    if ($paragraph->getBehaviorSetting('stanford_teaser', 'hide_heading', FALSE)) {
+
+    if ($heading_behavior == self::HIDE_HEADING) {
       $build['su_entity_headline']['#attributes']['class'][] = 'visually-hidden';
     }
-    foreach (Element::children($build['su_entity_item']) as $delta) {
-      $build['su_entity_item'][$delta]['#view_mode'] = 'stanford_h3_card';
 
-      // Replace the cache keys to match the view mode.
-      $cache_key = array_search('stanford_card', $build['su_entity_item'][$delta]['#cache']['keys']);
-      $build['su_entity_item'][$delta]['#cache']['keys'][$cache_key] = 'stanford_h3_card';
+    if ($heading_behavior == self::REMOVE_HEADING) {
+      unset($build['su_entity_headline']);
     }
   }
 
