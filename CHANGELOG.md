@@ -1,5 +1,19 @@
 # Stanford Profile Helper
 
+9.6.0
+--------------------------------------------------------------------------------
+_Release Date: 2024-03-14_
+
+- Clean up Algolia search index data before sending
+- D8CORE-7333 Change teaser and list paragraph headline behaviors (#300)
+- D8CORE-7307 Move /patterns to /admin/patterns
+- D8CORE-7189 Update splash font card headline margin-bottom (#299)
+- Added drush command to easily connect a Next.js site
+- D8CORE-7212 Add behavior to teaser paragraph to change headers to h3 (#294)
+- D8CORE-7208 D8CORE-7209 Prevent page title when using page title banner' (#291)
+- D8CORE-7211 D8CORE-7210 Add header behaviors for banner and card paragraphs (#292)
+- Updated help text for publishing scheduler (#289)
+
 9.5.1
 --------------------------------------------------------------------------------
 _Release Date: 2024-02-15_
