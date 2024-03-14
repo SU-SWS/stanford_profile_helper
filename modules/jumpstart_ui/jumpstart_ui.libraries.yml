@@ -43,19 +43,16 @@
 
 # Low level core styling. Decanter base element stuff.
 base:
-  version: VERSION
   css:
     base:
       dist/css/jumpstart_ui.base.css: {}
 
 layout:
-  version: VERSION
   css:
     base:
       dist/css/jumpstart_ui.layout.css: {}
 
 jumpstart_ui:
-  version: VERSION
   css:
     base:
       dist/css/jumpstart_ui.css: {}
@@ -65,24 +62,20 @@ jumpstart_ui:
     - core/jquery
 
 components.hero:
-  version: VERSION
   css:
     base:
       dist/css/hero.css: {}
 components.card:
-  version: VERSION
   css:
     base:
       dist/css/card.css: {}
 
 components.date_stacked:
-  version: VERSION
   css:
     base:
       dist/date-stacked/date-stacked.css: {}
 
 components.media:
-  version: VERSION
   css:
     base:
       dist/css/media.css: {}

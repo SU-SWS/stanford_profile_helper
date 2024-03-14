@@ -42,7 +42,6 @@
 # not break the component’s functionality or basic usability.
 #
 event_node:
-  version: VERSION
   css:
     component:
       dist/css/stanford_events.node.css: {}
@@ -54,7 +53,6 @@ event_node:
     - core/drupal
 
 event_views:
-  version: VERSION
   css:
     component:
       dist/css/stanford_events.views.css: {}
@@ -65,14 +63,12 @@ event_views:
     - core/jquery
 
 event_card:
-  version: VERSION
   css:
     base:
       dist/css/stanford_events.event-card.css: {}
   dependencies:
     - jumpstart_ui/components.card
 events_list:
-  version: VERSION
   css:
     base:
       dist/css/stanford_events.event-list.css: {}

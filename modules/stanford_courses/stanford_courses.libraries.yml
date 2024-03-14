@@ -44,17 +44,14 @@
 # EXAMPLE:
 #
 courses_page:
-  version: VERSION
   css:
     component:
       dist/css/stanford_courses.styles.css: {}
 course_list:
-  version: VERSION
   css:
     base:
       dist/css/course-list-item.css: {}
 course_card:
-  version: VERSION
   css:
     base:
       dist/css/course-vertical-teaser.css: {}

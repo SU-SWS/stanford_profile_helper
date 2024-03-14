@@ -42,13 +42,11 @@
 # not break the component’s functionality or basic usability.
 #
 event_series_node:
-  version: VERSION
   css:
     component:
       dist/css/stanford_events_series.node.css: {}
 
 event_series_views:
-  version: VERSION
   css:
     component:
       dist/css/stanford_events_series.views.css: {}

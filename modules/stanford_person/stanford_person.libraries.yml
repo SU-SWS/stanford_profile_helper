@@ -44,7 +44,6 @@
 # EXAMPLE:
 #
 node:
-  version: VERSION
   css:
     component:
       dist/css/stanford_person.node.css: {}
@@ -52,7 +51,6 @@ node:
     lib/js/stanford_person.js: {}
 
 views:
-  version: VERSION
   css:
     component:
       dist/css/stanford_person.views.css: {}

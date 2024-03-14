@@ -24,7 +24,7 @@ function jumpstart_ui_update_9001(&$sandbox) {
   /** @var \Drupal\paragraphs\ParagraphInterface $paragraph */
   foreach ($paragraph_storage->loadMultiple($ids) as $paragraph) {
     $behaviors = $paragraph->getAllBehaviorSettings();
-    $behaviors['list_paragraph']['hide_heading'] = TRUE;
+    $behaviors['list_paragraph']['heading_behavior'] = 'hide';
     $paragraph->setBehaviorSettings('list_paragraph', $behaviors['list_paragraph']);
 
     $view = $paragraph->get('su_list_view')->get(0)->getValue();

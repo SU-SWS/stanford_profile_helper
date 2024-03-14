@@ -42,7 +42,6 @@
 # not break the component’s functionality or basic usability.
 #
 taxonomy_menu:
-  version: VERSION
   js:
     dist/js/stanford_publication.js: {}
   dependencies:

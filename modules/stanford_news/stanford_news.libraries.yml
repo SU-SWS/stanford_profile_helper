@@ -43,7 +43,6 @@
 
 # News accelerant specific libraries.
 news_node:
-  version: VERSION
   css:
     base:
       dist/css/news-node.css: {}
@@ -54,7 +53,6 @@ news_node:
     - core/drupal
 
 news_list:
-  version: VERSION
   css:
     base:
       dist/css/news-list-item.css: {}
@@ -64,13 +62,11 @@ news_list:
     - core/jquery
 
 newsletter_signup:
-  version: VERSION
   css:
     base:
       dist/css/newsletter.css: {}
 
 news_vertical_teaser:
-  version: VERSION
   css:
     base:
       dist/css/news-vertical-teaser.css: {}
