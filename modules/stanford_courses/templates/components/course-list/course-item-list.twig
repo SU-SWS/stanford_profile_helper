@@ -59,7 +59,7 @@
 
   {%- if course_list_instructors|render|striptags('<drupal-render-placeholder>')|trim is not empty -%}
   <div class="su-course-list__instructors">
-    <h3>Instructors: </h3>{{ course_list_instructors}}
+    <span class="instructor-label">Instructors: </span>{{ course_list_instructors}}
   </div>
   {%-  endif -%}
 
