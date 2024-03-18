@@ -20,8 +20,11 @@ class PageHeadingBlock extends BlockBase {
    */
   public function defaultConfiguration() {
     $config = parent::defaultConfiguration();
-    $config['heading_text'] = "";
-    $config['wrapper'] = "h1";
+    $config += [
+      'heading_text' => '',
+      'wrapper' => 'h1',
+      'hide_heading' => FALSE,
+    ];
     return $config;
   }
 
@@ -54,6 +57,12 @@ class PageHeadingBlock extends BlockBase {
       '#default_value' => $config['wrapper'] ?? "h1",
     ];
 
+    $form['hide_heading'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Visually hide heading'),
+      '#default_value' => $config['hide_heading'] ?? FALSE,
+    ];
+
     return $form;
   }
 
@@ -65,6 +74,7 @@ class PageHeadingBlock extends BlockBase {
     $values = $form_state->getValues();
     $this->configuration['heading_text'] = $values['heading_text'];
     $this->configuration['wrapper'] = $values['wrapper'];
+    $this->configuration['hide_heading'] = $values['wrapper'];
   }
 
   /**
@@ -72,13 +82,17 @@ class PageHeadingBlock extends BlockBase {
    */
   public function build() {
     $config = $this->getConfiguration();
+    $classes = ['heading-' . $config['wrapper']];
+    if ($this->configuration['hide_heading']) {
+      $classes[] = 'visually-hidden';
+    }
     return [
       'heading' => [
         '#type' => 'html_tag',
         '#tag' => $config['wrapper'],
         '#value' => $config['heading_text'] ?? $this->t("No text provided"),
         '#attributes' => [
-          'class' => 'heading-' . $config['wrapper'],
+          'class' => $classes,
         ],
       ],
     ];
