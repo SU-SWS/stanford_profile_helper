@@ -6,6 +6,12 @@ _Release Date: 2024-03-17_
 
 - Allow heading block to be visually hidden in layout builder.
 
+9.6.3
+--------------------------------------------------------------------------------
+_Release Date: 2024-03-18_
+
+- Improve algolia data with urls.
+
 9.6.2
 --------------------------------------------------------------------------------
 _Release Date: 2024-03-18_
