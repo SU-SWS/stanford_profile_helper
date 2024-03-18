@@ -1167,19 +1167,28 @@ function stanford_profile_helper_filter_format_access(EntityInterface $entity, $
 function stanford_profile_helper_search_api_algolia_objects_alter(array &$objects, IndexInterface $index, array $items) {
   /** @var \Drupal\config_pages\ConfigPagesLoaderServiceInterface $config_page_loader */
   $config_page_loader = \Drupal::service('config_pages.loader');
+  // If the canonical url is set, use that to adjust the urls.
+  $site_domain = $config_page_loader->getValue('stanford_basic_site_settings', 'su_site_url', 0, 'uri');
+  $current_host = \Drupal::request()->getSchemeAndHttpHost();
 
   foreach ($objects as &$item) {
     // Remove fields that aren't necessary.
     unset($item['search_api_id'], $item['search_api_datasource'], $item['search_api_language']);
-    if (!isset($item['photo'])) {
+
+    // Either the canonical url hasn't been set, or it matches the current
+    // request. It would match the current request when the event is happening
+    // in the UI. If cron is running, the current host won't match the canonical
+    // url.
+    if (!$site_domain || $site_domain == $current_host) {
       continue;
     }
 
-    // If the canonical url is set, use that to adjust the photo url.
-    $site_domain = $config_page_loader->getValue('stanford_basic_site_settings', 'su_site_url', 0, 'uri');
-    if ($site_domain && !str_contains($item['photo'], $site_domain)) {
-      $photo_url = parse_url($item['photo']);
-      $item['photo'] = str_replace($photo_url['scheme'] . '://' . $photo_url['host'], $site_domain, $item['photo']);
+    // Change the urls from the current host to the canonical url.
+    foreach ($item as &$field) {
+      if (!is_string($field) || !str_contains($field, $current_host)) {
+        continue;
+      }
+      $field = str_replace($current_host, $site_domain, $field);
     }
   }
 }
