@@ -87,6 +87,7 @@ class PageHeadingBlockTest extends UnitTestCase {
     $title_text = $this->getRandomGenerator()->string();
     $form_state->setValue('heading_text', $title_text);
     $form_state->setValue('wrapper', 'h2');
+    $form_state->setValue('hide_heading', TRUE);
     $this->block->blockSubmit($form, $form_state);
     $new_config = $this->block->getConfiguration();
     $this->assertEquals($title_text, $new_config['heading_text']);
@@ -99,7 +100,7 @@ class PageHeadingBlockTest extends UnitTestCase {
     $this->assertEquals("h2", $build['heading']['#tag']);
     $this->assertEquals($build['heading']['#value'], $title_text);
     $this->assertEquals($build['heading']['#attributes'], [
-      'class' => 'heading-h2',
+      'class' => ['heading-h2', 'visually-hidden'],
     ]);
   }
 
