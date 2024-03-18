@@ -6,6 +6,12 @@ _Release Date: 2024-03-17_
 
 - Allow heading block to be visually hidden in layout builder.
 
+9.6.2
+--------------------------------------------------------------------------------
+_Release Date: 2024-03-18_
+
+- Removed hard coded h3 header in course list pattern
+
 9.6.0
 --------------------------------------------------------------------------------
 _Release Date: 2024-03-14_
