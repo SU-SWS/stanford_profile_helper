@@ -2,7 +2,7 @@ name: 'Jumpstart UI'
 type: module
 description: 'Provides UI Tools for Jumpstart Projects'
 package: Stanford
-version: 9.6.3
+version: 9.6.4
 core_version_requirement: ^9 || ^10
 dependencies:
   - components:components

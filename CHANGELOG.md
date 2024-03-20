@@ -1,10 +1,10 @@
 # Stanford Profile Helper
 
-9.6.1
+9.6.4
 --------------------------------------------------------------------------------
-_Release Date: 2024-03-17_
+_Release Date: 2024-03-20_
 
-- Allow heading block to be visually hidden in layout builder.
+- Improve algolia search indexing primarily for intranet sites.
 
 9.6.3
 --------------------------------------------------------------------------------
@@ -17,6 +17,13 @@ _Release Date: 2024-03-18_
 _Release Date: 2024-03-18_
 
 - Removed hard coded h3 header in course list pattern
+
+9.6.1
+--------------------------------------------------------------------------------
+_Release Date: 2024-03-17_
+
+- Allow heading block to be visually hidden in layout builder.
+
 
 9.6.0
 --------------------------------------------------------------------------------
