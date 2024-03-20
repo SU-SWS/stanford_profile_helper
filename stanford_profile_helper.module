@@ -1148,7 +1148,7 @@ function stanford_profile_helper_search_api_processor_info_alter(array &$process
  * Implements hook_entity_view_display_alter().
  */
 function stanford_profile_helper_entity_view_display_alter(EntityViewDisplayInterface $display, array $context) {
-  if ($context['view_mode'] == 'search_indexing' && $context['entity_type'] == 'node') {
+  if (str_contains($context['view_mode'], 'search_indexing') && $context['entity_type'] == 'node') {
     // The title is already in the template, it's not needed in the display.
     $display->removeComponent('title');
   }
@@ -1167,28 +1167,41 @@ function stanford_profile_helper_filter_format_access(EntityInterface $entity, $
 function stanford_profile_helper_search_api_algolia_objects_alter(array &$objects, IndexInterface $index, array $items) {
   /** @var \Drupal\config_pages\ConfigPagesLoaderServiceInterface $config_page_loader */
   $config_page_loader = \Drupal::service('config_pages.loader');
+
   // If the canonical url is set, use that to adjust the urls.
   $site_domain = $config_page_loader->getValue('stanford_basic_site_settings', 'su_site_url', 0, 'uri');
   $current_host = \Drupal::request()->getSchemeAndHttpHost();
 
+  // If there is no HTML, the item can not be indexed, so remove it.
+  $objects = array_filter($objects, fn($item) => !empty($item['html']));
+
   foreach ($objects as &$item) {
     // Remove fields that aren't necessary.
-    unset($item['search_api_id'], $item['search_api_datasource'], $item['search_api_language']);
+    unset($item['search_api_datasource'], $item['search_api_language'], $item['status']);
 
-    // Either the canonical url hasn't been set, or it matches the current
-    // request. It would match the current request when the event is happening
-    // in the UI. If cron is running, the current host won't match the canonical
-    // url.
-    if (!$site_domain || $site_domain == $current_host) {
-      continue;
-    }
-
-    // Change the urls from the current host to the canonical url.
-    foreach ($item as &$field) {
-      if (!is_string($field) || !str_contains($field, $current_host)) {
-        continue;
+    foreach ($item as $name => &$field) {
+      // Data that is being sent as the taxonomy term names should always be
+      // sent as an array of strings. When the node is only configured with one
+      // term in the field, it tries to send it as a string. So we force to be
+      // an array.
+      $property_path = $index->getField($name)?->getPropertyPath() ?: '';
+      if (is_string($field) && str_contains($property_path, ':entity:name')) {
+        $field = [$field];
       }
-      $field = str_replace($current_host, $site_domain, $field);
+
+      // Either the canonical url hasn't been set, or it matches the current
+      // request. It would match the current request when the event is happening
+      // in the UI. If cron is running, the current host won't match the canonical
+      // url.
+      if (
+        $site_domain &&
+        $site_domain != $current_host &&
+        is_string($field) &&
+        str_contains($field, $current_host)
+      ) {
+        // Change the urls from the current host to the canonical url.
+        $field = str_replace($current_host, $site_domain, $field);
+      }
     }
   }
 }

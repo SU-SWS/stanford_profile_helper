@@ -13,6 +13,7 @@ use Drupal\Core\StreamWrapper\StreamWrapperManager;
 use Drupal\file\FileInterface;
 use Drupal\node\NodeInterface;
 use Drupal\paragraphs\ParagraphInterface;
+use Drupal\search_api\IndexInterface;
 use Drupal\stanford_intranet\Plugin\Field\FieldType\EntityAccessFieldType;
 use Drupal\user\RoleInterface;
 use Symfony\Component\Finder\Finder;
@@ -117,7 +118,7 @@ function stanford_intranet_library_info_build() {
  */
 function stanford_intranet_entity_create_access(AccountInterface $account, array $context, $entity_bundle) {
   // Block access to uploading files on the intranet. Leave the door open for
-  // the super user account though.
+  // the user 1 account though.
   if (
     $context['entity_type_id'] == 'media' &&
     $entity_bundle == 'file' &&
@@ -134,10 +135,14 @@ function stanford_intranet_entity_create_access(AccountInterface $account, array
  * Implements hook_entity_access().
  */
 function stanford_intranet_entity_access(EntityInterface $entity, $operation, AccountInterface $account) {
+
   // Paragraphs inherit their access from the parents they live on, so we can
   // ignore them.
+  // Check for the role because doing `$account->isAuthenticated() only checks
+  // for the uid > 0. This doesn't work for search_api functionality, so just
+  // check for the role instead.
   if (
-    $account->isAnonymous() &&
+    !in_array(RoleInterface::AUTHENTICATED_ID, $account->getRoles()) &&
     \Drupal::state()->get('stanford_intranet', FALSE) &&
     !($entity instanceof ParagraphInterface)
   ) {
@@ -236,8 +241,11 @@ function stanford_intranet_node_grants(AccountInterface $account, $op) {
 function stanford_intranet_user_role_insert(RoleInterface $role) {
   $state = \Drupal::state()->get('stanford_intranet.rids', []);
   $state = array_flip($state);
+  $roles = \Drupal::entityTypeManager()
+    ->getStorage('user_role')
+    ->loadMultiple();
 
-  foreach (array_keys(user_role_names()) as $role_id) {
+  foreach (array_keys($roles) as $role_id) {
     if (!in_array($role_id, $state)) {
       $state[] = $role_id;
     }
@@ -262,4 +270,24 @@ function stanford_intranet_form_node_form_alter(&$form, FormStateInterface $form
   if (isset($form[EntityAccessFieldType::FIELD_NAME])) {
     $form[EntityAccessFieldType::FIELD_NAME]['#group'] = 'revision_information';
   }
+}
+
+/**
+ * Implements hook_search_api_algolia_objects_alter().
+ */
+function stanford_intranet_search_api_algolia_objects_alter(array &$objects, IndexInterface $index, array $items) {
+  if (!\Drupal::state()->get('stanford_intranet', FALSE)) {
+    return;
+  }
+  $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+  $current_user = \Drupal::currentUser();
+
+  // Filters out items that the current user (search_api configured) does not
+  // have access to view.
+  $objects = array_filter($objects, function($item) use ($node_storage, $current_user) {
+    $nodes = $node_storage->loadByProperties(['uuid' => $item['objectID']]);
+    /** @var \Drupal\node\NodeInterface $node */
+    $node = reset($nodes);
+    return $node->access('view', $current_user);
+  });
 }
