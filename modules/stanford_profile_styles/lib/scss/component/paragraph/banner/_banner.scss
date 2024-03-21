@@ -1,0 +1,24 @@
+@charset 'UTF-8';
+
+.su-card {
+  section.su-card__contents {
+    h2 {
+      @include type-c;
+    }
+
+    h3 {
+      font-size: 1.4em;
+    }
+
+    h4 {
+      @include type-e;
+    }
+
+    // Overwrite conflicting decanter styles for splash font card headline
+    div.su-font-splash {
+      @include modular-spacing('margin-bottom', -1);
+
+      font-size: 1.4em;
+    }
+  }
+}
