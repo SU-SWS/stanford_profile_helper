@@ -9,6 +9,7 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Session\UserSession;
 use Drupal\Core\StreamWrapper\StreamWrapperManager;
 use Drupal\file\FileInterface;
 use Drupal\node\NodeInterface;
@@ -270,24 +271,4 @@ function stanford_intranet_form_node_form_alter(&$form, FormStateInterface $form
   if (isset($form[EntityAccessFieldType::FIELD_NAME])) {
     $form[EntityAccessFieldType::FIELD_NAME]['#group'] = 'revision_information';
   }
-}
-
-/**
- * Implements hook_search_api_algolia_objects_alter().
- */
-function stanford_intranet_search_api_algolia_objects_alter(array &$objects, IndexInterface $index, array $items) {
-  if (!\Drupal::state()->get('stanford_intranet', FALSE)) {
-    return;
-  }
-  $node_storage = \Drupal::entityTypeManager()->getStorage('node');
-  $current_user = \Drupal::currentUser();
-
-  // Filters out items that the current user (search_api configured) does not
-  // have access to view.
-  $objects = array_filter($objects, function($item) use ($node_storage, $current_user) {
-    $nodes = $node_storage->loadByProperties(['uuid' => $item['objectID']]);
-    /** @var \Drupal\node\NodeInterface $node */
-    $node = reset($nodes);
-    return $node->access('view', $current_user);
-  });
 }

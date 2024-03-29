@@ -199,24 +199,6 @@ function _stanford_profile_helper_purge_path($path) {
 }
 
 /**
- * Implements hook_search_api_index_items_alter().
- */
-function stanford_profile_helper_search_api_index_items_alter(IndexInterface $index, array &$items) {
-  $exclude_pages = \Drupal::config('system.site')->get('page');
-  unset($exclude_pages['front']);
-  // Remove the 404, and 403 from indexing for search results.
-  /** @var \Drupal\search_api\Item\Item $item */
-  foreach ($items as $item_id => $item) {
-    $entity = $item->getOriginalObject()->getValue();
-    if ($entity instanceof NodeInterface) {
-      if (in_array('/node/' . $entity->id(), $exclude_pages)) {
-        unset($items[$item_id]);
-      }
-    }
-  }
-}
-
-/**
  * Implements hook_page_attachments().
  */
 function stanford_profile_helper_page_attachments(array &$attachments) {
@@ -1172,12 +1154,9 @@ function stanford_profile_helper_search_api_algolia_objects_alter(array &$object
   $site_domain = $config_page_loader->getValue('stanford_basic_site_settings', 'su_site_url', 0, 'uri');
   $current_host = \Drupal::request()->getSchemeAndHttpHost();
 
-  // If there is no HTML, the item can not be indexed, so remove it.
-  $objects = array_filter($objects, fn($item) => !empty($item['html']));
-
   foreach ($objects as &$item) {
     // Remove fields that aren't necessary.
-    unset($item['search_api_datasource'], $item['search_api_language'], $item['status']);
+    unset($item['search_api_datasource'], $item['status']);
 
     foreach ($item as $name => &$field) {
       // Data that is being sent as the taxonomy term names should always be
