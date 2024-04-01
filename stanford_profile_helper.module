@@ -27,6 +27,7 @@ use Drupal\search_api\IndexInterface;
 use Drupal\stanford_profile_helper\StanfordProfileHelper;
 use Drupal\taxonomy\TermInterface;
 use Drupal\taxonomy_menu\Plugin\Menu\TaxonomyMenuMenuLink;
+use Drupal\user\RoleInterface;
 use Drupal\views\ViewEntityInterface;
 
 /**
@@ -971,8 +972,13 @@ function _stanford_profile_helper_get_assignable_roles(): array {
     $role_delegation = \Drupal::service('delegatable_roles');
     return $role_delegation->getAssignableRoles(\Drupal::currentUser());
   }
-
-  return user_role_names(TRUE);
+  $roles = \Drupal::entityTypeManager()
+    ->getStorage('user_role')
+    ->loadMultiple();
+  unset($roles[RoleInterface::ANONYMOUS_ID]);
+  return array_map(function($role) {
+    return $role->label();
+  }, $roles);
 }
 
 /**

@@ -4,7 +4,7 @@ namespace Drupal\Tests\response_code_condition\Unit\Plugin\Condition;
 
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Form\FormState;
-use Drupal\Core\Http\RequestStack;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Drupal\response_code_condition\Plugin\Condition\ResponseCodeCondition;
 use Drupal\Tests\UnitTestCase;
 use Symfony\Component\HttpFoundation\ParameterBag;
