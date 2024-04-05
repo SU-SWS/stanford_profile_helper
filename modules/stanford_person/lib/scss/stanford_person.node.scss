@@ -205,6 +205,11 @@
 
     overflow-wrap: break-word;
 
+    @include grid-media-max('md') {
+      margin-left: 20px;
+      position: relative;
+    }
+
     .node-stanford-person-su-person-location-name,
     .node-stanford-person-su-person-telephone,
     .node-stanford-person-su-person-contact,
@@ -281,7 +286,7 @@
           content: "\f3c5";
 
           @include grid-media-max('sm') {
-            left: -16px;
+            left: -20px;
           }
         }
       }
@@ -295,7 +300,7 @@
           transform: scaleX(-1);
 
           @include grid-media-max('sm') {
-            left: -16px;
+            left: -20px;
           }
         }
       }
@@ -309,7 +314,7 @@
           transform: scaleX(-1);
 
           @include grid-media-max('sm') {
-            left: -17px;
+            left: -20px;
           }
         }
       }
