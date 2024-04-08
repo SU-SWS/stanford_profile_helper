@@ -6,11 +6,13 @@
  */
 
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\graphql\GraphQL\Execution\FieldContext;
 use Drupal\graphql_compose\Plugin\GraphQLCompose\GraphQLComposeFieldTypeInterface;
 use Drupal\paragraphs\ParagraphInterface;
+use Drupal\node\NodeInterface;
 
 /**
  * Implements hook_ENTITY_TYPE_access().
@@ -18,6 +20,79 @@ use Drupal\paragraphs\ParagraphInterface;
 function stanford_decoupled_layout_access(EntityInterface $entity, $operation, AccountInterface $account) {
   // Only allow access if the site is decoupled. Otherwise, don't change access.
   return AccessResult::allowedIf($operation == 'view' && _stanford_decoupled_is_decoupled());
+}
+
+/**
+ * Implements hook_entity_insert().
+ */
+function stanford_decoupled_entity_insert(EntityInterface $entity) {
+  _stanford_decoupled_entity_changes($entity);
+}
+
+/**
+ * Implements hook_entity_update().
+ */
+function stanford_decoupled_entity_update(EntityInterface $entity) {
+  _stanford_decoupled_entity_changes($entity);
+}
+
+/**
+ * Implement hook_entity_delete().
+ */
+function stanford_decoupled_entity_delete(EntityInterface $entity) {
+  _stanford_decoupled_entity_changes($entity);
+}
+
+/**
+ * Trigger Next module for on-demand invalidation for referencing entities.
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $entity
+ *   Inserted, updated, or deleted entity.
+ */
+function _stanford_decoupled_entity_changes(EntityInterface $entity) {
+  if (
+    !$entity instanceof ContentEntityInterface ||
+    !_stanford_decoupled_is_decoupled()
+  ) {
+    return;
+  }
+  $entity_type_manager = \Drupal::entityTypeManager();
+  $field_storage = $entity_type_manager->getStorage('field_storage_config');
+
+  // Loop through the fields that use the changed entity as a possible target.
+  // We'll then query to find entities that do reference the entity, and call
+  // the Next functions to trigger any invalidations that are configured.
+  /** @var \Drupal\field\FieldStorageConfigInterface[] $reference_fields */
+  $reference_fields = $field_storage->loadByProperties(['settings' => ['target_type' => $entity->getEntityTypeId()]]);
+  foreach ($reference_fields as $field) {
+    $entity_storage = $entity_type_manager->getStorage($field->getTargetEntityTypeId());
+    $referencing_ids = $entity_storage->getQuery()
+      ->accessCheck(FALSE)
+      ->condition($field->getName(), $entity->id())
+      ->execute();
+
+    foreach ($referencing_ids as $referencing_id) {
+      $referencing_entity = $entity_storage->load($referencing_id);;
+
+      next_entity_update($referencing_entity);
+
+      // Now if it's a node, look to see if there was a migration that imported
+      // the node. If there was, mark the record as needing update. This will
+      // update the node on the next cron job.
+      if ($referencing_entity instanceof NodeInterface) {
+        /** @var \Drupal\migrate_plus\Entity\Migration $migration */
+        $migration_entity = \Drupal::service('stanford_migrate')
+          ->getNodesMigration($referencing_entity);
+
+        if ($migration_entity) {
+          /** @var \Drupal\migrate\Plugin\Migration $migration */
+          $migration = \Drupal::service('plugin.manager.migration')->createInstance($migration_entity->id());
+          $source_ids = $migration->getIdMap()->lookupSourceId(['nid' => $referencing_entity->id()]);
+          $migration->getIdMap()->setUpdate($source_ids);
+        }
+      }
+    }
+  }
 }
 
 /**
@@ -184,5 +259,5 @@ function _stanford_decoupled_is_decoupled(): bool {
     ->accessCheck(FALSE)
     ->count()
     ->execute();
-  return $sites_count > 0;
+  return !!$sites_count;
 }
