@@ -15,6 +15,20 @@ use Drupal\paragraphs\ParagraphInterface;
 use Drupal\node\NodeInterface;
 
 /**
+ * Implements hook_graphql_compose_field_type_alter().
+ */
+function stanford_decoupled_graphql_compose_field_type_alter(array &$field_types) {
+  $field_types['image']['class'] = 'Drupal\stanford_decoupled\Plugin\GraphQLCompose\FieldType\ImageItem';
+}
+
+/**
+ * Implements hook_graphql_compose_graphql_type_alter().
+ */
+function stanford_decoupled_graphql_compose_graphql_type_alter(array &$entity_types) {
+  $entity_types['Image']['class'] = 'Drupal\stanford_decoupled\Plugin\GraphQLCompose\SchemaType\ImageType';
+}
+
+/**
  * Implements hook_ENTITY_TYPE_access().
  */
 function stanford_decoupled_layout_access(EntityInterface $entity, $operation, AccountInterface $account) {
@@ -102,10 +116,7 @@ function stanford_decoupled_graphql_compose_field_results_alter(array &$results,
   $field_definition = $plugin->getFieldDefinition();
   if ($field_definition->getName() == 'layout_selection') {
     foreach ($results as &$result) {
-      $result = [
-        'id' => $result->id(),
-        'label' => $result->label(),
-      ];
+      $result = ['id' => $result->id(), 'label' => $result->label()];
     }
   }
 
@@ -203,7 +214,7 @@ function stanford_decoupled_next_site_insert(EntityInterface $entity) {
  * Implements hook_ENTITY_TYPE_access().
  */
 function stanford_decoupled_redirect_access(EntityInterface $entity, $operation, AccountInterface $account) {
-  if ($operation == 'view') {
+  if ($operation == 'view' && _stanford_decoupled_is_decoupled()) {
     // Allowing viewing redirecting from JSON API.
     return AccessResult::allowed();
   }
