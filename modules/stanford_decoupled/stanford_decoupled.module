@@ -179,7 +179,7 @@ function stanford_decoupled_next_site_insert(EntityInterface $entity) {
         ],
         'revalidator_configuration' => [
           'revalidate_page' => TRUE,
-          'additional_paths' => "/tags/views:all\n/tags/views:$node_bundle",
+          'additional_paths' => "/tags/views:all/views:$node_bundle",
         ],
       ])->save();
     }
