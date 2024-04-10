@@ -6,13 +6,14 @@
  */
 
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\graphql\GraphQL\Execution\FieldContext;
 use Drupal\graphql_compose\Plugin\GraphQLCompose\GraphQLComposeFieldTypeInterface;
-use Drupal\paragraphs\ParagraphInterface;
 use Drupal\node\NodeInterface;
+use Drupal\paragraphs\ParagraphInterface;
 
 /**
  * Implements hook_graphql_compose_field_type_alter().
@@ -26,6 +27,16 @@ function stanford_decoupled_graphql_compose_field_type_alter(array &$field_types
  */
 function stanford_decoupled_graphql_compose_graphql_type_alter(array &$entity_types) {
   $entity_types['Image']['class'] = 'Drupal\stanford_decoupled\Plugin\GraphQLCompose\SchemaType\ImageType';
+}
+
+/**
+ * Implements hook_library_info_alter().
+ */
+function stanford_decoupled_library_info_alter(&$libraries, $extension) {
+  if ($extension == 'editoria11y' && _stanford_decoupled_is_decoupled()) {
+    // Disable Editoria11y library if the site is decoupled to avoid confusion.
+    $libraries = [];
+  }
 }
 
 /**
@@ -148,6 +159,7 @@ function stanford_decoupled_graphql_compose_entity_base_fields_alter(array &$fie
  * When a new Next site is created, create all Next entity type configs.
  */
 function stanford_decoupled_next_site_insert(EntityInterface $entity) {
+  Cache::invalidateTags(['library_info']);
   $next_storage = \Drupal::entityTypeManager()
     ->getStorage('next_entity_type_config');
   $node_types = \Drupal::entityTypeManager()
