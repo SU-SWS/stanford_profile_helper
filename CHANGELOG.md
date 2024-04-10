@@ -1,5 +1,16 @@
 # Stanford Profile Helper
 
+9.6.7
+--------------------------------------------------------------------------------
+_Release Date: 2024-04-10_
+
+- Disable editoria11y on decoupled sites
+- Add focal point coordinates to graphql data
+- Add "Next" invalidation for referencing entities when a referenced entity changes
+- D8CORE-7296 Fix icon alignment on mobile for person detail page;
+- D8CORE-7345 Fixed heading spacing on person teasers
+- D8CORE-7299 Fine tune intranet algolia indexing (#310)
+
 9.6.6
 --------------------------------------------------------------------------------
 _Release Date: 2024-03-28_

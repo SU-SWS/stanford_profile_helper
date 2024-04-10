@@ -276,6 +276,9 @@ function stanford_decoupled_preprocess_file_link(&$variables) {
  *   True if it's intended to be decoupled.
  */
 function _stanford_decoupled_is_decoupled(): bool {
+  if (!\Drupal::entityTypeManager()->hasDefinition('next_site')) {
+    return FALSE;
+  }
   $sites_count = \Drupal::entityTypeManager()
     ->getStorage('next_site')
     ->getQuery()
