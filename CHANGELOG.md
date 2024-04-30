@@ -1,5 +1,12 @@
 # Stanford Profile Helper
 
+9.6.8
+--------------------------------------------------------------------------------
+_Release Date: 2024-04-30_
+
+- Trigger next invalidations for events when the start or end date has recently passed.
+- Tweak next path invalidation
+
 9.6.7
 --------------------------------------------------------------------------------
 _Release Date: 2024-04-10_
