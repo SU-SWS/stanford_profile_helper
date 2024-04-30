@@ -48,6 +48,40 @@ function stanford_decoupled_layout_access(EntityInterface $entity, $operation, A
 }
 
 /**
+ * Implements hook_cron().
+ */
+function stanford_decoupled_cron() {
+  $last_run = \Drupal::state()->get('stanford-decoupled-last-ran', 0);
+  $now = time();
+  $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+  $query = $node_storage->getQuery()
+    ->accessCheck(FALSE)
+    ->condition('status', TRUE);
+
+  $conditions = $query->orConditionGroup();
+
+  $start_conditions = $query->andConditionGroup();
+  $end_conditions = $query->andConditionGroup();
+
+  $start_conditions->condition('su_event_date_time.value', $last_run, '>=');
+  $start_conditions->condition('su_event_date_time.value', $now, '<=');
+
+  $end_conditions->condition('su_event_date_time.end_value', $last_run, '>=');
+  $end_conditions->condition('su_event_date_time.end_value', $now, '<=');
+
+  $conditions->condition($start_conditions);
+  $conditions->condition($end_conditions);
+
+  $query->condition($conditions);
+  $results = $query->execute();
+
+  foreach ($node_storage->loadMultiple($results) as $node) {
+    next_entity_update($node);
+  }
+  \Drupal::state()->set('stanford-decoupled-last-ran', $now);
+}
+
+/**
  * Implements hook_entity_insert().
  */
 function stanford_decoupled_entity_insert(EntityInterface $entity) {
