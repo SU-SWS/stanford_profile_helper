@@ -33,10 +33,14 @@ class ImageItem extends OrigImageItem {
     $crop_type = \Drupal::config('focal_point.settings')->get('crop_type');
 
     $crop = $focal_point_manager->getCropEntity($file, $crop_type);
-    $x = $crop->get('x')->getString();
-    $y = $crop->get('y')->getString();
-    $focal_point = $focal_point_manager->absoluteToRelative($x, $y, $width, $height);
-    return array_combine(['focalX', 'focalY'], $focal_point);
+    $x = (int) $crop->get('x')->getString();
+    $y = (int) $crop->get('y')->getString();
+
+    if ($x && $y) {
+      $focal_point = $focal_point_manager->absoluteToRelative($x, $y, $width, $height);
+      return array_combine(['focalX', 'focalY'], $focal_point);
+    }
+    return ['focalX' => 50, 'focalY' => 50];
   }
 
 }
