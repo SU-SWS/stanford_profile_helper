@@ -50,10 +50,6 @@
         text-decoration: underline;
       }
 
-      &:focus {
-        outline: none;
-      }
-
       @include grid-media-max("lg") {
         @include modular-spacing("margin-bottom", 0);
       }

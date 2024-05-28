@@ -138,10 +138,6 @@
     @include modular-typography(2);
 
     display: inline;
-
-    &:focus {
-      outline: none;
-    }
   }
 
   .su-link--external {
