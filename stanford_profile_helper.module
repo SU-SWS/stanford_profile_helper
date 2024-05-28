@@ -31,6 +31,24 @@ use Drupal\user\RoleInterface;
 use Drupal\views\ViewEntityInterface;
 
 /**
+ * Implements hook_preprocess_HOOK().
+ */
+function stanford_profile_helper_preprocess_html(&$variables) {
+  $module_handler = \Drupal::moduleHandler();
+  $environment = 'sws-other';
+
+  if ($module_handler->moduleExists('acquia_purge')) {
+    $environment = 'sws-acquia';
+  }
+
+  if ($module_handler->moduleExists('acsf')) {
+    $environment = 'sws-acsf';
+  }
+  // Add a class to the body tag to identify sws applications.
+  $variables['attributes']['class'][] = $environment;
+}
+
+/**
  * Implements hook_module_implements_alter().
  */
 function stanford_profile_helper_module_implements_alter(&$implementations, $hook) {
