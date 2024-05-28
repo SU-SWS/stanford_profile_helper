@@ -2,9 +2,15 @@
 
 namespace Drupal\stanford_person_importer\Plugin\migrate\source;
 
+use Drupal\config_pages\ConfigPagesLoaderServiceInterface;
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Url;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate_plus\Plugin\migrate\source\Url as UrlPlugin;
+use Drupal\stanford_person_importer\CapInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Source plugin for retrieving data via CAP URLs.
@@ -13,30 +19,34 @@ use Drupal\migrate_plus\Plugin\migrate\source\Url as UrlPlugin;
  *   id = "cap_url"
  * )
  */
-class CapUrl extends UrlPlugin {
+class CapUrl extends UrlPlugin implements ContainerFactoryPluginInterface {
 
   const URL_CHUNKS = 15;
 
   /**
-   * Cap service.
-   *
-   * @var \Drupal\stanford_person_importer\CapInterface
+   * {@inheritDoc}
    */
-  protected $cap;
-
-  protected $configPages;
-
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, MigrationInterface $migration) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition, $migration);
-
-    $this->cap = \Drupal::service('stanford_person_importer.cap');
-    $this->configPages = \Drupal::service('@config_pages.loader');
-    $this->configFactory = \Drupal::configFactory();
-    $this->entityTypeManager = \Drupal::entityTypeManager();
-
-    $this->sourceUrls = $this->getImporterUrls();
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition, MigrationInterface $migration = NULL) {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $migration,
+      $container->get('stanford_person_importer.cap'),
+      $container->get('config_pages.loader'),
+      $container->get('config.factory'),
+      $container->get('entity_type.manager')
+    );
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, MigrationInterface $migration, protected CapInterface $cap, protected ConfigPagesLoaderServiceInterface $configPages, protected ConfigFactoryInterface $configFactory, protected EntityTypeManagerInterface $entityTypeManager) {
+    $this->sourceUrls = $this->getImporterUrls();
+    $configuration['urls'] = $this->sourceUrls;
+    parent::__construct($configuration, $plugin_id, $plugin_definition, $migration);
+  }
 
   /**
    * Get a list of urls for the importer.
@@ -44,7 +54,7 @@ class CapUrl extends UrlPlugin {
    * @return array|null
    *   Array of urls or NULL if any errors occur.
    */
-  protected function getImporterUrls(): ?array {
+  protected function getImporterUrls(): array {
     $urls = &drupal_static('cap_source_urls');
     if ($urls !== NULL) {
       return $urls;
@@ -58,7 +68,7 @@ class CapUrl extends UrlPlugin {
       $urls = array_merge($urls, $this->getSunetUrls());
     }
     catch (\Exception $e) {
-      return NULL;
+      return [];
     }
 
     $allowed_fields = $this->getAllowedFields();
@@ -77,8 +87,8 @@ class CapUrl extends UrlPlugin {
    *   Array of CAP selectors.
    */
   protected function getAllowedFields() {
-    $allowed_fields = $this->configFactory->getEditable('migrate_plus.migration.su_stanford_person')
-      ->getOriginal('source.fields') ?: [];
+    $allowed_fields = $this->configFactory->get('migrate_plus.migration.su_stanford_person')
+      ->get('source.fields') ?: [];
     foreach ($allowed_fields as &$field) {
       $field = $field['selector'];
       if ($slash_position = strpos($field, '/')) {
@@ -128,11 +138,7 @@ class CapUrl extends UrlPlugin {
    */
   protected function getWorkgroupUrls(): array {
     $workgroups = array_filter($this->configPages->getValue('stanford_person_importer', 'su_person_workgroup', [], 'value') ?? []);
-
-    if ($workgroups) {
-      return $this->getUrlChunks($this->cap->getWorkgroupUrl($workgroups));
-    }
-    return [];
+    return $workgroups ? $this->getUrlChunks($this->cap->getWorkgroupUrl($workgroups)) : [];
   }
 
   /**
@@ -146,7 +152,9 @@ class CapUrl extends UrlPlugin {
 
     $urls = [];
     foreach (array_chunk($sunets, self::URL_CHUNKS) as $chunk) {
-      $urls[] = $this->cap->getSunetUrl($chunk)->toString(TRUE)->getGeneratedUrl();
+      $urls[] = $this->cap->getSunetUrl($chunk)
+        ->toString(TRUE)
+        ->getGeneratedUrl();
     }
     return $urls;
   }
@@ -195,4 +203,5 @@ class CapUrl extends UrlPlugin {
   protected function getCapClientSecret(): string {
     return $this->configPages->getValue('stanford_person_importer', 'su_person_cap_password', 0, 'value') ?? '';
   }
+
 }

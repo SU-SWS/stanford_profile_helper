@@ -61,6 +61,8 @@ class ConfigOverrides implements ConfigFactoryOverrideInterface {
       $overrides['migrate_plus.migration.su_stanford_person']['source']['plugin'] = 'cap_url';
       $overrides['migrate_plus.migration.su_stanford_person']['source']['authentication']['client_id'] = $this->getCapClientId();
       $overrides['migrate_plus.migration.su_stanford_person']['source']['authentication']['client_secret'] = $this->getCapClientSecret();
+
+      $overrides['migrate_plus.migration.su_stanford_person']['status'] = $this->getCapClientId() && $this->getCapClientSecret();
     }
     return $overrides;
   }
