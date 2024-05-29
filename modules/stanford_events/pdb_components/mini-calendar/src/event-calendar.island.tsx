@@ -179,13 +179,13 @@ const EventCalendar = () => {
           {Moment(currentMonth).format('MMMM YYYY')}
         </caption>
         <thead>
-          <th aria-label="Sunday">Sun</th>
-          <th aria-label="Monday">Mon</th>
-          <th aria-label="Tuesday">Tue</th>
-          <th aria-label="Wednesday">Wed</th>
-          <th aria-label="Thursday">Thu</th>
-          <th aria-label="Friday">Fri</th>
-          <th aria-label="Saturday">Sat</th>
+          <th scope="col" abbr="Sunday">Sun</th>
+          <th scope="col" abbr="Monday">Mon</th>
+          <th scope="col" abbr="Tuesday">Tue</th>
+          <th scope="col" abbr="Wednesday">Wed</th>
+          <th scope="col" abbr="Thursday">Thu</th>
+          <th scope="col" abbr="Friday">Fri</th>
+          <th scope="col" abbr="Saturday">Sat</th>
         </thead>
 
         <tbody>
