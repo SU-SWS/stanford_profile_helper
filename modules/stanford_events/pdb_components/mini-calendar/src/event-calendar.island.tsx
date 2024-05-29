@@ -4,8 +4,8 @@ import {DrupalJsonApiParams} from "drupal-jsonapi-params";
 import styled from "styled-components";
 import Jsona from "jsona";
 import Moment from "moment";
-
-import OutsideClickHandler from "./outside-click-handler";
+import useOutsideClick from "./useOutsideClick";
+import {useBoolean} from "usehooks-ts";
 
 const islandName = 'event-calendar-island'
 
@@ -149,7 +149,7 @@ const EventCalendar = () => {
 
   return (
     <div>
-      <MonthNav>
+      <MonthNav aria-label="Change calendar month">
         <Button onClick={previousMonth}>
           <i className="fas fa-chevron-left"/>
           <span className="visually-hidden">Previous Month</span>
@@ -173,18 +173,19 @@ const EventCalendar = () => {
       <Table>
         <caption
           aria-live="polite"
+          aria-atomic
           aria-current={Moment(currentMonth).format('MMMM YYYY') === Moment().format('MMMM YYYY') ? 'date' : undefined}
         >
           {Moment(currentMonth).format('MMMM YYYY')}
         </caption>
         <thead>
-        <th aria-label="Sunday">Sun</th>
-        <th aria-label="Monday">Mon</th>
-        <th aria-label="Tuesday">Tue</th>
-        <th aria-label="Wednesday">Wed</th>
-        <th aria-label="Thursday">Thu</th>
-        <th aria-label="Friday">Fri</th>
-        <th aria-label="Saturday">Sat</th>
+          <th aria-label="Sunday">Sun</th>
+          <th aria-label="Monday">Mon</th>
+          <th aria-label="Tuesday">Tue</th>
+          <th aria-label="Wednesday">Wed</th>
+          <th aria-label="Thursday">Thu</th>
+          <th aria-label="Friday">Fri</th>
+          <th aria-label="Saturday">Sat</th>
         </thead>
 
         <tbody>
@@ -242,7 +243,8 @@ const CloseButton = styled.button`
 `
 
 const DayTile = ({date, events}) => {
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const {value: dialogOpen, setValue: setDialogOpen} = useBoolean()
+
   const dayEvents = events.filter(event => {
     const start = new Date(event.su_event_date_time.value)
     return start.toLocaleDateString() === date.toLocaleDateString()
@@ -259,9 +261,12 @@ const DayTile = ({date, events}) => {
     setDialogOpen(true);
   }
 
+  const tileRef = useRef(null)
+  useOutsideClick(tileRef, closeDialog)
+
   if (dayEvents.length) {
     return (
-      <OutsideClickHandler onOutsideFocus={closeDialog}>
+      <div ref={tileRef}>
         <TileButton
           onClick={openDialog}
           aria-label={Moment(date).format('MMM Do YYYY')}
@@ -287,7 +292,7 @@ const DayTile = ({date, events}) => {
           </List>
         </Dialog>
 
-      </OutsideClickHandler>
+      </div>
     )
   }
   return (
