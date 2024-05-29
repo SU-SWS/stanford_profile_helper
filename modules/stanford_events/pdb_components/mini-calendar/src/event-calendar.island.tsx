@@ -160,7 +160,7 @@ const EventCalendar = () => {
             setCurrentMonth(new Date());
             nextButtonRef.current.focus()
           }}>
-            Today
+            <span className="visually-hidden">Return to&nbsp;</span>Today
           </Button>
         }
 
