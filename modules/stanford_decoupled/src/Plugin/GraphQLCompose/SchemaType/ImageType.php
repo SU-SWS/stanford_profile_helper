@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\stanford_decoupled\Plugin\GraphQLCompose\SchemaType;
 
+use Drupal\Core\StringTranslation\ByteSizeMarkup;
 use Drupal\graphql_compose\Plugin\GraphQLCompose\SchemaType\ImageType as OrigImageType;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
@@ -72,7 +73,7 @@ class ImageType extends OrigImageType {
           $fields['svg'] = [
             'type' => Type::string(),
             'description' => (string) $this->t('Contents of the image, if the mime is `image/svg+xml` and size <= `@size`.', [
-              '@size' => format_size($svg_max * 1024),
+              '@size' => ByteSizeMarkup::create($svg_max * 1024),
             ]),
           ];
         }

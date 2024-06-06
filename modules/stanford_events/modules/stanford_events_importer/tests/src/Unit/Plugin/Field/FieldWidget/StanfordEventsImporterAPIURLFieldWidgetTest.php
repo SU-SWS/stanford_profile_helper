@@ -46,6 +46,7 @@ class StanfordEventsImporterAPIURLFieldWidgetTest extends UnitTestCase {
    * Test.
    */
   public function setup(): void {
+    parent::setUp();
     $plugin_id = "stanford_events_importer_apiurl_field_widget";
 
     $this->container = new ContainerBuilder();

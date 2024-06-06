@@ -23,7 +23,7 @@ class StanfordEventsImporterAPIURLFieldWidgetTest extends KernelTestBase {
   /**
    * {@inheritDoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'system',
     'node',
     'user',

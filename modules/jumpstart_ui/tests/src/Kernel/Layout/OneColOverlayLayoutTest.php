@@ -14,7 +14,7 @@ class OneColOverlayLayoutTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'system',
     'jumpstart_ui',
     'components',
