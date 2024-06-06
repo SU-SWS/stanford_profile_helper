@@ -111,6 +111,7 @@ function stanford_decoupled_entity_delete(EntityInterface $entity) {
 function _stanford_decoupled_entity_changes(EntityInterface $entity) {
   if (
     !$entity instanceof ContentEntityInterface ||
+    $entity->getEntityType()->isRevisionable() ||
     !_stanford_decoupled_is_decoupled()
   ) {
     return;
