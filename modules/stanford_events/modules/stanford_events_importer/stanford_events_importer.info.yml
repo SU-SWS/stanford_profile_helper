@@ -1,8 +1,8 @@
 name: 'Stanford Events Importer'
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^9 || ^10 || ^11
 description: 'Migrate importer for stanford events.'
 type: module
-version: 9.6.10
+version: 9.6.11
 package: 'Stanford'
 dependencies:
   - config_pages:config_pages

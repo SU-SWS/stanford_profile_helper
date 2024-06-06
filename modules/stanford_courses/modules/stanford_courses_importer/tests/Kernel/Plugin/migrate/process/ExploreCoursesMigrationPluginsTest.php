@@ -45,7 +45,7 @@ class ExploreCoursesMigrationPluginsTest extends EntityKernelTestBase {
    *
    * @var array
    */
-  public static $modules = [
+  protected static $modules = [
     'system',
     'stanford_courses_importer',
     'migrate',
