@@ -2,7 +2,7 @@ name: Stanford Notifications
 description: Display a notification icon to the users when something in the platform has changed.
 core_version_requirement: ^9 || ^10 || ^11
 type: module
-version: 9.6.11
+version: 9.6.12
 package: Stanford
 dependencies:
   - drupal:user
