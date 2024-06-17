@@ -3,7 +3,7 @@ type: module
 description: 'Stanford Profile Helper Module.'
 core_version_requirement: ^9 || ^10 || ^11
 package: Stanford
-version: 9.6.12
+version: 9.6.13
 dependencies:
   - admin_toolbar:admin_toolbar
   - admin_toolbar:admin_toolbar_tools
