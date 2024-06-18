@@ -133,24 +133,7 @@ function _stanford_decoupled_entity_changes(EntityInterface $entity) {
 
     foreach ($referencing_ids as $referencing_id) {
       $referencing_entity = $entity_storage->load($referencing_id);;
-
       next_entity_update($referencing_entity);
-
-      // Now if it's a node, look to see if there was a migration that imported
-      // the node. If there was, mark the record as needing update. This will
-      // update the node on the next cron job.
-      if ($referencing_entity instanceof NodeInterface) {
-        /** @var \Drupal\migrate_plus\Entity\Migration $migration */
-        $migration_entity = \Drupal::service('stanford_migrate')
-          ->getNodesMigration($referencing_entity);
-
-        if ($migration_entity) {
-          /** @var \Drupal\migrate\Plugin\Migration $migration */
-          $migration = \Drupal::service('plugin.manager.migration')->createInstance($migration_entity->id());
-          $source_ids = $migration->getIdMap()->lookupSourceId(['nid' => $referencing_entity->id()]);
-          $migration->getIdMap()->setUpdate($source_ids);
-        }
-      }
     }
   }
 }
