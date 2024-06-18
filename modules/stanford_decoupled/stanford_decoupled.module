@@ -223,7 +223,7 @@ function stanford_decoupled_next_site_insert(EntityInterface $entity) {
   // Create each of the node type bundle configs.
   foreach ($config_page_types as $config_page_type) {
     // Make sure one doesn't already exist.
-    if (!$next_storage->load("config_pages_type.$config_page_type")) {
+    if (!$next_storage->load("config_pages.$config_page_type")) {
       $next_storage->create([
         'id' => "config_pages.$config_page_type",
         'site_resolver' => 'site_selector',
