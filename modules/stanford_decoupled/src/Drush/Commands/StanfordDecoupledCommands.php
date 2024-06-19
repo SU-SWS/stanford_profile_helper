@@ -60,9 +60,13 @@ final class StanfordDecoupledCommands extends DrushCommands {
     $site->save();
 
     $nextjs_pass = $this->passwordGenerator->generate(20);
-    $nextjs_users = $this->entityTypeManager->getStorage('user')->loadByProperties(['name' => 'nextjs']);
-    if(!$nextjs_users){
-      $nextjs_users = [$this->entityTypeManager->getStorage('user')->create(['name' => 'nextjs'])];
+    $nextjs_users = $this->entityTypeManager->getStorage('user')
+      ->loadByProperties(['name' => 'nextjs']);
+    if (!$nextjs_users) {
+      $nextjs_users = [
+        $this->entityTypeManager->getStorage('user')
+          ->create(['name' => 'nextjs', 'status' => TRUE]),
+      ];
     }
     /** @var \Drupal\user\Entity\User $nextjs_user */
     $nextjs_user = reset($nextjs_users);
@@ -71,9 +75,13 @@ final class StanfordDecoupledCommands extends DrushCommands {
       ->save();
 
     $nextjs_admin_pass = $this->passwordGenerator->generate(20);
-    $nextjs_admin_users = $this->entityTypeManager->getStorage('user')->loadByProperties(['name' => 'nextjsAdmin']);
-    if(!$nextjs_admin_users){
-      $nextjs_admin_users = [$this->entityTypeManager->getStorage('user')->create(['name' => 'nextjsAdmin'])];
+    $nextjs_admin_users = $this->entityTypeManager->getStorage('user')
+      ->loadByProperties(['name' => 'nextjsAdmin']);
+    if (!$nextjs_admin_users) {
+      $nextjs_admin_users = [
+        $this->entityTypeManager->getStorage('user')
+          ->create(['name' => 'nextjsAdmin', 'status' => TRUE]),
+      ];
     }
     $nextjs_admin_user = reset($nextjs_admin_users);
     $nextjs_admin_user->addRole('decoupled_site_users')
@@ -94,10 +102,10 @@ final class StanfordDecoupledCommands extends DrushCommands {
     }
 
     $lined_output = [];
-    foreach($output as $key => $value){
+    foreach ($output as $key => $value) {
       $lined_output[] = "$key=$value";
     }
-    $this->output()->write(implode(PHP_EOL, $lined_output).PHP_EOL);
+    $this->output()->write(implode(PHP_EOL, $lined_output) . PHP_EOL);
   }
 
 }
