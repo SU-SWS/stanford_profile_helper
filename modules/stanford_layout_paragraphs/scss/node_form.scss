@@ -75,10 +75,15 @@
 }
 
 .node-form {
-  .layout-node-form {
+  .layout-node-form,
+  > .layout-form {
     display: grid;
     gap: 40px;
     grid-template-columns: 1fr;
+
+    .layout-region {
+      width: 100%;
+    }
   }
 }
 
