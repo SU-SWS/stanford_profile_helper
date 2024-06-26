@@ -223,8 +223,8 @@ function stanford_events_preprocess_pattern_events_list(&$variables) {
   $values = $variables;
 
   // Make sure we have a string, not a Markup or array.
-  $start = (string) (is_array($values['start_month']) ? $renderer->renderPlain($values['start_month']) : $values['start_month']);
-  $end = (string) is_array($values['end_month']) ? $renderer->renderPlain($values['end_month']) : $values['end_month'];
+  $start = (string) (is_array($values['start_month']) ? $renderer->renderInIsolation($values['start_month']) : $values['start_month']);
+  $end = (string) is_array($values['end_month']) ? $renderer->renderInIsolation($values['end_month']) : $values['end_month'];
 
   $start_month = strtolower(trim(strip_tags($start))) ?: NULL;
   $end_month = strtolower(trim(strip_tags($end))) ?: NULL;

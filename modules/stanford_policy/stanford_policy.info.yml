@@ -2,7 +2,7 @@ name: Stanford Policy
 type: module
 description: Modifications and functionality to policy content type.
 package: Stanford
-core_version_requirement: ^9 || ^10 || ^11
+core_version_requirement: ^10.3 || ^11
 dependencies:
   - drupal:node
   - drupal:book

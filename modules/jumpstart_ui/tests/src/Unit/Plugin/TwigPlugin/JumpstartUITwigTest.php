@@ -34,7 +34,7 @@ class JumpstartUITwigTest extends UnitTestCase {
     $container->set('string_translation', $this->getStringTranslationStub());
 
     $renderer = $this->createMock(RendererInterface::class);
-    $renderer->method('renderPlain')->will($this->returnCallback(function($arg){
+    $renderer->method('renderInIsolation')->will($this->returnCallback(function($arg){
       return $arg['#markup'] ?? $arg;
     }));
     $this->twiggery = new JumpstartUITwig($renderer);
