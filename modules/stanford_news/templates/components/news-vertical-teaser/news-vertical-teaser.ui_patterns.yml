@@ -17,6 +17,12 @@ news-vertical-teaser:
       label: "Headline"
       description: "Text heading"
       preview: "This is a headline"
+    date:
+      type: text
+      label: Date
+    dek:
+      type: text
+      label: Dek
     news_topics:
       type: text
       label: "Topics"

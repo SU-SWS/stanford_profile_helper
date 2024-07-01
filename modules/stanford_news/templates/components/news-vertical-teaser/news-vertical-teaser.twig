@@ -56,7 +56,21 @@
   {%- if news_url is not empty -%}
     </a>
   {%- endif -%}
+
   <div class="su-card__contents">
+
+    {% if date is not empty %}
+      <div class="su-news-date">
+        {{ date }}
+      </div>
+    {% endif %}
+
+    {% if dek is not empty %}
+      <div class="su-news-dek">
+        {{ dek }}
+      </div>
+    {% endif %}
+
     <div class="news-vertical-teaser__topics">{{ news_topics }}</div>
   </div>
   {%- if news_footer is not empty -%}
