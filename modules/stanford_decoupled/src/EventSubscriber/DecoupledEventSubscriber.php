@@ -11,6 +11,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Event subscriber for events on decoupled sites.
+ *
+ * @codeCoverageIgnore
  */
 final class DecoupledEventSubscriber implements EventSubscriberInterface {
 
@@ -39,11 +41,17 @@ final class DecoupledEventSubscriber implements EventSubscriberInterface {
     // When the site is not on an Acquia environment and running via the CLI, we
     // don't need to do any invalidations. This is often for migration runs.
     if (!getenv('AH_SITE_ENVIRONMENT') && !getenv('PANTHEON_ENVIRONMENT') && PHP_SAPI == 'cli') {
-      $this->loggerFactory->get('stanford_decoupled')
-        ->info('Skipping Next invalidation for %entity_type: %id.', [
-          '%entity_type' => $event->getEntity()->getEntityType()->getLabel(),
-          '%id' => $event->getEntity()->label(),
-        ]);
+      try {
+        $this->loggerFactory->get('stanford_decoupled')
+          ->info('Skipping Next invalidation for %entity_type: %id.', [
+            '%entity_type' => $event->getEntity()->getEntityType()->getLabel(),
+            '%id' => $event->getEntity()->label(),
+          ]);
+      }
+      catch (\Exception $e) {
+        // If an entity type is deleted, there might occur an error. Since it's
+        // on local environments, we can just ignore it.
+      }
       $event->stopPropagation();
     }
   }

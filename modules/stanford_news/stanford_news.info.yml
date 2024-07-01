@@ -28,8 +28,6 @@ dependencies:
   - jumpstart_ui:jumpstart_ui
   - layout_builder_restrictions:layout_builder_restrictions
   - menu_block:menu_block
-  - page_manager:page_manager
-  - page_manager:page_manager_ui
   - paragraphs:paragraphs
   - pathauto:pathauto
   - rabbit_hole:rabbit_hole

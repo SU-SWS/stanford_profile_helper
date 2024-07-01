@@ -30,7 +30,6 @@ dependencies:
   - layout_library:layout_library
   - menu_block:menu_block
   - migrate_plus:migrate_plus
-  - page_manager:page_manager
   - pathauto:pathauto
   - rabbit_hole:rabbit_hole
   - rabbit_hole:rh_node

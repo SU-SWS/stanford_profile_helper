@@ -33,8 +33,6 @@ dependencies:
   - layout_library:layout_library
   - menu_block:menu_block
   - node_revision_delete:node_revision_delete
-  - page_manager:page_manager
-  - page_manager:page_manager_ui
   - paragraphs:paragraphs
   - pathauto:pathauto
   - rabbit_hole:rabbit_hole
