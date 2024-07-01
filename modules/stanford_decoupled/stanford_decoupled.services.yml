@@ -1,6 +1,6 @@
 services:
   stanford_decoupled.event_subscriber:
     class: Drupal\stanford_decoupled\EventSubscriber\DecoupledEventSubscriber
-    arguments: ['@logger.factory']
+    arguments: []
     tags:
       - { name: event_subscriber }
