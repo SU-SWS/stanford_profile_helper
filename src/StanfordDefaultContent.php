@@ -65,7 +65,7 @@ class StanfordDefaultContent implements StanfordDefaultContentInterface {
     }
 
     $extension_path = $this->extensionResolver->getPath($type, $name);
-    $file_path = "$extension_path/content/node/$page_uuid.yml";
+    $file_path = "$extension_path/conditional-content/node/$page_uuid.yml";
     $normalizer = self::getContentNormalizer();
 
     // Check if we have the service and the default content file exists.

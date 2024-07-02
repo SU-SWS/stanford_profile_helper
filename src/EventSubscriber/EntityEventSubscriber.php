@@ -444,10 +444,12 @@ class EntityEventSubscriber implements EventSubscriberInterface {
     }
 
     $pages = [
-      'stanford_news' => '0b83d1e9-688a-4475-9673-a4c385f26247',
-      'stanford_event' => '8ba98fcf-d390-4014-92de-c77a59b30f3b',
-      'stanford_person' => '673a8fb8-39ac-49df-94c2-ed8d04db16a7',
-      'stanford_course' => '14768832-f763-4d27-8df6-7cd784886d57',
+      'stanford_news' => ['0b83d1e9-688a-4475-9673-a4c385f26247'],
+      'stanford_event' => ['8ba98fcf-d390-4014-92de-c77a59b30f3b', '86a411a2-0b05-41bc-ae15-2184b8e81ea4'],
+      'stanford_person' => ['673a8fb8-39ac-49df-94c2-ed8d04db16a7'],
+      'stanford_course' => ['14768832-f763-4d27-8df6-7cd784886d57'],
+      'stanford_publication' => ['ce9cb7ca-6c59-4eea-9934-0a33057a7ff2'],
+      'event_series' => ['ddd5aefb-6b7a-4cd7-aa72-e8c106598bb6'],
     ];
     $bundle = $entity->bundle();
     $state_key = 'stanford_profile_helper.default_content.' . $bundle;
@@ -465,13 +467,15 @@ class EntityEventSubscriber implements EventSubscriberInterface {
         ->execute();
 
       if ((int) $count == 0) {
-        $new_entity = $this->defaultContent->createDefaultContent($pages[$bundle]);
-        if ($new_entity) {
-          $this->messenger()
-            ->addMessage($this->t('A new page was created automatically for you. View the @link page to make changes.', [
-              '@link' => Link::fromTextAndUrl($new_entity->label(), $new_entity->toUrl())
-                ->toString(),
-            ]));
+        foreach ($pages[$bundle] as $page_uuid) {
+          $new_entity = $this->defaultContent->createDefaultContent($page_uuid);
+          if ($new_entity) {
+            $this->messenger()
+              ->addMessage($this->t('A new page was created automatically for you. View the @link page to make changes.', [
+                '@link' => Link::fromTextAndUrl($new_entity->label(), $new_entity->toUrl())
+                  ->toString(),
+              ]));
+          }
         }
       }
     }
