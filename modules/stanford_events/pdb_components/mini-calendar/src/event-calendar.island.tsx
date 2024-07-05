@@ -1,11 +1,11 @@
 import {createIslandWebComponent} from 'preact-island'
-import {useEffect, useRef, useState} from "preact/compat";
+import {useCallback, useEffect, useRef, useState} from "preact/compat";
 import {DrupalJsonApiParams} from "drupal-jsonapi-params";
 import styled from "styled-components";
 import Jsona from "jsona";
 import Moment from "moment";
 import useOutsideClick from "./useOutsideClick";
-import {useBoolean} from "usehooks-ts";
+import {useBoolean, useEventListener} from "usehooks-ts";
 
 const islandName = 'event-calendar-island'
 
@@ -253,6 +253,7 @@ const CloseButton = styled.button`
 `
 
 const DayTile = ({date, events}) => {
+  const ref = useRef<HTMLDivElement>(null)
   const {value: dialogOpen, setFalse: setDialogClosed, toggle: toggleDialog} = useBoolean()
 
   const dayEvents = events.filter(event => {
@@ -262,17 +263,30 @@ const DayTile = ({date, events}) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  const closeDialog = () => {
+  const closeDialog = useCallback(() => {
     if (dialogOpen) {
       setDialogClosed()
       buttonRef.current.focus();
     }
-  }
+  }, [setDialogClosed, dialogOpen])
+
   useOutsideClick(dialogRef, closeDialog)
+
+  // If the user presses escape on the keyboard, close the container.
+  const handleEscape = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return
+
+      closeDialog()
+    },
+    [closeDialog]
+  )
+
+  useEventListener("keydown", handleEscape, ref)
 
   if (dayEvents.length) {
     return (
-      <>
+      <div ref={ref}>
         <TileButton
           ref={buttonRef}
           onClick={toggleDialog}
@@ -301,7 +315,7 @@ const DayTile = ({date, events}) => {
             </List>
           </Dialog>
         }
-      </>
+      </div>
     )
   }
   return (
