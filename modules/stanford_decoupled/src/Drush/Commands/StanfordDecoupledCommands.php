@@ -29,8 +29,8 @@ final class StanfordDecoupledCommands extends DrushCommands {
   #[CLI\Option(name: 'preview-secret', description: 'Use a specific preview secret')]
   #[CLI\Option(name: 'revalidation-secret', description: 'Use a specific revalidation secret')]
   #[CLI\Option(name: 'format', description: 'Format the result data. Available formats: json,string')]
-  #[CLI\Usage(name: 'stanford-decoupled:connect-next "https://localhost:3000"', description: 'Create a next site entity to connect with Next.JS site')]
-  public function connectNextSite($domain = 'https://localhost:3000', $options = [
+  #[CLI\Usage(name: 'stanford-decoupled:connect-next "http://localhost:3000"', description: 'Create a next site entity to connect with Next.JS site')]
+  public function connectNextSite($domain = 'http://localhost:3000', $options = [
     'id' => 'local',
     'preview-secret' => NULL,
     'revalidation-secret' => NULL,
