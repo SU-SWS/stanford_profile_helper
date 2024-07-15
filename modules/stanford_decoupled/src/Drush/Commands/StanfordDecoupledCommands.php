@@ -4,22 +4,34 @@ namespace Drupal\stanford_decoupled\Drush\Commands;
 
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\Component\Uuid\UuidInterface;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Password\PasswordGeneratorInterface;
+use Drupal\Core\Url;
+use Drupal\next\Event\EntityActionEvent;
+use Drupal\next\Event\EntityActionEventInterface;
+use Drupal\next\Event\EntityEvents;
 use Drush\Attributes as CLI;
+use Drush\Boot\DrupalBootLevels;
 use Drush\Commands\DrushCommands;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 /**
- * A Drush commandfile.
+ * Drush commands used for various tasks within a decoupled site.
  *
  * @codeCoverageIgnore No need to test drush commands.
  */
+#[CLI\Bootstrap(DrupalBootLevels::FULL)]
 final class StanfordDecoupledCommands extends DrushCommands {
+
+  use AutowireTrait;
 
   /**
    * Constructs a StanfordDecoupledCommands object.
    */
-  public function __construct(private readonly EntityTypeManagerInterface $entityTypeManager, private readonly UuidInterface $uuid, private readonly PasswordGeneratorInterface $passwordGenerator) {}
+  public function __construct(private readonly EntityTypeManagerInterface $entityTypeManager, private readonly UuidInterface $uuid, private readonly PasswordGeneratorInterface $passwordGenerator, private readonly EventDispatcherInterface $eventDispatcher) {
+    parent::__construct();
+  }
 
   /**
    * Create a next site entity to connect with NextJS site
@@ -106,6 +118,45 @@ final class StanfordDecoupledCommands extends DrushCommands {
       $lined_output[] = "$key=$value";
     }
     $this->output()->write(implode(PHP_EOL, $lined_output) . PHP_EOL);
+  }
+
+  /**
+   * Send invalidation requests to the front end for the given url.
+   */
+  #[CLI\Command(name: 'stanford-decoupled:invalidate-url', aliases: ['su-next-invalidate'])]
+  #[CLI\Argument(name: 'url', description: 'Relative URL string, starting with "/"')]
+  public function nextInvalidateUrl(string $url) {
+    try {
+      $route_params = Url::fromUserInput(trim($url))
+        ->getRouteParameters();
+    }
+    catch (\Exception $e) {
+      // Redirect urls don't have route parameters while all other entity types
+      // do. If the URL fails to get the parameters, let's look to see if there
+      // is a redirect that matches the provided path.
+      $redirect = $this->entityTypeManager->getStorage('redirect')
+        ->loadByProperties(['redirect_source' => ltrim($url, '/')]);
+
+      // No redirect and no entity that matches the provided url.
+      if (!$redirect) {
+        throw new \Exception('Provided url does not exist. Ensure the path is relative url and exists on the site.');
+      }
+      $route_params = ['redirect' => reset($redirect)->id()];
+    }
+
+    $entity_type = key($route_params);
+    $entity_id = $route_params[$entity_type];
+
+    if (!$this->entityTypeManager->hasDefinition($entity_type)) {
+      throw new \Exception('Unknown path: ' . $url);
+    }
+
+    $entity = $this->entityTypeManager->getStorage($entity_type)
+      ->load($entity_id);
+    $event = EntityActionEvent::createFromEntity($entity, EntityActionEventInterface::DELETE_ACTION);
+    $this->eventDispatcher->dispatch($event, EntityEvents::ENTITY_ACTION);
+
+    $this->io()->write('Invalidated path: ' . $url . PHP_EOL);
   }
 
 }
