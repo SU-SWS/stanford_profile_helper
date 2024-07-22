@@ -71,6 +71,7 @@
         "drupal/redirect": ">=1.8",
         "drupal/scheduler": ">=2.0",
         "drupal/search_api": ">=1.30",
+        "drupal/search_api_algolia": ">= 3.0@beta",
         "drupal/shs": ">=2.0@RC",
         "drupal/smart_date": ">=4.0",
         "drupal/smart_trim": ">=2.1",
