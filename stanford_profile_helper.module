@@ -553,6 +553,11 @@ function stanford_profile_helper_node_access(NodeInterface $node, $op, AccountIn
       return AccessResult::forbidden();
     }
   }
+
+  $locked_node_ids = \Drupal::state()->get('stanford_profile_helper.locked_admin_nodes', []);
+  if (in_array($node->id(), $locked_node_ids)) {
+    return $op === 'view' ? AccessResult::forbiddenIf($account->isAnonymous()) : AccessResult::forbidden();
+  }
   return AccessResult::neutral();
 }
 

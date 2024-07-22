@@ -50,7 +50,7 @@ abstract class SuProfileHelperKernelTestBase extends KernelTestBase {
   /**
    * {@inheritDoc}
    */
-  public function setUp(): void {
+  protected function setUp(): void {
     parent::setUp();
     $this->installEntitySchema('node');
     $this->installEntitySchema('user');
