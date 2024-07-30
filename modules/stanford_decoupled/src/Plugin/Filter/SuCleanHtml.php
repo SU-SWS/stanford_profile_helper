@@ -51,6 +51,18 @@ class SuCleanHtml extends FilterBase implements ContainerFactoryPluginInterface 
       $text = preg_replace('/<!--.*?>/', '', $text);
       // Remove white space between tags.
       $text = preg_replace('/> +?</', '><', $text);
+
+      $ns = $this->entityTypeManager->getStorage('node');
+
+      // Convert /node/### links to the url of the node.
+      preg_match_all('/href="\/node\/\d+"/', $text, $matches);
+      foreach ($matches[0] as $match) {
+        preg_match('/node\/(\d+)/', $match, $node_id);
+        $node_id = $node_id[1];
+        if ($url = $ns->load($node_id)?->toUrl()->toString()) {
+          $text = str_replace($match, 'href="' . $url . '"', $text);
+        }
+      }
     }
 
     return new FilterProcessResult(trim($text));
