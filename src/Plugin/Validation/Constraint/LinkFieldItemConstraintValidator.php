@@ -3,7 +3,6 @@
 namespace Drupal\stanford_profile_helper\Plugin\Validation\Constraint;
 
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
-use Drupal\path_alias\AliasManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\Constraint;
@@ -22,20 +21,10 @@ class LinkFieldItemConstraintValidator extends ConstraintValidator implements Co
   protected $request;
 
   /**
-   * Path alias manager service.
-   *
-   * @var \Drupal\path_alias\AliasManagerInterface
-   */
-  protected $aliasManager;
-
-  /**
    * {@inheritDoc}
    */
   public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('request_stack'),
-      $container->get('path_alias.manager')
-    );
+    return new static($container->get('request_stack'));
   }
 
   /**
@@ -43,12 +32,9 @@ class LinkFieldItemConstraintValidator extends ConstraintValidator implements Co
    *
    * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
    *   Current request stack.
-   * @param \Drupal\path_alias\AliasManagerInterface $alias_manager
-   *   Path alias manager service.
    */
-  public function __construct(RequestStack $request_stack, AliasManagerInterface $alias_manager) {
+  public function __construct(RequestStack $request_stack) {
     $this->request = $request_stack->getCurrentRequest();
-    $this->aliasManager = $alias_manager;
   }
 
   /**
