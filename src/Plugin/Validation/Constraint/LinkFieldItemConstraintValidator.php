@@ -56,8 +56,8 @@ class LinkFieldItemConstraintValidator extends ConstraintValidator implements Co
    */
   public function validate($value, Constraint $constraint) {
     /** @var \Drupal\Core\Field\FieldItemListInterface $value */
-    $link_uri = $value->get(0)->get('uri')->getString();
-    if (str_contains($link_uri, $this->request->getSchemeAndHttpHost())) {
+    $link_uri = $value->get(0)?->get('uri')?->getString();
+    if ($link_uri && str_contains($link_uri, $this->request->getSchemeAndHttpHost())) {
       $this->context->addViolation($constraint->absoluteLink);
     }
   }
