@@ -1,0 +1,9 @@
+stanford_decoupled.settings:
+  type: mapping
+  mapping:
+    referenced_invalidated_types:
+      type: sequence
+      label: Entity Types to track for decoupled invalidations
+      sequence:
+        type: string
+        label: Entity Type ID

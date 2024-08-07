@@ -14,6 +14,7 @@ use Drupal\graphql\GraphQL\Execution\FieldContext;
 use Drupal\graphql_compose\Plugin\GraphQLCompose\GraphQLComposeFieldTypeInterface;
 use Drupal\node\NodeInterface;
 use Drupal\paragraphs\ParagraphInterface;
+use Drupal\views\ViewExecutable;
 
 /**
  * Implements hook_graphql_compose_field_type_alter().
@@ -51,6 +52,9 @@ function stanford_decoupled_layout_access(EntityInterface $entity, $operation, A
  * Implements hook_cron().
  */
 function stanford_decoupled_cron() {
+  if (!_stanford_decoupled_is_decoupled()) {
+    return;
+  }
   $last_run = \Drupal::state()->get('stanford-decoupled-last-ran', 0);
   $now = time();
   $node_storage = \Drupal::entityTypeManager()->getStorage('node');
@@ -109,15 +113,22 @@ function stanford_decoupled_entity_delete(EntityInterface $entity) {
  *   Inserted, updated, or deleted entity.
  */
 function _stanford_decoupled_entity_changes(EntityInterface $entity) {
+  $tracked_types = \Drupal::config('stanford_decoupled.settings')
+    ->get('referenced_invalidated_types') ?: ['taxonomy_term', 'media'];
+
   if (
+    !in_array($entity->getEntityTypeId(), $tracked_types) ||
     !$entity instanceof ContentEntityInterface ||
-    $entity->getEntityType()->isRevisionable() ||
     !_stanford_decoupled_is_decoupled()
   ) {
     return;
   }
   $entity_type_manager = \Drupal::entityTypeManager();
   $field_storage = $entity_type_manager->getStorage('field_storage_config');
+
+  /** @var \Drupal\Core\Queue\QueueFactoryInterface $queue_factory */
+  $queue_factory = \Drupal::service('queue');
+  $queue = $queue_factory->get('decoupled_referenced_invalidator');
 
   // Loop through the fields that use the changed entity as a possible target.
   // We'll then query to find entities that do reference the entity, and call
@@ -132,8 +143,10 @@ function _stanford_decoupled_entity_changes(EntityInterface $entity) {
       ->execute();
 
     foreach ($referencing_ids as $referencing_id) {
-      $referencing_entity = $entity_storage->load($referencing_id);;
-      next_entity_update($referencing_entity);
+      $queue->createItem([
+        'entity_type' => $field->getTargetEntityTypeId(),
+        'id' => $referencing_id,
+      ]);
     }
   }
 }
@@ -279,6 +292,20 @@ function stanford_decoupled_preprocess_image(&$variables) {
 }
 
 /**
+ * Implements hook_views_pre_execute().
+ */
+function stanford_decoupled_views_pre_execute(ViewExecutable $view) {
+  $route = \Drupal::routeMatch()->getRouteName();
+  if (!($route == 'entity.node.canonical' && _stanford_decoupled_is_decoupled())) {
+    return;
+  }
+  $current_limit = $view->query->getLimit();
+  if ($current_limit <= 0 || $current_limit > 5) {
+    $view->query->setLimit(30);
+  }
+}
+
+/**
  * Implements hook_preprocess_HOOK().
  */
 function stanford_decoupled_preprocess_file_link(&$variables) {
@@ -294,14 +321,24 @@ function stanford_decoupled_preprocess_file_link(&$variables) {
  *   True if it's intended to be decoupled.
  */
 function _stanford_decoupled_is_decoupled(): bool {
+  // The site won't change in the middle of the request, so if we've already
+  // determined if it's decoupled, return that value.
+  static $is_decoupled;
+  if (!is_null($is_decoupled)) {
+    return $is_decoupled;
+  }
+
   if (!\Drupal::entityTypeManager()->hasDefinition('next_site')) {
+    $is_decoupled = FALSE;
     return FALSE;
   }
+
   $sites_count = \Drupal::entityTypeManager()
     ->getStorage('next_site')
     ->getQuery()
     ->accessCheck(FALSE)
     ->count()
     ->execute();
-  return !!$sites_count;
+  $is_decoupled = !!$sites_count;
+  return $is_decoupled;
 }
