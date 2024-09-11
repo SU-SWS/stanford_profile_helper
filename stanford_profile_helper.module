@@ -468,7 +468,19 @@ function stanford_profile_helper_entity_field_access($operation, FieldDefinition
     $items->getEntity()->id()
   ) {
     // Prevent unpublishing the home, 404 and 403 pages.
-    return stanford_profile_helper_node_access($items->getEntity(), 'delete', $account);
+    $node = $items->getEntity();
+    $site_config = \Drupal::config('system.site');
+    $node_urls = [
+      $node->toUrl()->toString(TRUE)->getGeneratedUrl(),
+      "/node/{$node->id()}",
+    ];
+
+    // If the node is configured to be the home page, 404, or 403, prevent the
+    // user from deleting. Unfortunately this only works for roles without the
+    // "Bypass content access control" permission.
+    if (array_intersect($node_urls, $site_config->get('page'))) {
+      return AccessResult::forbidden();
+    }
   }
 
   if (
