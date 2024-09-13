@@ -986,11 +986,6 @@ function stanford_profile_helper_field_widget_datetime_timestamp_no_default_form
  * Implements hook_entity_bundle_field_info_alter().
  */
 function stanford_profile_helper_entity_bundle_field_info_alter(&$fields, EntityTypeInterface $entity_type, $bundle) {
-  foreach ($fields as $field) {
-    if ($field->getType() == 'link') {
-      $field->addConstraint('link_field_item_constaint', []);
-    }
-  }
   if (
     $bundle == 'stanford_global_message' &&
     !empty($fields['su_global_msg_enabled'])
