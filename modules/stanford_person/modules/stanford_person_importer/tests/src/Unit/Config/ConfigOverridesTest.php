@@ -106,8 +106,6 @@ class ConfigOverridesTest extends UnitTestCase {
       ->willReturn(Url::fromUri('http://localhost.orgs'));
     $cap->method('getWorkgroupUrl')
       ->willReturn(Url::fromUri('http://localhost.workgroup'));
-    $cap->method('getSunetUrl')
-      ->will($this->returnCallback([$this, 'getSunetUrlCallback']));
 
     return $cap;
   }
@@ -127,13 +125,12 @@ class ConfigOverridesTest extends UnitTestCase {
   }
 
   /**
-   * Test the config overrides when theres no urls.
+   * Test the config overrides when there's no urls.
    */
   public function testEmptyConfigOverrides() {
     $overrides = $this->configOverrides->loadOverrides(['migrate_plus.migration.su_stanford_person']);
     $this->assertEmpty($overrides['migrate_plus.migration.su_stanford_person']['source']['authentication']['client_id']);
     $this->assertEmpty($overrides['migrate_plus.migration.su_stanford_person']['source']['authentication']['client_secret']);
-    $this->assertEmpty($overrides['migrate_plus.migration.su_stanford_person']['source']['urls']);
   }
 
   /**
@@ -156,38 +153,10 @@ class ConfigOverridesTest extends UnitTestCase {
         }
       });
 
-    $this->configOverrides->loadOverrides(['migrate_plus.migration.su_stanford_person']);
-
-    drupal_static_reset('cap_source_urls');
     $overrides = $this->configOverrides->loadOverrides(['migrate_plus.migration.su_stanford_person']);
 
-    $expected_urls = [
-      'http://localhost.orgs?ps=15&whitelist=fooBar,barFoo',
-      'http://localhost.workgroup?p=1&ps=15&whitelist=fooBar,barFoo',
-      'http://localhost.workgroup?p=2&ps=15&whitelist=fooBar,barFoo',
-      'http://localhost.sunet?whitelist=fooBar,barFoo',
-    ];
-    asort($expected_urls);
-    asort($overrides['migrate_plus.migration.su_stanford_person']['source']['urls']);
-    foreach ($overrides['migrate_plus.migration.su_stanford_person']['source']['urls'] as &$url) {
-      $url = urldecode($url);
-    }
-    $this->assertEquals(array_values($expected_urls), array_values($overrides['migrate_plus.migration.su_stanford_person']['source']['urls']));
-
-    $this->sunetUrlError = TRUE;
-    drupal_static_reset('cap_source_urls');
-    $overrides = $this->configOverrides->loadOverrides(['migrate_plus.migration.su_stanford_person']);
-    $this->assertFalse($overrides['migrate_plus.migration.su_stanford_person']['status']);
-  }
-
-  /**
-   * Cap mock service callback.
-   */
-  public function getSunetUrlCallback() {
-    if ($this->sunetUrlError) {
-      throw new \Exception('Error getting sunet url');
-    }
-    return Url::fromUri('http://localhost.sunet');
+    $this->assertEquals('foo', $overrides['migrate_plus.migration.su_stanford_person']['source']['authentication']['client_id']);
+    $this->assertEquals('bar', $overrides['migrate_plus.migration.su_stanford_person']['source']['authentication']['client_secret']);
   }
 
 }
