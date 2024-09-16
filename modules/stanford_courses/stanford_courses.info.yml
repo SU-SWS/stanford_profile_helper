@@ -2,7 +2,7 @@ name: 'Stanford Courses'
 type: module
 description: 'Courses content type'
 core_version_requirement: ^10.3 || ^11
-version: 9.6.15
+version: 9.7.0
 package: Stanford
 dependencies:
   - config_pages:config_pages

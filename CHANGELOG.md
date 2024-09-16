@@ -1,5 +1,30 @@
 # Stanford Profile Helper
 
+9.7.0
+--------------------------------------------------------------------------------
+_Release Date: 2024-09-16_
+
+- moved relative link url validation to stanford_fields
+- Adjust field access to avoid conflicting with node access
+- Run tests with Drupal 11 (#325)
+- Improve performance for detecting decoupled sites
+- Delete algolia records immediately upon entity deletion (#322)
+- Adjust xmlsitemap to submit to google with the correct domain
+- D8CORE-7455 Algolia Search: Decode html entities before stripping the html (#321)
+- Downgrade preact for event minicalendar
+- Added decoupled drush command to invalidate path
+- Fixed next connect drush command domain default value
+- Added escape handler on event mini calendar
+- Removed unused page_manager dependencies
+- D8CORE-7429 Style event subheadline without h2 tag
+- D8CORE-7425 Added dek and date fields for news vertical teaser cards
+- Prevent unnecessary decoupled invalidations on local environments
+- Replaced deprecated code for D11
+- Updated node form styles for Drupal 10.3
+- Fixed drush command to make nextjs users active
+- fixup for next module entity type creator
+- Update drush command to connect nextjs site
+
 9.6.15
 --------------------------------------------------------------------------------
 _Release Date: 2024-06-18_
