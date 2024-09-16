@@ -3,7 +3,7 @@ type: module
 description: 'Migration support for importing of profile information from stanford.edu.'
 core_version_requirement: ^10.3 || ^11
 package: Stanford
-version: 9.6.15
+version: 9.7.0
 dependencies:
   - 'config_pages:config_pages'
   - 'drupal:migrate'
