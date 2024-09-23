@@ -86,6 +86,57 @@ function stanford_decoupled_cron() {
 }
 
 /**
+ * Implements hook_ENTITY_TYPE_insert().
+ */
+function stanford_decoupled_node_insert(NodeInterface $node) {
+  if (
+    $node->hasField('field_menulink') &&
+    $node->get('field_menulink')->count()
+  ) {
+    _stanford_decoupled_invalidate_menus();
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update().
+ */
+function stanford_decoupled_node_update(NodeInterface $node) {
+  if (!$node->hasField('field_menulink')) {
+    return;
+  }
+  // Compare the original field values with the new field values. If there are
+  // any differences, invalidate the menu.
+  $original = $node->original->get('field_menulink')->get(0)->getValue();
+  $new = $node->get('field_menulink')->get(0)->getValue();
+  unset($new['menu_link_weight']);
+  ksort($original);
+  ksort($new);
+
+  $original = implode(':', $original);
+  $new = implode(':', $new);
+  if (md5($original) != md5($new)) {
+    _stanford_decoupled_invalidate_menus();
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_delete().
+ */
+function stanford_decoupled_node_delete(NodeInterface $node) {
+  stanford_decoupled_node_insert($node);
+}
+
+/**
+ * Create a temporary menu link entity to trigger any invalidations.
+ */
+function _stanford_decoupled_invalidate_menus(){
+  $fake_menu_link = \Drupal::entityTypeManager()
+    ->getStorage('menu_link_content')
+    ->create(['id' => 'id']);
+  next_entity_insert($fake_menu_link);
+}
+
+/**
  * Implements hook_entity_insert().
  */
 function stanford_decoupled_entity_insert(EntityInterface $entity) {
@@ -223,6 +274,19 @@ function stanford_decoupled_next_site_insert(EntityInterface $entity) {
       'revalidator' => 'redirect_path',
       'configuration' => ['sites' => [$entity->id() => $entity->id()]],
       'revalidator_configuration' => [],
+    ])->save();
+  }
+
+  if (!$next_storage->load('menu_link_content.menu_link_content')) {
+    $next_storage->create([
+      'id' => 'menu_link_content.menu_link_content',
+      'site_resolver' => 'site_selector',
+      'revalidator' => 'path',
+      'configuration' => ['sites' => [$entity->id() => $entity->id()]],
+      'revalidator_configuration' => [
+        'revalidate_page' => FALSE,
+        'additional_paths' => '/tags/menu:main',
+      ],
     ])->save();
   }
 
