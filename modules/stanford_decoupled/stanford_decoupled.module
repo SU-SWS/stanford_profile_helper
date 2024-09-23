@@ -104,11 +104,12 @@ function stanford_decoupled_node_update(NodeInterface $node) {
   if (!$node->hasField('field_menulink')) {
     return;
   }
+
   // Compare the original field values with the new field values. If there are
   // any differences, invalidate the menu.
-  $original = $node->original->get('field_menulink')->get(0)->getValue();
-  $new = $node->get('field_menulink')->get(0)->getValue();
-  unset($new['menu_link_weight']);
+  $original = $node->original?->get('field_menulink')?->get(0)?->getValue() ?: [];
+  $new = $node->get('field_menulink')?->get(0)?->getValue() ?: [];
+  unset($new['menu_link_weight'], $new['db_weights']);
   ksort($original);
   ksort($new);
 
