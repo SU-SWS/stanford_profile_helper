@@ -1,5 +1,11 @@
 # Stanford Profile Helper
 
+9.7.2
+--------------------------------------------------------------------------------
+_Release Date: 2024-09-23_
+
+- Decoupled invalidation for node edits if the node is in the menu.
+
 9.7.1
 --------------------------------------------------------------------------------
 _Release Date: 2024-09-17_
