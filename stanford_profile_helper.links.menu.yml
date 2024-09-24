@@ -1,0 +1,3 @@
+stanford_profile_helper.menu_link:
+  class: Drupal\stanford_profile_helper\Plugin\Menu\BookMenuMenuLink
+  deriver: Drupal\stanford_profile_helper\Plugin\Derivative\BookMenuMenuLink
