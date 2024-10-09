@@ -14,9 +14,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @Filter(
  *   id = "su_clean_html",
  *   title = @Translation("Clean Html"),
- *   description = @Translation("Remove line breaks, html comments, and white space between tags. Requires <code>stanford_profile_helper.decoupled</code> state to be true."),
- *   type = Drupal\filter\Plugin\FilterInterface::TYPE_TRANSFORM_IRREVERSIBLE,
- *   weight = 99
+ *   description = @Translation("Remove line breaks, html comments, and white
+ *   space between tags. Requires
+ *   <code>stanford_profile_helper.decoupled</code> state to be true."), type =
+ *   Drupal\filter\Plugin\FilterInterface::TYPE_TRANSFORM_IRREVERSIBLE, weight
+ *   = 99
  * )
  */
 class SuCleanHtml extends FilterBase implements ContainerFactoryPluginInterface {
@@ -44,28 +46,60 @@ class SuCleanHtml extends FilterBase implements ContainerFactoryPluginInterface 
    * {@inheritdoc}
    */
   public function process($text, $langcode) {
-    if ($this->isDecoupled()) {
-      // Remove line breaks.
-      $text = preg_replace('/(\r\n)+|\r+|\n+|\t+/', ' ', $text);
-      // Remove html comments.
-      $text = preg_replace('/<!--.*?>/', '', $text);
-      // Remove white space between tags.
-      $text = preg_replace('/> +?</', '><', $text);
+    $text = $this->removeRedundantTitle($text);
 
-      $ns = $this->entityTypeManager->getStorage('node');
+    if (!$this->isDecoupled()) {
+      return new FilterProcessResult($text);
+    }
 
-      // Convert /node/### links to the url of the node.
-      preg_match_all('/href="\/node\/\d+"/', $text, $matches);
-      foreach ($matches[0] as $match) {
-        preg_match('/node\/(\d+)/', $match, $node_id);
-        $node_id = $node_id[1];
-        if ($url = $ns->load($node_id)?->toUrl()->toString()) {
-          $text = str_replace($match, 'href="' . $url . '"', $text);
-        }
+    // Remove line breaks.
+    $text = preg_replace('/(\r\n)+|\r+|\n+|\t+/', ' ', $text);
+    // Remove html comments.
+    $text = preg_replace('/<!--.*?>/', '', $text);
+    // Remove white space between tags.
+    $text = preg_replace('/> +?</', '><', $text);
+
+    // Remove link attributes that result from the linkit module. They aren't
+    // necessary: data-entity-type data-entity-uuid data-entity-substitution.
+    $text = preg_replace('/ data-entity-(type|uuid|substitution)="[^"]*"/', '', $text);
+
+    $ns = $this->entityTypeManager->getStorage('node');
+
+    // Convert /node/### links to the url of the node.
+    preg_match_all('/href="\/node\/\d+"/', $text, $matches);
+    foreach ($matches[0] as $match) {
+      preg_match('/node\/(\d+)/', $match, $node_id);
+      $node_id = $node_id[1];
+      if ($url = $ns->load($node_id)?->toUrl()->toString()) {
+        $text = str_replace($match, 'href="' . $url . '"', $text);
       }
     }
 
-    return new FilterProcessResult(trim($text));
+    return new FilterProcessResult($text);
+  }
+
+  /**
+   * Remove the title attribute if it matches the link text.
+   *
+   * @param string $text
+   *   The text string to be filtered.
+   *
+   * @return string
+   *   Modified text string.
+   */
+  protected function removeRedundantTitle($text): string {
+    libxml_use_internal_errors(TRUE);
+    $dom = new \DOMDocument();
+    $dom->loadHTML('<body>' . $text, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+    $xpath = new \DOMXPath($dom);
+
+    /** @var \DOMElement $link */
+    foreach ($xpath->query('//a[@title]') as $link) {
+      if ($link->textContent == $link->getAttribute('title')) {
+        $link->removeAttribute('title');
+      }
+    }
+    return preg_replace('/<body>(.*)<\/body>/', '$1', $dom->saveHtml());
   }
 
   /**
