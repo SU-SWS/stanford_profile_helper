@@ -74,7 +74,7 @@ class SuCleanHtml extends FilterBase implements ContainerFactoryPluginInterface 
       }
     }
 
-    return new FilterProcessResult($text);
+    return new FilterProcessResult(trim($text));
   }
 
   /**
