@@ -47,7 +47,6 @@ class SuCleanHtml extends FilterBase implements ContainerFactoryPluginInterface 
    */
   public function process($text, $langcode) {
     $text = $this->removeRedundantTitle($text);
-
     if (!$this->isDecoupled()) {
       return new FilterProcessResult($text);
     }
@@ -92,14 +91,14 @@ class SuCleanHtml extends FilterBase implements ContainerFactoryPluginInterface 
     $dom = new \DOMDocument();
     $dom->loadHTML('<body>' . $text, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
     $xpath = new \DOMXPath($dom);
-
     /** @var \DOMElement $link */
     foreach ($xpath->query('//a[@title]') as $link) {
-      if ($link->textContent == $link->getAttribute('title')) {
-        $link->removeAttribute('title');
+      $title = $link->getAttribute('title');
+      if ($link->textContent == $title) {
+        $text = preg_replace('/<a([^>]*) title="' . $title . '"([^>]*)>' . $title . '<\/a>/', '<a$1$2>' . $title . '</a>', $text);
       }
     }
-    return preg_replace('/<body>(.*)<\/body>/', '$1', $dom->saveHtml());
+    return $text;
   }
 
   /**

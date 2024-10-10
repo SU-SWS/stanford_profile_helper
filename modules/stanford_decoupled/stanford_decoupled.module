@@ -12,8 +12,8 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\graphql\GraphQL\Execution\FieldContext;
 use Drupal\graphql_compose\Plugin\GraphQLCompose\GraphQLComposeFieldTypeInterface;
-use Drupal\node\NodeInterface;
 use Drupal\paragraphs\ParagraphInterface;
+use Drupal\stanford_decoupled\Config\DecoupledConfigOverrides;
 use Drupal\views\ViewExecutable;
 
 /**
@@ -34,7 +34,7 @@ function stanford_decoupled_graphql_compose_graphql_type_alter(array &$entity_ty
  * Implements hook_library_info_alter().
  */
 function stanford_decoupled_library_info_alter(&$libraries, $extension) {
-  if ($extension == 'editoria11y' && _stanford_decoupled_is_decoupled()) {
+  if ($extension == 'editoria11y' && DecoupledConfigOverrides::isDecoupled()) {
     // Disable Editoria11y library if the site is decoupled to avoid confusion.
     $libraries = [];
   }
@@ -45,14 +45,14 @@ function stanford_decoupled_library_info_alter(&$libraries, $extension) {
  */
 function stanford_decoupled_layout_access(EntityInterface $entity, $operation, AccountInterface $account) {
   // Only allow access if the site is decoupled. Otherwise, don't change access.
-  return AccessResult::allowedIf($operation == 'view' && _stanford_decoupled_is_decoupled());
+  return AccessResult::allowedIf($operation == 'view' && DecoupledConfigOverrides::isDecoupled());
 }
 
 /**
  * Implements hook_cron().
  */
 function stanford_decoupled_cron() {
-  if (!_stanford_decoupled_is_decoupled()) {
+  if (!DecoupledConfigOverrides::isDecoupled()) {
     return;
   }
   $last_run = \Drupal::state()->get('stanford-decoupled-last-ran', 0);
@@ -119,7 +119,7 @@ function _stanford_decoupled_entity_changes(EntityInterface $entity) {
   if (
     !in_array($entity->getEntityTypeId(), $tracked_types) ||
     !$entity instanceof ContentEntityInterface ||
-    !_stanford_decoupled_is_decoupled()
+    !DecoupledConfigOverrides::isDecoupled()
   ) {
     return;
   }
@@ -270,7 +270,7 @@ function stanford_decoupled_next_site_insert(EntityInterface $entity) {
  * Implements hook_ENTITY_TYPE_access().
  */
 function stanford_decoupled_redirect_access(EntityInterface $entity, $operation, AccountInterface $account) {
-  if ($operation == 'view' && _stanford_decoupled_is_decoupled()) {
+  if ($operation == 'view' && DecoupledConfigOverrides::isDecoupled()) {
     // Allowing viewing redirecting from JSON API.
     return AccessResult::allowed();
   }
@@ -292,7 +292,7 @@ function stanford_decoupled_next_site_preview_alter(array &$preview, array $cont
  * Implements hook_preprocess_HOOK().
  */
 function stanford_decoupled_preprocess_image(&$variables) {
-  $decoupled = _stanford_decoupled_is_decoupled();
+  $decoupled = DecoupledConfigOverrides::isDecoupled();
 
   if ($decoupled && (empty($variables['width']) || empty($variables['height']))) {
     $path = str_starts_with($variables['uri'], '/') ? DRUPAL_ROOT . $variables['uri'] : $variables['uri'];
@@ -309,7 +309,7 @@ function stanford_decoupled_preprocess_image(&$variables) {
  */
 function stanford_decoupled_views_pre_execute(ViewExecutable $view) {
   $route = \Drupal::routeMatch()->getRouteName();
-  if (!($route == 'entity.node.canonical' && _stanford_decoupled_is_decoupled())) {
+  if (!($route == 'entity.node.canonical' && DecoupledConfigOverrides::isDecoupled())) {
     return;
   }
   $current_limit = $view->query->getLimit();
@@ -322,36 +322,7 @@ function stanford_decoupled_views_pre_execute(ViewExecutable $view) {
  * Implements hook_preprocess_HOOK().
  */
 function stanford_decoupled_preprocess_file_link(&$variables) {
-  if (_stanford_decoupled_is_decoupled()) {
+  if (DecoupledConfigOverrides::isDecoupled()) {
     $variables['link']['#url']->setAbsolute();
   }
-}
-
-/**
- * Check if the site is configured to be decoupled.
- *
- * @return bool
- *   True if it's intended to be decoupled.
- */
-function _stanford_decoupled_is_decoupled(): bool {
-  // The site won't change in the middle of the request, so if we've already
-  // determined if it's decoupled, return that value.
-  static $is_decoupled;
-  if (!is_null($is_decoupled)) {
-    return $is_decoupled;
-  }
-
-  if (!\Drupal::entityTypeManager()->hasDefinition('next_site')) {
-    $is_decoupled = FALSE;
-    return FALSE;
-  }
-
-  $sites_count = \Drupal::entityTypeManager()
-    ->getStorage('next_site')
-    ->getQuery()
-    ->accessCheck(FALSE)
-    ->count()
-    ->execute();
-  $is_decoupled = !!$sites_count;
-  return $is_decoupled;
 }

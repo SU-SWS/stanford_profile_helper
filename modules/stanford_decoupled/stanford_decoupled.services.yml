@@ -4,3 +4,8 @@ services:
     arguments: ['@entity_type.manager']
     tags:
       - { name: event_subscriber }
+  stanford_decoupled.config_overrider:
+    class: Drupal\stanford_decoupled\Config\DecoupledConfigOverrides
+    arguments: []
+    tags:
+      - {name: config.factory.override, priority: 5}
