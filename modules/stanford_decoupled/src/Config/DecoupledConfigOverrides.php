@@ -13,11 +13,6 @@ use Drupal\Core\Config\StorageInterface;
 class DecoupledConfigOverrides implements ConfigFactoryOverrideInterface {
 
   /**
-   * Config override constructor.
-   */
-  public function __construct() {}
-
-  /**
    * {@inheritDoc}
    */
   public function loadOverrides($names) {
