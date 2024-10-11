@@ -1,5 +1,12 @@
 # Stanford Profile Helper
 
+9.8.0
+--------------------------------------------------------------------------------
+_Release Date: 2024-10-11_
+
+- SUL23-486 Remove redundant title attribute and disable responsive tables for decoupled Sites
+- Cleaned up old code.
+
 9.7.3
 --------------------------------------------------------------------------------
 _Release Date: 2024-09-24_
