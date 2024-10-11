@@ -35,6 +35,9 @@
             }
         }
     ],
+    "conflict": {
+        "drupal/page_cache_query_ignore": "*"
+    },
     "require": {
         "drupal/core": "^10.3 || ^11",
         "drupal/graphql_compose": "^2.0",
