@@ -13,6 +13,8 @@ use function Symfony\Component\String\u;
 /**
  * Layout Schema Extension.
  *
+ * @codeCoverageIgnore
+ *
  * @SchemaExtension(
  *   id = "stanford_decoupled_books",
  *   name = "Stanford Decoupled Books",

@@ -12,12 +12,13 @@ use function Symfony\Component\String\u;
 /**
  * {@inheritDoc}
  *
+ * @codeCoverageIgnore
+ *
  * @GraphQLComposeSchemaType(
  *   id = "BookLink"
  * )
  */
 class BookLink extends GraphQLComposeSchemaTypeBase {
-
 
   /**
    * {@inheritdoc}

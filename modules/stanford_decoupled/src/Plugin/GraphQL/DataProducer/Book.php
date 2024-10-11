@@ -16,6 +16,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Produces a book menu tree from an entity.
  *
+ * @codeCoverageIgnore
+ *
  * @DataProducer(
  *   id = "book",
  *   name = @Translation("Book Tree"),
