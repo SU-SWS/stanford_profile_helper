@@ -55,7 +55,7 @@ final class DecoupledEventSubscriber implements EventSubscriberInterface {
    * @param \Drupal\stanford_profile_helper\Event\MenuCacheEvent $event
    *   Triggered event.
    */
-  public function onMenuCacheClear(MenuCacheEvent $event){
+  public function onMenuCacheClear(MenuCacheEvent $event) {
     $fake_menu_link = $this->entityTypeManager->getStorage('menu_link_content')
       ->create(['id' => 'id']);
     next_entity_insert($fake_menu_link);

@@ -509,7 +509,7 @@ class EntityEventSubscriber implements EventSubscriberInterface {
   /**
    * Clear the menu cache tags and dispatch an event.
    */
-  public static function clearMenuCacheTag(){
+  public static function clearMenuCacheTag() {
     Cache::invalidateTags(['stanford_profile_helper:menu_links']);
     \Drupal::service('event_dispatcher')
       ->dispatch(new MenuCacheEvent(), MenuCacheEvent::CACHE_CLEARED);
