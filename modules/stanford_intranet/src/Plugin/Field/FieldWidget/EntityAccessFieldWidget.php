@@ -2,26 +2,24 @@
 
 namespace Drupal\stanford_intranet\Plugin\Field\FieldWidget;
 
+use Drupal\Core\Field\Attribute\FieldWidget;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\State\StateInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Plugin implementation of the 'entity_access' widget.
- *
- * @FieldWidget(
- *   id = "entity_access",
- *   module = "stanford_intranet",
- *   label = @Translation("Entity Access"),
- *   field_types = {
- *     "entity_access"
- *   },
- *   multiple_values = TRUE
- * )
  */
+#[FieldWidget(
+  id: "entity_access",
+  label: new TranslatableMarkup("Entity Access"),
+  field_types: ["entity_access"],
+  multiple_values: TRUE
+)]
 class EntityAccessFieldWidget extends WidgetBase {
 
   /**

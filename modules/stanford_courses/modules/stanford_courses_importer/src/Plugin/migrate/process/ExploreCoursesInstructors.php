@@ -2,17 +2,15 @@
 
 namespace Drupal\stanford_courses_importer\Plugin\migrate\process;
 
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\Row;
 
 /**
  * Provides a 'ExploreCoursesInstructors' migrate process plugin.
- *
- * @MigrateProcessPlugin(
- *  id = "explore_courses_instructors"
- * )
  */
+#[MigrateProcess(id: "explore_courses_instructors")]
 class ExploreCoursesInstructors extends ProcessPluginBase {
 
   /**

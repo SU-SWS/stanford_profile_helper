@@ -4,9 +4,11 @@ namespace Drupal\stanford_courses\Plugin\Field\FieldWidget;
 
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Component\Utility\UrlHelper;
+use Drupal\Core\Field\Attribute\FieldWidget;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
 use Drupal\link\Plugin\Field\FieldWidget\LinkWidget;
 use GuzzleHttp\ClientInterface;
@@ -14,15 +16,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Plugin implementation of the 'explore_courses_url' widget.
- *
- * @FieldWidget(
- *   id = "explore_courses_url",
- *   label = @Translation("ExploreCourses"),
- *   field_types = {
- *     "link"
- *   }
- * )
  */
+#[FieldWidget(
+  id: "explore_courses_url",
+  label: new TranslatableMarkup("ExploreCourses"),
+  field_types: ["link"]
+)]
 class ExploreCoursesUrlWidget extends LinkWidget {
 
   /**

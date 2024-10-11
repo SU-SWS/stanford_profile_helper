@@ -2,6 +2,7 @@
 
 namespace Drupal\stanford_events_importer\Plugin\migrate\process;
 
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
@@ -26,11 +27,8 @@ use Drupal\migrate\Row;
  * @endcode
  *
  * This will perform the mathematical operation on the date strings.
- *
- * @MigrateProcessPlugin(
- *   id = "stanford_events_datemath"
- * )
  */
+#[MigrateProcess(id: "stanford_events_datemath")]
 class DateMath extends ProcessPluginBase {
 
   /**

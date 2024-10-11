@@ -4,23 +4,23 @@ namespace Drupal\stanford_decoupled\Plugin\Filter;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\filter\Attribute\Filter;
 use Drupal\filter\FilterProcessResult;
 use Drupal\filter\Plugin\FilterBase;
+use Drupal\filter\Plugin\FilterInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a 'Clean Html' filter.
- *
- * @Filter(
- *   id = "su_clean_html",
- *   title = @Translation("Clean Html"),
- *   description = @Translation("Remove line breaks, html comments, and white
- *   space between tags. Requires
- *   <code>stanford_profile_helper.decoupled</code> state to be true."), type =
- *   Drupal\filter\Plugin\FilterInterface::TYPE_TRANSFORM_IRREVERSIBLE, weight
- *   = 99
- * )
  */
+#[Filter(
+  id: "su_clean_html",
+  title: new TranslatableMarkup("Clean Html"),
+  description: new TranslatableMarkup("Remove line breaks, html comments, and white space between tags."),
+  type: FilterInterface::TYPE_TRANSFORM_IRREVERSIBLE,
+  weight: 99
+)]
 class SuCleanHtml extends FilterBase implements ContainerFactoryPluginInterface {
 
   /**

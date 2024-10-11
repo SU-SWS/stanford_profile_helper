@@ -3,16 +3,17 @@
 namespace Drupal\jumpstart_ui\Plugin\Block;
 
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Block\Attribute\Block;
 use Drupal\Core\Block\BlockBase;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
  * Provides a block with a hidden anchor.
- *
- * @Block(
- *   id = "jumpstart_ui_skipnav_main_anchor",
- *   admin_label = @Translation("Main content anchor target"),
- * )
  */
+#[Block(
+  id: "jumpstart_ui_skipnav_main_anchor",
+  admin_label: new TranslatableMarkup("Main content anchor target")
+)]
 class SkipNavAnchorBlock extends BlockBase {
 
   /**

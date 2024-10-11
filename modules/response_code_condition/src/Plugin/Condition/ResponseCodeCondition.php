@@ -2,27 +2,23 @@
 
 namespace Drupal\response_code_condition\Plugin\Condition;
 
+use Drupal\Core\Condition\Attribute\Condition;
 use Drupal\Core\Condition\ConditionPluginBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 /**
  * Provides a 'Response code' condition.
- *
- * @Condition(
- *   id = "response_code",
- *   label = @Translation("Response code"),
- * )
  */
+#[Condition(
+  id: "response_code",
+  label: new TranslatableMarkup("Response code")
+)]
 class ResponseCodeCondition extends ConditionPluginBase implements ContainerFactoryPluginInterface {
-
-  /**
-   * @var Symfony\Component\HttpFoundation\RequestStack
-   */
-  private $requestStack;
 
   /**
    * Creates a new Response code instance.
@@ -39,9 +35,8 @@ class ResponseCodeCondition extends ConditionPluginBase implements ContainerFact
    * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
    *   The request stack.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, RequestStack $requestStack) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, protected RequestStack $requestStack) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->requestStack = $requestStack;
   }
 
   /**
