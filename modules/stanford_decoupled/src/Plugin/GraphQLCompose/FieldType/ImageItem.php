@@ -9,6 +9,11 @@ use Drupal\file\FileInterface;
 use Drupal\graphql\GraphQL\Execution\FieldContext;
 use Drupal\graphql_compose\Plugin\GraphQLCompose\FieldType\ImageItem as OrigImageItem;
 
+/**
+ * Overrides the original image item to provide focal point data.
+ *
+ * @codeCoverageIgnore
+ */
 class ImageItem extends OrigImageItem {
 
   /**

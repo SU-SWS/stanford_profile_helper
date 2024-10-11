@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\stanford_profile_helper\Kernel;
 
+use Drupal\Core\Site\Settings;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\node\Entity\NodeType;
 use Drupal\node\NodeInterface;
@@ -45,6 +46,7 @@ abstract class SuProfileHelperKernelTestBase extends KernelTestBase {
     'options',
     'file',
     'next',
+    'menu_link',
   ];
 
   /**
@@ -52,6 +54,10 @@ abstract class SuProfileHelperKernelTestBase extends KernelTestBase {
    */
   protected function setUp(): void {
     parent::setUp();
+    $site_settings = Settings::getAll();
+    $site_settings['STANFORD_PROFILE_HELPER_DISABLE_NEXT'] = TRUE;
+    new Settings($site_settings);
+
     $this->installEntitySchema('node');
     $this->installEntitySchema('user');
     $this->installEntitySchema('path_alias');
@@ -60,6 +66,7 @@ abstract class SuProfileHelperKernelTestBase extends KernelTestBase {
     $this->installEntitySchema('field_storage_config');
     $this->installEntitySchema('config_pages');
     $this->installEntitySchema('taxonomy_term');
+    $this->installSchema('node', ['node_access']);
     $this->installConfig('system');
     $this->setInstallProfile('test_stanford_profile_helper');
 

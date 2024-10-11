@@ -6,20 +6,21 @@ namespace Drupal\stanford_decoupled\Plugin\QueueWorker;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Queue\Attribute\QueueWorker;
 use Drupal\Core\Queue\QueueWorkerBase;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Defines 'decoupled_referenced_invalidated' queue worker.
  *
  * @codeCoverageIgnore since it calls an external api, we can't test.
- *
- * @QueueWorker(
- *   id = "decoupled_referenced_invalidator",
- *   title = @Translation("Decoupled Referenced Invalidator"),
- *   cron = {"time" = 60},
- * )
  */
+#[QueueWorker(
+  id: "decoupled_referenced_invalidator",
+  title: new TranslatableMarkup("Decoupled Referenced Invalidator"),
+  cron: ["time" => 60],
+)]
 final class DecoupledReferencedInvalidated extends QueueWorkerBase implements ContainerFactoryPluginInterface {
 
   /**

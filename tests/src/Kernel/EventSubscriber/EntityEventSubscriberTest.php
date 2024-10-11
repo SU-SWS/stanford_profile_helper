@@ -73,6 +73,48 @@ class EntityEventSubscriberTest extends SuProfileHelperKernelTestBase {
     $this->assertArrayHasKey('rh_message', $variables['content']);
   }
 
+  public function testMenuCacheClears() {
+    $field_storage = FieldStorageConfig::create([
+      'field_name' => 'field_menulink',
+      'entity_type' => 'node',
+      'type' => 'menu_link',
+    ]);
+    $field_storage->save();
+    $field_config = FieldConfig::create([
+      'field_name' => 'field_menulink',
+      'entity_type' => 'node',
+      'bundle' => 'stanford_event',
+      'label' => 'menulink',
+    ]);
+    $field_config->save();
+    $node = Node::create([
+      'type' => 'stanford_event',
+      'title' => 'Foo Bar',
+      'field_menulink' => [
+        'title' => 'foobar',
+        'description' => '',
+        'weight' => 0,
+        'parent' => NULL,
+        'menu_name' => 'main',
+      ],
+    ]);
+    $node->save();
+
+    $node = Node::load($node->id());
+    $node->setUnpublished()->save();
+
+    $node->setPublished()->save();
+    $node->set('field_menulink', [
+      'title' => 'foobar2',
+      'description' => '',
+      'weight' => 0,
+      'parent' => NULL,
+      'menu_name' => 'main',
+    ])->save();
+
+    $node->delete();
+  }
+
   /**
    * Test menu item events.
    */

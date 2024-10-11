@@ -6,10 +6,12 @@ use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Field\Attribute\FieldWidget;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -17,16 +19,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * The majority of this widget was taken from stanford_ssp with some adjustments
  * to work as a field widget.
- *
- * @FieldWidget(
- *   id = "saml_role_mapping",
- *   module = "stanford_profile_helper",
- *   label = @Translation("Saml Role Mapping"),
- *   field_types = {
- *     "string_long"
- *   }
- * )
  */
+#[FieldWidget(
+  id: "saml_role_mapping",
+  label: new TranslatableMarkup("Saml Role Mapping"),
+  field_types: ["string_long"]
+)]
 class SamlRoleMappingWidget extends WidgetBase {
 
   /**

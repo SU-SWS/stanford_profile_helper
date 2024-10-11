@@ -7,6 +7,8 @@ use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Configuration form for a policy log entity type.
+ *
+ * @codeCoverageIgnore
  */
 class SuPolicyLogSettingsForm extends FormBase {
 

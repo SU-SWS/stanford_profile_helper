@@ -2,7 +2,9 @@
 
 namespace Drupal\stanford_profile_helper;
 
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Security\TrustedCallbackInterface;
+use Drupal\stanford_profile_helper\Event\MenuCacheEvent;
 
 /**
  * Module helper methods and service.
@@ -21,7 +23,7 @@ class StanfordProfileHelper implements TrustedCallbackInterface {
     if (!is_array($item) || empty($item['#cache']['tags'])) {
       return;
     }
-    $item['#cache']['tags'] = array_filter($item['#cache']['tags'], function ($tag) use ($tags) {
+    $item['#cache']['tags'] = array_filter($item['#cache']['tags'], function($tag) use ($tags) {
       foreach ($tags as $search_tag) {
         if (preg_match("/$search_tag/", $tag)) {
           return FALSE;
@@ -30,6 +32,15 @@ class StanfordProfileHelper implements TrustedCallbackInterface {
       return TRUE;
     });
     $item['#cache']['tags'] = array_values($item['#cache']['tags']);
+  }
+
+  /**
+   * Clear the menu cache tags and dispatch an event.
+   */
+  public static function clearMenuCacheTag() {
+    Cache::invalidateTags(['stanford_profile_helper:menu_links']);
+    \Drupal::service('event_dispatcher')
+      ->dispatch(new MenuCacheEvent(), MenuCacheEvent::CACHE_CLEARED);
   }
 
   /**

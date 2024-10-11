@@ -25,6 +25,7 @@ use Drupal\layout_builder\LayoutBuilderEvents;
 use Drupal\menu_link_content\MenuLinkContentInterface;
 use Drupal\node\NodeInterface;
 use Drupal\stanford_profile_helper\StanfordDefaultContentInterface;
+use Drupal\stanford_profile_helper\StanfordProfileHelper;
 use Drupal\user\RoleInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -35,27 +36,6 @@ class EntityEventSubscriber implements EventSubscriberInterface {
 
   use MessengerTrait;
   use StringTranslationTrait;
-
-  /**
-   * Default content importer service.
-   *
-   * @var \Drupal\stanford_profile_helper\StanfordDefaultContentInterface
-   */
-  protected $defaultContent;
-
-  /**
-   * Core state service.
-   *
-   * @var \Drupal\Core\State\StateInterface
-   */
-  protected $state;
-
-  /**
-   * Core entity type manager service.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
 
   /**
    * {@inheritDoc}
@@ -73,18 +53,14 @@ class EntityEventSubscriber implements EventSubscriberInterface {
   /**
    * Event subscriber constructor.
    *
-   * @param \Drupal\stanford_profile_helper\StanfordDefaultContentInterface $stanford_default_content
+   * @param \Drupal\stanford_profile_helper\StanfordDefaultContentInterface $defaultContent
    *   Default content importer service.
    * @param \Drupal\Core\State\StateInterface $state
    *   Core state service.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   Core entity type manager service.
    */
-  public function __construct(StanfordDefaultContentInterface $stanford_default_content, StateInterface $state, EntityTypeManagerInterface $entity_type_manager) {
-    $this->defaultContent = $stanford_default_content;
-    $this->state = $state;
-    $this->entityTypeManager = $entity_type_manager;
-  }
+  public function __construct(protected StanfordDefaultContentInterface $defaultContent, protected StateInterface $state, protected EntityTypeManagerInterface $entityTypeManager) {}
 
   /**
    * Call individual methods for each entity type for the events.
@@ -198,7 +174,7 @@ class EntityEventSubscriber implements EventSubscriberInterface {
       $node->hasField('field_menulink') &&
       !$node->get('field_menulink')->isEmpty()
     ) {
-      Cache::invalidateTags(['stanford_profile_helper:menu_links']);
+      StanfordProfileHelper::clearMenuCacheTag();
     }
   }
 
@@ -219,6 +195,11 @@ class EntityEventSubscriber implements EventSubscriberInterface {
         !$original_node->get('field_menulink')->isEmpty()
       )
     ) {
+      if ($original_node->isPublished() != $node->isPublished()) {
+        StanfordProfileHelper::clearMenuCacheTag();
+        return;
+      }
+
       $keys = ['title', 'description', 'weight', 'expanded', 'parent'];
       $changes = $node->get('field_menulink')->getValue();
       $original = $original_node->get('field_menulink')->getValue();
@@ -228,7 +209,7 @@ class EntityEventSubscriber implements EventSubscriberInterface {
         $original_value = $original[0][$key] ?? NULL;
 
         if ($change_value != $original_value) {
-          Cache::invalidateTags(['stanford_profile_helper:menu_links']);
+          StanfordProfileHelper::clearMenuCacheTag();
           return;
         }
       }
@@ -252,7 +233,7 @@ class EntityEventSubscriber implements EventSubscriberInterface {
         ->condition('route_param_key', 'node=' . $node->id())
         ->execute();
       \Drupal::service('router.builder')->rebuildIfNeeded();
-      Cache::invalidateTags(['stanford_profile_helper:menu_links']);
+      StanfordProfileHelper::clearMenuCacheTag();
     }
   }
 
@@ -345,7 +326,7 @@ class EntityEventSubscriber implements EventSubscriberInterface {
    *   Menu item being saved.
    */
   protected function insertMenuLinkContent(MenuLinkContentInterface $entity) {
-    Cache::invalidateTags(['stanford_profile_helper:menu_links']);
+    StanfordProfileHelper::clearMenuCacheTag();
   }
 
   /**
@@ -355,7 +336,7 @@ class EntityEventSubscriber implements EventSubscriberInterface {
    *   Menu item being deleted.
    */
   protected function deleteMenuLinkContent(MenuLinkContentInterface $entity) {
-    Cache::invalidateTags(['stanford_profile_helper:menu_links']);
+    StanfordProfileHelper::clearMenuCacheTag();
   }
 
   /**
@@ -374,7 +355,7 @@ class EntityEventSubscriber implements EventSubscriberInterface {
       $updated[] = $entity->get($field_name)->getValue();
     }
     if (md5(json_encode($original)) != md5(json_encode($updated))) {
-      Cache::invalidateTags(['stanford_profile_helper:menu_links']);
+      StanfordProfileHelper::clearMenuCacheTag();
     }
   }
 

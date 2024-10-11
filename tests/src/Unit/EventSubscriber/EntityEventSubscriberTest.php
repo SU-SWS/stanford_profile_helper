@@ -27,7 +27,6 @@ class EntityEventSubscriberTest extends UnitTestCase {
 
     $blockManager = $this->createMock(BlockManagerInterface::class);
 
-
     $tax_menu = $this->createMock(TaxonomyMenuInterface::class);
     $tax_menu->method('getMenu')->willReturn('foo-bar-baz');
     $entityStorage = $this->createMock(EntityStorageInterface::class);

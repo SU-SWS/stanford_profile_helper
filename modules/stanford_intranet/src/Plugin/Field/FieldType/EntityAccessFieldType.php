@@ -2,6 +2,7 @@
 
 namespace Drupal\stanford_intranet\Plugin\Field\FieldType;
 
+use Drupal\Core\Field\Attribute\FieldType;
 use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
@@ -9,16 +10,14 @@ use Drupal\Core\TypedData\DataDefinition;
 
 /**
  * Plugin implementation of the 'entity_access' field type.
- *
- * @FieldType(
- *   id = "entity_access",
- *   label = @Translation("Entity access field type"),
- *   description = @Translation("My Field Type"),
- *   no_ui = TRUE,
- *   default_widget = "language_select",
- *   cardinality = \Drupal\Core\Field\FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED
- * )
  */
+#[FieldType(
+  id: "entity_access",
+  label: new TranslatableMarkup("Entity access field type"),
+  default_widget: "language_select",
+  cardinality: FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED,
+  no_ui: TRUE
+)]
 class EntityAccessFieldType extends FieldItemBase {
 
   const FIELD_NAME = 'stanford_intranet__access';

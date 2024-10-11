@@ -2,7 +2,9 @@
 
 namespace Drupal\stanford_events_importer\Plugin\Field\FieldWidget;
 
+use Drupal\Core\Field\Attribute\FieldWidget;
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\link\LinkItemInterface;
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\link\Plugin\Field\FieldWidget\LinkWidget;
@@ -14,16 +16,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Plugin implementation of the 'stanford_events_importer_apiurl_field_widget'.
- *
- * @FieldWidget(
- *   id = "stanford_events_importer_apiurl_field_widget",
- *   module = "stanford_events_importer",
- *   label = @Translation("Stanford Events API URL Builder Widget"),
- *   field_types = {
- *     "link"
- *   }
- * )
  */
+#[FieldWidget(
+  id: "stanford_events_importer_apiurl_field_widget",
+  label: new TranslatableMarkup("Stanford Events API URL Builder Widget"),
+  field_types: ["link"]
+)]
 class StanfordEventsImporterAPIURLFieldWidget extends LinkWidget {
 
   /**

@@ -2,17 +2,18 @@
 
 namespace Drupal\jumpstart_ui\Plugin\Block;
 
+use Drupal\Core\Block\Attribute\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
  * Provides a block that outputs an h1 tag.
- *
- * @Block(
- *   id = "jumpstart_ui_page_heading",
- *   admin_label = @Translation("Heading Block"),
- * )
  */
+#[Block(
+  id: "jumpstart_ui_page_heading",
+  admin_label: new TranslatableMarkup("Heading Block")
+)]
 class PageHeadingBlock extends BlockBase {
 
   /**

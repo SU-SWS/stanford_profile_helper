@@ -3,20 +3,21 @@
 namespace Drupal\stanford_news\Plugin\Block;
 
 use Drupal\Core\Access\AccessResultForbidden;
+use Drupal\Core\Block\Attribute\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Block\BlockPluginInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
  * Provides a 'Newsletter Signup' Block.
- *
- * @Block(
- *   id = "signup_block",
- *   admin_label = @Translation("Newsletter Signup"),
- *   category = @Translation("Stanford News"),
- * )
  */
+#[Block(
+  id: "signup_block",
+  admin_label: new TranslatableMarkup("Newsletter Signup"),
+  category: new TranslatableMarkup("Stanford News")
+)]
 class SignupBlock extends BlockBase implements BlockPluginInterface {
 
   /**

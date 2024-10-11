@@ -14,10 +14,25 @@ use Drupal\stanford_decoupled\Plugin\Filter\SuCleanHtml;
  */
 class SuCleanHtmlTest extends UnitTestCase {
 
+  public function filterDataProvider() {
+    return [
+      [
+        "\r\n<!-- FOO BAR BAZ-->\n\n<div>foo</div>\n\n\n<div>\r\nbar\r\n\r\nbaz</div>\r\n",
+        '<div>foo</div><div> bar baz</div>',
+      ],
+      [
+        '<a href="foobar">foobar</a><article title="foobar">foobar</article><a href="foobar" title="foobar">foobar</a><a href="foobar" title="foobarbaz"><span>foobarbaz</span></a>',
+        '<a href="foobar">foobar</a><article title="foobar">foobar</article><a href="foobar">foobar</a><a href="foobar" title="foobarbaz"><span>foobarbaz</span></a>',
+      ],
+    ];
+  }
+
   /**
    * Test the clean html filter.
+   *
+   * @dataProvider filterDataProvider
    */
-  public function testFilter() {
+  public function testFilter($html, $expected) {
     $config = [];
     $definition = ['provider' => 'stanford_profile_helper'];
 
@@ -36,9 +51,9 @@ class SuCleanHtmlTest extends UnitTestCase {
     $container->set('entity_type.manager', $entity_type_manager);
 
     $filter = SuCleanHtml::create($container, $config, 'foo', $definition);
-    $result = $filter->process("\r\n<!-- FOO BAR BAZ-->\n\n<div>foo</div>\n\n\n<div>\r\nbar\r\n\r\nbaz</div>\r\n", NULL);
+    $result = $filter->process($html, NULL);
 
-    $this->assertEquals('<div>foo</div><div> bar baz</div>', (string) $result);
+    $this->assertEquals($expected, (string) $result);
   }
 
 }

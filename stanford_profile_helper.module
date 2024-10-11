@@ -53,6 +53,12 @@ function stanford_profile_helper_preprocess_html(&$variables) {
  * Implements hook_module_implements_alter().
  */
 function stanford_profile_helper_module_implements_alter(&$implementations, $hook) {
+  // Only for test scenarios, disable all hooks in the next module since they
+  // cause errors with the containers in unit tests. It's just easier to remove
+  // the hooks than to work around the errors.
+  if (Settings::get('STANFORD_PROFILE_HELPER_DISABLE_NEXT')) {
+    unset($implementations['next']);
+  }
   if ($hook === 'plugin_filter_block__layout_builder_alter') {
     unset($implementations['menu_block']);
   }
@@ -122,6 +128,7 @@ function stanford_profile_helper_cron() {
     'organizations' => array_values($orgs) ?: [],
     'siteType' => $site_type,
     'renewalDate' => $renewal_date,
+    'theme' => \Drupal::config('system.theme')->get('default'),
   ];
   $uri = 'private://stanford';
   $directory = \Drupal::service('stream_wrapper_manager')->normalizeUri($uri);
@@ -131,52 +138,12 @@ function stanford_profile_helper_cron() {
 }
 
 /**
- * Implements hook_cache_flush().
- */
-function stanford_profile_helper_cache_flush() {
-  $queries = [];
-  /** @var \Drupal\views\Entity\View[] $views */
-  $views = \Drupal::entityTypeManager()->getStorage('view')
-    ->loadByProperties(['status' => TRUE]);
-  foreach ($views as $view) {
-    foreach ($view->get('display') as $display) {
-      $filters = $display['display_options']['filters'] ?? [];
-      foreach ($filters as $filter) {
-        $queries[] = $filter['expose']['identifier'] ?? NULL;
-      }
-    }
-  }
-  $queries = array_unique(array_filter($queries));
-  asort($queries);
-  \Drupal::state()
-    ->set('page_cache_query_ignore.view_params', array_values($queries));
-}
-
-/**
- * Implements hook_ENTITY_TYPE_update().
- */
-function stanford_profile_helper_view_update(ViewEntityInterface $view) {
-  // After updating a view, reset the page_cache_query_ignore state.
-  stanford_profile_helper_cache_flush();
-}
-
-/**
  * Implements hook_entity_type_alter().
  */
 function stanford_profile_helper_entity_type_alter(array &$entity_types) {
   if (isset($entity_types['menu_link_content'])) {
     $entity_types['menu_link_content']->addConstraint('menu_link_item_url_constraint');
   }
-}
-
-/**
- * Implements hook_local_tasks_alter().
- */
-function stanford_profile_helper_local_tasks_alter(&$local_tasks) {
-  // Remove this when a new release for the scheduler module comes out above
-  // 2.0.0-alpha1.
-  // @see https://www.drupal.org/project/scheduler/issues/3224340.
-  unset($local_tasks['scheduler.scheduled_content'], $local_tasks['scheduler.scheduled_media'], $local_tasks['scheduler.media_overview']);
 }
 
 /**
