@@ -24,8 +24,8 @@ use Drupal\layout_builder\Event\SectionComponentBuildRenderArrayEvent;
 use Drupal\layout_builder\LayoutBuilderEvents;
 use Drupal\menu_link_content\MenuLinkContentInterface;
 use Drupal\node\NodeInterface;
-use Drupal\stanford_profile_helper\Event\MenuCacheEvent;
 use Drupal\stanford_profile_helper\StanfordDefaultContentInterface;
+use Drupal\stanford_profile_helper\StanfordProfileHelper;
 use Drupal\user\RoleInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -174,7 +174,7 @@ class EntityEventSubscriber implements EventSubscriberInterface {
       $node->hasField('field_menulink') &&
       !$node->get('field_menulink')->isEmpty()
     ) {
-      self::clearMenuCacheTag();
+      StanfordProfileHelper::clearMenuCacheTag();
     }
   }
 
@@ -196,7 +196,7 @@ class EntityEventSubscriber implements EventSubscriberInterface {
       )
     ) {
       if ($original_node->isPublished() != $node->isPublished()) {
-        self::clearMenuCacheTag();
+        StanfordProfileHelper::clearMenuCacheTag();
         return;
       }
 
@@ -209,7 +209,7 @@ class EntityEventSubscriber implements EventSubscriberInterface {
         $original_value = $original[0][$key] ?? NULL;
 
         if ($change_value != $original_value) {
-          self::clearMenuCacheTag();
+          StanfordProfileHelper::clearMenuCacheTag();
           return;
         }
       }
@@ -233,7 +233,7 @@ class EntityEventSubscriber implements EventSubscriberInterface {
         ->condition('route_param_key', 'node=' . $node->id())
         ->execute();
       \Drupal::service('router.builder')->rebuildIfNeeded();
-      self::clearMenuCacheTag();
+      StanfordProfileHelper::clearMenuCacheTag();
     }
   }
 
@@ -326,7 +326,7 @@ class EntityEventSubscriber implements EventSubscriberInterface {
    *   Menu item being saved.
    */
   protected function insertMenuLinkContent(MenuLinkContentInterface $entity) {
-    self::clearMenuCacheTag();
+    StanfordProfileHelper::clearMenuCacheTag();
   }
 
   /**
@@ -336,7 +336,7 @@ class EntityEventSubscriber implements EventSubscriberInterface {
    *   Menu item being deleted.
    */
   protected function deleteMenuLinkContent(MenuLinkContentInterface $entity) {
-    self::clearMenuCacheTag();
+    StanfordProfileHelper::clearMenuCacheTag();
   }
 
   /**
@@ -355,7 +355,7 @@ class EntityEventSubscriber implements EventSubscriberInterface {
       $updated[] = $entity->get($field_name)->getValue();
     }
     if (md5(json_encode($original)) != md5(json_encode($updated))) {
-      self::clearMenuCacheTag();
+      StanfordProfileHelper::clearMenuCacheTag();
     }
   }
 
@@ -504,15 +504,6 @@ class EntityEventSubscriber implements EventSubscriberInterface {
       }
     }
     return NULL;
-  }
-
-  /**
-   * Clear the menu cache tags and dispatch an event.
-   */
-  public static function clearMenuCacheTag() {
-    Cache::invalidateTags(['stanford_profile_helper:menu_links']);
-    \Drupal::service('event_dispatcher')
-      ->dispatch(new MenuCacheEvent(), MenuCacheEvent::CACHE_CLEARED);
   }
 
 }
