@@ -103,12 +103,13 @@ function stanford_profile_helper_cron() {
   /** @var \Drupal\config_pages\ConfigPagesLoaderServiceInterface $config_pages */
   $config_pages = \Drupal::service('config_pages.loader');
 
-  $canonical_url = $config_pages->getValue('stanford_basic_site_settings', 'su_site_url', 0, 'uri');
-  $owners = $config_pages->getValue('stanford_basic_site_settings', 'su_site_owner_contact', [], 'value');
-  $site_managers = $config_pages->getValue('stanford_basic_site_settings', 'su_site_tech_contact', [], 'value');
   $ally = $config_pages->getValue('stanford_basic_site_settings', 'su_site_a11y_contact', [], 'value');
+  $canonical_url = $config_pages->getValue('stanford_basic_site_settings', 'su_site_url', 0, 'uri');
+  $created = (int) $config_pages->getValue('stanford_basic_site_settings', 'su_site_created', 0, 'value');
   $org_ids = $config_pages->getValue('stanford_basic_site_settings', 'su_site_org', [], 'target_id');
+  $owners = $config_pages->getValue('stanford_basic_site_settings', 'su_site_owner_contact', [], 'value');
   $renewal_date = $config_pages->getValue('stanford_basic_site_settings', 'su_site_renewal_due', 0, 'value');
+  $site_managers = $config_pages->getValue('stanford_basic_site_settings', 'su_site_tech_contact', [], 'value');
   $site_type = $config_pages->getValue('stanford_basic_site_settings', 'su_site_type', 0, 'value');
 
   $orgs = \Drupal::entityTypeManager()
@@ -120,14 +121,15 @@ function stanford_profile_helper_cron() {
   }
 
   $site_information = [
-    'siteName' => \Drupal::config('system.site')->get('name'),
-    'canonicalUrl' => $canonical_url,
-    'owners' => $owners ?: [],
-    'siteManagers' => $site_managers ?: [],
     'accessibility' => $ally ?: [],
+    'canonicalUrl' => $canonical_url,
+    'created' => $created,
     'organizations' => array_values($orgs) ?: [],
-    'siteType' => $site_type,
+    'owners' => $owners ?: [],
     'renewalDate' => $renewal_date,
+    'siteManagers' => $site_managers ?: [],
+    'siteName' => \Drupal::config('system.site')->get('name'),
+    'siteType' => $site_type,
     'theme' => \Drupal::config('system.theme')->get('default'),
   ];
   $uri = 'private://stanford';
