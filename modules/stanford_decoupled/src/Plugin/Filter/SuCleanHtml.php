@@ -95,7 +95,8 @@ class SuCleanHtml extends FilterBase implements ContainerFactoryPluginInterface 
     foreach ($xpath->query('//a[@title]') as $link) {
       $title = $link->getAttribute('title');
       if ($link->textContent == $title) {
-        $text = preg_replace('/<a([^>]*) title="' . $title . '"([^>]*)>' . $title . '<\/a>/', '<a$1$2>' . $title . '</a>', $text);
+        $regex_title = preg_quote($title, '/');
+        $text = preg_replace('/<a([^>]*) title="' . $regex_title . '"([^>]*)>' . $regex_title . '<\/a>/', '<a$1$2>' . $title . '</a>', $text);
       }
     }
     return $text;
