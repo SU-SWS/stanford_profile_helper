@@ -84,7 +84,7 @@
     {% endblock %}
     {# Web login button #}
     {% if weblogin_url is not empty %}
-      <a{{ weblogin_attributes }} href="{{ weblogin_url }}" class="su-link su-link--internal">
+      <a{{ weblogin_attributes }} href="{{ weblogin_url }}" class="su-link su-link--internal" rel="nofollow">
         {{ weblogin_text|default('Web Login') }}
       </a>
     {% endif %}
