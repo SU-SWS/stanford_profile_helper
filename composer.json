@@ -36,7 +36,8 @@
         }
     ],
     "conflict": {
-        "drupal/page_cache_query_ignore": "*"
+        "drupal/page_cache_query_ignore": "*",
+        "drupal/pdb": "<2.0.2"
     },
     "require": {
         "drupal/core": "^10.3 || ^11",
@@ -94,7 +95,8 @@
         "su-sws/stanford_migrate": ">=8.4"
     },
     "replace": {
-        "drupal/response_code_condition": "1.1.0"
+        "drupal/response_code_condition": "1.1.0",
+        "drupal/pdb_react-pdb_react" : "*"
     },
     "autoload": {
         "psr-4": {
