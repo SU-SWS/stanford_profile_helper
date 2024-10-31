@@ -47,6 +47,7 @@ abstract class SuProfileHelperKernelTestBase extends KernelTestBase {
     'file',
     'next',
     'menu_link',
+    'google_analytics',
   ];
 
   /**
