@@ -36,8 +36,7 @@
         }
     ],
     "conflict": {
-        "drupal/page_cache_query_ignore": "*",
-        "drupal/pdb": "<2.0.2"
+        "drupal/page_cache_query_ignore": "*"
     },
     "require": {
         "drupal/core": "^10.3 || ^11",
@@ -60,6 +59,7 @@
         "drupal/field_formatter_class": ">=1.6",
         "drupal/field_group": ">=3.4",
         "drupal/flat_taxonomy": ">=2.0",
+        "drupal/google_analytics": "^4.0",
         "drupal/hook_event_dispatcher": ">=4.0",
         "drupal/jsonapi_extras": ">=3.24",
         "drupal/layout_builder_restrictions": ">=2.19",
@@ -95,8 +95,7 @@
         "su-sws/stanford_migrate": ">=8.4"
     },
     "replace": {
-        "drupal/response_code_condition": "1.1.0",
-        "drupal/pdb_react-pdb_react" : "*"
+        "drupal/response_code_condition": "1.1.0"
     },
     "autoload": {
         "psr-4": {
