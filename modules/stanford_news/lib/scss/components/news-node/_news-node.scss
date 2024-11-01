@@ -8,15 +8,14 @@
   }
 }
 
-.byline-social-media-wrapper {
-  &.centered-container {
-    @include modular-spacing('margin-bottom', 7);
+.node-stanford-news-su-news-banner {
+  @include modular-spacing('margin-top', 6);
 
-    @include grid-media-between('xs', 'md') {
-      @include modular-spacing('margin-bottom', 2);
-    }
+  @include grid-media-between('xs', 'md') {
+    @include modular-spacing('margin-top', 2);
   }
 }
+
 
 .news-date-pipe-byline {
   @include small-paragraph;
