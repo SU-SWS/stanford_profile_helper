@@ -55,7 +55,7 @@ class StanfordLayoutParagraphsSubscriber implements EventSubscriberInterface {
         ->getDefinition($layout_settings['layout'])->getRegions();
       if (count($layout_regions) > 1) {
         $types = $event->getTypes();
-        unset($types['stanford_banner'], $types['stanford_gallery']);
+        unset($types['stanford_banner'], $types['stanford_gallery'], $types['stanford_faq']);
         $event->setTypes($types);
       }
     }
