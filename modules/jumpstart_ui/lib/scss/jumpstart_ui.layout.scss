@@ -2,11 +2,23 @@
 
 // Jumpstart UI Specific Configuration and variable overrides.
 @import './jumpstart_ui.config';
-// @import 'decanter/core/src/scss/decanter-no-markup';
+ @import 'decanter/core/src/scss/decanter-no-markup';
 
 .centered-content {
   > div:first-child {
     margin-left: auto;
     margin-right: auto;
+  }
+}
+
+.jumpstart-ui {
+  &--three-column,
+  &--two-column {
+    // Add some extra space between the main-region and the left-region.
+    > .left-region + .main-region {
+      @include grid-media('xl') {
+        @include padding(null null null 80px);
+      }
+    }
   }
 }
