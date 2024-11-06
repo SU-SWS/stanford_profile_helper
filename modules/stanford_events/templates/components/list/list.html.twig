@@ -38,7 +38,7 @@
 {%- endif -%}
 {% set header_tag = variant == 'h3_header' ? 'h3' : 'h2' %}
 
-<div {{ attributes }}>
+<article {{ attributes }}>
   <div class="su-event-list-item__date">
       <div class="su-date-stacked su-date-stacked--no-background" aria-hidden="true">
         <span class="su-event-start-month">{{ start_month }}</span>
@@ -146,11 +146,6 @@
       {%- if location_sorting_code|render_clean is not empty %}
         {{- location_sorting_code -}}
       {% endif %}
-      </div>
-{#    {% endif %}#}
-
-    {# Edit this Event  #}
-      <div class="views-field-su-event-edit">{{- edit -}}</div>
-
+    </div>
   </div>
-</div>
+</article>
