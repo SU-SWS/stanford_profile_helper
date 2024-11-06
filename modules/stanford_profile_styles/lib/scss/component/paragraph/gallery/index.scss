@@ -3,7 +3,14 @@
 
 .paragraph--type--stanford-gallery {
   container: paragraph / inline-size;
+
+  h2 {
+    @include margin(0);
+
+    text-align: center;
+  }
 }
+
 
 .su-gallery-images {
 

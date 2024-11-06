@@ -1,0 +1,227 @@
+@charset 'UTF-8';
+@import '../../../config';
+
+
+.ptype-stanford-lists,
+.paragraph--type--stanford-lists {
+  container: paragraph / inline-size;
+
+  .su-list-headline {
+    h2 {
+      @include margin(0);
+      text-align: center;
+    }
+  }
+
+  .su-list-button {
+    display: flex;
+    justify-content: center;
+  }
+
+  @container paragraph (max-width: 600px) {
+    .stanford-news--cards,
+    .stanford-events {
+      .views-view-grid {
+        .views-col,
+        .views-row {
+          @include responsive-spacing('margin-bottom', 4);
+          padding-top: 0; //for the event padding top on the first item
+
+          &:last-of-type {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+
+    .view [class*="grid-container"] {
+      grid-template-columns: 1fr;
+    }
+
+    // Person grid has a little different need.
+    .stanford-people-grid {
+      .views-view-grid {
+        .views-col,
+        .views-row {
+          @include responsive-spacing('margin-bottom', 4);
+        }
+      }
+
+      .views-view-grid {
+        .views-row:last-of-type {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .views-view-grid .views-row > div {
+      width: 100%;
+      max-width: 100%;
+      flex: none;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+
+    .su-news-list__item-date + .su-news-list__item {
+      .media {
+        margin-top: 0;
+      }
+    }
+
+    .su-news-vertical-teaser {
+      &.su-card {
+        margin-bottom: inherit;
+      }
+    }
+
+    // Stack the date above the title on the events lists.
+    .su-event-list-item {
+      display: block;
+    }
+
+    .su-news-list,
+    .su-basic-page-types-list {
+      img,
+      picture {
+        display: none;
+      }
+    }
+  }
+
+  &[data-react-columns]:not([data-react-columns="12"]) {
+    // Views-row for non-grid displays.
+    // Views-view-grid has some different markup, so it needs some different work.
+    // this is to remove spacing from the last col and to keep MS4 between the cards.
+    .stanford-news--cards,
+    .stanford-events {
+      .views-view-grid {
+        .views-col,
+        .views-row {
+          @include responsive-spacing('margin-bottom', 4);
+          padding-top: 0; //for the event padding top on the first item
+
+          &:last-of-type {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+
+    .view [class*="grid-container"] {
+      grid-template-columns: 1fr;
+    }
+
+    // Person grid has a little different need.
+    .stanford-people-grid {
+      .views-view-grid {
+        .views-col,
+        .views-row {
+          @include responsive-spacing('margin-bottom', 4);
+        }
+      }
+
+      .views-view-grid {
+        .views-row:last-of-type {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .views-view-grid .views-row > div {
+      width: 100%;
+      max-width: 100%;
+      flex: none;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+
+    .su-news-list__item-date + .su-news-list__item {
+      .media {
+        margin-top: 0;
+      }
+    }
+
+    .su-news-vertical-teaser {
+      &.su-card {
+        margin-bottom: inherit;
+      }
+    }
+
+    // Stack the date above the title on the events lists.
+    .su-event-list-item {
+      display: block;
+    }
+
+    .su-news-list,
+    .su-basic-page-types-list {
+      img,
+      picture {
+        display: none;
+      }
+    }
+  }
+
+  //adds margin for the basic page plus when a card in 12 across.
+  .stanford-basic-pages {
+    .views-view-grid {
+      .su-basic-page-types-view-row {
+        @include responsive-spacing('margin-bottom', 4);
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  //adds margin for the basic page plus when a card in 2 or 3 cols.
+  &.flex-6-of-12,
+  &.flex-4-of-12 {
+    .su-basic-page-types-view-column {
+      @include responsive-spacing('margin-bottom', 4);
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+
+  }
+
+  // Removes the padding top for the first item
+  // but not on 12 across.
+  &:not(.flex-12-of-12) {
+    .stanford-news--list {
+      div:first-child {
+        .su-news-list {
+          @include grid-media-min('xl') {
+            padding-top: 0;
+          }
+        }
+      }
+    }
+  }
+
+  // Grid removal for news and people lists in cols
+  // Grid removal for event spanning dates in cols
+  &[data-react-columns='4'],
+  &[data-react-columns='6'] {
+    .su-news-list__header {
+      grid-template-columns: 1fr;
+    }
+
+    .stanford-people-grid {
+      .flex-container {
+        display: unset;
+      }
+    }
+
+    .su-event-list-item__date {
+      align-items: center;
+      display: flex;
+    }
+  }
+}
