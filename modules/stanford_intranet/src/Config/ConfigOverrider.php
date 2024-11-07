@@ -64,6 +64,11 @@ class ConfigOverrider implements ConfigFactoryOverrideInterface {
       }
     }
 
+    // Don't alert document links on intranet sites.
+    if (in_array('editoria11y.settings', $names)) {
+      $overrides['editoria11y.settings']['download_links'] = "a[href$='.ppt']";
+    }
+
     return $overrides;
   }
 
