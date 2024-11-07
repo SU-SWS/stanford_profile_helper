@@ -208,21 +208,3 @@
     }
   }
 }
-
-// adjusting to match the other list page gutter spacing.
-.jumpstart-ui--two-column {
-  >.left-region {
-    + .flex-lg-9-of-12 {
-      @include modular-spacing('padding-left', 2);
-
-      .ptype-stanford-lists {
-        padding-left: 0;
-
-        .field--name-su-list-view {
-          padding: 0;
-        }
-      }
-    }
-  }
-}
-
