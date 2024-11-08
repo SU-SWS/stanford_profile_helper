@@ -5,6 +5,8 @@
  * Contains stanford_profile_admin.module.
  */
 
+use \Drupal\Core\Form\FormStateInterface;
+
 /**
  * Implements hook_link_alter().
  */
@@ -15,4 +17,11 @@ function stanford_profile_admin_link_alter(&$variables) {
   ) {
     $variables['text'] = 'Users';
   }
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ */
+function stanford_profile_admin_form_menu_link_content_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $form['#attached']['library'][] = 'stanford_profile_admin/menu_link_form';
 }
