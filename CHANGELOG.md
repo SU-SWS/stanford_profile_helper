@@ -1,5 +1,20 @@
 # Stanford Profile Helper
 
+9.8.3
+--------------------------------------------------------------------------------
+_Release Date: 2024-11-08_
+
+- Clean up decoupled preview url
+- CORE-442 Hide description field on menu link content form
+- D8CORE-7590 Adjust editori11y settings for intranets
+- remove unused css code in publications
+- D8CORE-7354 Apply teaser styles on all pages, not just basic pages
+- D8CORE-7305 Use article tags only when a header is provided
+- D8CORE-6324 Set the left padding on the layout instead of the node page styles
+- Restrict FAQ paragraph to single column layouts
+- D8CORE-7568: moved margin bottom on news article (#338)
+- D8CORE-7446 Scope google analytics cookie to the individual site (#339)
+
 9.8.2
 --------------------------------------------------------------------------------
 _Release Date: 2024-10-17_
