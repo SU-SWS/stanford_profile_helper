@@ -92,26 +92,7 @@
   @include modular-spacing('margin-bottom', 4);
 }
 
-// Make the people referenced entity pictures circles.
-.su-person-photo {
-  @include margin(0 auto);
-  @include padding(30px);
-  max-width: 300px;
 
-  picture,
-  img {
-    border-radius: 50%;
-  }
-}
-
-.ds-entity--stanford-person {
-  text-align: center;
-
-  h3 {
-    font-size: 1.4em;
-    margin-bottom: 1.0rem;
-  }
-}
 
 .su-list-unstyled {
   li {

@@ -120,6 +120,13 @@ function stanford_profile_styles_field_widget_smartdate_timezone_form_alter(arra
  * Implements hook_entity_display_build_alter().
  */
 function stanford_profile_styles_entity_display_build_alter(&$build, $context) {
+  if ($context['entity']->getEntityTypeId() == 'node') {
+    $bundle = $context['entity']->bundle();
+    // Add libraries that correspond to the current paragraph type. No need to
+    // check for the existing library. No message is created if no library exists.
+    $build['#attached']['library'][] = "stanford_profile_styles/node.$bundle";
+  }
+
   if ($context['entity']->getEntityTypeId() != 'paragraph') {
     return;
   }

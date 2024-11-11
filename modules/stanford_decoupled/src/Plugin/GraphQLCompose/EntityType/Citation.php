@@ -10,7 +10,15 @@ use Drupal\graphql_compose\Plugin\GraphQLCompose\GraphQLComposeEntityTypeBase;
  * {@inheritdoc}
  *
  * @GraphQLComposeEntityType(
- *   id = "citation"
+ *   id = "citation",
+ *   prefix = "Citation",
+ *   base_fields = {
+ *      "created" = {},
+ *      "changed" = {},
+ *      "title" = {
+ *        "field_type" = "entity_label",
+ *      }
+ *    },
  * )
  */
 class Citation extends GraphQLComposeEntityTypeBase {
