@@ -1,5 +1,11 @@
 # Stanford Profile Helper
 
+9.8.4
+--------------------------------------------------------------------------------
+_Release Date: 2024-11-11_
+
+- Consistently apply person node styles across teasers and lists.
+
 9.8.3
 --------------------------------------------------------------------------------
 _Release Date: 2024-11-08_
