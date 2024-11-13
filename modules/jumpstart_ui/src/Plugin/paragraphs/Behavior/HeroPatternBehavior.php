@@ -14,8 +14,7 @@ use Drupal\paragraphs\ParagraphsTypeInterface;
  * @ParagraphsBehavior(
  *   id = "hero_pattern",
  *   label = @Translation("Hero Pattern"),
- *   description = @Translation("Display options for the hero pattern
- *   paragraph.")
+ *   description = @Translation("Display options for the hero pattern paragraph.")
  * )
  */
 class HeroPatternBehavior extends ParagraphsBehaviorBase {

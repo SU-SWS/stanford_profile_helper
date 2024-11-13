@@ -18,7 +18,6 @@ use Drupal\ui_patterns\UiPatterns;
  * Implements hook_page_attachments().
  */
 function jumpstart_ui_page_attachments(array &$page) {
-
   // It is recommended that you don't just add a library to all pages but
   // rather, conditionally require this library only where it is needed.
   // See: https://www.drupal.org/node/2274843
@@ -28,7 +27,6 @@ function jumpstart_ui_page_attachments(array &$page) {
     $page['#attached']['library'][] = 'jumpstart_ui/layout';
     $page['#attached']['library'][] = 'jumpstart_ui/jumpstart_ui';
   }
-
 }
 
 /**
@@ -73,7 +71,6 @@ function jumpstart_ui_preprocess_ds_entity_view(&$variables) {
  * Implements hook_preprocess().
  */
 function jumpstart_ui_preprocess(&$variables, $hook) {
-
   // Only want pattern contexts.
   if (!(isset($variables['context']) && $variables['context'] instanceof PatternContext)) {
     return;
@@ -82,7 +79,6 @@ function jumpstart_ui_preprocess(&$variables, $hook) {
   // Match the hook with a strpos because it is not consistent.
   foreach (UiPatterns::getPatternDefinitions() as $pattern_id => $pattern) {
     if (str_contains($hook, $pattern_id)) {
-
       if (isset($variables['attributes']['id'])) {
         $variables['attributes']['id'] = Html::getUniqueId($variables['attributes']['id']);
       }
@@ -100,9 +96,7 @@ function jumpstart_ui_preprocess(&$variables, $hook) {
  * Implements hook_preprocess_patterns_overview_page().
  */
 function jumpstart_ui_preprocess_patterns_overview_page(&$variables) {
-  uasort($variables['patterns'], function ($pattern_a, $pattern_b) {
-    return strcmp($pattern_a['label'], $pattern_b['label']);
-  });
+  uasort($variables['patterns'], fn($pattern_a, $pattern_b) => strcmp($pattern_a['label'], $pattern_b['label']));
 }
 
 /**
