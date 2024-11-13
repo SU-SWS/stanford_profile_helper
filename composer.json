@@ -48,7 +48,6 @@
         "citation-style-language/locales": "^1.0",
         "citation-style-language/styles-distribution": "^1.0",
         "drupal/admin_toolbar": ">=3.4",
-        "drupal/allowed_formats": ">=3.0",
         "drupal/auto_entitylabel": ">=3.0",
         "drupal/components": ">=3.0",
         "drupal/config_pages": ">=2.15",

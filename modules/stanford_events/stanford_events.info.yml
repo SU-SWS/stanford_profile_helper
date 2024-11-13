@@ -6,7 +6,6 @@ package: Stanford
 version: 9.8.5
 dependencies:
   - address:address
-  - allowed_formats:allowed_formats
   - auto_entitylabel:auto_entitylabel
   - components:components
   - default_content:default_content
