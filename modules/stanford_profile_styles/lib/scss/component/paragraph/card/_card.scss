@@ -1,7 +1,7 @@
 @charset 'UTF-8';
 
 .su-card {
-  section.su-card__contents {
+  .su-card__contents {
     h2 {
       @include type-c;
     }
@@ -15,7 +15,7 @@
     }
 
     // Overwrite conflicting decanter styles for splash font card headline
-    div.su-font-splash {
+    .su-font-splash {
       @include modular-spacing('margin-bottom', -1);
 
       font-size: 1.4em;
