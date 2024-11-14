@@ -6,7 +6,7 @@ logo:
       type: text
       label: "Logo Link"
       description: "The URL that the logo links to."
-      preview: "https://stanford.edu/"
+      preview: "https://www.stanford.edu/"
     logo_text:
       type: text
       label: "Logo Text"

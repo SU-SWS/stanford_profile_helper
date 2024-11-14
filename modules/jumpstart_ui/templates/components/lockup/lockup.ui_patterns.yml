@@ -87,7 +87,7 @@ lockup:
       type: text
       label: "Lockup Link"
       description: "The URL that the lockup links to."
-      preview: "https://stanford.edu/"
+      preview: "https://www.stanford.edu/"
     line1:
       type: text
       label: "Line 1"
