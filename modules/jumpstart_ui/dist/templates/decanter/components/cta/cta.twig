@@ -21,7 +21,7 @@
  * - icon_alt: Alt text for the icon image.
  */
 #}
-<a {{- attributes }} href="{{ link|default("https://stanford.edu") }}" class="su-cta {{ modifier_class }}">
+<a {{- attributes }} href="{{ link|default("https://www.stanford.edu") }}" class="su-cta {{ modifier_class }}">
   <img src="{{ image_src|default("/kss-assets/hero-banner.jpg") }}" alt="{{ image_alt|default("Alt text for image") }}" class="su-cta__img" />
   {# CTA icon #}
   {%- if icon_src is not empty -%}

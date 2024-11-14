@@ -44,7 +44,7 @@ hero:
       type: text
       label: "CTA Link"
       description: "The href value for the cta field link"
-      preview: "https://stanford.edu"
+      preview: "https://www.stanford.edu"
     hero_cta_attributes:
       type: text
       label: "CTA element attributes"
@@ -59,7 +59,7 @@ hero:
       type: text
       label: "Button Link"
       description: "The href property of the button element"
-      preview: "https://stanford.edu"
+      preview: "https://www.stanford.edu"
     hero_button_label:
       type: text
       label: "Button Label"

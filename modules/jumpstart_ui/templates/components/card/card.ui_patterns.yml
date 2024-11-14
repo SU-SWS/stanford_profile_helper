@@ -54,7 +54,7 @@ card:
       type: text
       label: "Link URL"
       description: "A plain text string of just the URL"
-      preview: "https://stanford.edu/?a=b&c=d"
+      preview: "https://www.stanford.edu/?a=b&c=d"
     card_cta_attributes:
       type: text
       label: "CTA Attributes"

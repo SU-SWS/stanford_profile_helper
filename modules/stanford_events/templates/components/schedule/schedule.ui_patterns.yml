@@ -26,7 +26,7 @@ events_schedule:
       type: text
       label: "URL"
       description: "Link the heading to something."
-      preview: "https://stanford.edu/"
+      preview: "https://www.stanford.edu/"
     speakers:
       type: text
       label: "Speakers"

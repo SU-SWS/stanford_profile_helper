@@ -32,7 +32,7 @@ media:
       type: "text"
       label: "Media link"
       description: "What to link the media to"
-      preview: '<a href="https://stanford.edu">Stanford Homepage</a>'
+      preview: '<a href="https://www.stanford.edu">Stanford Homepage</a>'
     media_link_attributes:
       type: "text"
       label: "Wrapper link attributes"

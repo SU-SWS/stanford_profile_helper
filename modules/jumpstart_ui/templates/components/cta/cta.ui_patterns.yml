@@ -37,7 +37,7 @@ cta:
       type: text
       label: "Link URL"
       description: "A plain text string of just the URL"
-      preview: "https://stanford.edu"
+      preview: "https://www.stanford.edu"
     icon_src:
       type: text
       label: "Icon Source"
