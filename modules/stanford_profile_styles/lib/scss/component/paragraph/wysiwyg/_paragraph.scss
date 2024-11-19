@@ -161,11 +161,47 @@
   }
 
   // A quote that looks similar to h2.
-  .su-quote-text {
+  .su-quote-text,
+  .su-quote-text--lg {
     @at-root #{selector-unify(&, p)},
     & {
-      @include quote-text;
       @include type-b;
+
+      &::after {
+        @include sr-only;
+        content: "End Quote";
+      }
+
+      &::before {
+        @include sr-only;
+        content: "Quote";
+      }
+    }
+  }
+
+  // A quote that looks similar to h3.
+  .su-quote-text--md {
+    @at-root #{selector-unify(&, p)},
+    & {
+      @include type-c;
+
+      &::after {
+        @include sr-only;
+        content: "End Quote";
+      }
+
+      &::before {
+        @include sr-only;
+        content: "Quote";
+      }
+    }
+  }
+
+  // A quote that looks similar to h4.
+  .su-quote-text--sm {
+    @at-root #{selector-unify(&, p)},
+    & {
+      @include type-d;
 
       &::after {
         @include sr-only;
