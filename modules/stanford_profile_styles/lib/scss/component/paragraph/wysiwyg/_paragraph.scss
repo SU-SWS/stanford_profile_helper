@@ -166,6 +166,8 @@
     @at-root #{selector-unify(&, p)},
     & {
       @include type-b;
+      line-height: 1.5em;
+      max-width: 800px;
 
       &::after {
         @include sr-only;
@@ -184,6 +186,8 @@
     @at-root #{selector-unify(&, p)},
     & {
       @include type-c;
+      line-height: 1.5em;
+      max-width: 800px;
 
       &::after {
         @include sr-only;
@@ -202,6 +206,8 @@
     @at-root #{selector-unify(&, p)},
     & {
       @include type-d;
+      line-height: 1.5em;
+      max-width: 800px;
 
       &::after {
         @include sr-only;
