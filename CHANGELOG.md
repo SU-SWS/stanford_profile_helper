@@ -1,5 +1,18 @@
 # Stanford Profile Helper
 
+9.8.9
+--------------------------------------------------------------------------------
+_Release Date: 2024-11-20_
+
+- Fixed styles for people cards and lists.
+- Added uuid tokens on entities and token support for nextjs entity paths.
+
+9.8.8
+--------------------------------------------------------------------------------
+_Release Date: 2024-11-15_
+
+- Updated stanford.edu to www.stanford.edu
+
 9.8.7
 --------------------------------------------------------------------------------
 _Release Date: 2024-11-13_
