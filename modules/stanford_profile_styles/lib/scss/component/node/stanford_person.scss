@@ -4,7 +4,7 @@
 // Make the people referenced entity pictures circles.
 .su-person-photo {
   @include margin(0 auto);
-  @include padding(30px);
+  @include padding(0);
   max-width: 300px;
 
   picture,
@@ -15,6 +15,11 @@
 
 .ds-entity--stanford-person {
   text-align: center;
+
+  .su-person-photo {
+    @include margin(0 auto);
+    @include padding(30px 30px 0);
+  }
 
   a {
     color: $su-color-bright-red;
@@ -30,5 +35,20 @@
   h3 {
     font-size: 1.4em;
     margin-bottom: 1.0rem;
+  }
+}
+
+.view {
+  .ds-entity--stanford-person {
+    text-align: left;
+  }
+
+  .su-person-photo {
+    @include margin(0);
+    @include padding(30px 0);
+
+    picture, img {
+      max-width: 140px;
+    }
   }
 }
