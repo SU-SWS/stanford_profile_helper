@@ -64,7 +64,7 @@ function stanford_decoupled_token_info() {
     return [];
   }
   $entity_types = \Drupal::entityTypeManager()->getDefinitions();
-  $info['tokens'] = [];
+  $info = [];
 
   foreach ($entity_types as $entity_id => $entity_type) {
     if ($entity_type->getGroup() == 'content') {
@@ -82,8 +82,7 @@ function stanford_decoupled_token_info() {
  */
 function stanford_decoupled_tokens($type, $tokens, array $data = [], array $options = []) {
   $replacements = [];
-  if (!empty($data[$type]) && method_exists($data[$type], 'uuid')) {
-    /** @var \Drupal\Core\Entity\ContentEntityInterface $entity */
+  if (!empty($data[$type]) && $data[$type] instanceof ContentEntityInterface) {
     $entity = $data[$type];
 
     foreach ($tokens as $name => $original) {
