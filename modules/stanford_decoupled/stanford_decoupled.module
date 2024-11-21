@@ -340,11 +340,13 @@ function stanford_decoupled_next_site_preview_alter(array &$preview, array $cont
     $url = $preview['toolbar']['links']['#links']['live_link']['url'];
     $options = $url->getOptions();
     // No need for all the other parameters.
-    $options['query'] = [
-      'slug' => $options['query']['slug'],
-      'secret' => $options['query']['secret'],
-    ];
-    $url->setOptions($options);
+    if (isset($options['query']['slug'])) {
+      $options['query'] = [
+        'slug' => $options['query']['slug'],
+        'secret' => $options['query']['secret'],
+      ];
+      $url->setOptions($options);
+    }
   }
 }
 
