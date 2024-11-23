@@ -225,3 +225,37 @@
     }
   }
 }
+
+// Opportunities Lists
+.view.stanford-opportunities {
+  .su-card {
+
+    .su-card__contents {
+      @include responsive-spacing('padding', 0)
+
+      h3 {
+        @include type-e;
+        margin-bottom: 0;
+      }
+      .su-opp-type {
+        font-weight: $su-font-semi-bold;
+      }
+      div {
+        margin: 10px 0;
+      }
+    }
+
+    .image {
+      aspect-ratio: 1 / 1;
+
+      figure,
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+    }
+  }
+}
+
