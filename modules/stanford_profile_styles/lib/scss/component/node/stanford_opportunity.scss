@@ -1,31 +1,32 @@
 @charset 'UTF-8';
 @import '../../config';
 
-.opportunity.node {
-  @include responsive-spacing('margin-bottom', 6);
+.opportunity {
+  &.node {
+    @include responsive-spacing('margin-bottom', 6);
 
-  .node-stanford-opportunity-su-opp-prerequisites {
-    @include responsive-spacing('margin', 0 null);
-    @include card();
-
-    padding: 30px; 
-    width: 75%;
-
-    h2 {
+    .node-stanford-opportunity-su-opp-prerequisites {
       @include responsive-spacing('margin', 0 null);
-      @include type-d;
+      @include card;
+
+      padding: 30px;
+      width: 75%;
+
+      h2 {
+        @include responsive-spacing('margin', 0 null);
+        @include type-d;
+      }
+    }
+
+    .su-opp-image {
+      @include responsive-spacing('margin-bottom', 0);
+    }
+
+    .su-opp-eligibility {
+      @include responsive-spacing('margin', 0 null);
+      @include card;
+
+      padding: 1em;
     }
   }
-
-  .su-opp-image {
-    @include responsive-spacing('margin-bottom', 0);
-  }
-
-  .su-opp-eligibility {
-    @include responsive-spacing('margin', 0 null);
-    @include card();
-
-    padding: 1em;
-  }
 }
-  
