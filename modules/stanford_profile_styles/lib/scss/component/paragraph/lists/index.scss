@@ -231,14 +231,15 @@
   .su-card {
 
     .su-card__contents {
-      @include responsive-spacing('padding', 0)
+      @include responsive-spacing('padding', 0);
 
       h3 {
         @include type-e;
         margin-bottom: 0;
+        word-break: break-word;
       }
       .su-opp-type {
-        font-weight: $su-font-semi-bold;
+        display: none;
       }
       div {
         margin: 10px 0;
