@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\stanford_decoupled\EventSubscriber;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\State\StateInterface;
 use Drupal\next\Event\EntityActionEvent;
 use Drupal\next\Event\EntityEvents;
 use Drupal\stanford_profile_helper\Event\MenuCacheEvent;
@@ -33,7 +34,7 @@ final class DecoupledEventSubscriber implements EventSubscriberInterface {
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   Entity type manager service.
    */
-  public function __construct(protected EntityTypeManagerInterface $entityTypeManager) {}
+  public function __construct(protected EntityTypeManagerInterface $entityTypeManager, protected StateInterface $state) {}
 
   /**
    * Stop propagation of the event if on local environment and CLI execution.
@@ -42,6 +43,10 @@ final class DecoupledEventSubscriber implements EventSubscriberInterface {
    *   Next module event.
    */
   public function onNextEntityAction(EntityActionEvent $event) {
+    if ($this->state->get('stanford_decoupled.stop_propagation', FALSE)) {
+      $event->stopPropagation();
+    }
+
     // When the site is not on an Acquia environment and running via the CLI, we
     // don't need to do any invalidations. This is often for migration runs.
     if (!getenv('AH_SITE_ENVIRONMENT') && !getenv('PANTHEON_ENVIRONMENT') && PHP_SAPI == 'cli') {
