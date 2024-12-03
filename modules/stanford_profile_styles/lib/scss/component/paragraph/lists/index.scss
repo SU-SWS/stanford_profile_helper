@@ -226,7 +226,7 @@
   }
 }
 
-// Opportunities Lists
+// Opportunities Card Lists
 .view.stanford-opportunities {
   .su-card {
 
@@ -250,6 +250,7 @@
 
     .image {
       aspect-ratio: 1 / 1;
+      max-width: 100%;
 
       figure,
       img {
@@ -260,5 +261,16 @@
       }
     }
   }
-}
 
+  article {
+    border-bottom: 1px solid grey;
+    margin: 30px 0;
+  }
+  // Opportunites Default List image size
+  .image {
+    max-width: 150px;
+  }
+  .content {
+    padding: 20px 0;
+  }
+}
