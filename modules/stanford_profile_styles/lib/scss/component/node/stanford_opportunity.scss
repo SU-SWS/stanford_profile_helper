@@ -2,31 +2,47 @@
 @import '../../config';
 
 .opportunity {
-  &.node {
-    @include responsive-spacing('margin-bottom', 6);
+  @include responsive-spacing('margin-bottom', 6);
 
-    .node-stanford-opportunity-su-opp-prerequisites {
-      @include responsive-spacing('margin', 0 null);
-      @include card;
+  .node-stanford-opportunity-su-opp-prerequisites {
+    @include responsive-spacing('margin', 0 null);
+    background-color: $su-color-fog;
+    padding: 30px;
+    width: 75%;
 
-      padding: 30px;
-      width: 75%;
-
-      h2 {
-        @include responsive-spacing('margin', 0 null);
-        @include type-d;
-      }
-    }
-
-    .su-opp-image {
+    h2 {
       @include responsive-spacing('margin-bottom', 0);
+      @include type-d;
     }
+  }
 
-    .su-opp-eligibility {
-      @include responsive-spacing('margin', 0 null);
-      @include card;
+  .su-opp-image {
+    @include responsive-spacing('margin-bottom', 0);
+  }
 
-      padding: 1em;
+  .su-opp-eligibility {
+    @include responsive-spacing('margin', 0 null);
+
+    background-color: $su-color-fog;
+    padding: 1em;
+
+    > div:first-child {
+      font-weight: $su-font-semi-bold;
+    }
+  }
+
+  .su-opp-paragraphs {
+    @include responsive-spacing('padding-top', 2);
+  }
+
+  .su-opp-type,
+  .su-opp-start-date,
+  .su-opp-application-deadline,
+  .su-opp-course-code {
+    @include responsive-spacing('padding', 0 null);
+
+    > div:first-child {
+      font-weight: $su-font-semi-bold;
     }
   }
 }
