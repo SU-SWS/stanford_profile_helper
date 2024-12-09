@@ -458,7 +458,7 @@
     <choose>
       <if type="article-journal">
         <group delimiter=" ">
-          <text variable="collection-title"/>
+          <text variable="collection-title" font-style="italic"/>
           <text variable="collection-number"/>
         </group>
       </if>
@@ -692,6 +692,7 @@
             <number variable="number-of-volumes" form="numeric"/>
             <text term="volume" form="short" plural="true"/>
           </group>
+          <text variable="subtitle" text-case="title"/>
         </group>
       </else-if>
       <else-if type="chapter entry-dictionary entry-encyclopedia paper-conference" match="any">
@@ -1204,9 +1205,6 @@
                   </if>
                 </choose>
               </if>
-              <else-if type="speech" variable="publisher publisher-place" match="none">
-                <text macro="issue"/>
-              </else-if>
             </choose>
           </if>
           <else-if variable="volume issue" match="none">
