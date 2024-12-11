@@ -12,12 +12,17 @@
 
     h2 {
       @include responsive-spacing('margin-bottom', 0);
-      @include type-d;
+      @include type-e;
     }
   }
 
   .su-opp-image {
     @include responsive-spacing('margin-bottom', 0);
+
+    @include grid-media-max('md') {
+      @include responsive-spacing('margin-top', 0);
+
+    }
   }
 
   .su-opp-eligibility {
@@ -38,11 +43,12 @@
   .su-opp-type,
   .su-opp-start-date,
   .su-opp-application-deadline,
-  .su-opp-course-code {
+  .su-opp-course-code,
+  .su-opp-eligibility {
     @include responsive-spacing('padding', 0 null);
 
-    > div:first-child {
-      font-weight: $su-font-semi-bold;
+    h2 {
+      font-size: 1.2em;
     }
   }
 }
