@@ -161,8 +161,7 @@
   }
 
   // A quote that looks similar to h2.
-  .su-quote-text,
-  .su-quote-text--lg {
+  .su-quote-text {
     @at-root #{selector-unify(&, p)},
     & {
       @include type-b;
