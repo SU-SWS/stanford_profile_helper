@@ -166,6 +166,8 @@
     & {
       @include type-b;
       @include responsive-spacing('padding', 0 null 1 2);
+      @include margin(0 auto);
+      @include responsive-spacing('margin-bottom', 2);
 
       line-height: 1.5em;
       max-width: 800px;
@@ -189,6 +191,8 @@
     & {
       @include type-c;
       @include responsive-spacing('padding', 0 null 1 2);
+      @include margin(0 auto);
+      @include responsive-spacing('margin-bottom', 2);
 
       line-height: 1.5em;
       max-width: 800px;
@@ -211,6 +215,8 @@
     @at-root #{selector-unify(&, p)},
     & {
       @include responsive-spacing('padding', 0 null 1 1);
+      @include margin(0 auto);
+      @include responsive-spacing('margin-bottom', 2);
 
       line-height: 1.5em;
       max-width: 800px;
