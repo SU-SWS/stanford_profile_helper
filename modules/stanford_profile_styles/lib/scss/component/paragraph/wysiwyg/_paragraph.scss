@@ -210,7 +210,6 @@
   .su-quote-text--sm {
     @at-root #{selector-unify(&, p)},
     & {
-      @include type-d;
       @include responsive-spacing('padding', 0 null 1 1);
 
       line-height: 1.5em;
