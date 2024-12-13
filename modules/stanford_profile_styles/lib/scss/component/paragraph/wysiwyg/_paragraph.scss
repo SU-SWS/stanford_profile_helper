@@ -166,8 +166,11 @@
     @at-root #{selector-unify(&, p)},
     & {
       @include type-b;
+      @include responsive-spacing('padding', 0 null 1 2);
+
       line-height: 1.5em;
       max-width: 800px;
+      border-left: 3px solid $su-color-black-90;
 
       &::after {
         @include sr-only;
@@ -186,8 +189,11 @@
     @at-root #{selector-unify(&, p)},
     & {
       @include type-c;
+      @include responsive-spacing('padding', 0 null 1 2);
+
       line-height: 1.5em;
       max-width: 800px;
+      border-left: 3px solid $su-color-black-90;
 
       &::after {
         @include sr-only;
@@ -206,8 +212,11 @@
     @at-root #{selector-unify(&, p)},
     & {
       @include type-d;
+      @include responsive-spacing('padding', 0 null 1 1);
+
       line-height: 1.5em;
       max-width: 800px;
+      border-left: 3px solid $su-color-black-90;
 
       &::after {
         @include sr-only;
