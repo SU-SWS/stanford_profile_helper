@@ -33,8 +33,13 @@
   }
 
   h3 {
-    font-size: 1.4em;
+    @include type-d;
+    line-height: 1.2em;
     margin-bottom: 1.0rem;
+  }
+
+  .su-person-short-title {
+    line-height: 1.2em;
   }
 }
 
@@ -45,7 +50,7 @@
 
   .su-person-photo {
     @include margin(0);
-    @include padding(30px 0);
+    @include padding(30px 30px 0 0);
 
     picture, img {
       max-width: 140px;
