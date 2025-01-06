@@ -4,18 +4,6 @@
 .opportunity {
   @include responsive-spacing('margin-bottom', 6);
 
-  .node-stanford-opportunity-su-opp-prerequisites {
-    @include responsive-spacing('margin', 0 null);
-    background-color: $su-color-fog;
-    padding: 30px;
-    width: 75%;
-
-    h2 {
-      @include responsive-spacing('margin-bottom', 0);
-      @include type-e;
-    }
-  }
-
   .su-opp-image {
     @include responsive-spacing('margin-bottom', 0);
 
@@ -25,8 +13,10 @@
     }
   }
 
-  .su-opp-eligibility {
+  .su-opp-eligibility,
+  .node-stanford-opportunity-su-opp-prerequisites {
     @include responsive-spacing('margin', 0 null);
+    width: 100%;
 
     background-color: $su-color-fog;
     padding: 1em;
@@ -44,7 +34,8 @@
   .su-opp-start-date,
   .su-opp-application-deadline,
   .su-opp-course-code,
-  .su-opp-eligibility {
+  .su-opp-eligibility,
+  .node-stanford-opportunity-su-opp-prerequisites {
     @include responsive-spacing('padding', 0 null);
 
     h2 {
@@ -73,4 +64,16 @@
 
 .node-stanford-opportunity-su-opp-sponsor {
   margin: 30px 0;
+}
+
+.stanford-opportunities-list-page {
+  &.stanford-opportunities.list-page {
+    .su-opp-image {
+      @include grid-media-min('md') {
+        @include responsive-spacing('padding-right', 0);
+
+        float: left;
+      }
+    }
+  }
 }
