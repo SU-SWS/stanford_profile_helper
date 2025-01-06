@@ -154,4 +154,25 @@ class CitationTest extends PublicationTestBase {
     $this->assertStringContainsString($expected, $biblio);
   }
 
+  public function testJournalChicago() {
+    /** @var \Drupal\stanford_publication\Entity\CitationInterface $citation */
+    $citation = Citation::create([
+      'type' => 'su_article_journal',
+      'su_author' => [['given' => 'John', 'family' => 'Doe']],
+      'su_year' => 2021,
+      'su_publisher' => 'Journal Name',
+      'su_doi' => 'foo/bar',
+      'su_url' => [
+        'uri' => 'https://localhost',
+      ],
+    ]);
+    $citation->setLabel('Foo Bar');
+    $citation->save();
+
+    // Nothing to link to.
+    $biblio = $citation->getBibliography(CitationInterface::CHICAGO);
+    $expected = 'Doe, John. <a href="https://localhost">“Foo Bar”</a>, <i>Journal Name</i>, 2021. https://doi.org/foo/bar.';
+    $this->assertStringContainsString($expected, $biblio);
+  }
+
 }
