@@ -5,7 +5,12 @@
 //
 // Exception: if we need additional spacing on top,
 // use padding-top, not margin-top.
-
+/// @name su-intro-max-width
+///
+/// @group variable
+///
+/// @type Width
+$su-intro-max-width: unset;
 
 .su-wysiwyg-text {
   .media {
@@ -103,6 +108,7 @@
       @include intro-text;
       @include modular-typography(2);
       @include modular-spacing('margin-bottom', 2);
+      max-width: $su-intro-max-width;
 
       &:last-child {
         // Remove margin-bottom when it is the last item on the paragraph
