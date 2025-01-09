@@ -6,6 +6,13 @@
   margin: 0 auto;
 }
 
+.layout--layout-paragraphs-two-column .layout__region {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 30px;
+}
+
+
 @media screen and (min-width: 576px) {
   .layout--layout-paragraphs-two-column {
     max-width: calc(100vw - 60px);
