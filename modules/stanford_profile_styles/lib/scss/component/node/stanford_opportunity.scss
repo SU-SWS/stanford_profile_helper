@@ -13,13 +13,10 @@
     }
   }
 
-  .su-opp-eligibility,
-  .node-stanford-opportunity-su-opp-prerequisites {
+  .su-opp-eligibility{
     @include responsive-spacing('margin', 0 null);
     width: 100%;
-
-    background-color: $su-color-fog;
-    padding: 1em;
+    padding: 1em 0;
 
     > div:first-child {
       font-weight: $su-font-semi-bold;
@@ -34,9 +31,16 @@
   .su-opp-start-date,
   .su-opp-application-deadline,
   .su-opp-course-code,
-  .su-opp-eligibility,
   .node-stanford-opportunity-su-opp-prerequisites {
     @include responsive-spacing('padding', 0 null);
+
+    h2 {
+      font-size: 1.2em;
+    }
+  }
+
+  .node-stanford-opportunity-su-opp-contact-email {
+    @include responsive-spacing('padding-top', 0);
 
     h2 {
       font-size: 1.2em;
@@ -46,7 +50,7 @@
 
 .node-stanford-opportunity-su-opp-summary {
   border-top: 1px solid $su-color-black-60;
-  padding: 10px;
+  padding: 25px;
   border-bottom: 1px solid $su-color-black-60;
   font-size: 1.5em;
   margin-bottom: 50px;
