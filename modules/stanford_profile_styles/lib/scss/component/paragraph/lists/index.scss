@@ -228,7 +228,17 @@
 
 // Opportunities Card Lists
 .view.stanford-opportunities {
+  // Equal height cards.
+  ul {
+    li {
+      .ds-entity--stanford-opportunity {
+        height: 100%;
+      }
+    }
+  }
+
   .su-card {
+    min-height: 100%; // Equal height cards.
 
     .su-card__contents {
       @include responsive-spacing('padding', 0);
