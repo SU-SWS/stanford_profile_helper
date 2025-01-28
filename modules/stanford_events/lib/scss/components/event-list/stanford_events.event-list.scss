@@ -27,6 +27,14 @@ h1 {
   @include modular-spacing('margin', null null 5 null);
 }
 
+.stanford-events-list-page {
+  li:last-child {
+    article {
+      margin-bottom: 0;
+    }
+  }
+}
+
 .su-event-list-item {
   @include modular-spacing('padding', null null 1 null);
   @include modular-spacing('margin', null null 2 null);
