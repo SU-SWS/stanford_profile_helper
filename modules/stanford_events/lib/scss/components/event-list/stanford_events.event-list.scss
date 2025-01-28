@@ -28,17 +28,15 @@ h1 {
 }
 
 .stanford-events-list-page {
-  &.list-page {
-    .su-list-unstyled > li:last-child {
-      article {
-        margin-bottom: 0;
-      }
+  li:last-child {
+    article {
+      margin-bottom: 0;
     }
   }
 }
 
 .su-event-list-item {
-  @include modular-spacing('padding', null null 4 null);
+  @include modular-spacing('padding', null null 1 null);
   @include modular-spacing('margin', null null 2 null);
 
   display: flex;
@@ -101,9 +99,13 @@ h1 {
     }
 
     .event-list-item__subheadline {
-      @include modular-spacing('margin', null null 1 null);
+      @include modular-spacing('margin', null null 0 null);
       @include modular-typography(1);
       font-weight: $su-font-bold;
+    }
+
+    .event-list_item__dek {
+      @include modular-spacing('margin', null null 0 null);
     }
 
     .views-field-su-event-dek {
@@ -112,6 +114,7 @@ h1 {
 
     .address {
       @include small-paragraph;
+      margin-bottom: 0;
     }
 
     .views-field-su-event-location {
