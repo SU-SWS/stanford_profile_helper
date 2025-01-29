@@ -6,9 +6,9 @@
 }
 
 .layout--layout-paragraphs-three-column .layout__region {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-gap: 30px;
+  display: flex;
+  flex-flow: row;
+  gap: 30px;
 }
 
 @media screen and (min-width: 576px) {
