@@ -19,5 +19,8 @@ accordion:
         css:
           component:
             ../../../dist/css/accordion.css: { }
+        js:
+          accordion.js: { }
         dependencies:
-          - core/drupal.collapse
+          - core/jquery
+          - core/once
