@@ -54,13 +54,6 @@
     }
   }
 
-
-  &:first-of-type {
-    > article {
-      padding-top: 0;
-    }
-  }
-
   //List grid set up
   .su-news-list__item-date {
     grid-area: date;
@@ -101,8 +94,10 @@
   .su-news-article {
     @include margin(0);
     @include padding(0);
-    @include modular-spacing('padding', 1 null);
+    @include modular-spacing('padding', null null 1 null);
+    @include modular-spacing('margin', null null 1 null);
 
+    margin-bottom: 0;
     border-bottom: 1px solid $su-color-cool-grey-25;
   }
 
