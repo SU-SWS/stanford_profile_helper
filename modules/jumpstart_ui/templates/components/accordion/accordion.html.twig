@@ -1,10 +1,8 @@
-<details{{ attributes.addClass('jumpstart-accordion') }}>
-  <summary>
-    <span class="accordion__title">
+<div{{ attributes.addClass('jumpstart-accordion') }}>
+  <button class="accordion__title">
       {{ title|render_clean('<span> <h2> <h3> <h4> <h5> <h6>') }}
-    </span>
-  </summary>
-  <div class="contents">
+  </button>
+  <div class="accordion__contents">
     {{ contents }}
   </div>
-</details>
+</div>

@@ -6,18 +6,21 @@
 
 .jumpstart-accordion {
   border: 0;
-  border-bottom: 1px solid #d2d3d4;
   border-top: 1px solid #d2d3d4;
 
-  summary {
+  button {
     @include modular-typography(1);
     @include padding(0);
     @include margin(0);
     @include fancy-hover($su-color-black, $su-color-black, 'left', 6px);
+    @include responsive-spacing('padding', 0);
     width: 100%;
     font-weight: $su-font-bold;
     position: relative;
     cursor: pointer;
+    background: none;
+    color: black;
+    text-align: left;
 
     &::marker,
     &::-webkit-details-marker {
@@ -41,25 +44,36 @@
     &:focus,
     &:hover {
       text-decoration: underline;
+      background: none;
+      color: black;
+      box-shadow: none;
     }
-  }
 
-  &[open] {
-    summary {
+    &[aria-expanded="true"] {
       &::after {
         content: "\2212";
       }
     }
   }
 
-  .accordion__title {
-    @include responsive-spacing('padding', 0);
-    display: inline-block;
-    width: calc(100% - 70px);
-  }
-
-  .contents {
+  .accordion__contents {
     @include responsive-spacing('padding', 0 0 null);
     height: auto;
+  }
+
+  .stanford-accordion {
+    > p {
+      &:last-child {
+        padding-bottom: 1em;
+      }
+    }
+  }
+}
+
+.stanford-faq {
+  > .ptype-stanford-accordion {
+    &:last-of-type {
+      border-bottom: 1px solid #d2d3d4;
+    }
   }
 }
