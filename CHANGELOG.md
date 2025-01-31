@@ -1,5 +1,22 @@
 # Stanford Profile Helper
 
+9.8.10
+--------------------------------------------------------------------------------
+_Release Date: 2025-01-31_
+
+- D8CORE-7753: Refactor accordion to use button and aria attributes (#364)
+- D8CORE-7722 D8CORE-7751: design tweaks (#363)
+- D8CORE-7781: Fix layout paragraph columns grid to flex (#362)
+- D8CORE-7749: tighten spacing on news list (#359)
+- D8CORE-7722: margin bottom zero on last item (#358)
+- D8CORE-7751: tighten up event list spacing (#360)
+- D8CORE-7633: added aria-live: polite to the modal (#361)
+- Add trash delete hook similar to node delete event
+- D8CORE-7531: removed max-width on intro text and drop cap text (#357)
+- D8CORE-7696 Add small spaces between components in two and three column layouts
+- D8CORE-7678: removed medium and small quotes (#356)
+- Replace field_widget_form_alter hook that was removed from core
+
 9.8.9
 --------------------------------------------------------------------------------
 _Release Date: 2024-11-20_
