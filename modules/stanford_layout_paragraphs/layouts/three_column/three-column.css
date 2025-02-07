@@ -5,10 +5,12 @@
   margin: 0 auto;
 }
 
-.layout--layout-paragraphs-three-column .layout__region {
-  display: flex;
-  flex-flow: row;
-  gap: 30px;
+.layout--layout-paragraphs-three-column .layout__region > div {
+  margin-top: 50px
+}
+
+.layout--layout-paragraphs-three-column .layout__region > div:first-child {
+  margin-top: 0;
 }
 
 @media screen and (min-width: 576px) {
