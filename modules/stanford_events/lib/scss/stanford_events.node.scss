@@ -86,10 +86,17 @@
     }
 
     .su-event-type-bottom {
+      .su-event-type {
+        > div {
+          padding: .1em .3em .1em 0;
+        }
+      }
+
       a {
         color: $su-color-bright-red;
         font-weight: $su-font-regular;
         text-decoration: none;
+        line-height: 2em;
 
         &:hover,
         &:focus {
@@ -322,6 +329,9 @@
   }
 }
 
+.su-event-type-bottom.node.stanford-event.su-event-type.entity-reference.label-hidden > div {
+  padding: .1em .3em .1em 0;
+}
 
 // -----------------------------------------------------------------------------
 // Schedule Paragraph Styles.
