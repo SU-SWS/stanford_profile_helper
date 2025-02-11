@@ -290,3 +290,16 @@ function stanford_profile_helper_extlink_settings_alter(array &$settings) {
     $settings['extlink_class'] = '';
   }
 }
+
+/**
+ * Implements hook_page_attachments_alter().
+ */
+function stanford_profile_styles_page_attachments_alter(array &$attachments) {
+  if (isset($attachments['#attached']['drupalSettings']['data']['extlink'])) {
+    $no_ext_links = \Drupal::service('config_pages.loader')
+      ->getValue('stanford_basic_site_settings', 'su_hide_ext_link_icons', 0, 'value');
+    if ($no_ext_links) {
+      $attachments['#attached']['drupalSettings']['data']['extlink']['extAdditionalLinkClasses'] = '';
+    }
+  }
+}
