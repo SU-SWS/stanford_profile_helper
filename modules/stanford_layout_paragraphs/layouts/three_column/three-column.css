@@ -5,8 +5,8 @@
   margin: 0 auto;
 }
 
-.layout--layout-paragraphs-three-column .layout__region > div {
-  margin-top: 50px
+.layout--layout-paragraphs-three-column .layout__region > div:not(.ptype-stanford-spacer) {
+  padding-top: 30px
 }
 
 .layout--layout-paragraphs-three-column .layout__region > div:first-child {

@@ -23,14 +23,12 @@ use Drupal\Core\Serialization\Yaml;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\Url;
-use Drupal\core_event_dispatcher\Event\Entity\EntityDeleteEvent;
 use Drupal\node\NodeInterface;
 use Drupal\search_api\IndexInterface;
 use Drupal\stanford_profile_helper\StanfordProfileHelper;
 use Drupal\taxonomy\TermInterface;
 use Drupal\taxonomy_menu\Plugin\Menu\TaxonomyMenuMenuLink;
 use Drupal\user\RoleInterface;
-use Drupal\views\ViewEntityInterface;
 
 /**
  * Implements hook_preprocess_HOOK().

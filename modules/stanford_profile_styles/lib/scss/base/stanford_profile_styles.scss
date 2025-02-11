@@ -103,6 +103,10 @@ a {
 
   // Style the SVG for mailto.
   &.mailto {
+    &:after {
+      display: none;
+    }
+
     svg {
       @include margin(null 0 null 0.25em);
       @include padding(null 0.01em null null);
