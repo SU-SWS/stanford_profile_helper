@@ -224,4 +224,17 @@
       display: flex;
     }
   }
+
+  .su-basic-page-types-list {
+    @include responsive-spacing('padding-top', 1);
+    @include responsive-spacing('padding-bottom', 1);
+
+    h3 {
+      @include responsive-spacing('margin-bottom', -1);
+    }
+
+    .su-basic-page-list__description {
+      margin-bottom: 0;
+      }
+  }
 }
