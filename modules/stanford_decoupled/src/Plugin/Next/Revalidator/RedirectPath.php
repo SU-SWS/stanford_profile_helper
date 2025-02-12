@@ -61,7 +61,12 @@ class RedirectPath extends ConfigurableRevalidatorBase implements RevalidatorInt
     foreach ($paths as $path) {
       foreach ($sites as $site) {
         try {
-          $revalidate_url = $site->getRevalidateUrlForPath($path);
+          if (method_exists($site, 'getRevalidateUrlForPath')) {
+            $revalidate_url = $site->getRevalidateUrlForPath($path);
+          }
+          else {
+            $revalidate_url = $site->buildRevalidateUrl(['path' => $path]);
+          }
 
           if (!$revalidate_url) {
             throw new \Exception('No revalidate url set.');
