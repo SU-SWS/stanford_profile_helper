@@ -88,7 +88,7 @@
     .su-event-type-bottom {
       .su-event-type {
         > div {
-          padding: .1em .3em .1em 0;
+          padding: 0.1em 0.3em 0.1em 0;
         }
       }
 
@@ -327,10 +327,6 @@
   .block__title {
     text-align: center;
   }
-}
-
-.su-event-type-bottom.node.stanford-event.su-event-type.entity-reference.label-hidden > div {
-  padding: .1em .3em .1em 0;
 }
 
 // -----------------------------------------------------------------------------
