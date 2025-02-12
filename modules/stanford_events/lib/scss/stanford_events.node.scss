@@ -86,8 +86,8 @@
     }
 
     .su-event-type-bottom {
-      .su-event-type {
-        > div {
+      &.su-event-type {
+        div {
           padding: 0.1em 0.3em 0.1em 0;
         }
       }
