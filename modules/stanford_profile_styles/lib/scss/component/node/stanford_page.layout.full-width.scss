@@ -26,15 +26,16 @@ body.front {
   }
 }
 
-.main-region.flex-10-of-12 {
-  max-width: calc(100vw - 40px);
+.main-region {
+  &.flex-10-of-12 {
+    max-width: calc(100vw - 40px);
 
-  @include grid-media-min('md') {
-    max-width: calc(100vw - 100px);
-  }
+    @include grid-media-min('md') {
+      max-width: calc(100vw - 100px);
+    }
 
-  @include grid-media-min('lg') {
-    max-width: calc(100vw - 200px);
+    @include grid-media-min('lg') {
+      max-width: calc(100vw - 200px);
+    }
   }
 }
-
