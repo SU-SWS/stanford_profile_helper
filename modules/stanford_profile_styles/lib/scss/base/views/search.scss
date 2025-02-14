@@ -28,7 +28,7 @@
   }
 
   h2 {
-    @include type_c;
+    @include type-c;
     @include responsive-spacing('margin-bottom', -1);
   }
 
@@ -48,9 +48,9 @@
 
     > p {
       @include responsive-spacing('margin-top', 4);
-      @include type_d;
+      @include type-d;
 
     }
   }
-
 }
+
