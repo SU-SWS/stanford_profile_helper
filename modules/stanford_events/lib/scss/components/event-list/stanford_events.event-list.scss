@@ -28,7 +28,7 @@ h1 {
 }
 
 .su-event-list-item {
-  @include modular-spacing('padding', null null 4 null);
+  @include modular-spacing('padding', null null 1 null);
   @include modular-spacing('margin', null null 2 null);
 
   display: flex;
@@ -91,9 +91,13 @@ h1 {
     }
 
     .event-list-item__subheadline {
-      @include modular-spacing('margin', null null 1 null);
       @include modular-typography(1);
       font-weight: $su-font-bold;
+      margin-bottom: .6rem;
+    }
+
+    .event-list_item__dek {
+      @include modular-spacing('margin', null null 0 null);
     }
 
     .views-field-su-event-dek {
@@ -102,6 +106,7 @@ h1 {
 
     .address {
       @include small-paragraph;
+      margin-bottom: 0;
     }
 
     .views-field-su-event-location {
@@ -234,7 +239,6 @@ h1 {
   color: #544948;
   line-height: 1.5;
   margin-top: 0.6em;
-  margin-bottom: 1em;
 }
 
 //Edit event content link

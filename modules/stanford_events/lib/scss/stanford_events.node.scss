@@ -42,6 +42,8 @@
       color: $su-color-bright-red;
       font-weight: $su-font-regular;
       text-decoration: none;
+      line-height: 2em;
+      padding: 0.1em 0 0.1em 0;
 
       &:hover,
       &:focus {
@@ -90,6 +92,8 @@
         color: $su-color-bright-red;
         font-weight: $su-font-regular;
         text-decoration: none;
+        line-height: 2em;
+        padding: 0.1em 0.3em 0.1em 0;
 
         &:hover,
         &:focus {
@@ -321,7 +325,6 @@
     text-align: center;
   }
 }
-
 
 // -----------------------------------------------------------------------------
 // Schedule Paragraph Styles.

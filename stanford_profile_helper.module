@@ -29,7 +29,6 @@ use Drupal\stanford_profile_helper\StanfordProfileHelper;
 use Drupal\taxonomy\TermInterface;
 use Drupal\taxonomy_menu\Plugin\Menu\TaxonomyMenuMenuLink;
 use Drupal\user\RoleInterface;
-use Drupal\views\ViewEntityInterface;
 
 /**
  * Implements hook_preprocess_HOOK().
@@ -1217,5 +1216,24 @@ function stanford_profile_helper_xmlsitemap_load($entities) {
     $base_url = \Drupal::state()->get('xmlsitemap_base_url');
     $uri['path'] = $base_url . $uri['path'];
     $xml_entity->set('uri', $uri);
+  }
+}
+
+/**
+ * Implements hook_entity_trash_delete().
+ */
+function stanford_profile_helper_entity_trash_delete(EntityInterface $entity) {
+  // If a node has menu link data, delete the menu link.
+  if (
+    $entity instanceof NodeInterface &&
+    $entity->hasField('field_menulink') &&
+    !$entity->get('field_menulink')->isEmpty()
+  ) {
+    \Drupal::database()->delete('menu_tree')
+      ->condition('id', 'menu_link_field:%', 'LIKE')
+      ->condition('route_param_key', 'node=' . $entity->id())
+      ->execute();
+    \Drupal::service('router.builder')->rebuildIfNeeded();
+    StanfordProfileHelper::clearMenuCacheTag();
   }
 }
