@@ -13,7 +13,7 @@
     }
   }
 
-  .su-opp-eligibility{
+  .su-opp-eligibility {
     @include responsive-spacing('margin', 0 null);
     width: 100%;
     padding: 1em 0;
@@ -57,10 +57,12 @@
 }
 
 .su-wysiwyg-text {
-  &.node.stanford-opportunity {
-    &.su-opp-summary {
-      p {
-        font-size: 1.1em;
+  &.node {
+    &.stanford-opportunity {
+      &.su-opp-summary {
+        p {
+          font-size: 1.1em;
+        }
       }
     }
   }
@@ -71,12 +73,14 @@
 }
 
 .stanford-opportunities-list-page {
-  &.stanford-opportunities.list-page {
-    .su-opp-image {
-      @include grid-media-min('md') {
-        @include responsive-spacing('padding-right', 0);
+  &.stanford-opportunities {
+    &.list-page {
+      .su-opp-image {
+        @include grid-media-min('md') {
+          @include responsive-spacing('padding-right', 0);
 
-        float: left;
+          float: left;
+        }
       }
     }
   }
