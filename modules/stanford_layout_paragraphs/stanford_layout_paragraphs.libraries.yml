@@ -17,6 +17,11 @@ two_column:
     component:
       layouts/two_column/two-column.css: {}
 
+two_filtered_column:
+  css:
+    component:
+      layouts/two-filtered_column/two-filtered-column.css: {}
+
 three_column:
   css:
     component:

@@ -28,6 +28,22 @@ layout_paragraphs_2_column:
   icon_map:
     - [left, right]
 
+layout_paragraphs_2_filtered_column:
+  label: '2 Filtered Column'
+  category: 'Stanford Layout Paragraphs'
+  class: '\Drupal\stanford_layout_paragraphs\Layouts\TwoFilteredColumn'
+  path: layouts/two_filtered_column
+  template: layout-paragraphs-two-filtered-column
+  library: stanford_layout_paragraphs/two_filtered_column
+  regions:
+    left:
+      label: Left
+    right:
+      label: Right
+  default_region: left
+  icon_map:
+    - [left, right]
+
 layout_paragraphs_3_column:
   label: '3 Column'
   category: 'Stanford Layout Paragraphs'
