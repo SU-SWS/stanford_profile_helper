@@ -20,9 +20,14 @@
 .stanford-people-grid,
 .taxonomy-term-pages.people-terms {
 
-  @include grid-media-between('xs','sm') {
-    .su-card--minimal:not(.su-card--icon) .su-card__contents {
-      @include modular-spacing('padding-top', 0);
+  // Override for just the people card.
+  @include grid-media-between('xs', 'sm') {
+    .su-card--minimal {
+      &:not(.su-card--icon) {
+        .su-card__contents {
+          @include modular-spacing('padding-top', 0);
+        }
+      }
     }
   }
 
