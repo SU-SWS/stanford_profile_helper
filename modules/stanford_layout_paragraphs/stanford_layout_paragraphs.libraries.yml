@@ -12,6 +12,11 @@ one_column:
     component:
       layouts/one_column/one-column.css: {}
 
+one_column_filters:
+  css:
+    component:
+      layouts/one_column_filters/one-column-filters.css: {}
+
 two_column:
   css:
     component:
