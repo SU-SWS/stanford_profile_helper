@@ -51,6 +51,7 @@
   .su-news-list__topics {
     ul {
       margin-bottom: 0;
+      margin-top: 0.5em;
     }
   }
 
@@ -101,8 +102,11 @@
 
   .su-news-list__item-date {
     @include small-paragraph;
-
     order: -1;
+
+    > p {
+      margin-bottom: 0.5em;
+    }
   }
 
   .image {
@@ -147,9 +151,9 @@
   }
 
   .su-news-list__dek {
-    @include big-paragraph;
     @include modular-spacing('margin-top', -1);
-
+    font-size: 2.1rem;
+    line-height: 1.5;
     margin-bottom: 0;
   }
 

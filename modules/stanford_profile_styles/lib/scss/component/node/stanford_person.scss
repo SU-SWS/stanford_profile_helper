@@ -35,7 +35,7 @@
   h3 {
     @include type-d;
     line-height: 1.2em;
-    margin-bottom: 1.0rem;
+    margin-bottom: 0.5rem;
   }
 
   .su-person-short-title {
@@ -50,7 +50,7 @@
 
   .su-person-photo {
     @include margin(0);
-    @include padding(30px 30px 0 0);
+    @include padding(10px 30px 0 0);
 
     picture, img {
       max-width: 140px;
