@@ -197,4 +197,21 @@
       }
     }
   }
+
+  // Opportunity teasers
+  .ds-entity--stanford-opportunity {
+    .su-card__contents {
+      @include responsive-spacing('padding', 0);
+
+      .su-opp-type {
+        display: none;
+      }
+
+      h3 {
+        @include type-e;
+        margin-bottom: 0;
+        word-break: break-word;
+      }
+    }
+  }
 }

@@ -1,0 +1,87 @@
+@charset 'UTF-8';
+@import '../../config';
+
+.opportunity {
+  @include responsive-spacing('margin-bottom', 6);
+
+  .su-opp-image {
+    @include responsive-spacing('margin-bottom', 0);
+
+    @include grid-media-max('md') {
+      @include responsive-spacing('margin-top', 0);
+
+    }
+  }
+
+  .su-opp-eligibility {
+    @include responsive-spacing('margin', 0 null);
+    width: 100%;
+    padding: 1em 0;
+
+    > div:first-child {
+      font-weight: $su-font-semi-bold;
+    }
+  }
+
+  .su-opp-paragraphs {
+    @include responsive-spacing('padding-top', 2);
+  }
+
+  .su-opp-type,
+  .su-opp-start-date,
+  .su-opp-application-deadline,
+  .su-opp-course-code,
+  .node-stanford-opportunity-su-opp-prerequisites {
+    @include responsive-spacing('padding', 0 null);
+
+    h2 {
+      font-size: 1.2em;
+    }
+  }
+
+  .node-stanford-opportunity-su-opp-contact-email {
+    @include responsive-spacing('padding-top', 0);
+
+    h2 {
+      font-size: 1.2em;
+    }
+  }
+}
+
+.node-stanford-opportunity-su-opp-summary {
+  border-top: 1px solid $su-color-black-60;
+  padding: 25px;
+  border-bottom: 1px solid $su-color-black-60;
+  font-size: 1.5em;
+  margin-bottom: 50px;
+}
+
+.su-wysiwyg-text {
+  &.node {
+    &.stanford-opportunity {
+      &.su-opp-summary {
+        p {
+          font-size: 1.1em;
+        }
+      }
+    }
+  }
+}
+
+.node-stanford-opportunity-su-opp-sponsor {
+  margin: 30px 0;
+}
+
+.stanford-opportunities-list-page {
+  &.stanford-opportunities {
+    &.list-page {
+      .su-opp-image {
+        @include grid-media-min('md') {
+          @include responsive-spacing('padding-right', 0);
+
+          float: left;
+        }
+      }
+    }
+  }
+}
