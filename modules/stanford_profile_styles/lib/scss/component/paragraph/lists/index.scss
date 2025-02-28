@@ -303,4 +303,17 @@
   .content {
     padding: 20px 0;
   }
+
+  //Opportunity default list type list
+  .su-opp-type {
+    > div {
+      display: inline-block;
+
+      &:not(:last-of-type) {
+        &::after {
+          content: ", ";
+        }
+      }
+    }
+  }
 }
