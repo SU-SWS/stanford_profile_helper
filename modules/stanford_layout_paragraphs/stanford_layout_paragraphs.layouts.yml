@@ -12,6 +12,20 @@ layout_paragraphs_1_column:
   icon_map:
     - [main]
 
+layout_paragraphs_1_column_filters:
+  label: '1 Column with Filters'
+  category: 'Stanford Layout Paragraphs'
+  class: '\Drupal\stanford_layout_paragraphs\Layouts\OneColumnFilters'
+  path: layouts/one_column_filters
+  template: layout-paragraphs-one-column-filters
+  library: stanford_layout_paragraphs/one_column-filters
+  regions:
+    main:
+      label: Main content
+  default_region: main
+  icon_map:
+    - [main]
+
 layout_paragraphs_2_column:
   label: '2 Column'
   category: 'Stanford Layout Paragraphs'

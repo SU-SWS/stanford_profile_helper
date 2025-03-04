@@ -180,5 +180,38 @@
     h3 {
       font-size: 1.4em;
     }
+
+    .node-title {
+      .su-link--action {
+        &::after {
+          background-color: $su-color-bright-red;
+        }
+
+        &:active,
+        &:focus,
+        &:hover {
+          &::after {
+            background-color: $su-color-black;
+          }
+        }
+      }
+    }
+  }
+
+  // Opportunity teasers
+  .ds-entity--stanford-opportunity {
+    .su-card__contents {
+      @include responsive-spacing('padding', 0);
+
+      .su-opp-type {
+        display: none;
+      }
+
+      h3 {
+        @include type-e;
+        margin-bottom: 0;
+        word-break: break-word;
+      }
+    }
   }
 }

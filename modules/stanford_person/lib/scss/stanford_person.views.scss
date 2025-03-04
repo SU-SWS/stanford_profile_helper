@@ -19,6 +19,18 @@
 // Grid set up
 .stanford-people-grid,
 .taxonomy-term-pages.people-terms {
+
+  // Override for just the people card.
+  @include grid-media-between('xs', 'sm') {
+    .su-card--minimal {
+      &:not(.su-card--icon) {
+        .su-card__contents {
+          @include modular-spacing('padding-top', 0);
+        }
+      }
+    }
+  }
+
   .su-list-unstyled {
 
     // Short title
@@ -32,6 +44,7 @@
     &,
     + .js-pager__items {
       @include modular-spacing('margin-bottom', 8);
+      @include modular-spacing('margin-top', 5);
     }
 
     > div {
@@ -54,15 +67,13 @@
     }
 
     h3 {
-      @include type-e;
+      @include type-d;
 
       font-weight: $su-font-semi-bold;
       margin-bottom: 0;
     }
 
     a {
-      @include type-d;
-
       color: $su-color-bright-red;
       text-decoration: none;
       word-break: break-word;
