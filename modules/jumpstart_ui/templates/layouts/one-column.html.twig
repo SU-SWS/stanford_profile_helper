@@ -20,7 +20,6 @@
 {% if settings.columns|render is not empty and settings.columns != "default" %}
   {% if region_attributes.main is iterable %}
     {% set main_attributes = main_attributes.removeClass('flex-12-of-12').addClass(settings.columns) %}
-    {% set attributes = attributes.addClass('centered-content') %}
   {% endif %}
 {% endif %}
 
