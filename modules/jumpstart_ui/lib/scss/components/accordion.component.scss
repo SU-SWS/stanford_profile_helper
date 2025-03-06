@@ -21,6 +21,7 @@
     background: none;
     color: black;
     text-align: left;
+    padding-right: 50px !important;
 
     &::marker,
     &::-webkit-details-marker {
@@ -29,6 +30,7 @@
 
     &::after {
       content: "+";
+      background-color: transparent;
       display: block;
       position: absolute;
       top: 50%;
@@ -47,6 +49,10 @@
       background: none;
       color: black;
       box-shadow: none;
+
+      &::after {
+        background-color: transparent;
+      }
     }
 
     &[aria-expanded="true"] {
