@@ -12,3 +12,45 @@
   width: calc(100% - 200px);
   margin: 0 auto;
 }
+
+.search-results {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.item-list {
+  @include responsive-spacing('margin-top', 4);
+
+  .su-list-unstyled {
+    >li {
+      @include responsive-spacing('margin-bottom', 3);
+    }
+  }
+
+  h2 {
+    @include type-c;
+    @include responsive-spacing('margin-bottom', -1);
+  }
+
+  .views-field-changed {
+    color: $su-color-black-60;
+  }
+
+  .views-field-search-api-excerpt {
+    @include responsive-spacing('margin-bottom', -1);
+
+  }
+}
+
+.search {
+  &.results {
+    @include responsive-spacing('padding-bottom', 9);
+
+    > p {
+      @include responsive-spacing('margin-top', 4);
+      @include type-d;
+
+    }
+  }
+}
+
