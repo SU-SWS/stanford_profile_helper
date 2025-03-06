@@ -14,7 +14,7 @@
     @include margin(0);
     @include fancy-hover($su-color-black, $su-color-black, 'left', 6px);
     @include responsive-spacing('padding', 0);
-    width: 98%;
+    width: 100%;
     font-weight: $su-font-bold;
     position: relative;
     cursor: pointer;
@@ -35,7 +35,7 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      right: 0;
+      right: 0.5em;
       font-weight: $su-font-regular;
       font-size: 3.6rem;
       line-height: 3.6rem;
