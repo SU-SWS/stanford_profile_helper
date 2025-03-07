@@ -110,6 +110,7 @@ function stanford_profile_helper_cron() {
   $renewal_date = $config_pages->getValue('stanford_basic_site_settings', 'su_site_renewal_due', 0, 'value');
   $site_managers = $config_pages->getValue('stanford_basic_site_settings', 'su_site_tech_contact', [], 'value');
   $site_type = $config_pages->getValue('stanford_basic_site_settings', 'su_site_type', 0, 'value');
+  $person_sunet = $config_pages->getValue('stanford_basic_site_settings', 'su_site_sunetid', 0, 'value');
 
   $orgs = \Drupal::entityTypeManager()
     ->getStorage('taxonomy_term')
@@ -118,6 +119,15 @@ function stanford_profile_helper_cron() {
   foreach ($orgs as &$org) {
     $org = $org->label();
   }
+
+  $user_storage = \Drupal::entityTypeManager()->getStorage('user');
+  $uid = $user_storage->getQuery()
+    ->accessCheck(FALSE)
+    ->condition('roles', ['site_manager', 'contributor', 'site_editor'], 'IN')
+    ->sort('access', 'DESC')
+    ->range(0, 1)
+    ->execute();
+  $last_editor = $uid ? $user_storage->load(reset($uid)): null;
 
   $site_information = [
     'accessibility' => $ally ?: [],
@@ -130,6 +140,8 @@ function stanford_profile_helper_cron() {
     'siteName' => \Drupal::config('system.site')->get('name'),
     'siteType' => $site_type,
     'theme' => \Drupal::config('system.theme')->get('default'),
+    'personSunet' => $person_sunet,
+    'lastEditorAccess' => (int) $last_editor?->get('access')->getString(),
   ];
   $uri = 'private://stanford';
   $directory = \Drupal::service('stream_wrapper_manager')->normalizeUri($uri);
