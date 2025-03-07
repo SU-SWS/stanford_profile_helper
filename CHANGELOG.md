@@ -1,5 +1,23 @@
 # Stanford Profile Helper
 
+9.8.13
+--------------------------------------------------------------------------------
+_Release Date: 2025-03-07_
+
+- Added sunet to site information cron
+- D8CORE-7893: changed size of mailto icon to match previous icon (#381)
+- D8CORE-7834: Accordions added a transparent background to icon (#376)
+- D8CORE-7835: Accordion add padding to prevent button overlaying text
+- D8CORE-7660: Styling for opportunities content type. (#353)
+- D8CORE-7662: Created a single collayout to added the filtered paragraph into (#378)
+- D8CORE-7783: updated the color of the caret on su-link--action for policy teaser (#372)
+- D8CORE-7641: formatted the spacing on search page (#374)
+- D8CORE-7801: fine tuning the news list (#377)
+- D8CORE-7784: adjustments to spacing on a person list (#371)
+- D8CORE-7726: adding space for touch targets on Events node taxonomy terms.  (#368)
+- D8CORE-7785: changed spacing on the basic page list (#369)
+- D8CORE-7786: Removed margin-bottom from the "This event has already occurred" (#370)
+
 9.8.12
 --------------------------------------------------------------------------------
 _Release Date: 2025-02-11_
