@@ -286,7 +286,7 @@
   }
 
   article {
-    border-bottom: 1px solid #808080;
+    border-bottom: 1px solid #d2d3d4;
     margin: 30px 0;
 
     // Opportunities default list top alignment.
@@ -301,7 +301,7 @@
   }
 
   .content {
-    padding: 20px 0;
+    padding: 0 0 10px 0;
   }
 
   //Opportunity default list type list
@@ -315,5 +315,9 @@
         }
       }
     }
+  }
+
+  .stanford-opportunity__title {
+    @include type-d;
   }
 }
