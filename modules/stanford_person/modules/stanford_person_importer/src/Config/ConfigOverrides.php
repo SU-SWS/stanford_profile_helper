@@ -134,7 +134,7 @@ class ConfigOverrides implements ConfigFactoryOverrideInterface {
       return NULL;
     }
 
-    $allowed_fields = $this->getAllowedFields();
+    $allowed_fields = array_unique($this->getAllowedFields());
     foreach ($urls as &$url) {
       $url = Url::fromUri($url);
       $url->mergeOptions(['query' => ['whitelist' => implode(',', $allowed_fields)]]);
