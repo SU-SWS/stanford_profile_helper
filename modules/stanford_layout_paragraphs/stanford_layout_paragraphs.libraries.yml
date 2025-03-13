@@ -12,10 +12,10 @@ one_column:
     component:
       layouts/one_column/one-column.css: {}
 
-one_column_filters:
+one_column_wide:
   css:
     component:
-      layouts/one_column_filters/one-column-filters.css: {}
+      layouts/one_column_wide/one-column-wide.css: {}
 
 two_column:
   css:

@@ -12,13 +12,13 @@ layout_paragraphs_1_column:
   icon_map:
     - [main]
 
-layout_paragraphs_1_column_filters:
-  label: '1 Column with Filters'
+layout_paragraphs_1_column_wide:
+  label: '1 Column (Wide)'
   category: 'Stanford Layout Paragraphs'
-  class: '\Drupal\stanford_layout_paragraphs\Layouts\OneColumnFilters'
-  path: layouts/one_column_filters
-  template: layout-paragraphs-one-column-filters
-  library: stanford_layout_paragraphs/one_column-filters
+  class: '\Drupal\stanford_layout_paragraphs\Layouts\OneColumnWide'
+  path: layouts/one_column_wide
+  template: layout-paragraphs-one-column-wide
+  library: stanford_layout_paragraphs/one_column-wide
   regions:
     main:
       label: Main content
