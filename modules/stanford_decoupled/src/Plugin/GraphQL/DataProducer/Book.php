@@ -63,7 +63,7 @@ class Book extends DataProducerPluginBase implements ContainerFactoryPluginInter
    */
   public function resolve(EntityInterface $entity, FieldContext $context): ?array {
     if ($entity instanceof NodeInterface && isset($entity->book['bid'])) {
-      $book_tree = $this->bookManager->bookTreeAllData($entity->book['bid']);
+      $book_tree = $this->bookManager->bookTreeAllData((int) $entity->book['bid']);
       return $this->buildBookTreeData(reset($book_tree));
     }
 
