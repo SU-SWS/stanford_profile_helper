@@ -7,6 +7,6 @@ use Drupal\Core\Layout\LayoutDefault;
 /**
  * One column layout class.
  */
-class OneColumnFilters extends LayoutDefault {
+class OneColumnWide extends LayoutDefault {
 
 }
