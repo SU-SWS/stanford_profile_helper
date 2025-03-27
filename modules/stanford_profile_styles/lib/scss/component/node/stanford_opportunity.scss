@@ -56,6 +56,16 @@
 
   .node-stanford-opportunity-su-opp-cta-url {
     @include responsive-spacing('padding', 4 1 null 1);
+
+    .su-button--secondary a {
+      color: $su-color-bright-red;
+
+      &:hover,
+      &:focus,
+      &:active {
+        color: $su-color-black;
+      }
+    }
   }
 
   .su-opp-image {
