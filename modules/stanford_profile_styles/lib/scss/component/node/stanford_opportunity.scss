@@ -83,6 +83,13 @@
     background-color: $su-color-foggy-light;
     width: 100%;
 
+    @include grid-media-min('lg') {
+      &.text-long {
+        box-shadow: 0 0 0 38px $su-color-foggy-light;
+        clip-path: inset(0 -100vmax);
+      }
+    }
+
     h2 {
       @include type-d;
       font-weight: $su-font-semi-bold;
