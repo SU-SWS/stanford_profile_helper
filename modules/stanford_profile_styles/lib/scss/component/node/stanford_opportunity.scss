@@ -121,14 +121,13 @@
   }
 
   // Border grouping
-  .su-opp-application-deadline {
-    @include responsive-spacing('padding', 1 null);
+  .node-stanford-opportunity-su-opp-application-deadline {
+    .su-opp-application-deadline {
+      @include responsive-spacing('padding', 1 null);
 
-    border-bottom: 1px solid $su-color-black-30;
-  }
-
-  .stanford-opportunity.su-opp-application-deadline {
-    border-top: 1px solid $su-color-black-30;
+      border-top: 1px solid $su-color-black-30;
+      border-bottom: 1px solid $su-color-black-30;
+    }
   }
 
   .node-stanford-opportunity-su-opp-contact-name,
