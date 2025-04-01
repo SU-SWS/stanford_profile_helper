@@ -137,12 +137,14 @@
     }
   }
 
-  .node-stanford-opportunity-su-opp-contact-name,
+  .node-stanford-opportunity-su-opp-contact-email,
   .su-opp-application-deadline {
     @include responsive-spacing('padding-top', 1);
 
     h2 {
       @include type-d;
+      margin-bottom: 3px;
+
     }
   }
 }
