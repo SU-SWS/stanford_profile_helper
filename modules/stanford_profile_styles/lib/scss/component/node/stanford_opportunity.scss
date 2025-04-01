@@ -5,23 +5,40 @@
   @include responsive-spacing('margin-bottom', 6);
 
   // adjusting layout for meantime
-  .jumpstart-ui--two-column>.left-region+.main-region {
-    @include responsive-spacing('padding-left', 0);
+  .su-opp-node-container-wrapper {
+    &.jumpstart-ui--two-column {
+      .left-region {
+        max-width: 980px;
+        margin: 0 auto;
+      }
 
-    border-top: 1px solid $su-color-black-30;
+      .main-region {
+        max-width: 300px;
 
-    h2,
-    .su-opp-type,
-    .su-opp-course-code,
-    .su-opp-units,
-    time,
-    .su-opp-contact-name,
-    .su-opp-contact-email,
-    .su-opp-contact-phone,
-    .su-opp-contact-url,
-    .su-opp-learn-more,
-    .su-opp-cta-url {
-      @include responsive-spacing('padding', null 1);
+        h2,
+        .su-opp-type,
+        .su-opp-course-code,
+        .su-opp-units,
+        time,
+        .su-opp-contact-name,
+        .su-opp-contact-email,
+        .su-opp-contact-phone,
+        .su-opp-contact-url,
+        .su-opp-learn-more,
+        .su-opp-cta-url {
+          @include responsive-spacing('padding', null 1);
+        }
+      }
+    }
+  }
+
+  // Specific for an override.
+  .jumpstart-ui--two-column{
+    > .left-region{
+      + .main-region {
+        padding-left: 0;
+        border-top: 1px solid $su-color-black-30;
+      }
     }
   }
 
@@ -29,9 +46,30 @@
     @include responsive-spacing('padding-bottom', 1);
   }
 
-  .su-opp-type,
-  .su-opp-tags {
+  .cshs-term-group {
+    ul {
+      list-style: none;
+
+      li {
+        display: inline;
+
+        &::after {
+          content: ', ';
+          margin-left: -4px;
+        }
+      }
+
+      li:last-of-type {
+        &::after {
+          content: '';
+        }
+      }
+    }
+  }
+
+  .su-opp-type {
     @include responsive-spacing('padding-top', 1);
+
 
     div {
       display: inline;
@@ -103,7 +141,6 @@
   .node-stanford-opportunity-su-opp-prerequisites {
     @include responsive-spacing('padding', 2 null 5 null);
 
-    border-bottom: 1px solid $su-color-black-30;
     border-top: 1px solid $su-color-black-30;
 
     h2 {
