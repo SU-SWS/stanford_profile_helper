@@ -319,5 +319,9 @@
         }
       }
     }
+
+    .node-stanford-person-su-person-profile-link {
+      @include responsive-spacing('margin-bottom', 5);
+    }
   }
 }
