@@ -114,9 +114,9 @@
     }
   }
 
-  .su-opp-eligibility {
+  .su-opp-eligibility,
+  .su-opp-prerequisites {
     @include responsive-spacing('padding', 2 null);
-    @include responsive-spacing('margin-bottom', 2);
 
     background-color: $su-color-foggy-light;
     width: 100%;
@@ -130,6 +130,7 @@
 
     h2 {
       @include type-d;
+
       font-weight: $su-font-semi-bold;
     }
 
@@ -139,14 +140,11 @@
   }
 
   .node-stanford-opportunity-su-opp-prerequisites {
-    @include responsive-spacing('padding', 2 null 5 null);
+    @include responsive-spacing('margin-bottom', 2);
+  }
 
-    border-top: 1px solid $su-color-black-30;
-
-    h2 {
-      @include type-c;
-      font-weight: $su-font-semi-bold;
-    }
+  .su-opp-prerequisites {
+    padding-top: 0;
   }
 
   .su-opp-paragraphs {
@@ -162,6 +160,17 @@
     > div:first-of-type {
       font-weight: $su-font-semi-bold;
     }
+  }
+
+  .su-tags-wrapper {
+    @include responsive-spacing('padding', 1 null);
+
+    border-bottom: 1px solid $su-color-black-30;
+
+    > div {
+      @include responsive-spacing('padding', null 1);
+    }
+
   }
 
   // Border grouping
