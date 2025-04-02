@@ -44,11 +44,20 @@
 
   .su-opp-units {
     @include responsive-spacing('padding-bottom', 1);
+    padding-top: 0;
   }
 
   .cshs-term-group {
+    .cshs-term-group__title {
+      font-weight: $su-font-semi-bold;
+    }
+
     ul {
+      @include responsive-spacing('padding-bottom', 0);
+
       list-style: none;
+      margin: 0;
+      padding-left: 0;
 
       li {
         display: inline;
@@ -69,7 +78,11 @@
 
   .su-opp-type {
     @include responsive-spacing('padding-top', 1);
+  }
 
+  .su-opp-type,
+  .su-opp-units {
+    @include type-d;
 
     div {
       display: inline;
@@ -95,13 +108,15 @@
   .node-stanford-opportunity-su-opp-cta-url {
     @include responsive-spacing('padding', 4 1 null 1);
 
-    .su-button--secondary a {
-      color: $su-color-bright-red;
+    .su-button--secondary {
+      a {
+        color: $su-color-bright-red;
 
-      &:hover,
-      &:focus,
-      &:active {
-        color: $su-color-black;
+        &:hover,
+        &:focus,
+        &:active {
+          color: $su-color-black;
+        }
       }
     }
   }
@@ -152,7 +167,10 @@
   }
 
   .su-opp-course-code,
-  .su-opp-type {
+  .su-opp-type,
+  .su-opp-units {
+    @include type-d;
+
     font-weight: $su-font-semi-bold;
   }
 
@@ -170,7 +188,6 @@
     > div {
       @include responsive-spacing('padding', null 1);
     }
-
   }
 
   // Border grouping
