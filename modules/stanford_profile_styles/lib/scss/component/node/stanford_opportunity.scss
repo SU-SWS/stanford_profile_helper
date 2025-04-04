@@ -48,6 +48,7 @@
 
   .su-opp-units {
     @include responsive-spacing('padding-bottom', 1);
+
     padding-top: 0;
   }
 
@@ -146,12 +147,9 @@
 
     &.text-long {
       clip-path: inset(0 -100vmax);
+      box-shadow: 0 0 0 10px $su-color-foggy-light;
 
-      @include grid-media-max('lg') {
-        box-shadow: 0 0 0 10px $su-color-foggy-light;
-      }
-
-      @include grid-media-min('xl') {
+      @include grid-media-min('2xl') {
         box-shadow: 0 0 0 38px $su-color-foggy-light;
       }
     }
@@ -221,6 +219,44 @@
       @include type-d;
       margin-bottom: 3px;
 
+    }
+  }
+
+  .su-opp-title-wrapper {
+    .main-region {
+      &.flex-12-of-12 {
+        display: flex;
+        flex-direction: column;
+
+        @include grid-media-min('md') {
+          flex-direction: row;
+        }
+
+        .node-stanford-opportunity-su-opp-icon {
+          @include responsive-spacing('margin-top', 6);
+
+          align-self: flex-start;
+
+          @include grid-media-min('md') {
+            align-self: center;
+          }
+
+          .fa-brands {
+            font-size: 3em;
+            padding-right: 28px;
+          }
+        }
+
+        @include grid-media-max('sm') {
+          .node-stanford-page-title {
+            margin-top: 1.5rem;
+          }
+        }
+
+        h1#page-title {
+          margin-bottom: 0;
+        }
+      }
     }
   }
 }
