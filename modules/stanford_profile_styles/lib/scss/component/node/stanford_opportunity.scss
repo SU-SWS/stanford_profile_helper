@@ -26,7 +26,7 @@
         .su-opp-contact-url,
         .su-opp-learn-more,
         .su-opp-cta-url {
-          @include responsive-spacing('margin', null 1);
+          @include responsive-spacing('margin-left', 1);
         }
       }
     }
@@ -201,14 +201,22 @@
     }
   }
 
-  // Border grouping
+  // Border grouping for Application deadline.
   .node-stanford-opportunity-su-opp-application-deadline {
     .su-opp-application-deadline {
-      @include responsive-spacing('padding', 1 null);
+      &.su-opp-deadline-date {
+        @include responsive-spacing('margin-top', 1);
 
-      border-top: 1px solid $su-color-black-30;
-      border-bottom: 1px solid $su-color-black-30;
+        border-top: 1px solid $su-color-black-30;
+      }
     }
+  }
+
+  .su-opp-deadline-time.su-opp-application-deadline {
+    @include responsive-spacing('padding-bottom', 1);
+
+    border-bottom: 1px solid $su-color-black-30;
+    padding-top: 0;
   }
 
   .node-stanford-opportunity-su-opp-contact-email,
