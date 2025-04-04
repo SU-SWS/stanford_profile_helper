@@ -26,7 +26,7 @@
         .su-opp-contact-url,
         .su-opp-learn-more,
         .su-opp-cta-url {
-          @include responsive-spacing('padding', null 1);
+          @include responsive-spacing('margin', null 1);
         }
       }
     }
@@ -108,21 +108,21 @@
   .node-stanford-opportunity-su-opp-cta-url {
     @include responsive-spacing('padding', 4 1 null 1);
 
-    .su-button--secondary {
+    .su-button {
       a {
-        color: $su-color-bright-red;
+        color: $su-color-white;
 
         &:hover,
         &:focus,
         &:active {
-          color: $su-color-black;
+          color: $su-color-white;
         }
       }
     }
   }
 
   .su-opp-image {
-    @include responsive-spacing('margin-bottom', 0);
+    @include responsive-spacing('margin-bottom', 5);
 
     @include grid-media-max('md') {
       @include responsive-spacing('margin-top', 0);
@@ -136,10 +136,15 @@
     background-color: $su-color-foggy-light;
     width: 100%;
 
-    @include grid-media-min('lg') {
-      &.text-long {
+    &.text-long {
+      clip-path: inset(0 -100vmax);
+
+      // @include grid-media-min('lg') {
+      //   box-shadow: 0 0 0 10px $su-color-foggy-light;
+      // }
+
+      @include grid-media-min('xl') {
         box-shadow: 0 0 0 38px $su-color-foggy-light;
-        clip-path: inset(0 -100vmax);
       }
     }
 
