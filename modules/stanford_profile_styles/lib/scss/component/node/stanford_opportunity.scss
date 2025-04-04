@@ -8,7 +8,7 @@
   .su-opp-node-container-wrapper {
     &.jumpstart-ui--two-column {
       .left-region {
-        max-width: 980px;
+        max-width: 904px;
         margin: 0 auto;
       }
 
@@ -38,6 +38,10 @@
       + .main-region {
         padding-left: 0;
         border-top: 1px solid $su-color-black-30;
+
+        @include grid-media-min('md') {
+          margin-left: 30px;
+        }
       }
     }
   }
@@ -133,15 +137,19 @@
   .su-opp-prerequisites {
     @include responsive-spacing('padding', 2 null);
 
+    @include grid-media-max('md') {
+      @include responsive-spacing('padding', 2);
+    }
+
     background-color: $su-color-foggy-light;
     width: 100%;
 
     &.text-long {
       clip-path: inset(0 -100vmax);
 
-      // @include grid-media-min('lg') {
-      //   box-shadow: 0 0 0 10px $su-color-foggy-light;
-      // }
+      @include grid-media-max('lg') {
+        box-shadow: 0 0 0 10px $su-color-foggy-light;
+      }
 
       @include grid-media-min('xl') {
         box-shadow: 0 0 0 38px $su-color-foggy-light;
