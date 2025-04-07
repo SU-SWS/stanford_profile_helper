@@ -34,7 +34,7 @@
 
   <div {{ region_attributes.info.addClass("su-event-schedule__info") }}>
     {%- if headline|render_clean is not empty -%}
-      <h3 class="su-event-schedule__headline">
+      <h4 class="su-event-schedule__headline">
         {%- if url|render_clean is not empty -%}
         <a {{ link_attributes }} href="{{ url|render_clean }}">
           {%- endif -%}
@@ -44,7 +44,7 @@
           {%- if url|render_clean is not empty -%}
         </a>
         {%- endif -%}
-      </h3>
+      </h4>
     {%- endif -%}
 
     {%- if description|render_clean is not empty -%}

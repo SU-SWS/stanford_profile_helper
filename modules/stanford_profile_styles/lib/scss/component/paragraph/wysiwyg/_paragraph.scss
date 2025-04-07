@@ -238,7 +238,25 @@ $su-intro-max-width: unset;
       @include sr-only;
       content: "Begin Subtitle";
     }
+  }
 
+  // Code inserted in the CKEditor
+  pre {
+    code {
+      background: $su-color-black-10;
+      border: 1px solid $su-color-black-30;
+      border-radius: 2px;
+      color: $su-color-black;
+      direction: ltr;
+      font-style: normal;
+      min-width: 200px;
+      padding: 1em;
+      tab-size: 4;
+      text-align: left;
+      white-space: pre-wrap;
+      width: 90%;
+      display: inline-block;
+    }
   }
 }
 

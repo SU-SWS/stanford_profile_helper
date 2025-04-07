@@ -459,8 +459,8 @@ function stanford_profile_helper_entity_field_access($operation, FieldDefinition
     $operation != 'view' &&
     $field_definition->getName() == 'status' &&
     $field_definition->getTargetEntityTypeId() == 'node' &&
-    $items &&
-    $items->getEntity()->id()
+    $items?->getEntity()?->id() &&
+    !in_array('administrator', $account->getRoles())
   ) {
     // Prevent unpublishing the home, 404 and 403 pages.
     $node = $items->getEntity();
