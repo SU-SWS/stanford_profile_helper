@@ -90,6 +90,9 @@
   .su-opp-type,
   .su-opp-units {
     @include type-d;
+  }
+
+  .su-opp-type {
 
     div {
       display: inline;
@@ -204,8 +207,14 @@
   }
 
   .su-opp-units {
+    padding-bottom: 0;
+
     > div:first-of-type {
       font-weight: $su-font-semi-bold;
+
+      &::after {
+        content: ':';
+      }
     }
   }
 
