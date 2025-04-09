@@ -423,7 +423,7 @@ class EntityEventSubscriber implements EventSubscriberInterface {
 
       /** @var \Drupal\entity_reference_revisions\Plugin\Field\FieldType\EntityReferenceRevisionsItem $component */
       foreach ($entity->get('su_page_components') as $component) {
-        $paragraph = $component->get('entity')->getValue()->bundle();
+        $paragraph = $component?->get('entity')?->getValue()?->bundle();
         if ($paragraph == 'stanford_filtered_lists') {
           $entity->set('layout_selection', 'stanford_basic_page_full');
         }
