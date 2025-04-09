@@ -267,7 +267,7 @@
             align-self: center;
           }
 
-          .fa-brands {
+          span {
             font-size: 3em;
             padding-right: 28px;
           }
@@ -292,30 +292,3 @@
   @include type-d;
 }
 
-// WYSIWYG
-.su-wysiwyg-text {
-  &.node {
-    &.stanford-opportunity {
-      &.su-opp-summary {
-        p {
-          @include type-d;
-        }
-      }
-    }
-  }
-}
-
-// Opportunity lists
-.stanford-opportunities-list-page {
-  &.stanford-opportunities {
-    &.list-page {
-      .su-opp-image {
-        @include grid-media-min('md') {
-          @include responsive-spacing('padding-right', 0);
-
-          float: left;
-        }
-      }
-    }
-  }
-}
