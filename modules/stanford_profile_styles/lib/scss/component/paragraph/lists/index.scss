@@ -365,14 +365,12 @@
 // Opportunity lists
 .stanford-opportunities-list-page {
   &.stanford-opportunities {
+    .su-opp-image {
+      @include grid-media-min('md') {
+        @include responsive-spacing('padding-right', 0);
 
-      .su-opp-image {
-        @include grid-media-min('md') {
-          @include responsive-spacing('padding-right', 0);
-
-          float: left;
-        }
+        float: left;
       }
-
+    }
   }
 }
