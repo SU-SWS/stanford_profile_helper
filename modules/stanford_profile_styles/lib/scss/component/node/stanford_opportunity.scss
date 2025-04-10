@@ -430,6 +430,10 @@
 
       .su-news-list__topics {
         order: -1;
+
+        .su-opp-type-list {
+          @include responsive-spacing('padding-bottom', 1);
+        }
       }
 
       .su-basic-page-list__image {
@@ -443,6 +447,5 @@
         gap: 20px;
       }
     }
-
   }
 }
