@@ -420,41 +420,29 @@
 // Opportunity lists
 .stanford-opportunities-list-page {
   &.stanford-opportunities {
-
+  // Uses the news default list template.
     article {
       @include responsive-spacing('padding',1 null);
 
       border-bottom: 1px solid $su-color-black-30;
+      display: flex;
+      flex-direction: column;
 
-      .content {
-        display: grid;
-        grid-template-areas:
-        "date date"
-        "headline article-image"
-        "headline article-image"
-        "type type";
-        grid-template-columns: 70% 30%;
+      .su-news-list__topics {
+        order: -1;
       }
 
-      .su-opp-summary {
-        grid-area: headline;
-      }
-      .su-opp-application-deadline {
-        grid-area: date;
-      }
-      .su-opp-image {
-        grid-area: article-image;
+      .su-basic-page-list__image {
         margin-bottom: 0;
         max-width: 150px;
         justify-self: right;
       }
-      .su-opp-type {
-        grid-area: type;
 
-        > div {
-         display: inline;
-        }
+      header.su-news-list__header {
+        display: flex;
+        gap: 20px;
       }
     }
+
   }
 }
