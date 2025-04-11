@@ -1,288 +1,287 @@
 @charset 'UTF-8';
 @import '../../config';
 
-.section-opportunities {
-  .opportunity {
-    @include responsive-spacing('margin-bottom', 6);
 
-    // adjusting layout for meantime
-    .su-opp-node-container-wrapper {
+.opportunity {
+  @include responsive-spacing('margin-bottom', 6);
 
-      .left-region {
-        max-width: 904px;
-        margin: 0 auto;
-      }
+  // adjusting layout for meantime
+  .su-opp-node-container-wrapper {
 
-      .main-region {
-        max-width: 300px;
-      }
-
-      h2,
-      .su-opp-type,
-      .su-opp-course-code,
-      .su-opp-units,
-      time,
-      .su-opp-contact-name,
-      .su-opp-contact-email,
-      .su-opp-contact-phone,
-      .su-opp-contact-url,
-      .su-opp-learn-more,
-      .su-opp-cta-url {
-        @include responsive-spacing('margin-left', 1);
-      }
+    .left-region {
+      max-width: 904px;
+      margin: 0 auto;
     }
 
-    // Specific for an override.
-    .jumpstart-ui--two-column {
-      > .left-region {
-        + .main-region {
-          padding-left: 0;
-          border-top: 1px solid $su-color-black-30;
-
-          @include grid-media-min('md') {
-            margin-left: 30px;
-          }
-        }
-      }
+    .main-region {
+      max-width: 300px;
     }
 
-    .su-opp-units {
-      @include responsive-spacing('padding-bottom', 1);
-
-      padding-top: 0;
-    }
-
-    .cshs-term-group {
-      .cshs-term-group__title {
-        @include type-e;
-
-        font-weight: $su-font-semi-bold;
-        margin: 0 0 8px 0;
-      }
-
-      ul {
-        @include responsive-spacing('padding-bottom', 0);
-
-        list-style: none;
-        margin: 0;
-        padding-left: 0;
-
-        li {
-          display: inline;
-
-          &::after {
-            content: ', ';
-            margin-left: -4px;
-          }
-        }
-
-        li:last-of-type {
-          &::after {
-            content: '';
-          }
-        }
-      }
-    }
-
-    .su-opp-type {
-      @include responsive-spacing('padding-top', 1);
-    }
-
+    h2,
     .su-opp-type,
-    .su-opp-units {
-      @include type-d;
+    .su-opp-course-code,
+    .su-opp-units,
+    time,
+    .su-opp-contact-name,
+    .su-opp-contact-email,
+    .su-opp-contact-phone,
+    .su-opp-contact-url,
+    .su-opp-learn-more,
+    .su-opp-cta-url {
+      @include responsive-spacing('margin-left', 1);
+    }
+  }
 
-      div {
-        display: inline;
+  // Specific for an override.
+  .jumpstart-ui--two-column {
+    > .left-region {
+      + .main-region {
+        padding-left: 0;
+        border-top: 1px solid $su-color-black-30;
 
-        &::after {
-          content: ', ';
+        @include grid-media-min('md') {
+          margin-left: 30px;
         }
       }
+    }
+  }
 
-      div:last-of-type {
+  .su-opp-units {
+    @include responsive-spacing('padding-bottom', 1);
+
+    padding-top: 0;
+  }
+
+  .cshs-term-group {
+    .cshs-term-group__title {
+      @include type-e;
+
+      font-weight: $su-font-semi-bold;
+      margin: 0 0 8px 0;
+    }
+
+    ul {
+      @include responsive-spacing('padding-bottom', 0);
+
+      list-style: none;
+      margin: 0;
+      padding-left: 0;
+    }
+
+    li {
+      display: inline;
+
+      &::after {
+        content: ', ';
+        margin-left: -4px;
+      }
+
+      &:last-of-type {
         &::after {
           content: '';
         }
       }
     }
+  }
 
-    .su-opp-tags {
+  .su-opp-type {
+    @include responsive-spacing('padding-top', 1);
+  }
+
+  .su-opp-type,
+  .su-opp-units {
+    @include type-d;
+
+    div {
+      display: inline;
+
+      &::after {
+        content: ', ';
+      }
+    }
+
+    div:last-of-type {
+      &::after {
+        content: '';
+      }
+    }
+  }
+
+  .su-opp-tags {
+    a {
+      font-weight: $su-font-regular;
+    }
+  }
+
+  .node-stanford-opportunity-su-opp-cta-url {
+    @include responsive-spacing('padding', 4 null null null);
+
+    .su-button {
       a {
-        font-weight: $su-font-regular;
-      }
-    }
+        color: $su-color-white;
 
-    .node-stanford-opportunity-su-opp-cta-url {
-      @include responsive-spacing('padding', 4 null null null);
-
-      .su-button {
-        a {
+        &:hover,
+        &:focus,
+        &:active {
           color: $su-color-white;
-
-          &:hover,
-          &:focus,
-          &:active {
-            color: $su-color-white;
-          }
         }
       }
     }
+  }
 
-    .su-opp-image {
-      @include responsive-spacing('margin-bottom', 5);
+  .su-opp-image {
+    @include responsive-spacing('margin-bottom', 5);
 
-      @include grid-media-max('md') {
-        @include responsive-spacing('margin-top', 0);
+    @include grid-media-max('md') {
+      @include responsive-spacing('margin-top', 0);
+    }
+  }
+
+  .su-opp-eligibility,
+  .su-opp-prerequisites {
+    @include responsive-spacing('padding', 2 null);
+
+    @include grid-media-max('md') {
+      @include responsive-spacing('padding', 2);
+    }
+
+    background-color: $su-color-foggy-light;
+    width: 100%;
+
+    &.text-long {
+      clip-path: inset(0 -100vmax);
+      box-shadow: 0 0 0 10px $su-color-foggy-light;
+
+      @include grid-media-min('2xl') {
+        box-shadow: 0 0 0 38px $su-color-foggy-light;
       }
     }
 
-    .su-opp-eligibility,
-    .su-opp-prerequisites {
-      @include responsive-spacing('padding', 2 null);
-
-      @include grid-media-max('md') {
-        @include responsive-spacing('padding', 2);
-      }
-
-      background-color: $su-color-foggy-light;
-      width: 100%;
-
-      &.text-long {
-        clip-path: inset(0 -100vmax);
-        box-shadow: 0 0 0 10px $su-color-foggy-light;
-
-        @include grid-media-min('2xl') {
-          box-shadow: 0 0 0 38px $su-color-foggy-light;
-        }
-      }
-
-      h2 {
-        @include type-d;
-
-        font-weight: $su-font-semi-bold;
-        margin-left: 0;
-      }
-
-      p {
-        margin-bottom: 0;
-      }
-    }
-
-    .node-stanford-opportunity-su-opp-eligibility {
-      + .node-stanford-opportunity-su-opp-prerequisites {
-        .text-long {
-          padding-top: 0;
-        }
-      }
-    }
-
-    .node-stanford-opportunity-su-opp-prerequisites {
-      @include responsive-spacing('margin-bottom', 2);
-
-      .text-long {
-        @include responsive-spacing('padding-top', 2);
-        @include responsive-spacing('padding-bottom', 2);
-      }
-    }
-
-    .node-stanford-opportunity-su-opp-eligibility {
-      + .node-stanford-opportunity-body {
-        @include responsive-spacing('margin-top', 2);
-      }
-    }
-
-    .su-opp-paragraphs {
-      @include responsive-spacing('padding-top', 2);
-    }
-
-    .su-opp-course-code,
-    .su-opp-type,
-    .su-opp-units {
+    h2 {
       @include type-d;
 
       font-weight: $su-font-semi-bold;
+      margin-left: 0;
     }
 
-    .su-opp-units {
-      > div:first-of-type {
-        font-weight: $su-font-semi-bold;
-      }
+    p {
+      margin-bottom: 0;
     }
+  }
 
-    .su-tags-wrapper {
-      @include responsive-spacing('padding', 1 null);
-
-      border-bottom: 1px solid $su-color-black-30;
-
-      > div {
-        @include responsive-spacing('padding', null 1);
-      }
-    }
-
-    // Border grouping for Application deadline.
-    .node-stanford-opportunity-su-opp-application-deadline {
-      .su-opp-deadline-date {
-        @include responsive-spacing('margin-top', 1);
-
-        border-top: 1px solid $su-color-black-30;
-      }
-    }
-
-    .su-opp-deadline-time {
-      &.su-opp-application-deadline {
-        @include responsive-spacing('padding-bottom', 1);
-
-        border-bottom: 1px solid $su-color-black-30;
+  .node-stanford-opportunity-su-opp-eligibility {
+    + .node-stanford-opportunity-su-opp-prerequisites {
+      .text-long {
         padding-top: 0;
       }
     }
+  }
 
-    .node-stanford-opportunity-su-opp-contact-email,
-    .su-opp-application-deadline {
-      @include responsive-spacing('padding-top', 1);
+  .node-stanford-opportunity-su-opp-prerequisites {
+    @include responsive-spacing('margin-bottom', 2);
 
-      h2 {
-        @include type-d;
-        margin-bottom: 3px;
-
-      }
+    .text-long {
+      @include responsive-spacing('padding-top', 2);
+      @include responsive-spacing('padding-bottom', 2);
     }
+  }
 
-    .su-opp-title-wrapper {
-      .main-region {
-        &.flex-12-of-12 {
-          display: flex;
-          flex-direction: column;
+  .node-stanford-opportunity-su-opp-eligibility {
+    + .node-stanford-opportunity-body {
+      @include responsive-spacing('margin-top', 2);
+    }
+  }
+
+  .su-opp-paragraphs {
+    @include responsive-spacing('padding-top', 2);
+  }
+
+  .su-opp-course-code,
+  .su-opp-type,
+  .su-opp-units {
+    @include type-d;
+
+    font-weight: $su-font-semi-bold;
+  }
+
+  .su-opp-units {
+    > div:first-of-type {
+      font-weight: $su-font-semi-bold;
+    }
+  }
+
+  .su-tags-wrapper {
+    @include responsive-spacing('padding', 1 null);
+
+    border-bottom: 1px solid $su-color-black-30;
+
+    > div {
+      @include responsive-spacing('padding', null 1);
+    }
+  }
+
+  // Border grouping for Application deadline.
+  .node-stanford-opportunity-su-opp-application-deadline {
+    .su-opp-deadline-date {
+      @include responsive-spacing('margin-top', 1);
+
+      border-top: 1px solid $su-color-black-30;
+    }
+  }
+
+  .su-opp-deadline-time {
+    &.su-opp-application-deadline {
+      @include responsive-spacing('padding-bottom', 1);
+
+      border-bottom: 1px solid $su-color-black-30;
+      padding-top: 0;
+    }
+  }
+
+  .node-stanford-opportunity-su-opp-contact-email,
+  .su-opp-application-deadline {
+    @include responsive-spacing('padding-top', 1);
+
+    h2 {
+      @include type-d;
+      margin-bottom: 3px;
+
+    }
+  }
+
+  .su-opp-title-wrapper {
+    .main-region {
+      &.flex-12-of-12 {
+        display: flex;
+        flex-direction: column;
+
+        @include grid-media-min('md') {
+          flex-direction: row;
+        }
+
+        .node-stanford-opportunity-su-opp-icon {
+          @include responsive-spacing('margin-top', 6);
+
+          align-self: flex-start;
 
           @include grid-media-min('md') {
-            flex-direction: row;
+            align-self: center;
           }
 
-          .node-stanford-opportunity-su-opp-icon {
-            @include responsive-spacing('margin-top', 6);
-
-            align-self: flex-start;
-
-            @include grid-media-min('md') {
-              align-self: center;
-            }
-
-            span {
-              font-size: 3em;
-              padding-right: 28px;
-            }
+          span {
+            font-size: 3em;
+            padding-right: 28px;
           }
+        }
 
-          @include grid-media-max('sm') {
-            .node-stanford-page-title {
-              margin-top: 1.5rem;
-            }
+        @include grid-media-max('sm') {
+          .node-stanford-page-title {
+            margin-top: 1.5rem;
           }
+        }
 
-          h1 {
-            margin-bottom: 0;
-          }
+        h1 {
+          margin-bottom: 0;
         }
       }
     }
@@ -295,99 +294,90 @@
 }
 
 // Opportunities Card Lists
-.stanford-opportunities.cards,
 .ds-entity--stanford-opportunity {
   height: 100%;
 
-  article {
-    &.su-card {
-      height: 100%; // Equal height cards.
-      position: relative;
-      padding-bottom: 2em;
+  .su-card {
+    height: 100%; // Equal height cards.
+    position: relative;
 
-      .su-card__contents {
-        @include responsive-spacing('padding', 2);
+    .su-card__contents {
+      @include responsive-spacing('padding', 2);
+    }
 
-        h3 {
-          @include type-f;
+    h3 {
+      @include type-f;
 
-          margin-bottom: 0;
-          word-break: break-word;
-          color: $su-color-black;
+      margin-bottom: 0;
+      word-break: break-word;
+      color: $su-color-black;
 
-          &.su-link--action {
-            color: $su-color-black;
+      &.su-link--action {
+        color: $su-color-black;
 
-            &:hover,
-            &:focus {
-              color: $su-color-digital-red;
-              text-decoration: underline;
-            }
-
-            &::after {
-              background-color: $su-color-digital-red;
-              height: 15px;
-              width: 15px;
-            }
-          }
-
-          a {
-            color: $su-color-black;
-
-            &:hover,
-            &:focus {
-              color: $su-color-digital-red;
-              text-decoration: underline;
-            }
-          }
+        &:hover,
+        &:focus {
+          color: $su-color-digital-red;
+          text-decoration: underline;
         }
 
-        .su-card__superhead {
-          font-size: 1em;
-          font-weight: 400;
-          padding-bottom: 0.6em;
-        }
-
-        .su-opp-icon {
-          position: absolute;
-          bottom: 0;
-          margin-bottom: 45px;
-          right: 36px;
-
-          span {
-            font-size: 2.6em;
-          }
-        }
-
-        .su-opp-card-footer {
-          color: $su-color-black-60;
-          margin: 18px 0;
+        &::after {
+          background-color: $su-color-digital-red;
+          height: 15px;
+          width: 15px;
         }
       }
 
-      .image {
-        aspect-ratio: 1 / 1;
-        max-width: 100%;
+      a {
+        color: $su-color-black;
 
-        figure,
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          object-position: center;
+        &:hover,
+        &:focus {
+          color: $su-color-digital-red;
+          text-decoration: underline;
         }
+      }
+    }
+
+    .su-card__superhead {
+      font-size: 1em;
+      font-weight: 400;
+      padding-bottom: 0.6em;
+    }
+
+    .su-opp-icon {
+      position: absolute;
+      bottom: 0;
+      margin-bottom: 45px;
+      right: 36px;
+
+      span {
+        font-size: 2.6em;
+      }
+    }
+
+    .su-opp-card-footer {
+      color: $su-color-black-60;
+      margin: 18px 0;
+    }
+
+    .image {
+      aspect-ratio: 1 / 1;
+      max-width: 100%;
+
+      figure,
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
       }
     }
   }
 
-  article {
-    border-bottom: 1px solid #d2d3d4;
-    margin: 30px 0;
-
-    // Opportunities default list top alignment.
-    .su-opp-application-deadline {
-      padding-top: 0;
-    }
+  // Opportunities default list top alignment.
+  .su-opp-application-deadline {
+    padding-top: 0;
   }
 
   // Opportunites Default List image size.
@@ -418,34 +408,33 @@
 }
 
 // Opportunity lists
-.stanford-opportunities-list-page {
-  &.stanford-opportunities {
+.ds-entity--stanford-opportunity {
+
   // Uses the news default list template.
-    article {
-      @include responsive-spacing('padding',1 null);
+  .su-news-article {
+    @include responsive-spacing('padding', 1 null);
 
-      border-bottom: 1px solid $su-color-black-30;
+    border-bottom: 1px solid $su-color-black-30;
+    display: flex;
+    flex-direction: column;
+
+    .su-news-list__topics {
+      order: -1;
+    }
+
+    .su-opp-type-list {
+      @include responsive-spacing('padding-bottom', 1);
+    }
+
+    .su-basic-page-list__image {
+      margin-bottom: 0;
+      max-width: 150px;
+      justify-self: right;
+    }
+
+    header.su-news-list__header {
       display: flex;
-      flex-direction: column;
-
-      .su-news-list__topics {
-        order: -1;
-
-        .su-opp-type-list {
-          @include responsive-spacing('padding-bottom', 1);
-        }
-      }
-
-      .su-basic-page-list__image {
-        margin-bottom: 0;
-        max-width: 150px;
-        justify-self: right;
-      }
-
-      header.su-news-list__header {
-        display: flex;
-        gap: 20px;
-      }
+      gap: 20px;
     }
   }
 }
