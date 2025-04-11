@@ -1,6 +1,7 @@
 @charset 'UTF-8';
 @import '../../config';
 
+
 .opportunity {
   @include responsive-spacing('margin-bottom', 6);
 
@@ -65,17 +66,17 @@
       list-style: none;
       margin: 0;
       padding-left: 0;
+    }
 
-      li {
-        display: inline;
+    li {
+      display: inline;
 
-        &::after {
-          content: ', ';
-          margin-left: -4px;
-        }
+      &::after {
+        content: ', ';
+        margin-left: -4px;
       }
 
-      li:last-of-type {
+      &:last-of-type {
         &::after {
           content: '';
         }
@@ -267,7 +268,7 @@
             align-self: center;
           }
 
-          .fa-brands {
+          span {
             font-size: 3em;
             padding-right: 28px;
           }
@@ -292,30 +293,148 @@
   @include type-d;
 }
 
-// WYSIWYG
-.su-wysiwyg-text {
-  &.node {
-    &.stanford-opportunity {
-      &.su-opp-summary {
-        p {
-          @include type-d;
+// Opportunities Card Lists
+.ds-entity--stanford-opportunity {
+  height: 100%;
+
+  .su-card {
+    height: 100%; // Equal height cards.
+    position: relative;
+
+    .su-card__contents {
+      @include responsive-spacing('padding', 2);
+    }
+
+    h3 {
+      @include type-f;
+
+      margin-bottom: 0;
+      word-break: break-word;
+      color: $su-color-black;
+
+      &.su-link--action {
+        color: $su-color-black;
+
+        &:hover,
+        &:focus {
+          color: $su-color-digital-red;
+          text-decoration: underline;
+        }
+
+        &::after {
+          background-color: $su-color-digital-red;
+          height: 15px;
+          width: 15px;
+        }
+      }
+
+      a {
+        color: $su-color-black;
+
+        &:hover,
+        &:focus {
+          color: $su-color-digital-red;
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .su-card__superhead {
+      font-size: 1em;
+      font-weight: 400;
+      padding-bottom: 0.6em;
+    }
+
+    .su-opp-icon {
+      position: absolute;
+      bottom: 0;
+      margin-bottom: 45px;
+      right: 36px;
+
+      span {
+        font-size: 2.6em;
+      }
+    }
+
+    .su-opp-card-footer {
+      color: $su-color-black-60;
+      margin: 18px 0;
+    }
+
+    .image {
+      aspect-ratio: 1 / 1;
+      max-width: 100%;
+
+      figure,
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+    }
+  }
+
+  // Opportunities default list top alignment.
+  .su-opp-application-deadline {
+    padding-top: 0;
+  }
+
+  // Opportunites Default List image size.
+  .image {
+    max-width: 150px;
+  }
+
+  .content {
+    padding: 0 0 10px 0;
+  }
+
+  //Opportunity default list type list
+  .su-opp-type {
+    > div {
+      display: inline-block;
+
+      &:not(:last-of-type) {
+        &::after {
+          content: ", ";
         }
       }
     }
   }
+
+  .stanford-opportunity__title {
+    @include type-d;
+  }
 }
 
 // Opportunity lists
-.stanford-opportunities-list-page {
-  &.stanford-opportunities {
-    &.list-page {
-      .su-opp-image {
-        @include grid-media-min('md') {
-          @include responsive-spacing('padding-right', 0);
+.ds-entity--stanford-opportunity {
 
-          float: left;
-        }
-      }
+  // Uses the news default list template.
+  .su-news-article {
+    @include responsive-spacing('padding', 1 null);
+
+    border-bottom: 1px solid $su-color-black-30;
+    display: flex;
+    flex-direction: column;
+
+    .su-news-list__topics {
+      order: -1;
+    }
+
+    .su-opp-type-list {
+      @include responsive-spacing('padding-bottom', 1);
+    }
+
+    .su-basic-page-list__image {
+      margin-bottom: 0;
+      max-width: 150px;
+      justify-self: right;
+    }
+
+    header.su-news-list__header {
+      display: flex;
+      gap: 20px;
     }
   }
 }
