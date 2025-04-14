@@ -303,7 +303,11 @@
     position: relative;
 
     .su-card__contents {
-      @include responsive-spacing('padding', 2);
+      @include responsive-spacing('padding', 2 2 5 2);
+
+      p {
+        margin-bottom: 50px;
+      }
     }
 
     h3 {
@@ -346,10 +350,13 @@
       padding-bottom: 0.6em;
     }
 
+    .fontawesome-icon {
+      margin-bottom: 45px;
+    }
+
     .su-opp-icon {
       position: absolute;
       bottom: 0;
-      margin-bottom: 45px;
       right: 36px;
 
       span {
@@ -430,7 +437,14 @@
     .su-basic-page-list__image {
       margin-bottom: 0;
       max-width: 150px;
-      justify-self: right;
+    }
+
+    .su-news-list__headline-dek {
+      flex: 3;
+    }
+
+    .su-news-list__item-date {
+      display: none;
     }
 
     header.su-news-list__header {
