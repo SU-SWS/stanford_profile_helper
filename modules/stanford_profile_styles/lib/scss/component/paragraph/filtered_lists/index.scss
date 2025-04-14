@@ -1,0 +1,54 @@
+@charset 'UTF-8';
+@import '../../../config';
+
+
+.ptype-stanford-filtered-lists {
+  max-width: 1500px;
+  margin: 0 auto;
+
+  fieldset {
+    padding: 0;
+    margin-bottom: 48px;
+
+    legend {
+      font-size: 1.15em;
+      font-weight: $su-font-semi-bold;
+      border-top: 1px solid;
+      display: block;
+      width: 100%;
+      padding-top: 18px;
+
+      &:first-of-type {
+        padding-top: 36px;
+      }
+
+      &:last-of-type {
+        padding-bottom: 36px;
+      }
+    }
+
+    label {
+      font-size: 0.85em;
+      padding: 0 26px 26px 26px;
+    }
+  }
+
+  .stanford-opportunities-filtered {
+    display: flex;
+    flex-direction: row;
+    gap: 78px;
+
+    .views-exposed-form {
+      width: 307px;
+    }
+
+    &.list-page {
+      // Opportunity Default list
+    }
+
+    &.cards {
+      // Opportunity Cards list
+    }
+  }
+}
+
