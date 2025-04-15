@@ -37,21 +37,29 @@
     flex-direction: row;
     gap: 78px;
 
-    @include grid-media-max('md') {
+    @include grid-media-max('sm') {
       flex-direction: column;
+    }
+
+    @include grid-media-only('md') {
+      .grid-container-3 {
+        grid-template-columns: 1fr;
+      }
     }
 
     .views-exposed-form {
       width: 307px;
     }
 
-    &.list-page {
-      // Opportunity Default list
-    }
+    // Opportunity Default list
+    // &.list-page {
 
-    &.cards {
-      // Opportunity Cards list
-    }
+    // }
+
+    // Opportunity Cards list
+    // &.cards {
+
+    // }
   }
 }
 
