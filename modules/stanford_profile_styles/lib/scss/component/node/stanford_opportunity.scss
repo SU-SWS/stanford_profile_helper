@@ -292,6 +292,11 @@
   @include type-d;
 
   max-width: 980px;
+  margin-left: 0;
+
+  @include grid-media-min('md') {
+    margin-left: 95px;
+  }
 }
 
 // Opportunities Card Lists
