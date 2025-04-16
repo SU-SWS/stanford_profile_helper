@@ -1,7 +1,6 @@
 @charset 'UTF-8';
 @import '../../config';
 
-
 .opportunity {
   @include responsive-spacing('margin-bottom', 6);
 
@@ -87,6 +86,7 @@
 
   .su-opp-type {
     @include responsive-spacing('padding-top', 1);
+    @include responsive-spacing('margin-bottom', -1);
   }
 
   .su-opp-type,
