@@ -1,0 +1,65 @@
+@charset 'UTF-8';
+@import '../../../config';
+
+
+.ptype-stanford-filtered-lists {
+  @include centered-column;
+
+  fieldset {
+    padding: 0;
+    margin-bottom: 48px;
+
+    legend {
+      font-size: 1.15em;
+      font-weight: $su-font-semi-bold;
+      border-top: 1px solid;
+      display: block;
+      width: 100%;
+      padding-top: 18px;
+
+      &:first-of-type {
+        padding-top: 36px;
+      }
+
+      &:last-of-type {
+        padding-bottom: 36px;
+      }
+    }
+
+    label {
+      font-size: 0.85em;
+      padding: 0 26px 26px 26px;
+    }
+  }
+
+  .stanford-opportunities-filtered {
+    display: flex;
+    flex-direction: row;
+    gap: 78px;
+
+    @include grid-media-max('sm') {
+      flex-direction: column;
+    }
+
+    @include grid-media-only('md') {
+      .grid-container-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .views-exposed-form {
+      width: 307px;
+    }
+
+    // Opportunity Default list
+    // &.list-page {
+
+    // }
+
+    // Opportunity Cards list
+    // &.cards {
+
+    // }
+  }
+}
+
