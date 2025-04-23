@@ -69,6 +69,7 @@ class DecoupledConfigOverrides implements ConfigFactoryOverrideInterface {
     $is_decoupled = !!$entity_type_manager->getStorage('next_entity_type_config')
       ->getQuery()
       ->accessCheck(FALSE)
+      ->condition('id', 'node.', 'STARTS_WITH')
       ->count()
       ->execute();
     $cache->set('stanford_decoupled', $is_decoupled, Cache::PERMANENT, ['config:next_entity_type_config_list']);
