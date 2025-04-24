@@ -50,6 +50,16 @@
     @include responsive-spacing('padding-bottom', 1);
 
     padding-top: 0;
+
+    ul {
+      list-style: none;
+      display: inline;
+      padding-left: 0;
+
+      li {
+        display: inline;
+      }
+    }
   }
 
   .cshs-term-group {
@@ -191,14 +201,6 @@
 
   .su-opp-units {
     padding-bottom: 0;
-
-    > div:first-of-type {
-      font-weight: $su-font-semi-bold;
-
-      &::after {
-        content: ':';
-      }
-    }
   }
 
   .su-tags-wrapper {
@@ -230,7 +232,8 @@
   }
 
   .node-stanford-opportunity-su-opp-contact-email,
-  .su-opp-application-deadline {
+  .su-opp-application-deadline,
+  .node-stanford-opportunity-su-opp-units {
     @include responsive-spacing('padding-top', 1);
 
     h2 {
