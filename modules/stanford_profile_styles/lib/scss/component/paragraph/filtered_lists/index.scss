@@ -34,32 +34,25 @@
 
   .stanford-opportunities-filtered {
     display: flex;
-    flex-direction: row;
     gap: 78px;
+    flex-direction: column;
 
-    @include grid-media-max('sm') {
-      flex-direction: column;
-    }
+    @include grid-media-min('lg') {
+      display: grid;
+      grid-template-columns: 307px 1fr;
+      gap: 78px;
 
-    @include grid-media-only('md') {
-      .grid-container-3 {
-        grid-template-columns: 1fr;
+      .views-exposed-form {
+        grid-row: span 2 / span 2;
+      }
+
+      .js-pager__items pager {
+        grid-column-start: 2;
       }
     }
 
     .views-exposed-form {
       width: 307px;
     }
-
-    // Opportunity Default list
-    // &.list-page {
-
-    // }
-
-    // Opportunity Cards list
-    // &.cards {
-
-    // }
   }
 }
-
