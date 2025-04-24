@@ -50,12 +50,23 @@
     @include responsive-spacing('padding-bottom', 1);
 
     padding-top: 0;
+
+    ul {
+      list-style: none;
+      display: inline;
+      padding-left: 0;
+
+      li {
+        display: inline;
+      }
+    }
   }
 
   .cshs-term-group {
     .cshs-term-group__title {
       @include type-e;
 
+      display: inline;
       font-weight: $su-font-semi-bold;
       margin: 0 0 8px 0;
     }
@@ -70,17 +81,6 @@
 
     li {
       display: inline;
-
-      &::after {
-        content: ', ';
-        margin-left: -4px;
-      }
-
-      &:last-of-type {
-        &::after {
-          content: '';
-        }
-      }
     }
   }
 
@@ -92,19 +92,13 @@
   .su-opp-type,
   .su-opp-units {
     @include type-d;
+  }
+
+  .su-opp-type,
+  .su-opp-units {
 
     div {
       display: inline;
-
-      &::after {
-        content: ', ';
-      }
-    }
-
-    div:last-of-type {
-      &::after {
-        content: '';
-      }
     }
   }
 
@@ -206,9 +200,7 @@
   }
 
   .su-opp-units {
-    > div:first-of-type {
-      font-weight: $su-font-semi-bold;
-    }
+    padding-bottom: 0;
   }
 
   .su-tags-wrapper {
@@ -240,7 +232,8 @@
   }
 
   .node-stanford-opportunity-su-opp-contact-email,
-  .su-opp-application-deadline {
+  .su-opp-application-deadline,
+  .node-stanford-opportunity-su-opp-units {
     @include responsive-spacing('padding-top', 1);
 
     h2 {
@@ -407,12 +400,6 @@
   .su-opp-type {
     > div {
       display: inline-block;
-
-      &:not(:last-of-type) {
-        &::after {
-          content: ", ";
-        }
-      }
     }
   }
 
