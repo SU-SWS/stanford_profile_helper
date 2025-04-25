@@ -54,5 +54,16 @@
     .views-exposed-form {
       width: 307px;
     }
+
+    // Spacing after clicking the load more on only card list.
+    &.cards {
+      .views-infinite-scroll-content-wrapper {
+        > div {
+          + div {
+            margin-top: 45px;
+          }
+        }
+      }
+    }
   }
 }
