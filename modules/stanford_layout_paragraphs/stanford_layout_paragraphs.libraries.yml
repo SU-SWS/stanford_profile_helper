@@ -6,16 +6,19 @@ layout_paragraphs:
       dist/css/preview_paragraphs.css: { }
   js:
     js/stanford_layout_paragraphs.layout_paragraphs.js: {}
+  dependencies:
+    - core/jquery
+    - core/once
 
 one_column:
   css:
     component:
       layouts/one_column/one-column.css: {}
 
-one_column_filters:
+one_column_wide:
   css:
     component:
-      layouts/one_column_filters/one-column-filters.css: {}
+      layouts/one_column_wide/one-column-wide.css: {}
 
 two_column:
   css:

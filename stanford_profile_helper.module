@@ -49,6 +49,30 @@ function stanford_profile_helper_preprocess_html(&$variables) {
 }
 
 /**
+ * Implements hook_theme_registry_alter().
+ */
+function stanford_profile_helper_theme_registry_alter(&$theme_registry) {
+  $theme_registry['cshs_term_group']['variables']['field_name'] = '';
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function stanford_profile_helper_preprocess_field__entity_reference(&$variables) {
+  foreach ($variables['items'] as &$item) {
+    // Add the field name so it can be used in the theme suggestions below.
+    $item['content']['#field_name'] = $variables['field_name'];
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function stanford_profile_helper_theme_suggestions_cshs_term_group(array $variables) {
+  return ['cshs_term_group__' . $variables['field_name']];
+}
+
+/**
  * Implements hook_module_implements_alter().
  */
 function stanford_profile_helper_module_implements_alter(&$implementations, $hook) {

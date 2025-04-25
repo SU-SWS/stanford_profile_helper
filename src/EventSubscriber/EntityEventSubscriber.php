@@ -416,6 +416,19 @@ class EntityEventSubscriber implements EventSubscriberInterface {
     // Invalidate any search result cached so the updated/new content will be
     // displayed for previously searched terms.
     Cache::invalidateTags(['config:views.view.search']);
+    if (
+      $entity->bundle() == 'stanford_page' &&
+      $entity->get('su_page_components')->count()
+    ) {
+
+      /** @var \Drupal\entity_reference_revisions\Plugin\Field\FieldType\EntityReferenceRevisionsItem $component */
+      foreach ($entity->get('su_page_components') as $component) {
+        $paragraph = $component?->get('entity')?->getValue()?->bundle();
+        if ($paragraph == 'stanford_filtered_lists') {
+          $entity->set('layout_selection', 'stanford_basic_page_full');
+        }
+      }
+    }
 
     if (
       InstallerKernel::installationAttempted() ||

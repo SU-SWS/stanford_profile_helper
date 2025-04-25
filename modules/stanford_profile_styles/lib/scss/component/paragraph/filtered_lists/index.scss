@@ -1,0 +1,69 @@
+@charset 'UTF-8';
+@import '../../../config';
+
+
+.ptype-stanford-filtered-lists {
+  @include centered-column;
+
+  fieldset {
+    padding: 0;
+    margin-bottom: 48px;
+
+    legend {
+      font-size: 1.15em;
+      font-weight: $su-font-semi-bold;
+      border-top: 1px solid;
+      display: block;
+      width: 100%;
+      padding-top: 18px;
+
+      &:first-of-type {
+        padding-top: 36px;
+      }
+
+      &:last-of-type {
+        padding-bottom: 36px;
+      }
+    }
+
+    label {
+      font-size: 0.85em;
+      padding: 0 26px 26px 26px;
+    }
+  }
+
+  .stanford-opportunities-filtered {
+    display: flex;
+    gap: 78px;
+    flex-direction: column;
+
+    @include grid-media-min('lg') {
+      display: grid;
+      grid-template-columns: 307px 1fr;
+      gap: 78px;
+
+      .views-exposed-form {
+        grid-row: span 2 / span 2;
+      }
+
+      .js-pager__items pager {
+        grid-column-start: 2;
+      }
+    }
+
+    .views-exposed-form {
+      width: 307px;
+    }
+
+    // Spacing after clicking the load more on only card list.
+    &.cards {
+      .views-infinite-scroll-content-wrapper {
+        > div {
+          + div {
+            margin-top: 45px;
+          }
+        }
+      }
+    }
+  }
+}
