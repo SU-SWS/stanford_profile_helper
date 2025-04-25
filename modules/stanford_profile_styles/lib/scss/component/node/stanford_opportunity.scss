@@ -1,5 +1,6 @@
 @charset 'UTF-8';
 @import '../../config';
+@import 'stanford_page';
 
 .opportunity {
   @include responsive-spacing('margin-bottom', 6);
