@@ -278,7 +278,7 @@
       }
 
       h1 {
-        margin-bottom: 0;
+        margin-bottom: 1.3rem;
       }
 
       .node-stanford-opportunity-su-opp-icon {
@@ -304,7 +304,7 @@
 }
 
 .node-stanford-opportunity-su-opp-summary {
-  @include responsive-spacing('margin', 0 null 1 null);
+  @include responsive-spacing('margin', null null 1 null);
   @include type-d;
 
   max-width: 980px;
