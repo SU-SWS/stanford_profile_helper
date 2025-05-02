@@ -69,6 +69,11 @@ class ConfigOverrider implements ConfigFactoryOverrideInterface {
       $overrides['editoria11y.settings']['download_links'] = "a[href$='.ppt']";
     }
 
+    if (in_array('r4032login.settings', $names)) {
+      $overrides['r4032login.settings']['display_denied_message'] = FALSE;
+      // $overrides['r4032login.settings']['user_login_path'] = '/saml/login';
+    }
+
     return $overrides;
   }
 
