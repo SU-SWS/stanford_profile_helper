@@ -33,6 +33,7 @@ class JumpstartUiTwoColumnLayout extends JumpstartUiLayouts {
     $config = parent::defaultConfiguration();
     unset($config['columns']);
     $config['orientation'] = self::RIGHT;
+    $config['force_regions'] = FALSE;
     return $config;
   }
 
@@ -52,6 +53,11 @@ class JumpstartUiTwoColumnLayout extends JumpstartUiLayouts {
         self::LEFT => $this->t('Larger Left Column'),
       ],
     ];
+    $form['force_regions'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Force displaying of both regions'),
+      '#default_value' => $this->getConfiguration()['force_regions'] ?? FALSE,
+    ];
     return $form;
   }
 
@@ -62,6 +68,7 @@ class JumpstartUiTwoColumnLayout extends JumpstartUiLayouts {
     parent::submitConfigurationForm($form, $form_state);
     unset($this->configuration['columns']);
     $this->configuration['orientation'] = $form_state->getValue('orientation');
+    $this->configuration['force_regions'] = $form_state->getValue('force_regions');
   }
 
 }

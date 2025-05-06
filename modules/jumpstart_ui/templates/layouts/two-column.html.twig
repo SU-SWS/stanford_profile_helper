@@ -19,13 +19,13 @@
 
 <div{{ attributes.addClass('jumpstart-ui--two-column', 'flex-container', settings.centered, settings.extra_classes) }}>
 
-  {% if content.left|render %}
+  {% if content.left|render or settings.force_regions %}
     <div {{ region_attributes.left.addClass('left-region', left_class) }}>
       {{ content.left }}
     </div>
   {% endif %}
 
-  {% if content.main|render %}
+  {% if content.main|render or settings.force_regions %}
     <div {{ region_attributes.main.addClass('main-region') }}>
       {{ content.main }}
     </div>
