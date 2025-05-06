@@ -1,5 +1,18 @@
 # Stanford Profile Helper
 
+9.9.0
+--------------------------------------------------------------------------------
+_Release Date: 2025-03-10_
+
+- D8CORE-8031 Allow force displaying both regions on two column layout
+- Adjust intranet settings for anonymous users redirect message
+- D8CORE-5741: Opportunities content type and views styles (#391)
+- Adjust decoupled detector for editoria11y library
+- D8CORE-7799: adding spacing below the profile link when no other content (#390)
+- Allow publishing home page for only admins
+- D8CORE-7674: styling the code block in ckeditor to look the same in editing, preview, and live page (#380)
+- D8CORE-7625: changed event schedule heading level for best order (#385)
+
 9.8.14
 --------------------------------------------------------------------------------
 _Release Date: 2025-03-10_
