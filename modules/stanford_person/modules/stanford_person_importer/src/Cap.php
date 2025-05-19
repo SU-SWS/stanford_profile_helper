@@ -243,7 +243,7 @@ class Cap implements CapInterface {
     if (empty($tids)) {
       /** @var \Drupal\taxonomy\TermInterface $term */
       $term = $term_storage->create([
-        'name' => $org_data['name'] . ' (' . implode(', ', $org_data['orgCodes']) . ')',
+        'name' => preg_replace('/ \(.*?$/', '', $org_data['name']),
         'vid' => 'cap_org_codes',
         'su_cap_org_code' => $org_data['orgCodes'],
       ]);
