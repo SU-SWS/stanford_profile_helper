@@ -18,3 +18,25 @@ function stanford_person_importer_requirements($phase) {
   ];
   return $requirements;
 }
+
+/**
+ * Update CAP Org code term names.
+ */
+function stanford_person_importer_update_9000(&$sandbox) {
+  $term_storage = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
+  if (empty($sandbox['ids'])) {
+    $sandbox['ids'] = $term_storage->getQuery()
+      ->accessCheck(FALSE)
+      ->condition('vid', 'cap_org_codes')
+      ->condition('name', '% (%)', 'LIKE')
+      ->execute();
+    $sandbox['total'] = count($sandbox['ids']);
+  }
+  $ids = array_splice($sandbox['ids'], 0, 25);
+  /** @var \Drupal\taxonomy\TermInterface $term */
+  foreach ($term_storage->loadMultiple($ids) as $term) {
+    $term->setName(preg_replace('/ \(.*?$/', '', $term->label()))->save();
+  }
+
+  $sandbox['#finished'] = count($sandbox['ids']) ? 1 - count($sandbox['ids']) / $sandbox['total'] : 1;
+}
