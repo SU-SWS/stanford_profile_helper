@@ -104,6 +104,19 @@
     }
   }
 
+  .su-opp-units {
+    ul {
+      li {
+          &:not(:last-of-type) {
+            &::after {
+              content: ",";
+              padding-right: 5px;
+            }
+          }
+        }
+    }
+  }
+
   .su-opp-tags {
     a {
       font-weight: $su-font-regular;
