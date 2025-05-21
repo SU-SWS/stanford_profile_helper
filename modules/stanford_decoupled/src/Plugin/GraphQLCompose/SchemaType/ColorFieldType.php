@@ -14,10 +14,10 @@ use GraphQL\Type\Definition\Type;
  * @codeCoverageIgnore Unclear how to test for this.
  *
  * @GraphQLComposeSchemaType(
- *   id = "FontawesomeIconType"
+ *   id = "ColorFieldType"
  * )
  */
-class FontawesomeIconType extends GraphQLComposeSchemaTypeBase {
+class ColorFieldType extends GraphQLComposeSchemaTypeBase {
 
   /**
    * {@inheritdoc}
@@ -25,21 +25,21 @@ class FontawesomeIconType extends GraphQLComposeSchemaTypeBase {
   public function getTypes(): array {
     $types = [];
 
-    if (!$this->moduleHandler->moduleExists('fontawesome')) {
+    if (!$this->moduleHandler->moduleExists('color_field')) {
       return $types;
     }
 
     $types[] = new ObjectType([
       'name' => $this->getPluginId(),
-      'description' => (string) $this->t('FontAwesome Icon.'),
+      'description' => (string) $this->t('Color Field.'),
       'fields' => fn() => [
-        'iconName' => [
+        'color' => [
           'type' => Type::nonNull(Type::string()),
-          'description' => 'Icon Name',
+          'description' => 'Color Hex',
         ],
-        'style' => [
-          'type' => Type::nonNull(Type::string()),
-          'description' => 'Icon Style',
+        'opacity' => [
+          'type' => Type::float(),
+          'description' => 'Opacity',
         ],
       ],
     ]);
