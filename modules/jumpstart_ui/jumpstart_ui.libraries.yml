@@ -79,3 +79,8 @@ components.media:
   css:
     base:
       dist/css/media.css: {}
+
+components.stat_card:
+  css:
+    base:
+      dist/css/stat_card.css: {}

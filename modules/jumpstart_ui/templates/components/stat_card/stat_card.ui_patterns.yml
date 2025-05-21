@@ -1,0 +1,37 @@
+stat_card:
+  label: Stat Card
+  description: "One of the primary building block components. This card component comes with several fields to ensure flexibility."
+  fields:
+    card_image:
+      type: text
+      label: "Image"
+      description: "The cards image."
+      preview: "<img src='https://picsum.photos/900/900/' alt='Example Image' />"
+    card_super_headline:
+      type: text
+      label: "Super Headline"
+      description: "Text heading"
+      preview: "This is a super headline"
+    card_stat:
+      type: text
+      label: Stat Text
+    card_headline:
+      type: text
+      label: "Headline"
+      description: "Text heading"
+      preview: "This is the headline"
+    card_body:
+      type: text
+      label: "Body"
+      description: "An open variable for anything. Generally this would be for WYSIWYG editor contents"
+      preview: "<p>Sample text goes here and this card should be able to handle a few lines.</p>"
+    card_link:
+      type: text
+      label: "Link"
+      description: "A plain text string of just the URL"
+      preview: "https://www.stanford.edu/?a=b&c=d"
+  use: "@jumpstart_ui/components/stat_card/stat_card.html.twig"
+  libraries:
+    - stat_card:
+       dependencies:
+         - jumpstart_ui/components.stat_card
