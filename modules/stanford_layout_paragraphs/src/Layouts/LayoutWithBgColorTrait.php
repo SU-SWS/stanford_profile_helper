@@ -21,6 +21,8 @@ trait LayoutWithBgColorTrait {
       '#title' => $this->t('Background Color'),
       '#default_value' => '#' . $this->configuration['bg_color'],
       '#suffix' => "<div class='color-field-widget-box-form' id='$id'></div>",
+      '#maxlength' => 7,
+      '#size' => 7,
       '#attached' => [
         'library' => ['color_field/color-field-widget-box'],
         'drupalSettings' => [
