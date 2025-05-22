@@ -9,4 +9,8 @@ use Drupal\Core\Layout\LayoutDefault;
  */
 class OneColumn extends LayoutDefault {
 
+  use LayoutWithBgColorTrait;
+
+
+
 }

@@ -9,4 +9,5 @@ use Drupal\Core\Layout\LayoutDefault;
  */
 class ThreeColumn extends LayoutDefault {
 
+  use LayoutWithBgColorTrait;
 }
