@@ -19,7 +19,7 @@ trait LayoutWithBgColorTrait {
     $form['bg_color'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Background Color'),
-      '#default_value' => $this->configuration['bg_color'],
+      '#default_value' => '#' . $this->configuration['bg_color'],
       '#suffix' => "<div class='color-field-widget-box-form' id='$id'></div>",
       '#attached' => [
         'library' => ['color_field/color-field-widget-box'],
@@ -33,7 +33,7 @@ trait LayoutWithBgColorTrait {
                     '#f4f4f4',
                     '#dad7cb',
                     '#c5e0e5',
-                    '#dad7cb',
+                    '#d2eae6',
                     '#f0e5ef',
                     '#f7ecde',
                   ],
