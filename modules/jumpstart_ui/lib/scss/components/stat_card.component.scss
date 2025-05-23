@@ -24,6 +24,10 @@
     }
   }
 
+  &.stat-centered {
+    text-align: center;
+  }
+
   .stat-card-header {
     display: flex;
     flex-direction: column-reverse;
