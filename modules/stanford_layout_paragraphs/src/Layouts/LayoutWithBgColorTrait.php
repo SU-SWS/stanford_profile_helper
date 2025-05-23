@@ -16,10 +16,11 @@ trait LayoutWithBgColorTrait {
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
     $form = parent::buildConfigurationForm($form, $form_state);
     $id = Html::getUniqueId('color-field-' . $this->getPluginId());
+    $default_color = $this->configuration['bg_color'] ?? '';
     $form['bg_color'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Background Color'),
-      '#default_value' => '#' . $this->configuration['bg_color'],
+      '#default_value' => $default_color ? '#' . $default_color : '',
       '#suffix' => "<div class='color-field-widget-box-form' id='$id'></div>",
       '#maxlength' => 7,
       '#size' => 7,
