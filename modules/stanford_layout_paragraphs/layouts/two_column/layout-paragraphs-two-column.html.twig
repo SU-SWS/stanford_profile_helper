@@ -10,29 +10,28 @@
  * @ingroup themeable
  */
 #}
-{%
-  set classes = [
-    'layout',
-    'layout--layout-paragraphs-two-column',
-    'bg-' ~ settings.bg_color
-  ]
-%}
+{% set classes = [
+  'layout',
+  'layout--layout-paragraphs-two-column'
+] %}
 
 {% if content %}
-  <div{{ attributes.addClass(classes) }}>
+  <div class="layout-background {{ 'bg-' ~ settings.bg_color }}">
+    <div{{ attributes.addClass(classes) }}>
 
-    {% if content.left %}
-      <div {{ region_attributes.left.addClass('layout__region', 'layout__region--main') }}>
-        {{ content.left }}
-      </div>
-    {% endif %}
+      {% if content.left %}
+        <div {{ region_attributes.left.addClass('layout__region', 'layout__region--main') }}>
+          {{ content.left }}
+        </div>
+      {% endif %}
 
-    {% if content.right %}
-      <div {{ region_attributes.right.addClass('layout__region', 'layout__region--sidebar') }}>
-        {{ content.right }}
-      </div>
-    {% endif %}
+      {% if content.right %}
+        <div {{ region_attributes.right.addClass('layout__region', 'layout__region--sidebar') }}>
+          {{ content.right }}
+        </div>
+      {% endif %}
 
+    </div>
   </div>
 {% endif %}
 
