@@ -7,6 +7,9 @@ stat_card:
       label: "Image"
       description: "The cards image."
       preview: "<img src='https://picsum.photos/900/900/' alt='Example Image' />"
+    card_icon:
+      type: icon
+      label: Icon
     card_super_headline:
       type: text
       label: "Super Headline"

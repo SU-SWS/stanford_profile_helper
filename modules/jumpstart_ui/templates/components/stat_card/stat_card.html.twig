@@ -12,10 +12,13 @@
           <div class="stat-card-headline">{{ card_headline }}</div>
         {% endif %}
         {% if card_stat %}
-          <div class="stat-card-stat">{{ card_stat|render_clean }}</div>
+          <div class="stat-card-stat">{{ card_stat }}</div>
         {% endif %}
         {% if card_super_headline %}
           <div class="stat-card-super-headline">{{ card_super_headline }}</div>
+        {% endif %}
+        {% if card_icon %}
+          <div class="stat-card-icon">{{ card_icon }}</div>
         {% endif %}
       </div>
     {% endif %}
