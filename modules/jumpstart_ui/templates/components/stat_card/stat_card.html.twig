@@ -22,11 +22,13 @@
         {% endif %}
       </div>
     {% endif %}
-    {% if card_body %}
-      <div class="stat-card-body">{{ card_body }}</div>
-    {% endif %}
-    {% if card_link %}
-      <div class="stat-card-link">{{ card_link }}</div>
-    {% endif %}
+    <div>
+      {% if card_body %}
+        <div class="stat-card-body">{{ card_body }}</div>
+      {% endif %}
+      {% if card_link %}
+        <div class="stat-card-link">{{ card_link }}</div>
+      {% endif %}
+    </div>
   </div>
 </{{ isArticle ? "article" : "div" }}>

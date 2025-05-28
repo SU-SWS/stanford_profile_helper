@@ -10,7 +10,7 @@
 }
 
 .layout--layout-paragraphs-three-column .layout__region > div:first-child {
-  margin-top: 0;
+  padding-top: 0;
 }
 
 @media screen and (min-width: 576px) {
