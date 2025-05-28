@@ -13,30 +13,25 @@ layout_paragraphs:
 layout_colors:
   css:
     component:
-      layouts/all/layout-builder-layouts.css: { }
+      dist/css/layouts/all-layouts.css: { }
 
 one_column:
   css:
     component:
-      layouts/one_column/one-column.css: { }
+      dist/css/layouts/one-column.css: { }
   dependencies:
     - stanford_layout_paragraphs/layout_colors
-
-one_column_wide:
-  css:
-    component:
-      layouts/one_column_wide/one-column-wide.css: { }
 
 two_column:
   css:
     component:
-      layouts/two_column/two-column.css: { }
+      dist/css/layouts/two-column.css: { }
   dependencies:
     - stanford_layout_paragraphs/layout_colors
 
 three_column:
   css:
     component:
-      layouts/three_column/three-column.css: { }
+      dist/css/layouts/three-column.css: { }
   dependencies:
     - stanford_layout_paragraphs/layout_colors

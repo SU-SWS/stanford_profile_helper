@@ -47,6 +47,15 @@ trait LayoutWithBgColorTrait {
         ],
       ],
     ];
+    $form['bottom_margin'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Bottom Margin'),
+      '#default_value' => $this->configuration['bottom_margin'] ?? NULL,
+      '#empty_option' => $this->t('Default'),
+      '#options' => [
+        'none' => $this->t('None'),
+      ],
+    ];
     return $form;
   }
 
@@ -56,6 +65,7 @@ trait LayoutWithBgColorTrait {
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
     parent::submitConfigurationForm($form, $form_state);
     $this->configuration['bg_color'] = strtolower(str_replace('#', '', $form_state->getValue('bg_color')));
+    $this->configuration['bottom_margin'] = $form_state->getValue('bottom_margin');
   }
 
 }

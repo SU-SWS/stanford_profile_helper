@@ -1,0 +1,63 @@
+// Import Decanter Library:
+@import 'decanter/core/src/scss/decanter-no-markup';
+
+.layout--layout-paragraphs-two-column {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 50px;
+  max-width: calc(100vw - 40px);
+  margin: 0 auto;
+
+  .layout__region {
+    > div {
+      &:not(.ptype-stanford-spacer) {
+        padding-top: 30px
+      }
+    }
+  }
+
+  .layout__region {
+    > div {
+      &:first-child {
+        padding-top: 0;
+      }
+    }
+  }
+
+  @media screen and (min-width: 576px) {
+    max-width: calc(100vw - 60px);
+  }
+
+  @media screen and (min-width: 768px) {
+    max-width: calc(100vw - 100px);
+  }
+
+  @media screen and (min-width: 992px) {
+    grid-template-columns: 1fr 1fr;
+    max-width: calc(100vw - 160px);
+  }
+
+  @media screen and (min-width: 1200px) {
+    max-width: calc(100vw - 200px);
+  }
+
+  @media screen and (min-width: 1700px) {
+    max-width: 1500px;
+  }
+
+  > div {
+    min-width: 0;
+  }
+
+}
+
+@media screen and (min-width: 992px) {
+  .layout-paragraphs-two-column--33-67 {
+    grid-template-columns: 1fr 2fr;
+  }
+
+  .layout-paragraphs-two-column--67-33 {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+

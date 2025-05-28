@@ -16,7 +16,7 @@
 ] %}
 
 {% if content %}
-  <div class="layout-background {{ 'bg-' ~ settings.bg_color }}">
+  <div class="layout-background {{ 'bg-' ~ settings.bg_color }} {{ settings.bottom_margin == 'none' ? "bottom-margin-0": "" }}">
     <div{{ attributes.addClass(classes) }}>
 
       {% if content.left %}
