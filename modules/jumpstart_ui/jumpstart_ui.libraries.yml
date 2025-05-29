@@ -41,6 +41,15 @@
 # component’s structure to be “swappable”, and omitting these entirely should
 # not break the component’s functionality or basic usability.
 
+countup:
+  remote: https://inorganik.github.io/countUp.js/
+  version: 2.8.1
+  license:
+    name: CountUp
+    url: https://github.com/inorganik/countUp.js/blob/master/LICENSE.md
+  js:
+    //cdn.jsdelivr.net/gh/lekoala/formidable-elements@master/dist/count-up.min.js: { type: external, minified: true }
+
 # Low level core styling. Decanter base element stuff.
 base:
   css:
@@ -84,3 +93,9 @@ components.stat_card:
   css:
     base:
       dist/css/stat_card.css: {}
+  js:
+    lib/js/stat_card.js: {}
+  dependencies:
+    - core/jquery
+    - core/once
+    - jumpstart_ui/countup
