@@ -11,6 +11,4 @@ class OneColumn extends LayoutDefault {
 
   use LayoutWithBgColorTrait;
 
-
-
 }
