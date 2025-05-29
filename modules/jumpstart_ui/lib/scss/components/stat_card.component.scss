@@ -1,0 +1,197 @@
+@charset 'UTF-8';
+@import '../jumpstart_ui.config';
+@import 'decanter/core/src/scss/decanter-no-markup';
+@import 'decanter/core/src/scss/components/card/index';
+
+.su-stat-card {
+  .stat-card-header {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .stat-card-headline {
+    margin-bottom: 15px;
+
+    h2,
+    h3,
+    h4,
+    h5 {
+      font-size: 28px;
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  .stat-card-super-headline {
+    font-weight: 700;
+  }
+
+  .stat-card-stat {
+    font-size: 86px;
+    font-weight: 700;
+  }
+
+  .stat-card-icon {
+    font-size: 90px;
+  }
+
+  .stat-card-body {
+    margin-bottom: 30px;
+  }
+
+}
+
+.stat-centered {
+  .su-stat-card {
+    text-align: center;
+  }
+}
+
+.stat-icon-2e2d29 {
+  .stat-card-icon {
+    color: $su-color-black;
+  }
+}
+
+.stat-icon-8c1515 {
+  .stat-card-icon {
+    color: $su-color-cardinal-red;
+  }
+}
+
+.stat-icon-620059 {
+  .stat-card-icon {
+    color: $su-color-plum;
+  }
+}
+
+.stat-icon-007c92 {
+  .stat-card-icon {
+    color: $su-color-lagunita;
+  }
+}
+
+.stat-icon-279989 {
+  .stat-card-icon {
+    color: $su-color-palo-verde-dark;
+  }
+}
+
+.stat-icon-ffffff {
+  .stat-card-icon {
+    color: $su-color-white;
+  }
+}
+
+.stat-stat-2e2d29 {
+  .stat-card-stat {
+    color: $su-color-black;
+  }
+}
+
+.stat-stat-8c1515 {
+  .stat-card-stat {
+    color: $su-color-cardinal-red;
+  }
+}
+
+.stat-stat-620059 {
+  .stat-card-stat {
+    color: $su-color-plum;
+  }
+}
+
+.stat-stat-007c92 {
+  .stat-card-stat {
+    color: $su-color-lagunita;
+  }
+}
+
+.stat-stat-279989 {
+  .stat-card-stat {
+    color: $su-color-palo-verde-dark;
+  }
+}
+
+.stat-stat-ffffff {
+  .stat-card-stat {
+    color: $su-color-white;
+  }
+}
+
+.stat-bg-2e2d29 {
+  .su-stat-card {
+    background: $su-color-black;
+    color: $su-color-white;
+  }
+}
+
+.stat-bg-53565a {
+  .su-stat-card {
+    background: $su-color-cool-grey;
+    color: $su-color-white;
+  }
+}
+
+.stat-bg-544948 {
+  .su-stat-card {
+    background: $su-color-stone-dark;
+    color: $su-color-white;
+
+    a {
+      color: $su-color-white;
+
+      &::after {
+        background-color: $su-color-white;
+      }
+    }
+  }
+}
+
+.stat-bg-8c1515 {
+  .su-stat-card {
+    background: $su-color-cardinal-red;
+    color: $su-color-white;
+  }
+}
+
+.stat-bg-620059 {
+  .su-stat-card {
+    background: $su-color-plum;
+    color: $su-color-white;
+  }
+}
+
+.stat-bg-007c92 {
+  .su-stat-card {
+    background: $su-color-lagunita;
+    color: $su-color-white;
+  }
+}
+
+.stat-bg-175e54 {
+  .su-stat-card {
+    background: $su-color-palo-alto;
+    color: $su-color-white;
+  }
+}
+
+.stat-bg-e98300 {
+  .su-stat-card {
+    background: $su-color-poppy;
+
+    a:not(.su-button) {
+      color: $su-color-black;
+
+      &::after {
+        background-color: $su-color-black;
+      }
+    }
+  }
+}
+
+.stat-bg-f4f4f4 {
+  .su-stat-card {
+    background: $su-color-foggy-light;
+  }
+}

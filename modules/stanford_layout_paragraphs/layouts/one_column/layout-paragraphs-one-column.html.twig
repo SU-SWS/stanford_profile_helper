@@ -10,22 +10,22 @@
  * @ingroup themeable
  */
 #}
-{%
-  set classes = [
-    'layout',
-    'layout--layout-paragraphs-one-column',
-  ]
-%}
+{% set classes = [
+  'layout',
+  'layout--layout-paragraphs-one-column'
+] %}
 
 {% if content %}
-  <div{{ attributes.addClass(classes) }}>
+  <div class="layout-background {{ 'bg-' ~ settings.bg_color }} {{ settings.bottom_margin == 'none' ? "bottom-margin-0": "" }}">
+    <div{{ attributes.addClass(classes) }}>
 
-    {% if content.main %}
-      <div {{ region_attributes.main.addClass('layout__region', 'layout__region--main') }}>
-        {{ content.main }}
-      </div>
-    {% endif %}
+      {% if content.main %}
+        <div {{ region_attributes.main.addClass('layout__region', 'layout__region--main') }}>
+          {{ content.main }}
+        </div>
+      {% endif %}
 
+    </div>
   </div>
 {% endif %}
 

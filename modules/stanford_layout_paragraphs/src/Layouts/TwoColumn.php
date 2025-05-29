@@ -9,6 +9,8 @@ use Drupal\layout_builder\Plugin\Layout\MultiWidthLayoutBase;
  */
 class TwoColumn extends MultiWidthLayoutBase {
 
+  use LayoutWithBgColorTrait;
+
   /**
    * {@inheritDoc}
    *

@@ -17,6 +17,10 @@ const config = {
 
 var webpackConfig = {
   entry: {
+    "layouts/all-layouts": ["./layouts/all/layout-builder-layouts.scss"],
+    "layouts/one-column": ["./layouts/one_column/one-column.scss"],
+    "layouts/two-column": ["./layouts/two_column/two-column.scss"],
+    "layouts/three-column": ["./layouts/three_column/three-column.scss"],
     "node_form": ["./scss/node_form.scss"],
     "preview_paragraphs": ["./scss/preview_paragraphs.scss"],
   },

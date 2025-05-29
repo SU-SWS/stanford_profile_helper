@@ -1,0 +1,58 @@
+// Import Decanter Library:
+@import 'decanter/core/src/scss/decanter-no-markup';
+
+.layout-background {
+  @include modular-spacing("margin-bottom", 5);
+
+  &.bottom-margin-0 {
+    margin-bottom: 0;
+  }
+
+  &.bg-f4f4f4,
+  &.bg-dad7cb,
+  &.bg-c5e0e5,
+  &.bg-d2eae6,
+  &.bg-f0e5ef,
+  &.bg-f7ecde {
+    @include modular-spacing("padding", 3 null 3 null);
+  }
+
+  &.bg-f4f4f4 {
+    background: #f4f4f4;
+  }
+
+  &.bg-dad7cb {
+    background: #dad7cb;
+  }
+
+  &.bg-c5e0e5 {
+    background: #c5e0e5;
+  }
+
+  &.bg-d2eae6 {
+    background: #d2eae6;
+  }
+
+  &.bg-f0e5ef {
+    background: #f0e5ef;
+  }
+
+  &.bg-f7ecde {
+    background: #f7ecde;
+  }
+}
+
+.jumpstart-ui--two-column {
+  .layout-background {
+    &.bg-f4f4f4,
+    &.bg-dad7cb,
+    &.bg-c5e0e5,
+    &.bg-d2eae6,
+    &.bg-f0e5ef,
+    &.bg-f7ecde,
+    &.bg-f4f4f4 {
+      @include modular-spacing("padding", null 3 null 3);
+    }
+  }
+}
+

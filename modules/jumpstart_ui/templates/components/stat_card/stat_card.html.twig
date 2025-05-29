@@ -1,0 +1,34 @@
+{% set attributes = attributes.addClass(["su-stat-card", "su-card"]) %}
+{% set isArticle = card_headline|render_clean is not empty %}
+
+<{{ isArticle ? "article" : "div" }}{{ attributes }}>
+  {% if card_image %}
+    <div class="stat-card-image">{{ card_image }}</div>
+  {% endif %}
+  <div class="su-card__contents">
+    {% if card_headline or card_super_headline or card_stat %}
+      <div class="stat-card-header">
+        {% if card_headline %}
+          <div class="stat-card-headline">{{ card_headline }}</div>
+        {% endif %}
+        {% if card_stat %}
+          <div class="stat-card-stat">{{ card_stat }}</div>
+        {% endif %}
+        {% if card_super_headline %}
+          <div class="stat-card-super-headline">{{ card_super_headline }}</div>
+        {% endif %}
+        {% if card_icon %}
+          <div class="stat-card-icon">{{ card_icon }}</div>
+        {% endif %}
+      </div>
+    {% endif %}
+    <div>
+      {% if card_body %}
+        <div class="stat-card-body">{{ card_body }}</div>
+      {% endif %}
+      {% if card_link %}
+        <div class="stat-card-link">{{ card_link }}</div>
+      {% endif %}
+    </div>
+  </div>
+</{{ isArticle ? "article" : "div" }}>

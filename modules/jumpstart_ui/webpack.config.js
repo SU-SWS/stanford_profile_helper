@@ -34,7 +34,8 @@ var webpackConfig = {
     "lockup":               path.resolve("lib/scss/components/lockup.component.scss"),
     "logo":                 path.resolve("lib/scss/components/logo.component.scss"),
     "media":                path.resolve("lib/scss/components/media.component.scss"),
-    "quote":                path.resolve("lib/scss/components/quote.component.scss")
+    "quote":                path.resolve("lib/scss/components/quote.component.scss"),
+    "stat_card":            path.resolve("lib/scss/components/stat_card.component.scss"),
   },
   output: {
     path: config.distFolder,

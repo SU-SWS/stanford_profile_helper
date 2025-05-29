@@ -1,5 +1,0 @@
-.layout--layout-paragraphs-one-column .layout__region {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
