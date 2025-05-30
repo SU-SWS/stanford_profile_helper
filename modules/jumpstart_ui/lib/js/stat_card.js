@@ -15,7 +15,7 @@
 
         // The stat starts with numbers.
         if (/^[0-9+]/.test(statText)) {
-          const matches = statText.match(/^([0-9]+)(.*)/);
+          const matches = statText.match(/^([0-9.]+)(.*)/);
           const xpath = `//div[text()='${statText}']`;
           const matchingElement = document.evaluate(xpath, stat[0], null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
           $(matchingElement).html(`<count-up data-duration="2" data-suffix="${matches[2]}">${matches[1]}</count-up>`);
@@ -23,7 +23,7 @@
 
         // The stat starts with dollar sign and then numbers.
         if (/^\$[0-9+]/.test(statText)) {
-          const matches = statText.match(/^\$([0-9]+)(.*)/);
+          const matches = statText.match(/^\$([0-9.]+)(.*)/);
           const xpath = `//div[text()='${statText}']`;
           const matchingElement = document.evaluate(xpath, stat[0], null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
           $(matchingElement).html(`<count-up data-duration="2" data-prefix="$" data-suffix="${matches[2]}">${matches[1]}</count-up>`);

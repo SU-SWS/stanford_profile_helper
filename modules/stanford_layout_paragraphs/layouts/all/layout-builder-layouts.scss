@@ -4,37 +4,60 @@
 .layout-background {
   @include modular-spacing("margin-bottom", 5);
 
-  &.bottom-margin-0 {
+  &.background-color {
+    @include modular-spacing("padding", 3 null 3 null);
+
+    &.top-padding-none {
+      padding-top: 0;
+    }
+
+    &.top-padding-more {
+      @include modular-spacing("padding", 5 null null null);
+    }
+
+    &.bottom-margin-none {
+      margin-bottom: 0;
+    }
+
+    &.bottom-padding-none {
+      padding-bottom: 0;
+    }
+  }
+
+  &.top-padding-none {
+    padding-top: 0;
+  }
+
+  &.top-padding-more {
+    @include modular-spacing("padding", 5 null null null);
+  }
+
+  &.bottom-margin-none {
     margin-bottom: 0;
   }
 
-  &.bg-f4f4f4,
-  &.bg-dad7cb,
-  &.bg-c5e0e5,
-  &.bg-d2eae6,
-  &.bg-f0e5ef,
-  &.bg-f7ecde {
-    @include modular-spacing("padding", 3 null 3 null);
+  &.bottom-padding-none {
+    padding-bottom: 0;
   }
 
   &.bg-f4f4f4 {
-    background: #f4f4f4;
+    background: $su-color-foggy-light;
   }
 
-  &.bg-dad7cb {
-    background: #dad7cb;
+  &.bg-ebeae5 {
+    background: #ebeae4;
   }
 
-  &.bg-c5e0e5 {
-    background: #c5e0e5;
+  &.bg-dcecef {
+    background: #dcecef;
   }
 
-  &.bg-d2eae6 {
-    background: #d2eae6;
+  &.bg-dcefec {
+    background: #dcefec;
   }
 
-  &.bg-f0e5ef {
-    background: #f0e5ef;
+  &.bg-f2e8f1 {
+    background: #f2e8f1;
   }
 
   &.bg-f7ecde {
@@ -44,13 +67,7 @@
 
 .jumpstart-ui--two-column {
   .layout-background {
-    &.bg-f4f4f4,
-    &.bg-dad7cb,
-    &.bg-c5e0e5,
-    &.bg-d2eae6,
-    &.bg-f0e5ef,
-    &.bg-f7ecde,
-    &.bg-f4f4f4 {
+    &.background-color {
       @include modular-spacing("padding", null 3 null 3);
     }
   }

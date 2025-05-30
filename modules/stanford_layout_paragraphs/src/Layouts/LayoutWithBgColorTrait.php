@@ -34,10 +34,10 @@ trait LayoutWithBgColorTrait {
                   'required' => FALSE,
                   'palette' => [
                     '#f4f4f4',
-                    '#dad7cb',
-                    '#c5e0e5',
-                    '#d2eae6',
-                    '#f0e5ef',
+                    '#ebeae5',
+                    '#dcecef',
+                    '#dcefec',
+                    '#f2e8f1',
                     '#f7ecde',
                   ],
                 ],
@@ -47,9 +47,31 @@ trait LayoutWithBgColorTrait {
         ],
       ],
     ];
+    $form['top_padding'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Space inside the section - Top'),
+      '#description' => $this->t('This would be equivalent to "padding-top".'),
+      '#default_value' => $this->configuration['top_padding'] ?? NULL,
+      '#empty_option' => $this->t('Default'),
+      '#options' => [
+        'none' => $this->t('None'),
+        'more' => $this->t('Add More'),
+      ],
+    ];
+    $form['bottom_padding'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Space inside the section - Bottom'),
+      '#description' => $this->t('This would be equivalent to "padding-bottom".'),
+      '#default_value' => $this->configuration['bottom_padding'] ?? NULL,
+      '#empty_option' => $this->t('Default'),
+      '#options' => [
+        'none' => $this->t('None'),
+      ],
+    ];
     $form['bottom_margin'] = [
       '#type' => 'select',
-      '#title' => $this->t('Bottom Margin'),
+      '#title' => $this->t('Space below section'),
+      '#description' => $this->t('This would be equivalent to "margin-bottom".'),
       '#default_value' => $this->configuration['bottom_margin'] ?? NULL,
       '#empty_option' => $this->t('Default'),
       '#options' => [
@@ -65,6 +87,8 @@ trait LayoutWithBgColorTrait {
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
     parent::submitConfigurationForm($form, $form_state);
     $this->configuration['bg_color'] = strtolower(str_replace('#', '', $form_state->getValue('bg_color')));
+    $this->configuration['top_padding'] = $form_state->getValue('top_padding');
+    $this->configuration['bottom_padding'] = $form_state->getValue('bottom_padding');
     $this->configuration['bottom_margin'] = $form_state->getValue('bottom_margin');
   }
 
