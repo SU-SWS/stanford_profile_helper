@@ -109,6 +109,18 @@
   }
 }
 
+.stat-icon-d1660f {
+  .stat-card-icon {
+    color: $su-color-poppy-dark;
+  }
+}
+
+.stat-icon-e04f39 {
+  .stat-card-icon {
+    color: $su-color-spirited;
+  }
+}
+
 .stat-stat-2e2d29 {
   .stat-card-stat {
     color: $su-color-black;
@@ -142,6 +154,18 @@
 .stat-stat-ffffff {
   .stat-card-stat {
     color: $su-color-white;
+  }
+}
+
+.stat-stat-d1660f {
+  .stat-card-stat {
+    color: $su-color-poppy-dark;
+  }
+}
+
+.stat-stat-e04f39 {
+  .stat-card-stat {
+    color: $su-color-spirited;
   }
 }
 
@@ -233,5 +257,11 @@
 .stat-bg-f4f4f4 {
   .su-stat-card {
     background: $su-color-foggy-light;
+  }
+}
+
+.stat-bg-e04f39 {
+  .su-stat-card {
+    background: $su-color-spirited;
   }
 }
