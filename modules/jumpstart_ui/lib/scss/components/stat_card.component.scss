@@ -7,26 +7,24 @@
   .stat-button {
     box-shadow: inset 0 0 0 2px $su-color-white;
     color: white;
-    background-color: transparent;
 
     &:hover,
     &:focus {
       box-shadow: inset 0 0 0 2px $su-color-white;
       color: $su-color-white;
-      background: transparent;
     }
   }
 }
 
 .su-stat-card {
+  container-type: inline-size;
+
   .stat-card-header {
     display: flex;
     flex-direction: column-reverse;
   }
 
   .stat-card-headline {
-    margin-bottom: 15px;
-
     h2,
     h3,
     h4,
@@ -38,12 +36,20 @@
   }
 
   .stat-card-super-headline {
-    font-weight: 700;
+    font-weight: 500
   }
 
   .stat-card-stat {
-    font-size: 86px;
+    font-size: 40px;
+    line-height: 1.2;
     font-weight: 700;
+
+    @container (min-width: 200px) {
+      font-size: 50px;
+    }
+    @container (min-width: 300px) {
+      font-size: 60px;
+    }
   }
 
   .stat-card-icon {
@@ -51,11 +57,26 @@
   }
 
   .stat-card-body {
-    margin-bottom: 30px;
+    p {
+      &:first-child {
+        margin-top: 15px;
+      }
+    }
+
+    p {
+      &:last-child {
+        margin-bottom: 30px;
+      }
+    }
+  }
+
+  .stat-card-link {
+    margin-top: 15px;
   }
 
   .stat-button {
     @include button-secondary;
+    background-color: transparent;
     color: $su-color-black;
     text-decoration: none;
     box-shadow: inset 0 0 0 2px $su-color-black;
@@ -63,6 +84,7 @@
     &:hover,
     &:focus {
       text-decoration: underline;
+      background-color: transparent;
     }
   }
 }
@@ -170,6 +192,8 @@
 }
 
 .stat-bg-2e2d29 {
+  @include stat-card-dark-bg;
+
   .su-stat-card {
     background: $su-color-black;
     color: $su-color-white;
@@ -239,7 +263,6 @@
 }
 
 .stat-bg-e98300 {
-  @include stat-card-dark-bg;
 
   .su-stat-card {
     background: $su-color-poppy;

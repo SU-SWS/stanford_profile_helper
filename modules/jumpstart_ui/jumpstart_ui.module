@@ -54,9 +54,9 @@ function jumpstart_ui_preprocess_ds_entity_view(&$variables) {
     if ($bg_color = $entity->get('su_stat_bg_color')?->getString()) {
       $variables['attributes']['class'][] = "stat-bg-$bg_color";
 
-      // If the background color isn't a light version, don't change the icon
-      // or stat colors.
-      if (!in_array($bg_color, ['f4f4f4', 'e98300', 'e04f39'])) {
+      // If the background color isn't a very light version, don't change the
+      // icon or stat colors.
+      if (!in_array($bg_color, ['f4f4f4'])) {
         return;
       }
     }
