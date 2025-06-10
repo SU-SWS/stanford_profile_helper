@@ -14,6 +14,22 @@
       color: $su-color-white;
     }
   }
+
+
+  a {
+    color: $su-color-white;
+
+    &::after {
+      background-color: $su-color-white;
+    }
+
+    &:hover,
+    &:focus {
+      &::after {
+        background-color: $su-color-white;
+      }
+    }
+  }
 }
 
 .su-stat-card {
@@ -95,6 +111,15 @@
     &:focus {
       text-decoration: underline;
       background-color: transparent;
+    }
+  }
+
+
+  a {
+    color: $su-color-black;
+
+    &::after {
+      background-color: $su-color-black;
     }
   }
 }
@@ -208,15 +233,6 @@
     background: $su-color-black;
     color: $su-color-white;
   }
-
-  a {
-    color: $su-color-white;
-
-    &:hover,
-    &:focus {
-      color: $su-color-white;
-    }
-  }
 }
 
 .stat-bg-53565a {
@@ -225,15 +241,6 @@
   .su-stat-card {
     background: $su-color-cool-grey;
     color: $su-color-white;
-  }
-
-  a {
-    color: $su-color-white;
-
-    &:hover,
-    &:focus {
-      color: $su-color-white;
-    }
   }
 }
 
@@ -244,15 +251,6 @@
     background: $su-color-stone-dark;
     color: $su-color-white;
   }
-
-  a {
-    color: $su-color-white;
-
-    &:hover,
-    &:focus {
-      color: $su-color-white;
-    }
-  }
 }
 
 .stat-bg-8c1515 {
@@ -261,15 +259,6 @@
   .su-stat-card {
     background: $su-color-cardinal-red;
     color: $su-color-white;
-  }
-
-  a {
-    color: $su-color-white;
-
-    &:hover,
-    &:focus {
-      color: $su-color-white;
-    }
   }
 }
 
@@ -280,15 +269,6 @@
     background: $su-color-plum;
     color: $su-color-white;
   }
-
-  a {
-    color: $su-color-white;
-
-    &:hover,
-    &:focus {
-      color: $su-color-white;
-    }
-  }
 }
 
 .stat-bg-007c92 {
@@ -297,15 +277,6 @@
   .su-stat-card {
     background: $su-color-lagunita;
     color: $su-color-white;
-  }
-
-  a {
-    color: $su-color-white;
-
-    &:hover,
-    &:focus {
-      color: $su-color-white;
-    }
   }
 }
 
@@ -316,29 +287,11 @@
     background: $su-color-palo-alto;
     color: $su-color-white;
   }
-
-  a {
-    color: $su-color-white;
-
-    &:hover,
-    &:focus {
-      color: $su-color-white;
-    }
-  }
 }
 
 .stat-bg-e98300 {
-
   .su-stat-card {
     background: $su-color-poppy;
-
-    a:not(.su-button) {
-      color: $su-color-black;
-
-      &::after {
-        background-color: $su-color-black;
-      }
-    }
   }
 }
 

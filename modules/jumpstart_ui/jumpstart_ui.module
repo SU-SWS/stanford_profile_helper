@@ -40,6 +40,24 @@ function jumpstart_ui_preprocess_field__su_stat_button(&$variables) {
 }
 
 /**
+ * Implements hook_field_widget_complete_WIDGET_TYPE_form_alter().
+ */
+function jumpstart_ui_field_widget_complete_color_field_widget_box_form_alter(&$field_widget_complete_form, \Drupal\Core\Form\FormStateInterface $form_state, $context) {
+  /** @var \Drupal\Core\Field\FieldItemListInterface $items */
+  $items = $context['items'];
+  if (in_array($items->getFieldDefinition()->getName(), [
+    'su_stat_icon_color',
+    'su_stat_stat_color',
+  ])) {
+    $field_widget_complete_form['#states'] = [
+      'invisible' => [
+        'input[name="su_stat_bg_color[0][color]"]' => ['filled' => TRUE],
+      ],
+    ];
+  }
+}
+
+/**
  * Implements hook_preprocess_HOOK().
  */
 function jumpstart_ui_preprocess_ds_entity_view(&$variables) {
