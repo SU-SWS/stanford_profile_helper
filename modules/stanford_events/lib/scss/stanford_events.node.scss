@@ -118,6 +118,8 @@
     @include box-shadow('paper');
     @include modular-spacing('padding', 2 3);
     @include modular-spacing('margin', 3 null 3 null);
+
+    line-height: 1.5;
   }
 
   .right-region {
