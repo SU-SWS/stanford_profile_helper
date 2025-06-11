@@ -25,6 +25,8 @@
 
     &:hover,
     &:focus {
+      color: $su-color-white;
+
       &::after {
         background-color: $su-color-white;
       }
