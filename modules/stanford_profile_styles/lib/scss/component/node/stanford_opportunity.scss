@@ -19,15 +19,7 @@
     }
 
     h2,
-    .su-opp-type,
-    .su-opp-course-code,
-    .su-opp-units,
     time,
-    .su-opp-contact-name,
-    .su-opp-contact-email,
-    .su-opp-contact-phone,
-    .su-opp-contact-url,
-    .su-opp-learn-more,
     .su-opp-cta-url {
       @include responsive-spacing('margin-left', 1);
     }
@@ -37,12 +29,8 @@
   .jumpstart-ui--two-column {
     > .left-region {
       + .main-region {
-        padding-left: 0;
-        border-top: 1px solid $su-color-black-30;
-        margin-top: 30px;
-
-        @include grid-media-min('lg') {
-          margin: 0 0 0 30px;
+        > div:first-child {
+          border-top: 1px solid $su-color-black-30;
         }
       }
     }
@@ -205,6 +193,12 @@
     padding-bottom: 0;
   }
 
+  .stanford-opportunities-list-page {
+    > div {
+      @include responsive-spacing('padding', null 1);
+    }
+  }
+
   .su-tags-wrapper {
     @include responsive-spacing('padding', 1 null);
 
@@ -212,15 +206,6 @@
 
     > div {
       @include responsive-spacing('padding', null 1);
-    }
-  }
-
-  // Border grouping for Application deadline.
-  .node-stanford-opportunity-su-opp-application-deadline {
-    .su-opp-deadline-date {
-      @include responsive-spacing('margin-top', 1);
-
-      border-top: 1px solid $su-color-black-30;
     }
   }
 
@@ -233,12 +218,20 @@
     }
   }
 
+  .stanford-opportunities-type-units {
+    .type-units {
+      @include responsive-spacing('padding-bottom', 1);
+
+      border-bottom: 1px solid $su-color-black-30;
+    }
+  }
+
   .node-stanford-opportunity-su-opp-contact-email,
   .su-opp-application-deadline,
-  .node-stanford-opportunity-su-opp-units {
-    @include responsive-spacing('padding-top', 1);
-
+  .node-stanford-opportunity-su-opp-units,
+  .stanford-opportunities-contact {
     h2 {
+      @include responsive-spacing('padding-top', 1);
       @include type-d;
       margin-bottom: 3px;
 
