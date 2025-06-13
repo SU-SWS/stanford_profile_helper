@@ -1,5 +1,19 @@
 # Stanford Profile Helper
 
+9.10.0
+--------------------------------------------------------------------------------
+_Release Date: 2025-06-25_
+
+- D8CORE-8019: Updating spacing on Opportunity page right column. (#404)
+- D8CORE-7574: Updated spacing on Events' contact to be a11y compliant (#407)
+- Added visible/invisible state to stat card color fields in UI
+- Updated stat card with additional colors
+- Support trailing zeros after a decimal for stat card counter
+- Added section margin and padding options. Adjusted section colors
+- Animate stat card numbers
+- D8CORE-7843: Added stat card component & row layout background colors (#405)
+- Add "Color Field" support for graphql field data
+
 9.9.1
 --------------------------------------------------------------------------------
 _Release Date: 2025-03-19_
