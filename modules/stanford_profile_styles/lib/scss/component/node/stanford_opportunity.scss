@@ -16,13 +16,13 @@
 
     .main-region {
       max-width: 300px;
+
+      @include grid-media-max('md') {
+        max-width: 100%;
+      }
     }
 
-    h2,
-    time,
-    .su-opp-cta-url {
-      @include responsive-spacing('margin-left', 1);
-    }
+
   }
 
   // Specific for an override.
@@ -58,7 +58,9 @@
 
       display: inline;
       font-weight: $su-font-semi-bold;
-      margin: 0 0 8px 0;
+      margin-top: 0;
+      margin-bottom: 0;
+      margin-bottom: 8px;
     }
 
     ul {
@@ -71,6 +73,23 @@
 
     li {
       display: inline;
+    }
+  }
+
+  // Right sidebar
+  .main-region {
+  @include grid-media-max('md') {
+    @include responsive-spacing('margin-bottom', 3);
+
+    max-width: 100%;
+    order: -1;
+  }
+
+    h2,
+    time,
+    .su-opp-cta-url,
+    .cshs-term-group__terms {
+      @include responsive-spacing('margin-left', 1);
     }
   }
 
@@ -203,10 +222,6 @@
     @include responsive-spacing('padding', 1 null);
 
     border-bottom: 1px solid $su-color-black-30;
-
-    > div {
-      @include responsive-spacing('padding', null 1);
-    }
   }
 
   .su-opp-deadline-time {
