@@ -21,8 +21,11 @@
         max-width: 100%;
       }
     }
+  }
 
 
+  .jumpstart-ui--two-column>.left-region+.main-region {
+    padding-left: 26px;
   }
 
   // Specific for an override.
@@ -257,13 +260,14 @@
     .main-region {
       display: flex;
       flex-direction: column;
+      @include centered-column;
 
       @include responsive-spacing('margin-top', 6);
 
       @include grid-media-min('md') {
         display: grid;
-        grid-template-columns: 60px 1fr;
-        column-gap: 25px;
+        grid-template-columns: 1fr;
+        max-width: 1200px;
 
         .node-stanford-opportunity-su-opp-icon {
           grid-column: 1 / 2;
@@ -287,6 +291,10 @@
         }
       }
 
+      @include grid-media-min('lg') {
+        max-width: 1200px;
+      }
+
       h1 {
         margin-bottom: 1.3rem;
       }
@@ -303,8 +311,18 @@
       }
 
       .node-stanford-page-title {
-          margin-top: 0;
+        margin-top: 0;
+      }
+
+      // Change grid if there is an icon.
+      &.has-icon {
+        @include grid-media-min('md') {
+          display: grid;
+          grid-template-columns: 60px 1fr;
+          column-gap: 25px;
+          max-width: 1200px;
         }
+      }
     }
   }
 }
@@ -313,7 +331,7 @@
   @include responsive-spacing('margin', null null 1 null);
   @include type-d;
 
-  max-width: 980px;
+  max-width: 924px;
   margin-left: 0;
 
   @include grid-media-min('md') {
