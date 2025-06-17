@@ -82,14 +82,7 @@
   .su-opp-type,
   .su-opp-units {
     @include type-d;
-  }
-
-  .su-opp-type,
-  .su-opp-units {
-
-    div {
-      display: inline;
-    }
+    display: inline-block;
   }
 
   .su-opp-tags {
@@ -218,23 +211,33 @@
     }
   }
 
-  .stanford-opportunities-type-units {
-    .type-units {
+  .stanford-opportunities {
+    &.type-units {
       @include responsive-spacing('padding-bottom', 1);
 
-      border-bottom: 1px solid $su-color-black-30;
+      > div {
+        border-bottom: 1px solid $su-color-black-30;
+      }
+
+      h2 {
+        @include responsive-spacing('padding-top', 1);
+        @include type-d;
+        display: inline-block;
+        margin-bottom: 3px;
+        margin-left: 0;
+      }
     }
   }
 
   .node-stanford-opportunity-su-opp-contact-email,
   .su-opp-application-deadline,
-  .node-stanford-opportunity-su-opp-units,
   .stanford-opportunities-contact {
     h2 {
       @include responsive-spacing('padding-top', 1);
+      @include responsive-spacing('padding-left', 1);
       @include type-d;
       margin-bottom: 3px;
-
+      margin-left: 0;
     }
   }
 
