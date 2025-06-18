@@ -62,8 +62,6 @@
       display: inline;
       font-weight: $su-font-semi-bold;
       margin-top: 0;
-      margin-bottom: 0;
-      margin-bottom: 8px;
     }
 
     ul {
@@ -81,12 +79,12 @@
 
   // Right sidebar
   .main-region {
-  @include grid-media-max('md') {
-    @include responsive-spacing('margin-bottom', 3);
+    @include grid-media-max('md') {
+      @include responsive-spacing('margin-bottom', 3);
 
-    max-width: 100%;
-    order: -1;
-  }
+      max-width: 100%;
+      order: -1;
+    }
 
     h2,
     time,
