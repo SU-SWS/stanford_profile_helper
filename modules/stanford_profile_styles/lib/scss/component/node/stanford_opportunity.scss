@@ -144,6 +144,12 @@
     }
   }
 
+  .su-card {
+    .su-opp-image {
+      margin-bottom: 0;
+    }
+  }
+
   .su-opp-eligibility,
   .su-opp-prerequisites {
     @include responsive-spacing('padding', 2 null);
@@ -266,7 +272,8 @@
 
       @include grid-media-min('md') {
         display: grid;
-        grid-template-columns: 1fr;
+        grid-template-columns: 60px 1fr;
+        column-gap: 25px;
         max-width: 1200px;
 
         .node-stanford-opportunity-su-opp-icon {
@@ -313,16 +320,6 @@
       .node-stanford-page-title {
         margin-top: 0;
       }
-
-      // Change grid if there is an icon.
-      &.has-icon {
-        @include grid-media-min('md') {
-          display: grid;
-          grid-template-columns: 60px 1fr;
-          column-gap: 25px;
-          max-width: 1200px;
-        }
-      }
     }
   }
 }
@@ -354,41 +351,43 @@
       p {
         margin-bottom: 50px;
       }
-    }
 
-    h3 {
-      @include type-f;
+      h3 {
+        @include type-f;
 
-      margin-bottom: 0;
-      word-break: break-word;
-      color: $su-color-black;
-
-      &.su-link--action {
+        margin-bottom: 0;
+        word-break: break-word;
         color: $su-color-black;
 
-        &:hover,
-        &:focus {
-          color: $su-color-digital-red;
-          text-decoration: underline;
+        &.su-link--action {
+          color: $su-color-black;
+
+          &:hover,
+          &:focus {
+            color: $su-color-digital-red;
+            text-decoration: underline;
+          }
+
+          &::after {
+            background-color: $su-color-digital-red;
+            height: 15px;
+            width: 15px;
+          }
         }
 
-        &::after {
-          background-color: $su-color-digital-red;
-          height: 15px;
-          width: 15px;
-        }
-      }
+        a {
+          color: $su-color-black;
 
-      a {
-        color: $su-color-black;
-
-        &:hover,
-        &:focus {
-          color: $su-color-digital-red;
-          text-decoration: underline;
+          &:hover,
+          &:focus {
+            color: $su-color-digital-red;
+            text-decoration: underline;
+          }
         }
       }
     }
+
+
 
     .su-card__superhead {
       font-size: 1em;
