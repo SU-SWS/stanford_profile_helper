@@ -125,7 +125,7 @@
 
   // Main body wrapper for opportunity
   .su-opp-node-container-wrapper {
-  // Content for opportunity
+    // Content for opportunity
     .left-region {
       .su-opp-eligibility,
       .su-opp-prerequisites {
@@ -187,7 +187,7 @@
       }
     }
 
-  // Right sidebar for opportunity
+    // Right sidebar for opportunity
     .main-region {
       @include grid-media-max('md') {
         @include responsive-spacing('margin-bottom', 3);
