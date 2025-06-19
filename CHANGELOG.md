@@ -1,8 +1,14 @@
 # Stanford Profile Helper
 
+9.10.1
+--------------------------------------------------------------------------------
+_Release Date: 2025-06-19_
+
+- UE-536: Corrected opportunity  node page mobile layout and some spacing issues
+
 9.10.0
 --------------------------------------------------------------------------------
-_Release Date: 2025-06-25_
+_Release Date: 2025-06-13_
 
 - D8CORE-8019: Updating spacing on Opportunity page right column. (#404)
 - D8CORE-7574: Updated spacing on Events' contact to be a11y compliant (#407)
