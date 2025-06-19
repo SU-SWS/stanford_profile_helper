@@ -2,7 +2,7 @@
 @import '../../config';
 @import 'stanford_page';
 
-.node--layout-full {
+.node--stanford-opportunity {
   @include responsive-spacing('margin-bottom', 6);
 
   // adjusting layout for meantime
