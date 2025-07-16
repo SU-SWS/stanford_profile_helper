@@ -9,3 +9,9 @@ services:
     arguments: []
     tags:
       - {name: config.factory.override, priority: 5}
+
+  stanford_decoupled.route_subscriber:
+    class: Drupal\stanford_decoupled\EventSubscriber\StanfordDecoupledRouteSubscriber
+    arguments: [ '%authentication_providers%' ]
+    tags:
+      - { name: event_subscriber }
