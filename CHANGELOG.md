@@ -1,5 +1,11 @@
 # Stanford Profile Helper
 
+9.10.3
+--------------------------------------------------------------------------------
+_Release Date: 2025-07-16_
+
+- Revert basic auth global provider in favor of router subscriber modification for private file auth.
+
 9.10.2
 --------------------------------------------------------------------------------
 _Release Date: 2025-07-16_
