@@ -40,6 +40,8 @@
 
   // Opportunity node title wrapper
   .su-opp-title-wrapper {
+    @include responsive-spacing('margin', null null 1 null);
+
     .main-region {
       display: flex;
       flex-direction: column;
@@ -61,12 +63,38 @@
         }
 
         .node-stanford-opportunity-su-opp-summary {
-          grid-column: 2 / 3;
+          grid-column: 2 / 2;
           grid-row: 2;
         }
 
+        .node-stanford-opportunity-su-opp-sponsor {
+          grid-column: 2 / 2;
+          grid-row: 3;
+
+          border-top: 1px solid $su-color-black-20;
+          padding-top: 15px;
+
+          span {
+            font-weight: $su-font-semi-bold;
+          }
+
+          div {
+            display: inline-block;
+
+            &::after {
+              content: ", "
+            }
+          }
+
+          div:last-of-type {
+            &::after {
+              content: " "
+            }
+          }
+        }
+
         .node-stanford-opportunity-title {
-          grid-column: 2 / 3;
+          grid-column: 2 / 2;
         }
 
         .jumpstart-ui-skipnav-main-anchor.block-jumpstart-ui {
