@@ -75,20 +75,52 @@
           padding-top: 15px;
 
           span {
+            display: inline;
             font-weight: $su-font-semi-bold;
           }
 
-          div {
-            display: inline-block;
+          .su-opp-sponsor {
+            display: inline;
 
-            &::after {
-              content: ", "
+            > div {
+              display: inline;
             }
           }
 
-          div:last-of-type {
-            &::after {
-              content: " "
+          .su-opp-sponsor-list {
+            list-style: none;
+            padding: 0;
+            display: inline;
+
+            li {
+              display: inline;
+
+              &::after {
+                content: ", ";
+              }
+
+              &:last-child {
+                &::before {
+                  content: " and ";
+                }
+
+                &::after {
+                  content: " ";
+                }
+              }
+
+              &:nth-last-child(2) {
+                &::after {
+                  content: " ";
+                }
+              }
+
+              &:only-child {
+                &::before,
+                &::after {
+                  content: "";
+                }
+              }
             }
           }
         }
