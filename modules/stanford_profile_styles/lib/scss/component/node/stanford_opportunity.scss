@@ -74,6 +74,8 @@
           border-top: 1px solid $su-color-black-20;
           padding-top: 15px;
 
+          @include flex-column(10);
+
           span {
             display: inline;
             font-weight: $su-font-semi-bold;
