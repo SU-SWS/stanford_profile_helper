@@ -65,6 +65,37 @@
 
   .su-event-sponsor {
     @include type-e;
+
+    @include grid-media-min('lg') {
+      > div {
+        &::after {
+          content: ", "
+        }
+
+        &:last-child {
+          &::before {
+            content: " and ";
+          }
+
+          &::after {
+            content: "";
+          }
+        }
+
+        &:nth-last-child(2) {
+          &::after {
+            content: "";
+          }
+        }
+
+        &:only-child {
+          &::before,
+          &::after {
+            content: "";
+          }
+        }
+      }
+    }
   }
 
   span {
@@ -82,16 +113,6 @@
 
     div {
       display: inline;
-
-      &::after {
-        content: ", "
-      }
-    }
-
-    div:last-of-type {
-      &::after {
-        content: " "
-      }
     }
   }
 }
