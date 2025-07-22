@@ -73,8 +73,7 @@
 
           border-top: 1px solid $su-color-black-20;
           padding-top: 15px;
-
-          @include flex-column(10);
+          max-width: 980px;
 
           span {
             display: inline;

@@ -59,8 +59,7 @@
 }
 
 .node-stanford-event-su-event-sponsor {
-  @include flex-column(7);
-
+  max-width: 980px;
   border-top: 1px solid $su-color-black-20;
   padding-top: 15px;
 
