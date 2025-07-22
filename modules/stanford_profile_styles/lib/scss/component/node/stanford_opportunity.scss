@@ -262,10 +262,18 @@
           a {
             color: $su-color-white;
 
+            &:after {
+                background-color: $su-color-white;
+              }
+
             &:hover,
             &:focus,
             &:active {
               color: $su-color-white;
+
+              &:after {
+                background-color: $su-color-white;
+              }
             }
           }
         }
