@@ -274,6 +274,7 @@
       a {
         @include link-icon(arrow-up-right, 10px, topright);
 
+        line-height: 1.5;
         font-weight: $su-font-regular;
       }
     }
