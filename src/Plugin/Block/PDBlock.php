@@ -13,7 +13,8 @@ use Drupal\stanford_profile_helper\Plugin\Derivative\ReactBlockDeriver;
 #[Block(
   id: "pdb_component",
   admin_label: new TranslatableMarkup("PDB Component"),
-  deriver: ReactBlockDeriver::class
+  deriver: ReactBlockDeriver::class,
+  category: new TranslatableMarkup("PDB Components")
 )]
 class PDBlock extends PdbBlock {
 
@@ -24,6 +25,20 @@ class PDBlock extends PdbBlock {
    */
   public function attachLibraries(array $component) {
     return ['library' => parent::attachLibraries($component)];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function build() {
+    $info = $this->getComponentInfo();
+    $machine_name = $info['machine_name'];
+
+    $build = parent::build();
+    $build['#allowed_tags'] = [$machine_name];
+    $build['#markup'] = '<' . $machine_name . ' id="' . $machine_name . '"></' . $machine_name . '>';
+
+    return $build;
   }
 
 }
