@@ -9,9 +9,6 @@ use Drupal\Tests\UnitTestCase;
 
 /**
  * Class JumpstartUiTwoColumnLayoutTest.
- *
- * @group jumpstart_ui
- * @coversDefaultClass \Drupal\jumpstart_ui\Layouts\JumpstartUiTwoColumnLayout
  */
 class JumpstartUiTwoColumnLayoutTest extends UnitTestCase {
 

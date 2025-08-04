@@ -2,6 +2,7 @@
 
 namespace Drupal\stanford_notifications\Entity;
 
+use Drupal\Core\Entity\Attribute\ContentEntityType;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityTypeInterface;
@@ -11,17 +12,16 @@ use Drupal\stanford_notifications\NotificationInterface;
 
 /**
  * Defines the notification entity class.
- *
- * @ContentEntityType(
- *   id = "notification",
- *   label = @Translation("Notification"),
- *   base_table = "notification",
- *   entity_keys = {
- *     "id" = "id",
- *     "uuid" = "uuid"
- *   }
- * )
  */
+#[ContentEntityType(
+  id: "notification",
+  label: new TranslatableMarkup("Notification"),
+  entity_keys: [
+    "id" => "id",
+    "uuid" => "uuid",
+  ],
+  base_table: "notification"
+)]
 class Notification extends ContentEntityBase implements NotificationInterface {
 
   /**
@@ -49,7 +49,6 @@ class Notification extends ContentEntityBase implements NotificationInterface {
    * {@inheritDoc}
    */
   public function message() {
-
     return $this->get('message')->getString();
   }
 

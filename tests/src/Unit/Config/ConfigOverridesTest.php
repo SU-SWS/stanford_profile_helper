@@ -16,9 +16,6 @@ use Drupal\Core\StreamWrapper\StreamWrapperInterface;
 
 /**
  * Class ConfigOverridesTest
- *
- * @group stanford_profile_helper
- * @coversDefaultClass \Drupal\stanford_profile_helper\Config\ConfigOverrides
  */
 class ConfigOverridesTest extends UnitTestCase {
 
@@ -138,15 +135,10 @@ class ConfigOverridesTest extends UnitTestCase {
       $configs['system.theme']['default'] = 'foobar';
     }
     $state = $this->createMock(StateInterface::class);
-    $state->method('get')->will($this->returnCallback([
-      $this,
-      'getStateCallback',
-    ]));
+    $state->method('get')->willReturnCallback([$this, 'getStateCallback']);
 
     $config_pages = $this->createMock(ConfigPagesLoaderServiceInterface::class);
-    $config_pages->method('getValue')->will(
-      $this->returnCallback([$this, 'getConfigPageValue'])
-    );
+    $config_pages->method('getValue')->willReturnCallback([$this, 'getConfigPageValue']);
 
     $file_storage = $this->createMock(EntityStorageInterface::class);
     $file_storage->method('load')->willReturnReference($this->logoFile);

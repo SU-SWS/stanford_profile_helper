@@ -9,9 +9,6 @@ use Symfony\Component\Routing\RouteCollection;
 
 /**
  * Class RouteSubscriberTest
- *
- * @group stanford_profile_helper
- * @coversDefaultClass \Drupal\stanford_profile_admin\Routing\RouteSubscriber
  */
 class RouteSubscriberTest extends UnitTestCase {
 
@@ -29,6 +26,9 @@ class RouteSubscriberTest extends UnitTestCase {
 
     $route = new Route('/admin/bar/people');
     $route_collection->add('baz', $route);
+
+    $route = new Route('/admin/baz');
+    $route_collection->add('ui_patterns.patterns.overview', $route);
 
     $subscriber = new TestRouteSubscriber();
     $subscriber->alterRoutes($route_collection);

@@ -8,9 +8,6 @@ use Drush\Exceptions\UserAbortException;
 
 /**
  * Class StanfordNotificationsCommandsTest.
- *
- * @group stanford_notifications
- * @coversDefaultClass \Drupal\stanford_notifications\Commands\StanfordNotificationsCommands
  */
 class StanfordNotificationsCommandsTest extends StanfordNotificationTestBase {
 

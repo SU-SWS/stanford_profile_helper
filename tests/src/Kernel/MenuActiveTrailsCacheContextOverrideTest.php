@@ -7,9 +7,6 @@ use Drupal\stanford_profile_helper\MenuActiveTrailsCacheContextOverride;
 
 /**
  * Class MenuActiveTrailsCacheContextOverrideTest.
- *
- * @group stanford_profile_helper
- * @coversDefaultClass \Drupal\stanford_profile_helper\MenuActiveTrailsCacheContextOverride
  */
 class MenuActiveTrailsCacheContextOverrideTest extends KernelTestBase {
 

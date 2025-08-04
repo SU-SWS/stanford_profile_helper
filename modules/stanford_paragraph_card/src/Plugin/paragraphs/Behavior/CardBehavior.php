@@ -4,19 +4,20 @@ namespace Drupal\stanford_paragraph_card\Plugin\paragraphs\Behavior;
 
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\paragraphs\Attribute\ParagraphsBehavior;
 use Drupal\paragraphs\Entity\ParagraphsType;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\paragraphs\ParagraphsBehaviorBase;
 
 /**
  * Teaser paragraph behaviors.
- *
- * @ParagraphsBehavior(
- *   id = "su_card_styles",
- *   label = @Translation("Card Styles"),
- *   description = @Translation("Style options for card paragraph")
- * )
  */
+#[ParagraphsBehavior(
+  id: 'su_card_styles',
+  label: new TranslatableMarkup('Card Styles'),
+  description: new TranslatableMarkup('Style options for card paragraph.')
+)]
 class CardBehavior extends ParagraphsBehaviorBase {
 
   /**

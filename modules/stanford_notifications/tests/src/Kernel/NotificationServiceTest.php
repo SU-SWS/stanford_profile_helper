@@ -9,9 +9,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class NotificationServiceTest.
- *
- * @group stanford_notifications
- * @coversDefaultClass \Drupal\stanford_notifications\NotificationService
  */
 class NotificationServiceTest extends StanfordNotificationTestBase {
 

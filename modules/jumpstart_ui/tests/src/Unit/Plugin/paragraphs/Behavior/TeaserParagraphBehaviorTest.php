@@ -18,9 +18,6 @@ use Drupal\Tests\UnitTestCase;
 
 /**
  * Class TeaserParagraphBehaviorTest
- *
- * @group jumpstart_ui
- * @coversDefaultClass \Drupal\jumpstart_ui\Plugin\paragraphs\Behavior\TeaserParagraphBehavior
  */
 class TeaserParagraphBehaviorTest extends UnitTestCase {
 

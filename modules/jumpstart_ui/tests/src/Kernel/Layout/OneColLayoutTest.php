@@ -10,8 +10,6 @@ use Twig\Loader\FilesystemLoader;
 
 /**
  * Class OneColLayoutTest.
- *
- * @group jumpstart_ui
  */
 class OneColLayoutTest extends KernelTestBase {
 

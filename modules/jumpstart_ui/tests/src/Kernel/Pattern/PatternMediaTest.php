@@ -11,8 +11,6 @@ use Drupal\Component\Utility\Html;
 
 /**
  * Class PatternMediaTest.
- *
- * @group jumpstart_ui
  */
 class PatternMediaTest extends KernelTestBase {
 

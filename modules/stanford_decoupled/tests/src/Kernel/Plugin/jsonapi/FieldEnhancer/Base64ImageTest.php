@@ -8,7 +8,6 @@ use Drupal\KernelTests\KernelTestBase;
 use Shaper\Util\Context;
 
 /**
- * @coversDefaultClass \Drupal\stanford_decoupled\Plugin\jsonapi\FieldEnhancer\Base64Image
  */
 class Base64ImageTest extends KernelTestBase {
 

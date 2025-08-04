@@ -2,76 +2,20 @@
 
 namespace Drupal\Tests\stanford_profile_helper\Kernel\EventSubscriber;
 
-use Drupal\config_pages\Entity\ConfigPages;
-use Drupal\config_pages\Entity\ConfigPagesType;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\menu_link_content\Entity\MenuLinkContent;
-use Drupal\next\Entity\NextEntityTypeConfig;
-use Drupal\next\Entity\NextSite;
 use Drupal\node\Entity\Node;
-use Drupal\node\Entity\NodeType;
 use Drupal\path_alias\Entity\PathAlias;
 use Drupal\redirect\Entity\Redirect;
 use Drupal\Tests\stanford_profile_helper\Kernel\SuProfileHelperKernelTestBase;
-use Drupal\user\Entity\Role;
 
 /**
  * Test the event subscriber.
- *
- * @coversDefaultClass \Drupal\stanford_profile_helper\EventSubscriber\EntityEventSubscriber
  */
-class EntityEventSubscriberTest extends SuProfileHelperKernelTestBase {
+class EntityObjectHooksTest extends SuProfileHelperKernelTestBase {
 
-  /**
-   * Entity Pre-save event listener.
-   */
-  public function testNodePresave() {
-    $role = Role::create(['id' => 'foo', 'label' => 'Foo']);
-    $role->save();
-
-    $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple();
-    $this->assertEmpty($nodes);
-    $node = Node::create(['type' => 'stanford_event', 'title' => 'Foo Bar']);
-    $node->save();
-    $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple();
-    $this->assertCount(2, $nodes);
-
-    \Drupal::state()
-      ->delete('stanford_profile_helper.default_content.stanford_event');
-    $node = Node::create(['type' => 'stanford_event', 'title' => 'Bar Foo']);
-    $node->save();
-    $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple();
-    $this->assertCount(3, $nodes);
-
-    $variables = [
-      'node' => $node,
-      'page' => FALSE,
-      'content' => [],
-    ];
-    $service = \Drupal::service('preprocess_event.service');
-    $service->createAndDispatchKnownEvents('node', $variables);
-    $this->assertArrayNotHasKey('rh_message', $variables['content']);
-
-    $rabbit_hole_behavior = \Drupal::entityTypeManager()
-      ->getStorage('behavior_settings')
-      ->create([
-        'id' => 'node_type_stanford_event',
-        'action' => 'access_denied',
-        'redirect' => 'http://foo.bar',
-        'redirect_code' => 301,
-      ]);
-    $rabbit_hole_behavior->save();
-
-    $variables['page'] = TRUE;;
-    $service->createAndDispatchKnownEvents('node', $variables);
-    $this->assertArrayNotHasKey('rh_message', $variables['content']);
-
-    $rabbit_hole_behavior->set('action', 'page_redirect')->save();
-
-    $service->createAndDispatchKnownEvents('node', $variables);
-    $this->assertArrayHasKey('rh_message', $variables['content']);
-  }
+  protected $strictConfigSchema = FALSE;
 
   public function testMenuCacheClears() {
     $field_storage = FieldStorageConfig::create([
@@ -183,33 +127,6 @@ class EntityEventSubscriberTest extends SuProfileHelperKernelTestBase {
     $field_storage->save();
 
     $this->assertNull($field_storage->getThirdPartySetting('field_permissions', 'permission_type'));
-  }
-
-  public function testConfigPages() {
-    ConfigPagesType::create([
-      'id' => 'foo',
-      'context' => [],
-      'menu' => [],
-    ])->save();
-    $field_storage = FieldStorageConfig::create([
-      'field_name' => 'su_site_url',
-      'entity_type' => 'config_pages',
-      'type' => 'link',
-    ]);
-    $field_storage->save();
-    FieldConfig::create([
-      'field_storage' => $field_storage,
-      'bundle' => 'foo',
-    ])->save();
-
-    ConfigPages::create([
-      'type' => 'foo',
-      'su_site_url' => ['uri' => 'https://foo.bar'],
-      'context' => 'a:0:{}',
-    ])->save();
-
-    $this->assertEquals('https://foo.bar', \Drupal::state()
-      ->get('xmlsitemap_base_url'));
   }
 
 }

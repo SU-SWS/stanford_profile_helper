@@ -5,7 +5,6 @@ namespace Drupal\Tests\stanford_profile_helper\Kernel\Plugin\search_api\processo
 use Drupal\Tests\search_api\Kernel\Processor\CustomValueTest as SearchApiCustomValueTest;
 
 /**
- * @coversDefaultClass \Drupal\stanford_profile_helper\Plugin\search_api\processor\CustomValue
  */
 class CustomValueTest extends SearchApiCustomValueTest {
 
@@ -21,7 +20,6 @@ class CustomValueTest extends SearchApiCustomValueTest {
     'search_api_test',
     'comment',
     'text',
-    'action',
     'system',
     'stanford_profile_helper',
     'rabbit_hole',

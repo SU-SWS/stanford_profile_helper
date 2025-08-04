@@ -13,9 +13,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * Class GlobalMessageConstraintValidatorTest.
- *
- * @group stanford_profile_helper
- * @coversDefaultClass \Drupal\stanford_profile_helper\Plugin\Validation\Constraint\GlobalMessageConstraintValidator
  */
 class GlobalMessageConstraintValidatorTest extends UnitTestCase {
 
@@ -55,7 +52,7 @@ class GlobalMessageConstraintValidatorTest extends UnitTestCase {
 
     $entity = $this->createMock(FieldableEntityInterface::class);
     $entity->method('get')
-      ->will($this->returnCallback([$this, 'getFieldCallback']));
+      ->willReturnCallback([$this, 'getFieldCallback']);
     $entity->method('hasField')->willReturn(TRUE);
 
     $field_value = $this->createMock(FieldItemListInterface::class);
@@ -76,7 +73,7 @@ class GlobalMessageConstraintValidatorTest extends UnitTestCase {
 
     $entity = $this->createMock(FieldableEntityInterface::class);
     $entity->method('get')
-      ->will($this->returnCallback([$this, 'getFieldCallback']));
+      ->willReturnCallback([$this, 'getFieldCallback']);
     $entity->method('hasField')->willReturn(TRUE);
 
     $field_value = $this->createMock(FieldItemListInterface::class);

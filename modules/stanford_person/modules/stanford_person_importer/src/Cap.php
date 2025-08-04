@@ -146,9 +146,10 @@ class Cap implements CapInterface {
    */
   protected function getApiResponse(Url $url, array $options = []) {
     try {
-      $response = $this->client->request('GET', $url->toString(TRUE)->getGeneratedUrl(), $options);
+      $response = $this->client->request('GET', $url->toString(TRUE)
+        ->getGeneratedUrl(), $options);
     }
-    catch (GuzzleException | \Exception $e) {
+    catch (GuzzleException|\Exception $e) {
       $this->cache->delete('cap:access_token');
       // Most errors originate from the API itself, log the error and let it
       // fall over.
@@ -305,10 +306,13 @@ class Cap implements CapInterface {
     $result = $this->getApiResponse(Url::fromUri(self::AUTH_URL, $options), [
       'auth' => [$this->clientId, $this->clientSecret],
     ]);
-    $this->cache->set('cap:access_token', $result, time() + $result['expires_in'] - 3600, [
-      'cap',
-      'cap:token',
-    ]);
+
+    if ($result) {
+      $this->cache->set('cap:access_token', $result, time() + $result['expires_in'] - 3600, [
+        'cap',
+        'cap:token',
+      ]);
+    }
 
     return $result['access_token'] ?? NULL;
   }

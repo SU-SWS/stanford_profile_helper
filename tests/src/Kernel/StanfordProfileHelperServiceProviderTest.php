@@ -5,15 +5,11 @@ namespace Drupal\Tests\stanford_profile_helper\Kernel;
 use Drupal\stanford_profile_helper\SearchApiAlgoliaHelper;
 
 /**
- * @coversDefaultClass \Drupal\stanford_profile_helper\SearchApiAlgoliaHelper
  */
 class StanfordProfileHelperServiceProviderTest extends SuProfileHelperKernelTestBase {
 
   protected static $modules = [
     'config_pages',
-    'core_event_dispatcher',
-    'hook_event_dispatcher',
-    'preprocess_event_dispatcher',
     'default_content',
     'node',
     'serialization',

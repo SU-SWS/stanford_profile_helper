@@ -21,9 +21,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Class ConfigOverridesTest.
- *
- * @group stanford_person_importer
- * @coversDefaultClass \Drupal\stanford_person_importer\Config\ConfigOverrides
  */
 class ConfigOverridesTest extends UnitTestCase {
 
@@ -95,19 +92,19 @@ class ConfigOverridesTest extends UnitTestCase {
   protected function getCapService() {
     $cap = $this->createMock(CapInterface::class);
     $cap->method('getTotalProfileCount')
-      ->will($this->returnCallback(function () {
+      ->willReturnCallback(function () {
         if (empty($this->count)) {
           $this->count = 0;
         }
         $this->count += 10;
         return $this->count;
-      }));
+      });
     $cap->method('getOrganizationUrl')
       ->willReturn(Url::fromUri('http://localhost.orgs'));
     $cap->method('getWorkgroupUrl')
       ->willReturn(Url::fromUri('http://localhost.workgroup'));
     $cap->method('getSunetUrl')
-      ->will($this->returnCallback([$this, 'getSunetUrlCallback']));
+      ->willReturnCallback([$this, 'getSunetUrlCallback']);
 
     return $cap;
   }

@@ -7,9 +7,6 @@ use Drupal\stanford_publication\Entity\CitationType;
 
 /**
  * Class CitationTypeListBuilderTest
- *
- * @group stanford_publication
- * @coversDefaultClass \Drupal\stanford_publication\CitationTypeListBuilder
  */
 class CitationTypeListBuilderTest extends PublicationTestBase {
 

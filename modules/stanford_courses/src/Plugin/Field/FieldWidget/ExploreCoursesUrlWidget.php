@@ -97,8 +97,14 @@ class ExploreCoursesUrlWidget extends LinkWidget {
     try {
       $response = $this->client->request('GET', 'search?view=xml-' . $input, ['base_uri' => 'https://explorecourses.stanford.edu/']);
       $response = (string) $response->getBody();
-      libxml_use_internal_errors();
-      $xml = new \SimpleXMLElement($response);
+
+      libxml_use_internal_errors(TRUE);
+      $xml = simplexml_load_string($response);
+
+      if (!$xml) {
+        throw new \Exception('Failed to parse XML data');
+      }
+
       // Do this as a string, since SimpleXMLElement doesn't cast to bools.
       if ((string) $xml->deprecated == 'true') {
         $form_state->setError($element, $this->t("That API version is deprecated. Newest version is: $xml->latestVersion"));
@@ -158,7 +164,6 @@ class ExploreCoursesUrlWidget extends LinkWidget {
    * {@inheritDoc}.
    */
   public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
-
     // Something like `view=xml-20200810`, but it may change.
     $xml_querystring = 'xml-' . $this->getSetting('api_version');
 
@@ -171,7 +176,8 @@ class ExploreCoursesUrlWidget extends LinkWidget {
         $url['query']['view'] = $xml_querystring;
 
         $massaged_url = Url::fromUri($url['path'], ['query' => $url['query']]);
-        $values[$delta]['uri'] = $massaged_url->toString(TRUE)->getGeneratedUrl();
+        $values[$delta]['uri'] = $massaged_url->toString(TRUE)
+          ->getGeneratedUrl();
       }
     }
     return parent::massageFormValues($values, $form, $form_state);

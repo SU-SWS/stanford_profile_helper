@@ -8,9 +8,6 @@ use Drupal\Tests\stanford_publication\Kernel\PublicationTestBase;
 
 /**
  * Class CitationTypeDeleteFormTest.
- *
- * @group stanford_publication
- * @coversDefaultClass \Drupal\stanford_publication\Form\CitationTypeDeleteForm
  */
 class CitationTypeDeleteFormTest extends PublicationTestBase {
 

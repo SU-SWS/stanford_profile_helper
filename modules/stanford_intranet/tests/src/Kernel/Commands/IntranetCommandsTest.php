@@ -12,8 +12,6 @@ use Drupal\Tests\stanford_intranet\Kernel\IntranetKernelTestBase;
 
 /**
  * Drush commands tests.
- *
- * @coversDefaultClass \Drupal\stanford_intranet\Commands\IntranetCommands
  */
 class IntranetCommandsTest extends IntranetKernelTestBase {
 

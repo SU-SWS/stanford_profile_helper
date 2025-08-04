@@ -7,9 +7,6 @@ use Drupal\stanford_publication\Entity\Citation;
 
 /**
  * Class CitationAccessControlHandlerTest.
- *
- * @group stanford_publication
- * @coversDefaultClass \Drupal\stanford_publication\CitationAccessControlHandler
  */
 class CitationAccessControlHandlerTest extends PublicationTestBase {
 

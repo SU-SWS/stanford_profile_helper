@@ -4,23 +4,20 @@ namespace Drupal\Tests\stanford_profile_helper\Kernel\EventSubscriber;
 
 use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\Core\Form\FormState;
-use Drupal\stanford_profile_helper\EventSubscriber\FormEventSubscriber;
+use Drupal\stanford_profile_helper\Hook\FormHooks;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\taxonomy\Entity\Vocabulary;
+use Drupal\taxonomy\VocabularyListBuilder;
 use Drupal\Tests\stanford_profile_helper\Kernel\SuProfileHelperKernelTestBase;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\paragraphs\Entity\ParagraphsType;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
-use Drupal\field_event_dispatcher\Event\Field\WidgetCompleteFormAlterEvent;
-use Drupal\field_event_dispatcher\FieldHookEvents;
 
 /**
  * Test the event subscriber.
- *
- * @coversDefaultClass \Drupal\stanford_profile_helper\EventSubscriber\FormEventSubscriber
  */
-class FormEventSubscriberTest extends SuProfileHelperKernelTestBase {
+class FormHooksTest extends SuProfileHelperKernelTestBase {
 
   /**
    * A mock paragraph type.
@@ -50,7 +47,7 @@ class FormEventSubscriberTest extends SuProfileHelperKernelTestBase {
 
     $form_state = new FormState();
     $form_state->setValue(['name', 0, 'value'], 'bar_baz &$ bin foo');
-    FormEventSubscriber::argHelperAjaxCallback($form, $form_state);
+    FormHooks::argHelperAjaxCallback($form, $form_state);
     $this->assertEquals('barbazbinfoo', $form['name']['arg_helper']['#value']);
   }
 
@@ -108,31 +105,36 @@ class FormEventSubscriberTest extends SuProfileHelperKernelTestBase {
     $form_object = $entity_type_manager->getFormObject($paragraph->getEntityTypeId(), 'default');
     $form_object->setEntity($paragraph);
 
-    $field_item = $paragraph->get('su_spacer_size');
-
     $form_state = new FormState();
     $form_state->setFormObject($form_object);
     $form_state->setCompleteForm($complete_form_array);
 
     $spacer_form_element = $complete_form_array['su_spacer_size'];
 
-    $entity_form_display = EntityFormDisplay::collectRenderDisplay($form_state->getFormObject()->getEntity(), 'default');
-    $widget = $entity_form_display->getRenderer('su_spacer_size');
-
-    $context = [
-      'form' => $form_object,
-      'widget' => $widget,
-      'items' => $field_item,
-      'delta' => 0,
-      'default' => FALSE,
-    ];
-
-    // Trigger the event.
-    $event = new WidgetCompleteFormAlterEvent($spacer_form_element, $form_state, $context);
-    $event_dispatcher = \Drupal::service('event_dispatcher');
-    $event_dispatcher->dispatch($event, FieldHookEvents::WIDGET_COMPLETE_FORM_ALTER);
-
     $this->assertEquals('Standard', $spacer_form_element['widget']['#options']['_none']);
+  }
+
+  public function testTaxonomyOverviewForm() {
+    $entity_type_manager = $this->container->get('entity_type.manager');
+    $entity_type = $entity_type_manager->getDefinition('taxonomy_vocabulary');
+
+    $entity_type_manager->getStorage('taxonomy_vocabulary')->create([
+      'vid' => 'foo',
+      'name' => 'foo',
+    ])->save();
+
+    $listBuilder = VocabularyListBuilder::createInstance($this->container, $entity_type);
+    $form = [];
+    $form_state = new FormState();
+    $form = $listBuilder->buildForm($form, $form_state);
+
+    $this->assertArrayHasKey('#tabledrag', $form['vocabularies']);
+    $this->assertArrayHasKey('foo', $form['vocabularies']);
+
+    \Drupal::moduleHandler()
+      ->alter('form_taxonomy_overview_vocabularies', $form, $form_state);
+    $this->assertArrayNotHasKey('#tabledrag', $form['vocabularies']);
+    $this->assertArrayNotHasKey('foo', $form['vocabularies']);
   }
 
 }

@@ -10,9 +10,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * Class SignupBlockTest.
- *
- * @group stanford_news
- * @coversDefaultClass \Drupal\stanford_news\Plugin\Block\SignupBlock
  */
 class SignupBlockTest extends UnitTestCase {
 

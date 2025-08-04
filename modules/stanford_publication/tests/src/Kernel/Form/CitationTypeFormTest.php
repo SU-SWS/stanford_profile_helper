@@ -8,9 +8,6 @@ use Drupal\Tests\stanford_publication\Kernel\PublicationTestBase;
 
 /**
  * Class CitationTypeFormTest
- *
- * @group stanford_publication
- * @coversDefaultClass \Drupal\stanford_publication\Form\CitationTypeForm
  */
 class CitationTypeFormTest extends PublicationTestBase {
 

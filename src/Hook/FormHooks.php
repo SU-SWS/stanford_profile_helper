@@ -1,23 +1,19 @@
 <?php
 
-namespace Drupal\stanford_profile_helper\EventSubscriber;
+namespace Drupal\stanford_profile_helper\Hook;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\State\StateInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\core_event_dispatcher\Event\Form\FormBaseAlterEvent;
-use Drupal\core_event_dispatcher\Event\Form\FormIdAlterEvent;
-use Drupal\field_event_dispatcher\Event\Field\WidgetCompleteFormAlterEvent;
-use Drupal\field_event_dispatcher\FieldHookEvents;
-use Drupal\hook_event_dispatcher\HookEventDispatcherInterface;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Form event subscriber.
  */
-class FormEventSubscriber implements EventSubscriberInterface {
+class FormHooks {
+
   use StringTranslationTrait;
 
   /**
@@ -29,56 +25,35 @@ class FormEventSubscriber implements EventSubscriberInterface {
   public function __construct(protected AccountProxyInterface $currentUser, protected StateInterface $state) {}
 
   /**
-   * {@inheritdoc}
-   */
-  public static function getSubscribedEvents(): array {
-    return [
-      HookEventDispatcherInterface::PREFIX . 'form_taxonomy_overview_vocabularies.alter' => ['taxonomyOverviewFormAlter'],
-      HookEventDispatcherInterface::PREFIX . 'form_base_taxonomy_term_form.alter' => ['taxonomyFormAlter'],
-      FieldHookEvents::WIDGET_COMPLETE_FORM_ALTER => ['fieldWidgetFormAlter'],
-    ];
-  }
-
-  /**
    * Alter the field widget form.
-   *
-   * @param \Drupal\field_event_dispatcher\Event\Field\WidgetCompleteFormAlterEvent $event
-   *   Triggered hook event.
    */
-  public function fieldWidgetFormAlter(WidgetCompleteFormAlterEvent $event): void {
-    $context = $event->getContext();
-
+  #[Hook('field_widget_complete_form_alter')]
+  public function fieldWidgetFormAlter(&$field_widget_complete_form, FormStateInterface $form_state, $context): void {
     /** @var \Drupal\Core\Field\FieldItemList $items */
     $items = $context['items'];
     if ($items->getFieldDefinition()->getName() == 'su_site_nobots') {
-      $form = &$event->getWidgetCompleteForm();
-      $form['widget']['value']['#default_value'] = (bool) $this->state->get('nobots');
+      $field_widget_complete_form['widget']['value']['#default_value'] = (bool) $this->state->get('nobots');
     }
 
     // Change the default value label in the Spacer paragraph.
     if ($items->getFieldDefinition()->getName() == 'su_spacer_size') {
-      $form = &$event->getWidgetCompleteForm();
-      $form['widget']['#options']['_none'] = 'Standard';
+      $field_widget_complete_form['widget']['#options']['_none'] = 'Standard';
     }
 
     // Hide token help in the viewfield widget.
     if ($context['widget']->getPluginId() == 'viewfield_select') {
-      $widget_form = &$event->getWidgetCompleteForm();
-      $widget_form['widget'][0]['view_options']['arguments']['#description'] = '';
-      foreach (Element::children($widget_form['widget']) as $delta) {
-        unset($widget_form['widget'][$delta]['view_options']['token_help']);
+      $field_widget_complete_form['widget'][0]['view_options']['arguments']['#description'] = '';
+      foreach (Element::children($field_widget_complete_form['widget']) as $delta) {
+        unset($field_widget_complete_form['widget'][$delta]['view_options']['token_help']);
       }
     }
   }
 
   /**
    * Alter the taxonomy term form.
-   *
-   * @param \Drupal\core_event_dispatcher\Event\Form\FormBaseAlterEvent $event
-   *   Alter event.
    */
-  public function taxonomyFormAlter(FormBaseAlterEvent $event):void {
-    $form = &$event->getForm();
+  #[Hook('form_taxonomy_term_form_alter')]
+  public function taxonomyTermFormAlter(&$form, FormStateInterface $form_state, $form_id):void {
     $form['name']['arg_helper'] = [
       '#type' => 'textfield',
       '#title' => $this->t('List Filtering Argument'),
@@ -131,26 +106,22 @@ class FormEventSubscriber implements EventSubscriberInterface {
 
   /**
    * Modify the taxonomy overview form to hide vocabs the user doesn't need.
-   *
-   * @param \Drupal\core_event_dispatcher\Event\Form\FormIdAlterEvent $event
-   *   Triggered event.
    */
-  public function taxonomyOverviewFormAlter(FormIdAlterEvent $event): void {
+  #[Hook('form_taxonomy_overview_vocabularies_alter')]
+  public function taxonomyOverviewFormAlter(&$form, FormStateInterface $form_state): void {
     if ($this->currentUser->hasPermission('administer taxonomy')) {
       return;
     }
 
-    $form = &$event->getForm();
     foreach (Element::children($form['vocabularies']) as $vid) {
+      unset($form['vocabularies'][$vid]['weight']);
       if (
         !$this->currentUser->hasPermission("create terms in $vid") &&
         !$this->currentUser->hasPermission("delete terms in $vid") &&
         !$this->currentUser->hasPermission("edit terms in $vid")
       ) {
         unset($form['vocabularies'][$vid]);
-        continue;
       }
-      unset($form['vocabularies'][$vid]['weight']);
     }
     unset($form['vocabularies']['#tabledrag']);
     unset($form['vocabularies']['#header']['weight'], $form['actions']);

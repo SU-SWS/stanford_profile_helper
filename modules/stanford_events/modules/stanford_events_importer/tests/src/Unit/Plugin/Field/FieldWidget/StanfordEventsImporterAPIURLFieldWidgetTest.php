@@ -12,9 +12,6 @@ use Drupal\Core\DependencyInjection\ContainerBuilder;
 
 /**
  * Class StanfordEventsImporterAPIURLFieldWidget
- *
- * @group stanford_events_importer
- * @coversDefaultClass \Drupal\stanford_events_importer\Plugin\Field\FieldWidget\StanfordEventsImporterAPIURLFieldWidget
  */
 class StanfordEventsImporterAPIURLFieldWidgetTest extends UnitTestCase {
 

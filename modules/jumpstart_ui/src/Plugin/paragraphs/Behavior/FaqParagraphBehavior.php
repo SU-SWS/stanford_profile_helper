@@ -4,19 +4,20 @@ namespace Drupal\jumpstart_ui\Plugin\paragraphs\Behavior;
 
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\paragraphs\Attribute\ParagraphsBehavior;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\paragraphs\ParagraphsBehaviorBase;
 use Drupal\paragraphs\ParagraphsTypeInterface;
 
 /**
  * Class FaqParagraphBehavior.
- *
- * @ParagraphsBehavior(
- *   id = "faq_accordions",
- *   label = @Translation("FAQ Accordion"),
- *   description = @Translation("Display options for the FAQ Accordion paragraph.")
- * )
  */
+#[ParagraphsBehavior(
+  id: 'faq_accordions',
+  label: new TranslatableMarkup('FAQ Accordion'),
+  description: new TranslatableMarkup('Display options for the FAQ Accordion paragraph.')
+)]
 class FaqParagraphBehavior extends ParagraphsBehaviorBase {
 
   /**

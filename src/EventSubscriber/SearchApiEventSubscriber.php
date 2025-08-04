@@ -4,6 +4,7 @@ namespace Drupal\stanford_profile_helper\EventSubscriber;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\node\NodeInterface;
+use Drupal\search_api\Event\GatheringPluginInfoEvent;
 use Drupal\search_api\Event\IndexingItemsEvent;
 use Drupal\search_api\Event\SearchApiEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -19,6 +20,7 @@ class SearchApiEventSubscriber implements EventSubscriberInterface {
   public static function getSubscribedEvents() {
     $events = [
       SearchApiEvents::INDEXING_ITEMS => 'alterIndexItems',
+      SearchApiEvents::GATHERING_PROCESSORS =>  'processorInfoAlter'
     ];
 
     return $events;
@@ -53,6 +55,17 @@ class SearchApiEventSubscriber implements EventSubscriberInterface {
       }
     }
     $event->setItems($items);
+  }
+
+  /**
+   * Reacts to the processor info alter event.
+   *
+   * @param \Drupal\search_api\Event\GatheringPluginInfoEvent $event
+   *   The processor plugin info alter event.
+   */
+  public function processorInfoAlter(GatheringPluginInfoEvent $event) {
+    $processorInfo = &$event->getDefinitions();
+    $processorInfo['custom_value']['class'] = '\Drupal\stanford_profile_helper\Plugin\search_api\processor\CustomValue';
   }
 
 }

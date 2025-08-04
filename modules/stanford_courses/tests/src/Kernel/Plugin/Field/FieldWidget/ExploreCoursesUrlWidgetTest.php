@@ -12,6 +12,7 @@ use Drupal\node\Entity\Node;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Stream;
+use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\ResponseInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 
@@ -19,9 +20,6 @@ use Drupal\stanford_courses\Plugin\Field\FieldWidget\ExploreCoursesUrlWidget;
 
 /**
  * Class ExploreCoursesUrlWidgetTest.php.
- *
- * @group stanford_courses
- * @coversDefaultClass \Drupal\stanford_courses\Plugin\Field\FieldWidget\ExploreCoursesUrlWidget
  */
 class ExploreCoursesUrlWidgetTest extends KernelTestBase {
 
@@ -64,9 +62,9 @@ class ExploreCoursesUrlWidgetTest extends KernelTestBase {
     $field->save();
 
     $guzzle_client = $this->createMock(ClientInterface::class);
-    $guzzle_client->method('requestAsync')
-      ->will($this->returnCallback([$this, 'requestAsyncCallback']));
-
+    $guzzle_client->method('requestAsync')->willReturnCallback([$this, 'requestAsyncCallback']);
+    $guzzle_client->method('request')->willReturnCallback([$this, 'requestAsyncCallback']);
+    \Drupal::getContainer()->set('http_client', $guzzle_client);
   }
 
   /**
@@ -101,105 +99,102 @@ class ExploreCoursesUrlWidgetTest extends KernelTestBase {
 
     $form = [];
     $form_state = new FormState();
+    $form_state->setValue('foo', 'bar');
     $element = $widget->settingsForm($form, $form_state);
-    $element['#parents'] = [];
+    $element['#parents'] = ['foo'];
 
     $widget->validateApi($element, $form_state, $form);
     $this->assertCount(1, $form_state->getErrors());
-
   }
 
-  /**
-   * Test Url Validation.
-   */
-  public function testUrlValidation() {
-    $field_def = $this->createMock(FieldDefinitionInterface::class);
-    $config = [
-      'field_definition' => $field_def,
-      'settings' => [],
-      'third_party_settings' => [],
-    ];
-    $definition = [];
-    $widget = ExploreCoursesUrlWidget::create(\Drupal::getContainer(), $config, '', $definition);
-    $element = ['#value' => '', '#parents' => []];
-    $form = [];
-    $form_state = new FormState();
-    $widget->validateUrl($element, $form_state, $form);
-    $this->assertCount(0, $form_state->getErrors());
-    $element['#value'] = "https://explorecourses.stanford.edu?test=test";
-    $widget->validateUrl($element, $form_state, $form);
-    $this->assertCount(0, $form_state->getErrors());
-    $element['#value'] = "https://bad-data.com";
-    $widget->validateUrl($element, $form_state, $form);
-    $this->assertCount(1, $form_state->getErrors());
-  }
+    /**
+     * Test Url Validation.
+     */
+    public function testUrlValidation() {
+      $field_def = $this->createMock(FieldDefinitionInterface::class);
+      $config = [
+        'field_definition' => $field_def,
+        'settings' => [],
+        'third_party_settings' => [],
+      ];
+      $definition = [];
+      $widget = ExploreCoursesUrlWidget::create(\Drupal::getContainer(), $config, '', $definition);
 
-  /**
-   * Test the entity form is displayed correctly.
-   */
-  public function testWidgetForm() {
-    $node = Node::create([
-      'type' => 'page',
-    ]);
-    /** @var \Drupal\Core\Entity\Display\EntityFormDisplayInterface $entity_form_display */
-    $entity_form_display = EntityFormDisplay::create([
-      'targetEntityType' => 'node',
-      'bundle' => 'page',
-      'mode' => 'default',
-      'status' => TRUE,
-    ]);
-    $entity_form_display->setComponent('su_explore_course_url', ['type' => 'explore_courses_url', 'settings' => ['api_version' => '20200810']])
-      ->removeComponent('created')
-      ->save();
+      $element = ['#value' => '', '#parents' => ['foo']];
+      $form = [];
+      $form_state = new FormState();
+      $form_state->setValue('foo', 'bar');
 
-    $node->set('su_explore_course_url', [
-      [
-        'uri' => 'https://explorecourses.stanford.edu/search?view=catalog',
-        'title' => '',
-        'options' => '',
-      ],
-    ]);
+      $widget->validateUrl($element, $form_state, $form);
+      $this->assertCount(0, $form_state->getErrors());
+      $element['#value'] = "https://explorecourses.stanford.edu?test=test";
+      $widget->validateUrl($element, $form_state, $form);
+      $this->assertCount(0, $form_state->getErrors());
+      $element['#value'] = "https://bad-data.com";
 
-    $form = [];
-    $form_state = new FormState();
-    $entity_form_display->buildForm($node, $form, $form_state);
-    $widget_value = $form['su_explore_course_url']['widget'][0];
+      $widget->validateUrl($element, $form_state, $form);
+      $this->assertCount(1, $form_state->getErrors());
+    }
 
-    $this->assertIsArray($widget_value);
-    $this->assertEquals($widget_value['uri']['#default_value'], 'https://explorecourses.stanford.edu/search?view=catalog');
+    /**
+     * Test the entity form is displayed correctly.
+     */
+    public function testWidgetForm() {
+      $node = Node::create([
+        'type' => 'page',
+      ]);
+      /** @var \Drupal\Core\Entity\Display\EntityFormDisplayInterface $entity_form_display */
+      $entity_form_display = EntityFormDisplay::create([
+        'targetEntityType' => 'node',
+        'bundle' => 'page',
+        'mode' => 'default',
+        'status' => TRUE,
+      ]);
+      $entity_form_display->setComponent('su_explore_course_url', ['type' => 'explore_courses_url', 'settings' => ['api_version' => '20200810']])
+        ->removeComponent('created')
+        ->save();
 
-    $field_def = $this->createMock(FieldDefinitionInterface::class);
-    $config = [
-      'field_definition' => $field_def,
-      'settings' => [
-        'api_version' => '20200810',
-      ],
-      'third_party_settings' => [],
-    ];
+      $node->set('su_explore_course_url', [
+        [
+          'uri' => 'https://explorecourses.stanford.edu/search?view=catalog',
+          'title' => '',
+          'options' => '',
+        ],
+      ]);
 
-    $widget = ExploreCoursesUrlWidget::create(\Drupal::getContainer(), $config, '', []);
-    $form = [];
-    $form_state = new FormState();
+      $form = [];
+      $form_state = new FormState();
+      $entity_form_display->buildForm($node, $form, $form_state);
+      $widget_value = $form['su_explore_course_url']['widget'][0];
 
-    $massaged_values = $widget->massageFormValues([0 => ['uri' => 'https://explorecourses.stanford.edu/search?q=all%20courses&view=catalog&page=0']], $form, $form_state);
-    $this->assertCount(1, $massaged_values);
-    $this->assertEquals('https://explorecourses.stanford.edu/search?q=all%20courses&view=xml-20200810&page=0', $massaged_values[0]['uri']);
+      $this->assertIsArray($widget_value);
+      $this->assertEquals($widget_value['uri']['#default_value'], 'https://explorecourses.stanford.edu/search?view=catalog');
 
-  }
+      $field_def = $this->createMock(FieldDefinitionInterface::class);
+      $config = [
+        'field_definition' => $field_def,
+        'settings' => [
+          'api_version' => '20200810',
+        ],
+        'third_party_settings' => [],
+      ];
+
+      $widget = ExploreCoursesUrlWidget::create(\Drupal::getContainer(), $config, '', []);
+      $form = [];
+      $form_state = new FormState();
+
+      $massaged_values = $widget->massageFormValues([0 => ['uri' => 'https://explorecourses.stanford.edu/search?q=all%20courses&view=catalog&page=0']], $form, $form_state);
+      $this->assertCount(1, $massaged_values);
+      $this->assertEquals('https://explorecourses.stanford.edu/search?q=all%20courses&view=xml-20200810&page=0', $massaged_values[0]['uri']);
+    }
 
   /**
    * Provide a little xml needed by the settings form validator.
    */
   public function requestAsyncCallback($method, $uri, $options) {
     $data = "<xml><deprecated>false</deprecated><latestVersion>20200810</latestVersion></xml>";
-
-    $resource = fopen('php://memory','r+');
-    fwrite($resource, $data);
-    rewind($resource);
-    $body = new Stream($resource);
-
     $response = $this->createMock(ResponseInterface::class);
-    $response->method('getBody')->willReturn($body);
+    $response->method('getBody')->willReturn(Utils::streamFor($data));
 
     $promise = $this->createMock(PromiseInterface::class);
     $promise->method('wait')->willReturn($response);

@@ -4,19 +4,20 @@ namespace Drupal\jumpstart_ui\Plugin\paragraphs\Behavior;
 
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\paragraphs\Attribute\ParagraphsBehavior;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\paragraphs\ParagraphsBehaviorBase;
 use Drupal\paragraphs\ParagraphsTypeInterface;
 
 /**
  * Class HeroPatternBehavior.
- *
- * @ParagraphsBehavior(
- *   id = "hero_pattern",
- *   label = @Translation("Hero Pattern"),
- *   description = @Translation("Display options for the hero pattern paragraph.")
- * )
  */
+#[ParagraphsBehavior(
+  id: 'hero_pattern',
+  label: new TranslatableMarkup('Hero Pattern'),
+  description: new TranslatableMarkup('Display options for the hero pattern paragraph.')
+)]
 class HeroPatternBehavior extends ParagraphsBehaviorBase {
 
   /**

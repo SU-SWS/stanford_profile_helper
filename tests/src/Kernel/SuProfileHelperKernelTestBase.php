@@ -3,6 +3,7 @@
 namespace Drupal\Tests\stanford_profile_helper\Kernel;
 
 use Drupal\Core\Site\Settings;
+use Drupal\Core\Url;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\node\Entity\NodeType;
 use Drupal\node\NodeInterface;
@@ -11,7 +12,6 @@ use Drupal\stanford_profile_helper\StanfordDefaultContentInterface;
 /**
  * Test the event subscriber.
  *
- * @coversDefaultClass \Drupal\stanford_profile_helper\EventSubscriber\EntityEventSubscriber
  */
 abstract class SuProfileHelperKernelTestBase extends KernelTestBase {
 
@@ -20,9 +20,6 @@ abstract class SuProfileHelperKernelTestBase extends KernelTestBase {
    */
   protected static $modules = [
     'config_pages',
-    'core_event_dispatcher',
-    'hook_event_dispatcher',
-    'preprocess_event_dispatcher',
     'default_content',
     'node',
     'serialization',
@@ -73,16 +70,17 @@ abstract class SuProfileHelperKernelTestBase extends KernelTestBase {
 
     NodeType::create(['type' => 'stanford_event', 'name' => 'Event'])->save();
 
-    $entity = $this->createMock(NodeInterface::class);
-    $entity->method('label')->willReturn('Foo Bar');
-
-    $default_content_mock = $this->createMock(StanfordDefaultContentInterface::class);
-    $default_content_mock->method('createDefaultContent')
-      ->willReturnReference($entity);
-
-    $container = \Drupal::getContainer();
-    $container->set('stanford_profile_helper.default_content', $default_content_mock);
-    \Drupal::setContainer($container);
+//    $entity = $this->createMock(NodeInterface::class);
+//    $entity->method('label')->willReturn('Foo Bar');
+//    $entity->method('toUrl')->willReturn(new Url('node.canonoical', ['node' => $entity]));
+//
+//    $default_content_mock = $this->createMock(StanfordDefaultContentInterface::class);
+//    $default_content_mock->method('createDefaultContent')
+//      ->willReturnReference($entity);
+//
+//    $container = \Drupal::getContainer();
+//    $container->set('stanford_profile_helper.default_content', $default_content_mock);
+//    \Drupal::setContainer($container);
   }
 
 }
