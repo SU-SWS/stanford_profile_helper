@@ -9,9 +9,6 @@ use Drupal\jumpstart_ui\Plugin\Block\SkipNavAnchorBlock;
 
 /**
  * Class SkipNavAnchorBlockTest
- *
- * @package Drupal\Tests\jumpstart_ui\Unit\Plugin\Block
- * @covers \Drupal\jumpstart_ui\Plugin\Block\SkipNavAnchorBlock
  */
 class SkipNavAnchorBlockTest extends UnitTestCase {
 

@@ -17,6 +17,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\File\FileExists;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Hook\Attribute\LegacyModuleImplementsAlter;
 use Drupal\Core\Link;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Serialization\Yaml;
@@ -75,6 +76,7 @@ function stanford_profile_helper_theme_suggestions_cshs_term_group(array $variab
 /**
  * Implements hook_module_implements_alter().
  */
+#[LegacyModuleImplementsAlter]
 function stanford_profile_helper_module_implements_alter(&$implementations, $hook) {
   // Only for test scenarios, disable all hooks in the next module since they
   // cause errors with the containers in unit tests. It's just easier to remove
@@ -110,7 +112,7 @@ function stanford_profile_helper_plugin_filter_block__layout_builder_alter(array
  * Implements hook_ENTITY_TYPE_update().
  */
 function stanford_profile_helper_node_update(NodeInterface $node) {
-  if (!$node->isPublished() && $node->original?->isPublished() && \Drupal::hasService('search_api_algolia.helper')) {
+  if (!$node->isPublished() && $node->getOriginal()?->isPublished() && \Drupal::hasService('search_api_algolia.helper')) {
     // Trigger algolia to delete the record.
     \Drupal::service('search_api_algolia.helper')->entityDelete($node);
   }
@@ -731,7 +733,7 @@ function _stanford_profile_helper_get_lockup_states(array $opts, $input) {
  */
 function stanford_profile_helper_taxonomy_term_update(TermInterface $entity) {
   // https://www.drupal.org/project/taxonomy_menu/issues/2867626
-  $original_parent = $entity->original->get('parent')->getString();
+  $original_parent = $entity->getOriginal()->get('parent')->getString();
   if ($original_parent == $entity->get('parent')->getString()) {
     return;
   }
@@ -1155,13 +1157,6 @@ function stanford_profile_helper_entity_view(array &$build, EntityInterface $ent
     $render_array['#items'] = $items;
     $build[$field][0] = $render_array;
   }
-}
-
-/**
- * Implements hook_search_api_processor_info_alter().
- */
-function stanford_profile_helper_search_api_processor_info_alter(array &$processors) {
-  $processors['custom_value']['class'] = '\Drupal\stanford_profile_helper\Plugin\search_api\processor\CustomValue';
 }
 
 /**

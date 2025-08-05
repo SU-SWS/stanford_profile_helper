@@ -2,15 +2,17 @@
 
 namespace Drupal\stanford_publication\Entity;
 
-use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Entity\Attribute\ContentEntityType;
 use Drupal\Core\Entity\ContentEntityBase;
+use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Link;
 use Drupal\Core\Logger\LoggerChannelTrait;
 use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\TypedData\TranslatableInterface;
 use Drupal\Core\Url;
 use Drupal\field\Entity\FieldStorageConfig;
@@ -20,38 +22,37 @@ use Seboettg\CiteProc\CiteProc;
  * Defines the Citation entity.
  *
  * @ingroup stanford_publication
- *
- * @ContentEntityType(
- *   id = "citation",
- *   label = @Translation("Citation"),
- *   bundle_label = @Translation("Citation type"),
- *   handlers = {
- *     "view_builder" = "Drupal\stanford_publication\CitationViewBuilder",
- *     "access" = "Drupal\stanford_publication\CitationAccessControlHandler",
- *     "form" = {
- *       "default" = "Drupal\Core\Entity\ContentEntityForm",
- *       "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm",
- *       "edit" = "Drupal\Core\Entity\ContentEntityForm"
- *     },
- *     "views_data" = "Drupal\views\EntityViewsData",
- *   },
- *   base_table = "citation",
- *   data_table = "citation_field_data",
- *   translatable = TRUE,
- *   permission_granularity = "bundle",
- *   admin_permission = "administer citation entities",
- *   entity_keys = {
- *     "id" = "id",
- *     "bundle" = "type",
- *     "label" = "title",
- *     "uuid" = "uuid",
- *     "langcode" = "langcode",
- *     "published" = "status",
- *   },
- *   bundle_entity_type = "citation_type",
- *   field_ui_base_route = "entity.citation_type.edit_form"
- * )
  */
+#[ContentEntityType(
+   id: 'citation',
+  label: new TranslatableMarkup('Citation'),
+  entity_keys: [
+    'id' => 'id',
+    'bundle' => 'type',
+    'label' => 'title',
+    'uuid' => 'uuid',
+    'langcode' => 'langcode',
+    'published' => 'status',
+  ],
+  handlers: [
+    'view_builder' => 'Drupal\stanford_publication\CitationViewBuilder',
+    'access' => 'Drupal\stanford_publication\CitationAccessControlHandler',
+    'form' => [
+      'default' => 'Drupal\Core\Entity\ContentEntityForm',
+      'delete' => 'Drupal\Core\Entity\ContentEntityDeleteForm',
+      'edit' => 'Drupal\Core\Entity\ContentEntityForm'
+    ],
+    'views_data' => 'Drupal\views\EntityViewsData',
+  ],
+  admin_permission: 'administer citation entities',
+  permission_granularity: 'bundle',
+  bundle_entity_type: 'citation_type',
+  bundle_label: new TranslatableMarkup('Citation type'),
+  base_table: 'citation',
+  data_table: 'citation_field_data',
+  translatable: TRUE,
+  field_ui_base_route: 'entity.citation_type.edit_form'
+)]
 class Citation extends ContentEntityBase implements CitationInterface {
 
   use EntityChangedTrait;

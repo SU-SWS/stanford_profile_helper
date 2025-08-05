@@ -8,8 +8,6 @@ use Drupal\stanford_profile_helper\StanfordProfileHelper;
 
 /**
  * Class StanfordProfileHelperTest.
- *
- * @group stanford_profile_helper
  */
 class StanfordProfileHelperTest extends KernelTestBase {
 

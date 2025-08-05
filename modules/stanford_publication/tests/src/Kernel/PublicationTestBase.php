@@ -10,7 +10,6 @@ use Drupal\node\Entity\NodeType;
  * Class PublicationTestBase.
  *
  * @group stanford_publication
- * @coversDefaultClass \Drupal\stanford_publication\Entity\Citation
  */
 abstract class PublicationTestBase extends KernelTestBase {
 

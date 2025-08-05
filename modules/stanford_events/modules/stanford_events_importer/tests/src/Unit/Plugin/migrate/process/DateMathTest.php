@@ -9,9 +9,6 @@ use Drupal\Tests\UnitTestCase;
 
 /**
  * Class DateMathTest.
- *
- * @group stanford_events_importer
- * @coversDefaultClass \Drupal\stanford_events_importer\Plugin\migrate\process\DateMath
  */
 class DateMathTest extends UnitTestCase {
 

@@ -13,9 +13,6 @@ use Drupal\user\RoleInterface;
 
 /**
  * Class MenuLinkTreeOverrideTest.
- *
- * @group stanford_profile_helper
- * @coversDefaultClass \Drupal\stanford_profile_helper\MenuLinkTreeOverride
  */
 class MenuLinkTreeOverrideTest extends KernelTestBase {
 

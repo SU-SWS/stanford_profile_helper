@@ -1,4 +1,6 @@
 services:
+  Drupal\stanford_profile_helper\StanfordDefaultContentInterface:
+    alias: stanford_profile_helper.default_content
   stanford_profile_helper.default_content:
     class: Drupal\stanford_profile_helper\StanfordDefaultContent
     arguments: ['@entity_type.manager', '@config.factory', '@extension.path.resolver']
@@ -7,26 +9,11 @@ services:
     arguments: ['@config.factory']
     tags:
       - { name: 'event_subscriber' }
-  stanford_profile_helper.event_subscriber.views:
-    class: Drupal\stanford_profile_helper\EventSubscriber\ViewsEventSubscriber
-    arguments: [ ]
-    tags:
-      - { name: 'event_subscriber' }
   stanford_profile_helper.event_subscriber.entity:
     class: Drupal\stanford_profile_helper\EventSubscriber\EntityEventSubscriber
     arguments: ['@stanford_profile_helper.default_content', '@state', '@entity_type.manager']
     tags:
       - { name: 'event_subscriber' }
-  stanford_profile_helper.event_subscriber.preprocess:
-    class: Drupal\stanford_profile_helper\EventSubscriber\PreprocessEventSubscriber
-    arguments: ['@rabbit_hole.behavior_invoker', '@plugin.manager.rabbit_hole_behavior_plugin']
-    tags:
-      - { name: 'event_subscriber' }
-  stanford_profile_helper.event_subscriber.form:
-    class: Drupal\stanford_profile_helper\EventSubscriber\FormEventSubscriber
-    arguments: ['@current_user', '@state']
-    tags:
-      - { name: event_subscriber }
   stanford_profile_helper.config_overrider:
     class: Drupal\stanford_profile_helper\Config\ConfigOverrides
     arguments: ['@state', '@config_pages.loader', '@config.factory', '@entity_type.manager', '@stream_wrapper_manager']

@@ -21,10 +21,9 @@ class ExploreCoursesInstructors extends ProcessPluginBase {
       return '';
     }
 
-    try {
-      $xml = new \SimpleXMLElement($value);
-    }
-    catch (\Throwable $e) {
+    libxml_use_internal_errors(TRUE);
+    $xml = simplexml_load_string($value);
+    if (!$xml) {
       return '';
     }
 
@@ -32,7 +31,6 @@ class ExploreCoursesInstructors extends ProcessPluginBase {
 
     $sections = $xml->section;
     foreach ($sections as $section) {
-
       $instructors = $section->schedules->schedule->instructors->instructor;
       foreach ($instructors as $instructor) {
         $instructors_array[] = trim((string) $instructor->name);

@@ -50,7 +50,7 @@ abstract class IntranetKernelTestBase extends KernelTestBase {
     ]);
     $this->fieldStorage->save();
 
-    NodeType::create(['type' => 'page'])->save();
+    NodeType::create(['type' => 'page', 'name' => 'page'])->save();
 
     \Drupal::service('module_installer')->install(['stanford_intranet']);
   }

@@ -1,33 +1,20 @@
 <?php
 
-namespace Drupal\stanford_profile_helper\EventSubscriber;
+namespace Drupal\stanford_profile_helper\Hook;
 
-use Drupal\views_event_dispatcher\Event\Views\ViewsPreViewEvent;
-use Drupal\views_event_dispatcher\ViewsHookEvents;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\views\ViewExecutable;
 
 /**
  * Views hook event subscriber.
  */
-class ViewsEventSubscriber implements EventSubscriberInterface {
+class ViewsHooks {
 
   /**
-   * {@inheritDoc}
+   * Modify the cache tags on views..
    */
-  public static function getSubscribedEvents(): array {
-    $events = [];
-    $events[ViewsHookEvents::VIEWS_PRE_VIEW] = 'viewsPreView';
-    return $events;
-  }
-
-  /**
-   * Modify the cache tags on views.
-   *
-   * @param \Drupal\views_event_dispatcher\Event\Views\ViewsPreViewEvent $event
-   *   Pre view hook event.
-   */
-  public function viewsPreView(ViewsPreViewEvent $event) {
-    $view = $event->getView();
+  #[Hook('views_pre_view')]
+  public function viewsPreView(ViewExecutable $view, $display_id, array &$args) {
     $display_options = &$view->getDisplay()->options;
 
     // When viewing the "default" view display, just escape out.

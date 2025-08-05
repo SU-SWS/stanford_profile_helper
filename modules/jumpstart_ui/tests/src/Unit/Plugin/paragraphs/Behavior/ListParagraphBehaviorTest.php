@@ -13,9 +13,6 @@ use Drupal\Tests\UnitTestCase;
 
 /**
  * Class ListParagraphBehaviorTest
- *
- * @group jumpstart_ui
- * @coversDefaultClass \Drupal\jumpstart_ui\Plugin\paragraphs\Behavior\ListParagraphBehavior
  */
 class ListParagraphBehaviorTest extends UnitTestCase {
 
@@ -58,7 +55,7 @@ class ListParagraphBehaviorTest extends UnitTestCase {
 
     $paragraph = $this->createMock(ParagraphInterface::class);
     $paragraph->method('getBehaviorSetting')
-      ->will($this->returnCallback([$this, 'getParagraphBehavior']));
+      ->willReturnCallback([$this, 'getParagraphBehavior']);
     $plugin->buildBehaviorForm($paragraph, $form, $form_state);
     $this->assertNotEmpty($form);
 

@@ -198,8 +198,8 @@ function stanford_publication_node_update(NodeInterface $entity) {
 function _stanford_publication_node_post_save(NodeInterface $entity) {
   $citation_entity = _stanford_pubs_get_citation_entity($entity);
   $original_title = '';
-  if (isset($entity->original) && $entity->original->id()) {
-    $original_title = $entity->original->label();
+  if ($entity->getOriginal()?->id()) {
+    $original_title = $entity->getOriginal()->label();
   }
 
   if (!$citation_entity) {

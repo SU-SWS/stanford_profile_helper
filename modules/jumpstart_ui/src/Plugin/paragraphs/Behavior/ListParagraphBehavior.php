@@ -5,19 +5,20 @@ namespace Drupal\jumpstart_ui\Plugin\paragraphs\Behavior;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\paragraphs\Attribute\ParagraphsBehavior;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\paragraphs\ParagraphsBehaviorBase;
 use Drupal\paragraphs\ParagraphsTypeInterface;
 
 /**
  * Class HeroPatternBehavior.
- *
- * @ParagraphsBehavior(
- *   id = "list_paragraph",
- *   label = @Translation("List Paragraph"),
- *   description = @Translation("Alter the display of the list paragraph.")
- * )
  */
+#[ParagraphsBehavior(
+  id: 'list_paragraph',
+  label: new TranslatableMarkup('List Paragraph'),
+  description: new TranslatableMarkup('Alter the display of the list paragraph.')
+)]
 class ListParagraphBehavior extends ParagraphsBehaviorBase {
 
   const SHOW_HEADING = 'show';

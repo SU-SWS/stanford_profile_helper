@@ -19,15 +19,13 @@ use Drupal\taxonomy\TermInterface;
 use Drupal\Tests\UnitTestCase;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Stream;
+use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Class CapTest.
- *
- * @group stanford_person_importer
- * @coversDefaultClass \Drupal\stanford_person_importer\Cap
  */
 class CapTest extends UnitTestCase {
 
@@ -66,7 +64,7 @@ class CapTest extends UnitTestCase {
     parent::setUp();
     $guzzle = $this->createMock(ClientInterface::class);
     $guzzle->method('request')
-      ->will($this->returnCallback([$this, 'guzzleRequestCallback']));
+      ->willReturnCallback([$this, 'guzzleRequestCallback']);
 
     $entity_type_manager = $this->getEntityTypeManager();
 
@@ -242,14 +240,9 @@ class CapTest extends UnitTestCase {
     }
     $response = $this->createMock(ResponseInterface::class);
     $response->method('getStatusCode')
-      ->willReturnReference($this->guzzleStatusCode);
-
-    $resource = fopen('php://memory','r+');
-    fwrite($resource, $this->guzzleBody);
-    rewind($resource);
-    $body = new Stream($resource);
-
-    $response->method('getBody')->willReturnReference($body);
+      ->willReturn($this->guzzleStatusCode);
+    $response->method('getBody')
+      ->willReturn(Utils::streamFor($this->guzzleBody));
     return $response;
   }
 

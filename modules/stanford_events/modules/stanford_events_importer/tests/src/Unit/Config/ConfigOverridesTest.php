@@ -8,8 +8,6 @@ use Drupal\Tests\UnitTestCase;
 
 /**
  * Config override test.
- *
- * @coversDefaultClass \Drupal\stanford_events_importer\Config\ConfigOverrides
  */
 class ConfigOverridesTest extends UnitTestCase {
 
@@ -23,7 +21,7 @@ class ConfigOverridesTest extends UnitTestCase {
   public function setup(): void {
     parent::setUp();
     $this->configPages = $this->createMock(ConfigPagesLoaderServiceInterface::class);
-    $this->configPages->method('getValue')->will($this->returnCallback([$this, 'getConfigPagesValue']));
+    $this->configPages->method('getValue')->willReturnCallback([$this, 'getConfigPagesValue']);
   }
 
   /**

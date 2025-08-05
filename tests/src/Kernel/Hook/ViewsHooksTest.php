@@ -8,19 +8,14 @@ use Drupal\views\Views;
 
 /**
  * Test the event subscriber.
- *
- * @coversDefaultClass \Drupal\stanford_profile_helper\EventSubscriber\ViewsEventSubscriber
  */
-class ViewsEventSubscriberTest extends SuProfileHelperKernelTestBase {
+class ViewsHooksTest extends SuProfileHelperKernelTestBase {
 
   /**
    * {@inheritDoc}
    */
   protected static $modules = [
     'config_pages',
-    'core_event_dispatcher',
-    'hook_event_dispatcher',
-    'preprocess_event_dispatcher',
     'default_content',
     'node',
     'serialization',
@@ -38,7 +33,6 @@ class ViewsEventSubscriberTest extends SuProfileHelperKernelTestBase {
     'config_pages',
     'link',
     'views',
-    'views_event_dispatcher',
     'views_custom_cache_tag',
   ];
 

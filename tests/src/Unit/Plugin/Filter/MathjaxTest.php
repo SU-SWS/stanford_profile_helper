@@ -8,8 +8,6 @@ use Drupal\Tests\UnitTestCase;
 
 /**
  * Class MathjaxTest.
- *
- * @coversDefaultClass \Drupal\stanford_profile_helper\Plugin\Filter\Mathjax
  */
 class MathjaxTest extends UnitTestCase {
 

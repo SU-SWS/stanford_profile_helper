@@ -8,13 +8,14 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\Query\QueryInterface;
 use Drupal\Tests\UnitTestCase;
 use Drupal\stanford_decoupled\Plugin\Filter\SuCleanHtml;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Class SulCleanHtmlTest.
  */
 class SuCleanHtmlTest extends UnitTestCase {
 
-  public function filterDataProvider() {
+  public static function filterDataProvider() {
     return [
       [
         "\r\n<!-- FOO BAR BAZ-->\n\n<div>foo</div>\n\n\n<div>\r\nbar\r\n\r\nbaz</div>\r\n",
@@ -33,9 +34,8 @@ class SuCleanHtmlTest extends UnitTestCase {
 
   /**
    * Test the clean html filter.
-   *
-   * @dataProvider filterDataProvider
    */
+  #[DataProvider('filterDataProvider')]
   public function testFilter($html, $expected) {
     $config = [];
     $definition = ['provider' => 'stanford_profile_helper'];

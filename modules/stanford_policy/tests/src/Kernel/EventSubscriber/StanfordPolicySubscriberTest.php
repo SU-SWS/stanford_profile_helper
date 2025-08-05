@@ -13,12 +13,11 @@ use Drupal\KernelTests\KernelTestBase;
 use Drupal\node\Entity\Node;
 use Drupal\node\Entity\NodeType;
 use Drupal\stanford_fields\Form\StanfordFieldBookAdminEditForm;
-use Drupal\stanford_policy\EventSubscriber\StanfordPolicySubscriber;
+use Drupal\stanford_policy\Hook\StanfordPolicyHooks;
 use Drupal\user\Entity\Role;
 use Drupal\user\RoleInterface;
 
 /**
- * @coversDefaultClass \Drupal\stanford_policy\EventSubscriber\StanfordPolicySubscriber
  */
 class StanfordPolicySubscriberTest extends KernelTestBase {
 
@@ -31,8 +30,6 @@ class StanfordPolicySubscriberTest extends KernelTestBase {
     'book',
     'stanford_policy',
     'config_pages',
-    'hook_event_dispatcher',
-    'core_event_dispatcher',
   ];
 
   /**
@@ -60,7 +57,7 @@ class StanfordPolicySubscriberTest extends KernelTestBase {
 
     ConfigPagesType::create([
       'id' => 'policy_settings',
-      'menu' => [],
+      'menu' => ['path' => '/foo'],
       'context' => [],
     ])->save();
 
@@ -264,7 +261,7 @@ class StanfordPolicySubscriberTest extends KernelTestBase {
     $this->assertNotEmpty($form);
 
     $this->assertEquals([
-      StanfordPolicySubscriber::class,
+      StanfordPolicyHooks::class,
       'onBookAdminEditSubmit',
     ], end($form['#submit']));
 

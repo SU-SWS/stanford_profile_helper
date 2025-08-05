@@ -18,9 +18,6 @@ use Drupal\Tests\UnitTestCase;
 
 /**
  * Class HeroPatternBehaviorTest
- *
- * @group jumpstart_ui
- * @coversDefaultClass \Drupal\jumpstart_ui\Plugin\paragraphs\Behavior\HeroPatternBehavior
  */
 class HeroPatternBehaviorTest extends UnitTestCase {
 
@@ -52,7 +49,7 @@ class HeroPatternBehaviorTest extends UnitTestCase {
     $entity_storage = $this->createMock(EntityStorageInterface::class);
     $entity_storage->method('getQuery')->wilLReturn($query);
     $entity_storage->method('loadMultiple')
-      ->will($this->returnCallback([$this, 'loadMultipleDisplayCallback']));
+      ->willReturnCallback([$this, 'loadMultipleDisplayCallback']);
 
     $entity_manager = $this->createMock(EntityTypeManagerInterface::class);
     $entity_manager->method('getStorage')->willReturn($entity_storage);

@@ -7,9 +7,6 @@ use Drupal\Tests\stanford_notifications\Kernel\StanfordNotificationTestBase;
 
 /**
  * Class NotificationTest.
- *
- * @group stanford_notifications
- * @coversDefaultClass \Drupal\stanford_notifications\Entity\Notification
  */
 class NotificationTest extends StanfordNotificationTestBase {
 

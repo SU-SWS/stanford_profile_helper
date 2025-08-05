@@ -5,14 +5,6 @@ namespace Drupal\stanford_policy\EventSubscriber;
 use Drupal\book\BookManagerInterface;
 use Drupal\config_pages\ConfigPagesLoaderServiceInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\core_event_dispatcher\EntityHookEvents;
-use Drupal\core_event_dispatcher\Event\Entity\AbstractEntityEvent;
-use Drupal\core_event_dispatcher\Event\Entity\EntityPresaveEvent;
-use Drupal\core_event_dispatcher\Event\Form\FormAlterEvent;
-use Drupal\core_event_dispatcher\FormHookEvents;
-use Drupal\field_event_dispatcher\Event\Field\WidgetSingleElementFormAlterEvent;
-use Drupal\field_event_dispatcher\FieldHookEvents;
 use Drupal\node\NodeInterface;
 use Drupal\stanford_fields\Event\BookOutlineUpdatedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -35,12 +27,6 @@ class StanfordPolicySubscriber implements EventSubscriberInterface {
   public static function getSubscribedEvents(): array {
     return [
       BookOutlineUpdatedEvent::OUTLINE_UPDATED => 'onBookOutlineUpdate',
-      FormHookEvents::FORM_ALTER => 'onFormAlter',
-      EntityHookEvents::ENTITY_PRE_SAVE => 'onEntityPreSave',
-      EntityHookEvents::ENTITY_UPDATE => 'onEntityCrud',
-      EntityHookEvents::ENTITY_INSERT => 'onEntityCrud',
-      EntityHookEvents::ENTITY_DELETE => 'onEntityCrud',
-      FieldHookEvents::WIDGET_SINGLE_ELEMENT_FORM_ALTER => 'onWidgetFormAlter',
     ];
   }
 
@@ -55,100 +41,6 @@ class StanfordPolicySubscriber implements EventSubscriberInterface {
    *   Entity type manager service.
    */
   public function __construct(protected BookManagerInterface $bookManager, protected ConfigPagesLoaderServiceInterface $configPagesLoader, protected EntityTypeManagerInterface $entityTypeManager) {
-  }
-
-  /**
-   * Alter the policy form widgets.
-   *
-   * @param \Drupal\field_event_dispatcher\Event\Field\WidgetSingleElementFormAlterEvent $event
-   *   Widget form alter event.
-   */
-  public function onWidgetFormAlter(WidgetSingleElementFormAlterEvent $event) {
-    /** @var \Drupal\Core\Field\FieldItemListInterface $field_items */
-    $field_items = $event->getContext()['items'];
-    $element = &$event->getElement();
-    if ($field_items->getName() == 'su_policy_related') {
-      $element['#chosen'] = TRUE;
-    }
-  }
-
-  /**
-   * Resave all books if the policy config page was saved/deleted.
-   *
-   * @param \Drupal\core_event_dispatcher\Event\Entity\AbstractEntityEvent $event
-   *   Triggered event.
-   */
-  public function onEntityCrud(AbstractEntityEvent $event) {
-    $entity = $event->getEntity();
-    if ($entity->getEntityTypeId() == 'config_pages' && $entity->bundle() == 'policy_settings') {
-      $book_node_ids = array_keys($this->bookManager->getAllBooks());
-      foreach ($book_node_ids as $node_id) {
-        $this->resaveBookNodes($node_id);
-      }
-    }
-  }
-
-  /**
-   * Reset the policy node label from the other field.
-   *
-   * @param \Drupal\core_event_dispatcher\Event\Entity\EntityPresaveEvent $event
-   *   Triggered event.
-   */
-  public function onEntityPreSave(EntityPresaveEvent $event): void {
-    $entity = $event->getEntity();
-    // Since the settings for the auto entity label have to be "Preserve
-    // Existing" so that we don't get errors, we still need to update the node
-    // label if the field changed. Use the "Changed" field to determine if this
-    // has already been done because the node will be re-saved with the book
-    // outline update.
-    if (
-      $entity->getEntityTypeId() == 'node' &&
-      $entity->bundle() == 'stanford_policy' &&
-      (empty($entity->book['pid']) || $entity->book['pid'] == -1)
-    ) {
-      $entity->set('title', trim($entity->get('su_policy_title')->getString()));
-      $entity->setChangedTime(time());
-    }
-  }
-
-  /**
-   * Alter the book admin form to add submit handler.
-   *
-   * @param \Drupal\core_event_dispatcher\Event\Form\FormAlterEvent $event
-   *   Triggered Event.
-   */
-  public function onFormAlter(FormAlterEvent $event): void {
-    $form = &$event->getForm();
-
-    if ($event->getFormId() == 'book_admin_edit') {
-      $build_args = $event->getFormState()->getBuildInfo()['args'];
-      $book_node = $build_args[0];
-
-      if ($book_node->bundle() == 'stanford_policy') {
-        $form['#submit'][] = [self::class, 'onBookAdminEditSubmit'];
-      }
-    }
-    if (in_array($event->getFormId(), [
-      'node_stanford_policy_form',
-      'node_stanford_policy_edit_form',
-    ])) {
-      $form['su_policy_title']['#attributes']['class'][] = 'js-form-item-title-0-value';
-    }
-  }
-
-  /**
-   * Dispatch the event to update the book outline.
-   *
-   * @param array $form
-   *   Complete form.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   Submitted form state.
-   */
-  public static function onBookAdminEditSubmit(array &$form, FormStateInterface $form_state): void {
-    $build_args = $form_state->getBuildInfo()['args'];
-    $book_node = $build_args[0];
-    \Drupal::service('event_dispatcher')
-      ->dispatch(new BookOutlineUpdatedEvent($book_node), BookOutlineUpdatedEvent::OUTLINE_UPDATED);
   }
 
   /**
@@ -174,7 +66,7 @@ class StanfordPolicySubscriber implements EventSubscriberInterface {
    * @param int $book_id
    *   Book node id.
    */
-  protected function resaveBookNodes(int $book_id): void {
+  public function resaveBookNodes(int $book_id): void {
     $book_contents = $this->bookManager->getTableOfContents($book_id, 9);
     foreach (array_keys($book_contents) as $nid) {
       $node = $this->entityTypeManager->getStorage('node')->load($nid);

@@ -13,8 +13,8 @@ use Drupal\stanford_profile_helper\Plugin\Derivative\ReactBlockDeriver;
 #[Block(
   id: "pdb_component",
   admin_label: new TranslatableMarkup("PDB Component"),
-  deriver: ReactBlockDeriver::class,
-  category: new TranslatableMarkup("PDB Components")
+  category: new TranslatableMarkup("PDB Components"),
+  deriver: ReactBlockDeriver::class
 )]
 class PDBlock extends PdbBlock {
 

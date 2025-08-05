@@ -12,8 +12,6 @@ use Drupal\search_api\Item\ItemInterface;
 
 /**
  * Test the event subscriber.
- *
- * @coversDefaultClass \Drupal\stanford_profile_helper\EventSubscriber\SearchApiEventSubscriber
  */
 class SearchApiSubscriberTest extends KernelTestBase {
 

@@ -39,14 +39,14 @@ class StanfordLayoutParagraphsSubscriberTest extends KernelTestBase {
       'nesting_depth' => 0,
     ]);
     $layout->method('getComponentByUuid')
-      ->will($this->returnCallback(function($arg) {
+      ->willReturnCallback(function($arg) {
         if ($arg == 'foo') {
           $component = $this->createMock(LayoutParagraphsComponent::class);
           $component->method('getSettings')
             ->wiLlreturn(['layout' => 'layout_paragraphs_2_column']);
           return $component;
         }
-      }));
+      });
 
     $context = ['parent_uuid' => 'foo', 'region' => 'foo'];
     $event = new LayoutParagraphsAllowedTypesEvent($types, $layout, $context);

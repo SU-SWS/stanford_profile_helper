@@ -10,9 +10,6 @@ use Drupal\Core\Form\FormState;
 
 /**
  * Class PageHeadingBlockTest
- *
- * @package Drupal\Tests\jumpstart_ui\Unit\Plugin\Block
- * @covers \Drupal\jumpstart_ui\Plugin\Block\PageHeadingBlock
  */
 class PageHeadingBlockTest extends UnitTestCase {
 

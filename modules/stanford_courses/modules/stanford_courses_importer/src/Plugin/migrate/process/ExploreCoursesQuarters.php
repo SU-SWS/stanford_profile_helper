@@ -20,11 +20,9 @@ class ExploreCoursesQuarters extends ProcessPluginBase {
     if (!is_string($value)) {
       return '';
     }
-
-    try {
-      $xml = new \SimpleXMLElement($value);
-    }
-    catch (\Throwable $e) {
+    libxml_use_internal_errors(TRUE);
+    $xml = simplexml_load_string($value);
+    if (!$xml) {
       return '';
     }
 

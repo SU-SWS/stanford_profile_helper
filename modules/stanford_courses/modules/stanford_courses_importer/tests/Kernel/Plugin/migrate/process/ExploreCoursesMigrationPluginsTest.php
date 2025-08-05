@@ -9,8 +9,6 @@ use Drupal\migrate\Row;
 
 /**
  * Class ExploreCoursesMigrationPluginsTest.
- *
- * @group stanford_courses_importer
  */
 class ExploreCoursesMigrationPluginsTest extends EntityKernelTestBase {
 
@@ -58,6 +56,7 @@ class ExploreCoursesMigrationPluginsTest extends EntityKernelTestBase {
     parent::setUp();
     $this->processManager = $this->container->get('plugin.manager.migrate.process');
     $this->section_xml = <<<DATA
+<?xml version="1.0" encoding="UTF-8"?>
 <sections>
     <section>
         <classId>25525</classId>
@@ -183,6 +182,7 @@ class ExploreCoursesMigrationPluginsTest extends EntityKernelTestBase {
 </sections>
 DATA;
     $this->tags_xml = <<<TAGS
+<?xml version="1.0" encoding="UTF-8"?>
 <tags>
     <tag>
         <organization>EDUC</organization>
@@ -202,8 +202,6 @@ TAGS;
 
   /**
    * Test the Instructors plugin.
-   *
-   * @covers \Drupal\stanford_courses_importer\Plugin\migrate\process\ExploreCoursesInstructors
    */
   public function testExploreCoursesInstructors() {
     /** @var \Drupal\stanford_courses_importer\Plugin\migrate\process\ExploreCoursesInstructors $plugin */
@@ -219,9 +217,11 @@ TAGS;
       2 => 'Rajanala, S.',
       3 => 'Morrison, T.',
     ], $translated);
+
     // non string value
     $translated = $plugin->transform([], $migrate, $row, '');
     $this->assertEquals('', $translated);
+
     // unparseable xml
     $translated = $plugin->transform('<?xml version="1.0" encoding="ASCII"?>', $migrate, $row, '');
     $this->assertEquals('', $translated);
@@ -229,9 +229,6 @@ TAGS;
 
   /**
    * Test the Quarters plugin.
-   *
-   * @covers \Drupal\stanford_courses_importer\Plugin\migrate\process\ExploreCoursesQuarters
-   *
    */
   public function testExploreCoursesQuarters() {
     /** @var \Drupal\stanford_courses_importer\Plugin\migrate\process\ExploreCoursesQuarters$plugin */
@@ -252,9 +249,6 @@ TAGS;
 
   /**
    * Test the Tags plugin.
-   *
-   * @covers \Drupal\stanford_courses_importer\Plugin\migrate\process\ExploreCoursesTags
-   *
    */
   public function testExploreCoursesTags() {
     /** @var \Drupal\stanford_courses_importer\Plugin\migrate\process\ExploreCoursesTags $plugin */
@@ -275,9 +269,6 @@ TAGS;
 
   /**
    * Test the Units plugin.
-   *
-   * @covers \Drupal\stanford_courses_importer\Plugin\migrate\process\ExploreCoursesUnits
-   *
    */
   public function testExploreCoursesUnits() {
     /** @var \Drupal\stanford_courses_importer\Plugin\migrate\process\ExploreCoursesUnits $plugin */

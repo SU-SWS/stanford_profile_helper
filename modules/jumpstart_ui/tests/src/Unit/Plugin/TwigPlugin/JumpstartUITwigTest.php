@@ -12,9 +12,6 @@ use Twig\TwigFunction;
 
 /**
  * Class JumpstartUITwigTest
- *
- * @package Drupal\Tests\jumpstart_ui\Unit\Plugin\TwigPlugin
- * @covers \Drupal\jumpstart_ui\Plugin\TwigPlugin\JumpstartUITwig
  */
 class JumpstartUITwigTest extends UnitTestCase {
 
@@ -34,9 +31,9 @@ class JumpstartUITwigTest extends UnitTestCase {
     $container->set('string_translation', $this->getStringTranslationStub());
 
     $renderer = $this->createMock(RendererInterface::class);
-    $renderer->method('renderInIsolation')->will($this->returnCallback(function($arg){
+    $renderer->method('renderInIsolation')->willReturnCallback(function($arg){
       return $arg['#markup'] ?? $arg;
-    }));
+    });
     $this->twiggery = new JumpstartUITwig($renderer);
 
     \Drupal::setContainer($container);

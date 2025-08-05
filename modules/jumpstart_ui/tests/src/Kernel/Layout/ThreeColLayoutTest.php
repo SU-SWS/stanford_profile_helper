@@ -11,8 +11,6 @@ use Twig\Loader\FilesystemLoader;
 
 /**
  * Class ThreeColLayoutTest.
- *
- * @group jumpstart_ui
  */
 class ThreeColLayoutTest extends KernelTestBase {
 

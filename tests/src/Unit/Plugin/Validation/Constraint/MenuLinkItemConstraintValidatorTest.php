@@ -4,6 +4,7 @@ namespace Drupal\Tests\stanford_profile_helper\Unit\Plugin\Validation\Constraint
 
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Field\FieldItemInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Drupal\Core\TypedData\TypedDataInterface;
@@ -19,9 +20,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class MenuLinkItemConstraintValidatorTest.
- *
- * @group stanford_profile_helper
- * @coversDefaultClass \Drupal\stanford_profile_helper\Plugin\Validation\Constraint\MenuLinkItemConstraintValidator
  */
 class MenuLinkItemConstraintValidatorTest extends UnitTestCase {
 

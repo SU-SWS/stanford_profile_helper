@@ -10,9 +10,6 @@ use Drupal\image\Entity\ImageStyle;
 
 /**
  * Test intranet manager service.
- *
- * @coversDefaultClass \Drupal\stanford_intranet\StanfordIntranetManager
- * @group stanford_intranet
  */
 class StanfordIntranetManagerTest extends IntranetKernelTestBase {
 

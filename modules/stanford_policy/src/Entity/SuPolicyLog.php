@@ -2,50 +2,47 @@
 
 namespace Drupal\stanford_policy\Entity;
 
+use Drupal\Core\Entity\Attribute\ContentEntityType;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\stanford_policy\SuPolicyLogInterface;
 use Drupal\user\EntityOwnerTrait;
 
 /**
  * Defines the policy log entity class.
- *
- * @ContentEntityType(
- *   id = "su_policy_log",
- *   label = @Translation("Policy Log"),
- *   label_collection = @Translation("Policy Logs"),
- *   label_singular = @Translation("policy log"),
- *   label_plural = @Translation("policy logs"),
- *   label_count = @PluralTranslation(
- *     singular = "@count policy logs",
- *     plural = "@count policy logs",
- *   ),
- *   handlers = {
- *     "views_data" = "Drupal\views\EntityViewsData",
- *     "access" = "Drupal\stanford_policy\SuPolicyLogAccessControlHandler",
- *     "form" = {
- *       "add" = "Drupal\Core\Entity\ContentEntityForm",
- *       "edit" = "Drupal\Core\Entity\ContentEntityForm",
- *       "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm",
- *     },
- *     "route_provider" = {
- *       "html" = "Drupal\Core\Entity\Routing\AdminHtmlRouteProvider",
- *     }
- *   },
- *   base_table = "su_policy_log",
- *   admin_permission = "administer su policy log",
- *   entity_keys = {
- *     "id" = "id",
- *     "label" = "id",
- *     "uuid" = "uuid",
- *     "owner" = "uid",
- *   },
- *   field_ui_base_route = "entity.su_policy_log.settings",
- * )
  */
+#[ContentEntityType(
+  id: 'su_policy_log',
+  label: new TranslatableMarkup('Policy Log'),
+  label_collection: new TranslatableMarkup('Policy Logs'),
+  label_singular: new TranslatableMarkup('policy log'),
+  label_plural: new TranslatableMarkup('policy logs'),
+  entity_keys: [
+    'id' => 'id',
+    'label' => 'id',
+    'uuid' => 'uuid',
+    'owner' => 'uid',
+  ],
+  handlers: [
+    'views_data' => 'Drupal\views\EntityViewsData',
+    'access' => 'Drupal\stanford_policy\SuPolicyLogAccessControlHandler',
+    'form' => [
+      'add' => 'Drupal\Core\Entity\ContentEntityForm',
+      'edit' => 'Drupal\Core\Entity\ContentEntityForm',
+      'delete' => 'Drupal\Core\Entity\ContentEntityDeleteForm',
+    ],
+    'route_provider' => [
+      'html' => 'Drupal\Core\Entity\Routing\AdminHtmlRouteProvider',
+    ],
+  ],
+  admin_permission: 'administer su policy log',
+  base_table: 'su_policy_log',
+  field_ui_base_route: 'entity.su_policy_log.settings',
+)]
 class SuPolicyLog extends ContentEntityBase implements SuPolicyLogInterface {
 
   use EntityChangedTrait;

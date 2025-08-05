@@ -51,7 +51,6 @@ class StanfordEventsImporter {
    *   Full string of raw xml.
    */
   public function fetchXML($query = "category-list") {
-
     $options = [
       'query' => [
         $query => '',
@@ -69,7 +68,6 @@ class StanfordEventsImporter {
     catch (\Exception $e) {
       return FALSE;
     }
-
   }
 
   /**
@@ -88,16 +86,18 @@ class StanfordEventsImporter {
    * @return array|bool
    *   Success or not.
    */
-  public function parseXML($raw, array $options) {
-    $xml = new \SimpleXMLElement($raw);
+  public function parseXML(string $raw, array $options) {
+    libxml_use_internal_errors(TRUE);
+    $xml = simplexml_load_string($raw);
+
     $guids = $xml->xpath($options['guids']);
     $labels = $xml->xpath($options['label']);
 
-    array_walk($guids, function (&$val) {
+    array_walk($guids, function(&$val) {
       $val = $val->__toString();
     });
 
-    array_walk($labels, function (&$val) {
+    array_walk($labels, function(&$val) {
       $val = $val->__toString();
     });
 

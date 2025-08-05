@@ -25,7 +25,7 @@ class ResponseCodeConditionTest extends UnitTestCase {
 
     $request_stack = $this->createMock(RequestStack::class);
     $request_stack->method('getCurrentRequest')
-      ->will($this->returnCallback([$this, 'getCurrentRequest']));
+      ->willReturnCallback([$this, 'getCurrentRequest']);
 
     $container = new ContainerBuilder();
     $container->set('request_stack', $request_stack);

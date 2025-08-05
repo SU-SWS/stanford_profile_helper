@@ -9,12 +9,10 @@ use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Stream;
+use GuzzleHttp\Psr7\Utils;
 
 /**
  * Class StanfordEventsImporterTest
- *
- * @group stanford_events_importer
- * @coversDefaultClass \Drupal\stanford_events_importer\StanfordEventsImporter
  */
 class StanfordEventsImporterTest extends UnitTestCase {
 
@@ -37,7 +35,7 @@ class StanfordEventsImporterTest extends UnitTestCase {
     parent::setUp();
     $this->client = $this->createMock(ClientInterface::class);
     $this->client->method('request')
-      ->will($this->returnCallback([$this, 'getResponseCallback']));
+      ->willReturnCallback([$this, 'getResponseCallback']);
 
     $this->plugin = new StanfordEventsImporter($this->client);
   }
@@ -76,13 +74,7 @@ class StanfordEventsImporterTest extends UnitTestCase {
       $body = $category;
     }
 
-    $resource = fopen('php://memory','r+');
-    fwrite($resource, $body);
-    rewind($resource);
-    $body = new Stream($resource);
-
-    $response->method('getBody')
-      ->willReturn($body);
+    $response->method('getBody')->willReturn(Utils::streamFor($body));
     return $response;
   }
 

@@ -6,8 +6,6 @@ use Drupal\KernelTests\KernelTestBase;
 
 /**
  * Class OneColLayoutOverlayTest.
- *
- * @group jumpstart_ui
  */
 class OneColOverlayLayoutTest extends KernelTestBase {
 

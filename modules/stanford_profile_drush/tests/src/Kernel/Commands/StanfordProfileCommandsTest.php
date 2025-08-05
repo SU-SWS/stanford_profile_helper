@@ -14,9 +14,6 @@ use Drupal\stanford_profile_drush\Commands\StanfordProfileCommands;
 
 /**
  * Class StanfordProfileCommandsTest.
- *
- * @group stanford_profile
- * @coversDefaultClass \Drupal\stanford_profile_drush\Commands\StanfordProfileCommands
  */
 class StanfordProfileCommandsTest extends KernelTestBase {
 

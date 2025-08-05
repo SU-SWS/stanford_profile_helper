@@ -16,8 +16,6 @@ use Drupal\Tests\UnitTestCase;
 
 /**
  * Test the event subscriber.
- *
- * @coversDefaultClass \Drupal\stanford_profile_helper\EventSubscriber\EntityEventSubscriber
  */
 class EntityEventSubscriberTest extends UnitTestCase {
 

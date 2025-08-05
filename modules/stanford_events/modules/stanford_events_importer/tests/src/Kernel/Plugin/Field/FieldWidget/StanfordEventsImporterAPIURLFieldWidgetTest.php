@@ -14,9 +14,6 @@ use Drupal\Core\Cache\CacheBackendInterface;
 
 /**
  * Class StanfordEventsImporterAPIURLFieldWidgetTest.php
- *
- * @group stanford_events_importer
- * @coversDefaultClass \Drupal\stanford_events_importer\Plugin\Field\FieldWidget\StanfordEventsImporterAPIURLFieldWidget
  */
 class StanfordEventsImporterAPIURLFieldWidgetTest extends KernelTestBase {
 

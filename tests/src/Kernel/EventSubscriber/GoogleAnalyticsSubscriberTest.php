@@ -10,8 +10,6 @@ use Drupal\Tests\stanford_profile_helper\Kernel\SuProfileHelperKernelTestBase;
 
 /**
  * Test the event subscriber.
- *
- * @coversDefaultClass \Drupal\stanford_profile_helper\EventSubscriber\GoogleAnalyticsSubscriber
  */
 class GoogleAnalyticsSubscriberTest extends SuProfileHelperKernelTestBase {
 
