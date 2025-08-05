@@ -12,9 +12,6 @@ use Twig\TwigFunction;
 
 /**
  * Class JumpstartUITwigTest
- *
- * @package Drupal\Tests\jumpstart_ui\Unit\Plugin\TwigPlugin
- * @covers \Drupal\jumpstart_ui\Plugin\TwigPlugin\JumpstartUITwig
  */
 class JumpstartUITwigTest extends UnitTestCase {
 

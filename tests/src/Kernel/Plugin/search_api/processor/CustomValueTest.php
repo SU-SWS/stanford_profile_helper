@@ -33,4 +33,11 @@ class CustomValueTest extends SearchApiCustomValueTest {
     $this->assertInstanceOf('\Drupal\stanford_profile_helper\Plugin\search_api\processor\CustomValue', $plugin);
   }
 
+  /**
+   * Preventing warning from the invalid "covers" annotation.
+   */
+  public function testItemFieldExtraction() {
+    parent::testItemFieldExtraction();
+  }
+
 }
