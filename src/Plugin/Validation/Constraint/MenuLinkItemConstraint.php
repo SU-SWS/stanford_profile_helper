@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraint;
  * Checks that the submitted value is a unique integer.
  */
 #[ConstraintAttribute(
-  id: 'global_message_constraint',
+  id: 'menu_link_item_url_constraint',
   label: new TranslatableMarkup('Menu Link Item', [], ['context' => 'Validation']),
   type: 'string'
 )]
