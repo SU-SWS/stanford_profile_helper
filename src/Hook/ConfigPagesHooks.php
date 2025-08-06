@@ -10,7 +10,6 @@ use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Installer\InstallerKernel;
 use Drupal\Core\State\StateInterface;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
-use Drupal\stanford_profile\EventSubscriber\StanfordProfileEventSubscriber;
 
 /**
  * Hooks that modify the functionality of config pages.
@@ -32,7 +31,7 @@ class ConfigPagesHooks {
     if (
       PHP_SAPI != 'cli' &&
       $configPage->bundle() == 'stanford_basic_site_settings' &&
-      StanfordProfileEventSubscriber::redirectUser()
+      self::redirectUser()
     ) {
       $renewal_date = time() + 60 * 60 * 24 * 365;
       $configPage->set('su_site_renewal_due', date(DateTimeItemInterface::DATETIME_STORAGE_FORMAT, $renewal_date));
@@ -80,6 +79,50 @@ class ConfigPagesHooks {
       'block_view',
       'node_view',
     ]);
+  }
+
+  /**
+   * Check if the current user should be redirected to the site settings form.
+   *
+   * @return bool
+   *   Redirect the user.
+   */
+  public static function redirectUser() {
+    $current_user = \Drupal::currentUser();
+    $cache = \Drupal::cache();
+
+    /** @var \Drupal\Core\Routing\CurrentRouteMatch $route_match */
+    $route_match = \Drupal::service('current_route_match');
+    $name = $route_match->getCurrentRouteMatch()->getRouteName();
+    $ignore_routes = [
+      'system.css_asset',
+      'system.js_asset',
+      'image.style_private',
+      'system.files',
+      'system.private_file_download',
+    ];
+    if (in_array($name, $ignore_routes)) {
+      return FALSE;
+    }
+
+    $cache_data = $cache->get('su_renew_site:' . $current_user->id());
+    if ($cache_data) {
+      return $cache_data->data;
+    }
+
+    /** @var \Drupal\config_pages\ConfigPagesLoaderServiceInterface $config_page_loader */
+    $config_page_loader = \Drupal::service('config_pages.loader');
+    $renewal_date = $config_page_loader->getValue('stanford_basic_site_settings', 'su_site_renewal_due', 0, 'value') ?: date(DateTimeItemInterface::DATETIME_STORAGE_FORMAT);
+
+    // Check for config page edit access and ignore if the user is an
+    // administrator. That way devs don't get forced into submitting the form.
+    $site_manager = $current_user->hasPermission('edit stanford_basic_site_settings config page entity') && !in_array('administrator', $current_user->getRoles());
+
+    // If the renewal date has passed, they should be redirected.
+    $needs_renewal = !getenv('CI') && $site_manager && strtotime($renewal_date) < time();
+    $cache->set('su_renew_site:' . $current_user->id(), $needs_renewal, strtotime($renewal_date), ['site-renew-date']);
+
+    return $needs_renewal;
   }
 
 }

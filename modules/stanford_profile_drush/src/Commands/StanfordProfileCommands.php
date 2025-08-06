@@ -13,7 +13,7 @@ use Drush\Commands\DrushCommands;
 /**
  * Class StanfordProfileCommands.
  *
- * @package Drupal\stanford_profile\Commands
+ * @package Drupal\stanford_profile_drush\Commands
  */
 class StanfordProfileCommands extends DrushCommands {
 

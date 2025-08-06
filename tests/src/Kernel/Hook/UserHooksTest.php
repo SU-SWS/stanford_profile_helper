@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Tests\stanford_profile\Kernel\Hook;
+namespace Drupal\Tests\stanford_profile_helper\Kernel\Hook;
 
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\user\Entity\Role;
