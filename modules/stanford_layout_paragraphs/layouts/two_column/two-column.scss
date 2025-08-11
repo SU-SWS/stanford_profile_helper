@@ -35,6 +35,26 @@
   @media screen and (min-width: 992px) {
     grid-template-columns: 1fr 1fr;
     max-width: calc(100vw - 160px);
+
+    &.vertical-divider {
+      > div {
+        position: relative;
+
+        &:after {
+          content: '';
+          position: absolute;
+          top: 0;
+          right: -25px;
+          height: 100%;
+          width: 1.5px;
+          background: $su-color-black;
+        }
+
+        &:last-child:after {
+          background: none;
+        }
+      }
+    }
   }
 
   @media screen and (min-width: 1200px) {
