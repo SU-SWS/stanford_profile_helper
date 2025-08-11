@@ -10,11 +10,7 @@ use Drupal\Core\Form\FormStateInterface;
  */
 trait LayoutWithBgColorTrait {
 
-  /**
-   * {@inheritdoc}
-   */
-  public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
-    $form = parent::buildConfigurationForm($form, $form_state);
+  protected function addBackgroundColorElement(array $form, FormStateInterface $form_state) {
     $id = Html::getUniqueId('color-field-' . $this->getPluginId());
     $default_color = $this->configuration['bg_color'] ?? '';
     $form['bg_color'] = [
@@ -47,6 +43,10 @@ trait LayoutWithBgColorTrait {
         ],
       ],
     ];
+    return $form;
+  }
+
+  protected function addPaddingMarginElements(array $form, FormStateInterface $form_state) {
     $form['top_padding'] = [
       '#type' => 'select',
       '#title' => $this->t('Space inside the section - Top'),
@@ -81,12 +81,11 @@ trait LayoutWithBgColorTrait {
     return $form;
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
-    parent::submitConfigurationForm($form, $form_state);
+  protected function submitBackgroundForm(array &$form, FormStateInterface $form_state){
     $this->configuration['bg_color'] = strtolower(str_replace('#', '', $form_state->getValue('bg_color')));
+  }
+
+  protected function submitPaddingMarginForm(array &$form, FormStateInterface $form_state){
     $this->configuration['top_padding'] = $form_state->getValue('top_padding');
     $this->configuration['bottom_padding'] = $form_state->getValue('bottom_padding');
     $this->configuration['bottom_margin'] = $form_state->getValue('bottom_margin');
