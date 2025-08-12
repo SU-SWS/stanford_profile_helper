@@ -27,7 +27,7 @@ class ConfigPagesHooks {
    *   Config page entity.
    */
   #[Hook('config_pages_presave')]
-  public function configPagesPreSaveUpdateRenewal(ConfigPagesInterface $configPage) {
+  public function configPagesPreSaveUpdateRenewal(ConfigPagesInterface $configPage): void {
     if (
       PHP_SAPI != 'cli' &&
       $configPage->bundle() == 'stanford_basic_site_settings' &&
@@ -39,7 +39,6 @@ class ConfigPagesHooks {
     }
   }
 
-
   /**
    * Before saving a configuration page, set some state and clear caches.
    *
@@ -47,7 +46,7 @@ class ConfigPagesHooks {
    *   The configuration page being saved.
    */
   #[Hook('config_pages_presave')]
-  public function configPagesPreSave(ConfigPagesInterface $configPage) {
+  public function configPagesPreSave(ConfigPagesInterface $configPage): void {
     if (InstallerKernel::installationAttempted()) {
       // Rebuild the routes so that the config pages will save from the default
       // content import at site installation.
@@ -87,7 +86,7 @@ class ConfigPagesHooks {
    * @return bool
    *   Redirect the user.
    */
-  public static function redirectUser() {
+  public static function redirectUser(): bool {
     $current_user = \Drupal::currentUser();
     $cache = \Drupal::cache();
 

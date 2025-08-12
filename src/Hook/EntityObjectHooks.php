@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\stanford_profile_helper\Hook;
 
 use Drupal\Core\Cache\Cache;
@@ -19,7 +21,6 @@ class EntityObjectHooks {
   use MessengerTrait;
   use StringTranslationTrait;
 
-
   /**
    * Before saving a field storage, adjust the third party settings.
    *
@@ -27,7 +28,7 @@ class EntityObjectHooks {
    *   Field storage being saved.
    */
   #[Hook('field_storage_config_presave')]
-  public static function preSaveFieldStorageConfig(FieldStorageConfigInterface $field_storage) {
+  public static function preSaveFieldStorageConfig(FieldStorageConfigInterface $field_storage): void {
     // If a field is saved and the field permissions are public, lets just
     // remove those third party settings before save so that it keeps the
     // config clean.
@@ -45,7 +46,7 @@ class EntityObjectHooks {
    */
   #[Hook('menu_link_content_insert')]
   #[Hook('menu_link_content_delete')]
-  public function insertMenuLinkContent(MenuLinkContentInterface $entity) {
+  public function insertMenuLinkContent(MenuLinkContentInterface $entity): void {
     StanfordProfileHelper::clearMenuCacheTag();
   }
 
@@ -56,7 +57,7 @@ class EntityObjectHooks {
    *   Modified menu item.
    */
   #[Hook('menu_link_content_update')]
-  public function updateMenuLinkContent(MenuLinkContentInterface $entity) {
+  public function updateMenuLinkContent(MenuLinkContentInterface $entity): void {
     $original_entity = $entity->getOriginal();
     $compare_fields = ['title', 'link', 'parent', 'weight', 'expanded'];
     $original = $updated = [];
@@ -117,7 +118,6 @@ class EntityObjectHooks {
       $entity->set('redirect_redirect', $internal_path);
     }
   }
-
 
   /**
    * Lookup an internal path.

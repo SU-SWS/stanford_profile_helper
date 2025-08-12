@@ -27,7 +27,7 @@ class UserHooks {
    */
   #[Hook('user_role_insert')]
   #[Hook('user_role_delete')]
-  public function userRoleInsert(RoleInterface $role) {
+  public function userRoleInsert(RoleInterface $role): void {
     if (!$this->moduleHandler->moduleExists('samlauth')) {
       return;
     }
@@ -49,7 +49,7 @@ class UserHooks {
    *   The role being saved.
    */
   #[Hook('user_role_presave')]
-  public function userRolePreSave(RoleInterface $role) {
+  public function userRolePreSave(RoleInterface $role): void {
     // Only modify new roles if they are created through the UI and don't exist
     // in the config management - Prefix them with "custm_" so they can be
     // easily identifiable.
@@ -65,7 +65,7 @@ class UserHooks {
    *   User entity.
    */
   #[Hook('user_presave')]
-  public function userPreSave(UserInterface $user) {
+  public function userPreSave(UserInterface $user): void {
     // Invalidate the site renewal redirect logic in case the user now has
     // permissions to make the needed changes.
     Cache::invalidateTags(['site-renew-date']);
