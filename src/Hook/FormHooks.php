@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\stanford_profile_helper\Hook;
 
 use Drupal\Core\Form\FormStateInterface;
@@ -53,7 +55,7 @@ class FormHooks {
    * Alter the taxonomy term form.
    */
   #[Hook('form_taxonomy_term_form_alter')]
-  public function taxonomyTermFormAlter(&$form, FormStateInterface $form_state, $form_id):void {
+  public function taxonomyTermFormAlter(&$form, FormStateInterface $form_state, $form_id): void {
     $form['name']['arg_helper'] = [
       '#type' => 'textfield',
       '#title' => $this->t('List Filtering Argument'),
@@ -85,7 +87,7 @@ class FormHooks {
    * @return array
    *   Altered arg helper form element.
    */
-  public static function argHelperAjaxCallback(array &$form, FormStateInterface $form_state):array {
+  public static function argHelperAjaxCallback(array &$form, FormStateInterface $form_state): array {
     $term_name = $form_state->getValue(['name', '0', 'value']);
     $form['name']['arg_helper']['#value'] = self::cleanString($term_name ?: '');
     return $form['name']['arg_helper'];

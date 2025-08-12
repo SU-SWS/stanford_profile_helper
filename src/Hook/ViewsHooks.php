@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\stanford_profile_helper\Hook;
 
 use Drupal\Core\Hook\Attribute\Hook;
@@ -14,7 +16,7 @@ class ViewsHooks {
    * Modify the cache tags on views..
    */
   #[Hook('views_pre_view')]
-  public function viewsPreView(ViewExecutable $view, $display_id, array &$args) {
+  public function viewsPreView(ViewExecutable $view, $display_id, array &$args): void {
     $display_options = &$view->getDisplay()->options;
 
     // When viewing the "default" view display, just escape out.
@@ -29,7 +31,6 @@ class ViewsHooks {
     // using the node type filters that exist on the view.
     // @see \Drupal\Core\Entity\EntityBase::getListCacheTagsToInvalidate().
     if (!empty($filters['type']['entity_type']) && $filters['type']['entity_type'] == 'node') {
-
       $tags = [];
       foreach ($filters['type']['value'] as $node_type) {
         $tags[] = 'node_list:' . $node_type;
