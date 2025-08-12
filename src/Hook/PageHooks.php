@@ -31,15 +31,27 @@ class PageHooks {
    */
   #[Hook('page_attachments')]
   public function pageAttachments(array &$attachments): void {
+    $env = getenv('AH_SITE_ENVIRONMENT');
+
+    // Add SiteImprove analytics for anonymous users on prod sites.
+    // ACE prod is 'prod'; ACSF can be '01live', '02live', ...
     if ($this->currentUser->isAnonymous()) {
+      if ($env && ($env === 'prod' || preg_match('/^\d*live$/', $env))) {
+        $attachments['#attached']['library'][] = 'stanford_profile_helper/siteimprove.analytics';
+      }
       return;
     }
 
+    /** @var \Drupal\user\UserInterface $user_entity */
     $user_entity = $this->entityTypeManager->getStorage('user')
       ->load($this->currentUser->id());
+
+    $displayName = $user_entity->hasField('su_display_name') ?
+      $user_entity->get('su_display_name')->getString() :
+      $this->currentUser->getAccountName();
     $attachments['#attached']['drupalSettings']['user'] = [
       'email' => $this->currentUser->getEmail(),
-      'displayName' => $user_entity->get('su_display_name')->getString(),
+      'displayName' => $displayName,
       'name' => $this->currentUser->getAccountName(),
     ];
   }
