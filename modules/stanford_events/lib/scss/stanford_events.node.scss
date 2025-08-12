@@ -54,11 +54,66 @@
 
   .su-event-dek {
     @include big-paragraph;
-    @include modular-spacing('margin', null null 4 null);
+    @include modular-spacing('margin', null null 2 null);
   }
+}
+
+.node-stanford-event-su-event-sponsor {
+  max-width: 980px;
+  border-top: 1px solid $su-color-black-20;
+  padding-top: 15px;
 
   .su-event-sponsor {
-    @include subheading;
+    @include type-e;
+
+    @include grid-media-min('lg') {
+      > div {
+        &::after {
+          content: ", "
+        }
+
+        &:last-child {
+          &::before {
+            content: " and ";
+          }
+
+          &::after {
+            content: "";
+          }
+        }
+
+        &:nth-last-child(2) {
+          &::after {
+            content: "";
+          }
+        }
+
+        &:only-child {
+          &::before,
+          &::after {
+            content: "";
+          }
+        }
+      }
+    }
+  }
+
+  span {
+    font-weight: $su-font-semi-bold;
+  }
+
+  span {
+    display: block;
+  }
+
+  @include grid-media-min('lg') {
+    span {
+      display: inline;
+    }
+
+    div {
+      display: inline;
+    }
   }
 }
 
