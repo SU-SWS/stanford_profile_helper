@@ -10,7 +10,7 @@ use Drupal\Core\Form\FormStateInterface;
  */
 trait LayoutWithBgColorTrait {
 
-  protected function addBackgroundColorElement(array $form, FormStateInterface $form_state) {
+  protected function addBackgroundColorElement(array &$form, FormStateInterface $form_state) {
     $id = Html::getUniqueId('color-field-' . $this->getPluginId());
     $default_color = $this->configuration['bg_color'] ?? '';
     $form['bg_color'] = [
@@ -46,7 +46,7 @@ trait LayoutWithBgColorTrait {
     return $form;
   }
 
-  protected function addPaddingMarginElements(array $form, FormStateInterface $form_state) {
+  protected function addPaddingMarginElements(array &$form, FormStateInterface $form_state) {
     $form['top_padding'] = [
       '#type' => 'select',
       '#title' => $this->t('Space inside the section - Top'),

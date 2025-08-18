@@ -17,8 +17,8 @@ class OneColumn extends LayoutDefault {
    */
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
     $form = parent::buildConfigurationForm($form, $form_state);
-    $from = $this->addBackgroundColorElement($form, $form_state);
-    $form = $this->addPaddingMarginElements($form, $form_state);
+    $this->addBackgroundColorElement($form, $form_state);
+    $this->addPaddingMarginElements($form, $form_state);
     return $form;
   }
 
