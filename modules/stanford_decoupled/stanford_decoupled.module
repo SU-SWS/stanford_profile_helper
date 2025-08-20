@@ -24,20 +24,6 @@ function stanford_decoupled_next_revalidator_info_alter(&$plugins) {
 }
 
 /**
- * Implements hook_graphql_compose_field_type_alter().
- */
-function stanford_decoupled_graphql_compose_field_type_alter(array &$field_types) {
-  $field_types['image']['class'] = 'Drupal\stanford_decoupled\Plugin\GraphQLCompose\FieldType\ImageItem';
-}
-
-/**
- * Implements hook_graphql_compose_graphql_type_alter().
- */
-function stanford_decoupled_graphql_compose_graphql_type_alter(array &$entity_types) {
-  $entity_types['Image']['class'] = 'Drupal\stanford_decoupled\Plugin\GraphQLCompose\SchemaType\ImageType';
-}
-
-/**
  * Implements hook_library_info_alter().
  */
 function stanford_decoupled_library_info_alter(&$libraries, $extension) {
