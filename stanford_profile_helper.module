@@ -10,7 +10,6 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Block\BlockPluginInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Extension\Extension;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
@@ -174,15 +173,6 @@ function stanford_profile_helper_cron() {
   $file_system = \Drupal::service('file_system');
   $file_system->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS);
   $file_system->saveData(json_encode($site_information, JSON_PRETTY_PRINT), "$directory/site-info.json", FileExists::Replace);
-}
-
-/**
- * Implements hook_entity_type_alter().
- */
-function stanford_profile_helper_entity_type_alter(array &$entity_types) {
-  if (isset($entity_types['menu_link_content'])) {
-    $entity_types['menu_link_content']->addConstraint('menu_link_item_url_constraint');
-  }
 }
 
 /**
@@ -965,19 +955,6 @@ function stanford_profile_helper_field_widget_complete_datetime_timestamp_no_def
   // Set the date increment for scheduler settings.
   $state = \Drupal::state();
   $field_widget_complete_form['widget'][0]['value']['#date_increment'] = $state->get('stanford_profile_helper.scheduler_increment', 60 * 60 * 4);
-}
-
-/**
- * Implements hook_entity_bundle_field_info_alter().
- */
-function stanford_profile_helper_entity_bundle_field_info_alter(&$fields, EntityTypeInterface $entity_type, $bundle) {
-  if (
-    $bundle == 'stanford_global_message' &&
-    !empty($fields['su_global_msg_enabled'])
-  ) {
-    $fields['su_global_msg_enabled']->addConstraint('global_message_constraint', []);
-  }
-
 }
 
 /**

@@ -22,19 +22,11 @@ class MenuLinkItemConstraintValidator extends ConstraintValidator implements Con
   protected $request;
 
   /**
-   * Path alias manager service.
-   *
-   * @var \Drupal\path_alias\AliasManagerInterface
-   */
-  protected $aliasManager;
-
-  /**
    * {@inheritDoc}
    */
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('request_stack'),
-      $container->get('path_alias.manager')
     );
   }
 
@@ -43,12 +35,9 @@ class MenuLinkItemConstraintValidator extends ConstraintValidator implements Con
    *
    * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
    *   Current request stack.
-   * @param \Drupal\path_alias\AliasManagerInterface $alias_manager
-   *   Path alias manager service.
    */
-  public function __construct(RequestStack $request_stack, AliasManagerInterface $alias_manager) {
+  public function __construct(RequestStack $request_stack) {
     $this->request = $request_stack->getCurrentRequest();
-    $this->aliasManager = $alias_manager;
   }
 
   /**
@@ -59,7 +48,7 @@ class MenuLinkItemConstraintValidator extends ConstraintValidator implements Con
     /** @var \Drupal\Core\Field\FieldItemInterface $link_value */
     $link_value = $value->get('link')->get(0);
     $link_uri = $link_value->get('uri')->getString();
-    if (str_contains($link_uri, $this->request->getSchemeAndHttpHost())) {
+    if ($link_uri && str_contains($link_uri, $this->request->getSchemeAndHttpHost())) {
       $this->context->addViolation($constraint->absoluteLink);
     }
   }
