@@ -1,5 +1,11 @@
 # Stanford Profile Helper
 
+10.0.1
+--------------------------------------------------------------------------------
+_Release Date: 2025-08-22_
+
+- Adjusted update hook to update more configs from response_code_condition
+
 10.0.0
 --------------------------------------------------------------------------------
 _Release Date: 2025-08-22_
