@@ -30,7 +30,6 @@ abstract class StanfordNotificationTestBase extends KernelTestBase {
     $this->installEntitySchema('notification');
     $this->installEntitySchema('user');
     $this->installEntitySchema('user_role');
-    $this->installSchema('system', ['sequences']);
 
     Role::create(['id' => RoleInterface::ANONYMOUS_ID, 'label' => 'anonymous'])->save();
     Role::create(['id' => 'foo', 'label' => 'foo'])->save();

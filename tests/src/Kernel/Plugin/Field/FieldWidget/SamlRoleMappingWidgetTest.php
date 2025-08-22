@@ -44,7 +44,6 @@ class SamlRoleMappingWidgetTest extends KernelTestBase {
     $this->installEntitySchema('node');
     $this->installEntitySchema('user');
     $this->installConfig('system');
-    $this->installSchema('system', ['sequences']);
     $this->installSchema('node', ['node_access']);
 
     NodeType::create(['type' => 'page'])->save();
