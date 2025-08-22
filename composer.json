@@ -42,7 +42,7 @@
         "drupal/core": "^11.2",
         "drupal/graphql_compose": "^2.0",
         "drupal/layout_paragraphs": "^2.0",
-        "seboettg/collection": "~3.1",
+        "seboettg/collection": "^3.1",
         "su-sws/stanford_fields": "^9.0"
     },
     "require-dev": {
@@ -93,7 +93,7 @@
         "seboettg/citeproc-php": ">=2.4",
         "su-sws/drupal-patches": "^11.0",
         "su-sws/react_paragraphs": ">=8.2",
-        "su-sws/stanford_media": ">=9.0 || >=10.0",
+        "su-sws/stanford_media": ">=10.0",
         "su-sws/stanford_migrate": ">=8.4"
     },
     "replace": {
