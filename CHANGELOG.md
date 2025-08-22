@@ -1,5 +1,23 @@
 # Stanford Profile Helper
 
+10.0.0
+--------------------------------------------------------------------------------
+_Release Date: 2025-08-22_
+
+- Added constraint for redirects to test for nodes in the trash (#427)
+- D8CORE-8276: Updated the search background color (#426)
+- Move some plugins to stanford_fields module and add it as a dependency (#424)
+- Fixed one column layout paragraph background color option
+- D8CORE-7585: Changed search page background color (#423)
+- D8CORE-8132: Added Sponsor to opportunity node (#416)
+- Add logged in user information to drupalSettings  (#422)
+- D8CORE-8075: Add option for vertical dividers on 2 and 3 column layouts (#421)
+- Move redirect user function from profile (#420)
+- Upgrade event subscriber, hooks, and tests for Drupal 11 (#419)
+- Move PDB blocks in layout builder to eliminate pdb_react module
+- D8CORE-7666: Updated line-height on a person node page "person links" (#417)
+- D8CORE-8170: Opportunity CTA button color correction (#418
+
 9.10.3
 --------------------------------------------------------------------------------
 _Release Date: 2025-07-16_
