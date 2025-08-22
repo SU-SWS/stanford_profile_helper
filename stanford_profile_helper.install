@@ -45,3 +45,23 @@ function stanford_profile_helper_update_8197() {
     $node->save();
   }
 }
+
+/**
+ * Update block dependencies that were using response_code_condition.
+ */
+function stanford_profile_helper_10000() {
+  $config_factory = \Drupal::configFactory();
+  foreach ($config_factory->listAll('block.block.') as $config_name) {
+    $config = $config_factory->getEditable($config_name);
+    $dependencies = $config->get('dependencies.module');
+    if (!$dependencies) {
+      continue;
+    }
+
+    $position = array_search('response_code_condition', $dependencies);
+    if ($position !== FALSE) {
+      $dependencies[$position] = 'stanford_fields';
+      $config->set('dependencies.module', $dependencies)->save(TRUE);
+    }
+  }
+}
