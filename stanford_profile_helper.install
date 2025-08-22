@@ -47,21 +47,26 @@ function stanford_profile_helper_update_8197() {
 }
 
 /**
- * Update block dependencies that were using response_code_condition.
+ * Update config dependencies that were using response_code_condition.
  */
 function stanford_profile_helper_update_10000() {
   $config_factory = \Drupal::configFactory();
-  foreach ($config_factory->listAll('block.block.') as $config_name) {
-    $config = $config_factory->getEditable($config_name);
-    $dependencies = $config->get('dependencies.module');
-    if (!$dependencies) {
-      continue;
-    }
 
-    $position = array_search('response_code_condition', $dependencies);
-    if ($position !== FALSE) {
-      $dependencies[$position] = 'stanford_fields';
-      $config->set('dependencies.module', $dependencies)->save(TRUE);
+  $config_prefixes = ['block.block.', 'google_tag.container.'];
+
+  foreach ($config_prefixes as $prefix) {
+    foreach ($config_factory->listAll($prefix) as $config_name) {
+      $config = $config_factory->getEditable($config_name);
+      $dependencies = $config->get('dependencies.module');
+      if (!$dependencies) {
+        continue;
+      }
+
+      $position = array_search('response_code_condition', $dependencies);
+      if ($position !== FALSE) {
+        $dependencies[$position] = 'stanford_fields';
+        $config->set('dependencies.module', $dependencies)->save(TRUE);
+      }
     }
   }
 }

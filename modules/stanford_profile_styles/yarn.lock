@@ -3254,7 +3254,7 @@ __metadata:
   linkType: hard
 
 "css-prefers-color-scheme@npm:^10.0.0":
-  version: 10.0.0
+  version: 10.0.1
   resolution: "css-prefers-color-scheme@npm:10.0.0"
   peerDependencies:
     postcss: ^8.4
@@ -5460,7 +5460,7 @@ __metadata:
   linkType: hard
 
 "postcss-color-hex-alpha@npm:^10.0.0":
-  version: 10.0.0
+  version: 10.0.1
   resolution: "postcss-color-hex-alpha@npm:10.0.0"
   dependencies:
     "@csstools/utilities": "npm:^2.0.0"
@@ -5472,7 +5472,7 @@ __metadata:
   linkType: hard
 
 "postcss-color-rebeccapurple@npm:^10.0.0":
-  version: 10.0.0
+  version: 10.0.1
   resolution: "postcss-color-rebeccapurple@npm:10.0.0"
   dependencies:
     "@csstools/utilities": "npm:^2.0.0"
@@ -5982,7 +5982,7 @@ __metadata:
   linkType: hard
 
 "postcss-place@npm:^10.0.0":
-  version: 10.0.0
+  version: 10.0.1
   resolution: "postcss-place@npm:10.0.0"
   dependencies:
     postcss-value-parser: "npm:^4.2.0"
