@@ -39,11 +39,9 @@ class MenuLinkItemConstraintValidatorTest extends UnitTestCase {
 
     $request_stack = $this->createMock(RequestStack::class);
     $request_stack->method('getCurrentRequest')->willReturn($request);
-    $path_alias_manager = $this->createMock(AliasManagerInterface::class);
 
     $container = new ContainerBuilder();
     $container->set('request_stack', $request_stack);
-    $container->set('path_alias.manager', $path_alias_manager);
 
     $link_uri = NULL;
     $property = $this->createMock(TypedDataInterface::class);

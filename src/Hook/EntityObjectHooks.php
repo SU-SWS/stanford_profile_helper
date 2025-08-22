@@ -6,6 +6,7 @@ namespace Drupal\stanford_profile_helper\Hook;
 
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -20,6 +21,40 @@ class EntityObjectHooks {
 
   use MessengerTrait;
   use StringTranslationTrait;
+
+  /**
+   * Alter entity types.
+   */
+  #[Hook('entity_type_alter')]
+  function stanford_profile_helper_entity_type_alter(array &$entity_types) {
+    if (isset($entity_types['menu_link_content'])) {
+      $entity_types['menu_link_content']->addConstraint('menu_link_item_url_constraint');
+    }
+  }
+
+  /**
+   * Alter entity base fields for non-bundles.
+   */
+  #[Hook('entity_base_field_info_alter')]
+  function stanford_profile_helper_entity_base_field_info_alter(&$fields, EntityTypeInterface $entity_type) {
+    if ($entity_type->id() == 'redirect') {
+      $fields['redirect_source']->addConstraint('redirect_source_trash', []);
+    }
+  }
+
+  /**
+   * Alter entity base fields for bundles.
+   */
+  #[Hook('entity_bundle_field_info_alter')]
+  function stanford_profile_helper_entity_bundle_field_info_alter(&$fields, EntityTypeInterface $entity_type, $bundle) {
+    if (
+      $entity_type->id() == 'config_pages' &&
+      $bundle == 'stanford_global_message' &&
+      !empty($fields['su_global_msg_enabled'])
+    ) {
+      $fields['su_global_msg_enabled']->addConstraint('global_message_constraint', []);
+    }
+  }
 
   /**
    * Before saving a field storage, adjust the third party settings.

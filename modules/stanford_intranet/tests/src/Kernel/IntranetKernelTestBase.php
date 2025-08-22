@@ -39,7 +39,6 @@ abstract class IntranetKernelTestBase extends KernelTestBase {
     $this->installEntitySchema('file');
     $this->installEntitySchema('image_style');
     $this->installConfig('system');
-    $this->installSchema('system', ['sequences']);
     $this->installSchema('node', ['node_access']);
     $this->installSchema('file', ['file_usage']);
 

@@ -60,6 +60,33 @@ class FormHooksTest extends SuProfileHelperKernelTestBase {
       'label' => 'Mock Spacer',
     ])->save();
 
+    $this->container->get('state')->set('nobots', TRUE);
+    $paragraph_field_storage = FieldStorageConfig::create([
+      'field_name' => 'su_site_nobots',
+      'entity_type' => 'paragraph',
+      'type' => 'boolean',
+    ]);
+    $paragraph_field_storage->save();
+
+    FieldConfig::create([
+      'field_storage' => $paragraph_field_storage,
+      'bundle' => 'stanford_spacer',
+      'settings' => [],
+    ])->save();
+
+    $paragraph_field_storage = FieldStorageConfig::create([
+      'field_name' => 'field_viewfield',
+      'entity_type' => 'paragraph',
+      'type' => 'viewfield',
+    ]);
+    $paragraph_field_storage->save();
+
+    FieldConfig::create([
+      'field_storage' => $paragraph_field_storage,
+      'bundle' => 'stanford_spacer',
+      'settings' => [],
+    ])->save();
+
     $paragraph_field_storage = FieldStorageConfig::create([
       'field_name' => 'su_spacer_size',
       'entity_type' => 'paragraph',
@@ -86,7 +113,9 @@ class FormHooksTest extends SuProfileHelperKernelTestBase {
       'mode' => 'default',
       'status' => TRUE,
     ]);
-    $form_display->setComponent('su_spacer_size', ['type' => 'options_select']);
+    $form_display->setComponent('su_spacer_size', ['type' => 'options_select'])
+      ->setComponent('su_site_nobots')
+      ->setComponent('field_viewfield');
     $form_display->save();
 
     $paragraph = Paragraph::create([
@@ -112,6 +141,8 @@ class FormHooksTest extends SuProfileHelperKernelTestBase {
     $spacer_form_element = $complete_form_array['su_spacer_size'];
 
     $this->assertEquals('Standard', $spacer_form_element['widget']['#options']['_none']);
+    $this->assertTrue($complete_form_array['su_site_nobots']['widget']['value']['#default_value']);
+    $this->assertArrayNotHasKey('token_help', $complete_form_array['field_viewfield']['widget'][0]['view_options']);
   }
 
   public function testTaxonomyOverviewForm() {

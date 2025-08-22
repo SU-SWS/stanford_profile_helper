@@ -23,6 +23,8 @@ class ConfigOverridesTest extends UnitTestCase {
 
   protected $configPageValues = [];
 
+  protected $configFactory;
+
   /**
    * Custom roles can be assigned by the site managers.
    */

@@ -2,10 +2,13 @@
 
 namespace Drupal\Tests\stanford_profile_helper\Kernel\EventSubscriber;
 
+use Drupal\config_pages\ConfigPagesLoaderServiceInterface;
 use Drupal\config_pages\Entity\ConfigPages;
 use Drupal\config_pages\Entity\ConfigPagesType;
+use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\stanford_profile_helper\Hook\ConfigPagesHooks;
 use Drupal\Tests\stanford_profile_helper\Kernel\SuProfileHelperKernelTestBase;
 
 /**
@@ -49,6 +52,25 @@ class ConfigPagesHooksTest extends SuProfileHelperKernelTestBase {
 
     $this->assertEquals('https://foo.bar', \Drupal::state()
       ->get('xmlsitemap_base_url'));
+  }
+
+  public function testRedirectUser() {
+    $this->assertFalse(ConfigPagesHooks::redirectUser());
+    // Cache line.
+    $this->assertFalse(ConfigPagesHooks::redirectUser());
+
+    $account = $this->createMock(AccountProxyInterface::class);
+    $account->method('hasPermission')->willReturn(TRUE);
+    $account->method('getRoles')->willReturn([]);
+    \Drupal::currentUser()->setAccount($account);
+
+
+    $configPageLoader = $this->createMock(ConfigPagesLoaderServiceInterface::class);
+    $configPageLoader->method('getValue')->willReturn(date('c', time() - 5));
+    \Drupal::getContainer()->set('config_pages.loader', $configPageLoader);
+
+    putenv('CI=');
+    $this->assertTrue(ConfigPagesHooks::redirectUser());
   }
 
 }
