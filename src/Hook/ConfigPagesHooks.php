@@ -111,7 +111,7 @@ class ConfigPagesHooks {
 
     /** @var \Drupal\config_pages\ConfigPagesLoaderServiceInterface $config_page_loader */
     $config_page_loader = \Drupal::service('config_pages.loader');
-    $renewal_date = $config_page_loader->getValue('stanford_basic_site_settings', 'su_site_renewal_due', 0, 'value') ?: date(DateTimeItemInterface::DATETIME_STORAGE_FORMAT);
+    $renewal_date = $config_page_loader->getValue('stanford_basic_site_settings', 'su_site_renewal_due', 0, 'value') ?: date(DateTimeItemInterface::DATETIME_STORAGE_FORMAT, 0);
 
     // Check for config page edit access and ignore if the user is an
     // administrator. That way devs don't get forced into submitting the form.
