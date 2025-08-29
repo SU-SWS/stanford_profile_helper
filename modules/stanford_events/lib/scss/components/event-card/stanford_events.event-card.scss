@@ -25,7 +25,7 @@
         @include modular-typography(1);
         @include modular-spacing('margin', null null 2 null);
 
-        font-weight: $su-font-bold;
+        font-weight: $su-font-semi-bold;
       }
 
       .event_list_item__type {

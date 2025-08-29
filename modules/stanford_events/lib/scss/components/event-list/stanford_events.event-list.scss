@@ -92,7 +92,7 @@ h1 {
 
     .event-list-item__subheadline {
       @include modular-typography(1);
-      font-weight: $su-font-bold;
+      font-weight: $su-font-semi-bold;
       margin-bottom: .6rem;
     }
 
