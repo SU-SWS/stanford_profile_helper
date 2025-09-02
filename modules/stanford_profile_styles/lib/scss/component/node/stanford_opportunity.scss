@@ -51,8 +51,7 @@
 
       @include grid-media-min('md') {
         display: grid;
-        grid-template-columns: 60px 1fr;
-        column-gap: 25px;
+        grid-template-columns: min-content 1fr;
         max-width: 1200px;
 
         .node-stanford-opportunity-su-opp-icon {
@@ -60,6 +59,10 @@
           grid-column-start: 1;
           grid-row-end: 2;
           grid-row-start: 1;
+
+          &:empty {
+            display: none;
+          }
         }
 
         .node-stanford-opportunity-su-opp-summary {
@@ -378,7 +381,7 @@
         &.su-opp-application-deadline {
           @include responsive-spacing('padding-bottom', 1);
 
-          border-bottom: 1px solid $su-color-black-30;
+          border-bottom: 1px solid $su-color-black-20;
           padding-top: 0;
         }
       }
@@ -401,6 +404,11 @@
           margin-bottom: 3px;
 
         }
+      }
+
+      .node-stanford-opportunity-su-opp-application-deadline {
+        border-right: 1px solid $su-color-black-20;
+        border-left: 1px solid $su-color-black-20;
       }
     }
   }
