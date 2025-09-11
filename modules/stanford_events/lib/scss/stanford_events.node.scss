@@ -1,5 +1,5 @@
 @charset 'UTF-8';
-@import "./stanford_events.config";
+@import './stanford_events.config';
 
 .section-editorial-content {
   @include modular-spacing('padding', 6 null 3 null);
@@ -18,7 +18,6 @@
 
     .divider {
       @include margin(null 5px);
-
     }
   }
 
@@ -30,11 +29,11 @@
     div {
       &:after {
         display: inline-block;
-        content: ",";
+        content: ',';
       }
 
       &:last-child:after {
-        content: "";
+        content: '';
       }
     }
 
@@ -69,29 +68,29 @@
     @include grid-media-min('lg') {
       > div {
         &::after {
-          content: ", "
+          content: ', ';
         }
 
         &:last-child {
           &::before {
-            content: " and ";
+            content: ' and ';
           }
 
           &::after {
-            content: "";
+            content: '';
           }
         }
 
         &:nth-last-child(2) {
           &::after {
-            content: "";
+            content: '';
           }
         }
 
         &:only-child {
           &::before,
           &::after {
-            content: "";
+            content: '';
           }
         }
       }
@@ -167,11 +166,10 @@
 }
 
 .su-events-details {
-
   .details-wrapper {
     @include small-paragraph;
     @include box-shadow('paper');
-    @include modular-spacing('padding', 2 3);
+    @include modular-spacing('padding', 2 3 4 2);
     @include modular-spacing('margin', 3 null 3 null);
 
     line-height: 1.5;
@@ -191,7 +189,6 @@
   }
 
   .jumpstart-ui-page-heading {
-
     h2 {
       @include modular-typography(1);
     }
@@ -201,7 +198,6 @@
   .node-stanford-event-su-event-alt-loc,
   .node-stanford-event-su-event-telephone,
   .node-stanford-event-su-event-audience {
-
     h2 {
       @include small-paragraph;
       @include modular-spacing('padding', null null null 1);
@@ -211,7 +207,6 @@
   }
 
   .su-event-cta {
-
     a {
       color: $su-color-white;
 
@@ -235,7 +230,6 @@
   .node-stanford-event-su-event-map-link,
   .node-stanford-event-su-event-telephone,
   .node-stanford-event-su-event-audience {
-
     &::before {
       @include small-paragraph;
 
@@ -259,7 +253,6 @@
   }
 
   .node-stanford-event-su-event-audience {
-
     div {
       div {
         padding-left: 0;
@@ -274,7 +267,7 @@
 
     &::before {
       // Need to switch to the SU icons.
-      content: "\f073";
+      content: '\f073';
 
       @include grid-media-max('sm') {
         left: -16px;
@@ -286,8 +279,7 @@
 
       &::before {
         // Override icon with blank.
-        content: "";
-
+        content: '';
       }
     }
   }
@@ -296,7 +288,7 @@
   .node-stanford-event-su-event-alt-loc {
     &::before {
       // Need to switch to the SU icons.
-      content: "\f3c5";
+      content: '\f3c5';
 
       @include grid-media-max('sm') {
         left: -16px;
@@ -307,7 +299,7 @@
   .node-stanford-event-su-event-telephone {
     &::before {
       // Need to switch to the SU icons.
-      content: "\f095";
+      content: '\f095';
       transform: scaleX(-1);
 
       @include grid-media-max('sm') {
@@ -319,7 +311,7 @@
   .node-stanford-event-su-event-audience {
     &::before {
       // Need to switch to the SU icons.
-      content: "\f0c0";
+      content: '\f0c0';
 
       @include grid-media-max('sm') {
         left: -17px;
@@ -333,7 +325,7 @@
 
   // Need conditions for the map link being included.
   .node-stanford-event-su-event-location {
-    &+ .node-stanford-event-su-event-map-link {
+    & + .node-stanford-event-su-event-map-link {
       @include modular-spacing('margin', -3 null 2 null);
     }
 
@@ -344,7 +336,7 @@
 
   // Need conditions for the map link being not included.
   .node-stanford-event-su-event-location {
-    &+ .node-stanford-event-su-event-telephone {
+    & + .node-stanford-event-su-event-telephone {
       @include modular-spacing('margin', 2 null null null);
     }
   }
@@ -355,7 +347,7 @@
   }
 
   .node-stanford-event-su-event-cta {
-    @include modular-spacing('padding', 3 null 5 null);
+    @include modular-spacing('padding', 3 null null null);
 
     text-align: center;
   }
@@ -364,7 +356,6 @@
     @include modular-spacing('margin', null null 2 null);
     @include modular-spacing('padding', null null null 1);
   }
-
 }
 
 .su-events-body {
@@ -399,7 +390,6 @@
 
 // The Schedule View.
 .stanford-events-schedule-event-schedule-block {
-
   // The block title & label (Schedule)
   .block__title {
     @include type-a;
@@ -427,7 +417,6 @@
       }
     }
   }
-
 }
 
 // -----------------------------------------------------------------------------
