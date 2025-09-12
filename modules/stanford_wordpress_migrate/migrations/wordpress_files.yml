@@ -1,0 +1,82 @@
+id: wordpress_files
+label: WordPress Files
+migration_tags:
+  - Files
+  - WordPress
+deriver: Drupal\stanford_wordpress_migrate\Plugin\migrate\WordPressFileDeriver
+migration_group: wordpress_migrations
+source:
+  track_changes: true
+  plugin: url
+  data_fetcher_plugin: http
+  request_options:
+    timeout: 30
+  urls: {  }
+  data_parser_plugin: json
+  item_selector: ''
+  fields:
+    -
+      name: id
+      label: id
+      selector: id
+    -
+      name: source_url
+      label: source_url
+      selector: source_url
+  ids:
+    id:
+      type: string
+  constants:
+    file_destination: 'public://media/wordpress/'
+process:
+  filename:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: source_url
+    -
+      plugin: callback
+      callable: basename
+  destination_uri:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: '@filename'
+    -
+      plugin: concat
+      source:
+        - constants/file_destination
+        - '@filename'
+  skip_if_exists:
+    -
+      plugin: skip_on_empty
+      source: '@destination_uri'
+      method: process
+    -
+      plugin: entity_lookup
+      value_key: uri
+      entity_type: file
+      ignore_case: true
+    -
+      plugin: str_replace
+      regex: true
+      search: '/^\d+$/'
+      replace: 'true'
+    -
+      plugin: skip_on_value
+      method: row
+      value: 'true'
+  uri:
+    -
+      plugin: download
+      destination: constants/file_destination
+      source:
+        - source_url
+        - '@destination_uri'
+      file_exists: 'use existing'
+  status:
+    plugin: default_value
+    default_value: 1
+destination:
+  plugin: entity:file
+migration_dependencies: {}

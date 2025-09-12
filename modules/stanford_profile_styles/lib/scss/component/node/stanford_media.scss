@@ -1,0 +1,184 @@
+@charset 'UTF-8';
+@import '../../config';
+
+.node--stanford-media {
+  .title {
+    h1 {
+      @include type-b;
+    }
+  }
+
+  .block-printable {
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    a {
+      @include button-secondary
+    }
+  }
+
+  .su-media-series {
+    > div:first-child {
+      font-weight: bold;
+    }
+  }
+
+  .after-first-media {
+    h2 {
+      @include type-d;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      @include modular-spacing('padding', 1 null);
+      border-top: 1px solid $su-color-black-20;
+    }
+
+    a {
+      color: $su-color-cardinal-red;
+
+      &:hover,
+      &:focus {
+        color: $su-color-black;
+      }
+    }
+  }
+
+  .media-content-related-series {
+    a {
+      color: $su-color-black;
+      text-decoration: none;
+
+      &:hover,
+      &:focus {
+        color: $su-color-cardinal-red;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .related-person {
+
+    .views-field-title {
+      margin-right: 3px;
+    }
+
+    li {
+      display: inline;
+      margin-right: 3px;
+
+      &::after {
+        margin-left: -3px;
+        content: ',';
+        display: inline-block;
+      }
+
+      &:last-child {
+        &::after {
+          content: ''
+        }
+      }
+    }
+  }
+
+  .related-series {
+    h2 {
+      @include type-d;
+    }
+
+    h3 {
+      @include type-f;
+    }
+  }
+
+  .node-stanford-media-su-media-types {
+    h2 {
+      @include type-d;
+    }
+  }
+
+  .su-media-types {
+    > div {
+      display: inline;
+      margin-right: 4px;
+
+      &::after {
+        content: ', ';
+        display: inline;
+        margin-left: -3px
+      }
+
+      &:last-child {
+        &::after {
+          content: ''
+        }
+      }
+    }
+  }
+
+  .ui-widget-overlay {
+    background: $su-color-black !important;
+    opacity: .9 !important;;
+  }
+
+  .date-duration-wrapper,
+  .season-episode-wrapper {
+    div {
+      display: inline;
+    }
+
+    > div {
+      position: relative;
+
+      &:nth-child(2) {
+        margin-left: 5px;
+        padding-left: 6px;
+
+        &::before {
+          content: '';
+          position: absolute;
+          width: 1.5px;
+          height: 80%;
+          left: 0;
+          top: 10%;
+          background: $su-color-black
+        }
+      }
+    }
+  }
+}
+
+.ui-dialog {
+  width: 90% !important;
+  left: 5% !important;
+  top: 5% !important;
+  z-index: 1000;
+  height: 90% !important;
+
+  h1 {
+    @include type-d
+  }
+
+  .ui-dialog-titlebar {
+    max-height: 50px;
+  }
+
+  .ui-dialog-content {
+    max-height: calc(100% - 50px) !important;
+    width: 100% !important;
+  }
+
+  iframe {
+    aspect-ratio: 16/9;
+    width: 100%;
+    height: auto;
+  }
+}

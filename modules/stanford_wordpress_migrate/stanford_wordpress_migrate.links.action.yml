@@ -1,0 +1,5 @@
+wordpress_migration.add_form:
+  title: 'Add WordPress migration'
+  route_name: entity.wordpress_migration.add_form
+  appears_on:
+    - entity.wordpress_migration.collection

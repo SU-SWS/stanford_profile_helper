@@ -1,0 +1,53 @@
+id: wordpress_terms
+label: WordPress Terms
+migration_tags:
+  - Taxonomy
+  - WordPress
+deriver: Drupal\stanford_wordpress_migrate\Plugin\migrate\WordPressContentDeriver
+migration_group: wordpress_migrations
+source:
+  track_changes: true
+  plugin: url
+  data_fetcher_plugin: http
+  request_options:
+    timeout: 30
+  urls: {  }
+  data_parser_plugin: json
+  item_selector: ''
+  fields:
+    -
+      name: id
+      label: id
+      selector: id
+    -
+      name: name
+      label: name
+      selector: name
+    -
+      name: parent
+      label: parent
+      selector: parent
+  ids:
+    id:
+      type: string
+process:
+  name:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: name
+    -
+      plugin: callback
+      callable: html_entity_decode
+  parent:
+    -
+      plugin: skip_on_value
+      method: process
+      value: '0'
+      source: parent
+    -
+      plugin: migration_lookup
+      migration: wordpress_terms
+destination:
+  plugin: entity:taxonomy_term
+migration_dependencies: {}

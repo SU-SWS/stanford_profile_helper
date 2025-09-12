@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Stanford WordPress Migrate module.
+ */
+
+/**
+ * STVP function to reorder video clips.
+ *
+ * Delete this function before creating a release.
+ */
+function stvp_fix_video_order() {
+  $ns = \Drupal::entityTypeManager()->getStorage("node");
+  $ms = \Drupal::entityTypeManager()->getStorage("media");
+  $video_ids = $ns->getQuery()
+    ->accessCheck(FALSE)
+    ->condition("type", "stanford_media")
+    ->condition("su_media_audio_video", NULL, "IS NOT NULL")
+    ->execute();
+  foreach ($video_ids as $id) {
+    echo $id . PHP_EOL;
+    $video = $ns->load($id);
+    $longest_video = 0;
+    $longest_delta = 0;
+    $clips = $video->get("su_media_audio_video")->getValue();
+    if (count($clips) <= 1) {
+      continue;
+    }
+    foreach ($clips as $delta => $item) {
+      $media = $ms->load($item["target_id"]);
+      $duration = (int) $media->get("su_video_duration")?->getString();
+      if ($duration && $duration > $longest_video) {
+        $longest_video = $duration;
+        $longest_delta = $delta;
+      }
+    }
+    if ($longest_delta > 0) {
+      $longest_clip = array_splice($clips, $longest_delta, 1);
+      array_unshift($clips, $longest_clip[0]);
+      $video->set("su_media_audio_video", $clips);
+      $video->save();
+    }
+  }
+}

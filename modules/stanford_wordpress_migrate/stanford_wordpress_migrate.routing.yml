@@ -1,0 +1,88 @@
+
+stanford_wordpress_migrate.autocomplete.sources:
+  path: '/admin/stanford_wordpress_migrate/autocomplete/sources'
+  defaults:
+    _controller: '\Drupal\stanford_wordpress_migrate\Controller\WordPressMigrateController::handleSourcesAutocomplete'
+    _format: json
+  requirements:
+    _permission: 'administer wordpress_migration'
+
+entity.wordpress_migration.collection:
+  path: '/admin/structure/migrate/wordpress'
+  defaults:
+    _entity_list: 'wordpress_migration'
+    _title: 'WordPress Migrations'
+  requirements:
+    _permission: 'administer wordpress_migration'
+
+entity.wordpress_migration.canonical:
+  path: '/admin/structure/migrate/wordpress/manage/{wordpress_migration}/source'
+  defaults:
+    _entity_wizard: 'wordpress_migration.edit'
+    _title: 'Edit Migration'
+    tempstore_id: wordpress_migration.site
+    wordpress_migration: '{machine_name}'
+  options:
+    parameters:
+      wordpress_migration:
+        type: tempstore:wordpress_migration
+  requirements:
+    _permission: 'administer wordpress_migration'
+
+entity.wordpress_migration.add_form:
+  path: '/admin/structure/migrate/wordpress/add'
+  defaults:
+    _entity_wizard: 'wordpress_migration.add'
+    _title: 'Add new WordPress migration'
+    tempstore_id: wordpress_migration.site
+  requirements:
+    _entity_create_access: wordpress_migration
+
+entity.wordpress_migration.add_step_form:
+  path: '/admin/structure/migrate/wordpress/add/{machine_name}/{step}'
+  defaults:
+    _entity_wizard: 'wordpress_migration.add'
+    _title: 'Add new WordPress migration'
+    tempstore_id: wordpress_migration.site
+  requirements:
+    _entity_create_access: wordpress_migration
+
+entity.wordpress_migration.edit_form:
+  path: '/admin/structure/migrate/wordpress/manage/{machine_name}/{step}'
+  defaults:
+    _entity_wizard: 'wordpress_migration.edit'
+    _title: 'Edit Migration'
+    tempstore_id: wordpress_migration.site
+    wordpress_migration: '{machine_name}'
+  options:
+    parameters:
+      wordpress_migration:
+        type: tempstore:wordpress_migration
+  requirements:
+    _permission: 'administer wordpress_migration'
+
+entity.wordpress_migration.delete_form:
+  path: '/admin/structure/migrate/wordpress/manage/{wordpress_migration}/delete'
+  defaults:
+    _entity_form: 'wordpress_migration.delete'
+    _title: 'Delete WordPress Migration'
+  requirements:
+    _entity_access: 'wordpress_migration.delete'
+
+entity.wordpress_migration.enable:
+  path: '/admin/structure/migrate/wordpress/{wordpress_migration}/enable'
+  defaults:
+    _controller: '\Drupal\stanford_wordpress_migrate\Controller\WordPressMigrateController::performOperation'
+    op: enable
+  requirements:
+    _entity_access: 'wordpress_migration.edit'
+    _csrf_token: 'TRUE'
+
+entity.wordpress_migration.disable:
+  path: '/admin/structure/migrate/wordpress/{wordpress_migration}/disable'
+  defaults:
+    _controller: '\Drupal\stanford_wordpress_migrate\Controller\WordPressMigrateController::performOperation'
+    op: disable
+  requirements:
+    _entity_access: 'wordpress_migration.edit'
+    _csrf_token: 'TRUE'

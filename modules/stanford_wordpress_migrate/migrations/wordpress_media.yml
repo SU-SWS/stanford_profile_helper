@@ -1,0 +1,90 @@
+id: wordpress_media
+label: WordPress Media
+migration_tags:
+  - Media
+  - WordPress
+deriver: Drupal\stanford_wordpress_migrate\Plugin\migrate\WordPressMediaDeriver
+migration_group: wordpress_migrations
+source:
+  track_changes: true
+  plugin: url
+  data_fetcher_plugin: http
+  request_options:
+    timeout: 30
+  urls: {  }
+  data_parser_plugin: json
+  item_selector: ''
+  fields:
+    -
+      name: id
+      label: id
+      selector: id
+    -
+      name: title_rendered
+      label: title_rendered
+      selector: title/rendered
+    -
+      name: alt_text
+      label: alt_text
+      selector: alt_text
+    -
+      name: source_url
+      label: source_url
+      selector: source_url
+  ids:
+    id:
+      type: string
+  constants:
+    file_destination: 'public://media/wordpress/'
+process:
+  name:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: title_rendered
+    -
+      plugin: callback
+      callable: html_entity_decode
+  field_media_image/target_id:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: source_url
+    -
+      plugin: file_import
+      destination: constants/file_destination
+      id_only: true
+      reuse: true
+  resize_image:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: '@field_media_image/target_id'
+    -
+      plugin: entity_value
+      entity_type: file
+      field_name: uri
+    -
+      plugin: extract
+      index:
+        - 0
+        - value
+    -
+      plugin: image_resize
+      max_width: 2000
+      max_height: 2000
+      image_style: responsive_large
+  field_media_image/alt:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: alt_text
+    -
+      plugin: str_replace
+      search: 'photo of '
+      replace: ''
+      case_insensitive: true
+destination:
+  plugin: entity:media
+  default_bundle: image
+migration_dependencies: {}
