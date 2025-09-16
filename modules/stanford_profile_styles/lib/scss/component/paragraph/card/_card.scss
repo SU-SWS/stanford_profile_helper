@@ -2,6 +2,9 @@
 
 .su-card {
   .su-card__contents {
+    display: flex;
+    flex-direction: column;
+
     h2 {
       @include type-c;
     }
@@ -12,6 +15,30 @@
 
     h4 {
       @include type-e;
+    }
+
+    h2,
+    h3,
+    h4 {
+      flex-shrink: 0;
+      order: 2;
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+
+    .su-card__superhead {
+      order: 1;
+      margin-top: -0.3em;
+    }
+
+    p {
+      order: 3;
+    }
+
+    .su-card__button {
+      order: 4;
     }
 
     // Overwrite conflicting decanter styles for splash font card headline
