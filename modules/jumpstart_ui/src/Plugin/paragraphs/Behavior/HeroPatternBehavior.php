@@ -28,6 +28,8 @@ class HeroPatternBehavior extends ParagraphsBehaviorBase {
       'overlay_position' => 'left',
       'heading' => 'h2',
       'hide_heading' => FALSE,
+      'overlay_color' => 'default',
+      'space_below' => 'default'
     ];
   }
 
@@ -88,8 +90,34 @@ class HeroPatternBehavior extends ParagraphsBehaviorBase {
       '#description' => $this->t('Position the text over the image on larger screens'),
       '#default_value' => $paragraph->getBehaviorSetting('hero_pattern', 'overlay_position', 'left'),
       '#options' => [
-        'left' => $this->t('Left'),
-        'right' => $this->t('Right'),
+        'left' => $this->t('Left Card'),
+        'right' => $this->t('Right Card'),
+        'center' => $this->t('Center Transparent Overlay'),
+      ],
+    ];
+    $form['overlay_colors'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Banner Overlay Color'),
+      '#description' => $this->t('Transparent color overlay for text readability'),
+      '#default_value' => $paragraph->getBehaviorSetting('hero_pattern', 'overlay_color', 'default'),
+      '#options' => [
+        'default' => $this->t('Default'),
+        'black-true' => $this->t('Black'),
+        'plum' => $this->t('Plum'),
+        'blue' => $this->t('Blue'),
+        'lagunita-dark' => $this->t('Lagunita Dark'),
+        'palo-alto' => $this->t('Palo Alto'),
+        'stone-dark' => $this->t('Stone Dark'),
+      ],
+    ];
+    $form['space_below'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Space Below Section'),
+      '#description' => $this->t('Space below the hero section'),
+      '#default_value' => $paragraph->getBehaviorSetting('hero_pattern', 'space_below', 'default'),
+      '#options' => [
+        'default' => $this->t('Default'),
+        'none' => $this->t('None'),
       ],
     ];
     return $form;
@@ -101,6 +129,7 @@ class HeroPatternBehavior extends ParagraphsBehaviorBase {
   public function view(array &$build, ParagraphInterface $paragraph, EntityViewDisplayInterface $display, $view_mode) {
     // FYI: this adds the class one level above than the pattern template.
     $build['#attributes']['class'][] = 'overlay-' . $paragraph->getBehaviorSetting('hero_pattern', 'overlay_position', 'left');
+    $build['#attributes']['class'][] = 'overlay-color-' . $paragraph->getBehaviorSetting('hero_pattern', 'overlay_colors', 'default');
+    $build['#attributes']['class'][] = 'bottom-margin-' . $paragraph->getBehaviorSetting('hero_pattern', 'space_below', 'default');
   }
-
 }
