@@ -95,7 +95,7 @@ class HeroPatternBehavior extends ParagraphsBehaviorBase {
         'center' => $this->t('Center Transparent Overlay'),
       ],
     ];
-    $form['overlay_colors'] = [
+    $form['overlay_color'] = [
       '#type' => 'select',
       '#title' => $this->t('Banner Overlay Color'),
       '#description' => $this->t('Transparent color overlay for text readability'),
@@ -129,7 +129,7 @@ class HeroPatternBehavior extends ParagraphsBehaviorBase {
   public function view(array &$build, ParagraphInterface $paragraph, EntityViewDisplayInterface $display, $view_mode) {
     // FYI: this adds the class one level above than the pattern template.
     $build['#attributes']['class'][] = 'overlay-' . $paragraph->getBehaviorSetting('hero_pattern', 'overlay_position', 'left');
-    $build['#attributes']['class'][] = 'overlay-color-' . $paragraph->getBehaviorSetting('hero_pattern', 'overlay_colors', 'default');
+    $build['#attributes']['class'][] = 'overlay-color-' . $paragraph->getBehaviorSetting('hero_pattern', 'overlay_color', 'default');
     $build['#attributes']['class'][] = 'bottom-margin-' . $paragraph->getBehaviorSetting('hero_pattern', 'space_below', 'default');
   }
 }
