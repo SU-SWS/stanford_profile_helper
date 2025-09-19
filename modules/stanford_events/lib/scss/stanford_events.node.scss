@@ -167,11 +167,10 @@
 }
 
 .su-events-details {
-
   .details-wrapper {
     @include small-paragraph;
     @include box-shadow('paper');
-    @include modular-spacing('padding', 2 3);
+    @include modular-spacing('padding', 2 3 4 2);
     @include modular-spacing('margin', 3 null 3 null);
 
     line-height: 1.5;
@@ -355,7 +354,7 @@
   }
 
   .node-stanford-event-su-event-cta {
-    @include modular-spacing('padding', 3 null 5 null);
+    @include modular-spacing('padding', 3 null null null);
 
     text-align: center;
   }
