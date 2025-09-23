@@ -28,8 +28,8 @@ class HeroPatternBehavior extends ParagraphsBehaviorBase {
       'overlay_position' => 'left',
       'heading' => 'h2',
       'hide_heading' => FALSE,
-      'overlay_color' => 'default',
-      'space_below' => 'default'
+      'overlay_color' => NULL,
+      'space_below' => NULL
     ];
   }
 
@@ -95,19 +95,42 @@ class HeroPatternBehavior extends ParagraphsBehaviorBase {
         'center' => $this->t('Center Transparent Overlay'),
       ],
     ];
-    $form['overlay_color'] = [
-      '#type' => 'select',
+    $form['overlay_color_wrapper'] = [
+      '#type' => 'container',
+      '#states' => [
+        'visible' => [
+          ':input[name="behavior_plugins[hero_pattern][overlay_position]"]' => ['value' => 'center'],
+        ],
+      ],
+    ];
+    $form['overlay_color_wrapper']['overlay_color'] = [
+      '#type' => 'textfield',
       '#title' => $this->t('Banner Overlay Color'),
-      '#description' => $this->t('Transparent color overlay for text readability'),
-      '#default_value' => $paragraph->getBehaviorSetting('hero_pattern', 'overlay_color', 'default'),
-      '#options' => [
-        'default' => $this->t('Default'),
-        'black-true' => $this->t('Black'),
-        'plum' => $this->t('Plum'),
-        'blue' => $this->t('Blue'),
-        'lagunita-dark' => $this->t('Lagunita Dark'),
-        'palo-alto' => $this->t('Palo Alto'),
-        'stone-dark' => $this->t('Stone Dark'),
+      '#default_value' => $default_color ? '#' . $default_color : '',
+      '#suffix' => "<div class='color-field-widget-box-form' id='$id'></div>",
+      '#maxlength' => 7,
+      '#size' => 7,
+      '#attached' => [
+        'library' => ['color_field/color-field-widget-box'],
+        'drupalSettings' => [
+          'color_field' => [
+            'color_field_widget_box' => [
+              'settings' => [
+                $id => [
+                  'required' => FALSE,
+                  'palette' => [
+                    '#000000',
+                    '#175E54',
+                    '#016895',
+                    '#006B81',
+                    '#2D716F',
+                    '#544948',
+                  ],
+                ],
+              ],
+            ],
+          ],
+        ],
       ],
     ];
     $form['space_below'] = [
@@ -116,7 +139,7 @@ class HeroPatternBehavior extends ParagraphsBehaviorBase {
       '#description' => $this->t('Space below the hero section'),
       '#default_value' => $paragraph->getBehaviorSetting('hero_pattern', 'space_below', 'default'),
       '#options' => [
-        'default' => $this->t('Default'),
+        '#empty_option'  => $this->t('Default'),
         'none' => $this->t('None'),
       ],
     ];
@@ -129,7 +152,9 @@ class HeroPatternBehavior extends ParagraphsBehaviorBase {
   public function view(array &$build, ParagraphInterface $paragraph, EntityViewDisplayInterface $display, $view_mode) {
     // FYI: this adds the class one level above than the pattern template.
     $build['#attributes']['class'][] = 'overlay-' . $paragraph->getBehaviorSetting('hero_pattern', 'overlay_position', 'left');
-    $build['#attributes']['class'][] = 'overlay-color-' . $paragraph->getBehaviorSetting('hero_pattern', 'overlay_color', 'default');
+    if ($color = $paragraph->getBehaviorSetting('hero_pattern', 'overlay_color')) {
+      $build['#attributes']['class'][] = 'overlay-color-' . strtolower(str_replace('#', '', $color));
+    }
     $build['#attributes']['class'][] = 'bottom-margin-' . $paragraph->getBehaviorSetting('hero_pattern', 'space_below', 'default');
   }
 }
