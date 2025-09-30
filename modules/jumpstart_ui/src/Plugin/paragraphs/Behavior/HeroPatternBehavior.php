@@ -106,7 +106,7 @@ class HeroPatternBehavior extends ParagraphsBehaviorBase {
     $form['overlay_color_wrapper']['overlay_color'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Banner Overlay Color'),
-      '#default_value' => $default_color ? '#' . $default_color : '',
+      '#default_value' => $default_color ? '#000000' . $default_color : '',
       '#suffix' => "<div class='color-field-widget-box-form' id='$id'></div>",
       '#maxlength' => 7,
       '#size' => 7,
