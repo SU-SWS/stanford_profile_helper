@@ -138,8 +138,8 @@ class HeroPatternBehavior extends ParagraphsBehaviorBase {
       '#title' => $this->t('Space Below Section'),
       '#description' => $this->t('Space below the hero section'),
       '#default_value' => $paragraph->getBehaviorSetting('hero_pattern', 'space_below', 'default'),
+      '#empty_option'  => $this->t('Default'),
       '#options' => [
-        '#empty_option'  => $this->t('Default'),
         'none' => $this->t('None'),
       ],
     ];
