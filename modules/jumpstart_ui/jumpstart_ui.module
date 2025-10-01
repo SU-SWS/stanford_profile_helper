@@ -13,6 +13,7 @@ use Drupal\Core\Url;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\ui_patterns\Element\PatternContext;
 use Drupal\ui_patterns\UiPatterns;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 /**
  * Implements hook_page_attachments().
@@ -156,14 +157,24 @@ function jumpstart_ui_preprocess_patterns_overview_page(&$variables) {
  * Implements hook_preprocess_HOOK().
  */
 function jumpstart_ui_preprocess_pattern_localfooter(&$variables) {
+  $variables['#cache']['tags'][] = 'config_pages:stanford_local_footer';
+
   if (
     !empty($variables['weblogin_text']) &&
     \Drupal::currentUser()->isAnonymous()
   ) {
+    $variables['#cache']['contexts'][] = 'url.path';
+
     $module_handler = \Drupal::moduleHandler();
-    $destination = \Drupal::requestStack()
-      ->getCurrentRequest()
-      ?->getRequestUri() ?? '/';
+    $current_request = \Drupal::requestStack()->getCurrentRequest();
+    $exception = $current_request->attributes->get('exception');
+    $destination = $current_request?->getPathInfo() ?: '/';
+    // If the page is not a 200 response, set the destination as the home page.
+    // This will be applicable for 404 and 403 pages.
+    if ($exception instanceof HttpExceptionInterface && $exception->getStatusCode() != 200) {
+      $destination = '/';
+    }
+
     $options = ['query' => ['destination' => $destination]];
 
     if ($module_handler->moduleExists('simplesamlphp_auth')) {
