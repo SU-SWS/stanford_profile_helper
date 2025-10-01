@@ -2,6 +2,7 @@
 
 namespace Drupal\jumpstart_ui\Plugin\paragraphs\Behavior;
 
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
@@ -103,10 +104,11 @@ class HeroPatternBehavior extends ParagraphsBehaviorBase {
         ],
       ],
     ];
+    $id = Html::getUniqueId('color-field-' . $this->getPluginId());
     $form['overlay_color_wrapper']['overlay_color'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Banner Overlay Color'),
-      '#default_value' => $default_color ? '#000000' . $default_color : '',
+      '#default_value' => $paragraph->getBehaviorSetting('hero_pattern', 'overlay_color', ''),
       '#suffix' => "<div class='color-field-widget-box-form' id='$id'></div>",
       '#maxlength' => 7,
       '#size' => 7,
