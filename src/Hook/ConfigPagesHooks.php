@@ -40,6 +40,16 @@ class ConfigPagesHooks {
   }
 
   /**
+   * Add cache tags for config pages cache invalidation.
+   */
+  #[Hook('config_pages_insert')]
+  #[Hook('config_pages_update')]
+  #[Hook('config_pages_delete')]
+  public function configPagesCrud(ConfigPagesInterface $configPage){
+    $configPage->addCacheTags(['config_pages:' . $configPage->bundle()]);
+  }
+
+  /**
    * Before saving a configuration page, set some state and clear caches.
    *
    * @param \Drupal\config_pages\ConfigPagesInterface $configPage
