@@ -21,7 +21,7 @@ $su-intro-max-width: unset;
   // to the caption itself.
   figure {
     .media {
-      @include padding(null null 0 null);
+      @include margin(null null 0 null);
     }
   }
 
