@@ -14,7 +14,7 @@ $su-intro-max-width: unset;
 
 .su-wysiwyg-text {
   .media {
-    @include padding(null null 2em null);
+    @include margin(null null 2em null);
   }
 
   // Remove the bottom padding when the media has a caption since we add padding
