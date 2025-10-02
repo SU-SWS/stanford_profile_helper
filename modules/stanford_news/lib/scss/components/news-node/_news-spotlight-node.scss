@@ -24,6 +24,8 @@
     }
 
     .left-region {
+      display: flex;
+      flex-direction: column;
       max-width: 73rem;
       order: 0;
       padding: 0;
@@ -45,11 +47,27 @@
       }
     }
 
-    .title {
-      @include modular-typography(5);
+    .node-stanford-news-title {
+      order: 0;
 
-      font-family: Source Sans Pro;
-      margin-bottom: 0;
+      .title {
+        @include modular-typography(5);
+
+        font-family: Source Sans Pro;
+        font-weight: 600;
+        margin-bottom: 0;
+      }
+    }
+
+    .node-stanford-news-layout-selection {
+      order: -1;
+
+      .layout-selection {
+        @include modular-spacing('margin-bottom', 1);
+        @include type-e;
+
+        font-weight: 600;
+      }
     }
 
     .su-news-quote {
