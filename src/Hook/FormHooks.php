@@ -129,4 +129,25 @@ class FormHooks {
     unset($form['vocabularies']['#header']['weight'], $form['actions']);
   }
 
+  /**
+   * Implements hook_field_widget_complete_WIDGET_TYPE_form_alter().
+   */
+  #[Hook('field_widget_complete_options_select_form_alter')]
+  public function fieldWidgetCompleteOptionsSelectFormAlter(&$field_widget_complete_form, FormStateInterface $form_state, $context) {
+    /** @var \Drupal\Core\Field\FieldItemListInterface $items */
+    $items = $context['items'];
+    $field_def = $items->getFieldDefinition();
+    if ($field_def->getName() == 'layout_selection') {
+      $field_widget_complete_form['widget']['#description'] = t('Choose a layout to display the page as a whole. Choose "- Default -" to keep the default layout setting.');
+
+      $noneOption = $this->t('- Default -');
+
+      if ($field_def->getTargetBundle() == 'stanford_news') {
+        $noneOption = $this->t('News');
+        $field_widget_complete_form['widget']['#title'] = t('Variant');
+      }
+      $field_widget_complete_form['widget']['#options']['_none'] = $noneOption;
+    }
+  }
+
 }

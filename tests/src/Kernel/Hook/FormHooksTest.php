@@ -168,4 +168,64 @@ class FormHooksTest extends SuProfileHelperKernelTestBase {
     $this->assertArrayNotHasKey('foo', $form['vocabularies']);
   }
 
+  /**
+   * Test the layout_selection field widget form alter for stanford_news.
+   */
+  public function testLayoutSelectionFieldWidgetFormAlter() {
+    $this->installEntitySchema('node');
+    $this->installConfig(['node', 'field']);
+    
+    $news_type = $this->container->get('entity_type.manager')
+      ->getStorage('node_type')
+      ->create([
+        'type' => 'stanford_news',
+        'name' => 'News',
+      ]);
+    $news_type->save();
+
+    $layout_field_storage = FieldStorageConfig::create([
+      'field_name' => 'layout_selection',
+      'entity_type' => 'node',
+      'type' => 'list_string',
+      'cardinality' => 1,
+      'settings' => [
+        'allowed_values' => [
+          'layout_1' => 'Layout 1',
+          'layout_2' => 'Layout 2',
+        ],
+      ],
+    ]);
+    $layout_field_storage->save();
+
+    FieldConfig::create([
+      'field_storage' => $layout_field_storage,
+      'bundle' => 'stanford_news',
+      'label' => 'Layout Selection',
+      'settings' => [],
+    ])->save();
+
+    $news_form_display = EntityFormDisplay::create([
+      'targetEntityType' => 'node',
+      'bundle' => 'stanford_news',
+      'mode' => 'default',
+      'status' => TRUE,
+    ]);
+    $news_form_display->setComponent('layout_selection', [
+      'type' => 'options_select'
+    ]);
+    $news_form_display->save();
+
+    $news_node = $this->container->get('entity_type.manager')
+      ->getStorage('node')
+      ->create([
+        'type' => 'stanford_news',
+        'title' => 'Test News',
+      ]);
+    $news_node->save();
+
+    $form = \Drupal::service('entity.form_builder')->getForm($news_node);
+
+    $this->assertEquals('News', $form['layout_selection']['widget']['#options']['_none']);
+    $this->assertEquals('Variant', (string) $form['layout_selection']['widget']['#title']);
+  }
 }
