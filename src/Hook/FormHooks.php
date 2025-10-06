@@ -138,9 +138,9 @@ class FormHooks {
     $items = $context['items'];
     $field_def = $items->getFieldDefinition();
     if ($field_def->getName() == 'layout_selection') {
-      $field_widget_complete_form['widget']['#description'] = t('Choose a layout to display the page as a whole. Choose "- None -" to keep the default layout setting.');
+      $field_widget_complete_form['widget']['#description'] = t('Choose a layout to display the page as a whole. Choose "- Default -" to keep the default layout setting.');
 
-      $noneOption = $this->t('Default');
+      $noneOption = $this->t('- Default -');
 
       if ($field_def->getTargetBundle() == 'stanford_news') {
         $noneOption = $this->t('News');
