@@ -144,6 +144,7 @@ class FormHooks {
 
       if ($field_def->getTargetBundle() == 'stanford_news') {
         $noneOption = $this->t('News');
+        $field_widget_complete_form['widget']['#title'] = t('Variant');
       }
       $field_widget_complete_form['widget']['#options']['_none'] = $noneOption;
     }
