@@ -3,6 +3,16 @@
 @import 'decanter/core/src/scss/decanter-no-markup';
 @import 'decanter/core/src/scss/components/hero/index';
 
+// Local variable not for changing.
+$_su-hero-height: (
+  'xs': 210px,
+  'sm': 210px,
+  'md': 320px,
+  'lg': 410px,
+  'xl': 520px,
+  '2xl': 520px,
+) !default;
+
 .su-hero {
   .su-hero__media {
     // Ensure everything gets set to 100% so that the object-fit property works.
@@ -15,11 +25,10 @@
   }
 }
 
-
 .overlay-right {
   .su-hero {
     .su-hero__card {
-      @include grid-media("md") {
+      @include grid-media('md') {
         right: 45px;
         left: unset;
         margin-left: auto;
@@ -32,3 +41,145 @@
   }
 }
 
+.overlay-center {
+  .su-hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+
+    @include grid-media('xs') {
+      min-height: map-get($_su-hero-height, 'xs');
+    }
+
+    @include grid-media('sm') {
+      min-height: map-get($_su-hero-height, 'sm');
+    }
+
+    @include grid-media('md') {
+      min-height: map-get($_su-hero-height, 'md');
+    }
+
+    @include grid-media('lg') {
+      min-height: map-get($_su-hero-height, 'lg');
+    }
+
+    @include grid-media('xl') {
+      min-height: map-get($_su-hero-height, 'xl');
+    }
+
+    .su-hero__media {
+      min-height: auto;
+      position: absolute;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+    }
+
+    .su-hero__card {
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      left: auto;
+      text-align: center;
+      max-width: unset;
+      margin: 0;
+      width: 100%;
+      bottom: unset;
+
+      .su-card__contents {
+        color: $su-color-white;
+        max-width: 100ch;
+        margin: 0 auto;
+        min-height: 220px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        @include grid-media-max('sm') {
+          width: 100%;
+        }
+
+        :first-child {
+          margin-top: 0;
+        }
+
+        .su-card__superhead {
+          max-width: 340px;
+          margin: 0 auto;
+        }
+
+        p {
+          max-width: 750px;
+          margin: 0 auto;
+        }
+      }
+    }
+  }
+}
+
+// Remove bottom margin if specified in the Image Banner behavior settings.
+.node-stanford-page-su-page-banner:has(.bottom-margin-none) {
+  margin-bottom: 0;
+}
+
+.su-hero.bottom-margin-none {
+  margin-bottom: 0;
+}
+
+//  Image Banner Color Overlays
+.overlay-color-default {
+  .su-hero__media::before {
+    background-color: $su-color-black-true;
+    opacity: 0.8;
+  }
+}
+
+.overlay-color-000000 {
+  .su-hero__media::before {
+    background-color: $su-color-black-true;
+    opacity: 0.8;
+  }
+}
+
+.overlay-color-175e54 {
+  .su-hero__media::before {
+    background-color: $su-color-plum;
+    opacity: 0.8;
+  }
+}
+
+.overlay-color-016895 {
+  .su-hero__media::before {
+    background-color: $su-color-sky-dark;
+    opacity: 0.8;
+  }
+}
+
+.overlay-color-006b81 {
+  .su-hero__media::before {
+    background-color: $su-color-lagunita-dark;
+    opacity: 0.8;
+  }
+}
+
+.overlay-color-2d716f {
+  .su-hero__media::before {
+    background-color: $su-color-palo-alto;
+    opacity: 0.8;
+  }
+}
+
+.overlay-color-544948 {
+  .su-hero__media::before {
+    background-color: $su-color-stone-dark;
+    opacity: 0.8;
+  }
+}
