@@ -1138,7 +1138,19 @@ function stanford_profile_helper_search_api_algolia_objects_alter(array &$object
   $site_domain = $config_page_loader->getValue('stanford_basic_site_settings', 'su_site_url', 0, 'uri');
   $current_host = \Drupal::request()->getSchemeAndHttpHost();
 
+  $federated = (bool) $config_page_loader->getValue('stanford_basic_site_settings', 'su_site_algolia_fed', 0, 'value');
+
   foreach ($objects as &$item) {
+    // If the site is configured for federated search, there's a chance that
+    // two or more sites have the same UUID on the node if the sites were ever
+    // cloned. To prevent possible uuid conflicts, prefix the unique ID with a
+    // hash of the site name. Each site should have a unique site name since
+    // that is used for the refinement options.
+    if ($federated) {
+      $prefix = substr(md5($item['site_name']), 0, 5) . ':';
+      $item['objectID'] = $prefix . $item['objectID'];
+    }
+
     // Remove fields that aren't necessary.
     unset($item['search_api_datasource'], $item['status']);
 
