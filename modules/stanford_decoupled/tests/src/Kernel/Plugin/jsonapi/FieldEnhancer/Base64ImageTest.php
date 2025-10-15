@@ -20,7 +20,7 @@ class Base64ImageTest extends KernelTestBase {
     'jsonapi',
     'jsonapi_extras',
     'stanford_decoupled',
-    'entity_usage',
+    'graphql_compose',
   ];
 
   protected function setUp(): void {

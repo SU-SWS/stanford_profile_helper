@@ -124,6 +124,72 @@ function stanford_decoupled_cron() {
 }
 
 /**
+ * Implements hook_entity_insert().
+ */
+function stanford_decoupled_entity_insert(EntityInterface $entity) {
+  _stanford_decoupled_entity_changes($entity);
+}
+
+/**
+ * Implements hook_entity_update().
+ */
+function stanford_decoupled_entity_update(EntityInterface $entity) {
+  _stanford_decoupled_entity_changes($entity);
+}
+
+/**
+ * Implement hook_entity_delete().
+ */
+function stanford_decoupled_entity_delete(EntityInterface $entity) {
+  _stanford_decoupled_entity_changes($entity);
+}
+
+/**
+ * Trigger Next module for on-demand invalidation for referencing entities.
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $entity
+ *   Inserted, updated, or deleted entity.
+ */
+function _stanford_decoupled_entity_changes(EntityInterface $entity) {
+  $tracked_types = \Drupal::config('stanford_decoupled.settings')
+    ->get('referenced_invalidated_types') ?: ['taxonomy_term', 'media'];
+
+  if (
+    !in_array($entity->getEntityTypeId(), $tracked_types) ||
+    !$entity instanceof ContentEntityInterface ||
+    !DecoupledConfigOverrides::isDecoupled()
+  ) {
+    return;
+  }
+  $entity_type_manager = \Drupal::entityTypeManager();
+  $field_storage = $entity_type_manager->getStorage('field_storage_config');
+
+  /** @var \Drupal\Core\Queue\QueueFactoryInterface $queue_factory */
+  $queue_factory = \Drupal::service('queue');
+  $queue = $queue_factory->get('decoupled_referenced_invalidator');
+
+  // Loop through the fields that use the changed entity as a possible target.
+  // We'll then query to find entities that do reference the entity, and call
+  // the Next functions to trigger any invalidations that are configured.
+  /** @var \Drupal\field\FieldStorageConfigInterface[] $reference_fields */
+  $reference_fields = $field_storage->loadByProperties(['settings' => ['target_type' => $entity->getEntityTypeId()]]);
+  foreach ($reference_fields as $field) {
+    $entity_storage = $entity_type_manager->getStorage($field->getTargetEntityTypeId());
+    $referencing_ids = $entity_storage->getQuery()
+      ->accessCheck(FALSE)
+      ->condition($field->getName(), $entity->id())
+      ->execute();
+
+    foreach ($referencing_ids as $referencing_id) {
+      $queue->createItem([
+        'entity_type' => $field->getTargetEntityTypeId(),
+        'id' => $referencing_id,
+      ]);
+    }
+  }
+}
+
+/**
  * Implements hook_graphql_compose_field_results_alter().
  */
 function stanford_decoupled_graphql_compose_field_results_alter(array &$results, $entity, GraphQLComposeFieldTypeInterface $plugin, FieldContext $context) {
