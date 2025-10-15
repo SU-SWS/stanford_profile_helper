@@ -1,0 +1,104 @@
+@charset "UTF-8";
+
+.node-page--stanford-news {
+  .su-news-spotlight-header {
+    @include modular-spacing('margin', 6 null 5);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    max-width: 130rem;
+    gap: 61px;
+
+    @include grid-media-between('sm', 'lg') {
+      gap: 34px;
+    }
+
+    @include grid-media-max('xs') {
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .main-region {
+      order: -1;
+      padding: 0;
+    }
+
+    .left-region {
+      display: flex;
+      flex-direction: column;
+      max-width: 73rem;
+      order: 0;
+      padding: 0;
+    }
+
+    .node-stanford-news-su-news-featured-media {
+      width: 36rem;
+
+      @include grid-media-max('lg') {
+        width: 29rem;
+      }
+
+      @include grid-media-max('md') {
+        width: 24rem;
+      }
+
+      @include grid-media-max('sm') {
+        width: 12rem;
+      }
+    }
+
+    .node-stanford-news-title {
+      order: 0;
+
+      .title {
+        @include modular-typography(5);
+
+        font-family: Source Sans Pro;
+        font-weight: 600;
+        margin-bottom: 0;
+      }
+    }
+
+    .node-stanford-news-layout-selection {
+      order: -1;
+
+      .layout-selection {
+        @include modular-spacing('margin-bottom', 1);
+        @include type-e;
+
+        font-weight: 600;
+      }
+    }
+
+    .su-news-quote {
+      @include modular-spacing('margin-bottom', 1);
+      @include type-c;
+
+      font-family: Source Sans Pro;
+    }
+
+    .su-news-subtitle {
+      @include type-e;
+
+      border-top: 1px solid $su-color-black-20;
+      color: $su-color-black-70;
+      padding-top: 12px;
+    }
+  }
+
+  .su-news-spotlight-components {
+    .main-region {
+      @include modular-spacing('margin-bottom', 6);
+
+      max-width: 98rem;
+
+      .node-stanford-news-su-news-publishing-date {
+        @include type-e;
+        @include modular-spacing('margin-bottom', 0);
+
+        color: $su-color-black-70;
+      }
+    }
+  }
+}
