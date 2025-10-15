@@ -1,5 +1,22 @@
 # Stanford Profile Helper
 
+10.0.3
+--------------------------------------------------------------------------------
+_Release Date: 2025-10-15_
+
+- Improve NextJS invalidation when a media or taxonomy term is changed (#444)
+- D8CORE-8322 | fixup default overlay banner color (#443)
+- D8CORE-8347: Prepend uuid for algolia items with a hash of the site name
+- D8CORE-8322 | Add banner overlay options and styles (#435)
+- D8CORE-8227 | Rename title and _none option for layout selection (#440)
+- D8CORE-8316 | Adjust events page details layout and styles (#436)
+- D8CORE-8356: Change login link destination to use only the pathname and not any query parameters (#439)
+- D8CORE-8316 | adjust event details card spacing (#433)
+- D8CORE-8196 | adjust card content order for a11y (#434)
+- D8CORE-8160 D8CORE-8159 Style adjustments to opportunity page display (#432)
+- D8CORE-8248: Event subtitles a little less bold (#431)
+
+
 10.0.2
 --------------------------------------------------------------------------------
 _Release Date: 2025-08-27_
