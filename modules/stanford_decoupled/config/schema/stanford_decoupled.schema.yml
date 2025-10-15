@@ -1,5 +1,5 @@
 stanford_decoupled.settings:
-  type: mapping
+  type: config_object
   mapping:
     referenced_invalidated_types:
       type: sequence
