@@ -21,6 +21,7 @@ class RedirectPathTest extends KernelTestBase {
     'path_alias',
     'link',
     'stanford_decoupled',
+    'entity_usage',
   ];
 
   protected $responseCode = 404;

@@ -11,6 +11,7 @@ class StanfordDecoupledRouteSubscriberTest extends KernelTestBase {
     'user',
     'basic_auth',
     'stanford_decoupled',
+    'entity_usage',
   ];
 
   public function testRouteAlter() {
