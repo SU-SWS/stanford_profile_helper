@@ -47,7 +47,7 @@ class StanfordDecoupledHooks {
    *   New entity type or entity bundle.
    */
   #[Hook('taxonomy_vocabulary_insert')]
-  #[Hook('paragraph_insert')]
+  #[Hook('paragraphs_type_insert')]
   #[Hook('config_pages_type_insert')]
   #[Hook('media_type_insert')]
   public function onEntityBundleCreate(ConfigEntityInterface $entity): void {

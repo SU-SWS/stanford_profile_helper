@@ -5,6 +5,7 @@ core_version_requirement: ^11.2
 package: Stanford
 version: 9.8.6
 dependencies:
+  - entity_usage:entity_usage
   - graphql_compose:graphql_compose_layout_paragraphs
   - graphql_compose:graphql_compose_menus
   - graphql_compose:graphql_compose_views

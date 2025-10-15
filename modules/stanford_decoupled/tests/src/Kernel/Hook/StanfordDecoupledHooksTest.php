@@ -42,6 +42,7 @@ class StanfordDecoupledHooksTest extends KernelTestBase {
     'paragraphs',
     'config_pages',
     'stanford_decoupled',
+    'entity_usage'
   ];
 
   /**

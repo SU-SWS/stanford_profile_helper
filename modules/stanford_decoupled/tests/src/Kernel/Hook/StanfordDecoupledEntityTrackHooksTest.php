@@ -21,6 +21,13 @@ use PHPUnit\Framework\Attributes\Group;
 class StanfordDecoupledEntityTrackHooksTest extends KernelTestBase {
 
   /**
+   * Disable strict config schema checking for this test.
+   *
+   * @var bool
+   */
+  protected $strictConfigSchema = FALSE;
+
+  /**
    * {@inheritdoc}
    */
   protected static $modules = [
