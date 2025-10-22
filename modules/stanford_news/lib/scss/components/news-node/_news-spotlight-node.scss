@@ -12,6 +12,7 @@
 
     @include grid-media-between('sm', 'lg') {
       gap: 34px;
+      justify-content: flex-start;
     }
 
     @include grid-media-max('xs') {
@@ -30,6 +31,11 @@
       max-width: 73rem;
       order: 0;
       padding: 0;
+
+      // overlay of text on image happens at 992px to 1100px.
+      @include grid-media('lg') {
+        padding-left: 4rem;
+      }
     }
 
     .node-stanford-news-su-news-featured-media {
@@ -55,8 +61,8 @@
         @include modular-typography(5);
 
         font-family: Source Sans Pro;
-        font-weight: 600;
-        margin-bottom: 0;
+        font-weight: $su-font-black;
+        margin-bottom: 1.2rem;
       }
     }
 
