@@ -6,23 +6,45 @@
 
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    max-width: 130rem;
-    gap: 61px;
+    justify-content: center;
+    max-width: 32rem;
+    gap: 34px;
 
-    @include grid-media-between('sm', 'lg') {
+    @include grid-media-between('sm', 'md') {
       gap: 34px;
-      justify-content: flex-start;
     }
+
+    @include grid-media('sm') {
+      max-width: 51.6rem;
+    }
+
+    @include grid-media('md') {
+      gap: 66px;
+      max-width: 66.8rem;
+    }
+
+
+    @include grid-media('lg') {
+      gap: 61px;
+      max-width: 83.2rem;
+    }
+
+    @include grid-media-min('xl') {
+      gap: 61px;
+      max-width: 130rem;
+    }
+
 
     @include grid-media-max('xs') {
       flex-direction: column;
       gap: 12px;
+      justify-content: flex-start;
     }
 
     .main-region {
       order: -1;
       padding: 0;
+      max-width: fit-content;
     }
 
     .left-region {
@@ -31,11 +53,27 @@
       max-width: 73rem;
       order: 0;
       padding: 0;
+      flex-grow: 2;
+
+      @include grid-media-min('sm') {
+        max-width: 33rem;
+        background-color: lightblue;
+      }
+
+      @include grid-media-min('md') {
+        max-width: 31rem;
+        background-color: lightgreen;
+      }
+
+      @include grid-media-min('lg') {
+        min-width: 47rem;
+        background-color: lightpink;
+      }
 
       // overlay of text on image happens at 992px to 1100px.
-      @include grid-media('lg') {
-        padding-left: 4rem;
-      }
+      // @include grid-media('lg') {
+        // padding-left: 4rem;
+      // }
     }
 
     .node-stanford-news-su-news-featured-media {
@@ -46,11 +84,11 @@
       }
 
       @include grid-media-max('md') {
-        width: 24rem;
+        width: 27.5rem;
       }
 
       @include grid-media-max('sm') {
-        width: 12rem;
+        width: 14rem;
       }
     }
 
