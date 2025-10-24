@@ -27,11 +27,8 @@
       // Has no type at top
       const eventLabel = $('<span class="su-event-label-past">' + Drupal.t('Past Event') + '</span></span>');
 
-      const pastText = $('<div class="su-event-text-past">' + Drupal.t('This event has already occurred.') + '</div>');
-
       // Apply past label and text
       if (eventDate < todayBegin) {
-        pastText.appendTo(eventTextLocation.last());
 
         if (eventTypeLabelLoc.length) {
           eventTypeLabel.prependTo(eventTypeLabelLoc.first());
