@@ -70,6 +70,11 @@
         background-color: lightpink;
       }
 
+      @include grid-media-min('xl') {
+        min-width: 70rem;
+        background-color: lightyellow;
+      }
+
       // overlay of text on image happens at 992px to 1100px.
       // @include grid-media('lg') {
         // padding-left: 4rem;
