@@ -7,33 +7,22 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    max-width: 32rem;
+    // max-width: 32rem;
+    max-width: 100%;
     gap: 34px;
 
     @include grid-media-between('sm', 'md') {
       gap: 34px;
     }
 
-    @include grid-media('sm') {
-      max-width: 51.6rem;
-    }
-
     @include grid-media('md') {
       gap: 66px;
-      max-width: 66.8rem;
     }
 
 
     @include grid-media('lg') {
       gap: 61px;
-      max-width: 83.2rem;
     }
-
-    @include grid-media-min('xl') {
-      gap: 61px;
-      max-width: 130rem;
-    }
-
 
     @include grid-media-max('xs') {
       flex-direction: column;
@@ -50,42 +39,19 @@
     .left-region {
       display: flex;
       flex-direction: column;
-      max-width: 73rem;
       order: 0;
       padding: 0;
-      flex-grow: 2;
 
       @include grid-media-min('sm') {
-        max-width: 33rem;
-        background-color: lightblue;
+        flex: 1 0 0;
       }
-
-      @include grid-media-min('md') {
-        max-width: 31rem;
-        background-color: lightgreen;
-      }
-
-      @include grid-media-min('lg') {
-        min-width: 47rem;
-        background-color: lightpink;
-      }
-
-      @include grid-media-min('xl') {
-        min-width: 70rem;
-        background-color: lightyellow;
-      }
-
-      // overlay of text on image happens at 992px to 1100px.
-      // @include grid-media('lg') {
-        // padding-left: 4rem;
-      // }
     }
 
     .node-stanford-news-su-news-featured-media {
-      width: 36rem;
+      width: 42rem;
 
       @include grid-media-max('lg') {
-        width: 29rem;
+        width: 33rem;
       }
 
       @include grid-media-max('md') {
