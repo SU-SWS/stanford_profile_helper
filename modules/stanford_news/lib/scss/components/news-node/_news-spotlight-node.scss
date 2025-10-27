@@ -7,8 +7,7 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    // max-width: 32rem;
-    max-width: 100%;
+    max-width: 1300px;
     gap: 34px;
 
     @include grid-media-between('sm', 'md') {
@@ -18,7 +17,6 @@
     @include grid-media('md') {
       gap: 66px;
     }
-
 
     @include grid-media('lg') {
       gap: 61px;
@@ -80,7 +78,7 @@
 
       .layout-selection {
         @include modular-spacing('margin-bottom', 1);
-        @include type-e;
+        @include type-d;
 
         font-weight: 600;
       }
