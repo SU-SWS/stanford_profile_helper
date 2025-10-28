@@ -77,18 +77,26 @@ function stanford_news_views_pre_view(ViewExecutable $view, $display_id, array &
     return;
   }
 
-  // Count total spotlight nodes.
-  $spotlight_count = \Drupal::entityQuery('node')
+  // Count total spotlight nodes (excluding trashed nodes).
+  $query = \Drupal::entityQuery('node')
     ->condition('type', 'stanford_news')
     ->condition('status', 1)
     ->accessCheck(FALSE)
-    ->condition('layout_selection', 'news_spotlight')
-    ->count()
-    ->execute();
+    ->condition('layout_selection', 'news_spotlight');
+
+  // Exclude trashed nodes if the trash module is enabled.
+  // The deleted field is NULL for non-trashed nodes.
+  if (\Drupal::moduleHandler()->moduleExists('trash')) {
+    $query->condition('deleted', NULL, 'IS NULL');
+  }
+
+  $spotlight_count = $query->count()->execute();
 
   // If less than 4 spotlights, prevent the view from rendering.
   if ($spotlight_count < 4) {
-    $view->build_info['fail'] = TRUE;
+    $view->executed = TRUE;
+    $view->result = [];
+    $view->total_rows = 0;
   }
 }
 
