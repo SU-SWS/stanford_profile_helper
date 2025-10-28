@@ -68,6 +68,81 @@ function stanford_news_page_attachments(array &$attachments) {
 }
 
 /**
+ * Implements hook_views_pre_view().
+ *
+ * Hide the Related Spotlights view if there are fewer than 4 spotlight nodes.
+ */
+function stanford_news_views_pre_view(ViewExecutable $view, $display_id, array &$args) {
+  if ($view->id() !== 'stanford_news' || $display_id !== 'related_spotlights') {
+    return;
+  }
+
+  // Count total spotlight nodes.
+  $spotlight_count = \Drupal::entityQuery('node')
+    ->condition('type', 'stanford_news')
+    ->condition('status', 1)
+    ->accessCheck(FALSE)
+    ->condition('layout_selection', 'news_spotlight')
+    ->count()
+    ->execute();
+
+  // If less than 4 spotlights, prevent the view from rendering.
+  if ($spotlight_count < 4) {
+    $view->build_info['fail'] = TRUE;
+  }
+}
+
+/**
+ * Implements hook_views_query_alter().
+ *
+ * Modify the Related Spotlights query to filter by matching taxonomy terms
+ * or fall back to recent nodes.
+ */
+function stanford_news_views_query_alter(ViewExecutable $view, $query) {
+  if ($view->id() !== 'stanford_news' || $view->current_display !== 'related_spotlights') {
+    return;
+  }
+
+  // Get the current node from the contextual filter (first argument).
+  if (empty($args[0])) {
+    $node = \Drupal::routeMatch()->getParameter('node');
+  }
+  else {
+    $node = \Drupal::entityTypeManager()->getStorage('node')->load($args[0]);
+  }
+
+  if (!$node || !$node->hasField('su_news_spotlight_filters')) {
+    return;
+  }
+
+  // Get the taxonomy terms from the current node.
+  $term_ids = [];
+  foreach ($node->get('su_news_spotlight_filters') as $item) {
+    if (!empty($item->target_id)) {
+      $term_ids[] = $item->target_id;
+    }
+  }
+
+  // If the node has taxonomy terms, add a filter for matching terms.
+  if (!empty($term_ids)) {
+    $configuration = [
+      'type' => 'LEFT',
+      'table' => 'node__su_news_spotlight_filters',
+      'field' => 'entity_id',
+      'left_table' => 'node_field_data',
+      'left_field' => 'nid',
+      'operator' => '=',
+    ];
+    $join = \Drupal::service('plugin.manager.views.join')->createInstance('standard', $configuration);
+    $query->addRelationship('node__su_news_spotlight_filters', $join, 'node_field_data');
+
+    // Add WHERE condition for matching taxonomy terms.
+    $query->addWhere(0, 'node__su_news_spotlight_filters.su_news_spotlight_filters_target_id', $term_ids, 'IN');
+  }
+  // If no taxonomy terms, the view will just use the default sort (publishing date DESC).
+}
+
+/**
  * Implements hook_views_post_render().
  *
  * Views render arrays contain a cache tag "node_list". This cache tag is
