@@ -139,12 +139,13 @@ class FormHooks {
     $field_def = $items->getFieldDefinition();
     if ($field_def->getName() == 'layout_selection') {
       $field_widget_complete_form['widget']['#description'] = t('Choose a layout to display the page as a whole. Choose "- Default -" to keep the default layout setting.');
-
       $noneOption = $this->t('- Default -');
 
+      // Special case for stanford_news content type.
       if ($field_def->getTargetBundle() == 'stanford_news') {
         $noneOption = $this->t('News');
         $field_widget_complete_form['widget']['#title'] = t('Variant');
+        $field_widget_complete_form['widget']['#description'] = t('Select how this News item should be displayed, as a standard News article or a Spotlight feature.');
       }
       $field_widget_complete_form['widget']['#options']['_none'] = $noneOption;
     }
