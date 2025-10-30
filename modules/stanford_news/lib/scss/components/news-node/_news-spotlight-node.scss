@@ -6,45 +6,58 @@
 
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    max-width: 130rem;
-    gap: 61px;
+    justify-content: center;
+    max-width: 1300px;
+    gap: 34px;
 
-    @include grid-media-between('sm', 'lg') {
+    @include grid-media-between('sm', 'md') {
       gap: 34px;
+    }
+
+    @include grid-media('md') {
+      gap: 66px;
+    }
+
+    @include grid-media('lg') {
+      gap: 61px;
     }
 
     @include grid-media-max('xs') {
       flex-direction: column;
       gap: 12px;
+      justify-content: flex-start;
     }
 
     .main-region {
       order: -1;
       padding: 0;
+      max-width: fit-content;
     }
 
     .left-region {
       display: flex;
       flex-direction: column;
-      max-width: 73rem;
       order: 0;
       padding: 0;
+
+      @include grid-media-min('sm') {
+        flex: 1 0 0;
+      }
     }
 
     .node-stanford-news-su-news-featured-media {
-      width: 36rem;
+      width: 42rem;
 
       @include grid-media-max('lg') {
-        width: 29rem;
+        width: 33rem;
       }
 
       @include grid-media-max('md') {
-        width: 24rem;
+        width: 27.5rem;
       }
 
       @include grid-media-max('sm') {
-        width: 12rem;
+        width: 14rem;
       }
     }
 
@@ -55,8 +68,8 @@
         @include modular-typography(5);
 
         font-family: Source Sans Pro;
-        font-weight: 600;
-        margin-bottom: 0;
+        font-weight: $su-font-black;
+        margin-bottom: 1.2rem;
       }
     }
 
