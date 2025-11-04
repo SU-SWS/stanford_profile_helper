@@ -91,7 +91,7 @@
       font-family: Source Sans Pro;
     }
 
-    .su-news-subtitle {
+    .su-news-spotlight-filters {
       @include type-e;
 
       border-top: 1px solid $su-color-black-20;
@@ -113,5 +113,69 @@
         color: $su-color-black-70;
       }
     }
+  }
+
+  .related-spotlights {
+    .su-card {
+      border: 1px solid $su-color-black-20;
+      box-shadow: none;
+      padding: 3rem;
+
+      @include grid-media-min('md') {
+        padding: 3.6rem
+      }
+
+      .field-media-image {
+        margin-bottom: 3.6rem;
+      }
+
+      .su-card__contents {
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+
+        // Quote styling.
+        @include type-c;
+
+        font-weight: $su-font-black;
+        color: $su-color-black;
+        padding-bottom: 3.2rem;
+        max-width: 75ch;
+
+        .su-card__superhead {
+          font-size: 1.6rem;
+          font-weight: $su-font-regular;
+          color: $su-color-black-70;
+          padding-bottom: 1rem;
+
+          @include grid-media-min('md') {
+            font-size: 1.8rem;
+          }
+        }
+
+        h2 {
+          order: 2;
+          font-size: 1.6rem;
+          padding-top: 3.2rem;
+
+          @include grid-media('md') {
+            font-size: 2.1rem;
+            padding-top: 4.8rem;
+          }
+        }
+
+        h2 ~ a {
+          display: block;
+          order: 2;
+          font-size: 1.6rem;
+          color: $su-color-black-70;
+
+          @include grid-media-min('md') {
+            font-size: 1.8rem;
+          }
+        }
+      }
+    }
+
   }
 }
