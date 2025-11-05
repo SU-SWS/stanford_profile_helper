@@ -46,6 +46,7 @@ class SuCleanHtml extends FilterBase implements ContainerFactoryPluginInterface 
    * {@inheritdoc}
    */
   public function process($text, $langcode) {
+    $text = str_replace('>&nbsp;</i>', '></i>', $text);
     $text = $this->removeRedundantTitle($text);
     if (!$this->isDecoupled()) {
       return new FilterProcessResult($text);
