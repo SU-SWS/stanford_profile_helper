@@ -4,6 +4,7 @@ namespace Drupal\stanford_decoupled\Drush\Commands;
 
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\Component\Uuid\UuidInterface;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Password\PasswordGeneratorInterface;
@@ -29,7 +30,13 @@ final class StanfordDecoupledCommands extends DrushCommands {
   /**
    * Constructs a StanfordDecoupledCommands object.
    */
-  public function __construct(private readonly EntityTypeManagerInterface $entityTypeManager, private readonly UuidInterface $uuid, private readonly PasswordGeneratorInterface $passwordGenerator, private readonly EventDispatcherInterface $eventDispatcher) {
+  public function __construct(
+    protected readonly EntityTypeManagerInterface $entityTypeManager,
+    protected readonly UuidInterface $uuid,
+    protected readonly PasswordGeneratorInterface $passwordGenerator,
+    protected readonly EventDispatcherInterface $eventDispatcher,
+    protected readonly ConfigFactoryInterface $configFactory
+  ) {
     parent::__construct();
   }
 
@@ -101,6 +108,10 @@ final class StanfordDecoupledCommands extends DrushCommands {
       ->setPassword($nextjs_admin_pass)
       ->save();
 
+    $this->configFactory->getEditable('system.theme')
+      ->set('default', 'stanford_profile_admin_theme')
+      ->save();
+
     $output = [
       'DRUPAL_PREVIEW_SECRET' => $site->getPreviewSecret(),
       'DRUPAL_REVALIDATE_SECRET' => $site->getRevalidateSecret(),
@@ -117,6 +128,7 @@ final class StanfordDecoupledCommands extends DrushCommands {
     foreach ($output as $key => $value) {
       $lined_output[] = "$key=$value";
     }
+
     $this->output()->write(implode(PHP_EOL, $lined_output) . PHP_EOL);
   }
 
