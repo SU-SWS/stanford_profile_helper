@@ -83,7 +83,7 @@ class StanfordDecoupledEntityTrackHooksTest extends KernelTestBase {
     $this->installSchema('node', ['node_access']);
     $this->installSchema('file', ['file_usage']);
     $this->installSchema('entity_usage', ['entity_usage']);
-    $this->installConfig(['field', 'node', 'media', 'taxonomy', 'paragraphs', 'stanford_decoupled']);
+    $this->installConfig(['field', 'node', 'media', 'taxonomy', 'paragraphs', 'stanford_decoupled', 'entity_usage']);
 
     // Create node type.
     NodeType::create([

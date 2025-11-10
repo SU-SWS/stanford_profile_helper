@@ -122,10 +122,10 @@ class HeroPatternBehavior extends ParagraphsBehaviorBase {
                   'required' => FALSE,
                   'palette' => [
                     '#000000',
-                    '#175E54',
+                    '#620059',
                     '#016895',
                     '#006B81',
-                    '#2D716F',
+                    '#175E54',
                     '#544948',
                   ],
                 ],
