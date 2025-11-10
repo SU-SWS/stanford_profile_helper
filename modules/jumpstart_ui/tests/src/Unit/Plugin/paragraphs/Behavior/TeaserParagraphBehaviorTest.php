@@ -57,6 +57,48 @@ class TeaserParagraphBehaviorTest extends UnitTestCase {
     $form = $plugin->buildBehaviorForm($paragraph, $form, $form_state);
     $this->assertArrayHasKey('heading_behavior', $form);
     $this->assertEquals('show', $form['heading_behavior']['#default_value']);
+
+    // Test that image size field is present.
+    $this->assertArrayHasKey('image_size', $form);
+    $this->assertEquals('select', $form['image_size']['#type']);
+    $this->assertArrayHasKey('large', $form['image_size']['#options']);
+    $this->assertArrayHasKey('small', $form['image_size']['#options']);
+  }
+
+  public function testImageSizeFormDefault() {
+    $plugin = TeaserParagraphBehavior::create(\Drupal::getContainer(), [], '', []);
+    $paragraph = $this->createMock(ParagraphInterface::class);
+    $paragraph->method('getBehaviorSetting')
+      ->willReturnCallback(function($plugin_id, $key, $default) {
+        if ($key === 'image_size') {
+          return 'large';
+        }
+        return $default;
+      });
+
+    $form = [];
+    $form_state = new FormState();
+    $form = $plugin->buildBehaviorForm($paragraph, $form, $form_state);
+
+    $this->assertEquals('large', $form['image_size']['#default_value']);
+  }
+
+  public function testImageSizeFormSmall() {
+    $plugin = TeaserParagraphBehavior::create(\Drupal::getContainer(), [], '', []);
+    $paragraph = $this->createMock(ParagraphInterface::class);
+    $paragraph->method('getBehaviorSetting')
+      ->willReturnCallback(function($plugin_id, $key, $default) {
+        if ($key === 'image_size') {
+          return 'small';
+        }
+        return $default;
+      });
+
+    $form = [];
+    $form_state = new FormState();
+    $form = $plugin->buildBehaviorForm($paragraph, $form, $form_state);
+
+    $this->assertEquals('small', $form['image_size']['#default_value']);
   }
 
   public function testView() {
@@ -78,6 +120,104 @@ class TeaserParagraphBehaviorTest extends UnitTestCase {
     $plugin->view($build, $paragraph, $display, 'foo');
     $this->assertContains('visually-hidden', $build['su_entity_headline']['#attributes']['class']);
     $this->assertContains('stanford_h3_card', $build['su_entity_item'][0]['#cache']['keys']);
+  }
+
+  public function testViewWithSpotlightImageSize() {
+    $plugin = TeaserParagraphBehavior::create(\Drupal::getContainer(), [], '', []);
+
+    // Mock a spotlight news node.
+    $layout = $this->createMock(\Drupal\layout_library\Entity\Layout::class);
+    $layout->method('id')->willReturn('news_spotlight');
+
+    $field_item_list = $this->createMock(\Drupal\Core\Field\FieldItemListInterface::class);
+    $field_item_list->method('isEmpty')->willReturn(FALSE);
+    $field_item_list->method('__get')->with('entity')->willReturn($layout);
+
+    $news_node = $this->createMock(\Drupal\node\NodeInterface::class);
+    $news_node->method('getEntityTypeId')->willReturn('node');
+    $news_node->method('bundle')->willReturn('stanford_news');
+    $news_node->method('hasField')->with('layout_selection')->willReturn(TRUE);
+    $news_node->method('get')->with('layout_selection')->willReturn($field_item_list);
+
+    $paragraph = $this->createMock(Paragraph::class);
+    $paragraph->method('hasField')->with('su_entity_item')->willReturn(TRUE);
+    $paragraph->method('get')->with('su_entity_item')->willReturnSelf();
+    $paragraph->method('referencedEntities')->willReturn([$news_node]);
+    $paragraph->method('getBehaviorSetting')
+      ->willReturnCallback(function($plugin_id, $key, $default) {
+        if ($key === 'image_size') {
+          return 'large';
+        }
+        return $default;
+      });
+
+    $display = $this->createMock(EntityViewDisplayInterface::class);
+    $build = [];
+    $plugin->view($build, $paragraph, $display, 'default');
+
+    // Verify image size is added to build array.
+    $this->assertEquals('large', $build['#spotlight_image_size']);
+    $this->assertContains('spotlight-image-large', $build['#attributes']['class']);
+  }
+
+  public function testViewWithSpotlightImageSizeSmall() {
+    $plugin = TeaserParagraphBehavior::create(\Drupal::getContainer(), [], '', []);
+
+    // Mock a spotlight news node.
+    $layout = $this->createMock(\Drupal\layout_library\Entity\Layout::class);
+    $layout->method('id')->willReturn('news_spotlight');
+
+    $field_item_list = $this->createMock(\Drupal\Core\Field\FieldItemListInterface::class);
+    $field_item_list->method('isEmpty')->willReturn(FALSE);
+    $field_item_list->method('__get')->with('entity')->willReturn($layout);
+
+    $news_node = $this->createMock(\Drupal\node\NodeInterface::class);
+    $news_node->method('getEntityTypeId')->willReturn('node');
+    $news_node->method('bundle')->willReturn('stanford_news');
+    $news_node->method('hasField')->with('layout_selection')->willReturn(TRUE);
+    $news_node->method('get')->with('layout_selection')->willReturn($field_item_list);
+
+    $paragraph = $this->createMock(Paragraph::class);
+    $paragraph->method('hasField')->with('su_entity_item')->willReturn(TRUE);
+    $paragraph->method('get')->with('su_entity_item')->willReturnSelf();
+    $paragraph->method('referencedEntities')->willReturn([$news_node]);
+    $paragraph->method('getBehaviorSetting')
+      ->willReturnCallback(function($plugin_id, $key, $default) {
+        if ($key === 'image_size') {
+          return 'small';
+        }
+        return $default;
+      });
+
+    $display = $this->createMock(EntityViewDisplayInterface::class);
+    $build = [];
+    $plugin->view($build, $paragraph, $display, 'default');
+
+    // Verify image size is added to build array.
+    $this->assertEquals('small', $build['#spotlight_image_size']);
+    $this->assertContains('spotlight-image-small', $build['#attributes']['class']);
+  }
+
+  public function testViewWithoutSpotlightNews() {
+    $plugin = TeaserParagraphBehavior::create(\Drupal::getContainer(), [], '', []);
+
+    // Mock a regular page node (not spotlight news).
+    $page_node = $this->createMock(\Drupal\node\NodeInterface::class);
+    $page_node->method('getEntityTypeId')->willReturn('node');
+    $page_node->method('bundle')->willReturn('stanford_page');
+
+    $paragraph = $this->createMock(Paragraph::class);
+    $paragraph->method('hasField')->with('su_entity_item')->willReturn(TRUE);
+    $paragraph->method('get')->with('su_entity_item')->willReturnSelf();
+    $paragraph->method('referencedEntities')->willReturn([$page_node]);
+    $paragraph->method('getBehaviorSetting')->willReturn('show');
+
+    $display = $this->createMock(EntityViewDisplayInterface::class);
+    $build = [];
+    $plugin->view($build, $paragraph, $display, 'default');
+
+    // Verify image size is NOT added when not a spotlight news item.
+    $this->assertArrayNotHasKey('#spotlight_image_size', $build);
   }
 
   /**
