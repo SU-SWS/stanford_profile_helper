@@ -9,11 +9,13 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\node\NodeInterface;
 use Drupal\search_api\IndexInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class AlgoliaHooks {
 
   public function __construct(
+    #[Autowire(service: 'config_pages.loader')]
     protected ConfigPagesLoaderServiceInterface $configPagesLoader,
     protected RequestStack $requestStack,
     protected EntityTypeManagerInterface $entityTypeManager
