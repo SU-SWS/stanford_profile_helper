@@ -123,7 +123,7 @@
       position: relative;
 
       @include grid-media-min('md') {
-        padding: 3.6rem
+        padding: 3.6rem;
       }
 
       .su-news-header {
@@ -184,6 +184,5 @@
         }
       }
     }
-
   }
 }
