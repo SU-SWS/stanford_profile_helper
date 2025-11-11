@@ -66,8 +66,7 @@
 
       .title {
         @include modular-typography(5);
-
-        font-family: Source Sans Pro;
+        @include serif;
         font-weight: $su-font-black;
         margin-bottom: 1.2rem;
       }
