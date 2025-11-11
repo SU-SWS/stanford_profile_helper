@@ -27,53 +27,55 @@
 
 {# If the news source url is set go there instead of the default. #}
 {%- if news_source|render|striptags("<drupal-render-placeholder>")|trim is not empty -%}
-  {%- set news_url = news_source -%}
-  {%- set classes = classes|merge(['su-news-external']) -%}
-  {%- set news_url_link_type = "su-link--external" -%}
+	{%- set news_url = news_source -%}
+	{%- set classes = classes|merge(['su-news-external']) -%}
+	{%- set news_url_link_type = "su-link--external" -%}
 {%- endif %}
 
 {%- if news_url_attributes is empty -%}
-  {% set news_url_attributes = create_attribute() -%}
+	{% set news_url_attributes = create_attribute() -%}
 {%- endif -%}
 
 {% set news_url = news_url|render|striptags("<drupal-render-placeholder>")|trim %}
 {% set header_tag = variant == 'h3_header' ? 'h3' : 'h2' %}
 
-<article{{ attributes.addClass(classes) }}>
-  {%- if news_url is not empty -%}
-    <a {{ news_url_attributes.addClass('su-news-vertical-teaser__link') }} href="{{ news_url }}">
-  {%- endif -%}
-  <figure class="su-media su-media--image su-card__media">
-    <div class="su-media__wrapper">
-      {{- news_vertical_teaser_image -}}
-    </div>
-  </figure>
-  <div class="su-news-header">
-    <{{ header_tag }} class="su-link su-card__link {{ news_url_link_type }}">
-      {{- news_vertical_teaser_headline -}}
-    </{{ header_tag }}>
-  </div>
-  {%- if news_url is not empty -%}
-    </a>
-  {%- endif -%}
+<article{{attributes.addClass(classes)}}>
+	<figure class="su-media su-media--image su-card__media">
+		<div class="su-media__wrapper">
+			{{- news_vertical_teaser_image -}}
+		</div>
+	</figure>
+	<div class="su-card__contents">
 
-  <div class="su-card__contents">
 
-    {% if date is not empty %}
-      <div class="su-news-date">
-        {{ date }}
-      </div>
-    {% endif %}
+		<div class="su-news-header">
+			{%- if news_url is not empty -%}
+				<a {{ news_url_attributes.addClass('su-news-vertical-teaser__link') }} href="{{ news_url }}">
+				{%- endif -%}
+				<{{header_tag}} class="su-link su-card__link {{ news_url_link_type }}">
+					{{- news_vertical_teaser_headline -}}
+				</{{header_tag}}>
+				{%- if news_url is not empty -%}
+				</a>
+			{%- endif -%}
+		</div>
 
-    {% if dek is not empty %}
-      <div class="su-news-dek">
-        {{ dek }}
-      </div>
-    {% endif %}
 
-    <div class="news-vertical-teaser__topics">{{ news_topics }}</div>
-  </div>
-  {%- if news_footer is not empty -%}
-    <div class="news-vertical-teaser__footer">{{ news_footer }}</div>
-  {%- endif -%}
+		{% if date is not empty %}
+			<div class="su-news-date">
+				{{ date }}
+			</div>
+		{% endif %}
+
+		{% if dek is not empty %}
+			<div class="su-news-dek">
+				{{ dek }}
+			</div>
+		{% endif %}
+
+		<div class="news-vertical-teaser__topics">{{ news_topics }}</div>
+	</div>
+	{%- if news_footer is not empty -%}
+		<div class="news-vertical-teaser__footer">{{ news_footer }}</div>
+	{%- endif -%}
 </article>
