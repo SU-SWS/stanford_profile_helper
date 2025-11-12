@@ -57,6 +57,7 @@ class AlgoliaHooks {
     $federated = $this->isFederatedSearch();
 
     foreach ($objects as &$item) {
+      $item['html'] = '';
       // Move title to the beginning for more easy UI results.
       $item = ['title' => $item['title'], ...$item];
 
@@ -127,7 +128,7 @@ class AlgoliaHooks {
     $termStorage = $this->entityTypeManager->getStorage('taxonomy_term');
 
     $terms = $termStorage->loadMultiple($data);
-
+    /** @var \Drupal\taxonomy\TermInterface $term */
     foreach ($terms as $term) {
       $categories = [];
 
@@ -137,11 +138,14 @@ class AlgoliaHooks {
       ];
 
       $level = 0;
-      while ($parent_id = $term?->get('parent')?->getString()) {
+
+      while (($parent_id = $term?->get('parent')?->getString()) && $level < 3) {
         $parent = $termStorage->load($parent_id);
-        $lastLevel = isset($categories['categories.lvl' . $level - 1]) ? $categories['categories.lvl' . $level - 1] . ' > ' : '';
-        $categories["categories.lvl$level"] = $lastLevel . $parent->label();
-        $term = $parent;
+        if ($parent) {
+          $lastLevel = isset($categories['categories.lvl' . $level - 1]) ? $categories['categories.lvl' . $level - 1] . ' > ' : '';
+          $categories["categories.lvl$level"] = $lastLevel . $parent->label();
+          $term = $parent;
+        }
         $level++;
       }
 
@@ -153,12 +157,12 @@ class AlgoliaHooks {
   /**
    * Get the configured canonical site domain.
    *
-   * @return string
+   * @return string|null
    *   Canonical domain.
    *
    * @codeCoverageIgnore
    */
-  protected function getSiteDomain(): string {
+  protected function getSiteDomain(): ?string {
     return $this->configPagesLoader->getValue('stanford_basic_site_settings', 'su_site_url', 0, 'uri');
   }
 
