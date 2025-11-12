@@ -72,15 +72,10 @@
       }
     }
 
-    .inline-block.stanford-component-block {
+    .su-spotlight-label {
       order: -1;
 
-      .su-intro,
-      .ptype-stanford-wysiwyg {
-        margin: 0;
-      }
-
-      .su-wysiwyg-text > p {
+      p {
         @include modular-spacing('margin-bottom', 1);
         @include type-e;
 
