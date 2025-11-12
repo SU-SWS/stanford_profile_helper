@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+// Adjust grid for Spotlight Cards in List.
+.stanford-news--cards-spotlight {
+  .su-list-unstyled.grid-container-4 {
+    @include grid-media-between('sm', 'xl') {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}
