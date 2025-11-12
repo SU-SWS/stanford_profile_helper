@@ -69,18 +69,16 @@
   }
 
   .su-news-list__header {
-
     @include grid-media-max('lg') {
       display: grid;
       grid-template-columns: 100%;
-      grid-template-areas: "date" "headline" "dek";
+      grid-template-areas: 'date' 'headline' 'dek';
     }
-
 
     @include grid-media-min('xl') {
       display: grid;
       grid-template-columns: 65% 35%;
-      grid-template-areas: "date date" "headline article-image" "headline article-image";
+      grid-template-areas: 'date date' 'headline article-image' 'headline article-image';
     }
   }
 
@@ -88,7 +86,7 @@
     .su-news-list__header {
       display: grid;
       grid-template-columns: 100%;
-      grid-template-areas: "date" "headline" "dek";
+      grid-template-areas: 'date' 'headline' 'dek';
     }
   }
 
@@ -98,7 +96,6 @@
 
     border-bottom: 1px solid $su-color-cool-grey-25;
   }
-
 
   .su-news-list__item-date {
     @include small-paragraph;
@@ -118,7 +115,6 @@
       }
     }
   }
-
 
   a {
     @include link;
@@ -170,13 +166,13 @@
       margin-bottom: 0;
 
       &::after {
-        content: ", ";
+        content: ', ';
       }
     }
 
     li:last-of-type {
       &::after {
-        content: "";
+        content: '';
       }
     }
   }

@@ -1,25 +1,68 @@
 @charset "UTF-8";
 
+// Spotlight Container styles for List and Filtered List.
+.su-page-components {
+  .ptype-stanford-lists,
+  .ptype-stanford-entity {
+    // &:has(.stanford-news--cards-spotlight),
+    // &:has(.stanford-news-related-spotlights-filtered),
+    &:has(.news-spotlight) {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+}
+// Spotlight Image Card styles for List, Filtered List, and Related Spotlights.
+.related-spotlights,
+.ptype-stanford-lists:has(.stanford-news--cards-spotlight),
+.ptype-stanford-lists:has(.stanford-news-related-spotlights-filtered) {
+  .su-media__wrapper {
+    padding: 3.6rem 3.6rem 0 3.6rem;
+
+    .field-media-image {
+      picture,
+      img {
+        min-width: fit-content;
+        width: 10rem;
+
+        @include grid-media('md') {
+          width: 16rem;
+        }
+      }
+    }
+  }
+}
+
+// Spotlight Card styles for Teaser, List, Filtered List, and Related Spotlights.
 .news-spotlight {
   .su-card {
     border: 1px solid $su-color-black-20;
     box-shadow: none;
     position: relative;
 
-    .su-news-header {
-      position: absolute;
-      bottom: 60px;
+    .field-media-image {
+      margin-bottom: 0;
+    }
 
+    .su-news-header {
       h2,
       h3 {
         font-size: 1.6rem;
-        padding-top: 3.2rem;
-        margin-left: 0;
-        margin-bottom: 0;
+        padding: 3.6rem 3.6rem 0 3.6rem;
+        margin: 0;
+        width: 100%;
 
         @include grid-media('md') {
           font-size: 2.1rem;
-          padding-top: 4.8rem;
+        }
+
+        &::after {
+          mask: url(../../../assets/svg/arrow-right.svg) no-repeat 0 0;
+          width: 1.8rem;
+          height: 1.3rem;
+          margin-left: 0.6rem;
+          margin-bottom: 0;
+          background-color: $su-color-black;
         }
       }
     }
@@ -27,21 +70,26 @@
     .su-card__contents {
       display: flex;
       flex-direction: column;
+      padding: 0 3.6rem 3.6rem 3.6rem;
 
       // Quote styling
-      .su-news-dek__big-quote {
+      .su-news-dek > p {
         @include type-c;
+        @include serif;
 
+        line-height: 1.2;
         font-weight: $su-font-black;
         color: $su-color-black;
-        padding-bottom: 3.2rem;
+        margin-top: 1rem;
+        margin-bottom: 0;
       }
 
       .su-news-date {
         font-size: 1.6rem;
         font-weight: $su-font-regular;
         color: $su-color-black-70;
-        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+        margin-top: 1.8rem;
 
         @include grid-media-min('md') {
           font-size: 1.8rem;
@@ -50,14 +98,21 @@
 
       .news-vertical-teaser__topics {
         display: block;
-        order: 2;
         font-size: 1.6rem;
         color: $su-color-black-70;
+        order: -1;
 
         @include grid-media-min('md') {
           font-size: 1.8rem;
         }
       }
     }
+  }
+}
+
+// Spotlight Date hidden modifier for No Date List.
+.spotlight-card-grid-no-date {
+  .su-news-date {
+    display: none;
   }
 }
