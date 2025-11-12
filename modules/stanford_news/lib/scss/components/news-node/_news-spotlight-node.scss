@@ -96,6 +96,20 @@
       border-top: 1px solid $su-color-black-20;
       color: $su-color-black-70;
       padding-top: 12px;
+
+      div {
+        display: inline-block;
+
+        &::after {
+          content: ',';
+          @include margin(null 5px null null);
+        }
+
+        &:last-child::after {
+          content: '';
+          @include margin(null 0 null null);
+        }
+      }
     }
   }
 
