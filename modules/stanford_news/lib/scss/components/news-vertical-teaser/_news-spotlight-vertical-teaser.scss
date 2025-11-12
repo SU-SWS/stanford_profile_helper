@@ -4,14 +4,19 @@
 .su-page-components {
   .ptype-stanford-lists,
   .ptype-stanford-entity {
-    // &:has(.stanford-news--cards-spotlight),
-    // &:has(.stanford-news-related-spotlights-filtered),
     &:has(.news-spotlight) {
       width: 100%;
       max-width: 100%;
     }
   }
 }
+
+.node--layout-full {
+  &:has(.news-spotlight) {
+    @include centered-column;
+  }
+}
+
 // Spotlight Image Card styles for List, Filtered List, and Related Spotlights.
 .related-spotlights,
 .ptype-stanford-lists:has(.stanford-news--cards-spotlight),
