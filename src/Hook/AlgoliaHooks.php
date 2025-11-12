@@ -12,8 +12,21 @@ use Drupal\search_api\IndexInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\RequestStack;
 
+/**
+ * Hooks that relate to algolia search indexing.
+ */
 class AlgoliaHooks {
 
+  /**
+   * Hook constructor.
+   *
+   * @param \Drupal\config_pages\ConfigPagesLoaderServiceInterface $configPagesLoader
+   *   Config pages loader service.
+   * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+   *   Complete request stack.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   *   Entity type manager service.
+   */
   public function __construct(
     #[Autowire(service: 'config_pages.loader')]
     protected ConfigPagesLoaderServiceInterface $configPagesLoader,
@@ -23,6 +36,8 @@ class AlgoliaHooks {
 
   /**
    * Implements hook_ENTITY_TYPE_update().
+   *
+   * Clears algolia record if a node went from published to unpublished.
    */
   #[Hook('node_update')]
   public function nodeUpdate(NodeInterface $node) {
@@ -48,6 +63,8 @@ class AlgoliaHooks {
 
   /**
    * Implements hook_search_api_algolia_objects_alter().
+   *
+   * Fix url domains and taxonomy fields.
    */
   #[Hook('search_api_algolia_objects_alter')]
   public function alterObjects(array &$objects, IndexInterface $index, array $items) {
@@ -76,7 +93,6 @@ class AlgoliaHooks {
 
       foreach ($item as $name => &$field) {
         // For filter fields, structure the data to work for Algolia facets.
-        // @see https://www.algolia.com/doc/api-reference/widgets/hierarchical-menu/react
         if (str_starts_with($name, 'filters_')) {
           // SearchAPI doesn't allow us to have multiple fields with the same
           // key. But we will only ever have 1 filters field on each item. So
@@ -112,45 +128,31 @@ class AlgoliaHooks {
   }
 
   /**
-   * Build a structured data for hierarchical menu with algolia.
+   * Build a nested structure that contains the parent term name as the key.
    *
-   * @see https://www.algolia.com/doc/api-reference/widgets/hierarchical-menu/react
+   * The result of the array can then be used for Algolia facets by configuring
+   * a facet for each parent term name. Since we don't know what those could be,
+   * there's no other way to structure the data to be more bullet proof.
    *
    * @param array|string $data
    *   Either the term id or an array of term ids.
    *
    * @return array
-   *   Indexed array of term structure.
+   *   Keyed array of parent term to children.
    */
   protected function adjustFiltersData($data): array {
     $data = is_array($data) ? $data : [$data];
     $structured_data = [];
+    /** @var \Drupal\taxonomy\TermStorage $termStorage */
     $termStorage = $this->entityTypeManager->getStorage('taxonomy_term');
 
-    $terms = $termStorage->loadMultiple($data);
-    /** @var \Drupal\taxonomy\TermInterface $term */
-    foreach ($terms as $term) {
-      $categories = [];
-
-      $itemData = [
-        'objectId' => $term->uuid(),
-        'name' => $term->label(),
-      ];
-
-      $level = 0;
-
-      while (($parent_id = $term?->get('parent')?->getString()) && $level < 3) {
-        $parent = $termStorage->load($parent_id);
-        if ($parent) {
-          $lastLevel = isset($categories['categories.lvl' . $level - 1]) ? $categories['categories.lvl' . $level - 1] . ' > ' : '';
-          $categories["categories.lvl$level"] = $lastLevel . $parent->label();
-          $term = $parent;
-        }
-        $level++;
-      }
-
-      $structured_data[] = [...$itemData, ... $categories];
+    // Grab the first parent and use that as the key for the array. This will
+    // allow facets to be used for "filters.Foo"
+    foreach ($data as $tid) {
+      $terms = $termStorage->loadAllParents($tid);
+      $structured_data[array_pop($terms)->label()][] = reset($terms)->label();
     }
+
     return $structured_data;
   }
 

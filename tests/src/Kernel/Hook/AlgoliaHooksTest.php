@@ -364,9 +364,9 @@ class AlgoliaHooksTest extends SuProfileHelperKernelTestBase {
     $this->assertArrayNotHasKey('filters_tags', $objects[0]);
     $this->assertIsArray($objects[0]['filters']);
     $this->assertNotEmpty($objects[0]['filters']);
-    $this->assertEquals('Child Term', $objects[0]['filters'][0]['name']);
-    $this->assertEquals($child_term->uuid(), $objects[0]['filters'][0]['objectId']);
-    $this->assertEquals($parent_term->label(), $objects[0]['filters'][0]['categories.lvl0']);
+
+    $this->assertArrayHasKey('Parent Term', $objects[0]['filters']);
+    $this->assertEquals('Child Term', $objects[0]['filters']['Parent Term'][0]);
   }
 
 }
