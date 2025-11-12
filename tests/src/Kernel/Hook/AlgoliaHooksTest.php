@@ -256,7 +256,7 @@ class AlgoliaHooksTest extends SuProfileHelperKernelTestBase {
     );
 
     // Create a mock index.
-    $index = $this->createMock(ItemInterface::class);
+    $index = $this->createMock(IndexInterface::class);
     $field = $this->createMock(FieldInterface::class);
     $field->method('getPropertyPath')->willReturn('entity:title');
     $index->method('getField')->willReturn($field);
