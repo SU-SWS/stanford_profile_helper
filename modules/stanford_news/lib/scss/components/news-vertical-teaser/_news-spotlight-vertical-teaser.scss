@@ -12,7 +12,8 @@
 }
 
 .node--layout-full {
-  &:has(.news-spotlight) {
+  .stanford-news--cards-spotlight,
+  .stanford-news-related-spotlights-filtered {
     @include centered-column;
   }
 }
