@@ -67,7 +67,7 @@
       .title {
         @include modular-typography(5);
         @include serif;
-        font-weight: $su-font-black;
+        font-weight: 800;
         margin-bottom: 1.2rem;
       }
     }
@@ -86,8 +86,7 @@
     .su-news-quote {
       @include modular-spacing('margin-bottom', 1);
       @include type-c;
-
-      font-family: Source Sans Pro;
+      @include serif;
     }
 
     .su-news-subtitle {
