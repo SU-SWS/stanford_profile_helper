@@ -1,7 +1,6 @@
 @charset 'UTF-8';
 @import '../../../config';
 
-
 .ptype-stanford-filtered-lists {
   @include centered-column;
 
@@ -32,7 +31,8 @@
     }
   }
 
-  .stanford-opportunities-filtered {
+  .stanford-opportunities-filtered,
+  .stanford-news-filtered {
     display: flex;
     gap: 78px;
     flex-direction: column;
@@ -66,4 +66,19 @@
       }
     }
   }
+
+  .stanford-news-filtered {
+    .grid-container-3 {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+
+      @include grid-media('md') {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      @include grid-media('2xl') {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+  }
 }
+
