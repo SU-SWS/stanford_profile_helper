@@ -67,15 +67,15 @@
       .title {
         @include modular-typography(5);
         @include serif;
-        font-weight: $su-font-black;
+        font-weight: 800;
         margin-bottom: 1.2rem;
       }
     }
 
-    .node-stanford-news-layout-selection {
+    .su-spotlight-label {
       order: -1;
 
-      .layout-selection {
+      p {
         @include modular-spacing('margin-bottom', 1);
         @include type-e;
 
@@ -86,16 +86,29 @@
     .su-news-quote {
       @include modular-spacing('margin-bottom', 1);
       @include type-c;
-
-      font-family: Source Sans Pro;
+      @include serif;
     }
 
-    .su-news-subtitle {
+    .su-news-spotlight-filters {
       @include type-e;
 
       border-top: 1px solid $su-color-black-20;
       color: $su-color-black-70;
       padding-top: 12px;
+
+      div {
+        display: inline-block;
+
+        &::after {
+          content: ',';
+          @include margin(null 5px null null);
+        }
+
+        &:last-child::after {
+          content: '';
+          @include margin(null 0 null null);
+        }
+      }
     }
   }
 
