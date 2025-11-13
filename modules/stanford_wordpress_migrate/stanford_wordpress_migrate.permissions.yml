@@ -1,0 +1,3 @@
+administer wordpress_migration:
+  title: 'Administer WordPress migrations'
+  restrict access: true

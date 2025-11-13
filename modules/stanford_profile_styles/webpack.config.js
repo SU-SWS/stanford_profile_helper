@@ -15,7 +15,13 @@ const config = {
   wdsPort: 3001,
 };
 
-const entryPoints = glob.sync('./lib/scss/**/*.scss').reduce((acc, filePath) => {
+const componentStyles = glob.sync('./components/**/*.scss').reduce((acc, filePath) => {
+  acc['../../' + filePath.replace('.scss', '')] = filePath
+  return acc
+}, {});
+
+
+let entryPoints = glob.sync('./lib/scss/**/*.scss').reduce((acc, filePath) => {
   const filePathParts = filePath.replace('./lib/scss/', '').split('/');
   let fileName = filePathParts.pop();
   if (fileName.indexOf('_') === 0) {
@@ -25,12 +31,12 @@ const entryPoints = glob.sync('./lib/scss/**/*.scss').reduce((acc, filePath) => 
     fileName = filePathParts.pop();
   }
   const entry = filePathParts.length >= 1 ? filePathParts.join('/') + '/' + fileName : fileName;
-  acc[entry.replace('.scss', '')] = filePath
+  acc[ entry.replace('.scss', '')] = filePath
   return acc
 }, {});
 
 var webpackConfig = {
-  entry: entryPoints,
+  entry: {...componentStyles, ...entryPoints},
   output: {
     path: config.distFolder,
     filename: '[name].js',

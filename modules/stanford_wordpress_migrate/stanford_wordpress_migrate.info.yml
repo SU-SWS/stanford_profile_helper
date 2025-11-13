@@ -1,0 +1,11 @@
+name: 'Stanford WordPress Migrate'
+type: module
+description: 'Migrate a WordPress site into Drupal'
+core_version_requirement: ^11.2
+package: Stanford
+version: 10.0.2
+dependencies:
+  - stanford_migrate:stanford_migrate
+  - drupal:media
+  - drupal:taxonomy
+  - drupal:node

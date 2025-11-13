@@ -61,6 +61,11 @@ layout:
     base:
       dist/css/jumpstart_ui.layout.css: {}
 
+layout.media_content_layout:
+  css:
+    base:
+      dist/css/layout.media-content-layout.css: {}
+
 jumpstart_ui:
   css:
     base:
@@ -99,3 +104,8 @@ components.stat_card:
     - core/jquery
     - core/once
     - jumpstart_ui/countup
+
+components.container_responsive_card:
+  css:
+    base:
+      dist/css/container_responsive_card.css: {}

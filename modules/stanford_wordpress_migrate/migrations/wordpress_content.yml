@@ -1,0 +1,42 @@
+id: wordpress_content
+label: WordPress Content
+migration_tags:
+  - Content
+  - WordPress
+deriver: Drupal\stanford_wordpress_migrate\Plugin\migrate\WordPressContentDeriver
+migration_group: wordpress_migrations
+source:
+  track_changes: true
+  plugin: url
+  data_fetcher_plugin: http
+  request_options:
+    timeout: 30
+  urls: {  }
+  data_parser_plugin: json
+  item_selector: ''
+  fields:
+    -
+      name: title_rendered
+      label: title_rendered
+      selector: title/rendered
+    -
+      name: id
+      label: id
+      selector: id
+  ids:
+    id:
+      type: string
+  constants:
+    stanford_html: stanford_html
+process:
+  title:
+    -
+      plugin: skip_on_empty
+      method: row
+      source: title_rendered
+    -
+      plugin: callback
+      callable: html_entity_decode
+destination:
+  plugin: entity:node
+migration_dependencies: {}

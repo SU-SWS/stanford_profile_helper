@@ -1,0 +1,93 @@
+@charset 'UTF-8';
+@import '../jumpstart_ui.config';
+@import 'decanter/core/src/scss/decanter-no-markup';
+
+.jumpstart-ui--media-content {
+  width: 100%;
+  gap: 5%;
+  justify-content: space-between;
+
+  @include grid-media('md') {
+    display: flex;
+  }
+
+  .region-label {
+    text-align: center;
+    font-style: italic;
+  }
+
+  .left-region {
+    @include modular-spacing('margin-top', 7);
+    @include modular-spacing('margin-bottom', 7);
+
+    flex-grow: 1;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .right-region {
+    @include modular-spacing('margin-top', 7);
+    @include modular-spacing('margin-bottom', 7);
+    width: 100%;
+
+    @include grid-media('md') {
+      width: 15%;
+    }
+
+    > * {
+      @include modular-spacing('margin-bottom', 3);
+    }
+  }
+
+  .video {
+    @include modular-spacing('margin-bottom', 1);
+    order: -999;
+
+    iframe {
+      width: 100%;
+    }
+
+    .video {
+      iframe {
+        aspect-ratio: 16/9;
+        height: auto;
+        width: 100%;
+      }
+    }
+  }
+
+  .primary {
+    width: 100%;
+    gap: 30px;
+    justify-content: space-between;
+
+    @include grid-media('md') {
+      display: flex;
+    }
+  }
+
+  .left-primary {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+  }
+
+  .main {
+    border-top: 1px solid $su-color-black-20;
+    @include modular-spacing('margin-top', 3);
+    @include modular-spacing('padding-top', 3);
+
+    > * {
+      @include modular-spacing('margin-bottom', 3);
+    }
+  }
+
+  .eyebrow {
+    order: -999;
+  }
+
+  .series {
+    width: 20%;
+  }
+}

@@ -57,3 +57,26 @@ jumpstart_ui_three_column:
       label: Main
     right:
       label: Right
+
+media_content:
+  label: 'Media Content'
+  category: 'Stanford'
+  path: templates/layouts
+  template: media-content
+  default_region: main
+  regions:
+    video:
+      label: Video
+    right:
+      label: Right
+    title:
+      label: Title
+    eyebrow:
+      label: Eyebrow
+    series:
+      label: Series
+    supplemental:
+      label: Supplemental
+    main:
+      label: Body
+  library: jumpstart_ui/layout.media_content_layout

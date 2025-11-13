@@ -30,6 +30,12 @@ class EntityObjectHooks {
     if (isset($entity_types['menu_link_content'])) {
       $entity_types['menu_link_content']->addConstraint('menu_link_item_url_constraint');
     }
+
+    foreach ($entity_types as $entity_type) {
+      if ($entity_type->getBundleOf() == 'media') {
+        $entity_type->setLinkTemplate('dialog', '/media/dialog/{media}');
+      }
+    }
   }
 
   /**

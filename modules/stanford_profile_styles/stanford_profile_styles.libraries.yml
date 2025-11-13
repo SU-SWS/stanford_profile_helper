@@ -5,3 +5,9 @@ colorbox:
   dependencies:
     - colorbox/init
     - core/once
+
+node.stanford_media_content:
+  js:
+    js/media-content.js: {}
+  dependencies:
+    - core/once

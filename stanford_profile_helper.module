@@ -104,20 +104,6 @@ function stanford_profile_helper_plugin_filter_block__layout_builder_alter(array
 }
 
 /**
- * Implements hook_entity_delete().
- *
- */
-/**
- * Implements hook_ENTITY_TYPE_update().
- */
-function stanford_profile_helper_node_update(NodeInterface $node) {
-  if (!$node->isPublished() && $node->getOriginal()?->isPublished() && \Drupal::hasService('search_api_algolia.helper')) {
-    // Trigger algolia to delete the record.
-    \Drupal::service('search_api_algolia.helper')->entityDelete($node);
-  }
-}
-
-/**
  * Implements hook_cron().
  */
 function stanford_profile_helper_cron() {
@@ -152,7 +138,7 @@ function stanford_profile_helper_cron() {
     ->sort('access', 'DESC')
     ->range(0, 1)
     ->execute();
-  $last_editor = $uid ? $user_storage->load(reset($uid)): null;
+  $last_editor = $uid ? $user_storage->load(reset($uid)) : NULL;
 
   $site_information = [
     'accessibility' => $ally ?: [],
@@ -362,7 +348,7 @@ function stanford_profile_helper_form_alter(&$form, FormStateInterface $form_sta
     // Sort the action menu options alphabetically.
     if (!empty($form['header']['views_bulk_operations_bulk_form']['action']['#options'])) {
       $actions_array = $form['header']['views_bulk_operations_bulk_form']['action']['#options'];
-      uasort($actions_array, function ($a, $b) {
+      uasort($actions_array, function($a, $b) {
         return strcasecmp((string) $a, (string) $b);
       });
       $form['header']['views_bulk_operations_bulk_form']['action']['#options'] = $actions_array;
@@ -516,7 +502,9 @@ function stanford_profile_helper_entity_field_access($operation, FieldDefinition
     // of some sort. If the banner paragraph is the correct type, we can prevent
     // the original node title from displaying.
     /** @var \Drupal\paragraphs\ParagraphInterface $banner_paragraph */
-    $banner_paragraph = $items->getEntity()->get('su_page_banner')->get(0)->entity;
+    $banner_paragraph = $items->getEntity()
+      ->get('su_page_banner')
+      ->get(0)->entity;
     return AccessResult::forbiddenIf($banner_paragraph->bundle() == 'stanford_page_title_banner');
   }
 
@@ -527,7 +515,7 @@ function stanford_profile_helper_entity_field_access($operation, FieldDefinition
  * Implements hook_preprocess_toolbar().
  */
 function stanford_profile_helper_preprocess_toolbar(&$variables) {
-  array_walk($variables['tabs'], function (&$tab, $key) {
+  array_walk($variables['tabs'], function(&$tab, $key) {
     if (isset($tab['attributes'])) {
       $tab['attributes']->addClass(Html::cleanCssIdentifier("$key-tab"));
     }
@@ -552,7 +540,10 @@ function stanford_profile_helper_contextual_links_alter(array &$links, $group, a
 function stanford_profile_helper_node_access(NodeInterface $node, $op, AccountInterface $account) {
   if ($op == 'delete') {
     $site_config = \Drupal::config('system.site');
-    $node_urls = [$node->toUrl()->toString(TRUE)->getGeneratedUrl(), "/node/{$node->id()}"];
+    $node_urls = [
+      $node->toUrl()->toString(TRUE)->getGeneratedUrl(),
+      "/node/{$node->id()}",
+    ];
 
     // If the node is configured to be the home page, 404, or 403, prevent the
     // user from deleting. Unfortunately this only works for roles without the
@@ -562,7 +553,8 @@ function stanford_profile_helper_node_access(NodeInterface $node, $op, AccountIn
     }
   }
 
-  $locked_node_ids = \Drupal::state()->get('stanford_profile_helper.locked_admin_nodes', []);
+  $locked_node_ids = \Drupal::state()
+    ->get('stanford_profile_helper.locked_admin_nodes', []);
   if (in_array($node->id(), $locked_node_ids)) {
     return $op === 'view' ? AccessResult::forbiddenIf($account->isAnonymous()) : AccessResult::forbidden();
   }
@@ -601,7 +593,6 @@ function stanford_profile_helper_form_menu_edit_form_alter(array &$form, FormSta
  *   An optional context array containing data related to the link.
  */
 function stanford_profile_helper_xmlsitemap_link_alter(array &$link, array $context) {
-
   // Get node/[:id] from loc.
   $node_id = $link['loc'];
 
@@ -619,7 +610,6 @@ function stanford_profile_helper_xmlsitemap_link_alter(array &$link, array $cont
     case $stanford_profile_helper_404_page:
       // Status is set to zero to exclude the item in the sitemap.
       $link['status'] = 0;
-
   }
 }
 
@@ -728,7 +718,6 @@ function stanford_profile_helper_preprocess_pattern_alert(&$variables) {
 
   // Global Messages!
   if ($entity_type == "config_pages" && $bundle == "stanford_global_message") {
-
     // Validate that the entity has the field we need so we don't 500 the site.
     if (!$entity->hasField('su_global_msg_type')) {
       \Drupal::logger('stanford_profile_helper')
@@ -743,7 +732,6 @@ function stanford_profile_helper_preprocess_pattern_alert(&$variables) {
       $variables['attributes']->addClass("su-alert--text-light");
     }
   }
-
 }
 
 /**
@@ -787,7 +775,6 @@ function stanford_profile_helper_preprocess_pattern_localfooter(&$variables) {
 
   // Local Footer!
   if ($entity_type == "config_pages" && $bundle == "stanford_local_footer") {
-
     // If the lockup updates are not enabled just end.
     if (
       !$entity->hasField('su_local_foot_use_loc')
@@ -812,7 +799,8 @@ function stanford_profile_helper_preprocess_pattern_localfooter(&$variables) {
     // Check if there is a file.
     if (isset($file_field->entity)) {
       $file_uri = $file_field->entity->getFileUri();
-      $variables['site_logo'] = \Drupal::service('file_url_generator')->generateAbsoluteString($file_uri);
+      $variables['site_logo'] = \Drupal::service('file_url_generator')
+        ->generateAbsoluteString($file_uri);
     }
     else {
       $variables['use_logo'] = "1";
@@ -830,14 +818,12 @@ function stanford_profile_helper_preprocess_pattern_localfooter(&$variables) {
     $option = $entity->get('su_local_foot_loc_op')->getString();
     $variables['lockup_option'] = 'su-lockup--option-' . $option;
   }
-
 }
 
 /**
  * Implements hook_form_FORM_ID_alter().
  */
 function stanford_profile_helper_form_media_library_add_form_embeddable_alter(array &$form, FormStateInterface $form_state) {
-
   $source_field = $form_state->get('source_field');
   $embed_code_field = $form_state->get('unstructured_field_name');
   $user = \Drupal::currentUser();
@@ -857,7 +843,6 @@ function stanford_profile_helper_form_media_library_add_form_embeddable_alter(ar
     }
     $form['container'][$source_field]['#title'] = t('oEmbed URL');
   }
-
 }
 
 /**
@@ -993,7 +978,6 @@ function _stanford_profile_helper_extension_enabled(Extension $extension) {
   // Traverse down the path of the extension to find a module/theme/profile
   // that can be checked for existance.
   while ($path) {
-
     // An info.yml file exists in the current path, check if it's enabled as
     // a theme, profile, or module.
     if ($info_files = glob("$path/*.info.yml")) {
@@ -1125,60 +1109,6 @@ function stanford_profile_helper_entity_view_display_alter(EntityViewDisplayInte
  */
 function stanford_profile_helper_filter_format_access(EntityInterface $entity, $operation, AccountInterface $account) {
   return AccessResult::forbiddenIf($entity->id() == 'administrative_html');
-}
-
-/**
- * Implements hook_search_api_algolia_objects_alter().
- */
-function stanford_profile_helper_search_api_algolia_objects_alter(array &$objects, IndexInterface $index, array $items) {
-  /** @var \Drupal\config_pages\ConfigPagesLoaderServiceInterface $config_page_loader */
-  $config_page_loader = \Drupal::service('config_pages.loader');
-
-  // If the canonical url is set, use that to adjust the urls.
-  $site_domain = $config_page_loader->getValue('stanford_basic_site_settings', 'su_site_url', 0, 'uri');
-  $current_host = \Drupal::request()->getSchemeAndHttpHost();
-
-  $federated = (bool) $config_page_loader->getValue('stanford_basic_site_settings', 'su_site_algolia_fed', 0, 'value');
-
-  foreach ($objects as &$item) {
-    // If the site is configured for federated search, there's a chance that
-    // two or more sites have the same UUID on the node if the sites were ever
-    // cloned. To prevent possible uuid conflicts, prefix the unique ID with a
-    // hash of the site name. Each site should have a unique site name since
-    // that is used for the refinement options.
-    if ($federated) {
-      $prefix = substr(md5($item['site_name']), 0, 5) . ':';
-      $item['objectID'] = $prefix . $item['objectID'];
-    }
-
-    // Remove fields that aren't necessary.
-    unset($item['search_api_datasource'], $item['status']);
-
-    foreach ($item as $name => &$field) {
-      // Data that is being sent as the taxonomy term names should always be
-      // sent as an array of strings. When the node is only configured with one
-      // term in the field, it tries to send it as a string. So we force to be
-      // an array.
-      $property_path = $index->getField($name)?->getPropertyPath() ?: '';
-      if (is_string($field) && str_contains($property_path, ':entity:name')) {
-        $field = [$field];
-      }
-
-      // Either the canonical url hasn't been set, or it matches the current
-      // request. It would match the current request when the event is happening
-      // in the UI. If cron is running, the current host won't match the canonical
-      // url.
-      if (
-        $site_domain &&
-        $site_domain != $current_host &&
-        is_string($field) &&
-        str_contains($field, $current_host)
-      ) {
-        // Change the urls from the current host to the canonical url.
-        $field = str_replace($current_host, $site_domain, $field);
-      }
-    }
-  }
 }
 
 /**

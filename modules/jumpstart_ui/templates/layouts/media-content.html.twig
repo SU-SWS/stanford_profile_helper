@@ -1,0 +1,47 @@
+{#
+/**
+ * Single Column Container with configuration options.
+ */
+#}
+
+{# Add a few classes to the outer wrapper by default. #}
+{% set attributes = attributes.addClass('jumpstart-ui--media-content', 'centered-container') %}
+
+<div{{ attributes }}>
+  <div class="left-region">
+    <div class="primary">
+      <div class="left-primary">
+        <div{{ region_attributes.title.addClass('title') }}>
+          {{ in_preview ? '<div class="region-label">Title</div>' : '' }}
+          {{ content.title }}
+        </div>
+
+        <div{{ region_attributes.eyebrow.addClass('eyebrow') }}>
+          {{ in_preview ? '<div class="region-label">Eyebrow</div>' : '' }}
+          {{ content.eyebrow }}
+        </div>
+        <div{{ region_attributes.supplemental.addClass('supplemental') }}>
+          {{ in_preview ? '<div class="region-label">Supplemental</div>' : '' }}
+          {{ content.supplemental }}
+        </div>
+      </div>
+
+      <div{{ region_attributes.series.addClass('series') }}>
+        {{ in_preview ? '<div class="region-label">Series</div>' : '' }}
+        {{ content.series }}
+      </div>
+    </div>
+    <div{{ region_attributes.video.addClass('video') }}>
+      {{ in_preview ? '<div class="region-label">Video</div>' : '' }}
+      {{ content.video }}
+    </div>
+    <div{{ region_attributes.main.addClass('main') }}>
+      {{ in_preview ? '<div class="region-label">Main</div>' : '' }}
+      {{ content.main }}
+    </div>
+  </div>
+  <div{{ region_attributes.right.addClass('right-region') }}>
+    {{ in_preview ? '<div class="region-label">Right' : '' }}
+    {{ content.right }}
+  </div>
+</div>

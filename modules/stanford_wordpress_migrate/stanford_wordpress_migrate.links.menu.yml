@@ -1,0 +1,5 @@
+entity.wordpress_migration.collection:
+  title: 'WordPress Migrations'
+  description: 'List of WordPress migrations.'
+  route_name: entity.wordpress_migration.collection
+  parent: entity.migration_group.list

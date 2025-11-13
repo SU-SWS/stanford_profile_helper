@@ -1,0 +1,55 @@
+id: wordpress_redirects
+label: WordPress Content Redirects
+migration_tags:
+  - Redirects
+  - WordPress
+deriver: Drupal\stanford_wordpress_migrate\Plugin\migrate\WordPressRedirectDeriver
+migration_group: wordpress_migrations
+source:
+  track_changes: true
+  plugin: url
+  data_fetcher_plugin: http
+  request_options:
+    timeout: 30
+  urls: {  }
+  data_parser_plugin: json
+  item_selector: ''
+  fields:
+    -
+      name: id
+      label: id
+      selector: id
+    -
+      name: link
+      label: link
+      selector: link
+  ids:
+    id:
+      type: string
+  constants:
+    destination: 'entity:node/'
+process:
+  redirect_source:
+    plugin: str_replace
+    search: ''
+    replace: ''
+    source: link
+  redirect_node:
+    -
+      plugin: migration_lookup
+      migration: wordpress_content
+      source: id
+    -
+      plugin: skip_on_empty
+      method: row
+  redirect_redirect:
+      plugin: concat
+      source:
+        - constants/destination
+        - '@redirect_node'
+  status_code:
+    plugin: default_value
+    default_value: 301
+destination:
+  plugin: entity:redirect
+migration_dependencies: {}

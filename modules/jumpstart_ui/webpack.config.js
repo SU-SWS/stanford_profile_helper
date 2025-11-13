@@ -36,6 +36,7 @@ var webpackConfig = {
     "media":                path.resolve("lib/scss/components/media.component.scss"),
     "quote":                path.resolve("lib/scss/components/quote.component.scss"),
     "stat_card":            path.resolve("lib/scss/components/stat_card.component.scss"),
+    "layout.media-content-layout": path.resolve("lib/scss/layouts/media-content-layout.scss"),
   },
   output: {
     path: config.distFolder,

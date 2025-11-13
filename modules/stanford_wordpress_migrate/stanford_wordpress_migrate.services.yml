@@ -1,0 +1,10 @@
+services:
+  stanford_wordpress_migrate.event_subscriber:
+    class: Drupal\stanford_wordpress_migrate\EventSubscriber\WordPressMigrateSubscriber
+    arguments: ['@plugin.manager.migration', '@file_system', '@database']
+    tags:
+      - { name: event_subscriber }
+
+  plugin.manager.wordpress_migrate_field_processor:
+    class: Drupal\stanford_wordpress_migrate\WordPressMigrateFieldProcessorPluginManager
+    parent: default_plugin_manager

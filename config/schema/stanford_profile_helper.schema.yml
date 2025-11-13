@@ -1,0 +1,15 @@
+# Schema for configuration files of the stanford_profile_helper module.
+
+field.formatter.settings.time_duration:
+  type: mapping
+  label: 'Time Duration formatter settings'
+  mapping:
+    style:
+      type: string
+      label: 'Format Style'
+    units:
+      type: sequence
+      label: 'Units to display'
+      sequence:
+        type: string
+        label: 'Unit'

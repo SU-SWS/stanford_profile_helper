@@ -1,0 +1,7 @@
+stanford_profile_helper.media_dialog:
+  path: '/media/dialog/{media}'
+  defaults:
+    _controller: '\Drupal\stanford_profile_helper\Controller\MediaDialogController::mediaDialog'
+    _title_callback: '\Drupal\stanford_profile_helper\Controller\MediaDialogController::title'
+  requirements:
+    _entity_access: 'media.view'
