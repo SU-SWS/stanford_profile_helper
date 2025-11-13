@@ -5,3 +5,11 @@ stanford_profile_helper.media_dialog:
     _title_callback: '\Drupal\stanford_profile_helper\Controller\MediaDialogController::title'
   requirements:
     _entity_access: 'media.view'
+
+stanford_profile_helper.autocomplete.viewfield:
+  path: '/admin/viewfield/autocomplete/{view}/{display}'
+  defaults:
+    _controller: '\Drupal\stanford_profile_helper\Controller\ViewFieldController::handleArgumentsAutocomplete'
+    _format: json
+  requirements:
+    _permission: 'view the administration theme'
