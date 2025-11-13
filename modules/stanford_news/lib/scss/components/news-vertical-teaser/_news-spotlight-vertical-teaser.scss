@@ -18,9 +18,20 @@
   }
 }
 
+.su-list-unstyled.grid-container-3:has(.news-spotlight) {
+  @include grid-media('md') {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  @include grid-media-max('sm') {
+    grid-gap: 0;
+  }
+}
+
 // Spotlight Image Card styles for List, Filtered List, and Related Spotlights.
 .related-spotlights {
   .su-media__wrapper {
+    margin-bottom: 0;
     padding: 3.6rem 3.6rem 0 3.6rem;
 
     .field-media-image {
@@ -85,7 +96,6 @@
         line-height: 1.2;
         font-weight: $su-font-black;
         color: $su-color-black;
-        margin-top: 1rem;
         margin-bottom: 0;
       }
 
@@ -93,7 +103,8 @@
         font-size: 1.6rem;
         font-weight: $su-font-regular;
         color: $su-color-black-70;
-        margin-bottom: 0.5rem;
+        margin-bottom: 1rem;
+        margin-top: 1.8rem;
 
         @include grid-media-min('md') {
           font-size: 1.8rem;
