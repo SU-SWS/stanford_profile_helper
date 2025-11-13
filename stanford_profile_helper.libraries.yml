@@ -11,3 +11,7 @@ siteimprove.analytics:
 ajax_views:
   js:
     js/stanford_profile_helper.ajax_views.js: {}
+
+viewfield_autocomplete:
+  js:
+    js/stanford_profile_helper.viewfield_autocomplete.js: {}
