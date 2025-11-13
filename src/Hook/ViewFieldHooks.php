@@ -18,7 +18,7 @@ class ViewFieldHooks {
    * Implements hook_field_widget_complete_WIDGET_TYPE_form_alter().
    */
   #[Hook('field_widget_complete_viewfield_select_form_alter')]
-  function stanford_profile_helper_field_widget_complete_viewfield_select_form_alter(&$field_widget_complete_form, FormStateInterface $form_state, $context) {
+  function viewfieldFormAlter(&$field_widget_complete_form, FormStateInterface $form_state, $context) {
     $field_widget_complete_form['#attached']['library'][] = 'stanford_profile_helper/viewfield_autocomplete';
     $deltas = Element::children($field_widget_complete_form['widget']);
     foreach ($deltas as $delta) {
