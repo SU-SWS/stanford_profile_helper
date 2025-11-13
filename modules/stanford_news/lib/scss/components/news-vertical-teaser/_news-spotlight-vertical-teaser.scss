@@ -19,7 +19,7 @@
 }
 
 .su-list-unstyled.grid-container-3:has(.news-spotlight) {
-  @include grid-media('md') {
+  @include grid-media-max('md') {
     grid-template-columns: repeat(1, 1fr);
   }
 
