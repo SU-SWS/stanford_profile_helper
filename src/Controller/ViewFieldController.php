@@ -86,10 +86,11 @@ class ViewFieldController extends ControllerBase {
       default => []
     };
 
-    $this->moduleHandler->alter('viewfield_argument_suggestion_vocabs', $vocabs, $view, $display);
+    $context = ['view' => $view, 'display' => $display];
+    $this->moduleHandler->alter('viewfield_argument_suggestion_vocabs', $vocabs, $context);
 
     $term_names = $this->getTermNameSuggestions($arg, $vocabs);
-    $this->moduleHandler->alter('viewfield_argument_suggestions', $term_names, $view, $display);
+    $this->moduleHandler->alter('viewfield_argument_suggestions', $term_names, $arg, $context);
 
     $results = [];
     foreach ($term_names as $suggestion) {
