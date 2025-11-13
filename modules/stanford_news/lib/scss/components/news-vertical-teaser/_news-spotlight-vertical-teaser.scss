@@ -19,9 +19,7 @@
 }
 
 // Spotlight Image Card styles for List, Filtered List, and Related Spotlights.
-.related-spotlights,
-.ptype-stanford-lists:has(.stanford-news--cards-spotlight),
-.ptype-stanford-lists:has(.stanford-news-related-spotlights-filtered) {
+.related-spotlights {
   .su-media__wrapper {
     padding: 3.6rem 3.6rem 0 3.6rem;
 
@@ -95,11 +93,19 @@
         font-size: 1.6rem;
         font-weight: $su-font-regular;
         color: $su-color-black-70;
-        margin-bottom: 1rem;
-        margin-top: 1.8rem;
+        margin-bottom: 0.5rem;
 
         @include grid-media-min('md') {
           font-size: 1.8rem;
+        }
+      }
+
+      // Quote styling
+      @container (width >= 480px) {
+        .su-card__contents {
+          .su-news-dek > p {
+            @include type-b;
+          }
         }
       }
 
