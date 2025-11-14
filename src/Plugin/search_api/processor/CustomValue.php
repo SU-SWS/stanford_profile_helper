@@ -16,7 +16,7 @@ class CustomValue extends SearchApiCustomValue {
   /**
    * {@inheritdoc}
    */
-  public function getPropertyDefinitions(DatasourceInterface $datasource = NULL) {
+  public function getPropertyDefinitions(DatasourceInterface|null $datasource = NULL) {
     $properties = [];
 
     if (!$datasource) {
