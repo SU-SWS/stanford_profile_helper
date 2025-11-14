@@ -80,7 +80,7 @@
 
     @include grid-media-min('lg') {
       display: grid;
-      grid-template-columns: 307px 1fr;
+      grid-template-columns: 280px 1fr;
       gap: 78px;
 
       .views-exposed-form {
@@ -93,7 +93,7 @@
     }
 
     .views-exposed-form {
-      width: 307px;
+      width: 280px;
     }
 
     // Spacing after clicking the load more on only card list.
@@ -108,17 +108,15 @@
     }
   }
 
-  .stanford-news-filtered {
-    .grid-container-3 {
+  .grid-container-3 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+
+    @include grid-media('lg') {
       grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
 
-      @include grid-media('md') {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      @include grid-media('2xl') {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
+    @include grid-media('2xl') {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
 }
