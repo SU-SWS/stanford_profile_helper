@@ -36,6 +36,18 @@
     box-shadow: none;
     position: relative;
 
+    // Display images on small screens
+    @include grid-media-max('sm') {
+      .su-news-vertical-teaser__link {
+        padding-top: 0;
+      }
+
+      figure,
+      img {
+        display: block;
+      }
+    }
+
     .su-media__wrapper {
       margin-bottom: 0;
 
