@@ -1,10 +1,6 @@
 @charset "UTF-8";
 
 .su-list-unstyled.grid-container-3:has(.news-spotlight) {
-  @include grid-media-max('md') {
-    grid-template-columns: repeat(1, 1fr);
-  }
-
   @include grid-media-max('sm') {
     grid-gap: 0;
   }
