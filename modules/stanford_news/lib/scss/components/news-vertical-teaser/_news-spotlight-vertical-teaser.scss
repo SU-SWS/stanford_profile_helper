@@ -93,21 +93,23 @@
       padding: 0 3.6rem 3.6rem 3.6rem;
 
       // Quote styling
-      .su-news-dek > p {
-        @include type-c;
-        @include serif;
+      .su-news-dek {
+        margin-top: 1rem;
+        > p {
+          @include type-c;
+          @include serif;
 
-        line-height: 1.2;
-        font-weight: $su-font-black;
-        color: $su-color-black;
-        margin-bottom: 0;
+          line-height: 1.2;
+          font-weight: $su-font-black;
+          color: $su-color-black;
+          margin-bottom: 0;
+        }
       }
 
       .su-news-date {
         font-size: 1.6rem;
         font-weight: $su-font-regular;
         color: $su-color-black-70;
-        margin-bottom: 1rem;
         margin-top: 1.8rem;
 
         @include grid-media-min('md') {
