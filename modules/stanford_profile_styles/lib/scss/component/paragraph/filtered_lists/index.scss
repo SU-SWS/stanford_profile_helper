@@ -68,17 +68,15 @@
     }
   }
 
-  .stanford-news-filtered {
-    .grid-container-3 {
+  .grid-container-3 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+
+    @include grid-media('lg') {
       grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
 
-      @include grid-media('lg') {
-        grid-template-columns: repeat(1, minmax(0, 1fr));
-      }
-
-      @include grid-media('2xl') {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
+    @include grid-media('2xl') {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
 }
