@@ -126,4 +126,8 @@
       }
     }
   }
+
+  .related-spotlights {
+    @include modular-spacing('margin-bottom', 9);
+  }
 }
