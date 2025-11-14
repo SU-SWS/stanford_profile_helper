@@ -1,24 +1,5 @@
 @charset "UTF-8";
 
-// Spotlight Container styles for List and Filtered List.
-.su-page-components {
-  .ptype-stanford-lists,
-  .ptype-stanford-entity {
-    &:has(.news-spotlight) {
-      width: 100%;
-      max-width: 100%;
-    }
-  }
-}
-
-// Centered Spotlight Card Teasers for Full Width layout.
-.node--layout-full:not(:has(.jumpstart-ui--two-column)) {
-  .ptype-stanford-entity:has(.news-spotlight),
-  .stanford-news--cards-spotlight {
-    @include centered-column;
-  }
-}
-
 .su-list-unstyled.grid-container-3:has(.news-spotlight) {
   @include grid-media-max('md') {
     grid-template-columns: repeat(1, 1fr);
