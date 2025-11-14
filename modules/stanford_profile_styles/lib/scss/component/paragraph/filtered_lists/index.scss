@@ -41,7 +41,7 @@
       [type='radio'] {
         appearance: none;
         -webkit-appearance: none;
-        width: 24px;
+        min-width: 24px;
         height: 24px;
         border: 2px solid $su-color-black-40;
         border-radius: 50%;
