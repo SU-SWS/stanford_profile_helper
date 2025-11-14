@@ -1,23 +1,5 @@
 @charset "UTF-8";
 
-// Spotlight Container styles for List and Filtered List.
-.su-page-components {
-  .ptype-stanford-lists,
-  .ptype-stanford-entity {
-    &:has(.news-spotlight) {
-      width: 100%;
-      max-width: 100%;
-    }
-  }
-}
-
-.node--layout-full {
-  .ptype-stanford-entity:has(.news-spotlight),
-  .stanford-news--cards-spotlight {
-    @include centered-column;
-  }
-}
-
 .su-list-unstyled.grid-container-3:has(.news-spotlight) {
   @include grid-media-max('md') {
     grid-template-columns: repeat(1, 1fr);
@@ -31,7 +13,6 @@
 // Spotlight Image Card styles for List, Filtered List, and Related Spotlights.
 .related-spotlights {
   .su-media__wrapper {
-    margin-bottom: 0;
     padding: 3.6rem 3.6rem 0 3.6rem;
 
     .field-media-image {
@@ -55,8 +36,12 @@
     box-shadow: none;
     position: relative;
 
-    .field-media-image {
+    .su-media__wrapper {
       margin-bottom: 0;
+
+      .field-media-image {
+        margin-bottom: 0;
+      }
     }
 
     .su-news-header {
@@ -89,21 +74,23 @@
       padding: 0 3.6rem 3.6rem 3.6rem;
 
       // Quote styling
-      .su-news-dek > p {
-        @include type-c;
-        @include serif;
+      .su-news-dek {
+        margin-top: 1rem;
+        > p {
+          @include type-c;
+          @include serif;
 
-        line-height: 1.2;
-        font-weight: $su-font-black;
-        color: $su-color-black;
-        margin-bottom: 0;
+          line-height: 1.2;
+          font-weight: $su-font-black;
+          color: $su-color-black;
+          margin-bottom: 0;
+        }
       }
 
       .su-news-date {
         font-size: 1.6rem;
         font-weight: $su-font-regular;
         color: $su-color-black-70;
-        margin-bottom: 1rem;
         margin-top: 1.8rem;
 
         @include grid-media-min('md') {

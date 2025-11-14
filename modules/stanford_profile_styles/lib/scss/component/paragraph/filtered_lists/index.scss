@@ -6,34 +6,74 @@
 
   fieldset {
     padding: 0;
-    margin-bottom: 48px;
+    margin-bottom: 44px;
 
     legend {
-      font-size: 1.15em;
+      @include modular-typography(0);
+
       font-weight: $su-font-semi-bold;
       border-top: 1px solid;
       display: block;
       width: 100%;
       padding-top: 18px;
-
-      &:first-of-type {
-        padding-top: 36px;
-      }
-
-      &:last-of-type {
-        padding-bottom: 36px;
-      }
+      padding-bottom: 26px;
     }
 
     label {
-      font-size: 0.85em;
+      font-size: 0.95em;
       padding: 0 26px 26px 26px;
+
+      &:last-of-type {
+        padding-bottom: 0;
+      }
+
+      &:hover,
+      &:focus {
+        text-decoration: underline;
+        text-underline-offset: 2px;
+
+        [type='radio'] {
+          background-color: rgba($su-color-digital-blue-light, 0.4);
+          border: 2px solid rgba($su-color-digital-blue-light, 0.9);
+        }
+      }
+
+      [type='radio'] {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 24px;
+        height: 24px;
+        border: 2px solid $su-color-black-40;
+        border-radius: 50%;
+        outline: none;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+        background-color: transparent;
+
+        &:checked {
+          background-color: rgba($su-color-digital-blue-light, 0.4);
+          border: 2px solid rgba($su-color-digital-blue-light, 0.9);
+
+          &::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: $su-color-digital-blue;
+          }
+        }
+      }
     }
   }
 
   .stanford-opportunities-filtered,
   .stanford-news-filtered,
-  .media-filtered {
+  .media-filtered,
+  .people-filtered {
     display: flex;
     gap: 78px;
     flex-direction: column;
@@ -80,4 +120,3 @@
     }
   }
 }
-
