@@ -11,7 +11,8 @@
   }
 }
 
-.node--layout-full {
+// Centered Spotlight Card Teasers for Full Width layout.
+.node--layout-full:not(:has(.jumpstart-ui--two-column)) {
   .ptype-stanford-entity:has(.news-spotlight),
   .stanford-news--cards-spotlight {
     @include centered-column;
