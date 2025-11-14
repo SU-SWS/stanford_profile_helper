@@ -41,7 +41,7 @@
       [type='radio'] {
         appearance: none;
         -webkit-appearance: none;
-        min-width: 24px;
+        width: 24px;
         height: 24px;
         border: 2px solid $su-color-black-40;
         border-radius: 50%;
@@ -49,6 +49,7 @@
         cursor: pointer;
         transition: all 0.2s ease-in-out;
         background-color: transparent;
+        flex: none;
 
         &:checked {
           background-color: rgba($su-color-digital-blue-light, 0.4);
