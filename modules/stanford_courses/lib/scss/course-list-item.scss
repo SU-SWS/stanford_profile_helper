@@ -29,6 +29,25 @@
 
   .su-course-list__header {
     order: -1;
+
+    div {
+      display: inline;
+    }
+  }
+
+  .su-course-quarters {
+    > div {
+      &::after {
+        content: ',';
+        display: inline
+      }
+
+      &:last-child {
+        &::after {
+          content: '';
+        }
+      }
+    }
   }
 
   .su-course-list__title {
