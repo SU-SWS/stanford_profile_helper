@@ -25,6 +25,7 @@
       @include responsive-spacing('padding-left', 0);
       @include responsive-spacing('padding-bottom', 0);
 
+      align-items: start;
       font-size: 0.95em;
       padding-top: 0;
 
