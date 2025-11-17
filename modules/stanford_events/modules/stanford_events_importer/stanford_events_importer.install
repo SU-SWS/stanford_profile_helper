@@ -5,6 +5,10 @@
  * stanford_events_importer.install
  */
 
+use Drupal\migrate\Event\MigrateEvents;
+use Drupal\migrate\Event\MigrateImportEvent;
+use Drupal\migrate\MigrateMessage;
+
 /**
  * Update importer for events-legacy domain.
  */
@@ -56,4 +60,30 @@ function stanford_events_importer_update_8002(&$sandbox) {
   }
 
   $sandbox['#finished'] = count($sandbox['ids']) ? 1 - count($sandbox['ids']) / $sandbox['total'] : 1;
+}
+
+/**
+ * Queue old events for deletion.
+ */
+function stanford_events_importer_update_8003() {
+  $config = \Drupal::configFactory()
+    ->getEditable('migrate_plus.migration.stanford_localist_importer');
+  $config->set('status', TRUE)->save();
+
+  $pluginManager = \Drupal::service('plugin.manager.migration');
+  $pluginManager->clearCachedDefinitions();
+
+  $migration = $pluginManager->createInstance('stanford_localist_importer');
+
+  /** @var \Drupal\migrate\Plugin\migrate\id_map\Sql $id_map */
+  $id_map = $migration->getIdMap();
+  if (!\Drupal::database()->schema()->tableExists($id_map->mapTableName())) {
+    return;
+  }
+
+  $message = new MigrateMessage();
+
+  $event = new MigrateImportEvent($migration, $message);
+  $event_dispatcher = \Drupal::service('event_dispatcher');
+  $event_dispatcher->dispatch($event, MigrateEvents::POST_IMPORT);
 }

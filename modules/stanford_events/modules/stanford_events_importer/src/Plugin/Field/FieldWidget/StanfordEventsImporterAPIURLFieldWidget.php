@@ -175,7 +175,7 @@ class StanfordEventsImporterAPIURLFieldWidget extends LinkWidget {
   public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
 
     // Parse form options we added into a url for the events-legacy.stanford.edu feed.
-    array_walk($values, 'self::walkMassagedFormValues');
+    array_walk($values, self::walkMassagedFormValues(...));
 
     // Let the parent LinkWidget do its thing.
     $values = parent::massageFormValues($values, $form, $form_state);
