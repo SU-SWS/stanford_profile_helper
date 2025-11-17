@@ -77,6 +77,7 @@
     }
 
     .su-card__contents {
+      container-type: inline-size;
       display: flex;
       flex-direction: column;
       padding: 0 3.6rem 3.6rem 3.6rem;
@@ -107,11 +108,9 @@
       }
 
       // Quote styling
-      @container (width >= 480px) {
-        .su-card__contents {
-          .su-news-dek > p {
-            @include type-b;
-          }
+      @container (width > 480px) {
+        .su-news-dek > p {
+          @include type-b;
         }
       }
 
