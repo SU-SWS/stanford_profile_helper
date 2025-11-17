@@ -1,0 +1,22 @@
+'$schema': 'https://git.drupalcode.org/project/drupal/-/raw/10.1.x/core/modules/sdc/src/metadata.schema.json'
+name: News Spotlight Teaser
+status: stable
+props:
+  type: object
+  properties:
+    large_image:
+      type: boolean
+      title: Large Image
+      # @todo Add examples here.
+      examples: []
+slots:
+  headline:
+    title: Headline
+  quote:
+    title: Quote
+  media:
+    title: Media
+  filter_terms:
+    title: Filter Terms
+  date:
+    title: Date

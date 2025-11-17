@@ -1,0 +1,54 @@
+{#
+/**
+ * @file
+ * Spotlight Teaser.
+ *
+ * Spotlight Teaser for News
+ *
+ * Available variables:
+ * - attributes: For additional HTML attributes not already provided.
+ * - spotlight_teaser_headline: Title of news
+ * - spotlight_teaser_quote: Quote/Big Text field
+ * - spotlight_teaser_media: Featured media image
+ * - spotlight_filters: Spotlight filter terms
+ * - date: Publication date
+ */
+#}
+
+{%- set classes = [
+  'news-spotlight-teaser',
+  modifier_class
+] -%}
+
+<article{{ attributes.addClass(classes) }}>
+  <div class="spotlight-media">
+    {{ media }}
+  </div>
+  <div class="spotlight-contents">
+
+    {% if headline is not empty %}
+      <div class="spotlight-headline">
+        {{ headline }}
+      </div>
+    {% endif %}
+
+    {% if date is not empty %}
+      <div class="spotlight-date">
+        {{ date }}
+      </div>
+    {% endif %}
+
+    {% if spotlight_filters is not empty %}
+      <div class="spotlight-filters">
+        {{ spotlight_filters }}
+      </div>
+    {% endif %}
+
+    {% if quote is not empty %}
+      <div class="spotlight-quote">
+        {{ quote }}
+      </div>
+    {% endif %}
+
+  </div>
+</article>
