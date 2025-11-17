@@ -108,7 +108,7 @@
       }
 
       // Quote styling
-      @container (width >= 480px) {
+      @container (width > 480px) {
         .su-news-dek > p {
           @include type-b;
         }
