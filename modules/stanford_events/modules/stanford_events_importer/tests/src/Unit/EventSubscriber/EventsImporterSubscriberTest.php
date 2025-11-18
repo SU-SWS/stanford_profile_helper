@@ -100,23 +100,23 @@ class EventsImporterSubscriberTest extends UnitTestCase {
   }
 
   /**
-   * Tests postImport with empty queue.
+   * Tests postImport with non-empty queue.
    */
-  public function testPostImportEmptyQueue(): void {
+  public function testPostImportNonEmptyQueue(): void {
     $migration = $this->createMock(MigrationInterface::class);
     $migration->expects($this->once())
       ->method('id')
       ->willReturn('stanford_localist_importer');
 
     $event = $this->createMock(MigrateImportEvent::class);
-    $event->expects($this->once())
+    $event->expects($this->any())
       ->method('getMigration')
       ->willReturn($migration);
 
     $queue = $this->createMock(QueueInterface::class);
     $queue->expects($this->once())
       ->method('numberOfItems')
-      ->willReturn(0);
+      ->willReturn(1);
 
     $this->queueFactory->expects($this->once())
       ->method('get')
@@ -155,7 +155,7 @@ class EventsImporterSubscriberTest extends UnitTestCase {
     $queue = $this->createMock(QueueInterface::class);
     $queue->expects($this->once())
       ->method('numberOfItems')
-      ->willReturn(5);
+      ->willReturn(0);
 
     $ignoredItems = [
       '12345' => '67890',
@@ -199,71 +199,7 @@ class EventsImporterSubscriberTest extends UnitTestCase {
 
     $this->connection->expects($this->once())
       ->method('select')
-      ->with('migrate_map_stanford_localist_importer', 'map')
-      ->willReturn($select);
-
-    $this->subscriber->postImport($event);
-  }
-
-  /**
-   * Tests postImport with no ignored events.
-   */
-  public function testPostImportNoIgnoredEvents(): void {
-    $migration = $this->createMock(MigrationInterface::class);
-    $migration->expects($this->once())
-      ->method('id')
-      ->willReturn('stanford_localist_importer');
-
-    $idMap = $this->createMock(Sql::class);
-    $idMap->expects($this->once())
-      ->method('mapTableName')
-      ->willReturn('migrate_map_stanford_localist_importer');
-
-    $migration->expects($this->once())
-      ->method('getIdMap')
-      ->willReturn($idMap);
-
-    $event = $this->createMock(MigrateImportEvent::class);
-    $event->expects($this->exactly(2))
-      ->method('getMigration')
-      ->willReturn($migration);
-
-    $queue = $this->createMock(QueueInterface::class);
-    $queue->expects($this->once())
-      ->method('numberOfItems')
-      ->willReturn(1);
-
-    $queue->expects($this->never())
-      ->method('createItem');
-
-    $this->queueFactory->expects($this->once())
-      ->method('get')
-      ->with('localist_event_checker')
-      ->willReturn($queue);
-
-    $statement = $this->createMock(StatementInterface::class);
-    $statement->expects($this->once())
-      ->method('fetchAllKeyed')
-      ->willReturn([]);
-
-    $select = $this->createMock(Select::class);
-    $select->expects($this->once())
-      ->method('fields')
-      ->with('m', ['sourceid1', 'destid1'])
-      ->willReturnSelf();
-
-    $select->expects($this->once())
-      ->method('condition')
-      ->with('source_row_status', MigrateIdMapInterface::STATUS_IGNORED)
-      ->willReturnSelf();
-
-    $select->expects($this->once())
-      ->method('execute')
-      ->willReturn($statement);
-
-    $this->connection->expects($this->once())
-      ->method('select')
-      ->with('migrate_map_stanford_localist_importer', 'map')
+      ->with('migrate_map_stanford_localist_importer', 'm')
       ->willReturn($select);
 
     $this->subscriber->postImport($event);
