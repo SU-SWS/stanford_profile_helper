@@ -1,5 +1,36 @@
 # Stanford Profile Helper
 
+10.1.0
+--------------------------------------------------------------------------------
+_Release Date: 2025-11-20_
+
+- Added intranet hook to remove item from algolia if they are restricted access
+- D8CORE-8470 | remove margin spacing on radio button (#469)
+- D8CORE-8449: Check Localist and delete imported events that no longer exist (#468)
+- D8CORE-8470 | align radio button to top with label (#466)
+- D8CORE-8474 | fixup container query for quote typography (#467)
+- D8CORE-8471 D8CORE-8472: adjusted padding and border color (#464)
+- D8CORE-8473: changed the number of cards for the medium breakpoint (#465)
+- D8CORE-8470: added a min-width to keep radio button round (#463)
+- D8CORE-8457 | display spotlight card images on smaller screens (#461)
+- D8CORE-8465: Updated filter column width and number of cards at large breakpoint (#459)
+- D8CORE-8460 D8CORE-8237 | adjust left column filter spacing and radio styles; fix single teaser style (#460)
+- D8CORE-8235 | adjust grid responsive for spotlight card list paragraph (#457)
+- Provided autocomplete suggestions to viewfield arguments input (#458)
+- Added wordpress migration UI and styles for media content type. (#442)
+- D8CORE-8239: adding styles for filtered spotlights (#455)
+- D8CORE-8233 D8CORE-8235 D8CORE-8237 | style spotlight card for related spotlights, list, and teaser paragraph (#449)
+- D8CORE-8415: Font correction (#456)
+- D8CORE-8415: Corrected font family for news spotlight name (#450)
+- D8CORE-8322: Fixup plum color for hero banner color (#451)
+- Remove whitespace from fontawesome links in the wysiwyg
+- D8CORE-8390: Change help text for news variants layout selection (#448)
+- D8CORE-8378: Support comma in stat card animation
+- D8CORE-8370: Removed event has already occurred from the list of past events. (#441)
+- D8CORE-8344: Adjust spacing to have full video appear when added to wysiwyg (#438)
+- D8CORE-8228: style spotlight variant for news content type (#437)
+
+
 10.0.3
 --------------------------------------------------------------------------------
 _Release Date: 2025-10-15_
