@@ -193,7 +193,7 @@ $_su-hero-height: (
     background: linear-gradient(
       270deg,
       $su-color-white 0%,
-      rgba($su-color-black-true, 0) 8.06%,
+      rgba($su-color-white, 0) 8.06%,
       rgba($su-color-black-true, 0) 38.06%,
       $su-color-black-true 100%
     );
@@ -202,35 +202,60 @@ $_su-hero-height: (
 
 .overlay-color-620059 {
   .su-hero__media::before {
-    background-color: $su-color-plum;
-    opacity: 0.8;
+    background: linear-gradient(
+      270deg,
+      $su-color-white 0%,
+      rgba($su-color-white, 0) 8.06%,
+      rgba($su-color-plum, 0) 38.06%,
+      $su-color-plum 100%
+    );
   }
 }
 
 .overlay-color-016895 {
   .su-hero__media::before {
-    background-color: $su-color-sky-dark;
-    opacity: 0.8;
+    background: linear-gradient(
+      270deg,
+      $su-color-white 0%,
+      rgba($su-color-white, 0) 8.06%,
+      rgba($su-color-sky-dark, 0) 38.06%,
+      $su-color-sky-dark 100%
+    );
   }
 }
 
 .overlay-color-006b81 {
   .su-hero__media::before {
-    background-color: $su-color-lagunita-dark;
-    opacity: 0.8;
+    background: linear-gradient(
+      270deg,
+      $su-color-white 0%,
+      rgba($su-color-white, 0) 8.06%,
+      rgba($su-color-lagunita-dark, 0) 38.06%,
+      $su-color-lagunita-dark 100%
+    );
   }
 }
 
 .overlay-color-175E54 {
   .su-hero__media::before {
-    background-color: $su-color-palo-alto;
-    opacity: 0.8;
+    background: linear-gradient(
+      270deg,
+      $su-color-white 0%,
+      rgba($su-color-white, 0) 8.06%,
+      rgba($su-color-palo-alto, 0) 38.06%,
+      $su-color-palo-alto 100%
+    );
   }
 }
 
 .overlay-color-544948 {
   .su-hero__media::before {
-    background-color: $su-color-stone-dark;
-    opacity: 0.8;
+    background: linear-gradient(
+      270deg,
+      $su-color-white 0%,
+      rgba($su-color-white, 0) 8.06%,
+      rgba($su-color-stone-dark, 0) 38.06%,
+      $su-color-stone-dark 100%
+    );
   }
 }
