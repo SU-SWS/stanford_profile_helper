@@ -93,11 +93,12 @@ class HeroPatternBehavior extends ParagraphsBehaviorBase {
       '#options' => [
         'left' => $this->t('Left Card'),
         'right' => $this->t('Right Card'),
-        'center' => $this->t('Center Transparent Overlay'),
+        //'center' => $this->t('Center Transparent Overlay'),
       ],
     ];
     $form['overlay_color_wrapper'] = [
       '#type' => 'container',
+      '#access' => \Drupal::state()->get('allow_hero_pattern_overlay_color'),
       '#states' => [
         'visible' => [
           ':input[name*="[hero_pattern][overlay_position]"]' => ['value' => 'center'],
@@ -112,6 +113,7 @@ class HeroPatternBehavior extends ParagraphsBehaviorBase {
       '#suffix' => "<div class='color-field-widget-box-form' id='$id'></div>",
       '#maxlength' => 7,
       '#size' => 7,
+      '#access' => \Drupal::state()->get('allow_hero_pattern_overlay_color'),
       '#attached' => [
         'library' => ['color_field/color-field-widget-box'],
         'drupalSettings' => [
