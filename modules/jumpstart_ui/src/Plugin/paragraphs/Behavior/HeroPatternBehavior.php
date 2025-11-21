@@ -93,14 +93,14 @@ class HeroPatternBehavior extends ParagraphsBehaviorBase {
       '#options' => [
         'left' => $this->t('Left Card'),
         'right' => $this->t('Right Card'),
-        'center' => $this->t('Center Transparent Overlay'),
+        'left-transparent' => $this->t('Left Transparent Overlay'),
       ],
     ];
     $form['overlay_color_wrapper'] = [
       '#type' => 'container',
       '#states' => [
         'visible' => [
-          ':input[name*="[hero_pattern][overlay_position]"]' => ['value' => 'center'],
+          ':input[name*="[hero_pattern][overlay_position]"]' => ['value' => 'left-transparent'],
         ],
       ],
     ];

@@ -41,7 +41,7 @@ $_su-hero-height: (
   }
 }
 
-.overlay-center {
+.overlay-left-transparent {
   .su-hero {
     display: flex;
     flex-direction: column;
@@ -84,24 +84,27 @@ $_su-hero-height: (
     }
 
     .su-hero__card {
+      @include modular-spacing('padding-left', 6);
+
       background: transparent;
       border: 0;
       box-shadow: none;
       left: auto;
-      text-align: center;
+      text-align: left;
       max-width: unset;
       margin: 0;
       width: 100%;
       bottom: unset;
 
       .su-card__contents {
+        border-top: 1px solid;
+        padding: 2.4rem 0 0 0;
         color: $su-color-white;
-        max-width: 100ch;
-        margin: 0 auto;
-        min-height: 220px;
+        max-width: 50rem;
+        min-height: 22rem;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        align-items: flex-start;
 
         @include grid-media-max('sm') {
           width: 100%;
@@ -111,14 +114,35 @@ $_su-hero-height: (
           margin-top: 0;
         }
 
-        .su-card__superhead {
-          max-width: 340px;
-          margin: 0 auto;
+        h2 {
+          margin-bottom: 1.8rem;
         }
 
-        p {
-          max-width: 750px;
-          margin: 0 auto;
+        .su-card__superhead {
+          line-height: 1.7;
+          margin-bottom: 1rem;
+        }
+
+        .su-button {
+          margin-top: 1.8rem;
+          padding: 0;
+          background-color: transparent;
+
+          &::after {
+            margin-left: 1rem;
+            content: '\f054';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            height: 2.8rem;
+            width: 2.8rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 100%;
+            background-color: $su-color-digital-red;
+            color: $su-color-white;
+            font-size: 1.8rem;
+          }
         }
       }
     }
@@ -144,8 +168,13 @@ $_su-hero-height: (
 
 .overlay-color-000000 {
   .su-hero__media::before {
-    background-color: $su-color-black-true;
-    opacity: 0.8;
+    background: linear-gradient(
+      270deg,
+      $su-color-white 0%,
+      rgba($su-color-black-true, 0) 8.06%,
+      rgba($su-color-black-true, 0) 38.06%,
+      $su-color-black-true 100%
+    );
   }
 }
 
