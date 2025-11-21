@@ -147,6 +147,7 @@ $_su-hero-height: (
               color 0.25s ease-in-out;
           }
 
+          &:focus,
           &:hover {
             &::after {
               background-color: $su-color-black;
