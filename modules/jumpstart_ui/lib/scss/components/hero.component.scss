@@ -127,6 +127,7 @@ $_su-hero-height: (
           margin-top: 1.8rem;
           padding: 0;
           background-color: transparent;
+          font-weight: 600;
 
           &::after {
             margin-left: 1rem;
@@ -142,6 +143,14 @@ $_su-hero-height: (
             background-color: $su-color-digital-red;
             color: $su-color-white;
             font-size: 1.8rem;
+            transition: background-color 0.25s ease-in-out,
+              color 0.25s ease-in-out;
+          }
+
+          &:hover {
+            &::after {
+              background-color: $su-color-black;
+            }
           }
         }
       }
