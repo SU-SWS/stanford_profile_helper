@@ -26,6 +26,10 @@
     height: 100%;
     min-height: unset;
     width: 100%;
+
+    &.media-oembed-content {
+      min-height: unset;
+    }
   }
 }
 
