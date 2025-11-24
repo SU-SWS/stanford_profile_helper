@@ -13,18 +13,6 @@
 $su-intro-max-width: unset;
 
 .su-wysiwyg-text {
-  .media {
-    @include margin(null null 2em null);
-  }
-
-  // Remove the bottom padding when the media has a caption since we add padding
-  // to the caption itself.
-  figure {
-    .media {
-      @include margin(null null 0 null);
-    }
-  }
-
   // Remove any existing top and bottom margin and padding.
   // The .tablesaw-cell-content class catches the spans in tables the module adds.
   p,
