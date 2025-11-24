@@ -1,0 +1,54 @@
+{#
+/**
+ * @file
+ * Spotlight Teaser.
+ *
+ * Spotlight Teaser for News
+ *
+ * Available variables:
+ * - attributes: For additional HTML attributes not already provided.
+ * - spotlight_teaser_headline: Title of news
+ * - spotlight_teaser_quote: Quote/Big Text field
+ * - spotlight_teaser_media: Featured media image
+ * - spotlight_filters: Spotlight filter terms
+ * - date: Publication date
+ */
+#}
+
+{%-
+  set classes = [
+    'su-card',
+    'su-spotlight-teaser',
+    modifier_class
+  ]
+-%}
+
+{% set header_tag = variant == 'h3_header' ? 'h3' : 'h2' %}
+
+<article{{attributes.addClass(classes)}}>
+	<figure class="su-media su-media--image su-card__media">
+		<div class="su-media__wrapper">
+			{{- spotlight_teaser_media|render -}}
+		</div>
+	</figure>
+	<div class="su-card__contents">
+
+		<div class="su-news-header">
+			<{{header_tag}} class="su-link su-card__link">
+				{{- spotlight_teaser_headline|render -}}
+			</{{header_tag}}>
+		</div>
+
+		{% if date is not empty %}
+			<div class="su-news-date">
+				{{- date|render -}}
+			</div>
+		{% endif %}
+
+		<div class="news-vertical-teaser__topics">{{- spotlight_filters|render -}}</div>
+		<div class="su-spotlight-quote">
+			{{- spotlight_teaser_quote|render -}}
+		</div>
+
+	</div>
+</article>

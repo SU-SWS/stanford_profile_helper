@@ -1,0 +1,44 @@
+spotlight-teaser:
+  label: Spotlight Teaser
+  description: "Spotlight Teaser"
+  variants:
+    default:
+      label: Default
+    h3_header:
+      label: H3 Header
+  fields:
+    spotlight_teaser_headline:
+      type: text
+      label: "Title"
+      description: "News title/headline"
+      preview: "This is a headline"
+    spotlight_teaser_quote:
+      type: text
+      label: "Quote/Big Text"
+      description: "The quote or big text field"
+      preview: "This is a compelling quote"
+    spotlight_teaser_media:
+      type: text
+      label: "Featured Media"
+      description: "The featured media image."
+      preview: "<img src='https://picsum.photos/900/900/' alt='Example Image' />"
+    spotlight_filters:
+      type: text
+      label: "Spotlight Filters"
+      description: "Spotlight filter terms"
+      preview: "Filter terms"
+    date:
+      type: text
+      label: "Publication Date"
+      description: "Publishing date"
+      preview: "January 1, 2025"
+    news_url:
+      type: text
+      label: "URL for item"
+      description: "URL for image and heading"
+      preview: "http://www.stanford.edu/"
+  use: "@news/spotlight-teaser/spotlight-teaser.twig"
+  libraries:
+    - spotlightteaser:
+        dependencies:
+          - stanford_news/spotlight_teaser
