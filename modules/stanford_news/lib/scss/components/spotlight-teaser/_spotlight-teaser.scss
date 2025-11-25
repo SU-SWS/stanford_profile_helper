@@ -1,19 +1,5 @@
 @charset "UTF-8";
 
-// Special case for single one on news article.
-.stanford-news-spotlight-teaser-term {
-  &.block-views {
-    .more-news-view {
-      > div:only-of-type {
-        @include margin(unset);
-
-        max-width: 25%;
-        width: 100%;
-      }
-    }
-  }
-}
-
 .su-spotlight-teaser {
   h2,
   h3 {
