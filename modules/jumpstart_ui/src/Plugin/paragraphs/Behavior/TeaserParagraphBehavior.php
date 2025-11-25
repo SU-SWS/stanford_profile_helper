@@ -71,16 +71,12 @@ class TeaserParagraphBehavior extends ParagraphsBehaviorBase {
       isset($build['su_entity_item']) &&
       (isset($build['su_entity_headline'][0]) || $heading_behavior == self::REMOVE_HEADING)
     ) {
-      // Check if the paragraph has a display mode field configured.
-      $has_display_mode_field = $paragraph->hasField('su_paragraph_display_mode') && !$paragraph->get('su_paragraph_display_mode')->isEmpty();
-      // Only override the view mode if no display mode was explicitly selected.
-      if (!$has_display_mode_field) {
-        foreach (Element::children($build['su_entity_item']) as $delta) {
-          $build['su_entity_item'][$delta]['#view_mode'] = 'stanford_h3_card';
+      foreach (Element::children($build['su_entity_item']) as $delta) {
+        $build['su_entity_item'][$delta]['#view_mode'] = 'stanford_h3_card';
+
         // Replace the cache keys to match the view mode.
-          $cache_key = array_search('stanford_card', $build['su_entity_item'][$delta]['#cache']['keys']);
-          $build['su_entity_item'][$delta]['#cache']['keys'][$cache_key] = 'stanford_h3_card';
-        }
+        $cache_key = array_search('stanford_card', $build['su_entity_item'][$delta]['#cache']['keys']);
+        $build['su_entity_item'][$delta]['#cache']['keys'][$cache_key] = 'stanford_h3_card';
       }
     }
 
