@@ -1,68 +1,5 @@
 @charset "UTF-8";
 
-// For all templates.
-.stanford-news--cards {
-  .flex-container {
-    .more-news-view {
-      @include grid-media-max('md') {
-        display: block;
-
-        .flex-4-of-12 {
-          max-width: 100%;
-        }
-      }
-    }
-  }
-
-  //Back to all news link
-  > .more-link {
-    @include modular-spacing('margin', 3 null 9 null);
-    text-align: center;
-
-    a {
-      @include button-primary;
-    }
-  }
-}
-
-// News Cards added in page as a paragraph.
-.more-news-view {
-  > div:nth-child(-n+3) {
-    max-width: 980px;
-    flex: none;
-  }
-
-  // Two items
-  > div:first-child:nth-last-child(2),
-  > div:first-child:nth-last-child(2) ~ div {
-    width: 45%;
-
-    @include grid-media-max('md') {
-      width: 100%;
-    }
-  }
-
-  // Three items
-  > div:first-child:nth-last-child(3),
-  > div:first-child:nth-last-child(3) ~ div {
-    width: 30%;
-
-    @include grid-media-max('md') {
-      width: 100%;
-    }
-  }
-
-  // One item
-  > div:only-of-type {
-    @include margin(0 auto);
-
-    flex: none;
-    max-width: 980px;
-    width: 100%;
-  }
-}
-
-
 // Special case for single one on news article.
 .stanford-news-spotlight-teaser-term {
   &.block-views {
@@ -80,22 +17,22 @@
 .su-spotlight-teaser {
   h2,
   h3 {
-    @include modular-spacing('margin-bottom', 1);
-    @include modular-spacing('margin-left', 2);
-    @include modular-spacing('margin-right', 2);
+    @include modular-spacing("margin-bottom", 1);
+    @include modular-spacing("margin-left", 2);
+    @include modular-spacing("margin-right", 2);
   }
 }
 
 // Minor edits to the card for News module.
 .su-spotlight-teaser {
   &.su-card {
-    @include modular-spacing('margin-bottom', 2);
+    @include modular-spacing("margin-bottom", 2);
     @include margin(0 auto);
     max-width: 980px;
     overflow: auto;
 
     .su-media__wrapper {
-      @include modular-spacing('margin-bottom', 0);
+      @include modular-spacing("margin-bottom", 0);
 
       img,
       picture,
@@ -105,7 +42,7 @@
       }
 
       iframe {
-        @include grid-media('lg') {
+        @include grid-media("lg") {
           min-height: 489px;
         }
       }
@@ -136,22 +73,14 @@
 
       &::after {
         @include type-c;
-        @include modular-spacing('margin-left', -1);
+        @include modular-spacing("margin-left", -1);
         background-color: $su-color-bright-red;
       }
-
     }
 
     h3 {
       &.su-link {
         font-size: 1.4em;
-      }
-    }
-
-    .su-link--external {
-      &::after {
-        height: 1.2rem;
-        width: 1.2rem;
       }
     }
 
@@ -164,17 +93,6 @@
       .spotlight-teaser__topics {
         @include small-paragraph;
 
-        a {
-          color: $su-color-bright-red;
-          font-weight: $su-font-regular;
-          text-decoration: none;
-
-          &:hover,
-          &:focus {
-            text-decoration: underline;
-          }
-        }
-
         ul {
           list-style: none;
           @include margin(0);
@@ -185,15 +103,24 @@
           display: inline-block;
 
           &::after {
-            content: ',';
+            content: ",";
             @include margin(null 5px null null);
           }
 
           &:last-child::after {
-            content: '';
+            content: "";
             @include margin(null 0 null null);
           }
         }
+      }
+
+      // Big quote.
+      .su-spotlight-teaser__quote {
+        font-family: "Source Serif 4", "Source Serif Pro", Georgia, Times,
+          Times New Roman, serif;
+        font-weight: 900;
+        line-height: 1.2;
+        margin-bottom: 0;
       }
     }
 
@@ -216,16 +143,4 @@ article {
       }
     }
   }
-}
-
-.spotlight-teaser__footer {
-  @include modular-spacing('margin', 1);
-
-  a {
-    @include button-secondary;
-  }
-}
-
-.stanford-news-terms--results-for {
-  @include modular-spacing('margin-bottom', 3);
 }

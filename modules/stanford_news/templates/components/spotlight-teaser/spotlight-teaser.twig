@@ -32,7 +32,7 @@
 	<div class="su-card__contents">
 
 		{% if spotlight_teaser_headline is not empty %}
-			<div class="su-news-header">
+			<div class="su-news-header su-spotlight-teaser__link">
 				{{- spotlight_teaser_headline|render -}}
 			</div>
 		{% endif %}
@@ -50,7 +50,7 @@
 		{% endif %}
 
 		{% if spotlight_teaser_quote is not empty %}
-			<div class="su-spotlight-quote">
+			<div class="su-spotlight-teaser__quote">
 				{{- spotlight_teaser_quote|render -}}
 			</div>
 		{% endif %}
