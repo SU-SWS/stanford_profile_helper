@@ -23,8 +23,6 @@
   ]
 -%}
 
-{% set header_tag = variant == 'h3_header' ? 'h3' : 'h2' %}
-
 <article{{attributes.addClass(classes)}}>
 	<figure class="su-media su-media--image su-card__media">
 		<div class="su-media__wrapper">
@@ -33,11 +31,11 @@
 	</figure>
 	<div class="su-card__contents">
 
-		<div class="su-news-header">
-			<{{header_tag}} class="su-link su-card__link">
+		{% if spotlight_teaser_headline is not empty %}
+			<div class="su-news-header">
 				{{- spotlight_teaser_headline|render -}}
-			</{{header_tag}}>
-		</div>
+			</div>
+		{% endif %}
 
 		{% if date is not empty %}
 			<div class="su-news-date">
@@ -45,10 +43,17 @@
 			</div>
 		{% endif %}
 
-		<div class="news-vertical-teaser__topics">{{- spotlight_filters|render -}}</div>
-		<div class="su-spotlight-quote">
-			{{- spotlight_teaser_quote|render -}}
-		</div>
+		{% if spotlight_filters is not empty %}
+			<div class="su-spotlight-teaser__topics">
+				{{- spotlight_filters|render -}}
+			</div>
+		{% endif %}
+
+		{% if spotlight_teaser_quote is not empty %}
+			<div class="su-spotlight-quote">
+				{{- spotlight_teaser_quote|render -}}
+			</div>
+		{% endif %}
 
 	</div>
 </article>

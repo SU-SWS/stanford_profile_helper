@@ -2,10 +2,12 @@ spotlight-teaser:
   label: Spotlight Teaser
   description: "Spotlight Teaser"
   variants:
-    default:
-      label: Default
-    h3_header:
-      label: H3 Header
+    large_image:
+      label: Spotlight Teaser - Large
+      modifier_class: "su-spotlight-teaser--large"
+    small_image:
+      label: Spotlight Teaser - Small
+      modifier_class: "su-spotlight-teaser--small"
   fields:
     spotlight_teaser_headline:
       type: text
@@ -32,11 +34,6 @@ spotlight-teaser:
       label: "Publication Date"
       description: "Publishing date"
       preview: "January 1, 2025"
-    news_url:
-      type: text
-      label: "URL for item"
-      description: "URL for image and heading"
-      preview: "http://www.stanford.edu/"
   use: "@news/spotlight-teaser/spotlight-teaser.twig"
   libraries:
     - spotlightteaser:
