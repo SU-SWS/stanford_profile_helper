@@ -1,5 +1,12 @@
 # Stanford Profile Helper
 
+10.1.2
+--------------------------------------------------------------------------------
+_Release Date: 2025-11-25_
+
+- D8CORE-8515: Added space for the load more button on publication node (#474)
+- D8CORE-8526: Adjust embedded video styles to have correct aspect ratios
+
 10.1.0
 --------------------------------------------------------------------------------
 _Release Date: 2025-11-20_
