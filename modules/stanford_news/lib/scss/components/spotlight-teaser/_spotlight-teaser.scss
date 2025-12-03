@@ -1,132 +1,170 @@
 @charset "UTF-8";
 
-.su-spotlight-teaser {
-  h2,
-  h3 {
-    @include modular-spacing("margin-bottom", 1);
-    @include modular-spacing("margin-left", 2);
-    @include modular-spacing("margin-right", 2);
+.su-list-unstyled.grid-container-3:has(.news-spotlight) {
+  @include grid-media-max('sm') {
+    grid-gap: 0;
   }
 }
 
-// Minor edits to the card for News module.
-.su-spotlight-teaser {
-  &.su-card {
-    @include modular-spacing("margin-bottom", 2);
-    @include margin(0 auto);
-    max-width: 980px;
-    overflow: auto;
+// Spotlight Image Card styles for List, Filtered List, and Related Spotlights.
+.su-spotlight-teaser--small {
+  .su-media__wrapper {
+    padding: 3.6rem 3.6rem 0 3.6rem;
 
-    .su-media__wrapper {
-      @include modular-spacing("margin-bottom", 0);
+    .field-media-image {
+      aspect-ratio: 1/1;
+      overflow: hidden;
+      object-fit: cover;
+      width: 10rem;
+      height: 100%;
 
-      img,
-      picture,
-      iframe {
-        min-width: 100%;
-        width: 100%;
-      }
-
-      iframe {
-        @include grid-media("lg") {
-          min-height: 489px;
-        }
+      @include grid-media('md') {
+        width: 16rem;
       }
     }
+  }
+}
 
-    .su-spotlight-teaser__link {
-      display: block;
+// Spotlight Card styles for Teaser, List, Filtered List, and Related Spotlights.
+.news-spotlight {
+  .su-spotlight-teaser {
+    border: 1px solid $su-color-black-20;
+    box-shadow: none;
+    position: relative;
 
-      &:hover {
-        h2,
-        h3 {
-          text-decoration: underline;
-        }
-      }
-
-      @include grid-media-max("xs") {
-        padding-top: 3rem;
-      }
-    }
-
-    // Action title link.
-    .su-link {
-      @include type-c;
-
-      color: $su-color-black;
-      display: inline-block;
-      font-weight: $su-font-bold;
-
-      &::after {
-        @include type-c;
-        @include modular-spacing("margin-left", -1);
-        background-color: $su-color-bright-red;
-      }
-    }
-
-    h3 {
-      &.su-link {
-        font-size: 1.4em;
-      }
-    }
-
-    .su-card__contents {
-      &:not(.su-card--icon) {
+    // Display images on small screens
+    @include grid-media-max('sm') {
+      .su-spotlight-teaser__link {
         padding-top: 0;
       }
 
-      // Topics list.
-      .spotlight-teaser__topics {
-        @include small-paragraph;
-
-        ul {
-          list-style: none;
-          @include margin(0);
-          @include padding(0);
-        }
-
-        li {
-          display: inline-block;
-
-          &::after {
-            content: ",";
-            @include margin(null 5px null null);
-          }
-
-          &:last-child::after {
-            content: "";
-            @include margin(null 0 null null);
-          }
-        }
+      figure,
+      img {
+        display: block;
       }
+    }
 
-      // Big quote.
-      .su-spotlight-teaser__quote {
-        font-family: "Source Serif 4", "Source Serif Pro", Georgia, Times,
-          Times New Roman, serif;
-        font-weight: 900;
-        line-height: 1.2;
+    .su-media__wrapper {
+      margin-bottom: 0;
+
+      .field-media-image {
         margin-bottom: 0;
       }
     }
 
-    // Put the focus on the whole card
-    &:focus-within {
-      outline: -webkit-focus-ring-color auto 1px;
+    .su-card__contents {
+      display: flex;
+      flex-direction: column;
+      padding: 3.6rem 3.6rem;
+
+      .su-news-header {
+        @include modular-spacing('margin-top', 3);
+
+        order: 1;
+
+        h2,
+        h3 {
+          margin: 0;
+          padding: 0;
+
+          .su-link {
+            color: $su-color-black;
+            text-decoration: none;
+            font-size: 1.6rem;
+            font-weight: 700;
+            width: 100%;
+
+            @include grid-media('md') {
+              font-size: 2.1rem;
+            }
+
+            &:hover,
+            &:focus {
+              text-decoration: underline;
+            }
+
+            &::after {
+              mask: none;
+              background-color: transparent;
+              font-family: 'Font Awesome 6 Free';
+              content: '\f061';
+              font-size: 1.6rem;
+              margin-left: 0.6rem;
+              margin-bottom: 0;
+            }
+
+            // Stretch-Link styles - makes entire card clickable
+            &::before {
+              display: block;
+              position: absolute;
+              top: 0;
+              right: 0;
+              bottom: 0;
+              left: 0;
+              z-index: 1;
+              pointer-events: auto;
+              content: '';
+              background-color: transparent;
+            }
+          }
+        }
+      }
+
+      // Quote styling
+      .su-spotlight-teaser__quote {
+        margin-top: 1rem;
+        > p {
+          @include type-c;
+          @include serif;
+
+          line-height: 1.2;
+          font-weight: $su-font-black;
+          color: $su-color-black;
+          margin-bottom: 0;
+        }
+      }
+
+      .su-news-date {
+        font-size: 1.6rem;
+        font-weight: $su-font-regular;
+        color: $su-color-black-70;
+
+        @include grid-media-min('md') {
+          font-size: 1.8rem;
+        }
+      }
+
+      // Quote styling
+      @container (width >= 480px) {
+        .su-card__contents {
+          .su-news-dek > p {
+            @include type-b;
+          }
+        }
+      }
+
+      .su-spotlight-teaser__topics {
+        order: 2;
+        display: block;
+        font-size: 1.6rem;
+        color: $su-color-black-70;
+
+        @include grid-media-min('md') {
+          font-size: 1.8rem;
+        }
+      }
+    }
+
+    @container (width > 630px) {
+      display: flex;
+      flex-direction: row;
     }
   }
 }
 
-article {
-  > .su-spotlight-teaser__link {
-    &.su-link {
-      &.su-link--external {
-        font-size: 1em;
-
-        &::after {
-          display: none;
-        }
-      }
-    }
+// Spotlight Date hidden modifier for No Date List.
+.spotlight-card-grid-no-date {
+  .su-news-date {
+    display: none;
   }
 }
