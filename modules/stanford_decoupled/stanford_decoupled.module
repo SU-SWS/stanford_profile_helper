@@ -49,10 +49,6 @@ function stanford_decoupled_layout_access(EntityInterface $entity, $operation, A
  * Implements hook_token_info().
  */
 function stanford_decoupled_token_info() {
-  // Drupal 11.1.0 already has the UUID token. This can be removed at that time.
-  if (version_compare(\Drupal::VERSION, '11.1', '>=')) {
-    return [];
-  }
   $entity_types = \Drupal::entityTypeManager()->getDefinitions();
   $info = [];
 

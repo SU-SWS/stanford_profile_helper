@@ -27,6 +27,7 @@
 
 // Spotlight Card styles for Teaser, List, Filtered List, and Related Spotlights.
 .news-spotlight {
+  container-type: inline-size;
   .su-spotlight-teaser {
     border: 1px solid $su-color-black-20;
     box-shadow: none;
@@ -155,9 +156,34 @@
       }
     }
 
-    @container (width > 630px) {
-      display: flex;
-      flex-direction: row;
+    &.su-spotlight-teaser--large {
+      @container (width > 630px) {
+        display: flex;
+        flex-direction: row;
+
+        .su-media__wrapper {
+          padding: 3.6rem 0 3.6rem 3.6rem;
+
+          .field-media-image {
+            aspect-ratio: 1/1;
+            overflow: hidden;
+            object-fit: cover;
+            width: 24rem;
+            height: 100%;
+          }
+        }
+      }
+    }
+
+    &.su-spotlight-teaser--small {
+      @container (width > 530px) {
+        display: flex;
+        flex-direction: row;
+
+        .su-media__wrapper {
+          padding: 3.6rem 0 3.6rem 3.6rem;
+        }
+      }
     }
   }
 }

@@ -10,6 +10,7 @@ use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\Query\QueryInterface;
 use Drupal\Core\Form\FormState;
+use Drupal\Core\State\StateInterface;
 use Drupal\jumpstart_ui\Plugin\paragraphs\Behavior\HeroPatternBehavior;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\paragraphs\Entity\ParagraphsType;
@@ -28,10 +29,12 @@ class HeroPatternBehaviorTest extends UnitTestCase {
     parent::setUp();
 
     $field_manager = $this->createMock(EntityFieldManagerInterface::class);
+    $state = $this->createMock(StateInterface::class);
 
     $container = new ContainerBuilder();
     $container->set('entity_field.manager', $field_manager);
     $container->set('string_translation', $this->getStringTranslationStub());
+    $container->set('state', $state);
     \Drupal::setContainer($container);
   }
 

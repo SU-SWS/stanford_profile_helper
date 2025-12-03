@@ -4,17 +4,6 @@
 @import 'decanter/core/src/scss/components/card/index';
 
 .su-card {
-  .media-entity-wrapper.video {
-    @include aspect-ratio(16, 9, '> div');
-
-    iframe {
-      &.media-oembed-content {
-        height: 100%;
-        min-height: unset;
-        width: 100%;
-      }
-    }
-  }
 
   .image {
     img,

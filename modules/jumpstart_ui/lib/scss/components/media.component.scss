@@ -7,16 +7,6 @@
   clear: right;
   position: relative;
 
-  .media-entity-wrapper.video {
-    @include aspect-ratio(16, 9, '> div');
-
-    iframe {
-      height: 100%;
-      min-height: unset;
-      width: 100%;
-    }
-  }
-
   .su-media__caption {
     float: right;
     text-align: right;

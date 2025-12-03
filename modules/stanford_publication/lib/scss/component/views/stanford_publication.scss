@@ -145,11 +145,6 @@
       }
     }
 
-    > div:not(:first-of-type) {
-      @include responsive-spacing('padding-top', 3);
-
-    }
-
     > div:last-of-type {
       margin-bottom: 0;
     }
@@ -186,25 +181,23 @@
 
 // Related views block on the node page.
 .stanford-publications-related {
-  .stanford-publications {
-    &.view {
-      > div:first-of-type,
-      > div {
-        padding-top: 0;
+  .related-publications {
+    //Back to all Publications link
+    .more-link {
+      @include responsive-spacing('padding', 3 null null null);
+
+      @include grid-media-max('sm') {
+        @include responsive-spacing('padding-bottom', 7);
+      }
+
+      flex: 100%;
+      margin: 0 auto;
+      text-align: center;
+
+      a {
+        @include button-primary;
       }
     }
   }
-
-  //Back to all Publications link
-  .more-link {
-    @include responsive-spacing('margin', 3 null 9 null);
-
-    flex: 100%;
-    margin: 0 auto;
-    text-align: center;
-
-    a {
-      @include button-primary;
-    }
-  }
 }
+

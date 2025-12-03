@@ -25,6 +25,7 @@
       @include responsive-spacing('padding-left', 0);
       @include responsive-spacing('padding-bottom', 0);
 
+      align-items: start;
       font-size: 0.95em;
       padding-top: 0;
 
@@ -55,6 +56,7 @@
         transition: all 0.2s ease-in-out;
         background-color: transparent;
         flex: none;
+        margin: 0;
 
         &:checked {
           background-color: rgba($su-color-digital-blue-light, 0.4);

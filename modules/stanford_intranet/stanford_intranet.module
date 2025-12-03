@@ -21,7 +21,10 @@ use Symfony\Component\Finder\Finder;
  * Implements hook_page_attachments().
  */
 function stanford_intranet_page_attachments(array &$attachments) {
-  if (\Drupal::state()->get('stanford_intranet', FALSE) && !\Drupal::service('router.admin_context')->isAdminRoute()) {
+  if (
+    \Drupal::state()->get('stanford_intranet', FALSE) &&
+    !\Drupal::service('router.admin_context')->isAdminRoute()
+  ) {
     $attachments['#attached']['library'][] = "stanford_intranet/intranet";
   }
 }
@@ -39,7 +42,8 @@ function stanford_intranet_file_download($uri) {
   // @see \Drupal\image\Controller\ImageStyleDownloadController::deliver().
   // @see file_file_download().
   if (preg_match('/.jp[e]?g.png$/', $uri) && StreamWrapperManager::getScheme($uri) == 'private') {
-    return \Drupal::moduleHandler()->invokeAll('file_download', [str_replace('.png', '', $uri)]);
+    return \Drupal::moduleHandler()
+      ->invokeAll('file_download', [str_replace('.png', '', $uri)]);
   }
 
   $file_repository = \Drupal::service('file.repository');
@@ -79,7 +83,8 @@ function stanford_intranet_file_access(FileInterface $file, $operation, AccountI
  */
 function stanford_intranet_library_info_build() {
   $libraries = [];
-  $module_path = \Drupal::service('extension.list.module')->getPath('stanford_intranet');
+  $module_path = \Drupal::service('extension.list.module')
+    ->getPath('stanford_intranet');
 
   // Find all css files in the dist/css directory.
   $finder = new Finder();
@@ -134,7 +139,6 @@ function stanford_intranet_entity_create_access(AccountInterface $account, array
  * Implements hook_entity_access().
  */
 function stanford_intranet_entity_access(EntityInterface $entity, $operation, AccountInterface $account) {
-
   // Paragraphs inherit their access from the parents they live on, so we can
   // ignore them.
   // Check for the role because doing `$account->isAuthenticated() only checks
@@ -256,7 +260,7 @@ function stanford_intranet_user_role_insert(RoleInterface $role) {
 /**
  * Implements hook_ENTITY_TYPE_predelete().
  */
-function stanford_intranet_user_role_predelete(RoleInterface $role){
+function stanford_intranet_user_role_predelete(RoleInterface $role) {
   $state = \Drupal::state()->get('stanford_intranet.rids', []);
   unset($state[$role->id()]);
   \Drupal::state()->set('stanford_intranet.rids', $state);

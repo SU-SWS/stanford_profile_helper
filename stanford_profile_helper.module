@@ -24,7 +24,6 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\Url;
 use Drupal\node\NodeInterface;
-use Drupal\search_api\IndexInterface;
 use Drupal\stanford_profile_helper\StanfordProfileHelper;
 use Drupal\taxonomy\TermInterface;
 use Drupal\taxonomy_menu\Plugin\Menu\TaxonomyMenuMenuLink;
