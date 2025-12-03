@@ -183,6 +183,20 @@
         .su-media__wrapper {
           padding: 3.6rem 0 3.6rem 3.6rem;
         }
+
+        .su-card__contents {
+          .su-news-dek > p {
+            @include type-c;
+          }
+        }
+
+        @container (width >= 576px) {
+          .su-card__contents {
+            .su-news-dek > p {
+              @include type-b;
+            }
+          }
+        }
       }
     }
   }
