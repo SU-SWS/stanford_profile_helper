@@ -64,7 +64,7 @@
     .node-stanford-news-title {
       order: 0;
 
-      .title {
+      h1 {
         @include modular-typography(5);
         @include serif;
         font-weight: 800;
@@ -89,6 +89,7 @@
       @include serif;
     }
 
+    // Topics list.
     .su-news-spotlight-filters {
       @include type-e;
 
@@ -96,7 +97,13 @@
       color: $su-color-black-70;
       padding-top: 12px;
 
-      div {
+      ul {
+        list-style: none;
+        @include margin(0);
+        @include padding(0);
+      }
+
+      li {
         display: inline-block;
 
         &::after {
