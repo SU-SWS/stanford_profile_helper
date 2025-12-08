@@ -13,3 +13,11 @@ field.formatter.settings.time_duration:
       sequence:
         type: string
         label: 'Unit'
+
+block.settings.anchor_link_navigation:
+  type: block_settings
+  label: 'Anchor Link Navigation block'
+  mapping:
+    example:
+      type: string
+      label: Example
