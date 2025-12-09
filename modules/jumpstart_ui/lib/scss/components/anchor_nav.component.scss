@@ -5,13 +5,37 @@
 @import 'decanter/core/src/scss/decanter-no-markup';
 
 .anchor-link-nav {
-  &.orientation-horizontal {
-    ul {
-      display: flex;
-    }
-  }
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
 
   ul {
     list-style: none;
   }
+
+  &.orientation-vertical {
+    nav {
+      position: sticky;
+      top: 0;
+    }
+  }
+
+  &.orientation-horizontal {
+    ul:not(.overflow-items) {
+      display: flex;
+    }
+  }
+
+  .overflow-items {
+    border: 1px solid #eee;
+    padding: 10px;
+    position: absolute;
+    right: 0;
+    top: 50px;
+    background-color: white;
+    z-index: 1;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+
 }

@@ -61,7 +61,7 @@ final class AnchorLinkNavigationBlock extends BlockBase {
       '#attributes' => [
         'class' => [
           'anchor-link-nav',
-          'orientation-' . $this->configuration['orientation'] ?? 'vertical',
+          'orientation-' . ($this->configuration['orientation'] ?: 'vertical'),
         ],
       ],
       '#attached' => ['library' => ['jumpstart_ui/anchor_link_nav']],
