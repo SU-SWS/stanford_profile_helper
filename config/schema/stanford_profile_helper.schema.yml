@@ -18,6 +18,6 @@ block.settings.anchor_link_navigation:
   type: block_settings
   label: 'Anchor Link Navigation block'
   mapping:
-    example:
+    orientation:
       type: string
-      label: Example
+      label: Orientation

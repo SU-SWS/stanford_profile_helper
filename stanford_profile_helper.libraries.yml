@@ -15,20 +15,3 @@ ajax_views:
 viewfield_autocomplete:
   js:
     js/stanford_profile_helper.viewfield_autocomplete.js: { }
-
-anchorjs:
-  remote: https://www.bryanbraun.com/anchorjs/
-  version: 5.0.0
-  license:
-    name: MIT
-    url: https://github.com/bryanbraun/anchorjs/blob/main/LICENSE
-    gpl-compatible: true
-  type: external
-  js:
-    https://cdn.jsdelivr.net/npm/anchor-js/anchor.min.js: { type: external, minified: true }
-
-anchor_link_nav:
-  js:
-    js/stanford_profile_helper.anchor_nav.js: {}
-  dependencies:
-    - stanford_profile_helper/anchorjs
