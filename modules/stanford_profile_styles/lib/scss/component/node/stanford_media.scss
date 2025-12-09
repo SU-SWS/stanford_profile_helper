@@ -154,6 +154,11 @@
       }
     }
   }
+
+  .node-stanford-media-su-media-dek,
+  .date-duration-wrapper {
+    @include responsive-spacing('margin-bottom', 0);
+  }
 }
 
 .ds-entity--stanford-media {
