@@ -20,28 +20,26 @@
     });
 
     const $container = $('.anchor-link-nav');
+    const $nav = $('<nav>').attr('aria-label', 'On this page').append($list);
 
-    $container.append($('<nav>').attr('aria-label', 'On this page').append($list));
+    $container.append($nav);
+    const $expandButton = $('<button>').text('Expand')
+      .attr('aria-expanded', 'false')
+      .attr('aria-controls', 'overflow-container');
+
+    const $overflowItemsContainer = $('<ul>').addClass('overflow-items hidden').attr('id', 'overflow-container');
 
     function manageOverflow() {
-      $('button', $container).remove();
-      $('.overflow-items', $container).remove();
+      $('button', $nav).remove();
+      $('.overflow-items', $nav).remove();
 
-      const $expandButton = $('<button>').text('Expand')
-        .attr('aria-expanded', 'false')
-        .attr('aria-controls', 'overflow-container');
-      const $overflowItemsContainer = $('<ul>').addClass('overflow-items hidden').attr('id', 'overflow-container');
+      $overflowItemsContainer.empty()
 
       // Toggle overflow items visibility on expand button click
       $expandButton.on('click', () => {
         $expandButton.attr('aria-expanded', (i, currentValue) => currentValue === 'true' ? 'false' : 'true');
         $overflowItemsContainer.toggleClass('hidden');
       });
-
-      // Clear previous overflow items
-      $overflowItemsContainer.empty();
-      $overflowItemsContainer.removeClass('visible');
-      $expandButton.removeClass('visible');
 
       const $listItems = $('li', $list);
       // Reset all list items to visible
@@ -54,11 +52,28 @@
           const $item = $(item);
 
           if ($list[0].scrollWidth > $container[0].clientWidth - 150) {
-            $overflowItemsContainer.prepend($item.clone());
+            $overflowItemsContainer.prepend($item.clone().addClass('overflow-item'));
             $item.addClass('hidden');
           }
         });
-        $container.append($expandButton).append($overflowItemsContainer);
+
+        $('li:first-child a', $overflowItemsContainer).on('blur', () => {
+          setTimeout(() => {
+            if(!$(document.activeElement).parent().hasClass('overflow-item')){
+              $expandButton.click();
+            }
+          }, 100)
+        });
+
+        $('li:last-child a', $overflowItemsContainer).on('blur', () => {
+          setTimeout(() => {
+            if(!$(document.activeElement).parent().hasClass('overflow-item')){
+              $expandButton.click();
+            }
+          }, 100)
+        });
+
+        $nav.append($expandButton).append($overflowItemsContainer);
       }
     }
 
@@ -66,6 +81,23 @@
       // Initial check and on window resize
       manageOverflow();
       window.addEventListener('resize', manageOverflow);
+
+      window.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+          if ($expandButton.attr('aria-expanded') === 'true') {
+            $expandButton.click();
+            $expandButton.focus();
+          }
+        }
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!$container[0].contains(event.target) && event.target !== $container[0]) {
+          if ($expandButton.attr('aria-expanded') === 'true') {
+            $expandButton.click();
+          }
+        }
+      });
     }
   });
 })(jQuery);

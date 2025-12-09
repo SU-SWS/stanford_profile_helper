@@ -5,10 +5,7 @@
 @import 'decanter/core/src/scss/decanter-no-markup';
 
 .anchor-link-nav {
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  white-space: nowrap;
+
 
   ul {
     list-style: none;
@@ -24,6 +21,15 @@
   &.orientation-horizontal {
     ul:not(.overflow-items) {
       display: flex;
+      gap: 15px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      white-space: nowrap;
+      justify-content: space-around;
     }
   }
 
