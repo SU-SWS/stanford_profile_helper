@@ -6,7 +6,6 @@
 
 .anchor-link-nav {
 
-
   ul {
     list-style: none;
   }
@@ -44,4 +43,15 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   }
 
+  button {
+    i {
+      transition: 0.2s ease;
+    }
+
+    &[aria-expanded="true"] {
+      i {
+        transform: rotate(-180deg);
+      }
+    }
+  }
 }

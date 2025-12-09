@@ -1,8 +1,8 @@
 (($) => {
   document.addEventListener('DOMContentLoaded', () => {
-    anchors.add('#page-content h2:not(.visually-hidden)');
+    anchors.add('#page-content h2:not(.visually-hidden):not(.no-anchor)');
 
-    const $headings = $('#page-content h2:not(.visually-hidden)[id]')
+    const $headings = $('#page-content h2:not(.visually-hidden):not(.no-anchor)[id]')
       .filter((i, item) => $(item).closest('.node-stanford-page-su-page-banner').length === 0);
 
     // If no links exist, don't add the markup.
@@ -23,7 +23,7 @@
     const $nav = $('<nav>').attr('aria-label', 'On this page').append($list);
 
     $container.append($nav);
-    const $expandButton = $('<button>').text('Expand')
+    const $expandButton = $('<button>').html('See More<i class="fa-solid fa-chevron-down"></i>')
       .attr('aria-expanded', 'false')
       .attr('aria-controls', 'overflow-container');
 
@@ -57,22 +57,6 @@
           }
         });
 
-        $('li:first-child a', $overflowItemsContainer).on('blur', () => {
-          setTimeout(() => {
-            if(!$(document.activeElement).parent().hasClass('overflow-item')){
-              $expandButton.click();
-            }
-          }, 100)
-        });
-
-        $('li:last-child a', $overflowItemsContainer).on('blur', () => {
-          setTimeout(() => {
-            if(!$(document.activeElement).parent().hasClass('overflow-item')){
-              $expandButton.click();
-            }
-          }, 100)
-        });
-
         $nav.append($expandButton).append($overflowItemsContainer);
       }
     }
@@ -91,11 +75,23 @@
         }
       });
 
+      // Event listener for clicks/focus anywhere on the document
       document.addEventListener('click', (event) => {
-        if (!$container[0].contains(event.target) && event.target !== $container[0]) {
-          if ($expandButton.attr('aria-expanded') === 'true') {
-            $expandButton.click();
-          }
+        // Check if the clicked element is outside the collapsible area or the toggle button itself
+        const isOutsideClick = !$overflowItemsContainer[0].contains(event.target) && event.target !== $expandButton[0];
+
+        if (isOutsideClick && $expandButton.attr('aria-expanded') === 'true') {
+          $expandButton.click();
+        }
+      });
+
+      // Handle focus events to close when focus moves outside
+      document.addEventListener('focusin', (event) => {
+        // Check if the newly focused element is outside the container and button
+        const isOutsideFocus = !$overflowItemsContainer[0].contains(event.target) && event.target !== $expandButton[0];
+
+        if (isOutsideFocus && $expandButton.attr('aria-expanded') === 'true') {
+          $expandButton.click();
         }
       });
     }
