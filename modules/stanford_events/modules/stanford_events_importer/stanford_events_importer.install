@@ -87,3 +87,42 @@ function stanford_events_importer_update_8003() {
   $event_dispatcher = \Drupal::service('event_dispatcher');
   $event_dispatcher->dispatch($event, MigrateEvents::POST_IMPORT);
 }
+
+/**
+ * Clear Cron queue and restore deleted events.
+ */
+function stanford_events_importer_update_8004() {
+  \Drupal::queue('localist_event_checker')->deleteQueue();
+
+  $nids = \Drupal::database()
+    ->select('migrate_map_stanford_localist_importer', 'm')
+    ->fields('m', ['destid1', 'destid1'])
+    ->execute()
+    ->fetchAllKeyed();
+
+  $vids = \Drupal::database()
+    ->select('node_field_revision', 'n')
+    ->fields('n', ['vid', 'vid'])
+    ->condition('nid', $nids, 'IN')
+    ->condition('uid', 0)
+    ->condition('deleted', 0, '>')
+    ->execute()
+    ->fetchAllKeyed();
+
+  \Drupal::database()
+    ->update('node_field_data')
+    ->fields(['deleted' => NULL])
+    ->condition('vid', $vids, 'IN')
+    ->execute();
+
+  \Drupal::database()
+    ->update('node_field_revision')
+    ->fields(['deleted' => NULL])
+    ->condition('vid', $vids, 'IN')
+    ->execute();
+
+  \Drupal::database()
+    ->update('migrate_map_stanford_localist_importer')
+    ->fields(['source_row_status' => 1])
+    ->execute();
+}
