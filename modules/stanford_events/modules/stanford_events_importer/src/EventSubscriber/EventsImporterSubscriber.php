@@ -49,11 +49,19 @@ final class EventsImporterSubscriber implements EventSubscriberInterface {
       return;
     }
     $nodeStorage = $this->entityTypeManager->getStorage('node');
-    $nids = $nodeStorage->getQuery()
-      ->accessCheck(FALSE)
-      ->condition('su_event_localist_id', 0, '>')
-      ->range(0, 50)
-      ->execute();
+    try {
+      $nids = $nodeStorage->getQuery()
+        ->accessCheck(FALSE)
+        ->condition('su_event_localist_id', 0, '>')
+        ->range(0, 50)
+        ->execute();
+    }
+    catch (\Exception $e) {
+      // If the field doesn't exist, an exception will be thrown. But we can
+      // just exit the method because that's where the data lives. Likely this
+      // is because the configuration has been imported yet.
+      return;
+    }
 
     if (!$nids) {
       return;
