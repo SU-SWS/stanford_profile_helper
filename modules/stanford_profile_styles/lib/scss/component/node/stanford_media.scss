@@ -38,34 +38,61 @@
     }
 
     li {
-      @include modular-spacing('padding', 1 null);
-      border-top: 1px solid $su-color-black-20;
+      @include modular-spacing('padding', 0 null);
+      border-top: 1px solid $su-color-black-30;
+    }
+
+    .views-field-su-media-description {
+      @include modular-spacing('padding-top', 0);
     }
 
     a {
-      color: $su-color-cardinal-red;
+      @include type-d;
+
+      font-weight: $su-font-bold;
+      color: $su-color-digital-red;
+      text-decoration: none;
 
       &:hover,
       &:focus {
         color: $su-color-black;
+        text-decoration: underline;
       }
     }
   }
 
   .media-content-related-series {
+    .views-row {
+      @include responsive-spacing('margin-bottom', 4);
+    }
+
+    .views-field-su-media-image {
+      @include responsive-spacing('margin-bottom', -1);
+    }
+
     a {
       color: $su-color-black;
       text-decoration: none;
 
       &:hover,
       &:focus {
-        color: $su-color-cardinal-red;
+        color: $su-color-digital-red;
         text-decoration: underline;
+      }
+
+      h3 {
+        @include type-e;
       }
     }
 
     h2 {
       @include type-d;
+    }
+
+    .views-field-su-media-date {
+      @include type-f;
+
+      color: $su-color-black-70;
     }
   }
 
@@ -105,7 +132,7 @@
 
   .node-stanford-media-su-media-types {
     h2 {
-      @include type-d;
+      @include type-f;
     }
   }
 
@@ -133,8 +160,11 @@
     opacity: .9 !important;;
   }
 
-  .date-duration-wrapper,
-  .season-episode-wrapper {
+    .season-episode-wrapper {
+
+    }
+
+  .date-duration-wrapper {
     div {
       display: inline;
     }
