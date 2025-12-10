@@ -63,6 +63,10 @@
         text-decoration: underline;
       }
     }
+
+    h2 {
+      @include type-d;
+    }
   }
 
   .related-person {
