@@ -55,9 +55,13 @@ final class EventsImporterSubscriber implements EventSubscriberInterface {
       ->range(0, 50)
       ->execute();
 
+    if (!$nids) {
+      return;
+    }
+
     foreach ($nodeStorage->loadMultiple($nids) as $node) {
       $queue->createItem([
-        (int) $node->get('su_event_localist_id')->getString(),
+        (int) $node->get('su_event_localist_id')?->getString(),
         (int) $node->id(),
       ]);
     }
