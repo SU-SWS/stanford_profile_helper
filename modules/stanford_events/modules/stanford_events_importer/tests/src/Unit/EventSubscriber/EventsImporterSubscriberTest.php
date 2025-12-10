@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\stanford_events_importer\Unit\EventSubscriber;
 
-use Drupal\Core\Database\Connection;
 use Drupal\Core\Database\Query\Select;
 use Drupal\Core\Database\StatementInterface;
+use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Entity\Query\QueryInterface;
+use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Queue\QueueFactory;
 use Drupal\Core\Queue\QueueInterface;
 use Drupal\migrate\Event\MigrateEvents;
@@ -14,6 +17,7 @@ use Drupal\migrate\Event\MigrateImportEvent;
 use Drupal\migrate\Plugin\migrate\id_map\Sql;
 use Drupal\migrate\Plugin\MigrateIdMapInterface;
 use Drupal\migrate\Plugin\MigrationInterface;
+use Drupal\node\NodeInterface;
 use Drupal\stanford_events_importer\EventSubscriber\EventsImporterSubscriber;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -36,9 +40,9 @@ class EventsImporterSubscriberTest extends UnitTestCase {
   /**
    * The database connection mock.
    *
-   * @var \Drupal\Core\Database\Connection|\PHPUnit\Framework\MockObject\MockObject
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  protected $connection;
+  protected $entityTypeManager;
 
   /**
    * The event subscriber.
@@ -54,11 +58,11 @@ class EventsImporterSubscriberTest extends UnitTestCase {
     parent::setUp();
 
     $this->queueFactory = $this->createMock(QueueFactory::class);
-    $this->connection = $this->createMock(Connection::class);
+    $this->entityTypeManager = $this->createMock(EntityTypeManagerInterface::class);
 
     $this->subscriber = new EventsImporterSubscriber(
       $this->queueFactory,
-      $this->connection
+      $this->entityTypeManager
     );
   }
 
@@ -69,7 +73,10 @@ class EventsImporterSubscriberTest extends UnitTestCase {
     $events = EventsImporterSubscriber::getSubscribedEvents();
 
     $this->assertArrayHasKey(MigrateEvents::POST_IMPORT, $events);
-    $this->assertEquals(['postImport', -100], $events[MigrateEvents::POST_IMPORT]);
+    $this->assertEquals([
+      'postImport',
+      -100,
+    ], $events[MigrateEvents::POST_IMPORT]);
   }
 
   /**
@@ -93,8 +100,8 @@ class EventsImporterSubscriberTest extends UnitTestCase {
       ->with('localist_event_checker')
       ->willReturn($queue);
 
-    $this->connection->expects($this->never())
-      ->method('select');
+    $this->entityTypeManager->expects($this->never())
+      ->method('getStorage');
 
     $this->subscriber->postImport($event);
   }
@@ -123,8 +130,8 @@ class EventsImporterSubscriberTest extends UnitTestCase {
       ->with('localist_event_checker')
       ->willReturn($queue);
 
-    $this->connection->expects($this->never())
-      ->method('select');
+    $this->entityTypeManager->expects($this->never())
+      ->method('getStorage');
 
     $this->subscriber->postImport($event);
   }
@@ -138,17 +145,8 @@ class EventsImporterSubscriberTest extends UnitTestCase {
       ->method('id')
       ->willReturn('stanford_localist_importer');
 
-    $idMap = $this->createMock(Sql::class);
-    $idMap->expects($this->once())
-      ->method('mapTableName')
-      ->willReturn('migrate_map_stanford_localist_importer');
-
-    $migration->expects($this->once())
-      ->method('getIdMap')
-      ->willReturn($idMap);
-
     $event = $this->createMock(MigrateImportEvent::class);
-    $event->expects($this->exactly(2))
+    $event->expects($this->once())
       ->method('getMigration')
       ->willReturn($migration);
 
@@ -163,9 +161,9 @@ class EventsImporterSubscriberTest extends UnitTestCase {
       '34567' => '89012',
     ];
 
-    $queue->expects($this->exactly(3))
+    $queue->expects($this->once())
       ->method('createItem')
-      ->willReturnCallback(function ($item) use (&$ignoredItems) {
+      ->willReturnCallback(function($item) use (&$ignoredItems) {
         $sourceId = (string) $item[0];
         $this->assertArrayHasKey($sourceId, $ignoredItems);
         $this->assertEquals((int) $ignoredItems[$sourceId], $item[1]);
@@ -177,30 +175,52 @@ class EventsImporterSubscriberTest extends UnitTestCase {
       ->with('localist_event_checker')
       ->willReturn($queue);
 
-    $statement = $this->createMock(StatementInterface::class);
-    $statement->expects($this->once())
-      ->method('fetchAllKeyed')
-      ->willReturn($ignoredItems);
+    $query = $this->createMock(QueryInterface::class);
 
-    $select = $this->createMock(Select::class);
-    $select->expects($this->once())
-      ->method('fields')
-      ->with('m', ['sourceid1', 'destid1'])
+    $query->expects($this->once())
+      ->method('accessCheck')
+      ->with(FALSE)
       ->willReturnSelf();
 
-    $select->expects($this->once())
+    $query->expects($this->once())
       ->method('condition')
-      ->with('source_row_status', MigrateIdMapInterface::STATUS_IGNORED)
+      ->with('su_event_localist_id', 0, '>')
       ->willReturnSelf();
 
-    $select->expects($this->once())
-      ->method('execute')
-      ->willReturn($statement);
+    $query->expects($this->once())
+      ->method('range')
+      ->with(0, 50)
+      ->willReturnSelf();
 
-    $this->connection->expects($this->once())
-      ->method('select')
-      ->with('migrate_map_stanford_localist_importer', 'm')
-      ->willReturn($select);
+    $query->expects($this->once())->method('execute')->willReturn([
+      1 => 2,
+      3 => 4,
+    ]);
+
+    $storage = $this->createMock(EntityStorageInterface::class);
+    $storage->expects($this->once())->method('getQuery')
+      ->willReturn($query);
+
+    $field = $this->createMock(FieldItemListInterface::class);
+    $field->expects($this->once())->method('getString')->willReturn(12345);
+
+    $node = $this->createMock(NodeInterface::class);
+    $node->expects($this->once())
+      ->method('get')
+      ->with('su_event_localist_id')
+      ->willReturn($field);
+    $node->expects($this->once())
+      ->method('id')
+      ->willReturn(67890);
+
+    $storage->expects($this->once())
+      ->method('loadMultiple')
+      ->willReturn([67890 => $node]);
+
+    $this->entityTypeManager->expects($this->once())
+      ->method('getStorage')
+      ->with('node')
+      ->willReturn($storage);
 
     $this->subscriber->postImport($event);
   }
