@@ -98,11 +98,13 @@ function stanford_events_importer_update_8004() {
     return;
   }
 
-
   $nids = $db->select('migrate_map_stanford_localist_importer', 'm')
     ->fields('m', ['destid1', 'destid1'])
     ->execute()
     ->fetchAllKeyed();
+  if (!$nids) {
+    return;
+  }
 
   $vids = $db->select('node_field_revision', 'n')
     ->fields('n', ['vid', 'vid'])
@@ -111,6 +113,10 @@ function stanford_events_importer_update_8004() {
     ->condition('deleted', 0, '>')
     ->execute()
     ->fetchAllKeyed();
+
+  if (!$vids) {
+    return;
+  }
 
   $db->update('node_field_data')
     ->fields(['deleted' => NULL])
