@@ -16,13 +16,23 @@
     }
 
     a {
-      @include button-secondary
+      @include button-secondary;
     }
   }
 
+  .season-episode-wrapper,
   .su-media-series {
-    > div:first-child {
-      font-weight: bold;
+    font-size: 16px;
+    line-height: 1.3em;
+  }
+
+  .su-media-series {
+    > div {
+      @include responsive-spacing('margin-bottom', -2);
+
+      &:first-child {
+        font-weight: bold;
+      }
     }
   }
 
@@ -80,20 +90,25 @@
         text-decoration: underline;
       }
 
-      h3 {
-        @include type-e;
+      h3,
+      h2 {
+        @include small-paragraph;
+
+        line-height: 1.4em;
       }
     }
 
-    h2 {
-      @include type-d;
-    }
-
     .views-field-su-media-date {
-      @include type-f;
-
+      font-size: 18px;
+      line-height: 1.4em;
       color: $su-color-black-70;
     }
+  }
+
+  .views-field-su-media-series {
+    font-size: 18px;
+    line-height: 1.4em;
+    color: $su-color-black-70;
   }
 
   .related-person {
