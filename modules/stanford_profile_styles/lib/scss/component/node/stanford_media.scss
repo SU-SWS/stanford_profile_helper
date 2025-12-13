@@ -92,6 +92,7 @@
 
       h3,
       h2 {
+        @include responsive-spacing('margin-bottom', -2);
         @include small-paragraph;
 
         line-height: 1.4em;
