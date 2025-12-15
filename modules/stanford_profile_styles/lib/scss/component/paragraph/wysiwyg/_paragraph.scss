@@ -16,6 +16,7 @@ $su-intro-max-width: unset;
   // Remove any existing top and bottom margin and padding.
   // The .tablesaw-cell-content class catches the spans in tables the module adds.
   p,
+  th,
   .tablesaw-cell-content {
     @include big-paragraph;
     @include margin(0 null null null);
