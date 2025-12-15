@@ -93,8 +93,9 @@
       h3,
       h2 {
         @include responsive-spacing('margin-bottom', -2);
-        @include small-paragraph;
+        @include big-paragraph;
 
+        font-weight: $su-font-black;
         line-height: 1.4em;
       }
     }
