@@ -220,6 +220,33 @@ $big-para-21: 21px;
 
 .ds-entity--stanford-media {
   // Card and teaser display styles.
+
+  .stanford-simple-card {
+    font-size: 18px;
+    line-height: 1.4em;
+
+    h3 {
+      @include big-paragraph;
+
+      line-height: 1.4em;
+      
+      a {
+        color: $su-color-black;
+        text-decoration: none;
+
+        &:hover,
+        &:focus {
+          color: $su-color-digital-red;
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .su-media-date {
+      color: $su-color-black-70;
+    }
+  }
+
 }
 
 .stanford-media-dialog {
