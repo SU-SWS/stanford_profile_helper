@@ -1,6 +1,9 @@
 @charset 'UTF-8';
 @import '../../config';
 
+// Variables
+$big-para-21: 21px;
+
 .node--stanford-media {
   .title {
     h1 {
@@ -96,7 +99,7 @@
 
       h3 {
         @include responsive-spacing('margin-bottom', -2);
-        @include big-paragraph;
+        font-size: $big-para-21;
 
         font-weight: $su-font-black;
         line-height: 1.4em;
@@ -113,7 +116,7 @@
   .views-field-su-media-series {
     font-size: 18px;
     line-height: 1.4em;
-    color: $su-color-black-70;
+    color: $su-color-black;
   }
 
   .related-person {
@@ -144,15 +147,15 @@
     h2 {
       @include type-d;
     }
-
-    h3 {
-      @include type-f;
-    }
   }
 
   .node-stanford-media-su-media-types {
+    border-top: 1px solid $su-color-black-30;
+
     h2 {
-      @include type-f;
+      @include type-d;
+
+      padding-top: 1.8rem;
     }
   }
 
