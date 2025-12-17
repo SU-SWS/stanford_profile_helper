@@ -150,11 +150,11 @@ $big-para-21: 21px;
   }
 
   .node-stanford-media-su-media-types {
-    border-top: 1px solid $su-color-black-30;
 
     h2 {
       @include type-d;
 
+      border-top: 1px solid $su-color-black-30;
       padding-top: 1.8rem;
     }
   }
