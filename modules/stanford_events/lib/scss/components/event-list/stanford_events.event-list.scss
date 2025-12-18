@@ -222,14 +222,19 @@ h1 {
   border-radius: 0;
   color: #6d6c69;
   text-transform: uppercase;
+}
 
-  // The | should only appear when there is a type assigned to it.
-  &:not(:only-child) {
-    &::after {
-      content: " | ";
+// Past Event list item styling
+.past-events-list-block {
+  .event-list-item__type {
+    a {
+      &:not(:last-child) {
+        &::after {
+          content: ", ";
+        }
+      }
     }
   }
-
 }
 
 //Edit event content link
