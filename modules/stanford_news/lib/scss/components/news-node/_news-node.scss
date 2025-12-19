@@ -88,6 +88,8 @@
 
 // Node View - More news 3 across cards.
 .stanford-news-vertical-teaser-term {
+  @include modular-spacing('margin-bottom', 9);
+
   > h2 {
     @include modular-spacing('margin-bottom', 1);
 
