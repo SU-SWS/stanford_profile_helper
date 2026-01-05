@@ -2,7 +2,7 @@
 @import '../../config';
 
 // Variables
-$big-para-21: 21px;
+$big-para-21: 2.1rem;
 
 .node--stanford-media {
   .title {
@@ -112,6 +112,59 @@ $big-para-21: 21px;
       font-size: 18px;
       line-height: 1.4em;
       color: $su-color-black-70;
+    }
+
+    .views-field-su-media-category {
+      .video,
+      .audio,
+      .podcast,
+      .media {
+        @include responsive-spacing('margin-top', -2);
+
+        color: $su-color-white;
+        background-color: $su-color-black;
+        font-size: 1.4rem;
+        line-height: 130%;
+        max-width: fit-content;
+        padding: 2px 7px;
+        border: 2px solid transparent;
+        border-radius: 2px;
+
+        &::before {
+          font-family: "Font Awesome 5 Free";
+          font-weight: 900;
+          color: $su-color-white;
+          display: inline-block;
+          position: relative;
+          visibility: visible;
+          font-size: 1.3rem;
+          padding-right: 5px;
+        }
+      }
+
+      .video {
+        &::before {
+          content: "\f03d";
+        }
+      }
+
+      .audio {
+        &::before {
+            content: "\f025";
+          }
+      }
+
+      .podcast {
+        &::before {
+          content: "\f0ce";
+        }
+      }
+
+      .media {
+        &::before {
+          content: "\f03e";
+        }
+      }
     }
   }
 
