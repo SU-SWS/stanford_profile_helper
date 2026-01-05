@@ -114,7 +114,11 @@ $big-para-21: 2.1rem;
 
     .views-field-su-media-category {
       .video,
-      .audio {
+      .audio,
+      .podcast,
+      .media {
+        @include responsive-spacing('margin-top', -2);
+
         color: $su-color-white;
         background-color: $su-color-black;
         font-size: 1.4rem;
@@ -124,12 +128,39 @@ $big-para-21: 2.1rem;
         border: 2px solid transparent;
         border-radius: 2px;
 
-        &.video {
-          // background-color: orange;
+        &::before {
+          font-family: "Font Awesome 5 Free";
+          font-weight: 900;
+          color: $su-color-white;
+          display: inline-block;
+          position: relative;
+          visibility: visible;
+          font-size: 1.3rem;
+          padding-right: 5px;
         }
+      }
 
-        &.audio {
-          // background-color: lime;
+      .video {
+        &::before {
+          content: "\f03d";
+        }
+      }
+
+      .audio {
+        &::before {
+            content: "\f025";
+          }
+      }
+
+      .podcast {
+        &::before {
+          content: "\f0ce";
+        }
+      }
+
+      .media {
+        &::before {
+          content: "\f03e";
         }
       }
     }
