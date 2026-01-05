@@ -111,6 +111,28 @@ $big-para-21: 2.1rem;
       line-height: 1.4em;
       color: $su-color-black-70;
     }
+
+    .views-field-su-media-category {
+      .video,
+      .audio {
+        color: $su-color-white;
+        background-color: $su-color-black;
+        font-size: 1.4rem;
+        line-height: 130%;
+        max-width: fit-content;
+        padding: 2px 7px;
+        border: 2px solid transparent;
+        border-radius: 2px;
+
+        &.video {
+          // background-color: orange;
+        }
+
+        &.audio {
+          // background-color: lime;
+        }
+      }
+    }
   }
 
   .views-field-su-media-series {
