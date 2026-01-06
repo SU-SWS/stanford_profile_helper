@@ -1,9 +1,6 @@
 @charset 'UTF-8';
 @import '../../config';
 
-// Variables
-$big-para-21: 2.1rem;
-
 .node--stanford-media {
   .title {
     h1 {
@@ -81,6 +78,8 @@ $big-para-21: 2.1rem;
 
     .views-field-su-media-image {
       @include responsive-spacing('margin-bottom', -1);
+
+      max-width: 200px;
     }
 
     h2 {
@@ -99,15 +98,15 @@ $big-para-21: 2.1rem;
 
       h3 {
         @include responsive-spacing('margin-bottom', -2);
-        font-size: $big-para-21;
 
+        font-size: 1.9rem;
         font-weight: $su-font-black;
         line-height: 1.4em;
       }
     }
 
     .views-field-su-media-date {
-      font-size: 18px;
+      font-size: 16px;
       line-height: 1.4em;
       color: $su-color-black-70;
     }
