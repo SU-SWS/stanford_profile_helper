@@ -22,7 +22,7 @@
 
   .season-episode-wrapper,
   .su-media-series {
-    font-size: 16px;
+    font-size: 1.6rem;
     line-height: 1.3em;
   }
 
@@ -106,9 +106,18 @@
     }
 
     .views-field-su-media-date {
-      font-size: 16px;
+      font-size: 1.6rem;
       line-height: 1.4em;
       color: $su-color-black-70;
+    }
+
+    .views-field-su-media-dek {
+      margin-bottom: .9rem;
+    }
+
+    .views-field-su-media-dek,
+    .views-field-su-media-series {
+      font-size: 1.6rem;
     }
   }
 
