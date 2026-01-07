@@ -276,30 +276,34 @@
 .ds-entity--stanford-media {
   // Card and teaser display styles.
   .stanford-simple-card {
-      font-size: 18px;
+    font-size: 1.6rem;
+    line-height: 1.4em;
+
+    h3 {
+      @include big-paragraph;
+
       line-height: 1.4em;
 
-      h3 {
-        @include big-paragraph;
+      a {
+        color: $su-color-black;
+        text-decoration: none;
 
-        line-height: 1.4em;
-
-        a {
-          color: $su-color-black;
-          text-decoration: none;
-
-          &:hover,
-          &:focus {
-            color: $su-color-digital-red;
-            text-decoration: underline;
-          }
+        &:hover,
+        &:focus {
+          color: $su-color-digital-red;
+          text-decoration: underline;
         }
       }
-
-      .su-media-date {
-        color: $su-color-black-70;
-      }
     }
+
+    .su-media-date {
+      color: $su-color-black-70;
+    }
+
+    .su-media-dek {
+      margin-bottom: .6rem;
+    }
+  }
 }
 
 .stanford-media-dialog {
