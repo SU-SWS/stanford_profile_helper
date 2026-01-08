@@ -39,7 +39,6 @@ class StanfordDecoupledHooksTest extends KernelTestBase {
     'media',
     'file',
     'image',
-    'paragraphs',
     'config_pages',
     'stanford_decoupled',
     'entity_usage'
@@ -57,6 +56,8 @@ class StanfordDecoupledHooksTest extends KernelTestBase {
    */
   protected function setUp(): void {
     parent::setUp();
+    $this->installConfig(['entity_usage']);
+    $this->container->get('module_installer')->install(['paragraphs']);
 
     $this->installEntitySchema('user');
     $this->installEntitySchema('node');
