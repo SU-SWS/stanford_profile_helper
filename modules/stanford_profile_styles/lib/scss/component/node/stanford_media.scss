@@ -341,3 +341,39 @@
     height: auto;
   }
 }
+
+// This is the container being tested.
+// Changing the width of the images based on container.
+// Moved the image to far right.
+
+.stanford-simple-card {
+
+  .simple-card-interior-wrapper {
+
+    .image {
+
+      @container simple-card (max-width: 500px) {
+          width: 231px;
+        }
+
+      @container simple-card (max-width: 725px) {
+        width: 240px;
+      }
+
+      @container simple-card (min-width: 726px) {
+        width: 284px;
+      }
+    }
+  }
+}
+
+// Default media list
+.paragraph--view-mode--default {
+  .stanford-simple-card {
+    .image {
+        @container simple-card (min-width: 500px) {
+          order: unset;
+        }
+      }
+  }
+}
