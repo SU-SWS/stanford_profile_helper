@@ -2,7 +2,7 @@
   'use strict';
   Drupal.behaviors.stanfordProfileHelperSiteImprove = {
     attach: function () {
-      const analyticsSrc = '//siteimproveanalytics.com/js/siteanalyze_634745.js';
+      const analyticsSrc = '//siteimproveanalytics.com/js/siteanalyze_6343745.js';
       // If a script tag with the source has already been added, do nothing.
       if ($(`script[src*="${analyticsSrc}"]`).length === 0) {
         const $script = $('<script>')
