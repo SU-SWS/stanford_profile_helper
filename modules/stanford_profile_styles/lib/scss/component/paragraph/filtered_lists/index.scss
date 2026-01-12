@@ -20,6 +20,10 @@
       padding-bottom: 26px;
     }
 
+    .options {
+      overflow: unset;
+    }
+
     label {
       @include responsive-spacing('padding-right', 0);
       @include responsive-spacing('padding-left', 0);
