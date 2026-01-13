@@ -52,6 +52,18 @@ class SuCleanHtml extends FilterBase implements ContainerFactoryPluginInterface 
       return new FilterProcessResult($text);
     }
 
+    // Store pre/code blocks temporarily to preserve their whitespace.
+    $pre_blocks = [];
+    $text = preg_replace_callback(
+      '/<pre[^>]*>.*?<\/pre>/is',
+      function($matches) use (&$pre_blocks) {
+        $placeholder = '___PRE_BLOCK_' . count($pre_blocks) . '___';
+        $pre_blocks[$placeholder] = $matches[0];
+        return $placeholder;
+      },
+      $text
+    );
+
     // Remove line breaks.
     $text = preg_replace('/(\r\n)+|\r+|\n+|\t+/', ' ', $text);
     // Remove html comments.
@@ -62,6 +74,11 @@ class SuCleanHtml extends FilterBase implements ContainerFactoryPluginInterface 
     // Remove link attributes that result from the linkit module. They aren't
     // necessary: data-entity-type data-entity-uuid data-entity-substitution.
     $text = preg_replace('/ data-entity-(type|uuid|substitution)="[^"]*"/', '', $text);
+
+    // Restore pre/code blocks with their original whitespace.
+    foreach ($pre_blocks as $placeholder => $original) {
+      $text = str_replace($placeholder, $original, $text);
+    }
 
     $ns = $this->entityTypeManager->getStorage('node');
 
