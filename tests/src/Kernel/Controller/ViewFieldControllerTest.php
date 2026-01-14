@@ -55,7 +55,12 @@ class ViewFieldControllerTest extends SuProfileHelperKernelTestBase {
       'name' => 'Shared Tags',
     ])->save();
 
-    $term_names = ['Testing One', 'Testing Two', 'Different Term', 'Another Test'];
+    $term_names = [
+      'Testing One',
+      'Testing Two',
+      'Different Term',
+      'Another Test',
+    ];
     foreach ($term_names as $name) {
       Term::create([
         'vid' => 'su_shared_tags',
@@ -159,13 +164,25 @@ class ViewFieldControllerTest extends SuProfileHelperKernelTestBase {
   public static function viewTypesProvider(): array {
     return [
       'stanford_shared_tags' => ['stanford_shared_tags', ['su_shared_tags']],
-      'stanford_courses' => ['stanford_courses', ['su_course_quarters', 'su_course_subjects', 'su_course_tags']],
+      'stanford_courses' => [
+        'stanford_courses',
+        ['su_course_quarters', 'su_course_subjects', 'su_course_tags'],
+      ],
       'stanford_news' => ['stanford_news', ['stanford_news_topics']],
       'stanford_basic_pages' => ['stanford_basic_pages', ['basic_page_types']],
-      'stanford_events' => ['stanford_events', ['stanford_event_types', 'event_audience']],
-      'stanford_opportunities' => ['stanford_opportunities', ['opportunity_type']],
+      'stanford_events' => [
+        'stanford_events',
+        ['stanford_event_types', 'event_audience'],
+      ],
+      'stanford_opportunities' => [
+        'stanford_opportunities',
+        ['opportunity_type'],
+      ],
       'stanford_person' => ['stanford_person', ['stanford_person_types']],
-      'stanford_publications' => ['stanford_publications', ['stanford_publication_topics']],
+      'stanford_publications' => [
+        'stanford_publications',
+        ['stanford_publication_topics'],
+      ],
       'media_content' => ['media_content', ['media_content_types']],
     ];
   }

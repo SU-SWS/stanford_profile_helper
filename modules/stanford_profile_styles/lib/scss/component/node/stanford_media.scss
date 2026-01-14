@@ -25,7 +25,7 @@ $big-para-21: 21px;
 
   .season-episode-wrapper,
   .su-media-series {
-    font-size: 16px;
+    font-size: 1.6rem;
     line-height: 1.3em;
   }
 
@@ -82,7 +82,7 @@ $big-para-21: 21px;
     .views-field-su-media-image {
       @include responsive-spacing('margin-bottom', -1);
 
-      max-width: 13.3rem;
+      max-width: 200px;
     }
 
     h2 {
@@ -101,17 +101,26 @@ $big-para-21: 21px;
 
       h3 {
         @include responsive-spacing('margin-bottom', -2);
-        font-size: $big-para-21;
 
+        font-size: 1.9rem;
         font-weight: $su-font-black;
         line-height: 1.4em;
       }
     }
 
     .views-field-su-media-date {
-      font-size: 18px;
+      font-size: 1.6rem;
       line-height: 1.4em;
       color: $su-color-black-70;
+    }
+
+    .views-field-su-media-dek {
+      margin-bottom: .9rem;
+    }
+
+    .views-field-su-media-dek,
+    .views-field-su-media-series {
+      font-size: 1.6rem;
     }
   }
 
@@ -220,11 +229,66 @@ $big-para-21: 21px;
   }
 }
 
+// Media Category badge. Used on cards, node, lists, etc.
+// The template is in SB field--su-media-category.html.twig
+.views-field-su-media-category,
+.su-media-category {
+  .video,
+  .audio,
+  .podcast,
+  .media {
+    @include responsive-spacing('margin-top', -2);
+
+    color: $su-color-white;
+    background-color: $su-color-black;
+    font-size: 1.4rem;
+    line-height: 130%;
+    max-width: fit-content;
+    padding: 2px 7px;
+    border: 2px solid transparent;
+    border-radius: 2px;
+
+    &::before {
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      color: $su-color-white;
+      display: inline-block;
+      position: relative;
+      visibility: visible;
+      font-size: 1.3rem;
+      padding-right: 5px;
+    }
+  }
+
+  .video {
+    &::before {
+      content: "\f03d";
+    }
+  }
+
+  .audio {
+    &::before {
+      content: "\f025";
+    }
+  }
+
+  .podcast {
+    &::before {
+      content: "\f2ce";
+    }
+  }
+
+  .media {
+    &::before {
+      content: "\f03e";
+    }
+  }
+}
+
 .ds-entity--stanford-media {
   // Card and teaser display styles.
-
   .stanford-simple-card {
-    font-size: 18px;
+    font-size: 1.6rem;
     line-height: 1.4em;
 
     h3 {
@@ -247,8 +311,11 @@ $big-para-21: 21px;
     .su-media-date {
       color: $su-color-black-70;
     }
-  }
 
+    .su-media-dek {
+      margin-bottom: .6rem;
+    }
+  }
 }
 
 .stanford-media-dialog {

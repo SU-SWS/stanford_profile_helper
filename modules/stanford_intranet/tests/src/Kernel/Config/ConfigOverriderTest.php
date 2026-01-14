@@ -15,7 +15,8 @@ class ConfigOverriderTest extends IntranetKernelTestBase {
    */
   public function testFileFieldConfigOverrides() {
     $this->assertEquals('public', $this->fieldStorage->getSetting('uri_scheme'));
-    \Drupal::state()->set('stanford_intranet', TRUE);
+    $this->container->get('state')->set('stanford_intranet', TRUE);
+    $this->container->get('kernel')->rebuildContainer();
 
     // Reload the field storage.
     $this->fieldStorage = FieldStorageConfig::load($this->fieldStorage->id());

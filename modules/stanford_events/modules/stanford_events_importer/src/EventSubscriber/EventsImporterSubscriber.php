@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\stanford_events_importer\EventSubscriber;
 
 use Drupal\Core\Database\Connection;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Queue\QueueFactory;
 use Drupal\migrate\Event\MigrateEvents;
 use Drupal\migrate\Event\MigrateImportEvent;
@@ -21,7 +22,7 @@ final class EventsImporterSubscriber implements EventSubscriberInterface {
    */
   public function __construct(
     private readonly QueueFactory $queue,
-    private readonly Connection $connection,
+    private readonly EntityTypeManagerInterface $entityTypeManager
   ) {}
 
   /**
@@ -47,20 +48,29 @@ final class EventsImporterSubscriber implements EventSubscriberInterface {
     ) {
       return;
     }
+    $nodeStorage = $this->entityTypeManager->getStorage('node');
+    try {
+      $nids = $nodeStorage->getQuery()
+        ->accessCheck(FALSE)
+        ->condition('su_event_localist_id', 0, '>')
+        ->range(0, 50)
+        ->execute();
+    }
+    catch (\Exception $e) {
+      // If the field doesn't exist, an exception will be thrown. But we can
+      // just exit the method because that's where the data lives. Likely this
+      // is because the configuration has been imported yet.
+      return;
+    }
 
-    /** @var \Drupal\migrate\Plugin\migrate\id_map\Sql $id_map */
-    $id_map = $event->getMigration()->getIdMap();
+    if (!$nids) {
+      return;
+    }
 
-    $items = $this->connection->select($id_map->mapTableName(), 'm')
-      ->fields('m', ['sourceid1', 'destid1'])
-      ->condition('source_row_status', MigrateIdMapInterface::STATUS_IGNORED)
-      ->execute()
-      ->fetchAllKeyed();
-
-    foreach ($items as $sourceId => $destId) {
+    foreach ($nodeStorage->loadMultiple($nids) as $node) {
       $queue->createItem([
-        (int) $sourceId,
-        (int) $destId,
+        (int) $node->get('su_event_localist_id')?->getString(),
+        (int) $node->id(),
       ]);
     }
   }

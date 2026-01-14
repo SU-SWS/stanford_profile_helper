@@ -19,7 +19,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 #[QueueWorker(
   id: 'localist_event_checker',
   title: new TranslatableMarkup('Localist Event Checker'),
-  cron: ['time' => 60],
+  cron: ['time' => 10],
 )]
 final class LocalistEventChecker extends QueueWorkerBase implements ContainerFactoryPluginInterface {
 
@@ -61,16 +61,20 @@ final class LocalistEventChecker extends QueueWorkerBase implements ContainerFac
       $this->httpClient->get("https://events.stanford.edu/api/2/events/$sourceId", ['timeout' => 5]);
     }
     catch (ClientException $e) {
-      $errorResponse = json_decode($e->getResponse()->getBody()
-        ->getContents(), TRUE, 512, JSON_THROW_ON_ERROR);
-
-      if (
-        isset($errorResponse['error']) &&
-        str_contains($errorResponse['error'], 'Couldn\'t find Event with')
-      ) {
-        $this->entityTypeManager->getStorage('node')
-          ->load($destId)
-          ->delete();
+      try {
+        $errorResponse = json_decode($e->getResponse()->getBody()
+          ->getContents(), TRUE, 512, JSON_THROW_ON_ERROR);
+        if (
+          isset($errorResponse['error']) &&
+          str_contains($errorResponse['error'], 'Couldn\'t find Event with')
+        ) {
+          $this->entityTypeManager->getStorage('node')
+            ->load($destId)
+            ->delete();
+        }
+      }
+      catch (\Throwable $e) {
+        // Do nothing.
       }
     }
   }

@@ -3,11 +3,8 @@
 namespace Drupal\Tests\stanford_profile_helper\Kernel;
 
 use Drupal\Core\Site\Settings;
-use Drupal\Core\Url;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\node\Entity\NodeType;
-use Drupal\node\NodeInterface;
-use Drupal\stanford_profile_helper\StanfordDefaultContentInterface;
 
 /**
  * Test the event subscriber.
@@ -39,7 +36,6 @@ abstract class SuProfileHelperKernelTestBase extends KernelTestBase {
     'taxonomy',
     'pathauto',
     'token',
-    'paragraphs',
     'options',
     'file',
     'next',
@@ -54,6 +50,7 @@ abstract class SuProfileHelperKernelTestBase extends KernelTestBase {
    */
   protected function setUp(): void {
     parent::setUp();
+    $this->container->get('module_installer')->install(['paragraphs']);
     $site_settings = Settings::getAll();
     $site_settings['STANFORD_PROFILE_HELPER_DISABLE_NEXT'] = TRUE;
     new Settings($site_settings);
@@ -71,18 +68,6 @@ abstract class SuProfileHelperKernelTestBase extends KernelTestBase {
     $this->setInstallProfile('test_stanford_profile_helper');
 
     NodeType::create(['type' => 'stanford_event', 'name' => 'Event'])->save();
-
-//    $entity = $this->createMock(NodeInterface::class);
-//    $entity->method('label')->willReturn('Foo Bar');
-//    $entity->method('toUrl')->willReturn(new Url('node.canonoical', ['node' => $entity]));
-//
-//    $default_content_mock = $this->createMock(StanfordDefaultContentInterface::class);
-//    $default_content_mock->method('createDefaultContent')
-//      ->willReturnReference($entity);
-//
-//    $container = \Drupal::getContainer();
-//    $container->set('stanford_profile_helper.default_content', $default_content_mock);
-//    \Drupal::setContainer($container);
   }
 
 }
