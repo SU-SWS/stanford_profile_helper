@@ -224,19 +224,6 @@ h1 {
   text-transform: uppercase;
 }
 
-// Past Event list item styling
-.past-events-list-block {
-  .event-list-item__type {
-    a {
-      &:not(:last-child) {
-        &::after {
-          content: ", ";
-        }
-      }
-    }
-  }
-}
-
 //Edit event content link
 .views-field-su-event-edit {
   a {
