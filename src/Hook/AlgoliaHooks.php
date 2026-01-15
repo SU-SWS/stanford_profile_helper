@@ -7,6 +7,7 @@ namespace Drupal\stanford_profile_helper\Hook;
 use Drupal\config_pages\ConfigPagesLoaderServiceInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\Site\Settings;
 use Drupal\node\NodeInterface;
 use Drupal\search_api\IndexInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -74,7 +75,9 @@ class AlgoliaHooks {
     $federated = $this->isFederatedSearch();
 
     foreach ($objects as &$item) {
-      $item['html'] = '';
+      if (Settings::get('algolia_trim_html')) {
+        $item['html'] = substr($item['html'] ?? '', 0, 100);
+      }
       // Move title to the beginning for more easy UI results.
       $item = ['title' => $item['title'], ...$item];
 

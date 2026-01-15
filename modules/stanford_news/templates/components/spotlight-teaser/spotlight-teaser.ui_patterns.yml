@@ -4,27 +4,27 @@ spotlight-teaser:
   variants:
     large_image:
       label: Spotlight Teaser - Large
-      modifier_class: "su-spotlight-teaser--large"
+      modifier_class: "news-spotlight--large"
     small_image:
       label: Spotlight Teaser - Small
-      modifier_class: "su-spotlight-teaser--small"
+      modifier_class: "news-teaser--small"
   fields:
-    spotlight_teaser_headline:
+    headline:
       type: text
       label: "Title"
       description: "News title/headline"
       preview: "This is a headline"
-    spotlight_teaser_quote:
+    quote:
       type: text
       label: "Quote/Big Text"
       description: "The quote or big text field"
       preview: "This is a compelling quote"
-    spotlight_teaser_media:
+    media:
       type: text
       label: "Featured Media"
       description: "The featured media image."
       preview: "<img src='https://picsum.photos/900/900/' alt='Example Image' />"
-    spotlight_filters:
+    filters:
       type: text
       label: "Spotlight Filters"
       description: "Spotlight filter terms"
@@ -34,8 +34,4 @@ spotlight-teaser:
       label: "Publication Date"
       description: "Publishing date"
       preview: "January 1, 2025"
-  use: "@news/spotlight-teaser/spotlight-teaser.twig"
-  libraries:
-    - spotlightteaser:
-        dependencies:
-          - stanford_news/spotlight_teaser
+  use: "stanford_profile_styles:news_spotlight_teaser"
