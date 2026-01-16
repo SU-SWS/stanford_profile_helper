@@ -30,6 +30,7 @@
     @include modular-spacing('margin-top', 7);
     @include modular-spacing('margin-bottom', 7);
     width: 100%;
+    border-top: 1px solid $su-color-black-30;
 
     @include grid-media('md') {
       width: 15%;
