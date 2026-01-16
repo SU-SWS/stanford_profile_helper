@@ -1,11 +1,5 @@
 @charset "UTF-8";
 
-.su-list-unstyled.grid-container-3:has(.news-spotlight) {
-  @include grid-media-max('sm') {
-    grid-gap: 0;
-  }
-}
-
 // Spotlight Image Card styles for List, Filtered List, and Related Spotlights.
 .related-spotlights {
   .su-media__wrapper {
