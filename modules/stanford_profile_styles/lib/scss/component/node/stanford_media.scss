@@ -17,20 +17,42 @@
 
     a {
       @include button-secondary;
+      background-color: #fff;
+      box-shadow: inset 0 0 0 1.5px $su-color-digital-red;
+      color: $su-color-digital-red;
+      padding: 1rem 2rem 1.15rem;
+      border-radius: 3px
+    }
+  }
+
+  .related-person {
+    a {
+      color: $su-color-digital-red;
+      font-weight: 400;
+      text-decoration: none;
+
+      &:hover,
+      &:focus {
+        color: $su-color-black;
+        text-decoration: underline;
+      }
     }
   }
 
   .season-episode-wrapper,
   .su-media-series {
+    @include responsive-spacing('padding', null 0);
     font-size: 1.6rem;
     line-height: 1.3em;
   }
 
   .su-media-series {
+    border-top: 1px solid $su-color-black-30;
     > div {
       @include responsive-spacing('margin-bottom', -2);
 
       &:first-child {
+        @include responsive-spacing('padding-top', 0);
         font-weight: bold;
       }
     }
@@ -81,7 +103,8 @@
     .views-field-su-media-image {
       @include responsive-spacing('margin-bottom', -1);
 
-      max-width: 200px;
+      max-height: 130px;
+      max-width: 130px;
     }
 
     h2 {
@@ -206,17 +229,17 @@
       position: relative;
 
       &:nth-child(2) {
-        margin-left: 5px;
-        padding-left: 6px;
+        padding-left: 10px;
+        margin-left: 7px;
 
         &::before {
           content: '';
           position: absolute;
-          width: 1.5px;
+          width: 1px;
           height: 80%;
           left: 0;
           top: 10%;
-          background: $su-color-black
+          background: $su-color-black-50;
         }
       }
     }
