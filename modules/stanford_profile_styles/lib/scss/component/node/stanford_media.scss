@@ -72,8 +72,10 @@
   }
 
   .media-content-related-series {
+    @include responsive-spacing('padding', 0 1 null 1);
+
     .views-row {
-      @include responsive-spacing('margin-bottom', 4);
+      @include responsive-spacing('margin-bottom', 3);
     }
 
     .views-field-su-media-image {
@@ -229,7 +231,7 @@
 // Media Category badge. Used on cards, node, lists, etc.
 // The template is in SB field--su-media-category.html.twig
 .views-field-su-media-category,
-.stanford-simple-card {
+.simple-card-interior {
   .video,
   .audio,
   .podcast,
@@ -285,12 +287,17 @@
 .ds-entity--stanford-media {
   // Card and teaser display styles.
   .stanford-simple-card {
+    @include responsive-spacing('padding', 1);
+
+    border: 1px solid $su-color-black-20;
+    background-color: $su-color-white;
     font-size: 1.6rem;
     line-height: 1.4em;
 
     h3 {
       @include big-paragraph;
 
+      margin-bottom: 0.8rem;
       line-height: 1.4em;
 
       a {
@@ -313,7 +320,25 @@
       margin-bottom: .6rem;
     }
   }
+
+  li:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
 }
+
+.media-content {
+  &.list {
+    .su-list-unstyled {
+      >li {
+        &:last-child {
+          padding-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
 
 .stanford-media-dialog {
   width: 90% !important;
@@ -339,5 +364,16 @@
     aspect-ratio: 16/9;
     width: 100%;
     height: auto;
+  }
+}
+
+// Default media list
+.paragraph--view-mode--default {
+  .stanford-simple-card {
+    .image {
+      @container simple-card (min-width: 500px) {
+        order: unset;
+      }
+    }
   }
 }
