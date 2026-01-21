@@ -123,8 +123,7 @@
 
       h3 {
         @include responsive-spacing('margin-bottom', -2);
-
-        font-size: 1.9rem;
+        @include type-e;
         font-weight: $su-font-black;
         line-height: 1.4em;
       }
