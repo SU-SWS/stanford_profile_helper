@@ -89,12 +89,12 @@
   }
 
   .main {
-    border-top: 1px solid $su-color-black-20;
-    @include modular-spacing('margin-top', 3);
     @include modular-spacing('padding-top', 3);
 
     > * {
       @include modular-spacing('margin-bottom', 3);
+      @include modular-spacing('padding-top', 1);
+      border-top: 1px solid $su-color-black-30;
     }
   }
 

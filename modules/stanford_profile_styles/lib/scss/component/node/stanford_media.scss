@@ -59,40 +59,50 @@
     }
   }
 
-  .after-first-media {
+  .media-content-after-first-media {
     h2 {
-      @include type-d;
+      @include type-c;
     }
 
-    ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
+    .after-first-media {
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
 
-    li {
-      @include modular-spacing('padding', 0 null);
-      border-top: 1px solid $su-color-black-30;
-    }
+      li {
+        @include modular-spacing('padding', 0);
+        border-top: 1px solid $su-color-black-30;
 
-    .views-field-su-media-description {
-      @include modular-spacing('padding-top', 0);
-    }
+        &:first-of-type {
+          border-top: none;
+        }
+      }
 
-    a {
-      @include type-d;
+      .views-field-su-media-description {
+        @include modular-spacing('padding-top', 0);
+      }
 
-      font-weight: $su-font-bold;
-      color: $su-color-digital-red;
-      text-decoration: none;
+      .views-field-su-video-duration {
+        font-size: 1.6rem;
+      }
 
-      &:hover,
-      &:focus {
-        color: $su-color-black;
-        text-decoration: underline;
+      a {
+        @include type-e;
+
+        font-weight: $su-font-bold;
+        color: $su-color-digital-red;
+        text-decoration: none;
+
+        &:hover,
+        &:focus {
+          color: $su-color-black;
+          text-decoration: underline;
+        }
       }
     }
-  }
+}
 
   .media-content-related-series {
     @include responsive-spacing('padding', 0 1 null 1);
