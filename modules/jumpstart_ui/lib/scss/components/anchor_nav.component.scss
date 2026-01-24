@@ -57,10 +57,10 @@ icon-bullet::before {
 
       // mobile first width:
       max-width: 245px;
-      margin: 0 auto;
+      margin: 0 auto 46px;
 
       @media screen and (min-width: 1201px){
-        max-width: 1000px;
+        max-width: 980px;
         margin: 0;
         
       }
@@ -72,24 +72,39 @@ icon-bullet::before {
           font-size: 17px;
 
         }
-      }
+      } 
 
       // show more section - overflow control
       button {
 
-        @media screen and (min-width: 1201px){
-          &::before {
-            // add the leading icon before this section, just for mobile
-            // bars-3-bottom-left
-            content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon"><path fill-rule="evenodd" d="M3 6.75A.75.75 0 0 1 3.75 6h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 6.75ZM3 12a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm0 5.25a.75.75 0 0 1 .75-.75H12a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd"/></svg>');
-            width: 20px;
-            height: 23px;
-            display: inline-block;
-            padding-top: 3px;
-            // i saw fontawesome included in jumpstart_ui.config.scss but not hero icons
-          }
-          
+        &::before {
+          // add the leading icon before this section, just for mobile
+          // bars-3-bottom-left
+          content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon"><path fill-rule="evenodd" d="M3 6.75A.75.75 0 0 1 3.75 6h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 6.75ZM3 12a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm0 5.25a.75.75 0 0 1 .75-.75H12a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd"/></svg>');
+          width: 20px;
+          height: 23px;
+          display: inline-block;
+          padding-top: 3px;
+          // i saw fontawesome included in jumpstart_ui.config.scss but not hero icons
         }
+
+        @media screen and (max-width: 1199px){
+          @include responsive-spacing('padding-top', 0); 
+          @include responsive-spacing('padding-left', 3);  // in teh design but not necessary due to margin centering
+          @include responsive-spacing('padding-right', 3);  // in teh design but not necessary due to margin centering
+          margin: 0 auto;
+        }
+
+        &::active {
+          text-decoration: underline solid #B1040E 1px;
+
+          // Kyle please work on chevron translate and rotation on expand/active class
+          // use transition so it rotates smoothly back and forth.
+        }
+
+
+          
+        
       // currently inheriting from parent theme?
       //  red chevron down icon is already applied in the js
       @include responsive-spacing('padding-left', 2);
@@ -136,6 +151,9 @@ icon-bullet::before {
 }
 // Subnav 2 col layout
 .jumpstart-ui--two-column {
-  // this is probably not needed but in case
+  
+  nav {
+
+  }
 }
 
