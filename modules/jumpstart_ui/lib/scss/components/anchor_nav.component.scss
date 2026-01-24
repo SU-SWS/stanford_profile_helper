@@ -95,15 +95,16 @@ icon-bullet::before {
           margin: 0 auto;
         }
 
-        &::active {
+        &::hover {
           text-decoration: underline solid #B1040E 1px;
+        }
 
+        // Expanded Menu:
+        &::active {
           // Kyle please work on chevron translate and rotation on expand/active class
           // use transition so it rotates smoothly back and forth.
         }
 
-
-          
         
       // currently inheriting from parent theme?
       //  red chevron down icon is already applied in the js
@@ -112,6 +113,8 @@ icon-bullet::before {
       }
       
 
+       // Expanded Menu:
+       // Kyle add code here for the expanded menu section and it's styles. remember to use their padding option that I have referenced above
     }
   }
   
