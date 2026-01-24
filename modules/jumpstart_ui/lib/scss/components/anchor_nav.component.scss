@@ -4,7 +4,23 @@
 @import '../jumpstart_ui.config';
 @import 'decanter/core/src/scss/decanter-no-markup';
 
+// checking how we want to do icons
+icon-bullet::before {
+  content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org' viewBox='0 0 10 10'%3E%3Ccircle cx='5' cy='5' r='5' fill='red'/%3E%3C/svg%3E");
+  display: inline-block; /* Helps with positioning */
+  width: 1em;            /* Adjust size as needed */
+  height: 1em;           /* Adjust size as needed */
+  margin-right: 0.5em;   /* Spacing between the icon and text */
+  vertical-align: middle;
+}
+
+
+
 .anchor-link-nav {
+
+  // on this page label
+
+  // links
 
   ul {
     list-style: none;
@@ -29,8 +45,61 @@
       overflow: hidden;
       white-space: nowrap;
       justify-content: space-around;
+      background-color: #F9F9F9;
+      border: 1px solid #C0C0BF;
+      border-radius: 46px;
+      //  todo: check if this is correct:
+      @include responsive-spacing('padding', 0);
+      @include responsive-spacing('padding-left', 2);
+      @include responsive-spacing('padding-right', 2);
+
+      min-height: 61px;
+
+      // mobile first width:
+      max-width: 245px;
+      margin: 0 auto;
+
+      @media screen and (min-width: 1201px){
+        max-width: 1000px;
+        margin: 0;
+        
+      }
+
+
+      li {
+
+        a {
+          font-size: 17px;
+
+        }
+      }
+
+      // show more section - overflow control
+      button {
+
+        @media screen and (min-width: 1201px){
+          &::before {
+            // add the leading icon before this section, just for mobile
+            // bars-3-bottom-left
+            content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon"><path fill-rule="evenodd" d="M3 6.75A.75.75 0 0 1 3.75 6h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 6.75ZM3 12a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm0 5.25a.75.75 0 0 1 .75-.75H12a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd"/></svg>');
+            width: 20px;
+            height: 23px;
+            display: inline-block;
+            padding-top: 3px;
+            // i saw fontawesome included in jumpstart_ui.config.scss but not hero icons
+          }
+          
+        }
+      // currently inheriting from parent theme?
+      //  red chevron down icon is already applied in the js
+      @include responsive-spacing('padding-left', 2);
+
+      }
+      
+
     }
   }
+  
 
   .overflow-items {
     border: 1px solid #eee;
@@ -55,3 +124,18 @@
     }
   }
 }
+
+// Now adjust for page layout differences, subtle
+// 1 column is the default layout
+
+
+// Subnav 2 col layout - overrides to adjust width and subtle differences.
+// example https://stvp.sites.stanford.edu/about/people
+.jumpstart-ui--one-column {
+
+}
+// Subnav 2 col layout
+.jumpstart-ui--two-column {
+  // this is probably not needed but in case
+}
+
