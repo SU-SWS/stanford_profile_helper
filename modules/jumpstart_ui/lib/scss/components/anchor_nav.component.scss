@@ -14,6 +14,18 @@ icon-bullet::before {
   vertical-align: middle;
 }
 
+@mixin icon-before--3-bars() {
+  &::before {
+    // add the leading icon before this section, just for mobile
+    // bars-3-bottom-left
+    content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon"><path fill-rule="evenodd" d="M3 6.75A.75.75 0 0 1 3.75 6h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 6.75ZM3 12a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm0 5.25a.75.75 0 0 1 .75-.75H12a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd"/></svg>');
+    width: 20px;
+    height: 23px;
+    display: inline-block;
+    padding-top: 3px;
+    // i saw fontawesome included in jumpstart_ui.config.scss but not hero icons
+  }
+}
 
 
 .anchor-link-nav {
@@ -60,6 +72,9 @@ icon-bullet::before {
       margin: 0 auto 46px;
 
       @media screen and (min-width: 1201px){
+      // add icon before button on desktops only
+          @include icon-before--3-bars();
+
         max-width: 980px;
         margin: 0;
         
@@ -77,18 +92,12 @@ icon-bullet::before {
       // show more section - overflow control
       button {
 
-        &::before {
-          // add the leading icon before this section, just for mobile
-          // bars-3-bottom-left
-          content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon"><path fill-rule="evenodd" d="M3 6.75A.75.75 0 0 1 3.75 6h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 6.75ZM3 12a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm0 5.25a.75.75 0 0 1 .75-.75H12a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd"/></svg>');
-          width: 20px;
-          height: 23px;
-          display: inline-block;
-          padding-top: 3px;
-          // i saw fontawesome included in jumpstart_ui.config.scss but not hero icons
-        }
+        
 
         @media screen and (max-width: 1199px){
+          // add icon before button on mobile only
+          @include icon-before--3-bars();
+
           @include responsive-spacing('padding-top', 0); 
           @include responsive-spacing('padding-left', 3);  // in teh design but not necessary due to margin centering
           @include responsive-spacing('padding-right', 3);  // in teh design but not necessary due to margin centering
@@ -113,8 +122,25 @@ icon-bullet::before {
       }
       
 
-       // Expanded Menu:
-       // Kyle add code here for the expanded menu section and it's styles. remember to use their padding option that I have referenced above
+       
+    }
+
+  // Expanded Menu:
+        // Kyle add code here for the expanded menu section and it's styles. remember to use their padding option that I have referenced above
+    .overflow-container {
+      width: 280px;
+      height: fit-content;
+      background-color: #f9f9f9;
+      border: 1px solid #C0C0BF;
+      border-radius: 6px;
+      // Kyle work on positioning styling once we have test site working.
+
+      // links
+      .overflow-items {
+        min-height: 21px; // in figma, but i think we can remove..
+
+        
+      }
     }
   }
   
@@ -129,6 +155,7 @@ icon-bullet::before {
     z-index: 1;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   }
+
 
   button {
     i {
