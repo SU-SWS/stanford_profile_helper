@@ -64,16 +64,15 @@ icon-bullet::before {
       @include responsive-spacing('padding', 0);
       @include responsive-spacing('padding-left', 2);
       @include responsive-spacing('padding-right', 2);
-
       min-height: 61px;
 
       // mobile first width:
       max-width: 245px;
-      margin: 0 auto 46px;
+      margin: 0 auto 48px; // note that the h2 following the horizontal nav has top margin to create the full spacing between
 
       @media screen and (min-width: 1201px){
       // add icon before button on desktops only
-          @include icon-before--3-bars();
+        @include icon-before--3-bars();
 
         max-width: 980px;
         margin: 0;
@@ -125,21 +124,29 @@ icon-bullet::before {
        
     }
 
-  // Expanded Menu:
-        // Kyle add code here for the expanded menu section and it's styles. remember to use their padding option that I have referenced above
+    // Expanded Menu:
+    // Kyle add code here for the expanded menu section and it's styles. remember to use their padding option that I have referenced above
     .overflow-container {
       width: 280px;
       height: fit-content;
+      // Kyle work on positioning styling once we have test site working.
+      position: absolute;
+      top: 0px; // or would this be 61px? we'll check w local
+      right: 40px; // anchor to top right corner of parent? 
       background-color: #f9f9f9;
       border: 1px solid #C0C0BF;
       border-radius: 6px;
-      // Kyle work on positioning styling once we have test site working.
+      @include responsive-spacing('padding-top', 2);
+      @include responsive-spacing('padding-bottom', 2);
+      @include responsive-spacing('padding-left', 3); // this is a guess from figma
+      @include responsive-spacing('padding-right', 3);
+
 
       // links
       .overflow-items {
         min-height: 21px; // in figma, but i think we can remove..
-
-        
+        // add spacing here
+        margin-bottom: 27px; // on each link, Kyle make sure it doesn't double-margin gap on the last link.
       }
     }
   }
