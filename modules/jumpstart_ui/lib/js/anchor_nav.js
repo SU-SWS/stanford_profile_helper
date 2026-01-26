@@ -77,8 +77,8 @@
 
       // Event listener for clicks/focus anywhere on the document
       document.addEventListener('click', (event) => {
-        // Check if the clicked element is outside the collapsible area or the toggle button itself
-        const isOutsideClick = !$overflowItemsContainer[0].contains(event.target) && event.target !== $expandButton[0];
+        // Check if the clicked element is outside the collapsible area or the toggle button itself (including the chevron icon)
+        const isOutsideClick = !$overflowItemsContainer[0].contains(event.target) && event.target !== $expandButton[0] && event.target.parentNode !== $expandButton[0];
 
         if (isOutsideClick && $expandButton.attr('aria-expanded') === 'true') {
           $expandButton.click();
