@@ -130,7 +130,7 @@ $su-color-black: #2E2D29;
         
         ul:first-child:before {
           content: 'On This Page';
-          padding-right: 16px; //  could be 18px to visually match figma?
+          padding-right: 14px; //  could be 18px to visually match figma?
           // flex-grow: 1;
         }
       }
