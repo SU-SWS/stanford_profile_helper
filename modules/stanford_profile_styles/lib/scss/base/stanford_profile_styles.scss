@@ -186,6 +186,43 @@ a {
   }
 }
 
+// Splash or extra large text links with icons following.
+.su-intro-text {
+  a {
+    &.mailto {
+      svg {
+        height: 3rem;
+        width: 3rem;
+      }
+    }
+
+    &.su-link--external {
+      &:after {
+        height: 1.6rem;
+        width: 1.6rem;
+      }
+    }
+  }
+}
+
+.su-font-splash {
+  a {
+    &.mailto {
+      svg {
+        height: 3.5rem;
+        width: 3.5rem;
+      }
+    }
+
+    &.su-link--external {
+      &:after {
+        height: 2.2rem;
+        width: 2.2rem;
+      }
+    }
+  }
+}
+
 // Menu styles and footer action links
 nav[aria-label^='footer'],
 .su-local-footer__action-links,
