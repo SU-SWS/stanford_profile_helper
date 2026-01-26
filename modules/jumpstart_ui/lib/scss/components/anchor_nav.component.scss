@@ -40,8 +40,8 @@ $su-color-black: #2E2D29;
         text-decoration: none;
 
         &:hover, &:focus {
-        color: $su-color-digital-red-light;
-        text-decoration: underline solid 1px $su-color-digital-red-light;
+          color: $su-color-digital-red-light;
+          text-decoration: underline solid 1px $su-color-digital-red-light;
         }
       }
     }
@@ -69,11 +69,14 @@ $su-color-black: #2E2D29;
       transition: 0.2s ease;
       color: $su-color-digital-red;
       padding-left: 10px;
+      padding-right: 0px;
     }
 
     &[aria-expanded="true"] {
       i {
         transform: rotate(-180deg);  // need to fix; the 'See More' rotates as well.
+        padding-right: 10px;
+        padding-left: 0px;
       }
     }
   }
@@ -106,9 +109,10 @@ $su-color-black: #2E2D29;
     }
 
     nav {
+      position: relative;
       display: flex;
       align-items: center;
-      overflow: hidden;
+      // overflow: hidden;
       white-space: nowrap;
       justify-content: space-around;
       
@@ -150,10 +154,7 @@ $su-color-black: #2E2D29;
 
         // Expanded Menu:
         &:active {
-          // Kyle please work on chevron translate and rotation on expand/active class
-          // this may be done already below in button[aria-expanded="true"], see if it works
-          transition: .2s ease;
-          transform: rotate(180deg);
+
         }
 
         
@@ -169,49 +170,42 @@ $su-color-black: #2E2D29;
 
     // Expanded Menu:
     // Kyle add code here for the expanded menu section and it's styles. remember to use their padding option that I have referenced above
-    .overflow-container {
+    .overflow-items {
       width: 280px;
       height: fit-content;
-      // Kyle work on positioning styling once we have test site working.
       position: absolute;
-      right: 50px;
-      top: 148px;
-    
+      right: 10px;
+      top: 30px;
       background-color: #f9f9f9;
       border: 1px solid #C0C0BF;
       border-radius: 6px;
-      @include responsive-spacing('padding-top', 2);
-      @include responsive-spacing('padding-bottom', 2);
-      @include responsive-spacing('padding-left', 3); // this is a guess from figma
-      @include responsive-spacing('padding-right', 3);
-
-
-
+      z-index: 1;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    
       &.hidden {
         height: 0px;
         transition: .2s ease;
       }
 
-      // links
-      .overflow-items,
-      li {
-        min-height: 21px; // in figma, but i think we can remove..
-        // add spacing here
-        margin-bottom: 27px; // on each link, Kyle make sure it doesn't double-margin gap on the last link.
-      }
+
     }
   }
   
 
   .overflow-items {
-    border: 1px solid #eee;
-    padding: 10px;
-    position: absolute;
-    right: 0;
-    top: 50px;
-    background-color: white;
-    z-index: 1;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    
+    @include responsive-spacing('padding-top', 2);
+    @include responsive-spacing('padding-bottom', 2);
+    @include responsive-spacing('padding-left', 3); // this is a guess from figma
+    @include responsive-spacing('padding-right', 3);
+
+    // links
+    .overflow-item,
+    li {
+      min-height: 21px; // in figma, but i think we can remove..
+      // add spacing here
+      margin-bottom: 27px; // on each link, Kyle make sure it doesn't double-margin gap on the last link.
+    }
   }
 
 }
