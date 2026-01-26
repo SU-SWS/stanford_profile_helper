@@ -107,6 +107,7 @@
 
     @include grid-media-min('lg') {
       width: 20%;
+      min-width: 220px;
     }
   }
 }
