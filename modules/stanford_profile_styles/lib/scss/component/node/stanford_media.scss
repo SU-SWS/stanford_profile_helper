@@ -42,15 +42,28 @@
 
   .season-episode-wrapper,
   .su-media-series {
+    h2,
+    div {
+      font-size: 1.6rem;
+      line-height: 1.3em;
+      font-weight: $su-font-regular;
+      display: inline-block;
+    }
+
     @include responsive-spacing('padding', null 0);
-    font-size: 1.6rem;
-    line-height: 1.3em;
+  }
+
+  .season-episode-wrapper {
+    > .field-block {
+      display: block;
+    }
   }
 
   .su-media-series {
     border-top: 1px solid $su-color-black-30;
     > div {
       @include responsive-spacing('margin-bottom', -2);
+      display: block;
 
       &:first-child {
         @include responsive-spacing('padding-top', 0);
@@ -215,10 +228,6 @@
     background: $su-color-black !important;
     opacity: .9 !important;
   }
-
-    .season-episode-wrapper {
-
-    }
 
   .date-duration-wrapper {
     div {
