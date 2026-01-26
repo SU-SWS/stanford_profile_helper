@@ -148,14 +148,15 @@ $su-color-black: #2E2D29;
           margin: 0 auto;
         }
 
+
+        // Expanded Menu:
+        &:active, &:focus {
+          text-decoration: none;
+        }
+
         &:hover {
           text-decoration: underline solid $su-color-digital-red 2px;
           text-underline-offset: 5px;
-        }
-
-        // Expanded Menu:
-        &:active {
-
         }
 
         
