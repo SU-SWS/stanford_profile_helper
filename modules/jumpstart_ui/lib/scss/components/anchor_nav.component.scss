@@ -101,7 +101,9 @@
         // Expanded Menu:
         &::active {
           // Kyle please work on chevron translate and rotation on expand/active class
-          // use transition so it rotates smoothly back and forth.
+          // this may be done already below in button[aria-expanded="true"], see if it works
+          transition: .2s ease;
+          transform: rotate(180deg);
         }
 
         
@@ -133,6 +135,11 @@
       @include responsive-spacing('padding-right', 3);
 
 
+      &.hidden {
+        height: 0px;
+        transition: .2s ease;
+      }
+
       // links
       .overflow-items {
         min-height: 21px; // in figma, but i think we can remove..
@@ -154,7 +161,7 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   }
 
-
+  //check if this works already
   button {
     i {
       transition: 0.2s ease;
