@@ -57,6 +57,7 @@ $su-color-black: #2E2D29;
     background-color: #f9f9f9;
     box-shadow: none;
     color: $su-color-black;
+    font-size: 17px;
 
     &:hover, 
     &:focus {
@@ -97,8 +98,8 @@ $su-color-black: #2E2D29;
     //  todo: check if this is correct:
     padding-top: 0;
     padding-bottom: 0;  
-    @include responsive-spacing('padding-left', 2);
-    @include responsive-spacing('padding-right', 2);
+    @include responsive-spacing('padding-left', 3);
+    @include responsive-spacing('padding-right', 3);
     min-height: 61px;
 
     ul:not(.overflow-items) {
