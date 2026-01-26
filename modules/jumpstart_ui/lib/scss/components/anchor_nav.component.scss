@@ -10,8 +10,6 @@
   &::before {
     // add the leading icon before this section, just for mobile
     // bars-3-bottom-left
-    content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org' viewBox='0 0 10 10'%3E%3Ccircle cx='5' cy='5' r='5' fill='red'/%3E%3C/svg%3E");
-    // or
     content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon"><path fill-rule="evenodd" d="M3 6.75A.75.75 0 0 1 3.75 6h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 6.75ZM3 12a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm0 5.25a.75.75 0 0 1 .75-.75H12a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd"/></svg>');
     width: 20px;
     height: 23px;
@@ -20,13 +18,66 @@
     // i saw fontawesome included in jumpstart_ui.config.scss but not hero icons so we might be including that as needed.
   }
 }
+$su-color-digital-red: #B1040E;
+$su-color-digital-red-light: #F83535;
+$su-color-black: #2E2D29;
 
 
 .anchor-link-nav {
+  // nav spacing that is general across
+    
+
 
   ul {
     list-style: none;
+
+    li {
+      margin-bottom: 0;
+    
+      a {
+        font-size: 17px;
+        color: $su-color-digital-red;
+        text-decoration: none;
+
+        &:hover, &:focus {
+        color: $su-color-digital-red-light;
+        text-decoration: underline solid 1px $su-color-digital-red-light;
+        }
+      }
+    }
   }
+
+  
+  //check if this works already
+  button {
+    // unset inherited button styles
+    padding: 0;
+    margin: 0;
+    background-color: none; //  being overridden
+    background-color: #f9f9f9;
+    box-shadow: none;
+    color: $su-color-black;
+
+    &:hover, 
+    &:focus {
+      background-color: #f9f9f9;
+      box-shadow: none;
+      color: $su-color-black;
+    }
+
+    i {
+      transition: 0.2s ease;
+      color: $su-color-digital-red
+    }
+
+    &[aria-expanded="true"] {
+      i {
+        transform: rotate(-180deg);
+      }
+    }
+  }
+
+  //  Layout Specific Styles
 
   &.orientation-vertical {
     nav {
@@ -40,14 +91,17 @@
     border: 1px solid #C0C0BF;
     border-radius: 46px;
     //  todo: check if this is correct:
-    @include responsive-spacing('padding', 0);
+    padding-top: 0;
+    padding-bottom: 0;  
     @include responsive-spacing('padding-left', 2);
     @include responsive-spacing('padding-right', 2);
     min-height: 61px;
 
     ul:not(.overflow-items) {
       display: flex;
-      gap: 15px;
+      align-items: center;
+      gap: 27px;
+      padding-left: 0;
     }
 
     nav {
@@ -68,21 +122,14 @@
         max-width: 980px;
         margin: 0;
         
-      }
-
-
-      li {
-
-        a {
-          font-size: 17px;
-
+        ul:before {
+          content: 'On This Page';
+          // flex-grow: 1;
         }
-      } 
+      }
 
       // show more section - overflow control
       button {
-
-        
 
         @media screen and (max-width: 1199px){
           // add icon before button on mobile only
@@ -94,12 +141,12 @@
           margin: 0 auto;
         }
 
-        &::hover {
-          text-decoration: underline solid #B1040E 1px;
+        &:hover {
+          text-decoration: underline solid $su-color-digital-red 1px;
         }
 
         // Expanded Menu:
-        &::active {
+        &:active {
           // Kyle please work on chevron translate and rotation on expand/active class
           // this may be done already below in button[aria-expanded="true"], see if it works
           transition: .2s ease;
@@ -161,18 +208,6 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   }
 
-  //check if this works already
-  button {
-    i {
-      transition: 0.2s ease;
-    }
-
-    &[aria-expanded="true"] {
-      i {
-        transform: rotate(-180deg);
-      }
-    }
-  }
 }
 
 // Now adjust for page layout differences, subtle
