@@ -127,7 +127,7 @@ $su-color-black: #2E2D29;
         max-width: 980px;
         margin: 0;
         
-        ul:before {
+        ul:first-child:before {
           content: 'On This Page';
           padding-right: 16px; //  could be 18px to visually match figma?
           // flex-grow: 1;
@@ -175,7 +175,8 @@ $su-color-black: #2E2D29;
       height: fit-content;
       position: absolute;
       right: 0px;
-      top: 50px;
+      top: 70px;
+      margin: 0px;
       background-color: #f9f9f9;
       border: 1px solid #C0C0BF;
       border-radius: 6px;
@@ -193,20 +194,31 @@ $su-color-black: #2E2D29;
   
 
   .overflow-items {
-    
+
+
     @include responsive-spacing('padding-top', 2);
     @include responsive-spacing('padding-bottom', 2);
     @include responsive-spacing('padding-left', 3); // this is a guess from figma
     @include responsive-spacing('padding-right', 3);
 
     // links
-    .overflow-item,
-    li {
+    .overflow-item {
       min-height: 21px; // in figma, but i think we can remove..
+
+      //ask if we want this to deal with overflow
+      max-width: 188px;
+      text-wrap: wrap;
+
       // add spacing here
-      margin-bottom: 27px; // on each link, Kyle make sure it doesn't double-margin gap on the last link.
+      margin-bottom: 27px;
+
+      
     }
-  }
+    
+    li:last-child {
+      margin-bottom: 0px;
+    }
+}
 
 }
 
