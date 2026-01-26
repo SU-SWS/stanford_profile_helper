@@ -67,12 +67,13 @@ $su-color-black: #2E2D29;
 
     i {
       transition: 0.2s ease;
-      color: $su-color-digital-red
+      color: $su-color-digital-red;
+      padding-left: 10px;
     }
 
     &[aria-expanded="true"] {
       i {
-        transform: rotate(-180deg);
+        transform: rotate(-180deg);  // need to fix; the 'See More' rotates as well.
       }
     }
   }
@@ -124,6 +125,7 @@ $su-color-black: #2E2D29;
         
         ul:before {
           content: 'On This Page';
+          padding-right: 16px; //  could be 18px to visually match figma?
           // flex-grow: 1;
         }
       }
@@ -142,7 +144,8 @@ $su-color-black: #2E2D29;
         }
 
         &:hover {
-          text-decoration: underline solid $su-color-digital-red 1px;
+          text-decoration: underline solid $su-color-digital-red 2px;
+          text-underline-offset: 5px;
         }
 
         // Expanded Menu:
@@ -171,8 +174,9 @@ $su-color-black: #2E2D29;
       height: fit-content;
       // Kyle work on positioning styling once we have test site working.
       position: absolute;
-      top: 0px; // or would this be 61px? we'll check w local
-      right: 40px; // anchor to top right corner of parent? 
+      right: 50px;
+      top: 148px;
+    
       background-color: #f9f9f9;
       border: 1px solid #C0C0BF;
       border-radius: 6px;
@@ -182,13 +186,15 @@ $su-color-black: #2E2D29;
       @include responsive-spacing('padding-right', 3);
 
 
+
       &.hidden {
         height: 0px;
         transition: .2s ease;
       }
 
       // links
-      .overflow-items {
+      .overflow-items,
+      li {
         min-height: 21px; // in figma, but i think we can remove..
         // add spacing here
         margin-bottom: 27px; // on each link, Kyle make sure it doesn't double-margin gap on the last link.
@@ -210,20 +216,5 @@ $su-color-black: #2E2D29;
 
 }
 
-// Now adjust for page layout differences, subtle
-// 1 column is the default layout
 
-
-// Subnav 2 col layout - overrides to adjust width and subtle differences.
-// example https://stvp.sites.stanford.edu/about/people
-.jumpstart-ui--one-column {
-
-}
-// Subnav 2 col layout
-.jumpstart-ui--two-column {
-  
-  nav {
-
-  }
-}
 
