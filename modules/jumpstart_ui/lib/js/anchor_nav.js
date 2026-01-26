@@ -35,6 +35,14 @@
 
       $overflowItemsContainer.empty()
 
+      // remove 'See More' on mobile
+      var width = $(window).width();
+      if(width < 1200) {
+        $expandButton.html('<i class="fa-solid fa-chevron-down"></i>');
+      } else {
+        $expandButton.html('See More<i class="fa-solid fa-chevron-down"></i>');
+      }
+
       // Toggle overflow items visibility on expand button click
       $expandButton.on('click', () => {
         $expandButton.attr('aria-expanded', (i, currentValue) => currentValue === 'true' ? 'false' : 'true');
@@ -46,12 +54,12 @@
       $listItems.removeClass('hidden');
 
       // Check if the list overflows its container
-      if ($list[0].scrollWidth > $container[0].clientWidth - 150) {
+      if ($list[0].scrollWidth > $container[0].clientWidth - 150 || width < 1200) {
 
         $listItems.get().reverse().map(item => {
           const $item = $(item);
 
-          if ($list[0].scrollWidth > $container[0].clientWidth - 150) {
+          if ($list[0].scrollWidth > $container[0].clientWidth - 150 || width < 1200) {
             $overflowItemsContainer.prepend($item.clone().addClass('overflow-item'));
             $item.addClass('hidden');
           }

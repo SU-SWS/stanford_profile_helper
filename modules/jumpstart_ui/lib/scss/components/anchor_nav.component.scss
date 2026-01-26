@@ -110,6 +110,8 @@ $su-color-black: #2E2D29;
     }
 
     nav {
+      @include icon-before--3-bars();
+
       position: relative;
       display: flex;
       align-items: center;
@@ -119,20 +121,19 @@ $su-color-black: #2E2D29;
       
       // mobile first width:
       max-width: 245px;
-      margin: 0 auto 48px; // note that the h2 following the horizontal nav has top margin to create the full spacing between
+      margin: 0 auto 0px; // note that the h2 following the horizontal nav has top margin to create the full spacing between
 
-      @media screen and (min-width: 1201px){
-      // add icon before button on desktops only
-        @include icon-before--3-bars();
+      ul:first-child:before {
+        content: 'On This Page';
+        padding-right: 14px; //  could be 18px to visually match figma?
+        // flex-grow: 1;
+      }
 
+      @media screen and (min-width: 1200px){
         max-width: 980px;
-        margin: 0;
+        margin: 0 auto 0px; // note that the h2 following the horizontal nav has top margin to create the full spacing between
+
         
-        ul:first-child:before {
-          content: 'On This Page';
-          padding-right: 14px; //  could be 18px to visually match figma?
-          // flex-grow: 1;
-        }
       }
 
       // show more section - overflow control
@@ -140,7 +141,7 @@ $su-color-black: #2E2D29;
 
         @media screen and (max-width: 1199px){
           // add icon before button on mobile only
-          @include icon-before--3-bars();
+          // @include icon-before--3-bars();
 
           @include responsive-spacing('padding-top', 0); 
           @include responsive-spacing('padding-left', 3);  // in teh design but not necessary due to margin centering
