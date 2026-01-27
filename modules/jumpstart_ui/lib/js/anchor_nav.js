@@ -40,8 +40,10 @@
       var maxMobileWidth = 1185;
       if(width < maxMobileWidth) {
         $expandButton.html('On This Page<i class="fa-solid fa-chevron-down"></i>');
+        $expandButton.attr('aria-label', 'On This Page');
       } else {
         $expandButton.html('See More<i class="fa-solid fa-chevron-down"></i>');
+        $expandButton.attr('aria-label', 'See More');
       }
 
       // Toggle overflow items visibility on expand button click
