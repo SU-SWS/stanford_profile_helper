@@ -25,7 +25,8 @@
     $container.append($nav);
     const $expandButton = $('<button>').html('See More<i class="fa-solid fa-chevron-down"></i>')
       .attr('aria-expanded', 'false')
-      .attr('aria-controls', 'overflow-container');
+      .attr('aria-controls', 'overflow-container')
+      .attr('aria-label', 'See More');
 
     const $overflowItemsContainer = $('<ul>').addClass('overflow-items hidden').attr('id', 'overflow-container');
 
@@ -100,39 +101,42 @@
       // Initial check and on window resize
       manageOverflow(false);
       window.addEventListener('resize', manageOverflow);
+
+      window.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+          if ($expandButton.attr('aria-expanded') === 'true') {
+            $expandButton.click();
+            $expandButton.focus();
+          }
+        }
+      });
+
+      // Handle focus events to close when focus moves outside
+      document.addEventListener('focusin', (event) => {
+        // Check if the newly focused element is outside the container and button
+        const isOutsideFocus = !$overflowItemsContainer[0].contains(event.target) && event.target !== $expandButton[0];
+
+        if (isOutsideFocus && $expandButton.attr('aria-expanded') === 'true') {
+          $expandButton.click();
+        }
+      });
+
+      // Event listener for clicks anywhere on the document
+      document.addEventListener('click', (event) => {
+        // Check if the clicked element is outside the collapsible area or the toggle button itself (including the chevron icon)
+        const isOutsideClick = !$overflowItemsContainer[0].contains(event.target) && event.target !== $expandButton[0] && event.target.parentNode !== $expandButton[0];
+
+        if (isOutsideClick && $expandButton.attr('aria-expanded') === 'true') {
+          $expandButton.click();
+        }
+      });
     }
+    
     if ($container.hasClass('orientation-vertical')) {
       // Initial check and on window resize
       manageOverflow(true);
     }
 
-    window.addEventListener('keydown', event => {
-      if (event.key === 'Escape') {
-        if ($expandButton.attr('aria-expanded') === 'true') {
-          $expandButton.click();
-          $expandButton.focus();
-        }
-      }
-    });
 
-    // Event listener for clicks/focus anywhere on the document
-    document.addEventListener('click', (event) => {
-      // Check if the clicked element is outside the collapsible area or the toggle button itself (including the chevron icon)
-      const isOutsideClick = !$overflowItemsContainer[0].contains(event.target) && event.target !== $expandButton[0] && event.target.parentNode !== $expandButton[0];
-
-      if (isOutsideClick && $expandButton.attr('aria-expanded') === 'true') {
-        $expandButton.click();
-      }
-    });
-
-    // Handle focus events to close when focus moves outside
-    document.addEventListener('focusin', (event) => {
-      // Check if the newly focused element is outside the container and button
-      const isOutsideFocus = !$overflowItemsContainer[0].contains(event.target) && event.target !== $expandButton[0];
-
-      if (isOutsideFocus && $expandButton.attr('aria-expanded') === 'true') {
-        $expandButton.click();
-      }
-    });
   });
 })(jQuery);

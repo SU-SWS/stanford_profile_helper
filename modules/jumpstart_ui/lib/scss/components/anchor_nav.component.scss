@@ -290,6 +290,8 @@ $su-color-black: #2E2D29;
 
   &.orientation-vertical {
     nav {
+      @include icon-before-with-text-130();
+
       position: sticky;
       top: 0;
       max-width: 317px;
@@ -300,7 +302,7 @@ $su-color-black: #2E2D29;
       @include responsive-spacing('padding', 2);
 
       ul:first-child {
-        @include icon-before-with-text-130();
+        // @include icon-before-with-text-130();
 
         li {
           min-height: 21px; // in figma, but i think we can remove..
