@@ -100,7 +100,7 @@
     if ($container.hasClass('orientation-horizontal')) {
       // Initial check and on window resize
       manageOverflow(false);
-      window.addEventListener('resize', manageOverflow);
+      window.addEventListener('resize', manageOverflow.bind(this, false));
 
       window.addEventListener('keydown', event => {
         if (event.key === 'Escape') {
@@ -131,7 +131,7 @@
         }
       });
     }
-    
+
     if ($container.hasClass('orientation-vertical')) {
       // Initial check and on window resize
       manageOverflow(true);
