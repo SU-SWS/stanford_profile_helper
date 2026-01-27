@@ -80,7 +80,7 @@ $su-color-black: #2E2D29;
 
     &:hover, 
     &:focus {
-      background-color: #f9f9f9;
+      background-color: transparent;
       box-shadow: none;
       color: $su-color-black;
     }
@@ -121,14 +121,14 @@ $su-color-black: #2E2D29;
     padding-bottom: 0;  
     @include responsive-spacing('padding-left', 3);
     @include responsive-spacing('padding-right', 3);
-    min-height: 53x;
+    height: 53px;
     max-width: 245px;
     justify-self: center;
     margin-bottom: 32px; // specific to design specs.
 
     @media screen and (min-width: 768px){
       margin-bottom: 35px; // specific to design specs.
-      min-height: 59px;
+      height: 59px;
     }
     @media screen and (min-width: 992px){
       margin-bottom: 45px; // specific to design specs.
@@ -137,7 +137,7 @@ $su-color-black: #2E2D29;
       margin-bottom: 48px; // specific to design specs.
       max-width: 980px;
       width: 980px;
-      min-height: 61px;
+      height: 61px;
     }
 
     ul:not(.overflow-items) {
@@ -157,7 +157,6 @@ $su-color-black: #2E2D29;
 
       // mobile first width:
       max-width: 169px;
-      // width: 169px; // per the design spec - but setting this lets the icon be a bit off center.
       width: fit-content;
       margin: 0 auto 0px; 
 
