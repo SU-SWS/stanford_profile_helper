@@ -123,14 +123,23 @@ $su-color-black: #2E2D29;
     padding-bottom: 0;  
     @include responsive-spacing('padding-left', 3);
     @include responsive-spacing('padding-right', 3);
-    @include responsive-spacing('margin-bottom', 3);
-    min-height: 61px;
+    min-height: 53x;
     max-width: 245px;
     justify-self: center;
+    margin-bottom: 32px; // specific to design specs.
 
+    @media screen and (min-width: 768px){
+      margin-bottom: 35px; // specific to design specs.
+      min-height: 59px;
+    }
+    @media screen and (min-width: 992px){
+      margin-bottom: 45px; // specific to design specs.
+    }
     @media screen and (min-width: 1200px){
+      margin-bottom: 48px; // specific to design specs.
       max-width: 980px;
       width: 980px;
+      min-height: 61px;
     }
 
     ul:not(.overflow-items) {
@@ -169,12 +178,21 @@ $su-color-black: #2E2D29;
 
       // show more section - overflow control
       button {
+          padding-top: 16px; 
+
+        @media screen and (min-width: 768px){
+          padding-top: 17px; 
+        }
 
         @media screen and (max-width: 1199px){
           // add icon before button on mobile only (instead of on nav)
           @include icon-before--3-bars();
-          padding-top: 19px; 
           margin: 0 auto;
+        }
+
+        @media screen and (min-width: 1200px) {
+          padding-top: 19px; 
+          padding-bottom: 19px;
         }
 
 
