@@ -119,12 +119,11 @@ $su-color-black: #2E2D29;
     background-color: #F9F9F9;
     border: 1px solid #C0C0BF;
     border-radius: 46px;
-    //  todo: check if this is correct:
     padding-top: 0;
     padding-bottom: 0;  
     @include responsive-spacing('padding-left', 3);
     @include responsive-spacing('padding-right', 3);
-    @include responsive-spacing('margin-bottom', 4);
+    @include responsive-spacing('margin-bottom', 3);
     min-height: 61px;
     max-width: 245px;
     justify-self: center;
@@ -142,7 +141,6 @@ $su-color-black: #2E2D29;
     }
 
     nav {
-
       position: relative;
       display: flex;
       align-items: center;
@@ -194,7 +192,6 @@ $su-color-black: #2E2D29;
           @include responsive-spacing('padding-left', 2);
         }
       }
-      
     }
 
     // Expanded Menu:
@@ -226,7 +223,6 @@ $su-color-black: #2E2D29;
       }
     }
   }
-  
 
   .overflow-items {
     @include responsive-spacing('padding-top', 2);
