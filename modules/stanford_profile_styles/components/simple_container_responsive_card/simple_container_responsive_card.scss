@@ -8,7 +8,11 @@
   .simple-card-interior-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+
+    /* Only add gap if .su-media-image exists */
+      &:has(.su-media-image) {
+        gap: 10px;
+      }
 
     @container simple-card (min-width: 500px) {
       flex-direction: row;
