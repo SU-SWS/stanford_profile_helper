@@ -14,7 +14,33 @@
     width: 20px;
     height: 23px;
     display: inline-block;
-    padding-top: 3px;
+    // padding-top: 3px;
+    vertical-align: middle;
+    margin-right: 10px;
+    background-color: #f9f9f9;
+    // @include responsive-spacing('padding-top', 0); 
+
+    // i saw fontawesome included in jumpstart_ui.config.scss but not hero icons so we might be including that as needed.
+  }
+}
+
+@mixin icon-before-with-text() {
+  &::before {
+    // add the leading icon before this section, just for mobile
+    // bars-3-bottom-left
+    content: " On This Page";
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon"><path fill-rule="evenodd" d="M3 6.75A.75.75 0 0 1 3.75 6h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 6.75ZM3 12a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm0 5.25a.75.75 0 0 1 .75-.75H12a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd"/></svg>') no-repeat left center;    
+
+    width: 120px;
+    height: 23px;
+    display: inline-block;
+    // padding-top: 3px;
+    vertical-align: middle;
+    margin-right: 10px;
+    background-color: #f9f9f9;
+    padding-left: 30px;
+    // @include responsive-spacing('padding-top', 0); 
+
     // i saw fontawesome included in jumpstart_ui.config.scss but not hero icons so we might be including that as needed.
   }
 }
@@ -101,6 +127,13 @@ $su-color-black: #2E2D29;
     @include responsive-spacing('padding-left', 3);
     @include responsive-spacing('padding-right', 3);
     min-height: 61px;
+    max-width: 245px;
+    justify-self: center;
+
+    @media screen and (min-width: 1200px){
+      max-width: 980px;
+      width: 980px;
+    }
 
     ul:not(.overflow-items) {
       display: flex;
@@ -110,42 +143,51 @@ $su-color-black: #2E2D29;
     }
 
     nav {
-      @include icon-before--3-bars();
 
       position: relative;
       display: flex;
       align-items: center;
       // overflow: hidden;
       white-space: nowrap;
-      justify-content: space-around;
-      
+      justify-content: center;
+
       // mobile first width:
-      max-width: 245px;
+      max-width: 169px;
+      width: 169px;
       margin: 0 auto 0px; // note that the h2 following the horizontal nav has top margin to create the full spacing between
+      // @include responsive-spacing('padding-left', 2);  // in teh design but not necessary due to margin centering
+      // @include responsive-spacing('padding-right', 2);  // in teh design but not necessary due to margin centering
+
 
       ul:first-child:before {
-        content: 'On This Page';
-        padding-right: 14px; //  could be 18px to visually match figma?
-        // flex-grow: 1;
+        content: unset;
       }
-
       @media screen and (min-width: 1200px){
-        max-width: 980px;
+        // @include icon-before--3-bars();
+
+        max-width: 890px;
+        width: 890px;
         margin: 0 auto 0px; // note that the h2 following the horizontal nav has top margin to create the full spacing between
 
-        
+        ul:first-child {
+          @include icon-before-with-text();
+          // content: 'On This Page';
+          // padding-right: 14px; //  could be 18px to visually match figma?
+          // flex-grow: 1;
+        }
+          
       }
 
       // show more section - overflow control
       button {
 
         @media screen and (max-width: 1199px){
-          // add icon before button on mobile only
-          // @include icon-before--3-bars();
+          // add icon before button on mobile only (instead of on nav)
+          @include icon-before--3-bars();
 
           @include responsive-spacing('padding-top', 0); 
-          @include responsive-spacing('padding-left', 3);  // in teh design but not necessary due to margin centering
-          @include responsive-spacing('padding-right', 3);  // in teh design but not necessary due to margin centering
+          // @include responsive-spacing('padding-left', 2);  // in teh design but not necessary due to margin centering
+          // @include responsive-spacing('padding-right', 2);  // in teh design but not necessary due to margin centering
           margin: 0 auto;
         }
 
@@ -163,8 +205,9 @@ $su-color-black: #2E2D29;
         
       // currently inheriting from parent theme?
       //  red chevron down icon is already applied in the js
-      @include responsive-spacing('padding-left', 2);
-
+        @media screen and (min-width: 1200px){  
+          @include responsive-spacing('padding-left', 2);
+        }
       }
       
 

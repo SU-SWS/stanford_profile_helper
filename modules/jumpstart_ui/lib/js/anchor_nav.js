@@ -37,8 +37,9 @@
 
       // remove 'See More' on mobile
       var width = $(window).width();
-      if(width < 1200) {
-        $expandButton.html('<i class="fa-solid fa-chevron-down"></i>');
+      var maxMobileWidth = 1185;
+      if(width < maxMobileWidth) {
+        $expandButton.html('On This Page<i class="fa-solid fa-chevron-down"></i>');
       } else {
         $expandButton.html('See More<i class="fa-solid fa-chevron-down"></i>');
       }
@@ -54,12 +55,12 @@
       $listItems.removeClass('hidden');
 
       // Check if the list overflows its container
-      if ($list[0].scrollWidth > $container[0].clientWidth - 150 || width < 1200) {
+      if ($list[0].scrollWidth > $container[0].clientWidth - 220 || width < maxMobileWidth) {
 
         $listItems.get().reverse().map(item => {
           const $item = $(item);
 
-          if ($list[0].scrollWidth > $container[0].clientWidth - 150 || width < 1200) {
+          if ($list[0].scrollWidth > $container[0].clientWidth - 220 || width < maxMobileWidth) {
             $overflowItemsContainer.prepend($item.clone().addClass('overflow-item'));
             $item.addClass('hidden');
           }
