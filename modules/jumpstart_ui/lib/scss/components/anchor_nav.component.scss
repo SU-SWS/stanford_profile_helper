@@ -82,7 +82,7 @@ $su-color-black: #2E2D29;
 
     &:hover, 
     &:focus {
-      background-color: #f9f9f9;
+      background-color: transparent;
       box-shadow: none;
       color: $su-color-black;
     }
@@ -159,7 +159,6 @@ $su-color-black: #2E2D29;
 
       // mobile first width:
       max-width: 169px;
-      // width: 169px; // per the design spec - but setting this lets the icon be a bit off center.
       width: fit-content;
       margin: 0 auto 0px; 
 
