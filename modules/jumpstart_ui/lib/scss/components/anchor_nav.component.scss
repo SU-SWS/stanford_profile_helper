@@ -154,7 +154,8 @@ $su-color-black: #2E2D29;
 
       // mobile first width:
       max-width: 169px;
-      width: 169px;
+      // width: 169px; // per the design spec - but setting this lets the icon be a bit off center.
+      width: fit-content;
       margin: 0 auto 0px; // note that the h2 following the horizontal nav has top margin to create the full spacing between
       // @include responsive-spacing('padding-left', 2);  // in teh design but not necessary due to margin centering
       // @include responsive-spacing('padding-right', 2);  // in teh design but not necessary due to margin centering
@@ -182,8 +183,7 @@ $su-color-black: #2E2D29;
         @media screen and (max-width: 1199px){
           // add icon before button on mobile only (instead of on nav)
           @include icon-before--3-bars();
-
-          @include responsive-spacing('padding-top', 0); 
+          padding-top: 19px; 
           // @include responsive-spacing('padding-left', 2);  // in teh design but not necessary due to margin centering
           // @include responsive-spacing('padding-right', 2);  // in teh design but not necessary due to margin centering
           margin: 0 auto;
