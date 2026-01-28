@@ -16,7 +16,7 @@
       const $heading = $(heading);
       const id = $heading.attr('id');
 
-      $list.append($('<li>').append($('<a>').attr('href', `#${id}`).text($heading.text().trim())));
+      $list.append($('<li>').append($('<a>').attr('href', `#${id}`).attr('class', `anchor-link`).text($heading.text().trim())));
     });
 
     const $container = $('.anchor-link-nav');
@@ -57,7 +57,6 @@
       $listItems.removeClass('hidden');
 
       const maxWidth = $($container[0]).css('max-width').split('px')[0]; // clientWidth doesn't work when width is unset
-      console.log(maxWidth);
 
       // Check if the list overflows its container
       if ($list[0].scrollWidth > maxWidth - 220 || width < maxMobileWidth) {
@@ -97,6 +96,9 @@
         if (isOutsideClick && $expandButton.attr('aria-expanded') === 'true') {
           $expandButton.click();
         }
+        if (event.target && event.target.classList.contains('anchor-link')) {
+          handleAnchorLinkClick(event);
+        }
       });
 
       // Handle focus events to close when focus moves outside
@@ -109,5 +111,16 @@
         }
       });
     }
+
+    // when an anchor link is clicked, make sure to close the expanded See More menu
+    function handleAnchorLinkClick(href, $li, $a, event) {
+      if (typeof window.handleAnchorNavClick === 'function') {
+        window.handleAnchorNavClick(href, $li, $a, event);
+      } else {
+        $expandButton.attr('aria-expanded', 'false' );
+        $overflowItemsContainer.addClass('hidden');
+      }
+    }
+
   });
 })(jQuery);
