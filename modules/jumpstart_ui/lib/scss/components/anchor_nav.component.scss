@@ -50,9 +50,6 @@ $su-color-black: #2E2D29;
 
     li {
       margin-bottom: 0;
-      // it should be aligned, but it needs a tiny tweak to be aligned perfectly
-      position: relative;
-      top: 1px;
     
       a {
         font-size: 17px;
@@ -77,6 +74,7 @@ $su-color-black: #2E2D29;
     box-shadow: none;
     color: $su-color-black;
     font-size: 17px;
+    line-height: 21px;
 
     &:hover, 
     &:focus {
@@ -121,14 +119,13 @@ $su-color-black: #2E2D29;
     padding-bottom: 0;  
     @include responsive-spacing('padding-left', 3);
     @include responsive-spacing('padding-right', 3);
-    height: 53px;
+    max-height: 61px;
     max-width: 245px;
     justify-self: center;
     margin-bottom: 32px; // specific to design specs.
 
     @media screen and (min-width: 768px){
       margin-bottom: 35px; // specific to design specs.
-      height: 59px;
     }
     @media screen and (min-width: 992px){
       margin-bottom: 45px; // specific to design specs.
@@ -137,14 +134,15 @@ $su-color-black: #2E2D29;
       margin-bottom: 48px; // specific to design specs.
       max-width: 980px;
       width: 980px;
-      height: 61px;
     }
 
     ul:not(.overflow-items) {
       display: flex;
       align-items: center;
       gap: 27px;
-      padding-left: 0;
+      font-size: 17px;
+      padding: 18px 0px; // mixin for this?
+      margin: 0;
     }
 
     nav {
@@ -156,7 +154,7 @@ $su-color-black: #2E2D29;
       justify-content: center;
 
       // mobile first width:
-      max-width: 169px;
+      max-width: 169px; // specific to design specs.
       width: fit-content;
       margin: 0 auto 0px; 
 
@@ -175,8 +173,8 @@ $su-color-black: #2E2D29;
 
       // show more section - overflow control
       button {
-        padding-top: 19px; 
-        padding-bottom: 19px;
+        padding-top: 18px;  // mixin for this?
+        padding-bottom: 18px; // mixin for this?
 
 
         @media screen and (max-width: 1199px){
@@ -249,7 +247,7 @@ $su-color-black: #2E2D29;
     li:last-child {
       margin-bottom: 0px;
     }
-}
+  }
 }
 
 
