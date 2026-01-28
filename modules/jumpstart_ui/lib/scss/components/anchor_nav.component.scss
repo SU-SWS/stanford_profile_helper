@@ -253,5 +253,13 @@ $su-color-black: #2E2D29;
   }
 }
 
+/* --- Two Column Overrides based on page layout --- */
 
-
+.jumpstart-ui--two-column {
+  .main-region {
+    .anchor-link-nav.orientation-horizontal {
+      max-width: 838px;
+      width: 838px;
+    }
+  }
+}
