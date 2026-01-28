@@ -16,7 +16,7 @@
       const $heading = $(heading);
       const id = $heading.attr('id');
 
-      $list.append($('<li>').append($('<a>').attr('href', `#${id}`).attr('class', `anchor-link`).text($heading.text().trim())));
+      $list.append($('<li>').append($('<a>').attr('href', `#${id}`).addClass(`anchor-link`).text($heading.text().trim())));
     });
 
     const $container = $('.anchor-link-nav');
@@ -97,7 +97,10 @@
           $expandButton.click();
         }
         if (event.target && event.target.classList.contains('anchor-link')) {
-          handleAnchorLinkClick(event);
+          // clicked an anchor link (in the dropdown or not)
+          if ($expandButton.attr('aria-expanded') === 'true') {
+            $expandButton.click();
+          }
         }
       });
 
@@ -110,16 +113,6 @@
           $expandButton.click();
         }
       });
-    }
-
-    // when an anchor link is clicked, make sure to close the expanded See More menu
-    function handleAnchorLinkClick(href, $li, $a, event) {
-      if (typeof window.handleAnchorNavClick === 'function') {
-        window.handleAnchorNavClick(href, $li, $a, event);
-      } else {
-        $expandButton.attr('aria-expanded', 'false' );
-        $overflowItemsContainer.addClass('hidden');
-      }
     }
 
   });
