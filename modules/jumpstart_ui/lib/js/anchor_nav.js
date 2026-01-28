@@ -114,12 +114,10 @@
 
     // when an anchor link is clicked, make sure to close the expanded See More menu
     function handleAnchorLinkClick(href, $li, $a, event) {
-      if (typeof window.handleAnchorNavClick === 'function') {
-        window.handleAnchorNavClick(href, $li, $a, event);
-      } else {
+    
         $expandButton.attr('aria-expanded', 'false' );
         $overflowItemsContainer.addClass('hidden');
-      }
+      
     }
 
   });
