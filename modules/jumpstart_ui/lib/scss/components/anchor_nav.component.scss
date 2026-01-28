@@ -74,8 +74,7 @@ $su-color-black: #2E2D29;
     // unset inherited button styles
     padding: 0;
     margin: 0;
-    background-color: none; //  being overridden
-    background-color: #f9f9f9;
+    background-color: transparent;
     box-shadow: none;
     color: $su-color-black;
     font-size: 17px;
@@ -180,7 +179,7 @@ $su-color-black: #2E2D29;
           padding-top: 16px; 
 
         @media screen and (min-width: 768px){
-          padding-top: 17px; 
+          padding-top: 18px; 
         }
 
         @media screen and (max-width: 1199px){
