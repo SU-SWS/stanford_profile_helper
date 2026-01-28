@@ -132,8 +132,8 @@ $su-color-black: #2E2D29;
     }
     @media screen and (min-width: 1200px){
       margin-bottom: 48px; // specific to design specs.
-      max-width: 980px;
-      width: 980px;
+      max-width: 1000px;
+      // width: 1000px;
     }
 
     ul:not(.overflow-items) {
@@ -162,8 +162,9 @@ $su-color-black: #2E2D29;
         content: unset;
       }
       @media screen and (min-width: 1200px){
-        max-width: 890px;
-        width: 890px;
+        max-width: 1000px;
+        min-width: fit-content;
+        // width: 890px;
         margin: 0 auto 0px; // note that the h2 following the horizontal nav has top margin to create the full spacing between
 
         ul:first-child {
