@@ -57,7 +57,6 @@
       $listItems.removeClass('hidden');
 
       const maxWidth = $($container[0]).css('max-width').split('px')[0]; // clientWidth doesn't work when width is unset
-      console.log(maxWidth);
 
       // Check if the list overflows its container
       if ($list[0].scrollWidth > maxWidth - 220 || width < maxMobileWidth) {
