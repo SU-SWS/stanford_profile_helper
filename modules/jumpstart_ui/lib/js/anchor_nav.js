@@ -49,8 +49,8 @@
 
       if(!vertical) {
         // remove 'See More' on mobile for horizontal
-        var width = $(window).width();
-        var maxMobileWidth = 1185;
+        const width = $(window).width();
+        const maxMobileWidth = 1185;
         if(width < maxMobileWidth) {
           $expandButton.html('On This Page<i class="fa-solid fa-chevron-down"></i>');
           $expandButton.attr('aria-label', 'On This Page');
