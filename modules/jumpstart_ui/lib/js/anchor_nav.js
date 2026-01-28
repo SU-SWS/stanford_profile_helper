@@ -58,14 +58,15 @@
           $expandButton.html('See More<i class="fa-solid fa-chevron-down"></i>');
           $expandButton.attr('aria-label', 'See More');
         }
+      
+        const maxWidth = $($container[0]).css('max-width').split('px')[0]; // clientWidth doesn't work when width is unset
 
         // Check if the list overflows its container
-        if ($list[0].scrollWidth > $container[0].clientWidth - 220 || width < maxMobileWidth) {
-
+        if ($list[0].scrollWidth > maxWidth - 220 || width < maxMobileWidth) {
           $listItems.get().reverse().map(item => {
             const $item = $(item);
 
-            if ($list[0].scrollWidth > $container[0].clientWidth - 220 || width < maxMobileWidth) {
+            if ($list[0].scrollWidth > maxWidth - 220 || width < maxMobileWidth) {
               $overflowItemsContainer.prepend($item.clone().addClass('overflow-item'));
               $item.addClass('hidden');
             }
@@ -92,8 +93,6 @@
           $overflowItemsContainer.addClass('vertical');
         }
       }
-
-
 
     }
 
