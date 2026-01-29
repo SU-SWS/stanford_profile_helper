@@ -5,6 +5,30 @@
 @import 'decanter/core/src/scss/decanter-no-markup';
 
 /* ---  Mixins --- */
+@mixin anchor-mobile-styles() {
+  /* --- mobile anchor nav - same for both horizontal and vertical --- */
+    background-color: #F9F9F9;
+    border: 1px solid #C0C0BF;
+    border-radius: 46px;
+    padding-top: 0;
+    padding-bottom: 0;  
+    @include responsive-spacing('padding-left', 3);
+    @include responsive-spacing('padding-right', 3);
+    max-height: 61px;
+    max-width: 245px;
+    justify-self: center;
+    margin-bottom: 32px; // specific to design specs.
+    height: 53px; // specific to design specs.
+
+    @media screen and (min-width: 768px){
+      margin-bottom: 35px; // specific to design specs.
+      height: 59px; // specific to design specs.
+    }
+    @media screen and (min-width: 992px){
+      margin-bottom: 45px; // specific to design specs.
+    }
+}
+
 @mixin hamburger-styles() {
   font-size: 17px;
   width: 20px;
@@ -114,26 +138,8 @@ $su-color-black: #2E2D29;
   /* --- Horizontal Layout Specific Styles --- */
 
   &.orientation-horizontal {
-    background-color: #F9F9F9;
-    border: 1px solid #C0C0BF;
-    border-radius: 46px;
-    padding-top: 0;
-    padding-bottom: 0;  
-    @include responsive-spacing('padding-left', 3);
-    @include responsive-spacing('padding-right', 3);
-    max-height: 61px;
-    max-width: 245px;
-    justify-self: center;
-    margin-bottom: 32px; // specific to design specs.
-    height: 53px; // specific to design specs.
-
-    @media screen and (min-width: 768px){
-      margin-bottom: 35px; // specific to design specs.
-      height: 59px; // specific to design specs.
-    }
-    @media screen and (min-width: 992px){
-      margin-bottom: 45px; // specific to design specs.
-    }
+    @include anchor-mobile-styles();
+    
     @media screen and (min-width: 1200px){
       margin-bottom: 48px; // specific to design specs.
       max-width: 1000px;
