@@ -42,15 +42,28 @@
 
   .season-episode-wrapper,
   .su-media-series {
+    h2,
+    div {
+      font-size: 1.6rem;
+      line-height: 1.3em;
+      font-weight: $su-font-regular;
+      display: inline-block;
+    }
+
     @include responsive-spacing('padding', null 0);
-    font-size: 1.6rem;
-    line-height: 1.3em;
+  }
+
+  .season-episode-wrapper {
+    > .field-block {
+      display: block;
+    }
   }
 
   .su-media-series {
     border-top: 1px solid $su-color-black-30;
     > div {
       @include responsive-spacing('margin-bottom', -2);
+      display: block;
 
       &:first-child {
         @include responsive-spacing('padding-top', 0);
@@ -59,40 +72,50 @@
     }
   }
 
-  .after-first-media {
+  .media-content-after-first-media {
     h2 {
-      @include type-d;
+      @include type-c;
     }
 
-    ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
+    .after-first-media {
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
 
-    li {
-      @include modular-spacing('padding', 0 null);
-      border-top: 1px solid $su-color-black-30;
-    }
+      li {
+        @include modular-spacing('padding', 0);
+        border-top: 1px solid $su-color-black-30;
 
-    .views-field-su-media-description {
-      @include modular-spacing('padding-top', 0);
-    }
+        &:first-of-type {
+          border-top: none;
+        }
+      }
 
-    a {
-      @include type-d;
+      .views-field-su-media-description {
+        @include modular-spacing('padding-top', 0);
+      }
 
-      font-weight: $su-font-bold;
-      color: $su-color-digital-red;
-      text-decoration: none;
+      .views-field-su-video-duration {
+        font-size: 1.6rem;
+      }
 
-      &:hover,
-      &:focus {
-        color: $su-color-black;
-        text-decoration: underline;
+      a {
+        @include type-e;
+
+        font-weight: $su-font-bold;
+        color: $su-color-digital-red;
+        text-decoration: none;
+
+        &:hover,
+        &:focus {
+          color: $su-color-black;
+          text-decoration: underline;
+        }
       }
     }
-  }
+}
 
   .media-content-related-series {
     @include responsive-spacing('padding', 0 1 null 1);
@@ -215,10 +238,6 @@
     background: $su-color-black !important;
     opacity: .9 !important;
   }
-
-    .season-episode-wrapper {
-
-    }
 
   .date-duration-wrapper {
     div {

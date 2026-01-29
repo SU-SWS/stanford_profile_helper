@@ -89,13 +89,23 @@
   }
 
   .main {
-    border-top: 1px solid $su-color-black-20;
+    border-top: 1px solid $su-color-black-30;
     @include modular-spacing('margin-top', 3);
     @include modular-spacing('padding-top', 3);
 
     > * {
       @include modular-spacing('margin-bottom', 3);
+      @include modular-spacing('padding', null 1);
+      max-width: 980px;
     }
+  }
+
+  h2 {
+    @include type-d;
+  }
+
+  h3, h4, h5 {
+    @include type-e;
   }
 
   .eyebrow {
@@ -107,6 +117,7 @@
 
     @include grid-media-min('lg') {
       width: 20%;
+      min-width: 220px;
     }
   }
 }
