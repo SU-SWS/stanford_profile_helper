@@ -34,12 +34,15 @@
       $expandButton.html(text + '<i class="fa-solid fa-chevron-down"></i>');
       $expandButton.attr('aria-label', text);
     }
+    const maxMobileWidth = 1185;
 
     function manageOverflow(vertical = false) {
       $('button', $nav).remove();
       $('.overflow-items', $nav).remove();
 
       $overflowItemsContainer.empty()
+      const width = $(window).width();
+
 
       // Toggle overflow items visibility on expand button click
       $expandButton.on('click', () => {
@@ -47,7 +50,11 @@
         $overflowItemsContainer.toggleClass('hidden');
 
         if(vertical) {
-          relabelExpandButton($expandButton.attr('aria-expanded') === 'true' ? 'Show Less' : 'Show More');
+          if(width >= maxMobileWidth) {
+            relabelExpandButton($expandButton.attr('aria-expanded') === 'true' ? 'Show Less' : 'Show More');
+          } else {
+            relabelExpandButton('On This Page');
+          }
         }
       });
 
@@ -56,10 +63,9 @@
       // Reset all list items to visible
       $listItems.removeClass('hidden');
 
-      if(!vertical) {
+      //horizontal layout or mobile vertical layout
+      if(!vertical || width < maxMobileWidth) {
         // remove 'See More' on mobile for horizontal
-        const width = $(window).width();
-        const maxMobileWidth = 1185;
         if(width < maxMobileWidth) {
           relabelExpandButton('On This Page');
         } else {
@@ -82,7 +88,7 @@
           $nav.append($expandButton).append($overflowItemsContainer);
         }
       } else {
-        // show first 7 links on vertical
+        // show first 7 links on vertical (non-mobile)
         if($listItems.length > 7) {
 
           let i = 0;
@@ -91,14 +97,13 @@
   
             if (i < $listItems.length - 7) {
               $overflowItemsContainer.prepend($item.clone().addClass('overflow-item'));
-              $item.remove();
+              $item.addClass('hidden');
               i++;
             }
           });
   
           relabelExpandButton('Show More');
           $nav.append($overflowItemsContainer).append($expandButton);
-          $overflowItemsContainer.addClass('vertical');
         }
       }
 
@@ -108,31 +113,47 @@
       // Initial check and on window resize
       manageOverflow(false);
       window.addEventListener('resize', manageOverflow.bind(this, false));
+    }
+    
+    if ($container.hasClass('orientation-vertical')) {
+      // Initial check and on window resize
+      manageOverflow(true);
+      window.addEventListener('resize', manageOverflow.bind(this, true));
+    }
 
-      window.addEventListener('keydown', event => {
-        if (event.key === 'Escape') {
-          if ($expandButton.attr('aria-expanded') === 'true') {
+    window.addEventListener('keydown', event => {
+      if (event.key === 'Escape') {
+        if ($expandButton.attr('aria-expanded') === 'true') {
+          const width = $(window).width();
+          if($container.hasClass('orientation-horizontal') || width < maxMobileWidth) {
             $expandButton.click();
             $expandButton.focus();
           }
         }
-      });
+      }
+    });
 
-      // Handle focus events to close when focus moves outside
-      document.addEventListener('focusin', (event) => {
-        // Check if the newly focused element is outside the container and button
-        const isOutsideFocus = !$overflowItemsContainer[0].contains(event.target) && event.target !== $expandButton[0];
+    // Handle focus events to close when focus moves outside
+    document.addEventListener('focusin', (event) => {
+      // Check if the newly focused element is outside the container and button
+      const isOutsideFocus = !$overflowItemsContainer[0].contains(event.target) && event.target !== $expandButton[0];
 
-        if (isOutsideFocus && $expandButton.attr('aria-expanded') === 'true') {
+      if (isOutsideFocus && $expandButton.attr('aria-expanded') === 'true') {
+        const width = $(window).width();
+        if($container.hasClass('orientation-horizontal') || width < maxMobileWidth) { 
           $expandButton.click();
         }
-      });
+      }
+    });
 
-      // Event listener for clicks anywhere on the document
-      document.addEventListener('click', (event) => {
-        // Check if the clicked element is outside the collapsible area or the toggle button itself (including the chevron icon)
-        const isOutsideClick = !$overflowItemsContainer[0].contains(event.target) && event.target !== $expandButton[0] && event.target.parentNode !== $expandButton[0];
+    // Event listener for clicks anywhere on the document
+    document.addEventListener('click', (event) => {
+      // Check if the clicked element is outside the collapsible area or the toggle button itself (including the chevron icon)
+      const isOutsideClick = !$overflowItemsContainer[0].contains(event.target) && event.target !== $expandButton[0] && event.target.parentNode !== $expandButton[0];
 
+      const width = $(window).width();
+      if($container.hasClass('orientation-horizontal') || width < maxMobileWidth) {
+          
         if (isOutsideClick && $expandButton.attr('aria-expanded') === 'true') {
           $expandButton.click();
         }
@@ -142,13 +163,8 @@
             $expandButton.click();
           }
         }
-      });
-    }
-
-    if ($container.hasClass('orientation-vertical')) {
-      // Initial check and on window resize
-      manageOverflow(true);
-    }
+      }
+    });
 
 
   });
