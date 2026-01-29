@@ -280,7 +280,7 @@ $su-color-black: #2E2D29;
           text-wrap: wrap;
 
           // add spacing here
-          margin-bottom: 27px;
+          margin-bottom: 10px;
 
           &:last-child {
             margin-bottom: 0px;
@@ -289,8 +289,21 @@ $su-color-black: #2E2D29;
       }
     }
 
-    .overflow-items.vertical {
-      @include responsive-spacing('padding', 0);
+    .overflow-items {
+      margin-top: -8px;
+      padding-top: 0px;
+      padding-bottom: 0px;
+      @include responsive-spacing('padding-left', 0);
+      @include responsive-spacing('padding-right', 0);
+  
+      // links
+      .overflow-item {
+        margin-bottom: 10px;
+      }
+      
+      li:last-child {
+        margin-bottom: 0px;
+      }
     }
   }
 

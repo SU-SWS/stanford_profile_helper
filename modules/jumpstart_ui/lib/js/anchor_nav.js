@@ -30,6 +30,11 @@
 
     const $overflowItemsContainer = $('<ul>').addClass('overflow-items hidden').attr('id', 'overflow-container');
 
+    function relabelExpandButton(text = 'See More') {
+      $expandButton.html(text + '<i class="fa-solid fa-chevron-down"></i>');
+      $expandButton.attr('aria-label', text);
+    }
+
     function manageOverflow(vertical = false) {
       $('button', $nav).remove();
       $('.overflow-items', $nav).remove();
@@ -40,6 +45,10 @@
       $expandButton.on('click', () => {
         $expandButton.attr('aria-expanded', (i, currentValue) => currentValue === 'true' ? 'false' : 'true');
         $overflowItemsContainer.toggleClass('hidden');
+
+        if(vertical) {
+          relabelExpandButton($expandButton.attr('aria-expanded') === 'true' ? 'Show Less' : 'Show More');
+        }
       });
 
 
@@ -52,11 +61,9 @@
         const width = $(window).width();
         const maxMobileWidth = 1185;
         if(width < maxMobileWidth) {
-          $expandButton.html('On This Page<i class="fa-solid fa-chevron-down"></i>');
-          $expandButton.attr('aria-label', 'On This Page');
+          relabelExpandButton('On This Page');
         } else {
-          $expandButton.html('See More<i class="fa-solid fa-chevron-down"></i>');
-          $expandButton.attr('aria-label', 'See More');
+          relabelExpandButton('See More');
         }
       
         const maxWidth = $($container[0]).css('max-width').split('px')[0]; // clientWidth doesn't work when width is unset
@@ -89,7 +96,8 @@
             }
           });
   
-          $nav.append($expandButton).append($overflowItemsContainer);
+          relabelExpandButton('Show More');
+          $nav.append($overflowItemsContainer).append($expandButton);
           $overflowItemsContainer.addClass('vertical');
         }
       }
