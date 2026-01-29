@@ -264,32 +264,40 @@ $su-color-black: #2E2D29;
 
   //  Vertical Layout Specific Styles
   &.orientation-vertical {
-    nav {
-      @include icon-before-with-text-130();
+    // mobile first - shared styles
+    @media screen and (max-width: 1199px) {
+      @include anchor-mobile-styles();
+    }
 
-      position: sticky;
-      top: 0;
-      max-width: 317px;
-      width: 317px;
-      background-color: #F9F9F9;
-      border: 1px solid #C0C0BF;
-      border-radius: 6px;
-      @include responsive-spacing('padding', 2);
+    @media screen and (min-width: 1200px) {
+    
+      nav {
+        @include icon-before-with-text-130();
 
-      ul:first-child {
+        position: sticky;
+        top: 0;
+        max-width: 317px;
+        width: 317px;
+        background-color: #F9F9F9;
+        border: 1px solid #C0C0BF;
+        border-radius: 6px;
+        @include responsive-spacing('padding', 2);
 
-        li {
-          min-height: 21px; // in figma, but i think we can remove..
+        ul:first-child {
 
-          //ask if we want this to deal with overflow
-          max-width: 188px;
-          text-wrap: wrap;
+          li {
+            min-height: 21px; // in figma, but i think we can remove..
 
-          // add spacing here
-          margin-bottom: 10px;
+            //ask if we want this to deal with overflow
+            max-width: 188px;
+            text-wrap: wrap;
 
-          &:last-child {
-            margin-bottom: 0px;
+            // add spacing here
+            margin-bottom: 10px;
+
+            &:last-child {
+              margin-bottom: 0px;
+            }
           }
         }
       }
