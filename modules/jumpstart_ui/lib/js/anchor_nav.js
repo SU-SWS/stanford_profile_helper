@@ -16,7 +16,7 @@
       const $heading = $(heading);
       const id = $heading.attr('id');
 
-      $list.append($('<li>').append($('<a>').attr('href', `#${id}`).text($heading.text().trim())));
+      $list.append($('<li>').append($('<a>').attr('href', `#${id}`).addClass(`anchor-link`).text($heading.text().trim())));
     });
 
     const $container = $('.anchor-link-nav');
@@ -127,6 +127,12 @@
 
         if (isOutsideClick && $expandButton.attr('aria-expanded') === 'true') {
           $expandButton.click();
+        }
+        if (event.target && event.target.classList.contains('anchor-link')) {
+          // clicked an anchor link (in the dropdown or not)
+          if ($expandButton.attr('aria-expanded') === 'true') {
+            $expandButton.click();
+          }
         }
       });
     }

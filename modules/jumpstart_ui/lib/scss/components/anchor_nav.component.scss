@@ -125,9 +125,11 @@ $su-color-black: #2E2D29;
     max-width: 245px;
     justify-self: center;
     margin-bottom: 32px; // specific to design specs.
+    height: 53px; // specific to design specs.
 
     @media screen and (min-width: 768px){
       margin-bottom: 35px; // specific to design specs.
+      height: 59px; // specific to design specs.
     }
     @media screen and (min-width: 992px){
       margin-bottom: 45px; // specific to design specs.
@@ -135,7 +137,7 @@ $su-color-black: #2E2D29;
     @media screen and (min-width: 1200px){
       margin-bottom: 48px; // specific to design specs.
       max-width: 1000px;
-      // width: 1000px;
+      height: 61px; // specific to design specs.
     }
 
     ul:not(.overflow-items) {
@@ -151,7 +153,6 @@ $su-color-black: #2E2D29;
       position: relative;
       display: flex;
       align-items: center;
-      // overflow: hidden;
       white-space: nowrap;
       justify-content: center;
 
