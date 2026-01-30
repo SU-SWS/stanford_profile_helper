@@ -38,12 +38,6 @@
     @media screen and (min-width: 768px){
       padding-top: 18px; 
     }
-
-    @media screen and (max-width: 1199px){
-      // add icon before button on mobile only (instead of on nav)
-      @include icon-before--3-bars();
-      margin: 0 auto;
-    }
   }
 }
 
@@ -250,6 +244,12 @@ $su-color-black: #2E2D29;
       // show more section - overflow control
       button {
         
+        @media screen and (max-width: 1199px){
+          // add icon before button on mobile only (instead of on nav)
+          @include icon-before--3-bars();
+          margin: 0 auto;
+        }
+
         @media screen and (min-width: 1200px){  
           @include responsive-spacing('padding-left', 2);
         }
@@ -281,12 +281,20 @@ $su-color-black: #2E2D29;
   //  Vertical Layout Specific Styles
   &.orientation-vertical {
     // mobile first - shared styles
-    @media screen and (max-width: 1199px) {
+    @media screen and (max-width: 991px) {
       @include anchor-mobile-styles();
 
       nav {
         position: relative;
         @include anchor-mobile-link-styles();
+
+        button {
+          @media screen and (max-width: 991px){
+            // add icon before button on mobile only (instead of on nav)
+            @include icon-before--3-bars();
+            margin: 0 auto;
+          }
+        }
 
         ul:first-child {
           margin: 0px;
@@ -296,20 +304,23 @@ $su-color-black: #2E2D29;
       @include overflow-menu-styles();
     }
 
-    @media screen and (min-width: 1200px) {
+    @media screen and (min-width: 992px) {
       margin: 50px 0px;
-      
+
       nav {
         @include icon-before-with-text-130();
 
         position: sticky;
         top: 0;
-        max-width: 317px;
-        width: 317px;
         background-color: #F9F9F9;
         border: 1px solid #C0C0BF;
         border-radius: 6px;
         @include responsive-spacing('padding', 1);
+
+        @media screen and (max-width: 1100px) {
+          @include responsive-spacing('padding-left', 1);
+          @include responsive-spacing('padding-right', 1);
+        }
 
         ul:first-child {
 

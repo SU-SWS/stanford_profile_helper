@@ -38,7 +38,8 @@
       $expandButton.html(text + '<i class="fa-solid fa-chevron-down"></i>');
       $expandButton.attr('aria-label', text);
     }
-    const maxMobileWidth = 1185;
+    const maxMobileWidth = 1185; // 1200px -15
+    const maxMobileVerticalWidth = 977; // 992px -15
 
     function manageOverflow(vertical = false) {
       $('button', $nav).remove();
@@ -54,7 +55,7 @@
         $overflowItemsContainer.toggleClass('hidden');
 
         if(vertical) {
-          if(width >= maxMobileWidth) {
+          if(width >= maxMobileVerticalWidth) {
             relabelExpandButton($expandButton.attr('aria-expanded') === 'true' ? 'Show Less' : 'Show More');
           } else {
             relabelExpandButton('On This Page');
@@ -68,14 +69,14 @@
       $listItems.removeClass('hidden');
 
       //horizontal layout or mobile vertical layout
-      if(!vertical || width < maxMobileWidth) {
+      if(!vertical || width < maxMobileVerticalWidth) {
         // remove 'See More' on mobile for horizontal
         if(width < maxMobileWidth) {
           relabelExpandButton('On This Page');
         } else {
           relabelExpandButton('See More');
         }
-      
+        
         const maxWidth = $($container[0]).css('max-width').split('px')[0]; // clientWidth doesn't work when width is unset
 
         // Check if the list overflows its container
@@ -129,7 +130,7 @@
       if (event.key === 'Escape') {
         if ($expandButton.attr('aria-expanded') === 'true') {
           const width = $(window).width();
-          if($container.hasClass('orientation-horizontal') || width < maxMobileWidth) {
+          if($container.hasClass('orientation-horizontal') || width < maxMobileVerticalWidth) {
             $expandButton.click();
             $expandButton.focus();
           }
@@ -144,7 +145,7 @@
 
       if (isOutsideFocus && $expandButton.attr('aria-expanded') === 'true') {
         const width = $(window).width();
-        if($container.hasClass('orientation-horizontal') || width < maxMobileWidth) { 
+        if($container.hasClass('orientation-horizontal') || width < maxMobileVerticalWidth) { 
           $expandButton.click();
         }
       }
@@ -156,7 +157,7 @@
       // on mobile vertical, clicking the chevron results in a null parentNode for some reason, but this handles it
       const isOutsideClick = !$overflowItemsContainer[0].contains(event.target) && event.target !== $expandButton[0] && event.target.parentNode !== null && event.target.parentNode !== $expandButton[0];
       const width = $(window).width();
-      if($container.hasClass('orientation-horizontal') || width < maxMobileWidth) {
+      if($container.hasClass('orientation-horizontal') || width < maxMobileVerticalWidth) {
           
         if (isOutsideClick && $expandButton.attr('aria-expanded') === 'true') {
           $expandButton.click();
