@@ -35,8 +35,11 @@
     const $overflowItemsContainer = $('<ul>').addClass('overflow-items hidden').attr('id', 'overflow-container');
 
     function relabelExpandButton(text = 'See More') {
-      $expandButton.html(text + '<i class="fa-solid fa-chevron-down"></i>');
-      $expandButton.attr('aria-label', text);
+      // relabel the button if the text is different
+      if(!$expandButton.text().includes(text)) {
+        $expandButton.html(text + '<i class="fa-solid fa-chevron-down"></i>');
+        $expandButton.attr('aria-label', text);
+      }
     }
     const maxMobileWidth = 1185; // 1200px -15
     const maxMobileVerticalWidth = 977; // 992px -15
