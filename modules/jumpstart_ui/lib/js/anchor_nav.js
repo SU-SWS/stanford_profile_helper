@@ -51,7 +51,6 @@
       $overflowItemsContainer.empty()
       const width = $(window).width();
 
-
       // Toggle overflow items visibility on expand button click
       $expandButton.on('click', () => {
         $expandButton.attr('aria-expanded', (i, currentValue) => currentValue === 'true' ? 'false' : 'true');
@@ -70,7 +69,6 @@
           }
         }
       });
-
 
       const $listItems = $('li', $list);
       // Reset all list items to visible
@@ -177,7 +175,5 @@
         }
       }
     });
-
-
   });
 })(jQuery);
