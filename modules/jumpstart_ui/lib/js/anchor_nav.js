@@ -162,8 +162,7 @@
     // Event listener for clicks anywhere on the document
     document.addEventListener('click', (event) => {
       // Check if the clicked element is outside the collapsible area or the toggle button itself (including the chevron icon)
-      // on mobile vertical, clicking the chevron results in a null parentNode for some reason, but this handles it
-      const isOutsideClick = !$overflowItemsContainer[0].contains(event.target) && event.target !== $expandButton[0] && event.target.parentNode !== null && event.target.parentNode !== $expandButton[0];
+      const isOutsideClick = !$overflowItemsContainer[0].contains(event.target) && event.target !== $expandButton[0] && event.target.parentNode !== $expandButton[0];
       const width = $(window).width();
       if($container.hasClass('orientation-horizontal') || width < maxMobileVerticalWidth) {
           
@@ -171,7 +170,7 @@
           $expandButton.click();
         }
         if (event.target && event.target.classList.contains('anchor-link')) {
-          // clicked an anchor link (in the dropdown or not)
+          // clicked an anchor link in the overflow dropdown menu
           if ($expandButton.attr('aria-expanded') === 'true') {
             $expandButton.click();
           }
