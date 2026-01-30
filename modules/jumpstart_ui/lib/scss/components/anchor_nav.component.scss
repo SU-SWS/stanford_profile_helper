@@ -297,7 +297,8 @@ $su-color-black: #2E2D29;
     }
 
     @media screen and (min-width: 1200px) {
-    
+      margin: 50px 0px;
+      
       nav {
         @include icon-before-with-text-130();
 
