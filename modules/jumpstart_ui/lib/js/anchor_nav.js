@@ -57,6 +57,11 @@
         if(vertical) {
           if(width >= maxMobileVerticalWidth) {
             relabelExpandButton($expandButton.attr('aria-expanded') === 'true' ? 'Show Less' : 'Show More');
+            //when overflow was just opened
+            if($expandButton.attr('aria-expanded') === 'true') {
+              // move tab focus to first overflow link for tabbing accessibility
+              $('#overflow-container li:first-child a')[0].focus();
+            }
           } else {
             relabelExpandButton('On This Page');
           }
