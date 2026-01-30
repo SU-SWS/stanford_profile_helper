@@ -198,6 +198,7 @@ $su-color-black: #2E2D29;
 
   &.orientation-horizontal {
     @include anchor-mobile-styles();
+    @include overflow-menu-styles();
     
     @media screen and (min-width: 1200px){
       margin-bottom: 48px; // specific to design specs.
@@ -229,6 +230,7 @@ $su-color-black: #2E2D29;
       ul:first-child:before {
         content: unset;
       }
+
       @media screen and (min-width: 1200px){
         max-width: 1000px;
         min-width: fit-content;
@@ -256,7 +258,6 @@ $su-color-black: #2E2D29;
       }
     }
 
-    @include overflow-menu-styles();
   }
 
   .overflow-items {
@@ -279,9 +280,11 @@ $su-color-black: #2E2D29;
 
   //  Vertical Layout Specific Styles
   &.orientation-vertical {
-    // mobile first - shared styles
+    /* --- mobile first --- */
     @media screen and (max-width: 991px) {
+      /* -- shared mobile styles:  -- */
       @include anchor-mobile-styles();
+      @include overflow-menu-styles();
 
       nav {
         position: relative;
@@ -289,7 +292,7 @@ $su-color-black: #2E2D29;
 
         button {
           @media screen and (max-width: 991px){
-            // add icon before button on mobile only (instead of on nav)
+            // add icon before button on mobile only (instead of on the nav element)
             @include icon-before--3-bars();
             margin: 0 auto;
           }
@@ -299,8 +302,6 @@ $su-color-black: #2E2D29;
           margin: 0px;
         }
       }
-      
-      @include overflow-menu-styles();
     }
 
     @media screen and (min-width: 992px) {
@@ -308,13 +309,12 @@ $su-color-black: #2E2D29;
 
       nav {
         @include icon-before-with-text-130();
-
+        @include responsive-spacing('padding', 2);
         position: sticky;
         top: 0;
         background-color: #F9F9F9;
         border: 1px solid #C0C0BF;
         border-radius: 6px;
-        @include responsive-spacing('padding', 2);
 
         @media screen and (max-width: 1100px) {
           @include responsive-spacing('padding-left', 1);
@@ -322,7 +322,6 @@ $su-color-black: #2E2D29;
         }
 
         ul:first-child {
-
           li {
             max-width: 188px;
             text-wrap: wrap;
@@ -359,9 +358,7 @@ $su-color-black: #2E2D29;
         }
       }
     }
-    
   }
-
 }
 
 /* --- Two Column Overrides based on page layout --- */
