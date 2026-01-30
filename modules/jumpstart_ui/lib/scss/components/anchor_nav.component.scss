@@ -317,6 +317,11 @@ $su-color-black: #2E2D29;
         border-radius: 6px;
         @include responsive-spacing('padding', 2);
 
+        @media screen and (max-width: 1100px) {
+          @include responsive-spacing('padding-left', 1);
+          @include responsive-spacing('padding-right', 1);
+        }
+
         ul:first-child {
 
           li {
