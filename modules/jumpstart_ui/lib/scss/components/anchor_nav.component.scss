@@ -315,7 +315,7 @@ $su-color-black: #2E2D29;
         background-color: #F9F9F9;
         border: 1px solid #C0C0BF;
         border-radius: 6px;
-        @include responsive-spacing('padding', 2);
+        @include responsive-spacing('padding', 1);
 
         @media screen and (max-width: 1100px) {
           @include responsive-spacing('padding-left', 1);
