@@ -364,4 +364,10 @@ $su-color-black: #2E2D29;
       max-width: 838px;
     }
   }
+  .left-region {
+    // vertical nav, upper container only when it follows the menu block in the sidebar
+    .menu-block + .anchor-link-navigation {
+      border-top: 1px solid #C0C0BF;
+    }
+  }
 }
