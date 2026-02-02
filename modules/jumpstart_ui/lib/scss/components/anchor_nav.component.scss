@@ -309,7 +309,8 @@ $su-color-black: #2E2D29;
 
       nav {
         @include icon-before-with-text-130();
-        @include responsive-spacing('padding', 1);
+        // @include responsive-spacing('padding', 1);
+        padding: 20px;
         position: sticky;
         top: 0;
         background-color: #F9F9F9;
