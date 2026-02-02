@@ -199,6 +199,8 @@ $su-color-black: #2E2D29;
   &.orientation-horizontal {
     @include anchor-mobile-styles();
     @include overflow-menu-styles();
+    margin-left: auto;
+    margin-right: auto;
     
     @media screen and (min-width: 1200px){
       margin-bottom: 48px; // specific to design specs.
