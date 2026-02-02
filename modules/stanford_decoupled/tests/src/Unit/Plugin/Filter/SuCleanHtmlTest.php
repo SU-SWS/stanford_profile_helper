@@ -19,7 +19,7 @@ class SuCleanHtmlTest extends UnitTestCase {
     return [
       [
         "\r\n<!-- FOO BAR BAZ-->\n\n<div>foo</div>\n\n\n<div>\r\nbar\r\n\r\nbaz</div>\r\n",
-        '<div>foo</div><div> bar baz</div>',
+        "<div>foo</div>\n\n\n<div>\r\nbar\r\n\r\nbaz</div>",
       ],
       [
         '<a href="foobar">foobar</a><article title="foobar">foobar</article><a href="foobar" title="foobar">foobar</a><a href="foobar" title="foobarbaz"><span>foobarbaz</span></a>',

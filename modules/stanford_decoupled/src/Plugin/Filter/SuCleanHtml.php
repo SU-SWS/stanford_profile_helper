@@ -52,8 +52,6 @@ class SuCleanHtml extends FilterBase implements ContainerFactoryPluginInterface 
       return new FilterProcessResult($text);
     }
 
-    // Remove line breaks.
-    $text = preg_replace('/(\r\n)+|\r+|\n+|\t+/', ' ', $text);
     // Remove html comments.
     $text = preg_replace('/<!--.*?>/', '', $text);
     // Remove white space between tags.
