@@ -42,6 +42,7 @@
       }
     }
     const maxMobileWidth = 1185; // 1200px -15
+    const maxWidthWithSecondaryNav = 900; // 
     const maxMobileVerticalWidth = 977; // 992px -15
 
     function manageOverflow(vertical = false) {
@@ -53,21 +54,38 @@
 
       // Toggle overflow items visibility on expand button click
       $expandButton.on('click', () => {
-        $expandButton.attr('aria-expanded', (i, currentValue) => currentValue === 'true' ? 'false' : 'true');
-        $overflowItemsContainer.toggleClass('hidden');
+        const startsExpanded = $expandButton.attr('aria-expanded') === 'true';
 
         if(vertical) {
           if(width >= maxMobileVerticalWidth) {
-            relabelExpandButton($expandButton.attr('aria-expanded') === 'true' ? 'Show Less' : 'Show More');
-            //when overflow was just opened
-            if($expandButton.attr('aria-expanded') === 'true') {
-              // move tab focus to first overflow link for tabbing accessibility
-              $('#overflow-container li:first-child a')[0].focus();
-            }
+            relabelExpandButton(startsExpanded ? 'Show More' : 'Show Less');
+          } else {
+            relabelExpandButton('On This Page');
+          }
+        } else {
+          if(width >= maxMobileWidth) {
+            relabelExpandButton(startsExpanded ? 'See More' : 'See Less');
           } else {
             relabelExpandButton('On This Page');
           }
         }
+
+        setTimeout(() => {
+          // toggle hidden after setting text to allow for transition ease effect
+          $expandButton.attr('aria-expanded', startsExpanded ? 'false' : 'true');
+          $overflowItemsContainer.toggleClass('hidden');
+
+          if(vertical) {
+            if(width >= maxMobileVerticalWidth) {
+              //when overflow was just opened
+              if($expandButton.attr('aria-expanded') === 'true') {
+                // move tab focus to first overflow link for tabbing accessibility
+                $('#overflow-container li:first-child a')[0].focus();
+              }
+            }
+          }
+        }, 0);
+
       });
 
       const $listItems = $('li', $list);
@@ -83,8 +101,10 @@
           relabelExpandButton('See More');
         }
         
-        const maxWidth = $($container[0]).css('max-width').split('px')[0]; // clientWidth doesn't work when width is unset
-
+        const maxAnchorWidth = $($container[0]).css('max-width').split('px')[0]; // clientWidth doesn't work when width is unset
+        const maxRegionWidth = $('.main-region .node-stanford-page-body')[0].clientWidth; // width of the main text area
+        const maxWidth = Math.min(maxAnchorWidth, maxRegionWidth); // limit the horizontal nav to whichever is smallest
+        
         // Check if the list overflows its container
         if ($list[0].scrollWidth > maxWidth - 220 || width < maxMobileWidth) {
           $listItems.get().reverse().map(item => {

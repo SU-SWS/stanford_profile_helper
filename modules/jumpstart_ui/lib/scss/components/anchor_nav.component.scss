@@ -343,7 +343,21 @@ $su-color-black: #2E2D29;
         padding-bottom: 0px;
         @include responsive-spacing('padding-left', 0);
         @include responsive-spacing('padding-right', 0);
+        transition: .2s ease;
+  
+        &.hidden {
+          height: 0px;
+          margin: 0px;
+          transition: .05s ease;
+          display: block;
+          opacity: 0;
+          overflow: hidden;
     
+          li {
+            display: none;
+          }
+        }
+
         // links
         .overflow-item {
           margin-bottom: 10px;
