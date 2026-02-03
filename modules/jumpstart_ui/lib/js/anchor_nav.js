@@ -94,7 +94,7 @@
         }
         
         const maxAnchorWidth = $($container[0]).css('max-width').split('px')[0]; // clientWidth doesn't work when width is unset
-        const maxRegionWidth = $('.main-region .node-stanford-page-body').length ? $('.main-region .node-stanford-page-body')[0].clientWidth : 1200; // width of the main text area
+        const maxRegionWidth = $('.main-region .node-stanford-page-body').length ? $('.main-region .node-stanford-page-body')[0].clientWidth : 1000; // width of the main text area
         const maxWidth = Math.min(maxAnchorWidth, maxRegionWidth); // limit the horizontal nav to whichever is smallest
         
         // Check if the list overflows its container
