@@ -21,3 +21,11 @@ block.settings.anchor_link_navigation:
     orientation:
       type: string
       label: Orientation
+
+field.widget.settings.layout_library_icons:
+  type: mapping
+  label: Layout Library Icons widget settings
+  mapping:
+    foo:
+      type: string
+      label: Foo
