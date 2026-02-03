@@ -16,8 +16,8 @@
     @include responsive-spacing('padding-right', 3);
     max-height: 61px;
     max-width: 245px;
-    justify-self: center;
-    margin-bottom: 32px; // specific to design specs.
+    width: fit-content;
+    margin: 0px auto 32px auto; // specific to design specs.
     height: 53px; // specific to design specs.
 
     @media screen and (min-width: 768px){
@@ -37,6 +37,9 @@
 
     @media screen and (min-width: 768px){
       padding-top: 18px; 
+    }
+    @media screen and (max-width: 767px){
+      padding-top: 15px; 
     }
   }
 }
@@ -307,7 +310,7 @@ $su-color-black: #2E2D29;
     }
 
     @media screen and (min-width: 992px) {
-      margin: 50px 0px;
+      margin-bottom: 50px;
 
       nav {
         @include icon-before-with-text-130();

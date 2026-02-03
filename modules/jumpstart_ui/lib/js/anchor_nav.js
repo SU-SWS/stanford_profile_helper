@@ -27,7 +27,9 @@
 
     const $nav = $('<nav>').attr('aria-label', 'On this page Navigation').append($list);
     $container.append($nav);
-    const $expandButton = $('<button>').html('See More<i class="fa-solid fa-chevron-down"></i>')
+    const $span = $('<span id="expand-text">See More<span>');
+    const $chevron = $('<i class="fa-solid fa-chevron-down"></i>');
+    const $expandButton = $('<button>').append($span).append($chevron)
       .attr('aria-expanded', 'false')
       .attr('aria-controls', 'overflow-container')
       .attr('aria-label', 'See More');
@@ -36,13 +38,13 @@
 
     function relabelExpandButton(text = 'See More') {
       // relabel the button if the text is different
-      if(!$expandButton.text().includes(text)) {
-        $expandButton.html(text + '<i class="fa-solid fa-chevron-down"></i>');
+      const $btnText = $expandButton.children('#expand-text');
+      if(!$btnText.text().includes(text)) {
+        $btnText.text(text);
         $expandButton.attr('aria-label', text);
       }
     }
     const maxMobileWidth = 1185; // 1200px -15
-    const maxWidthWithSecondaryNav = 900; // 
     const maxMobileVerticalWidth = 977; // 992px -15
 
     function manageOverflow(vertical = false) {
@@ -55,10 +57,17 @@
       // Toggle overflow items visibility on expand button click
       $expandButton.on('click', () => {
         const startsExpanded = $expandButton.attr('aria-expanded') === 'true';
+        $expandButton.attr('aria-expanded', startsExpanded ? 'false' : 'true');
+        $overflowItemsContainer.toggleClass('hidden');
 
         if(vertical) {
           if(width >= maxMobileVerticalWidth) {
             relabelExpandButton(startsExpanded ? 'Show More' : 'Show Less');
+            //when overflow was just opened
+            if($expandButton.attr('aria-expanded') === 'true') {
+              // move tab focus to first overflow link for tabbing accessibility
+              $('#overflow-container li:first-child a')[0].focus();
+            }
           } else {
             relabelExpandButton('On This Page');
           }
@@ -69,23 +78,6 @@
             relabelExpandButton('On This Page');
           }
         }
-
-        setTimeout(() => {
-          // toggle hidden after setting text to allow for transition ease effect
-          $expandButton.attr('aria-expanded', startsExpanded ? 'false' : 'true');
-          $overflowItemsContainer.toggleClass('hidden');
-
-          if(vertical) {
-            if(width >= maxMobileVerticalWidth) {
-              //when overflow was just opened
-              if($expandButton.attr('aria-expanded') === 'true') {
-                // move tab focus to first overflow link for tabbing accessibility
-                $('#overflow-container li:first-child a')[0].focus();
-              }
-            }
-          }
-        }, 0);
-
       });
 
       const $listItems = $('li', $list);
@@ -102,7 +94,7 @@
         }
         
         const maxAnchorWidth = $($container[0]).css('max-width').split('px')[0]; // clientWidth doesn't work when width is unset
-        const maxRegionWidth = $('.main-region .node-stanford-page-body')[0] ? $('.main-region .node-stanford-page-body')[0].clientWidth : 1200; // width of the main text area
+        const maxRegionWidth = $('.main-region .node-stanford-page-body').length ? $('.main-region .node-stanford-page-body')[0].clientWidth : 1200; // width of the main text area
         const maxWidth = Math.min(maxAnchorWidth, maxRegionWidth); // limit the horizontal nav to whichever is smallest
         
         // Check if the list overflows its container
