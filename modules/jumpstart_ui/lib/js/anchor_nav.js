@@ -62,9 +62,9 @@
           } else {
             relabelExpandButton('On This Page');
           }
-        } else { //  horizontal layour
+        } else {
           if(width >= maxMobileWidth) {
-            relabelExpandButton(startsExpanded ? 'See More' : 'See Less'); // need to expand this because the toggle isn't always getting it
+            relabelExpandButton(startsExpanded ? 'See More' : 'See Less');
           } else {
             relabelExpandButton('On This Page');
           }
@@ -102,7 +102,7 @@
         }
         
         const maxAnchorWidth = $($container[0]).css('max-width').split('px')[0]; // clientWidth doesn't work when width is unset
-        const maxRegionWidth = $('.main-region .node-stanford-page-body')[0].clientWidth; // width of the main text area
+        const maxRegionWidth = $('.main-region .node-stanford-page-body')[0] ? $('.main-region .node-stanford-page-body')[0].clientWidth : 1200; // width of the main text area
         const maxWidth = Math.min(maxAnchorWidth, maxRegionWidth); // limit the horizontal nav to whichever is smallest
         
         // Check if the list overflows its container
