@@ -311,8 +311,7 @@ $su-color-black: #2E2D29;
 
       nav {
         @include icon-before-with-text-130();
-        // @include responsive-spacing('padding', 1);
-        padding: 20px;
+        padding: 2rem;
         position: sticky;
         top: 0;
         background-color: #F9F9F9;
@@ -368,18 +367,6 @@ $su-color-black: #2E2D29;
         li:last-child {
           margin-bottom: 0px;
         }
-      }
-    }
-  }
-}
-
-/* --- Two Column Overrides based on page layout --- */
-
-.jumpstart-ui--two-column {
-  .flex-lg-9-of-12.main-region { // with sidebar layout
-    .anchor-link-nav.orientation-horizontal {
-      @media screen and (min-width: 992px) and (max-width: 1199px) {
-        max-width: 838px;
       }
     }
   }

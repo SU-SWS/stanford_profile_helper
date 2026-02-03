@@ -62,9 +62,9 @@
           } else {
             relabelExpandButton('On This Page');
           }
-        } else {
+        } else { //  horizontal layour
           if(width >= maxMobileWidth) {
-            relabelExpandButton(startsExpanded ? 'See More' : 'See Less');
+            relabelExpandButton(startsExpanded ? 'See More' : 'See Less'); // need to expand this because the toggle isn't always getting it
           } else {
             relabelExpandButton('On This Page');
           }
