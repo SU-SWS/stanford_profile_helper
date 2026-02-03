@@ -44,11 +44,14 @@ If you are experiencing issues with this module try reverting the feature first.
 Developer
 ---
 
-If you wish to develop on this module you will most likely need to compile some new css. Please use the sass structure provided and compile with the sass compiler packaged in this module. To install:
+If you wish to develop on this module you will most likely need to compile some new css. Please use the sass structure provided and compile with the sass compiler packaged in this module. 
+
+We use 'yarn' not 'npm'. 
+
+To rebuild css after scss changes:
 
 ```
-npm install
-npm run build
+yarn build
 ```
 
 Contribution / Collaboration

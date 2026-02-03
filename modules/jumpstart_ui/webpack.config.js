@@ -103,7 +103,7 @@ var webpackConfig = {
     new FileManagerPlugin({
       events: {
         onStart: {
-          delete: ["dist"]
+          delete: ["dist/css"]
         },
         // onEnd: {
         //   copy: [
