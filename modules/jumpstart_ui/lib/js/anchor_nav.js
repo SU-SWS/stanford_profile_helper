@@ -21,10 +21,6 @@
 
     const $container = $('.anchor-link-nav');
     
-    // Add a skip link before the nav for keyboard users
-    const $skipLink = $('<a>').attr('href', '#main-content').addClass('visually-hidden focusable su-skipnav su-skipnav--secondary').text('Skip to main content');
-    $container.append($skipLink);
-
     const $nav = $('<nav>').attr('aria-label', 'On this page Navigation').append($list);
     $container.append($nav);
     const $span = $('<span id="expand-text">See More<span>');
