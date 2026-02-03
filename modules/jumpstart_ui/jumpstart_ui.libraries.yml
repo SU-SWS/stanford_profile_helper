@@ -109,3 +109,24 @@ components.container_responsive_card:
   css:
     base:
       dist/css/container_responsive_card.css: {}
+
+anchorjs:
+  remote: https://www.bryanbraun.com/anchorjs/
+  version: 5.0.0
+  license:
+    name: MIT
+    url: https://github.com/bryanbraun/anchorjs/blob/main/LICENSE
+    gpl-compatible: true
+  type: external
+  js:
+    https://cdn.jsdelivr.net/npm/anchor-js/anchor.min.js: { type: external, minified: true }
+
+anchor_link_nav:
+  js:
+    lib/js/anchor_nav.js: {}
+  css:
+    base:
+      dist/css/anchor_nav.css: {}
+  dependencies:
+    - jumpstart_ui/anchorjs
+    - core/jquery

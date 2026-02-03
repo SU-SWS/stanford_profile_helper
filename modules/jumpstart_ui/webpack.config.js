@@ -20,6 +20,7 @@ var webpackConfig = {
     "jumpstart_ui":    path.resolve("lib/scss/jumpstart_ui.scss"),
     "jumpstart_ui.base":    path.resolve("lib/scss/jumpstart_ui.base.scss"),
     "jumpstart_ui.layout":  path.resolve("lib/scss/jumpstart_ui.layout.scss"),
+    "anchor_nav":           path.resolve("lib/scss/components/anchor_nav.component.scss"),
     "accordion":            path.resolve("lib/scss/components/accordion.component.scss"),
     "alert":                path.resolve("lib/scss/components/alert.component.scss"),
     "brand-bar":            path.resolve("lib/scss/components/brand-bar.component.scss"),
@@ -102,7 +103,7 @@ var webpackConfig = {
     new FileManagerPlugin({
       events: {
         onStart: {
-          delete: ["dist"]
+          delete: ["dist/css"]
         },
         // onEnd: {
         //   copy: [
