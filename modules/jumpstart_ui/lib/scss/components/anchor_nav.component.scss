@@ -78,6 +78,14 @@
         display: none;
       }
     }
+
+    @media screen and (max-width: 1199px) {
+      right: -66px;
+
+      &.hidden {
+        right: -66px;
+      }
+    }
   }
 }
 
