@@ -127,8 +127,7 @@
     .views-field-su-media-image {
       @include responsive-spacing('margin-bottom', -1);
 
-      max-height: 130px;
-      max-width: 130px;
+      max-width: 200px;
     }
 
     h2 {
