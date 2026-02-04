@@ -20,3 +20,8 @@ layout_library_icon_widget:
   css:
     component:
       css/stanford_profile_helper.layout_library_icon_widget.css: {}
+
+time_duration_widget:
+  css:
+    component:
+      css/stanford_profile_helper.time_duration_widget.css: {}
