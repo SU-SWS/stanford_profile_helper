@@ -6,6 +6,7 @@ namespace Drupal\stanford_profile_helper\Form;
 
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\stanford_profile_helper\LayoutLibraryIconInterface;
 
 /**
  * Provides a Stanford Profile Helper form.
@@ -26,7 +27,7 @@ final class LayoutLibraryIconForm extends EntityForm {
     $form['icon'] = [
       '#title' => $this->t('Layout icon'),
       '#type' => 'managed_file',
-      '#upload_location' => 'public://layout-icon/',
+      '#upload_location' => LayoutLibraryIconInterface::IMAGE_DIRECTORY,
       '#upload_validators' => [
         'FileExtension' => ['extensions' => 'png jpg svg'],
       ],

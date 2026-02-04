@@ -15,3 +15,8 @@ ajax_views:
 viewfield_autocomplete:
   js:
     js/stanford_profile_helper.viewfield_autocomplete.js: { }
+
+layout_library_icon_widget:
+  css:
+    component:
+      css/stanford_profile_helper.layout_library_icon_widget.css: {}

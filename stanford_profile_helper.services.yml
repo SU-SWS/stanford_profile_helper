@@ -34,3 +34,6 @@ services:
     arguments: ['@config_pages.loader', '@request_stack', '@state']
     tags:
       - { name: event_subscriber }
+  stanford_profile_helper.layout_library_icon:
+    class: Drupal\stanford_profile_helper\LayoutLibraryIcon
+    arguments: ['@entity_type.manager', '@file_system', '@file.usage', '@current_user', '@module_handler', '@uuid']

@@ -9,9 +9,10 @@ use Drupal\Core\Field\Attribute\FieldWidget;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\Plugin\Field\FieldWidget\OptionsWidgetBase;
-use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\stanford_profile_helper\LayoutLibraryIconInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -33,8 +34,9 @@ final class LayoutLibraryIconsWidget extends OptionsWidgetBase {
     FieldDefinitionInterface $field_definition,
     array $settings,
     array $third_party_settings,
-    protected FileSystemInterface $fileSystem,
+    protected LayoutLibraryIconInterface $layoutLibraryIcon,
     protected EntityTypeManagerInterface $entityTypeManager,
+    protected RendererInterface $renderer
   ) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $third_party_settings);
   }
@@ -49,8 +51,9 @@ final class LayoutLibraryIconsWidget extends OptionsWidgetBase {
       $configuration['field_definition'],
       $configuration['settings'],
       $configuration['third_party_settings'],
-      $container->get('file_system'),
+      $container->get('stanford_profile_helper.layout_library_icon'),
       $container->get('entity_type.manager'),
+      $container->get('renderer')
     );
   }
 
@@ -59,17 +62,48 @@ final class LayoutLibraryIconsWidget extends OptionsWidgetBase {
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $element = parent::formElement($items, $delta, $element, $form, $form_state);
+    $options = $this->getOptions($items->getEntity());
+    /** @var \Drupal\layout_library\Entity\Layout[] $layouts */
+    $layouts = $this->entityTypeManager->getStorage('layout')
+      ->loadMultiple(array_keys($options));
+    $default_icon = $this->layoutLibraryIcon->getDefaultIcon();
+
+    foreach ($layouts as $layout) {
+      $icon = $this->layoutLibraryIcon->getLayoutIcon($layout) ?: $default_icon;
+
+      if ($icon) {
+        $image = [
+          '#theme' => 'image',
+          '#uri' => $icon->getFileUri(),
+          '#alt' => '',
+          '#width' => 200,
+          '#height' => 200,
+        ];
+        $options[$layout->id()] .= $this->renderer->render($image);
+      }
+    }
+    if ($default_icon && isset($options['_none'])) {
+      $image = [
+        '#theme' => 'image',
+        '#uri' => $default_icon->getFileUri(),
+        '#alt' => '',
+        '#width' => 200,
+        '#height' => 200,
+      ];
+      $options['_none'] .= $this->renderer->render($image);
+    }
 
     $element += [
       '#type' => 'radios',
-      '#options' => $this->getOptions($items->getEntity()),
+      '#options' => $options,
       '#default_value' => $this->getSelectedOptions($items) ?: '_none',
-      // Do not display a 'multiple' select box if there is only one option.
-      '#multiple' => $this->multiple && count($this->options) > 1,
+      '#attached' => ['library' => ['stanford_profile_helper/layout_library_icon_widget']],
+      '#attributes' => ['class' => ['layout-library-icons']],
     ];
 
     return $element;
   }
+
   /**
    * {@inheritdoc}
    */
