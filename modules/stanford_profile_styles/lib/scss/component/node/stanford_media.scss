@@ -73,6 +73,10 @@
   }
 
   .media-content-after-first-media {
+    @include modular-spacing('padding-top', 0);
+
+    border-top: 1px solid $su-color-black-30;
+
     h2 {
       @include type-c;
     }
