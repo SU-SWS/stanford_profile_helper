@@ -28,6 +28,8 @@ class EntityEventSubscriber implements EventSubscriberInterface {
   /**
    * Event subscriber constructor.
    *
+   * @codeCoverageIgnore
+   *
    * @param \Drupal\stanford_profile_helper\StanfordDefaultContentInterface $defaultContent
    *   Default content importer service.
    * @param \Drupal\Core\State\StateInterface $state
@@ -43,7 +45,6 @@ class EntityEventSubscriber implements EventSubscriberInterface {
     protected EntityTypeManagerInterface $entityTypeManager,
     protected RouteMatchInterface $routeMatch
   ) {}
-
 
   /**
    * Modify the component build for layout builder.

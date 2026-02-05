@@ -13,11 +13,13 @@ class LayoutLibraryHooks {
    */
   #[Hook('entity_type_alter')]
   function entityTypeAlter(array &$entity_types) {
-    /** @var \Drupal\Core\Entity\EntityTypeInterface $layout */
-    $layout = $entity_types['layout'];
-    $layout->setLinkTemplate('edit-icon-form', $entity_types['layout']->getLinkTemplate('edit-form') . '/edit-icon');
-    $layout->setFormClass('edit-icon', LayoutLibraryIconForm::class);
-    $layout->setListBuilderClass(StanfordLayoutListBuilder::class);
+    if (isset($entity_types['layout'])) {
+      /** @var \Drupal\Core\Entity\EntityTypeInterface $layout */
+      $layout = $entity_types['layout'];
+      $layout->setLinkTemplate('edit-icon-form', $entity_types['layout']->getLinkTemplate('edit-form') . '/edit-icon');
+      $layout->setFormClass('edit-icon', LayoutLibraryIconForm::class);
+      $layout->setListBuilderClass(StanfordLayoutListBuilder::class);
+    }
   }
 
 }

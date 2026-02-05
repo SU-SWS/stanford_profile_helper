@@ -27,6 +27,7 @@ class SamlRoleMappingWidgetTest extends KernelTestBase {
   protected static $modules = [
     'system',
     'stanford_profile_helper',
+    'file',
     'node',
     'field',
     'user',

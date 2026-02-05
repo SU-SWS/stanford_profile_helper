@@ -21,6 +21,7 @@ abstract class SuProfileHelperKernelTestBase extends KernelTestBase {
     'node',
     'serialization',
     'stanford_profile_helper',
+    'file',
     'system',
     'user',
     'path_alias',

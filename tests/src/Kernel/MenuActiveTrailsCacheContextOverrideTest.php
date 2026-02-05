@@ -16,6 +16,7 @@ class MenuActiveTrailsCacheContextOverrideTest extends KernelTestBase {
   protected static $modules = [
     'system',
     'stanford_profile_helper',
+    'file',
     'config_pages',
     'rabbit_hole',
   ];
