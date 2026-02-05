@@ -3,9 +3,11 @@
 namespace Drupal\stanford_profile_helper\EventSubscriber;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\State\StateInterface;
 use Drupal\layout_builder\Event\SectionComponentBuildRenderArrayEvent;
 use Drupal\layout_builder\LayoutBuilderEvents;
+use Drupal\node\NodeInterface;
 use Drupal\stanford_profile_helper\StanfordDefaultContentInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -32,8 +34,15 @@ class EntityEventSubscriber implements EventSubscriberInterface {
    *   Core state service.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   Core entity type manager service.
+   * @param \Drupal\Core\Routing\RouteMatchInterface $routeMatch
+   *   Route match service.
    */
-  public function __construct(protected StanfordDefaultContentInterface $defaultContent, protected StateInterface $state, protected EntityTypeManagerInterface $entityTypeManager) {}
+  public function __construct(
+    protected StanfordDefaultContentInterface $defaultContent,
+    protected StateInterface $state,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected RouteMatchInterface $routeMatch
+  ) {}
 
 
   /**
@@ -46,7 +55,16 @@ class EntityEventSubscriber implements EventSubscriberInterface {
     $menus = self::getTaxonomyMenuIds();
 
     $component_config = $event->getComponent()->get('configuration');
-
+    if ($component_config['id'] == 'printable_links_block:node') {
+      $node = $this->routeMatch->getParameter('node');
+      if (
+        $node instanceof NodeInterface &&
+        $node->bundle() == 'stanford_media' &&
+        !$node->get('su_media_transcript')->count()
+      ) {
+        $event->setBuild([]);
+      }
+    }
     if (in_array($component_config['id'], $menus)) {
       // Always display the label for taxonomy menus due to the twig template.
       $build = $event->getBuild();

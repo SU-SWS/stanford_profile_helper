@@ -15,7 +15,11 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\node\NodeInterface;
 use Drupal\stanford_profile_helper\StanfordDefaultContentInterface;
 use Drupal\stanford_profile_helper\StanfordProfileHelper;
+use Drupal\stanford_profile_helper\SubtitleToParagraphs;
 
+/**
+ * Node entity hooks.
+ */
 class NodeHooks {
 
   use MessengerTrait;
@@ -61,6 +65,10 @@ class NodeHooks {
     // Invalidate any search result cached so the updated/new content will be
     // displayed for previously searched terms.
     Cache::invalidateTags(['config:views.view.search']);
+
+    if ($entity->bundle() == 'stanford_media') {
+      $this->buildAVTranscript($entity);
+    }
 
     if (
       $entity->bundle() == 'stanford_page' &&
@@ -113,6 +121,35 @@ class NodeHooks {
             ]));
         }
       }
+    }
+  }
+
+  /**
+   * Use the subtitle file upload and convert it into a text transcript.
+   *
+   * @param \Drupal\node\NodeInterface $node
+   *   Node entity being saved.
+   */
+  protected function buildAVTranscript(NodeInterface $node) {
+    if (
+      !$node->hasField('su_media_subtitles') ||
+      !$node->get('su_media_subtitles')->count()
+    ) {
+      return;
+    }
+    $subtitleFile = $node->get('su_media_subtitles')->get(0)->getValue();
+    $subtitleFile = $this->entityTypeManager->getStorage('file')
+      ->load($subtitleFile['target_id']);
+    if (!$subtitleFile) {
+      return;
+    }
+    $subtitles = file_get_contents($subtitleFile->getFileUri());
+    if ($subtitles && $paragraphs = SubtitleToParagraphs::convertFromSrt($subtitles)) {
+      $transcript = [
+        'value' => $paragraphs,
+        'format' => 'stanford_minimal_html',
+      ];
+      $node->set('su_media_transcript', $transcript);
     }
   }
 
