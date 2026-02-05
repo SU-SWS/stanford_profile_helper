@@ -12,6 +12,8 @@ use Drupal\layout_library\Entity\LayoutListBuilder;
 
 /**
  * Replaces the original layout library list builder to add data.
+ *
+ * @codeCoverageIgnore
  */
 class StanfordLayoutListBuilder extends LayoutListBuilder {
 

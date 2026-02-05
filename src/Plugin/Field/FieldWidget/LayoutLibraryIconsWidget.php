@@ -23,7 +23,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
   label: new TranslatableMarkup('Layout Library Icons'),
   field_types: ['entity_reference'],
 )]
-final class LayoutLibraryIconsWidget extends OptionsWidgetBase {
+class LayoutLibraryIconsWidget extends OptionsWidgetBase {
 
   /**
    * Constructs the plugin instance.

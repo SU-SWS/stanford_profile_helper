@@ -224,10 +224,11 @@ class EntityEventSubscriberTest extends UnitTestCase {
    */
   public function testTaxonomyMenuLabelDisplay() {
     // Mock taxonomy menu entity.
-    $taxonomy_menu = $this->getMockBuilder(\stdClass::class)
-      ->addMethods(['getMenu'])
-      ->getMock();
-    $taxonomy_menu->method('getMenu')->willReturn('test-taxonomy-menu');
+    $taxonomy_menu = new class {
+      public function getMenu() {
+        return 'test-taxonomy-menu';
+      }
+    };
 
     // Mock entity storage.
     $storage = $this->createMock(EntityStorageInterface::class);
