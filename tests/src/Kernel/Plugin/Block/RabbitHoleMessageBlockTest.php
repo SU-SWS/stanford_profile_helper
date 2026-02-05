@@ -23,6 +23,7 @@ class RabbitHoleMessageBlockTest extends KernelTestBase {
   protected static $modules = [
     'node',
     'stanford_profile_helper',
+    'file',
     'system',
     'user',
     'rabbit_hole',

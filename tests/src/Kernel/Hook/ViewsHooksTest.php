@@ -20,6 +20,7 @@ class ViewsHooksTest extends SuProfileHelperKernelTestBase {
     'node',
     'serialization',
     'stanford_profile_helper',
+    'file',
     'system',
     'user',
     'path_alias',

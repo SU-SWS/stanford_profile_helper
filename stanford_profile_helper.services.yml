@@ -11,7 +11,7 @@ services:
       - { name: 'event_subscriber' }
   stanford_profile_helper.event_subscriber.entity:
     class: Drupal\stanford_profile_helper\EventSubscriber\EntityEventSubscriber
-    arguments: ['@stanford_profile_helper.default_content', '@state', '@entity_type.manager']
+    arguments: ['@stanford_profile_helper.default_content', '@state', '@entity_type.manager', '@current_route_match']
     tags:
       - { name: 'event_subscriber' }
   stanford_profile_helper.config_overrider:
@@ -34,3 +34,6 @@ services:
     arguments: ['@config_pages.loader', '@request_stack', '@state']
     tags:
       - { name: event_subscriber }
+  stanford_profile_helper.layout_library_icon:
+    class: Drupal\stanford_profile_helper\LayoutLibraryIcon
+    arguments: ['@entity_type.manager', '@file_system', '@file.usage', '@current_user', '@module_handler', '@uuid']

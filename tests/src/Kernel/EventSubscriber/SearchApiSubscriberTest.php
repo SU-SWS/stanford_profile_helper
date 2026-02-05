@@ -22,6 +22,7 @@ class SearchApiSubscriberTest extends KernelTestBase {
     'system',
     'search_api',
     'stanford_profile_helper',
+    'file',
     'rabbit_hole',
     'config_pages',
   ];

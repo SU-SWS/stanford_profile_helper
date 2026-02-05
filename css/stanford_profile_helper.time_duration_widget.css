@@ -1,0 +1,9 @@
+.time-duration .fieldset__wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.time-duration .fieldset__description {
+  width: 100%;
+}

@@ -22,6 +22,7 @@ class CustomValueTest extends SearchApiCustomValueTest {
     'text',
     'system',
     'stanford_profile_helper',
+    'file',
     'rabbit_hole',
     'config_pages',
   ];

@@ -22,6 +22,7 @@ class UserHooksTest extends KernelTestBase {
     'samlauth',
     'externalauth',
     'stanford_profile_helper',
+    'file',
     'config_pages',
   ];
 

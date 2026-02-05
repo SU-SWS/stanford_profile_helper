@@ -13,3 +13,10 @@ stanford_profile_helper.autocomplete.viewfield:
     _format: json
   requirements:
     _permission: 'view the administration theme'
+
+entity.layout.edit_icon_form:
+  path: '/admin/structure/types/manage/{node_type}/layout-library/{layout}/edit-icon'
+  defaults:
+    _entity_form: 'layout.edit-icon'
+  requirements:
+    _entity_access: 'layout.edit'
