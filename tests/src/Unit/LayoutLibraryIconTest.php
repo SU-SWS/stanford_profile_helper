@@ -180,62 +180,6 @@ class LayoutLibraryIconTest extends UnitTestCase {
   }
 
   /**
-   * Test getDefaultIcon creates new file when none exists.
-   */
-  public function testGetDefaultIconCreatesNewFile() {
-    $new_file = $this->createMock(FileInterface::class);
-
-    $storage = $this->createMock(EntityStorageInterface::class);
-    // First call returns nothing (no existing file).
-    $storage->expects($this->once())
-      ->method('loadByProperties')
-      ->with(['uri' => 'public://layout-icon/default-default-icon.png'])
-      ->willReturn([]);
-
-    // Second call creates the file.
-    $storage->expects($this->once())
-      ->method('create')
-      ->willReturn($new_file);
-
-    $this->entityTypeManager->method('getStorage')
-      ->with('file')
-      ->willReturn($storage);
-
-    // Mock module handler.
-    $extension = $this->createMock(Extension::class);
-    $extension->method('getPath')->willReturn('/path/to/module');
-
-    $this->moduleHandler->expects($this->once())
-      ->method('getModule')
-      ->with('stanford_profile_helper')
-      ->willReturn($extension);
-
-    // Mock file system operations.
-    $this->fileSystem->expects($this->once())
-      ->method('prepareDirectory');
-
-    $this->fileSystem->expects($this->once())
-      ->method('saveData')
-      ->willReturn('public://layout-icon/default-default-icon.png');
-
-    // Mock UUID generation.
-    $this->uuid->expects($this->once())
-      ->method('generate')
-      ->willReturn('generated-uuid');
-
-    // Expect file save and usage tracking.
-    $new_file->expects($this->once())->method('save');
-
-    $this->fileUsage->expects($this->once())
-      ->method('add')
-      ->with($new_file, 'layout_library', 'layout', 'default');
-
-    // Mock file_get_contents - this is tricky in unit tests.
-    // We'll need to skip this test or use a different approach.
-    $this->markTestSkipped('Requires file system access for default icon file.');
-  }
-
-  /**
    * Test IMAGE_DIRECTORY constant is defined correctly.
    */
   public function testImageDirectoryConstant() {
