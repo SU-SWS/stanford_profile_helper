@@ -22,6 +22,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
   id: 'layout_library_icons',
   label: new TranslatableMarkup('Layout Library Icons'),
   field_types: ['entity_reference'],
+  multiple_values: TRUE,
 )]
 class LayoutLibraryIconsWidget extends OptionsWidgetBase {
 
@@ -60,8 +61,16 @@ class LayoutLibraryIconsWidget extends OptionsWidgetBase {
   /**
    * {@inheritdoc}
    */
+  public static function isApplicable(FieldDefinitionInterface $field_definition) {
+    return $field_definition->getName() == 'layout_selection';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $element = parent::formElement($items, $delta, $element, $form, $form_state);
+
     $options = $this->getOptions($items->getEntity());
     /** @var \Drupal\layout_library\Entity\Layout[] $layouts */
     $layouts = $this->entityTypeManager->getStorage('layout')
@@ -93,10 +102,11 @@ class LayoutLibraryIconsWidget extends OptionsWidgetBase {
       $options['_none'] .= $this->renderer->render($image);
     }
 
+    $selectedOption = $this->getSelectedOptions($items);
     $element += [
       '#type' => 'radios',
       '#options' => $options,
-      '#default_value' => $this->getSelectedOptions($items) ?: '_none',
+      '#default_value' => $selectedOption[0] ?? '_none',
       '#attached' => ['library' => ['stanford_profile_helper/layout_library_icon_widget']],
       '#attributes' => ['class' => ['layout-library-icons']],
     ];

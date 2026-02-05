@@ -158,7 +158,7 @@ class LayoutLibraryIconsWidgetTest extends UnitTestCase {
         ];
       }
       public function getSelectedOptions(FieldItemListInterface $items, $delta = 0) {
-        return 'layout_1';
+        return ['layout_1'];
       }
     };
     $widget->setStringTranslation($this->translation);
@@ -189,7 +189,7 @@ class LayoutLibraryIconsWidgetTest extends UnitTestCase {
     $reflection = new \ReflectionClass($this->widget);
     $method = $reflection->getMethod('getEmptyLabel');
     $method->setAccessible(TRUE);
-    
+
     $label = $method->invoke($this->widget);
     $this->assertInstanceOf(TranslatableMarkup::class, $label);
     // Check the untranslated string.
