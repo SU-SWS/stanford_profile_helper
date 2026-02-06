@@ -417,6 +417,9 @@ function _stanford_profile_helper_term_form_validate(array $element, FormStateIn
  * Implements hook_menu_links_discovered_alter().
  */
 function stanford_profile_helper_menu_links_discovered_alter(&$links) {
+  if (isset($links['admin_toolbar_tools.extra_links:node.add.stanford_page'])) {
+    $links['admin_toolbar_tools.extra_links:node.add.stanford_page']['weight'] = -99;
+  }
   if (isset($links['admin_toolbar_tools.extra_links:media_page'])) {
     // Alter the "Media" link for /admin/content/media path.
     $links['admin_toolbar_tools.extra_links:media_page']['title'] = t('All Media');
