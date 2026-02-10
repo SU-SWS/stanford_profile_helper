@@ -65,22 +65,69 @@ class LocalistEventCheckerTest extends UnitTestCase {
   }
 
   /**
-   * Tests processItem when the event exists on Localist.
+   * Tests processItem when the event instance exists on Localist.
    */
-  public function testProcessItemEventExists(): void {
+  public function testProcessItemEventInstanceExists(): void {
     $sourceId = 12345;
     $destId = 67890;
+    $instanceId = 54321;
 
-    $response = new Response(200, [], Utils::streamFor('{"event": "data"}'));
+    $responseData = json_encode([
+      'event' => [
+        'event_instances' => [
+          ['event_instance' => ['id' => $instanceId]],
+        ],
+      ],
+    ]);
+    $response = new Response(200, [], Utils::streamFor($responseData));
     $this->httpClient->expects($this->once())
       ->method('get')
-      ->with("https://events.stanford.edu/api/2/events/$sourceId")
+      ->with("https://events.stanford.edu/api/2/events/$sourceId", ['timeout' => 5])
       ->willReturn($response);
 
     $this->entityTypeManager->expects($this->never())
       ->method('getStorage');
 
-    $this->queueWorker->processItem([$sourceId, $destId]);
+    $this->queueWorker->processItem([$sourceId, $destId, $instanceId]);
+  }
+
+  /**
+   * Tests processItem when the event exists but instance does not.
+   */
+  public function testProcessItemEventExistsInstanceDoesNot(): void {
+    $sourceId = 12345;
+    $destId = 67890;
+    $instanceId = 54321;
+
+    $responseData = json_encode([
+      'event' => [
+        'event_instances' => [
+          ['event_instance' => ['id' => 99999]],
+        ],
+      ],
+    ]);
+    $response = new Response(200, [], Utils::streamFor($responseData));
+    $this->httpClient->expects($this->once())
+      ->method('get')
+      ->with("https://events.stanford.edu/api/2/events/$sourceId", ['timeout' => 5])
+      ->willReturn($response);
+
+    $node = $this->createMock(NodeInterface::class);
+    $node->expects($this->once())
+      ->method('delete');
+
+    $storage = $this->createMock(EntityStorageInterface::class);
+    $storage->expects($this->once())
+      ->method('load')
+      ->with($destId)
+      ->willReturn($node);
+
+    $this->entityTypeManager->expects($this->once())
+      ->method('getStorage')
+      ->with('node')
+      ->willReturn($storage);
+
+    $this->queueWorker->processItem([$sourceId, $destId, $instanceId]);
   }
 
   /**
@@ -89,6 +136,7 @@ class LocalistEventCheckerTest extends UnitTestCase {
   public function testProcessItemEventNotFound(): void {
     $sourceId = 12345;
     $destId = 67890;
+    $instanceId = 54321;
 
     $errorBody = json_encode(['error' => 'Couldn\'t find Event with id 12345']);
     $response = new Response(404, [], Utils::streamFor($errorBody));
@@ -100,7 +148,7 @@ class LocalistEventCheckerTest extends UnitTestCase {
 
     $this->httpClient->expects($this->once())
       ->method('get')
-      ->with("https://events.stanford.edu/api/2/events/$sourceId")
+      ->with("https://events.stanford.edu/api/2/events/$sourceId", ['timeout' => 5])
       ->willThrowException($exception);
 
     $node = $this->createMock(NodeInterface::class);
@@ -118,7 +166,7 @@ class LocalistEventCheckerTest extends UnitTestCase {
       ->with('node')
       ->willReturn($storage);
 
-    $this->queueWorker->processItem([$sourceId, $destId]);
+    $this->queueWorker->processItem([$sourceId, $destId, $instanceId]);
   }
 
   /**
@@ -127,6 +175,7 @@ class LocalistEventCheckerTest extends UnitTestCase {
   public function testProcessItemClientExceptionOtherError(): void {
     $sourceId = 12345;
     $destId = 67890;
+    $instanceId = 54321;
 
     $errorBody = json_encode(['error' => 'Some other error message']);
     $response = new Response(400, [], Utils::streamFor($errorBody));
@@ -138,13 +187,13 @@ class LocalistEventCheckerTest extends UnitTestCase {
 
     $this->httpClient->expects($this->once())
       ->method('get')
-      ->with("https://events.stanford.edu/api/2/events/$sourceId")
+      ->with("https://events.stanford.edu/api/2/events/$sourceId", ['timeout' => 5])
       ->willThrowException($exception);
 
     $this->entityTypeManager->expects($this->never())
       ->method('getStorage');
 
-    $this->queueWorker->processItem([$sourceId, $destId]);
+    $this->queueWorker->processItem([$sourceId, $destId, $instanceId]);
   }
 
   /**
@@ -153,6 +202,7 @@ class LocalistEventCheckerTest extends UnitTestCase {
   public function testProcessItemClientExceptionNoErrorKey(): void {
     $sourceId = 12345;
     $destId = 67890;
+    $instanceId = 54321;
 
     $errorBody = json_encode(['message' => 'Different error structure']);
     $response = new Response(500, [], Utils::streamFor($errorBody));
@@ -164,13 +214,13 @@ class LocalistEventCheckerTest extends UnitTestCase {
 
     $this->httpClient->expects($this->once())
       ->method('get')
-      ->with("https://events.stanford.edu/api/2/events/$sourceId")
+      ->with("https://events.stanford.edu/api/2/events/$sourceId", ['timeout' => 5])
       ->willThrowException($exception);
 
     $this->entityTypeManager->expects($this->never())
       ->method('getStorage');
 
-    $this->queueWorker->processItem([$sourceId, $destId]);
+    $this->queueWorker->processItem([$sourceId, $destId, $instanceId]);
   }
 
 }

@@ -53,12 +53,25 @@ final class LocalistEventChecker extends QueueWorkerBase implements ContainerFac
    * {@inheritdoc}
    */
   public function processItem($data): void {
-    [$sourceId, $destId] = $data;
+    [$sourceId, $destId, $instanceId] = $data;
     // Fetch from the API. Only delete the destination entity if the API
-    // response indicates the event was not found. Don't do anything if there's
-    // a timeout or some unexpected error.
+    // response indicates the event was not found or the given event instance
+    // does not exist in the list. An event instance is tied to the date of the
+    // event. If a user deletes a date, but the event still exists, the instance
+    // will not exist. Don't do anything if there's a timeout or some unexpected
+    // error.
     try {
-      $this->httpClient->get("https://events.stanford.edu/api/2/events/$sourceId", ['timeout' => 5]);
+      $response = $this->httpClient->get("https://events.stanford.edu/api/2/events/$sourceId", ['timeout' => 5]);
+
+      $response = json_decode($response->getBody()
+        ->getContents(), TRUE, 512, JSON_THROW_ON_ERROR);
+
+      foreach ($response['event']['event_instances'] as $instance) {
+        if ($instance['event_instance']['id'] == $instanceId) {
+          throw new \Exception('Instance Exists');
+        }
+      }
+      $this->deleteNode($destId);
     }
     catch (ClientException $e) {
       try {
@@ -68,15 +81,28 @@ final class LocalistEventChecker extends QueueWorkerBase implements ContainerFac
           isset($errorResponse['error']) &&
           str_contains($errorResponse['error'], 'Couldn\'t find Event with')
         ) {
-          $this->entityTypeManager->getStorage('node')
-            ->load($destId)
-            ->delete();
+          $this->deleteNode($destId);
         }
       }
       catch (\Throwable $e) {
         // Do nothing.
       }
     }
+    catch (\Exception $e) {
+      // Do nothing.
+    }
+  }
+
+  /**
+   * Delete the given node from the system.
+   *
+   * @param int $nid
+   *   Node id.
+   */
+  protected function deleteNode(int $nid) {
+    $this->entityTypeManager->getStorage('node')
+      ->load($nid)
+      ->delete();
   }
 
 }

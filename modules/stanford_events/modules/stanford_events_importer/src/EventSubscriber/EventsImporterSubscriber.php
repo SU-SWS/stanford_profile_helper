@@ -22,7 +22,8 @@ final class EventsImporterSubscriber implements EventSubscriberInterface {
    */
   public function __construct(
     private readonly QueueFactory $queue,
-    private readonly EntityTypeManagerInterface $entityTypeManager
+    private readonly EntityTypeManagerInterface $entityTypeManager,
+    private readonly Connection $database
   ) {}
 
   /**
@@ -48,31 +49,44 @@ final class EventsImporterSubscriber implements EventSubscriberInterface {
     ) {
       return;
     }
-    $nodeStorage = $this->entityTypeManager->getStorage('node');
-    try {
-      $nids = $nodeStorage->getQuery()
-        ->accessCheck(FALSE)
-        ->condition('su_event_localist_id', 0, '>')
-        ->range(0, 50)
-        ->execute();
+    $query = $this->database->select($event->getMigration()
+      ->getIdMap()
+      ->getQualifiedMapTableName(), 'map')
+      ->fields('map', ['destid1', 'sourceid1'])
+      ->condition('source_row_status', MigrateIdMapInterface::STATUS_IGNORED)
+      ->orderBy('last_imported', 'ASC')
+      ->execute();
+    while ($row = $query->fetchAssoc()) {
+      $this->queueNode((int) $row['destid1'], (int) $row['sourceid1']);
     }
-    catch (\Exception $e) {
-      // If the field doesn't exist, an exception will be thrown. But we can
-      // just exit the method because that's where the data lives. Likely this
-      // is because the configuration has been imported yet.
+  }
+
+  /**
+   * Queue the given node to be check if it needs to be cleared.
+   *
+   * @param int $nid
+   * @param int $instanceId
+   *
+   * @return void
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   */
+  protected function queueNode(int $nid, int $instanceId): void {
+    $queue = $this->queue->get('localist_event_checker');
+    $node = $this->entityTypeManager->getStorage('node')->load($nid);
+
+    if (
+      !$node->hasField('su_event_localist_id') ||
+      !$node->get('su_event_localist_id')->count()
+    ) {
       return;
     }
 
-    if (!$nids) {
-      return;
-    }
-
-    foreach ($nodeStorage->loadMultiple($nids) as $node) {
-      $queue->createItem([
-        (int) $node->get('su_event_localist_id')?->getString(),
-        (int) $node->id(),
-      ]);
-    }
+    $queue->createItem([
+      (int) $node->get('su_event_localist_id')?->getString(),
+      $nid,
+      $instanceId,
+    ]);
   }
 
 }

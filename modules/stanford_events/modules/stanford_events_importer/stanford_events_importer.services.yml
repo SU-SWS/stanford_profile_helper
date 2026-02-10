@@ -7,6 +7,6 @@ services:
 
   stanford_events_importer.event_subscriber:
     class: Drupal\stanford_events_importer\EventSubscriber\EventsImporterSubscriber
-    arguments: ['@queue', '@entity_type.manager']
+    arguments: ['@queue', '@entity_type.manager', '@database']
     tags:
       - { name: event_subscriber }
