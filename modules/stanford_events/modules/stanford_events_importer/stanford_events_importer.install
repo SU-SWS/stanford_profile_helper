@@ -132,3 +132,10 @@ function stanford_events_importer_update_8004() {
     ->fields(['source_row_status' => 1])
     ->execute();
 }
+
+/**
+ * Clear the event migration queue.
+ */
+function stanford_events_importer_update_8005() {
+  \Drupal::queue('localist_event_checker')->deleteQueue();
+}
