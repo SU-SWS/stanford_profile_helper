@@ -5,8 +5,11 @@
     const $headings = $('#page-content h2:not(.visually-hidden):not(.no-anchor)[id]')
       .filter((i, item) => $(item).closest('.node-stanford-page-su-page-banner').length === 0);
 
+    const $container = $('.anchor-link-nav');
+
     // If no links exist, don't add the markup.
     if ($headings.length === 0) {
+      $container.addClass('no-headings');
       return;
     }
 
@@ -18,8 +21,6 @@
 
       $list.append($('<li>').append($('<a>').attr('href', `#${id}`).addClass(`anchor-link`).text($heading.text().trim())));
     });
-
-    const $container = $('.anchor-link-nav');
 
     const $nav = $('<nav>').attr('aria-label', 'On this page Navigation').append($list);
     $container.append($nav);
