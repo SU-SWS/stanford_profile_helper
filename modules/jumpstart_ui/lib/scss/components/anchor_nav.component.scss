@@ -272,6 +272,9 @@ $su-color-black: #2E2D29;
       }
     }
 
+    &:not(.has-headings) {
+      display: none;
+    }
   }
 
   .overflow-items {

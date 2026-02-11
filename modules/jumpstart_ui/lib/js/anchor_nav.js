@@ -10,6 +10,9 @@
       return;
     }
 
+    const $container = $('.anchor-link-nav');
+    $container.addClass('has-headings');
+
     const $list = $('<ul>');
 
     $headings.map((i, heading) => {
@@ -18,8 +21,6 @@
 
       $list.append($('<li>').append($('<a>').attr('href', `#${id}`).addClass(`anchor-link`).text($heading.text().trim())));
     });
-
-    const $container = $('.anchor-link-nav');
 
     const $nav = $('<nav>').attr('aria-label', 'On this page Navigation').append($list);
     $container.append($nav);
