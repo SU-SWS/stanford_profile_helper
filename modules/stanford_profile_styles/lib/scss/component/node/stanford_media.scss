@@ -273,6 +273,10 @@
   }
 }
 
+.media-content-person-list {
+  @include modular-spacing('margin-bottom', 9);
+}
+
 // Media Category badge. Used on cards, node, lists, etc.
 // The template is in SB field--su-media-category.html.twig
 .views-field-su-media-category,
