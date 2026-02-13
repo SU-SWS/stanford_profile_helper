@@ -140,7 +140,7 @@ class TimeDurationFormatterTest extends KernelTestBase {
       'settings' => ['style' => 'short', 'units' => []],
     ]);
     $output = (string) $this->container->get('renderer')->renderRoot($view);
-    $this->assertStringContainsString(':00', $output);
+    $this->assertStringContainsString('0', $output);
 
     // Test 45 seconds.
     $node = Node::create([

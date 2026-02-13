@@ -118,7 +118,7 @@ class TimeDurationFormatter extends FormatterBase {
     if (!$unitDisplay || in_array('sec', $unitDisplay)) {
       $duration[] = str_pad("$seconds", 2, '0', STR_PAD_LEFT);
     }
-    return ltrim(implode('', $duration), '0 ');
+    return ltrim(implode('', $duration), '0 :') ?: '0';
   }
 
   /**
