@@ -50,7 +50,7 @@
         "citation-style-language/styles-distribution": "^1.0",
         "drupal/admin_toolbar": ">=3.4",
         "drupal/auto_entitylabel": ">=3.0",
-        "drupal/book": ">=2.0",
+        "drupal/book": "^2.0",
         "drupal/components": ">=3.0",
         "drupal/config_pages": ">=2.15",
         "drupal/config_pages_overrides": ">=2.0",

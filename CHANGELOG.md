@@ -1,5 +1,17 @@
 # Stanford Profile Helper
 
+10.2.0
+--------------------------------------------------------------------------------
+_Release Date: 2026-02-19_
+
+- Improve localist event orphan checker to check for deleted instances if the event exists (#512)
+- Create layout library widget with image icon selection, duration widget, and transcript field changes (#510)
+- Add anchor link navigation block (#480)
+- Past Event list minor styling changes (#487)
+- Media CT node, teaser, card styling (#482)
+- Updated number of cards across on filtered lists (#486)
+- Update siteimprove analytics
+
 10.1.4
 --------------------------------------------------------------------------------
 _Release Date: 2025-12-09_
@@ -16,8 +28,8 @@ _Release Date: 2025-12-03_
 --------------------------------------------------------------------------------
 _Release Date: 2025-11-25_
 
-- D8CORE-8515: Added space for the load more button on publication node (#474)
-- D8CORE-8526: Adjust embedded video styles to have correct aspect ratios
+- Added space for the load more button on publication node (#474)
+- Adjust embedded video styles to have correct aspect ratios
 
 10.1.0
 --------------------------------------------------------------------------------
@@ -25,29 +37,29 @@ _Release Date: 2025-11-20_
 
 - Added intranet hook to remove item from algolia if they are restricted access
 - D8CORE-8470 | remove margin spacing on radio button (#469)
-- D8CORE-8449: Check Localist and delete imported events that no longer exist (#468)
+- Check Localist and delete imported events that no longer exist (#468)
 - D8CORE-8470 | align radio button to top with label (#466)
 - D8CORE-8474 | fixup container query for quote typography (#467)
-- D8CORE-8471 D8CORE-8472: adjusted padding and border color (#464)
-- D8CORE-8473: changed the number of cards for the medium breakpoint (#465)
-- D8CORE-8470: added a min-width to keep radio button round (#463)
+- D8CORE-8471 adjusted padding and border color (#464)
+- changed the number of cards for the medium breakpoint (#465)
+- added a min-width to keep radio button round (#463)
 - D8CORE-8457 | display spotlight card images on smaller screens (#461)
-- D8CORE-8465: Updated filter column width and number of cards at large breakpoint (#459)
+- Updated filter column width and number of cards at large breakpoint (#459)
 - D8CORE-8460 D8CORE-8237 | adjust left column filter spacing and radio styles; fix single teaser style (#460)
 - D8CORE-8235 | adjust grid responsive for spotlight card list paragraph (#457)
 - Provided autocomplete suggestions to viewfield arguments input (#458)
 - Added wordpress migration UI and styles for media content type. (#442)
-- D8CORE-8239: adding styles for filtered spotlights (#455)
+- adding styles for filtered spotlights (#455)
 - D8CORE-8233 D8CORE-8235 D8CORE-8237 | style spotlight card for related spotlights, list, and teaser paragraph (#449)
-- D8CORE-8415: Font correction (#456)
-- D8CORE-8415: Corrected font family for news spotlight name (#450)
-- D8CORE-8322: Fixup plum color for hero banner color (#451)
+- Font correction (#456)
+- Corrected font family for news spotlight name (#450)
+- Fixup plum color for hero banner color (#451)
 - Remove whitespace from fontawesome links in the wysiwyg
-- D8CORE-8390: Change help text for news variants layout selection (#448)
-- D8CORE-8378: Support comma in stat card animation
-- D8CORE-8370: Removed event has already occurred from the list of past events. (#441)
-- D8CORE-8344: Adjust spacing to have full video appear when added to wysiwyg (#438)
-- D8CORE-8228: style spotlight variant for news content type (#437)
+- Change help text for news variants layout selection (#448)
+- Support comma in stat card animation
+- Removed event has already occurred from the list of past events. (#441)
+- Adjust spacing to have full video appear when added to wysiwyg (#438)
+- style spotlight variant for news content type (#437)
 
 
 10.0.3
@@ -56,15 +68,15 @@ _Release Date: 2025-10-15_
 
 - Improve NextJS invalidation when a media or taxonomy term is changed (#444)
 - D8CORE-8322 | fixup default overlay banner color (#443)
-- D8CORE-8347: Prepend uuid for algolia items with a hash of the site name
+- Prepend uuid for algolia items with a hash of the site name
 - D8CORE-8322 | Add banner overlay options and styles (#435)
 - D8CORE-8227 | Rename title and _none option for layout selection (#440)
 - D8CORE-8316 | Adjust events page details layout and styles (#436)
-- D8CORE-8356: Change login link destination to use only the pathname and not any query parameters (#439)
+- Change login link destination to use only the pathname and not any query parameters (#439)
 - D8CORE-8316 | adjust event details card spacing (#433)
 - D8CORE-8196 | adjust card content order for a11y (#434)
 - D8CORE-8160 D8CORE-8159 Style adjustments to opportunity page display (#432)
-- D8CORE-8248: Event subtitles a little less bold (#431)
+- Event subtitles a little less bold (#431)
 
 
 10.0.2
@@ -84,18 +96,18 @@ _Release Date: 2025-08-22_
 _Release Date: 2025-08-22_
 
 - Added constraint for redirects to test for nodes in the trash (#427)
-- D8CORE-8276: Updated the search background color (#426)
+- Updated the search background color (#426)
 - Move some plugins to stanford_fields module and add it as a dependency (#424)
 - Fixed one column layout paragraph background color option
-- D8CORE-7585: Changed search page background color (#423)
-- D8CORE-8132: Added Sponsor to opportunity node (#416)
+- Changed search page background color (#423)
+- Added Sponsor to opportunity node (#416)
 - Add logged in user information to drupalSettings  (#422)
-- D8CORE-8075: Add option for vertical dividers on 2 and 3 column layouts (#421)
+- Add option for vertical dividers on 2 and 3 column layouts (#421)
 - Move redirect user function from profile (#420)
 - Upgrade event subscriber, hooks, and tests for Drupal 11 (#419)
 - Move PDB blocks in layout builder to eliminate pdb_react module
-- D8CORE-7666: Updated line-height on a person node page "person links" (#417)
-- D8CORE-8170: Opportunity CTA button color correction (#418
+- Updated line-height on a person node page "person links" (#417)
+- Opportunity CTA button color correction (#418
 
 9.10.3
 --------------------------------------------------------------------------------
@@ -119,14 +131,14 @@ _Release Date: 2025-06-19_
 --------------------------------------------------------------------------------
 _Release Date: 2025-06-13_
 
-- D8CORE-8019: Updating spacing on Opportunity page right column. (#404)
-- D8CORE-7574: Updated spacing on Events' contact to be a11y compliant (#407)
+- Updating spacing on Opportunity page right column. (#404)
+- Updated spacing on Events' contact to be a11y compliant (#407)
 - Added visible/invisible state to stat card color fields in UI
 - Updated stat card with additional colors
 - Support trailing zeros after a decimal for stat card counter
 - Added section margin and padding options. Adjusted section colors
 - Animate stat card numbers
-- D8CORE-7843: Added stat card component & row layout background colors (#405)
+- Added stat card component & row layout background colors (#405)
 - Add "Color Field" support for graphql field data
 
 9.9.1
@@ -141,12 +153,12 @@ _Release Date: 2025-03-10_
 
 - D8CORE-8031 Allow force displaying both regions on two column layout
 - Adjust intranet settings for anonymous users redirect message
-- D8CORE-5741: Opportunities content type and views styles (#391)
+- Opportunities content type and views styles (#391)
 - Adjust decoupled detector for editoria11y library
-- D8CORE-7799: adding spacing below the profile link when no other content (#390)
+- adding spacing below the profile link when no other content (#390)
 - Allow publishing home page for only admins
-- D8CORE-7674: styling the code block in ckeditor to look the same in editing, preview, and live page (#380)
-- D8CORE-7625: changed event schedule heading level for best order (#385)
+- styling the code block in ckeditor to look the same in editing, preview, and live page (#380)
+- changed event schedule heading level for best order (#385)
 
 9.8.14
 --------------------------------------------------------------------------------
@@ -159,18 +171,18 @@ _Release Date: 2025-03-10_
 _Release Date: 2025-03-07_
 
 - Added sunet to site information cron
-- D8CORE-7893: changed size of mailto icon to match previous icon (#381)
-- D8CORE-7834: Accordions added a transparent background to icon (#376)
-- D8CORE-7835: Accordion add padding to prevent button overlaying text
-- D8CORE-7660: Styling for opportunities content type. (#353)
-- D8CORE-7662: Created a single collayout to added the filtered paragraph into (#378)
-- D8CORE-7783: updated the color of the caret on su-link--action for policy teaser (#372)
-- D8CORE-7641: formatted the spacing on search page (#374)
-- D8CORE-7801: fine tuning the news list (#377)
-- D8CORE-7784: adjustments to spacing on a person list (#371)
-- D8CORE-7726: adding space for touch targets on Events node taxonomy terms.  (#368)
-- D8CORE-7785: changed spacing on the basic page list (#369)
-- D8CORE-7786: Removed margin-bottom from the "This event has already occurred" (#370)
+- changed size of mailto icon to match previous icon (#381)
+- Accordions added a transparent background to icon (#376)
+- Accordion add padding to prevent button overlaying text
+- Styling for opportunities content type. (#353)
+- Created a single collayout to added the filtered paragraph into (#378)
+- updated the color of the caret on su-link--action for policy teaser (#372)
+- formatted the spacing on search page (#374)
+- fine tuning the news list (#377)
+- adjustments to spacing on a person list (#371)
+- adding space for touch targets on Events node taxonomy terms.  (#368)
+- changed spacing on the basic page list (#369)
+- Removed margin-bottom from the "This event has already occurred" (#370)
 
 9.8.12
 --------------------------------------------------------------------------------
@@ -188,17 +200,17 @@ _Release Date: 2025-02-07_
 --------------------------------------------------------------------------------
 _Release Date: 2025-01-31_
 
-- D8CORE-7753: Refactor accordion to use button and aria attributes (#364)
-- D8CORE-7722 D8CORE-7751: design tweaks (#363)
-- D8CORE-7781: Fix layout paragraph columns grid to flex (#362)
-- D8CORE-7749: tighten spacing on news list (#359)
-- D8CORE-7722: margin bottom zero on last item (#358)
-- D8CORE-7751: tighten up event list spacing (#360)
-- D8CORE-7633: added aria-live: polite to the modal (#361)
+- Refactor accordion to use button and aria attributes (#364)
+- D8CORE-7722 design tweaks (#363)
+- Fix layout paragraph columns grid to flex (#362)
+- tighten spacing on news list (#359)
+- margin bottom zero on last item (#358)
+- tighten up event list spacing (#360)
+- added aria-live: polite to the modal (#361)
 - Add trash delete hook similar to node delete event
-- D8CORE-7531: removed max-width on intro text and drop cap text (#357)
+- removed max-width on intro text and drop cap text (#357)
 - D8CORE-7696 Add small spaces between components in two and three column layouts
-- D8CORE-7678: removed medium and small quotes (#356)
+- removed medium and small quotes (#356)
 - Replace field_widget_form_alter hook that was removed from core
 
 9.8.9
@@ -250,7 +262,7 @@ _Release Date: 2024-11-08_
 - D8CORE-7305 Use article tags only when a header is provided
 - D8CORE-6324 Set the left padding on the layout instead of the node page styles
 - Restrict FAQ paragraph to single column layouts
-- D8CORE-7568: moved margin bottom on news article (#338)
+- moved margin bottom on news article (#338)
 - D8CORE-7446 Scope google analytics cookie to the individual site (#339)
 
 9.8.2
@@ -458,12 +470,12 @@ _Release Date: 2023-10-23_
 --------------------------------------------------------------------------------
 _Release Date: 2023-10-20_
 
-- D8CORE-6976: updating the Decanter version (#278)
+- updating the Decanter version (#278)
 - Adjust intranet roles when deleting roles
 - Update layout paragraphs node grid (#276)
 - D8CORE-6968 Fix gap and update all webpack setups (#275)
 - D8CORE-6715 Better hiding of list paragraph (#274)
-- D8CORE-5952: removed pipe from past events on node page (#273
+- removed pipe from past events on node page (#273
 
 9.3.4
 --------------------------------------------------------------------------------
@@ -488,7 +500,7 @@ _Release Date: 2023-09-11_
 _Release Date: 2023-09-08_
 
 - Update unit tests for d10 (#268)
-- D8CORE-6824: Spacer paragraph - changed label of default value
+- Spacer paragraph - changed label of default value
 
 9.3.0
 --------------------------------------------------------------------------------
@@ -540,8 +552,8 @@ _Release Date: 2023-07-07_
 --------------------------------------------------------------------------------
 _Release Date: 2023-06-29_
 
-- D8CORE-4778: adding the underline to splash in theme (#253)
-- D8CORE-6761: added button and link styles to the layout paragraph preview (#251)
+- adding the underline to splash in theme (#253)
+- added button and link styles to the layout paragraph preview (#251)
 - D8CORE-4850 add space between people rows after load more
 - D8CORE-2005 Refactor section to div tag for people page sections
 - D8CORE-6463 Prevent encoded subject names in course listing
@@ -558,8 +570,8 @@ _Release Date: 2023-06-29_
 - alter nobots field widget with state default value
 - D8CORE-4495 Update past events list styles (#248)
 - Adjusted styles for the list paragraph in the new layout paragraphs
-- Revert "D8CORE-4495: changing lineheight of past event note (#245)" (#247)
-- D8CORE-4495: changing lineheight of past event note (#245)
+- Revert "changing lineheight of past event note (#245)" (#247)
+- changing lineheight of past event note (#245)
 
 
 9.2.8
@@ -653,7 +665,7 @@ _Release Date: 2022-11-29_
 --------------------------------------------------------------------------------
 _Release Date: 2022-11-29_
 
-- D8CORE-3542: Added overflow-wrap property to event location
+- Added overflow-wrap property to event location
 
 9.0.4
 --------------------------------------------------------------------------------
@@ -666,14 +678,14 @@ _Release Date: 2022-11-21_
 _Release Date: 2022-11-11_
 
 - Override page_cache_query_ignore settings with view queries (#219)
-- D8CORE-2932: removing extra spacing on people unstyled lists (#217)
-- D8CORE-5865: Prevented spaces from being stripped from course code (#218)
+- removing extra spacing on people unstyled lists (#217)
+- Prevented spaces from being stripped from course code (#218)
 
 9.0.2
 --------------------------------------------------------------------------------
 _Release Date: 2022-10-19_
 
-- D8CORE-6344: fix to font size on people lists.
+- fix to font size on people lists.
 
 9.0.1
 --------------------------------------------------------------------------------
@@ -693,7 +705,7 @@ _Release Date: 2022-10-17_
 _Release Date: 2022-07-08_
 
 - fixed composer namespace to lowercase
-- D8CORE-5598 D8CORE-5592: making margins even (#209)
+- D8CORE-5598 making margins even (#209)
 - Merge branch 'master' into 8.x
 
 8.2.3
@@ -701,7 +713,7 @@ _Release Date: 2022-07-08_
 _Release Date: 2022-05-24_
 
 - Adjusted VBO form for event date fields that are required
-- D8CORE-5837: fixup for the transparent hover
+- fixup for the transparent hover
 
 8.x-2.2
 --------------------------------------------------------------------------------
@@ -714,7 +726,7 @@ _Release Date: 2022-05-10_
 _Release Date: 2022-05-09_
 
 - Update hook and drush command to move all public files into private file system. (#202)
-- D8CORE-5829: set up the footer text to inherit the smaller size (#201)
+- set up the footer text to inherit the smaller size (#201)
 
 8.x-2.0
 --------------------------------------------------------------------------------
@@ -723,13 +735,13 @@ _Release Date: 2022-05-02_
 - Updated dev dependencies (#199)
 - D8CORE-5750 Modify field render arrays to better suite the DS module limits (#198)
 - D8CORE-5686 Adjusted scheduler help text (#197)
-- D8CORE-5748: adding unstyle list to the term list (#196)
-- D8CORE-5729: People term list style fixes (#194)
-- D8CORE-5771: limited stripes to tbody only (#195)
-- D8CORE-5567: utility classes for tables (#192)
-- D8CORE-5749: updating styles for shared tags (#193)
-- D8CORE-4728: updating decanter (#191)
-- D8CORE-4842: removing the image when in 2-col (#188)
+- adding unstyle list to the term list (#196)
+- People term list style fixes (#194)
+- limited stripes to tbody only (#195)
+- utility classes for tables (#192)
+- updating styles for shared tags (#193)
+- updating decanter (#191)
+- removing the image when in 2-col (#188)
 - Improved cache tags for views when no filters are available
 - D8CORE-4128 Adjusted styles to change views to HTML lists (#190)
 - Drush command to easily set up intranets (#189)
@@ -762,7 +774,7 @@ _Release Date: 2022-03-08_
 --------------------------------------------------------------------------------
 _Release Date: 2022-02-03_
 
-- D8CORE-5418: hot fix adding back padding for mobile view (#171)
+- hot fix adding back padding for mobile view (#171)
 
 
 8.x-1.31
@@ -772,9 +784,9 @@ _Release Date: 2022-01-27_
 - Purge the source url when a redirect is saved (#169)
 - Modify the imported redirects to point at the node instead of the alias (#168)
 - Check if the form as VBO before sorting actions (#167)
-- D8CORE-5183: fixes to the after in a heading for the new localist work (#166)
-- D8CORE-5106: fixing the spacing between basic cards when in a list (#165)
-- D8CORE-4833: Added sorting to the node actions (#159)
+- fixes to the after in a heading for the new localist work (#166)
+- fixing the spacing between basic cards when in a list (#165)
+- Added sorting to the node actions (#159)
 - updated tests for D9.3 (#164)
 
 
@@ -782,14 +794,14 @@ _Release Date: 2022-01-27_
 --------------------------------------------------------------------------------
 _Release Date: 2021-12-03_
 
-- D8CORE-5096: visually hid external link svgs in localist embeddable. (#162)
+- visually hid external link svgs in localist embeddable. (#162)
 
 
 8.x-1.29
 --------------------------------------------------------------------------------
 _Release Date: 2021-12-01_
 
-- D8CORE-5110: working on card margin bottoms when stacked. (#158)
+- working on card margin bottoms when stacked. (#158)
 
 
 8.x-1.28
@@ -798,11 +810,11 @@ _Release Date: 2021-11-19_
 
 - Increase the module weight to take more priority over other modules
 - D8CORE-4246 unset stanford_basic FA library if the FA module exists (#155)
-- D8CORE-4843: updating external link icon on headings (#154)
+- updating external link icon on headings (#154)
 - D8CORE-4548 Prevent fatal error when menu items arent routed during save
 - Convert url object into a string for better rendering (#156)
 -  D8CORE-4878 Updated hook to work with recent config changes.  (#153)
-- D8CORE-3166: removing the extra space about the button in lists (#152)
+- removing the extra space about the button in lists (#152)
 
 
 8.x-1.27
@@ -817,7 +829,7 @@ _Release Date: 2021-10-21_
 --------------------------------------------------------------------------------
 _Release Date: 2021-10-11_
 
-- D8CORE-4859: removing bold change
+- removing bold change
 
 8.x-1.25
 --------------------------------------------------------------------------------
@@ -825,7 +837,7 @@ _Release Date: 2021-10-08_
 
 - Allow paragraphs to be indexed when intranet is enabled (#146)
 - D8CORE-4679 Add site improve analytics js (#145)
-- D8CORE-4691: adding bold to the external links (#139)
+- adding bold to the external links (#139)
 - D8CORE-4793 Configure mathjax to only target equations in <p> tags (#144)
 - D8CORE-4759 Clear search results cache after a node saves
 - Update hook to add role for users with custom LB content (#142)
@@ -843,7 +855,7 @@ _Release Date: 2021-09-07_
 --------------------------------------------------------------------------------
 _Release Date: 2021-09-03
 
-- D8CORE-4098: correcting the line contrast for the intranet wysiwyg table (#137)
+- correcting the line contrast for the intranet wysiwyg table (#137)
 
 8.x-1.22
 --------------------------------------------------------------------------------
@@ -857,7 +869,7 @@ _Release Date: 2021-08-11_
 --------------------------------------------------------------------------------
 _Release Date: 2021-07-19_
 
-- D8CORE-4536: fixing the date alignment for an event list (#129) (3eb1809)
+- fixing the date alignment for an event list (#129) (3eb1809)
 
 8.x-1.20
 --------------------------------------------------------------------------------
@@ -869,7 +881,7 @@ _Release Date: 2021-07-09_
 --------------------------------------------------------------------------------
 _Release Date: 2021-07-09_
 
-- D8CORE-4225: clearing the floats if used in the wysiwyg for the medium and down breakpoint (#125) (c98060a)
+- clearing the floats if used in the wysiwyg for the medium and down breakpoint (#125) (c98060a)
 
 8.x-1.18
 --------------------------------------------------------------------------------
@@ -887,9 +899,9 @@ _Release Date: 2021-06-15_
 --------------------------------------------------------------------------------
 _Release Date: 2021-06-11_
 
-- D8CORE-4341: Disable the grid style for people lists in rows (#118) (ac970c5)
+- Disable the grid style for people lists in rows (#118) (ac970c5)
 - D8CORE-3566 Invalidate cache when saving config pages (e2032ec)
-- D8CORE-4178: Fixing the h2 that wasn't wrapping (#114) (eb9652f)
+- Fixing the h2 that wasn't wrapping (#114) (eb9652f)
 - D8CORE-4104 Improve colorbox with javascript (#113) (60b8208)
 - D8CORE-2028 Change "People" to "Users" in the admin toolbar (#110) (6f9a64a)
 
@@ -897,14 +909,14 @@ _Release Date: 2021-06-11_
 --------------------------------------------------------------------------------
 _Release Date: 2021-05-07_
 
-- D8CORE-3970: adding teaser styles for event series (#106) (a40d5fb)
-- D8CORE-4097: Fixup the specificity problem for the local footer color (#105) (b07bdf9)
+- adding teaser styles for event series (#106) (a40d5fb)
+- Fixup the specificity problem for the local footer color (#105) (b07bdf9)
 
 8.x-1.14
 --------------------------------------------------------------------------------
 _Release Date: 2021-04-19_
 
-- D8CORE-4092: fixing up the padding to be on left and right (#103) (3949fe5)
+- fixing up the padding to be on left and right (#103) (3949fe5)
 - D8CORE-4115 Remove the "Unlock" button on node form (#102) (274bee7)
 - Basic pages+ styling fix (#101) (453befa)
 
@@ -918,14 +930,14 @@ _Release Date: 2021-04-12_
 --------------------------------------------------------------------------------
 _Release Date: 2021-04-09_
 
-- D8CORE-3254: basic page plus functionality (#90) (2cc9e5a)
-- D8CORE-2766: adding constraint for global message validation (#88) (11d09a9)
-- D8CORE-3686: Intranet styles. (#89) (54bd930)
-- D8CORE-4020: Styles for publication teaser displays (#96) (2f89062)
-- D8CORE-2942: Removed dropcap pseudo content: so that dropcap displays (#95) (4b01951)
+- basic page plus functionality (#90) (2cc9e5a)
+- adding constraint for global message validation (#88) (11d09a9)
+- Intranet styles. (#89) (54bd930)
+- Styles for publication teaser displays (#96) (2f89062)
+- Removed dropcap pseudo content: so that dropcap displays (#95) (4b01951)
 - D8CORE-2853 Prevent unpublishing home, 403, or 404 pages (#93) (12dd3c7)
 - D8CORE-4021 Give site managers permission to assign custom roles (#91) (f91a648)
-- D8CORE-2600: visually hide duration dropdown in smartdate fields (#85) (0b5d1d4)
+- visually hide duration dropdown in smartdate fields (#85) (0b5d1d4)
 - D8CORE-3126 intranet functionality (#86) (267aa53)
 
 8.x-1.11
@@ -944,13 +956,13 @@ _Release Date: 2021-03-09_
 --------------------------------------------------------------------------------
 _Release Date: 2021-03-05_
 
-- D8CORE-3540: fixing the caption styling on the gallery. (#80) (30fbadf)
+- fixing the caption styling on the gallery. (#80) (30fbadf)
 - Template and styles for search results (#78) (47e0670)
 - Updated admin toolbar module (#79) (3042933)
 - D8CORE-3520 All Publications list page (#74) (322432b)
 - D8CORE-3476 Create a new view display mode specific for viewfields (#77) (3ad05e3)
 - D8CORE-3564 Dont allow the new pub type view in the view paragraph type (#76) (dc18d1b)
-- D8CORE-3516: fixing the missing arrow icon (#75) (d92a762)
+- fixing the missing arrow icon (#75) (d92a762)
 - Added update hook to enable the stable9 theme (58e0ac3)
 
 8.x-1.8
@@ -960,26 +972,26 @@ _Release Date: 2021-02-08_
 - D8CORE-3438 Adjusted styles for full width page gallery items (#71) (8fc9196)
 - Set config entity uuids when they are created if they dont match (#70) (edfd548)
 - limit the publication views in the viewfield (#68) (2ecf612)
-- D8CORE-3163: adding a little space on lists in columns (#69) (602fadb)
-- D8CORE-3164: fixing news list alignment. (#64) (92d7d2a)
-- D8CORE-3053: fixing margin bottom on lists as cards (#65) (2aa14f2)
+- adding a little space on lists in columns (#69) (602fadb)
+- fixing news list alignment. (#64) (92d7d2a)
+- fixing margin bottom on lists as cards (#65) (2aa14f2)
 - fixed react paragraphs library name (a9c3ab5)
 - Fixed ckeditor styles path (#67) (298c1ce)
 - D8CORE-3263 Gallery paragraph styling & better scss file structure (#62) (7cb4749)
-- D8CORE-3052: Centering the title and button for teasers. (#63) (8a2ac19)
-- D8CORE-3142: Styling some padding for the su-intro (#60) (a5b109e)
+- Centering the title and button for teasers. (#63) (8a2ac19)
+- Styling some padding for the su-intro (#60) (a5b109e)
 - Updated circleci testing (#59) (e890c66)
 - Updated field_formatter_class module (9e02372)
-- D8CORE-2764: menu underline fix (#55) (2a9d914)
+- menu underline fix (#55) (2a9d914)
 
 8.x-1.7
 --------------------------------------------------------------------------------
 _Release Date: 2020-12-04_
 
-- D8CORE-2899: removing the character limits on the wysiwyg text field (#44) (3efdc37)
+- removing the character limits on the wysiwyg text field (#44) (3efdc37)
 - D8CORE-2668 Removed title attribute from taxonomy menu items (#54) (68baf99)
 - D9 Ready (#50) (aab94a8)
-- D8CORE-2765: removing action link and changing colors for mailto links (#51) (1bd15eb)
+- removing action link and changing colors for mailto links (#51) (1bd15eb)
 - Change the github actions to tag PRs on master (#49) (6bfeb4c)
 
 8.x-1.6
@@ -994,10 +1006,10 @@ _Release Date: 2020-11-06_
 - D8CORE-000 List and content reference paragraph style helpers (#42) (9c386a5)
 - D8CORE-2183 Keep the relations fieldset open by default on term form (#41) (24dd121)
 - D8CORE-2780 People card images are circles (#40) (56fe706)
-- D8CORE-2285: adding the css to the pages that need the ckeditor style… (#38) (a6a416c)
+- adding the css to the pages that need the ckeditor style… (#38) (a6a416c)
 - Adjusted the list paragraph styles for grid displays (#37) (3a9c06a)
 - D8CORE-2738 Reduce list paragraph max width (#36) (dcb9a46)
-- D8CORE-2875: Limit paragraph choices for now (#35) (73efcc5)
+- Limit paragraph choices for now (#35) (73efcc5)
 - D8CORE-2856 Remove unwanted views from the list paragraph type (#34) (96203a3)
 - D8CORE-000 Fixed breaking if the parent menu item is external (#33) (ba7d3b8)
 
@@ -1011,31 +1023,31 @@ _Release Date: 2020-10-12_
 --------------------------------------------------------------------------------
 _Release Date: 2020-10-05_
 
-- D8CORE-2613: Delete taxonomy menu links when the parents change (#28) (98aa957)
-- D8CORE-2644: Added additional help text and snow form links (#27) (2be1dee)
+- Delete taxonomy menu links when the parents change (#28) (98aa957)
+- Added additional help text and snow form links (#27) (2be1dee)
 - Added presave to remove all field permissions from field storage that arent needed (#26) (3c0dca8)
 
 8.x-1.2
 --------------------------------------------------------------------------------
 _Release Date: 2020-09-14_
 
-- D8CORE-2521: Add hook for field permission on open embed field. (#23) (95d6fac)
-- D8CORE-2490: Name key changes. (#21) (82c0791)
-- D8CORE-2420: Rebuild router on taxonomy change to fix bug with taxonomy_menu. (#20) (d309423)
-- D8CORE-1609: Super Footer and Global Messages (#15) (7e22801)
-- D8CORE-2533: external link adjustments (#16) (803b124)
-- D8CORE-2040: Update styles for react paragraphs V2 (#18) (cd5c1ae)
+- Add hook for field permission on open embed field. (#23) (95d6fac)
+- Name key changes. (#21) (82c0791)
+- Rebuild router on taxonomy change to fix bug with taxonomy_menu. (#20) (d309423)
+- Super Footer and Global Messages (#15) (7e22801)
+- external link adjustments (#16) (803b124)
+- Update styles for react paragraphs V2 (#18) (cd5c1ae)
 - D8CORE 2541 Added padding to images in the wysiwyg paragraph type (#19) (527e33e)
 - D8CORE-2499 Updated composer license (#17) (c04aa91)
-- D8CORE-2201, D8CORE-2448: External link module styles. (#11) (b720bb2)
-- D8CORE-2322: fixing the margins on the full width page (#14) (75d6f57)
+- D8CORE-2201, External link module styles. (#11) (b720bb2)
+- fixing the margins on the full width page (#14) (75d6f57)
 
 8.x-1.1
 --------------------------------------------------------------------------------
 _Release Date: 2020-08-07_
 
-- D8CORE-2497: setting max-width to 980 like the cards (#12) (3d0424f)
-- D8CORE-1472: Config pages lockup Form helpers (#10) (e7b662f)
+- setting max-width to 980 like the cards (#12) (3d0424f)
+- Config pages lockup Form helpers (#10) (e7b662f)
 - CSD-258: Hide checkbox that could cause damage. (#8) (8678198)
 - added comment (be4af9f)
 - fixup (2740425)
