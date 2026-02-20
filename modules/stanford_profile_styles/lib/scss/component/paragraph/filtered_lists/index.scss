@@ -20,10 +20,6 @@
       padding-bottom: 26px;
     }
 
-    .options {
-      overflow: unset;
-    }
-
     label {
       @include responsive-spacing('padding-right', 0);
       @include responsive-spacing('padding-left', 0);
@@ -31,7 +27,7 @@
 
       align-items: start;
       font-size: 0.95em;
-      padding-top: 0;
+      padding-top: 6px;
 
       &:last-of-type {
         padding-bottom: 0;
