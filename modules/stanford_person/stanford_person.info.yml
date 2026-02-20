@@ -3,7 +3,7 @@ type: module
 description: 'A person bio and supporting information content type'
 core_version_requirement: ^11.2
 package: Stanford
-version: 10.2.0
+version: 10.2.1
 dependencies:
   - auto_entitylabel:auto_entitylabel
   - ctools:ctools

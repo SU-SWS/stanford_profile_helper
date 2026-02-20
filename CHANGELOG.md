@@ -1,5 +1,11 @@
 # Stanford Profile Helper
 
+10.2.1
+--------------------------------------------------------------------------------
+_Release Date: 2026-02-20_
+
+- Removed the overflow unset on filters and added 6px of top space to options
+
 10.2.0
 --------------------------------------------------------------------------------
 _Release Date: 2026-02-19_
