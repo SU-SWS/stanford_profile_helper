@@ -2,5 +2,5 @@ name: 'Stanford Text Editor'
 description: 'Input formats and WYSIWYG settings'
 type: module
 core_version_requirement: ^11.2
-version: 10.2.0
+version: 10.2.1
 package: Stanford
