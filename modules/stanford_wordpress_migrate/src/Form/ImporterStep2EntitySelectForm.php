@@ -132,16 +132,17 @@ class ImporterStep2EntitySelectForm extends WordPressImporterFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
-    /** @var \Drupal\stanford_wordpress_migrate\WordPressMigrationInterface $migration */
-    $migration = $form_state->getTemporaryValue([
-      'wizard',
-      'wordpress_migration',
-    ]);
-    $media = array_filter($form_state->getValue('mapping'), fn($mapping) => $mapping['source'] && $mapping['destination']);
-    $chosen_sources = array_map(fn($a) => $a['source'], $media);
-    $chosen_destinations = array_map(fn($a) => $a['destination'], $media);
+    $cached_values = $form_state->getTemporaryValue(['wizard']);
 
-    $field_mapping = $migration->getConfigurationValue('media', []);
+    /** @var \Drupal\stanford_wordpress_migrate\WordPressMigrationInterface $migration */
+    $migration = $cached_values['wordpress_migration'];
+    $entity_type = $cached_values['entity_type'];
+
+    $mappings = array_filter($form_state->getValue('mapping'), fn($mapping) => $mapping['source'] && $mapping['destination']);
+    $chosen_sources = array_map(fn($a) => $a['source'], $mappings);
+    $chosen_destinations = array_map(fn($a) => $a['destination'], $mappings);
+
+    $field_mapping = $migration->getConfigurationValue($entity_type, []);
 
     // Remove any previously configured values that are no longer desired.
     foreach ($field_mapping as $source => $destinations) {
@@ -157,16 +158,16 @@ class ImporterStep2EntitySelectForm extends WordPressImporterFormBase {
         }
       }
     }
-    $migration->setConfigurationValue('media', array_filter($field_mapping));
+    $migration->setConfigurationValue($entity_type, array_filter($field_mapping));
 
-    foreach ($media as $mapping) {
+    foreach ($mappings as $mapping) {
       $field_mapping = $migration->getConfigurationValue([
-        'media',
+        $entity_type,
         $mapping['source'],
         $mapping['destination'],
       ], []);
       $migration->setConfigurationValue([
-        'media',
+        $entity_type,
         $mapping['source'],
         $mapping['destination'],
       ], $field_mapping);

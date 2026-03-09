@@ -323,8 +323,11 @@ class ImporterStep2EntitySelectFormTest extends UnitTestCase {
     $form_state = $this->createMock(FormStateInterface::class);
     $form_state->expects($this->once())
       ->method('getTemporaryValue')
-      ->with(['wizard', 'wordpress_migration'])
-      ->willReturn($migration);
+      ->with(['wizard'])
+      ->willReturn([
+        'wordpress_migration' => $migration,
+        'entity_type' => 'media',
+      ]);
 
     $form_state->expects($this->once())
       ->method('getValue')
@@ -356,8 +359,11 @@ class ImporterStep2EntitySelectFormTest extends UnitTestCase {
     $form_state = $this->createMock(FormStateInterface::class);
     $form_state->expects($this->once())
       ->method('getTemporaryValue')
-      ->with(['wizard', 'wordpress_migration'])
-      ->willReturn($migration);
+      ->with(['wizard'])
+      ->willReturn([
+        'wordpress_migration' => $migration,
+        'entity_type' => 'media',
+      ]);
 
     $form_state->expects($this->once())
       ->method('getValue')
@@ -391,8 +397,11 @@ class ImporterStep2EntitySelectFormTest extends UnitTestCase {
     $form_state = $this->createMock(FormStateInterface::class);
     $form_state->expects($this->once())
       ->method('getTemporaryValue')
-      ->with(['wizard', 'wordpress_migration'])
-      ->willReturn($migration);
+      ->with(['wizard'])
+      ->willReturn([
+        'wordpress_migration' => $migration,
+        'entity_type' => 'media',
+      ]);
 
     $form_state->expects($this->once())
       ->method('getValue')
