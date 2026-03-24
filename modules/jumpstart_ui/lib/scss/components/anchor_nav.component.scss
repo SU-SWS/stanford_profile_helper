@@ -138,6 +138,7 @@
 $su-color-digital-red: #B1040E;
 $su-color-digital-red-light: #F83535;
 $su-color-black: #2E2D29;
+$su-color-black-50: #979694;
 
 /* --- nav spacing that is general across layouts  --- */
 .anchor-link-nav {
@@ -146,9 +147,11 @@ $su-color-black: #2E2D29;
 
     li {
       margin-bottom: 0;
+      margin-top: 2px;
     
       a {
         font-size: 17px;
+        font-weight: $su-font-regular;
         color: $su-color-digital-red;
         text-decoration: none;
 
@@ -285,7 +288,6 @@ $su-color-black: #2E2D29;
 
     // links
     .overflow-item {
-      max-width: 188px;
       text-wrap: wrap;
       margin-bottom: 27px;
     }
@@ -338,7 +340,6 @@ $su-color-black: #2E2D29;
 
         ul:first-child {
           li {
-            max-width: 188px;
             text-wrap: wrap;
             margin-bottom: 10px;
 

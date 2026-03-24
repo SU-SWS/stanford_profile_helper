@@ -42,3 +42,7 @@
     @include margin(null null 0 null);
   }
 }
+
+.content:has(.anchor-link-nav.orientation-horizontal) .node-stanford-page-title {
+  @include margin(null null 4em null);
+}
