@@ -4464,7 +4464,7 @@ __metadata:
   linkType: hard
 
 "make-fetch-happen@npm:^10.0.4":
-  version: 10.2.1
+  version: 10.2.2
   resolution: "make-fetch-happen@npm:10.2.1"
   dependencies:
     agentkeepalive: "npm:^4.2.1"
@@ -4886,7 +4886,7 @@ __metadata:
   linkType: hard
 
 "node-gyp@npm:latest":
-  version: 10.2.1
+  version: 10.2.2
   resolution: "node-gyp@npm:10.2.0"
   dependencies:
     env-paths: "npm:^2.2.0"
@@ -5798,7 +5798,7 @@ __metadata:
   linkType: hard
 
 "postcss-preset-env@npm:^10.2.0":
-  version: 10.2.1
+  version: 10.2.2
   resolution: "postcss-preset-env@npm:10.2.0"
   dependencies:
     "@csstools/postcss-cascade-layers": "npm:^5.0.1"
@@ -6145,7 +6145,7 @@ __metadata:
   linkType: hard
 
 "regenerate-unicode-properties@npm:^10.2.0":
-  version: 10.2.1
+  version: 10.2.2
   resolution: "regenerate-unicode-properties@npm:10.2.0"
   dependencies:
     regenerate: "npm:^1.4.2"
