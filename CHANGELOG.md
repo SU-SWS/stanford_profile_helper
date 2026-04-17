@@ -1,5 +1,12 @@
 # Stanford Profile Helper
 
+10.2.2
+--------------------------------------------------------------------------------
+_Release Date: 2026-04-17_
+
+- D8CORE-8651: Requested anchor nav tweaks (#522)
+- Fixed entity mapping for wordpress importer form
+
 10.2.1
 --------------------------------------------------------------------------------
 _Release Date: 2026-02-20_
