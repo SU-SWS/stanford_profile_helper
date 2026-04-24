@@ -286,6 +286,7 @@
   .podcast,
   .media {
     @include responsive-spacing('margin-top', -2);
+    @include responsive-spacing('margin-bottom', 1);
 
     color: $su-color-white;
     background-color: $su-color-black;

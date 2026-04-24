@@ -50,7 +50,6 @@
   }
 
   .video {
-    @include modular-spacing('margin-bottom', 1);
     order: -999;
 
     iframe {
