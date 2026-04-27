@@ -179,26 +179,20 @@
   }
 
   .related-person {
-
     .views-field-title {
       margin-right: 3px;
+      display: inline;
+
+      // &::after {
+      //   margin-left: -3px;
+      //   content: ',';
+      //   display: inline-block;
+      // }
     }
 
     li {
-      display: inline;
+      display: block;
       margin-right: 3px;
-
-      &::after {
-        margin-left: -3px;
-        content: ',';
-        display: inline-block;
-      }
-
-      &:last-child {
-        &::after {
-          content: '';
-        }
-      }
     }
   }
 
