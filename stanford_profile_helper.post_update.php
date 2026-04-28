@@ -21,3 +21,25 @@ function stanford_profile_helper_removed_post_updates() {
     'stanford_profile_helper_post_update_create_cron' => '9.4.3',
   ];
 }
+
+/**
+ * Clear items from Algolia that are in the trash.
+ */
+function stanford_profile_helper_post_update_algolia_trash_delete(&$sandbox) {
+  $sapi_config = \Drupal::config('search_api.server.algolia_search');
+  if (!$sapi_config->get('backend_config.api_key') || $sapi_config->get('read_only')) {
+    return;
+  }
+  $trash_manager = \Drupal::service('trash.manager');
+  $trash_manager->setTrashContext('ignore');
+  $ns = \Drupal::entityTypeManager()
+    ->getStorage('node');
+  $nids = $ns->getQuery()
+    ->accessCheck(FALSE)
+    ->condition('deleted', 1, '>')
+    ->execute();
+  foreach ($ns->loadMultiple($nids) as $node) {
+    \Drupal::service('search_api_algolia.helper')->entityDelete($node);
+  }
+  $trash_manager->setTrashContext('active');
+}
