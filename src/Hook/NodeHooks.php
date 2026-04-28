@@ -147,16 +147,19 @@ class NodeHooks {
    *   Node entity being saved.
    */
   protected function buildAVTranscript(NodeInterface $node) {
-    if (
-      !$node->hasField('su_media_subtitles') ||
-      !$node->get('su_media_subtitles')->count()
-    ) {
+    if (!$node->hasField('su_media_subtitles')) {
       return;
     }
+    if (!$node->get('su_media_subtitles')->count()) {
+      $node->set('su_media_transcript', NULL);
+      return;
+    }
+
     $subtitleFile = $node->get('su_media_subtitles')->get(0)->getValue();
     $subtitleFile = $this->entityTypeManager->getStorage('file')
       ->load($subtitleFile['target_id']);
     if (!$subtitleFile) {
+      $node->set('su_media_transcript', NULL);
       return;
     }
     $subtitles = file_get_contents($subtitleFile->getFileUri());

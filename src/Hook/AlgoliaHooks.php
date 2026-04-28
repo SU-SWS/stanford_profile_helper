@@ -75,17 +75,7 @@ class AlgoliaHooks {
     $federated = $this->isFederatedSearch();
 
     foreach ($objects as &$item) {
-      if (Settings::get('algolia_trim_html')) {
-        // Algolia limits each record to 10KB when on the free plan. For local
-        // testing purposes, we can use a free plan but to prevent an item from
-        // getting blocked by Algolia indexing, trim the HTML to ensure the
-        // record is under the limit.
-        while (strlen(json_encode($item, JSON_UNESCAPED_SLASHES)) > 10000) {
-          $words = explode(' ', $item['html']);
-          array_pop($words); // Removes the last element
-          $item['html'] = implode(' ', $words);
-        }
-      }
+      $this->trimRecord($item);
       // Move title to the beginning for more easy UI results.
       $item = ['title' => $item['title'], ...$item];
 
@@ -135,6 +125,29 @@ class AlgoliaHooks {
           $field = str_replace($current_host, $site_domain, $field);
         }
       }
+    }
+  }
+
+  /**
+   * Trim the record html until it is under the Algolia limit.
+   *
+   * @param array $item
+   *   Algolia item.
+   *
+   * @codeCoverageIgnore This is only for local development.
+   */
+  protected function trimRecord(array &$item): void {
+    if (!Settings::get('algolia_trim_html')) {
+      return;
+    }
+    // Algolia limits each record to 10KB when on the free plan. For local
+    // testing purposes, we can use a free plan but to prevent an item from
+    // getting blocked by Algolia indexing, trim the HTML to ensure the
+    // record is under the limit.
+    while (strlen(json_encode($item, JSON_UNESCAPED_SLASHES)) > 10000) {
+      $words = explode(' ', $item['html']);
+      array_pop($words); // Removes the last element
+      $item['html'] = implode(' ', $words);
     }
   }
 
