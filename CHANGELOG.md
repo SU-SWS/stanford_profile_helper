@@ -1,5 +1,12 @@
 # Stanford Profile Helper
 
+10.2.3
+--------------------------------------------------------------------------------
+_Release Date: 2026-04-28_
+
+- Modify pathauto pattern for page if it is put into the trash
+- Delete Algolia items that are in the trash
+
 10.2.2
 --------------------------------------------------------------------------------
 _Release Date: 2026-04-17_
