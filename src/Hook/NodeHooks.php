@@ -13,6 +13,7 @@ use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\State\StateInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\node\NodeInterface;
+use Drupal\pathauto\PathautoPatternInterface;
 use Drupal\stanford_profile_helper\StanfordDefaultContentInterface;
 use Drupal\stanford_profile_helper\StanfordProfileHelper;
 use Drupal\stanford_profile_helper\SubtitleToParagraphs;
@@ -121,6 +122,21 @@ class NodeHooks {
             ]));
         }
       }
+    }
+  }
+
+  /**
+   * Implements hook_pathauto_pattern_alter().
+   */
+  #[Hook('pathauto_pattern_alter')]
+  public function pathautoPatternAlter(PathautoPatternInterface $pattern, array $context) {
+    if (
+      isset($context['data']['node']) &&
+      $context['data']['node'] instanceof NodeInterface &&
+      $context['data']['node']->hasField('deleted') &&
+      $context['data']['node']->get('deleted')->getString()
+    ) {
+      $pattern->setPattern(str_replace('/[node:title]', '/deleted-[node:title]', $pattern->getPattern()));
     }
   }
 
