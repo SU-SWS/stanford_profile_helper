@@ -136,7 +136,7 @@ class NodeHooks {
       $context['data']['node']->hasField('deleted') &&
       $context['data']['node']->get('deleted')->getString()
     ) {
-      $pattern->setPattern(str_replace('/[node:title]', '/deleted-[node:title]', $pattern->getPattern()));
+      $pattern->setPattern('/trash/' . $pattern->getPattern());
     }
   }
 
