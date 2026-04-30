@@ -136,7 +136,36 @@ class NodeHooks {
       $context['data']['node']->hasField('deleted') &&
       $context['data']['node']->get('deleted')->getString()
     ) {
-      $pattern->setPattern('/trash/' . $pattern->getPattern());
+      $pattern->setPattern('/trash' . $pattern->getPattern());
+    }
+  }
+
+  /**
+   * Implements hook_ENTITY_TYPE_trash_delete().
+   */
+  #[Hook('node_trash_delete')]
+  public function nodeTrashDelete(NodeInterface $node) {
+    $url = ltrim($node->toUrl()->toString(), '/');
+    if (str_starts_with($url, 'trash/')) {
+      $url = str_replace('trash/', '', $url);
+      $redirects = $this->entityTypeManager->getStorage('redirect')
+        ->loadByProperties(['redirect_source' => $url]);
+      foreach ($redirects as $redirect) {
+        $redirect->delete();
+      }
+    }
+  }
+
+  /**
+   * Implements hook_ENTITY_TYPE_trash_restore().
+   */
+  #[Hook('node_trash_restore')]
+  public function nodeTrashRestore(NodeInterface $node) {
+    $url = ltrim($node->toUrl()->toString(), '/');
+    $redirects = $this->entityTypeManager->getStorage('redirect')
+      ->loadByProperties(['redirect_source' => "trash/$url"]);
+    foreach ($redirects as $redirect) {
+      $redirect->delete();
     }
   }
 
