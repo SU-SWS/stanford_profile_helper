@@ -118,7 +118,7 @@ class NodeHooksTest extends UnitTestCase {
   }
 
   /**
-   * Node is deleted — '/[node:title]' is prefixed with '/deleted-'.
+   * Node is deleted — '/[node:title]' is prefixed with '/trash/'.
    */
   public function testPathautoPatternAlterDeletedNodePrefixesPattern() {
     $deletedField = $this->createMock(FieldItemListInterface::class);
@@ -132,7 +132,7 @@ class NodeHooksTest extends UnitTestCase {
     $pattern->method('getPattern')->willReturn('/news/[node:title]');
     $pattern->expects($this->once())
       ->method('setPattern')
-      ->with('/news/deleted-[node:title]');
+      ->with('/trash/news/[node:title]');
 
     $context = ['data' => ['node' => $node]];
     $this->hooks->pathautoPatternAlter($pattern, $context);
@@ -155,7 +155,7 @@ class NodeHooksTest extends UnitTestCase {
     // original — but setPattern is still called once.
     $pattern->expects($this->once())
       ->method('setPattern')
-      ->with('/news/[node:nid]');
+      ->with('/trash/news/[node:nid]');
 
     $context = ['data' => ['node' => $node]];
     $this->hooks->pathautoPatternAlter($pattern, $context);
