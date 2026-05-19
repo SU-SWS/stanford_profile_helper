@@ -33,12 +33,6 @@
 
     const $overflowItemsContainer = $('<ul>').addClass('overflow-items hidden').attr('id', 'overflow-container');
 
-    // FIX: Mirror the main nav pattern flagged by the a11y expert.
-    // The primary nav sets open="true" on the <ul> when expanded. VoiceOver (and
-    // other AT) can observe this attribute to understand expanded state. We keep
-    // aria-expanded on the button (for screen-reader button semantics) AND toggle
-    // the open attribute on the list (to match the pattern that already works in
-    // the main nav and gives VO a reliable hook for tracking state changes).
     const setExpanded = (expanded) => {
       $expandButton.attr('aria-expanded', expanded ? 'true' : 'false');
 
@@ -82,9 +76,6 @@
       $expandButton.on('click', () => {
         const startsExpanded = isExpanded();
 
-        // FIX: Use setExpanded() instead of manually setting aria-expanded so the
-        // open attribute is always kept in sync with aria-expanded. Previously only
-        // aria-expanded was updated here, leaving no open attribute for VO to track.
         setExpanded(!startsExpanded);
         $overflowItemsContainer.toggleClass('hidden');
 
