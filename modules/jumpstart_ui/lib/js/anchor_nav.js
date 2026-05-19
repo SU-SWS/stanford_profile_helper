@@ -33,6 +33,32 @@
 
     const $overflowItemsContainer = $('<ul>').addClass('overflow-items hidden').attr('id', 'overflow-container');
 
+    // FIX: Mirror the main nav pattern flagged by the a11y expert.
+    // The primary nav sets open="true" on the <ul> when expanded. VoiceOver (and
+    // other AT) can observe this attribute to understand expanded state. We keep
+    // aria-expanded on the button (for screen-reader button semantics) AND toggle
+    // the open attribute on the list (to match the pattern that already works in
+    // the main nav and gives VO a reliable hook for tracking state changes).
+    const setExpanded = (expanded) => {
+      $expandButton.attr('aria-expanded', expanded ? 'true' : 'false');
+
+      if (expanded) {
+        $overflowItemsContainer.attr('open', 'true');   // mirrors main-nav pattern
+      } else {
+        $overflowItemsContainer.removeAttr('open');
+      }
+    };
+
+    const isExpanded = () => $expandButton.attr('aria-expanded') === 'true';
+
+    // FIX: Central close helper used by all dismiss paths so behaviour is
+    // consistent (click, Escape, focusout, VO cursor-leave).
+    const closeOverflow = () => {
+      if (isExpanded()) {
+        $expandButton.click(); // reuse existing toggle logic (label update etc.)
+      }
+    };
+
     const relabelExpandButton = (text = 'See More') => {
       // relabel the button if the text is different
       const $btnText = $expandButton.children('#expand-text');
@@ -54,15 +80,19 @@
 
       // Toggle overflow items visibility on expand button click
       $expandButton.on('click', () => {
-        const startsExpanded = $expandButton.attr('aria-expanded') === 'true';
-        $expandButton.attr('aria-expanded', startsExpanded ? 'false' : 'true');
+        const startsExpanded = isExpanded();
+
+        // FIX: Use setExpanded() instead of manually setting aria-expanded so the
+        // open attribute is always kept in sync with aria-expanded. Previously only
+        // aria-expanded was updated here, leaving no open attribute for VO to track.
+        setExpanded(!startsExpanded);
         $overflowItemsContainer.toggleClass('hidden');
 
         if (vertical) {
           if (width >= maxMobileVerticalWidth) {
             relabelExpandButton(startsExpanded ? 'Show More' : 'Show Less');
             //when overflow was just opened
-            if ($expandButton.attr('aria-expanded') === 'true') {
+            if (!startsExpanded) {
               // move tab focus to first overflow link for tabbing accessibility
               $('#overflow-container li:first-child a')[0].focus();
             }
@@ -144,7 +174,7 @@
 
     window.addEventListener('keydown', event => {
       if (event.key === 'Escape') {
-        if ($expandButton.attr('aria-expanded') === 'true') {
+        if (isExpanded()) {
           const width = $(window).width();
           if ($container.hasClass('orientation-horizontal') || width < maxMobileVerticalWidth) {
             $expandButton.click();
@@ -154,12 +184,41 @@
       }
     });
 
-    // Handle focus events to close when focus moves outside
+    // FIX: Close the overflow menu when VoiceOver navigates away with
+    // Ctrl+Option+Arrow keys.
+
+    $overflowItemsContainer[0].addEventListener('focusout', (event) => {
+      setTimeout(() => {
+        const width = $(window).width();
+        const shouldManage =
+          $container.hasClass('orientation-horizontal') || width < maxMobileVerticalWidth;
+
+        if (!shouldManage || !isExpanded()) return;
+
+        const focusedEl = event.relatedTarget || document.activeElement;
+
+        // If the newly-focused element is still inside the overflow list or is
+        // the expand button itself, the user is still within our widget — leave
+        // the menu open.
+        const stillInside =
+          $overflowItemsContainer[0].contains(focusedEl) ||
+          focusedEl === $expandButton[0];
+
+        if (!stillInside) {
+          closeOverflow();
+        }
+      }, 0);
+    });
+
+    // Handle focus events to close when focus moves outside.
+    // NOTE: This handles Tab-key navigation (standard keyboard users and some AT).
+    // VoiceOver Ctrl+Option+Arrow is handled separately by the focusout listener
+    // above, because focusin does not fire for VO virtual-cursor movement.
     document.addEventListener('focusin', (event) => {
       // Check if the newly focused element is outside the container and button
       const isOutsideFocus = !$overflowItemsContainer[0].contains(event.target) && event.target !== $expandButton[0];
 
-      if (isOutsideFocus && $expandButton.attr('aria-expanded') === 'true') {
+      if (isOutsideFocus && isExpanded()) {
         const width = $(window).width();
         if ($container.hasClass('orientation-horizontal') || width < maxMobileVerticalWidth) {
           $expandButton.click();
@@ -174,12 +233,12 @@
       const width = $(window).width();
       if ($container.hasClass('orientation-horizontal') || width < maxMobileVerticalWidth) {
 
-        if (isOutsideClick && $expandButton.attr('aria-expanded') === 'true') {
+        if (isOutsideClick && isExpanded()) {
           $expandButton.click();
         }
         if (event.target && event.target.classList.contains('anchor-link')) {
           // clicked an anchor link in the overflow dropdown menu
-          if ($expandButton.attr('aria-expanded') === 'true') {
+          if (isExpanded()) {
             $expandButton.click();
           }
         }
