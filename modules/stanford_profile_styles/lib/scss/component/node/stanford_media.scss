@@ -180,19 +180,12 @@
 
   .related-person {
     .views-field-title {
-      margin-right: 3px;
+      margin-right: -3px;
       display: inline;
-
-      // &::after {
-      //   margin-left: -3px;
-      //   content: ',';
-      //   display: inline-block;
-      // }
     }
 
     li {
       display: block;
-      margin-right: 3px;
     }
   }
 
