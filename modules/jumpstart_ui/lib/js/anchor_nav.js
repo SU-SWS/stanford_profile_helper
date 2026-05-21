@@ -19,8 +19,7 @@
       const $heading = $(heading);
       const id = $heading.attr('id');
 
-      $list.append($('<li>').append($('<a>').attr('href', `#${id}`).addClass(`anchor-link`).text($heading.text().trim())));
-    });
+      $list.append($('<li>').append($('<a>').attr('href', `#${id}`).addClass(`anchor-link`).attr('aria-label', `Jump to: ${$heading.text().trim()}`).text($heading.text().trim())));    });
 
     const $nav = $('<nav>').attr('aria-label', 'On this page Navigation').append($list);
     $container.append($nav);
