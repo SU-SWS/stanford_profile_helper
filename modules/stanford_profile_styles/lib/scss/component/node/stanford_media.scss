@@ -179,26 +179,13 @@
   }
 
   .related-person {
-
     .views-field-title {
-      margin-right: 3px;
+      margin-right: -3px;
+      display: inline;
     }
 
     li {
-      display: inline;
-      margin-right: 3px;
-
-      &::after {
-        margin-left: -3px;
-        content: ',';
-        display: inline-block;
-      }
-
-      &:last-child {
-        &::after {
-          content: '';
-        }
-      }
+      display: block;
     }
   }
 
@@ -286,6 +273,7 @@
   .podcast,
   .media {
     @include responsive-spacing('margin-top', -2);
+    @include responsive-spacing('margin-bottom', 1);
 
     color: $su-color-white;
     background-color: $su-color-black;
