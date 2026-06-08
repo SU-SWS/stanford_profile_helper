@@ -2,6 +2,8 @@
 
 namespace Drupal\Tests\stanford_profile_helper\Kernel\Plugin\search_api\processor;
 
+use Drupal\search_api\Item\Field;
+use Drupal\search_api\Utility\Utility;
 use Drupal\Tests\search_api\Kernel\Processor\CustomValueTest as SearchApiCustomValueTest;
 
 /**
@@ -25,7 +27,19 @@ class CustomValueTest extends SearchApiCustomValueTest {
     'file',
     'rabbit_hole',
     'config_pages',
+    'token_or',
   ];
+
+  public function setUp($processor = NULL): void {
+    parent::setUp($processor);
+
+    $field = new Field($this->index, 'custom_value_token_or');
+    $field->setType('string');
+    $field->setPropertyPath('custom_value');
+    $field->setLabel('Type/Author');
+    $field->setConfiguration(['value' => '[foo:bar|node:type|node:title] [node:title|bar:foo]']);
+    $this->index->addField($field);
+  }
 
   public function testPlugin() {
     /** @var \Drupal\search_api\Processor\ProcessorPluginManager $plugin_manager */
@@ -39,6 +53,17 @@ class CustomValueTest extends SearchApiCustomValueTest {
    */
   public function testItemFieldExtraction() {
     parent::testItemFieldExtraction();
+
+    $node = $this->entities['node'];
+    $id = Utility::createCombinedId('entity:node', $node->id() . ':en');
+    $item = \Drupal::getContainer()
+      ->get('search_api.fields_helper')
+      ->createItemFromObject($this->index, $node->getTypedData(), $id);
+
+    // Extract field values and check the value of our field.
+    $fields = $item->getFields();
+    $expected = ['article Test'];
+    $this->assertEquals($expected, $fields['custom_value_token_or']->getValues());
   }
 
 }
