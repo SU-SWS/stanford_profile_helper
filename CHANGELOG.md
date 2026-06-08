@@ -1,5 +1,14 @@
 # Stanford Profile Helper
 
+10.2.5
+--------------------------------------------------------------------------------
+_Release Date: 2026-06-08_
+- D8CORE-8820: removed space adjustment from comma
+- D8CORE-8647: Updated the js to work with VO command keys
+- D8CORE-8721: Correcting spacing errors for Audio/Visual content type.
+- D8CORE-8680: adding aria-label to the jump link.
+- D8CORE-8283: Updated the search date color to su-color-black-70 to make it comply with a11y 4.5 minimum
+
 10.2.4
 --------------------------------------------------------------------------------
 _Release Date: 2026-04-30_

@@ -4471,7 +4471,7 @@ __metadata:
   linkType: hard
 
 "make-fetch-happen@npm:^10.0.4":
-  version: 10.2.4
+  version: 10.2.5
   resolution: "make-fetch-happen@npm:10.2.1"
   dependencies:
     agentkeepalive: "npm:^4.2.1"
@@ -4893,7 +4893,7 @@ __metadata:
   linkType: hard
 
 "node-gyp@npm:latest":
-  version: 10.2.4
+  version: 10.2.5
   resolution: "node-gyp@npm:10.2.0"
   dependencies:
     env-paths: "npm:^2.2.0"
@@ -6158,7 +6158,7 @@ __metadata:
   linkType: hard
 
 "regenerate-unicode-properties@npm:^10.2.0":
-  version: 10.2.4
+  version: 10.2.5
   resolution: "regenerate-unicode-properties@npm:10.2.0"
   dependencies:
     regenerate: "npm:^1.4.2"
