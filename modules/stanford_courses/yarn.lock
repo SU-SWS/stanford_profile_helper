@@ -5677,7 +5677,7 @@ __metadata:
   linkType: hard
 
 "regenerate-unicode-properties@npm:^10.2.2":
-  version: 10.2.4
+  version: 10.2.5
   resolution: "regenerate-unicode-properties@npm:10.2.2"
   dependencies:
     regenerate: "npm:^1.4.2"
