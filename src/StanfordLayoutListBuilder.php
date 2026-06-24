@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\stanford_profile_helper;
 
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Url;
 use Drupal\file\FileInterface;
@@ -71,8 +72,8 @@ class StanfordLayoutListBuilder extends LayoutListBuilder {
   /**
    * {@inheritdoc}
    */
-  protected function getDefaultOperations(EntityInterface $entity) {
-    $operations = parent::getDefaultOperations($entity);
+  protected function getDefaultOperations(EntityInterface $entity, ?CacheableMetadata $cacheability = NULL) {
+    $operations = parent::getDefaultOperations($entity, $cacheability);
     if (isset($operations['edit'])) {
       $operations['icon'] = [
         'title' => $this->t('Edit Icon'),
