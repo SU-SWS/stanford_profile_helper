@@ -91,8 +91,10 @@ class Path extends NextPath {
     foreach ($sites as $site) {
       if ($this->configuration['aggregate']) {
         foreach ($paths as $path) {
-          \Drupal::database()->insert('stanford_decoupled_revalidation')
+          \Drupal::database()->merge('stanford_decoupled_revalidation')
             ->fields(['site' => $site->id(), 'path' => $path])
+            ->key('site', $site->id())
+            ->key('path', $path)
             ->execute();
         }
         continue;
