@@ -54,6 +54,9 @@ class Path extends NextPath {
     return $form;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
     $this->configuration['method'] = $form_state->getValue('method');
     $this->configuration['aggregate'] = (bool) $form_state->getValue('aggregate');
