@@ -1,0 +1,40 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * Implements hook_schema().
+ */
+function stanford_decoupled_schema() {
+  $schema['stanford_decoupled_revalidation'] = [
+    'description' => 'Stores data for aggregated decoupled revalidation.',
+    'fields' => [
+      'site' => [
+        'description' => 'NextJS site id.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ],
+      'path' => [
+        'description' => 'Path to revalidate.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ],
+    ],
+  ];
+  return $schema;
+}
+
+/**
+ * Install new database table.
+ */
+function stanford_decoupled_update_10003() {
+  $schema = \Drupal::database()->schema();
+  $module_schema = stanford_decoupled_schema();
+  $table_schema = $module_schema['stanford_decoupled_revalidation'];
+  if (!$schema->tableExists('stanford_decoupled_revalidation')) {
+    $schema->createTable('stanford_decoupled_revalidation', $table_schema);
+  }
+}
+

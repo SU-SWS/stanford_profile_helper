@@ -1,7 +1,7 @@
 services:
   stanford_decoupled.event_subscriber:
     class: Drupal\stanford_decoupled\EventSubscriber\DecoupledEventSubscriber
-    arguments: ['@entity_type.manager', '@state']
+    arguments: ['@entity_type.manager', '@state', '@http_client', '@database']
     tags:
       - { name: event_subscriber }
   stanford_decoupled.config_overrider:
