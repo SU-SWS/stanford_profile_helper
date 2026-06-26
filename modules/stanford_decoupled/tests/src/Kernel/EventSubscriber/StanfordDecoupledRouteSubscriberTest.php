@@ -27,6 +27,7 @@ class StanfordDecoupledRouteSubscriberTest extends KernelTestBase {
     'basic_auth',
     'stanford_decoupled',
     'entity_usage',
+    'next',
   ];
 
   /**
