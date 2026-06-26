@@ -173,12 +173,15 @@ function stanford_decoupled_next_site_insert(EntityInterface $entity) {
         'id' => "node.$node_bundle",
         'site_resolver' => 'site_selector',
         'revalidator' => 'path',
+        'draft_enabled' => TRUE,
         'configuration' => [
           'sites' => [$entity->id() => $entity->id()],
         ],
         'revalidator_configuration' => [
           'revalidate_page' => TRUE,
           'additional_paths' => "/tags/views:all/views:$node_bundle",
+          'method' => 'POST',
+          'aggregate' => TRUE,
         ],
       ])->save();
     }
@@ -189,6 +192,7 @@ function stanford_decoupled_next_site_insert(EntityInterface $entity) {
       'id' => 'redirect.redirect',
       'site_resolver' => 'site_selector',
       'revalidator' => 'redirect_path',
+      'draft_enabled' => FALSE,
       'configuration' => ['sites' => [$entity->id() => $entity->id()]],
       'revalidator_configuration' => [],
     ])->save();
@@ -199,6 +203,7 @@ function stanford_decoupled_next_site_insert(EntityInterface $entity) {
       'id' => 'menu_link_content.menu_link_content',
       'site_resolver' => 'site_selector',
       'revalidator' => 'path',
+      'draft_enabled' => FALSE,
       'configuration' => ['sites' => [$entity->id() => $entity->id()]],
       'revalidator_configuration' => [
         'revalidate_page' => FALSE,
@@ -222,6 +227,7 @@ function stanford_decoupled_next_site_insert(EntityInterface $entity) {
         'id' => "config_pages.$config_page_type",
         'site_resolver' => 'site_selector',
         'revalidator' => 'path',
+        'draft_enabled' => FALSE,
         'configuration' => [
           'sites' => [$entity->id() => $entity->id()],
         ],

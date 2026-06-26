@@ -2,11 +2,16 @@
 
 namespace Drupal\stanford_decoupled\Plugin\Next\Revalidator;
 
+use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Url;
 use Drupal\next\Event\EntityActionEvent;
+use Drupal\next\NextSettingsManagerInterface;
 use Drupal\next\Plugin\Next\Revalidator\Path as NextPath;
+use GuzzleHttp\ClientInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -15,6 +20,25 @@ use Symfony\Component\HttpFoundation\Response;
  * @codeCoverageIgnore
  */
 class Path extends NextPath {
+
+  /**
+   * @var \Drupal\Core\Database\Connection
+   */
+  protected $database;
+
+  /**
+   * {@inheritDoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
+    $instance->setDatabase($container->get('database'));
+    return $instance;
+  }
+
+  public function setDatabase(Connection $database) {
+    $this->database = $database;
+    return $this;
+  }
 
   /**
    * {@inheritDoc}
@@ -90,14 +114,35 @@ class Path extends NextPath {
       return FALSE;
     }
 
+    $modifiedPaths = [];
+    $tags = [];
+
+    foreach ($paths as $path) {
+      if (!str_starts_with($path, '/tags/')) {
+        $modifiedPaths[] = $path;
+        continue;
+      }
+      foreach (explode('/', str_replace('/tags/', '', $path)) as $tag) {
+        $tags[] = $tag;
+      }
+    }
+
+    asort($modifiedPaths);
+    asort($tags);
+
+    $revalidations = [
+      'paths' => array_values(array_unique($modifiedPaths)),
+      'tags' => array_values(array_unique($tags)),
+    ];
+
     /** @var \Drupal\next\Entity\NextSite $site */
     foreach ($sites as $site) {
       if ($this->configuration['aggregate']) {
         foreach ($paths as $path) {
-          \Drupal::database()->merge('stanford_decoupled_revalidation')
+          // Use merge to reduce duplicates.
+          $this->database->merge('stanford_decoupled_revalidation')
             ->fields(['site' => $site->id(), 'path' => $path])
-            ->key('site', $site->id())
-            ->key('path', $path)
+            ->keys(['site' => $site->id(), 'path' => $path])
             ->execute();
         }
         continue;
@@ -122,7 +167,8 @@ class Path extends NextPath {
 
         $response = $this->httpClient->request('POST', $revalidate_url->toString(), [
           'headers' => ['Authorization' => "Bearer $secret"],
-          'json' => ['paths' => $paths],
+          'json' => $revalidations,
+          'timeout' => 5,
         ]);
 
         if ($response && $response->getStatusCode() === Response::HTTP_OK) {

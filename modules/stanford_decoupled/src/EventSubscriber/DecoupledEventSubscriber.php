@@ -6,11 +6,14 @@ namespace Drupal\stanford_decoupled\EventSubscriber;
 
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\State\StateInterface;
 use Drupal\Core\Url;
 use Drupal\next\Entity\NextSiteInterface;
 use Drupal\next\Event\EntityActionEvent;
 use Drupal\next\Event\EntityEvents;
+use Drupal\next\NextSettingsManagerInterface;
 use Drupal\stanford_profile_helper\Event\MenuCacheEvent;
 use GuzzleHttp\ClientInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -43,9 +46,12 @@ final class DecoupledEventSubscriber implements EventSubscriberInterface {
    */
   public function __construct(
     protected EntityTypeManagerInterface $entityTypeManager,
+    protected NextSettingsManagerInterface $nextSettingsManager,
     protected StateInterface $state,
     protected ClientInterface $client,
-    protected Connection $database
+    protected Connection $database,
+    protected ModuleHandlerInterface $moduleHandler,
+    protected LoggerChannelFactoryInterface $loggerFactory
   ) {}
 
   /**
@@ -72,13 +78,15 @@ final class DecoupledEventSubscriber implements EventSubscriberInterface {
 
       try {
         $this->revalidatePaths($site, $paths);
+        // Clear the records after a successful revalidation.
         $this->database->delete('stanford_decoupled_revalidation')
           ->condition('site', $site->id())
           ->condition('path', $paths, 'IN')
           ->execute();
       }
       catch (\Exception $e) {
-        // Log it.
+        $this->loggerFactory->get('stanford_decoupled')
+          ->error($e->getMessage());
       }
     }
   }
@@ -99,11 +107,53 @@ final class DecoupledEventSubscriber implements EventSubscriberInterface {
       throw new \Exception('No revalidate url set.');
     }
 
-    asort($paths);
+    $modifiedPaths = [];
+    $tags = [];
+
+    foreach ($paths as $path) {
+      if (!str_starts_with($path, '/tags/')) {
+        $modifiedPaths[] = $path;
+        continue;
+      }
+      foreach (explode('/', str_replace('/tags/', '', $path)) as $tag) {
+        $tags[] = $tag;
+      }
+    }
+
+    asort($modifiedPaths);
+    asort($tags);
+
+    $revalidations = [
+      'paths' => array_values(array_unique($modifiedPaths)),
+      'tags' => array_values(array_unique($tags)),
+    ];
+    $this->moduleHandler->alter('next_site_revalidate_url', $revalidations, $site);
+
+    if ($this->nextSettingsManager->isDebug()) {
+      $this->loggerFactory->get('stanford_decoupled')
+        ->notice('Revalidating path %path & tag %tag for the site %site. URL: %url', [
+          '%path' => implode(', ', $modifiedPaths),
+          '%tag' => implode(', ', $tags),
+          '%site' => $site->label(),
+          '%url' => $revalidate_url->toString(),
+        ]);
+    }
+
     $this->client->request('POST', $revalidate_url->toString(), [
       'headers' => ['Authorization' => "Bearer $secret"],
-      'json' => ['paths' => array_values(array_unique($paths))],
+      'json' => $revalidations,
+      'timeout' => 5,
     ]);
+
+    if ($this->nextSettingsManager->isDebug()) {
+      $this->loggerFactory->get('stanford_decoupled')
+        ->notice('Successfully revalidated path %path & tag %tag for the site %site. URL: %url', [
+          '%path' => implode(', ', $paths),
+          '%tag' => implode(', ', $tags),
+          '%site' => $site->label(),
+          '%url' => $revalidate_url->toString(),
+        ]);
+    }
   }
 
   /**
