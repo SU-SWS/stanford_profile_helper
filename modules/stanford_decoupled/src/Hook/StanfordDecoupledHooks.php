@@ -33,6 +33,21 @@ class StanfordDecoupledHooks {
   }
 
   /**
+   * Implements hook_config_schema_info_alter().
+   */
+  #[Hook('config_schema_info_alter')]
+  public function configSchemaInfoAlter(&$definitions) {
+    $definitions['next.revalidator.configuration.path']['mapping']['method'] = [
+      'type' => 'string',
+      'label' => 'Request method',
+    ];
+    $definitions['next.revalidator.configuration.path']['mapping']['aggregate'] = [
+      'type' => 'boolean',
+      'label' => 'Aggregate revalidations',
+    ];
+  }
+
+  /**
    * Set graphql settings when a node bundle is created.
    *
    * @param \Drupal\node\NodeTypeInterface $nodeType
