@@ -34,7 +34,7 @@ class RedirectSourceTrashConstraintValidator extends ConstraintValidator impleme
   public function validate(mixed $value, Constraint $constraint): void {
     if (!$value instanceof FieldItemListInterface) {
       throw new \InvalidArgumentException(
-        sprintf('The validated value must be instance of \Drupal\Core\Field\FieldItemListInterface, %s was given.', get_debug_type($item))
+        sprintf('The validated value must be instance of \Drupal\Core\Field\FieldItemListInterface, %s was given.', get_debug_type($value))
       );
     }
     $alias = '/' . $value->getString();
