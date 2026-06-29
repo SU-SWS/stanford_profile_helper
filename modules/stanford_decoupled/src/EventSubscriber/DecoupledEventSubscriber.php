@@ -61,6 +61,9 @@ final class DecoupledEventSubscriber implements EventSubscriberInterface {
    *   Termination event.
    */
   public function onKernelTerminate(TerminateEvent $event): void {
+    if (!$this->database->schema()->tableExists('stanford_decoupled_revalidation')) {
+      return;
+    }
     $query = $this->database->select('stanford_decoupled_revalidation', 's')
       ->fields('s')
       ->execute();

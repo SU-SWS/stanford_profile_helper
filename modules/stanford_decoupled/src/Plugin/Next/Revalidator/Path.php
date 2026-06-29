@@ -137,7 +137,10 @@ class Path extends NextPath {
 
     /** @var \Drupal\next\Entity\NextSite $site */
     foreach ($sites as $site) {
-      if ($this->configuration['aggregate']) {
+      if (
+        $this->configuration['aggregate'] &&
+        $this->database->schema()->tableExists('stanford_decoupled_revalidation')
+      ) {
         foreach ($paths as $path) {
           // Use merge to reduce duplicates.
           $this->database->merge('stanford_decoupled_revalidation')
