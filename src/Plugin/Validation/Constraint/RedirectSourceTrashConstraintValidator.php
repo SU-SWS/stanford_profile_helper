@@ -31,13 +31,13 @@ class RedirectSourceTrashConstraintValidator extends ConstraintValidator impleme
   /**
    * {@inheritdoc}
    */
-  public function validate(mixed $item, Constraint $constraint): void {
-    if (!$item instanceof FieldItemListInterface) {
+  public function validate(mixed $value, Constraint $constraint): void {
+    if (!$value instanceof FieldItemListInterface) {
       throw new \InvalidArgumentException(
         sprintf('The validated value must be instance of \Drupal\Core\Field\FieldItemListInterface, %s was given.', get_debug_type($item))
       );
     }
-    $alias = '/' . $item->getString();
+    $alias = '/' . $value->getString();
     $query = $this->database->select('path_alias', 'p')->fields('p');
     $query->leftJoin('node_field_data', 'n', "n.nid = REPLACE(p.path, '/node/', '')");
     $result = $query->condition('p.alias', $alias)

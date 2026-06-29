@@ -51,7 +51,7 @@ class SimplePreview extends ConfigurablePreviewUrlGeneratorBase {
   /**
    * {@inheritdoc}
    */
-  public function generate(NextSiteInterface $next_site, EntityInterface $entity, string $resource_version = NULL): ?Url {
+  public function generate(NextSiteInterface $next_site, EntityInterface $entity, ?string $resource_version = NULL): ?Url {
     $query = [
       'slug' => $entity->toUrl()->toString(TRUE)->getGeneratedUrl(),
       'secret' => $next_site->getPreviewSecret(),

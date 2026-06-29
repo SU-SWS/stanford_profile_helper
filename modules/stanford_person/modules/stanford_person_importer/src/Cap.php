@@ -229,7 +229,7 @@ class Cap implements CapInterface {
    *
    * @throws \Exception
    */
-  protected function insertOrgData(array $org_data, TermInterface $parent = NULL): void {
+  protected function insertOrgData(array $org_data, ?TermInterface $parent = NULL): void {
     if (!isset($org_data['orgCodes'])) {
       return;
     }

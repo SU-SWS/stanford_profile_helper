@@ -41,7 +41,7 @@ interface NotificationServiceInterface {
    * @return \Drupal\stanford_notifications\Entity\Notification[]
    *   Array of notifications for the user.
    */
-  public function getUserNotifications(AccountInterface $account = NULL);
+  public function getUserNotifications(?AccountInterface $account = NULL);
 
   /**
    * Clear out all notifications for the user.

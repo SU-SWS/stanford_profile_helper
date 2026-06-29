@@ -314,7 +314,7 @@ class MigrateExecutableTest implements MigrateExecutableInterface {
   /**
    * {@inheritDoc}.
    */
-  public function processRow(Row $row, array $process = NULL, $value = NULL) {
+  public function processRow(Row $row, ?array $process = NULL, $value = NULL) {
 
   }
 
