@@ -23,6 +23,7 @@ class RedirectPathTest extends KernelTestBase {
     'stanford_decoupled',
     'graphql_compose',
     'entity_usage',
+    'next',
   ];
 
   protected $responseCode = 404;

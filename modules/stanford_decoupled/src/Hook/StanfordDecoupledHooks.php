@@ -9,6 +9,7 @@ use Drupal\Core\Config\Entity\ConfigEntityInterface;
 use Drupal\Core\Field\FieldConfigInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\node\NodeTypeInterface;
+use Drupal\stanford_decoupled\Plugin\Next\Revalidator\Path;
 
 /**
  * Hooks to help decoupled functionality.
@@ -22,6 +23,29 @@ class StanfordDecoupledHooks {
    *   Config factory service.
    */
   public function __construct(protected ConfigFactoryInterface $configFactory) {}
+
+  /**
+   * @param $plugins
+   */
+  #[Hook('next_revalidator_info_alter')]
+  public function nextRevalidatorInfoAlter(&$plugins) {
+    $plugins['path']['class'] = Path::class;
+  }
+
+  /**
+   * Implements hook_config_schema_info_alter().
+   */
+  #[Hook('config_schema_info_alter')]
+  public function configSchemaInfoAlter(&$definitions) {
+    $definitions['next.revalidator.configuration.path']['mapping']['method'] = [
+      'type' => 'string',
+      'label' => 'Request method',
+    ];
+    $definitions['next.revalidator.configuration.path']['mapping']['aggregate'] = [
+      'type' => 'boolean',
+      'label' => 'Aggregate revalidations',
+    ];
+  }
 
   /**
    * Set graphql settings when a node bundle is created.

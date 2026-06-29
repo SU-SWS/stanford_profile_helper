@@ -153,7 +153,7 @@ class NotificationService implements NotificationServiceInterface {
   /**
    * {@inheritDoc}
    */
-  public function getUserNotifications(AccountInterface $account = NULL) {
+  public function getUserNotifications(?AccountInterface $account = NULL) {
     if (!$account) {
       $account = $this->currentUser;
     }

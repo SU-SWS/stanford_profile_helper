@@ -465,7 +465,7 @@ class ImporterStep5FieldMappingForm extends WordPressImporterFormBase {
    * @return array
    *   Indexed array of key paths.
    */
-  protected function flattenArrayAndGetKeys(array $array, string $parentKey = NULL): array {
+  protected function flattenArrayAndGetKeys(array $array, ?string $parentKey = NULL): array {
     $flatKeys = [];
 
     foreach ($array as $key => $value) {

@@ -51,7 +51,7 @@ function stanford_person_importer_node_presave(NodeInterface $entity) {
   /** @var \Drupal\stanford_migrate\StanfordMigrateInterface $stanford_migrate */
   $stanford_migrate = \Drupal::service('stanford_migrate');
   // Don't worry about nodes that were manually created or if the field is gone.
-  if (!$entity->hasField('su_person_photo') || !$stanford_migrate->getNodesMigration($entity)) {
+  if (!$entity->hasField('su_person_photo') || !$stanford_migrate->getEntityMigration($entity)) {
     return;
   }
   $photo_values = $entity->get('su_person_photo')->getValue();

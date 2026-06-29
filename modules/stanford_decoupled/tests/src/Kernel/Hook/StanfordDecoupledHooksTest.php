@@ -41,7 +41,8 @@ class StanfordDecoupledHooksTest extends KernelTestBase {
     'image',
     'config_pages',
     'stanford_decoupled',
-    'entity_usage'
+    'entity_usage',
+    'next',
   ];
 
   /**
@@ -66,7 +67,15 @@ class StanfordDecoupledHooksTest extends KernelTestBase {
     $this->installEntitySchema('file');
     $this->installEntitySchema('paragraph');
     $this->installEntitySchema('config_pages');
-    $this->installConfig(['field', 'node', 'taxonomy', 'media', 'system', 'file', 'image']);
+    $this->installConfig([
+      'field',
+      'node',
+      'taxonomy',
+      'media',
+      'system',
+      'file',
+      'image',
+    ]);
 
     // Initialize the GraphQL config.
     $this->config('graphql_compose.settings')->save();

@@ -7,3 +7,10 @@ stanford_decoupled.settings:
       sequence:
         type: string
         label: Entity Type ID
+
+next.preview_url_generator.configuration.simple_preview:
+  type: mapping
+  mapping:
+    vercel_bypass:
+      type: string
+      label: 'Vercel Deployment Protection bypass'

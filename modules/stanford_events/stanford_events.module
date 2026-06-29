@@ -89,10 +89,11 @@ function stanford_events_views_post_render(ViewExecutable $view, &$output, Cache
  */
 function stanford_events_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
 
-  // Only run on stanford news items.
-  if ($entity->bundle() !== "stanford_event" || !node_is_page($entity)) {
+  // Only run on stanford event items.
+  if ($entity->bundle() !== "stanford_event" || $view_mode != "view") {
     return;
   }
+  dpm($view_mode);
 
   if ($entity->hasField('su_event_date_time')) {
     $date_time = $entity->get('su_event_date_time')->getValue();

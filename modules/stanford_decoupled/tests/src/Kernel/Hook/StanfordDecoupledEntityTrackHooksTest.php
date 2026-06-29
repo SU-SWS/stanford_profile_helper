@@ -45,6 +45,7 @@ class StanfordDecoupledEntityTrackHooksTest extends KernelTestBase {
     'entity_usage',
     'next',
     'stanford_decoupled',
+    'next',
   ];
 
   /**
