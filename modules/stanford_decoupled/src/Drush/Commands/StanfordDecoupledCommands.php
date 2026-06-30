@@ -47,6 +47,7 @@ final class StanfordDecoupledCommands extends DrushCommands {
   #[CLI\Argument(name: 'domain', description: 'Next.js Domain.')]
   #[CLI\Option(name: 'preview-secret', description: 'Use a specific preview secret')]
   #[CLI\Option(name: 'revalidation-secret', description: 'Use a specific revalidation secret')]
+  #[CLI\Option(name: 'invisible', description: 'Configure the next entity types to not enable "Draft preview"')]
   #[CLI\Option(name: 'format', description: 'Format the result data. Available formats: json,string')]
   #[CLI\Usage(name: 'stanford-decoupled:connect-next "http://localhost:3000"', description: 'Create a next site entity to connect with Next.JS site')]
   public function connectNextSite($domain = 'http://localhost:3000', $options = [
@@ -54,6 +55,7 @@ final class StanfordDecoupledCommands extends DrushCommands {
     'preview-secret' => NULL,
     'revalidation-secret' => NULL,
     'format' => 'string',
+    'invisible' => FALSE,
   ]
   ) {
     $domain = trim($domain);
@@ -77,6 +79,14 @@ final class StanfordDecoupledCommands extends DrushCommands {
     $site->setPreviewUrl("$domain/api/draft");
 
     $site->save();
+
+    if ($this->input()->getOption('invisible')) {
+      $entityConfigs = $this->entityTypeManager->getStorage('next_entity_type_config')
+        ->loadMultiple();
+      foreach ($entityConfigs as $entityConfig) {
+        $entityConfig->set("draft_enabled", FALSE)->save();
+      }
+    }
 
     $nextjs_pass = $this->passwordGenerator->generate(20);
     $nextjs_users = $this->entityTypeManager->getStorage('user')
@@ -108,9 +118,11 @@ final class StanfordDecoupledCommands extends DrushCommands {
       ->setPassword($nextjs_admin_pass)
       ->save();
 
-    $this->configFactory->getEditable('system.theme')
-      ->set('default', 'stanford_profile_admin_theme')
-      ->save();
+    if (!$this->input()->getOption('invisible')) {
+      $this->configFactory->getEditable('system.theme')
+        ->set('default', 'stanford_profile_admin_theme')
+        ->save();
+    }
 
     $output = [
       'DRUPAL_PREVIEW_SECRET' => $site->getPreviewSecret(),

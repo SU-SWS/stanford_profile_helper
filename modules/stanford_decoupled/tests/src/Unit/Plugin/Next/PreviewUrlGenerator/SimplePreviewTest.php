@@ -133,7 +133,7 @@ class SimplePreviewTest extends UnitTestCase {
 
     $url = $plugin->generate($site, $entity)->toString();
     $this->assertEquals(
-      'http://example.test/preview?slug=/node/1&secret=token123&x-vercel-protection-bypass=bypass-secret',
+      'http://example.test/preview?slug=/node/1&secret=token123&x-vercel-protection-bypass=bypass-secret&x-vercel-set-bypass-cookie=samesitenone',
       $url
     );
   }

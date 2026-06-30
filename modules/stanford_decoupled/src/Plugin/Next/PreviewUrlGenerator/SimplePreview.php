@@ -52,11 +52,12 @@ class SimplePreview extends ConfigurablePreviewUrlGeneratorBase {
    * {@inheritdoc}
    */
   public function generate(NextSiteInterface $next_site, EntityInterface $entity, ?string $resource_version = NULL): ?Url {
+    $vercel_bypass = $this->configuration['vercel_bypass'] ?? NULL;
     $query = [
       'slug' => $entity->toUrl()->toString(TRUE)->getGeneratedUrl(),
       'secret' => $next_site->getPreviewSecret(),
-      'x-vercel-protection-bypass' => $this->configuration['vercel_bypass'] ?? NULL,
-      'x-vercel-set-bypass-cookie' => $this->configuration['vercel_bypass'] ? 'samesitenone' : NULL,
+      'x-vercel-protection-bypass' => $vercel_bypass,
+      'x-vercel-set-bypass-cookie' => $vercel_bypass ? 'samesitenone' : NULL,
     ];
     try {
       return Url::fromUri($next_site->getPreviewUrl(), ['query' => array_filter($query),]);
