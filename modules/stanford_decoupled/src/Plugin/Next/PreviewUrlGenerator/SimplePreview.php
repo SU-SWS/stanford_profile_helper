@@ -55,7 +55,8 @@ class SimplePreview extends ConfigurablePreviewUrlGeneratorBase {
     $query = [
       'slug' => $entity->toUrl()->toString(TRUE)->getGeneratedUrl(),
       'secret' => $next_site->getPreviewSecret(),
-      'x-vercel-protection-bypass' => $this->configuration['vercel_bypass'] ?? '',
+      'x-vercel-protection-bypass' => $this->configuration['vercel_bypass'] ?? NULL,
+      'x-vercel-set-bypass-cookie' => $this->configuration['vercel_bypass'] ? 'samesitenone' : NULL,
     ];
     try {
       return Url::fromUri($next_site->getPreviewUrl(), ['query' => array_filter($query),]);

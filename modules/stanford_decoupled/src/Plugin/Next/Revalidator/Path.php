@@ -134,12 +134,12 @@ class Path extends NextPath {
       'paths' => array_values(array_unique($modifiedPaths)),
       'tags' => array_values(array_unique($tags)),
     ];
-
+    $schema = $this->database->schema();
     /** @var \Drupal\next\Entity\NextSite $site */
     foreach ($sites as $site) {
       if (
         $this->configuration['aggregate'] &&
-        $this->database->schema()->tableExists('stanford_decoupled_revalidation')
+        $schema->tableExists('stanford_decoupled_revalidation')
       ) {
         foreach ($paths as $path) {
           // Use merge to reduce duplicates.
@@ -168,8 +168,14 @@ class Path extends NextPath {
           ]);
         }
 
+        $previewConfig = $this->nextSettingsManager->get('preview_url_generator_configuration');
+        $headers = ['Authorization' => "Bearer $secret"];
+        if ($vercelBypass = $previewConfig['vercel_bypass'] ?? '') {
+          $headers['x-vercel-protection-bypass'] = $vercelBypass;
+        }
+
         $response = $this->httpClient->request('POST', $revalidate_url->toString(), [
-          'headers' => ['Authorization' => "Bearer $secret"],
+          'headers' => $headers,
           'json' => $revalidations,
           'timeout' => 5,
         ]);

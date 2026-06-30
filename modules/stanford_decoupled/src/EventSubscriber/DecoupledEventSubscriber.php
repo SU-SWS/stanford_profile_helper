@@ -61,7 +61,8 @@ final class DecoupledEventSubscriber implements EventSubscriberInterface {
    *   Termination event.
    */
   public function onKernelTerminate(TerminateEvent $event): void {
-    if (!$this->database->schema()->tableExists('stanford_decoupled_revalidation')) {
+    if (!$this->database->schema()
+      ->tableExists('stanford_decoupled_revalidation')) {
       return;
     }
     $query = $this->database->select('stanford_decoupled_revalidation', 's')
@@ -142,8 +143,13 @@ final class DecoupledEventSubscriber implements EventSubscriberInterface {
         ]);
     }
 
+    $previewConfig = $this->nextSettingsManager->get('preview_url_generator_configuration');
+    $headers = ['Authorization' => "Bearer $secret"];
+    if ($vercelBypass = $previewConfig['vercel_bypass'] ?? '') {
+      $headers['x-vercel-protection-bypass'] = $vercelBypass;
+    }
     $this->client->request('POST', $revalidate_url->toString(), [
-      'headers' => ['Authorization' => "Bearer $secret"],
+      'headers' => $headers,
       'json' => $revalidations,
       'timeout' => 5,
     ]);
