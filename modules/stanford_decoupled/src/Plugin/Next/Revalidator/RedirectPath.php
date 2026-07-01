@@ -8,6 +8,8 @@ use Drupal\next\Event\EntityActionEvent;
 /**
  * Provides a revalidator for redirect paths.
  *
+ * @codeCoverageIgnore
+ *
  * @Revalidator(
  *  id = "redirect_path",
  *  label = "Redirect Path",
