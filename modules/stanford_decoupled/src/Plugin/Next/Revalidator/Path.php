@@ -5,12 +5,9 @@ namespace Drupal\stanford_decoupled\Plugin\Next\Revalidator;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Url;
 use Drupal\next\Event\EntityActionEvent;
-use Drupal\next\NextSettingsManagerInterface;
 use Drupal\next\Plugin\Next\Revalidator\Path as NextPath;
-use GuzzleHttp\ClientInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -35,6 +32,15 @@ class Path extends NextPath {
     return $instance;
   }
 
+  /**
+   * Set the database service on create.
+   *
+   * @param \Drupal\Core\Database\Connection $database
+   *   Database service.
+   *
+   * @return $this
+   *   Self.
+   */
   public function setDatabase(Connection $database) {
     $this->database = $database;
     return $this;
@@ -205,15 +211,15 @@ class Path extends NextPath {
   /**
    * Convert tokens in the additional paths.
    *
-   * @param string $paths
+   * @param string|null $paths
    *   Additional paths config.
    * @param \Drupal\Core\Entity\ContentEntityInterface $entity
    *   Entity being revalidated.
    *
-   * @return string
+   * @return string|null
    *   Adjusted paths.
    */
-  protected static function adjustAdditionalPaths(string $paths, ContentEntityInterface $entity) {
+  protected static function adjustAdditionalPaths(?string $paths = NULL, ContentEntityInterface $entity): ?string {
     return \Drupal::token()
       ->replace($paths, [$entity->getEntityTypeId() => $entity], ['clear' => TRUE]);
   }
