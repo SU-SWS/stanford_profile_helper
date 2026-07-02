@@ -80,7 +80,7 @@ class StanfordDecoupledHooksTest extends KernelTestBase {
     // Initialize the GraphQL config.
     $this->config('graphql_compose.settings')->save();
 
-    $this->hooks = new StanfordDecoupledHooks($this->container->get('config.factory'));
+    $this->hooks = new StanfordDecoupledHooks($this->container->get('config.factory'), $this->container->get('current_route_match'));
   }
 
   /**

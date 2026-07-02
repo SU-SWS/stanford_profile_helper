@@ -4,11 +4,16 @@ declare(strict_types=1);
 
 namespace Drupal\stanford_decoupled\Hook;
 
+use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Field\FieldConfigInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\node\NodeTypeInterface;
+use Drupal\stanford_decoupled\Config\DecoupledConfigOverrides;
 use Drupal\stanford_decoupled\Plugin\Next\Revalidator\Path;
 
 /**
@@ -21,8 +26,34 @@ class StanfordDecoupledHooks {
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   Config factory service.
+   * @param \Drupal\Core\Routing\RouteMatchInterface $routeMatch
+   *   Route match service.
    */
-  public function __construct(protected ConfigFactoryInterface $configFactory) {}
+  public function __construct(protected ConfigFactoryInterface $configFactory, protected RouteMatchInterface $routeMatch) {}
+
+  /**
+   * Implements hook_library_info_alter().
+   */
+  #[Hook('library_info_alter')]
+  public function libraryInfoAlter(&$libraries, $extension) {
+    if (
+      $extension == 'editoria11y' &&
+      DecoupledConfigOverrides::isDecoupled() &&
+      $this->routeMatch->getRouteName() == 'entity.node.canonical'
+    ) {
+      // Disable Editoria11y library if the site is decoupled to avoid confusion.
+      $libraries = [];
+    }
+  }
+
+  /**
+   * Implements hook_ENTITY_TYPE_access().
+   */
+  #[Hook('layout_access')]
+  public function layoutAccess(EntityInterface $entity, $operation, AccountInterface $account) {
+    // Only allow access if the site is decoupled. Otherwise, don't change access.
+    return AccessResult::allowedIf($operation == 'view' && DecoupledConfigOverrides::isDecoupled());
+  }
 
   /**
    * @param $plugins
