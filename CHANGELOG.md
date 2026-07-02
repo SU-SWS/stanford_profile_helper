@@ -1,5 +1,12 @@
 # Stanford Profile Helper
 
+10.2.9
+--------------------------------------------------------------------------------
+_Release Date: 2026-07-02_
+- Updated decoupled drush command and added schema
+- Improve redirect revalidation to be similar to "Path"
+- Added Vercel bypass for decoupled revalidations
+
 10.2.8
 --------------------------------------------------------------------------------
 _Release Date: 2026-06-29_
