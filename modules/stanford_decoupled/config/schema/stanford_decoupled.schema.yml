@@ -14,3 +14,19 @@ next.preview_url_generator.configuration.simple_preview:
     vercel_bypass:
       type: string
       label: 'Vercel Deployment Protection bypass'
+
+next.revalidator.configuration.redirect_path:
+  type: mapping
+  mapping:
+    revalidate_page:
+      type: boolean
+      label: 'Revalidate page'
+    additional_paths:
+      type: string
+      label: 'Additional paths'
+    method:
+      type: string
+      label: 'Revalidation method'
+    aggregate:
+      type: boolean
+      label: Aggregate revalidations for next execution
