@@ -32,10 +32,10 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
     ],
   ],
   links: [
-    'canonical' => '/admin/structure/citation_type/[citation_type]',
+    'canonical' => '/admin/structure/citation_type/{citation_type}',
     'add-form' => '/admin/structure/citation_type/add',
-    'edit-form' => '/admin/structure/citation_type/[citation_type]/edit',
-    'delete-form' => '/admin/structure/citation_type/[citation_type]/delete',
+    'edit-form' => '/admin/structure/citation_type/{citation_type}/edit',
+    'delete-form' => '/admin/structure/citation_type/{citation_type}/delete',
     'collection' => '/admin/structure/citation_type',
   ],
   admin_permission: 'administer site configuration',
