@@ -1,0 +1,71 @@
+'$schema': 'https://git.drupalcode.org/project/drupal/-/raw/10.1.x/core/modules/sdc/src/metadata.schema.json'
+name: Hero
+description: 'A big graphic element for use as a focal point or a large video.'
+props:
+  type: object
+  properties:
+    header_tag:
+      title: Header Tag Element
+      type: string
+      examples:
+        - h2
+        - h3
+        - h4
+        - div
+    header_classes:
+      title: Header Tag Classes
+      type: string
+      examples:
+        - splash
+    visually_hide_header:
+      title: Visually hide header
+      type: boolean
+      examples:
+        - true
+        - false
+    overlay_position:
+      title: Position of card overlay
+      type: string
+      examples:
+        - left
+        - right
+    wrapper_class:
+      title: Pattern Wrapper Classes
+      type: string
+      examples:
+        - bottom-margin-none
+slots:
+  image:
+    title: Image
+    description: 'A full HTML entity for an image. Can be img or picture.'
+  media:
+    title: Media
+    description: 'iframe or HTML5 video players'
+  super_headline:
+    title: 'Super Headline'
+    description: 'Text heading'
+  headline:
+    title: Headline
+    description: 'The text headline'
+  headline_tag:
+    title: 'Headline Tag'
+    description: 'Tag element for the headline'
+  body:
+    title: Content
+    description: 'An open variable for anything. Generally this would be for WYSIWYG editor contents.'
+  cta_link:
+    title: 'CTA Link'
+    description: 'The href value for the cta field link'
+  cta_attributes:
+    title: 'CTA element attributes'
+    description: 'Any html attributes on the cta link that need to be added. For example: _target.'
+  cta_label:
+    title: 'CTA Label'
+    description: 'The clickable text for the CTA link'
+  button_link:
+    title: 'Button Link'
+    description: 'The href property of the button element'
+  button_label:
+    title: 'Button Label'
+    description: 'The text label of the button component.'
+

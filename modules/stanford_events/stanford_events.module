@@ -93,7 +93,6 @@ function stanford_events_node_view(array &$build, EntityInterface $entity, Entit
   if ($entity->bundle() !== "stanford_event" || $view_mode != "view") {
     return;
   }
-  dpm($view_mode);
 
   if ($entity->hasField('su_event_date_time')) {
     $date_time = $entity->get('su_event_date_time')->getValue();

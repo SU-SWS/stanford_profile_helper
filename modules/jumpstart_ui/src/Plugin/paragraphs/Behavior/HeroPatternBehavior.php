@@ -172,7 +172,6 @@ class HeroPatternBehavior extends ParagraphsBehaviorBase {
    */
   public function view(array &$build, ParagraphInterface $paragraph, EntityViewDisplayInterface $display, $view_mode) {
     // FYI: this adds the class one level above than the pattern template.
-    $build['#attributes']['class'][] = 'overlay-' . $paragraph->getBehaviorSetting('hero_pattern', 'overlay_position', 'left');
     if ($color = $paragraph->getBehaviorSetting('hero_pattern', 'overlay_color')) {
       $build['#attributes']['class'][] = 'overlay-color-' . strtolower(str_replace('#', '', $color));
     }

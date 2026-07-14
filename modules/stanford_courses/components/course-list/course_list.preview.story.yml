@@ -1,0 +1,9 @@
+name: Preview
+slots:
+  course_list_code: MATH101
+  course_list_academic_year: 20xx-20xx
+  course_list_quarters: 'Winter, Spring, Summer, Fall'
+  course_list_title: 'Intro to Math Instruction'
+  course_list_instructors: 'Doe, J.; Smith, J.; Jones, A.'
+  course_list_description: 'In this course, you will learn about mathematics and the basics of teaching it.'
+  course_list_url: 'http://www.stanford.edu/'

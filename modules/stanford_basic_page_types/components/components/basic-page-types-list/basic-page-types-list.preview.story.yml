@@ -1,0 +1,7 @@
+name: Preview
+slots:
+  category: 'Research Project'
+  title: 'Page Title'
+  description: 'This is my page description'
+  page_image: "<img src='https://picsum.photos/900/900/' alt='Example Image' />"
+  footer: "<div class='su-news-edit-article'>Edit</div>"

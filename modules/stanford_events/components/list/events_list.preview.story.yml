@@ -1,0 +1,23 @@
+name: Preview
+slots:
+  start_month: May
+  start_date: '01'
+  end_month: May
+  end_date: '14'
+  headline: 'This is the headline.'
+  subheadline: 'This is the subheadline.'
+  dek: '<p>Sample text goes here and this list should be able to handle a few lines.</p>'
+  url: 'http://www.stanford.edu/'
+  date_time: 'Sunday, Aug 30 2020, 12:00 - 2:00pm PST'
+  location: '1234 Main Street, Stanford, CA 94305, United States'
+  address: '1234 Main Street, Stanford, CA 94305, United States'
+  location_organization: 'Company Name'
+  location_address_line1: '1234 Main Street'
+  location_address_line2: 'Suite 10'
+  location_locality: Stanford
+  location_administrative_area: California
+  location_dependent_locality: '1234 Main Street, Stanford, CA 94305, United States'
+  location_country_code: 'United States'
+  location_postal_code: '1234 Main Street, Stanford, CA 94305, United States'
+  location_sorting_code: '94305'
+  edit: 'http://www.stanford.edu'

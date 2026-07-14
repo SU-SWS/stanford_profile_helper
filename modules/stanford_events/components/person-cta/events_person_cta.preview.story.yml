@@ -1,0 +1,6 @@
+name: Preview
+slots:
+  image: '<img src="https://placeimg.com/640/480/people" alt />'
+  name: 'John Wick'
+  title: 'Director of the department of redundancy department'
+  link: 'https://google.com/'

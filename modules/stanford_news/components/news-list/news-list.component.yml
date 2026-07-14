@@ -1,0 +1,37 @@
+name: 'News List Item'
+description: 'Building block component for the news list page.'
+_template: '@news/news-list/news-item-list.twig'
+variants:
+  default:
+    title: Default
+  h3_header:
+    title: 'H3 Header'
+slots:
+  news_list_image:
+    title: Image
+    description: 'The list image.'
+  news_list_publishing_date:
+    title: Date
+    description: 'Publishing date'
+  news_list_headline:
+    title: Headline
+    description: 'Text heading'
+  news_list_dek:
+    title: Dek
+    description: 'This is the dek specific to news items.'
+  news_list_topics:
+    title: Topics
+    description: 'Associated terms from the topics taxonomy.'
+  news_source:
+    title: Source
+    description: 'The source field.'
+  news_url:
+    title: 'URL for item'
+    description: 'URL for image and heading'
+  news_list_footer:
+    title: Footer
+    description: 'An open footer area.'
+libraryOverrides:
+  css:
+    component:
+      ../../../dist/css/news-list-item.css: {  }

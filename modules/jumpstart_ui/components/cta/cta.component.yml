@@ -1,0 +1,38 @@
+name: CTA
+description: 'Call to action component with clickable image and button.'
+variants:
+  default:
+    title: Default
+    description: Default
+  bottom:
+    title: 'Button under image link'
+    description: 'Place the button below the image.'
+  icon:
+    title: Icon
+    description: 'Icon centered on image link with button underneath.'
+  center:
+    title: Centered
+    description: 'Button centered on image link'
+slots:
+  image_src:
+    title: 'Image Source'
+    description: 'The uri path to the image.'
+  image_alt:
+    title: "The image's alt text"
+    description: 'The alt text html property'
+  button_text:
+    title: 'Button Label'
+    description: 'The text to use for the button'
+  link:
+    title: 'Link URL'
+    description: 'A plain text string of just the URL'
+  icon_src:
+    title: 'Icon Source'
+    description: 'The uri path to the icon image'
+  icon_alt:
+    title: 'Icon alt text'
+    description: 'The alt text html property'
+libraryOverrides:
+  css:
+    component:
+      ../../../dist/css/cta.css: {  }

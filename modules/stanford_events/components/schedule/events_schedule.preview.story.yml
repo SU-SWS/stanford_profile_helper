@@ -1,0 +1,7 @@
+name: Preview
+slots:
+  time: '2:00pm - 3:00pm'
+  headline: 'Lightning talks'
+  description: 'Director of the department of redundancy department will begin a speach about speaches.'
+  location: '321 University BLVD, Palo Alto, CA, 93256'
+  url: 'https://www.stanford.edu/'

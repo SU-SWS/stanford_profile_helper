@@ -1,4 +1,4 @@
-basic-page-types-list:
+basic_page_types_list:
   label: Basic Page Types List
   description: "Building block component for the basic page types list page."
   fields:

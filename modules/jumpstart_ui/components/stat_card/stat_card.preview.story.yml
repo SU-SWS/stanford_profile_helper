@@ -1,0 +1,7 @@
+name: Preview
+slots:
+  card_image: "<img src='https://picsum.photos/900/900/' alt='Example Image' />"
+  card_super_headline: 'This is a super headline'
+  card_headline: 'This is the headline'
+  card_body: '<p>Sample text goes here and this card should be able to handle a few lines.</p>'
+  card_link: 'https://www.stanford.edu/?a=b&c=d'

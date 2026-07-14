@@ -1,0 +1,41 @@
+name: Alert
+description: 'Alert message.'
+variants:
+  default:
+    title: Default
+    description: 'Default alert'
+  error:
+    title: Error
+    description: 'Error alert'
+  success:
+    title: Success
+    description: 'Succes alert'
+  warning:
+    title: Warning
+    description: 'Warning alert'
+  info:
+    title: Info
+    description: 'Info alert'
+slots:
+  alert_icon:
+    title: Icon
+    description: 'The icon to use'
+  alert_label:
+    title: Label
+    description: 'The label of the alert that sits beside the icon'
+  alert_header:
+    title: Header
+    description: 'Larger alert synopsis text.'
+  alert_text:
+    title: Content
+    description: 'The body of the alert message.'
+  alert_dismiss:
+    title: 'Alert Dismiss'
+    description: 'boolean flag to show the dismiss button.'
+  alert_footer:
+    title: 'Alert Footer'
+    description: 'An open area below the body content for arbitrary content.'
+libraryOverrides:
+  css:
+    component:
+      ../../../dist/css/alert.css: {  }

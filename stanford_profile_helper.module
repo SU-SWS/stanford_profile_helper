@@ -959,9 +959,9 @@ function _stanford_profile_helper_get_assignable_roles(): array {
 function stanford_profile_helper_component_info_alter(&$components) {
   foreach ($components as $id => $component) {
     // Check if the provider of the PDB component is enabled.
-    if (!_stanford_profile_helper_extension_enabled($component)) {
-      unset($components[$id]);
-    }
+//    if (!_stanford_profile_helper_extension_enabled($component)) {
+//      unset($components[$id]);
+//    }
   }
 }
 

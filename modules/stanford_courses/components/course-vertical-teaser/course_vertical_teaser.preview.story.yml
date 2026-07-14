@@ -1,0 +1,6 @@
+name: Preview
+slots:
+  course_code: MATH101
+  course_academic_year: 20xx-20xx
+  course_title: 'Link to taxonomy terms'
+  course_url: 'https://www.stanford.edu'

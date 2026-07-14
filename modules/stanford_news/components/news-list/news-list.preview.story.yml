@@ -1,0 +1,9 @@
+name: Preview
+slots:
+  news_list_image: "<img src='https://picsum.photos/900/900/' alt='Example Image' />"
+  news_list_publishing_date: 'This is the published date.'
+  news_list_headline: 'This is the headline.'
+  news_list_dek: '<p>Sample text goes here and this list should be able to handle a few lines.</p>'
+  news_list_topics: 'Link to taxonomy terms'
+  news_source: 'I am a link'
+  news_url: 'http://www.stanford.edu/'

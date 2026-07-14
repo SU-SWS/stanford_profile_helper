@@ -1,0 +1,31 @@
+name: Button
+description: 'Button element'
+variants:
+  default:
+    title: Default
+    description: Default
+  secondary:
+    title: Secondary
+    description: 'Secondary Button'
+  big:
+    title: 'Big Button'
+    description: 'Its a big button'
+  nostyle:
+    title: Unstyled
+    description: 'No styles applied.'
+slots:
+  button_label:
+    title: Label
+    description: 'The text to display as the button'
+  button_value:
+    title: 'Submit Value'
+  button_name:
+    title: 'Button Name'
+    description: "The button's name property"
+  button_type:
+    title: 'Button Type'
+    description: 'The button type. Eg: submit | button | reset.'
+libraryOverrides:
+  css:
+    component:
+      ../../../dist/css/button.css: {  }

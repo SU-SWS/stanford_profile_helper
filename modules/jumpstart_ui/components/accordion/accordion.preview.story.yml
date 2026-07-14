@@ -1,0 +1,4 @@
+name: Preview
+slots:
+  title: 'Accordion Title'
+  contents: '<p>Lorem Ipsum</p>'

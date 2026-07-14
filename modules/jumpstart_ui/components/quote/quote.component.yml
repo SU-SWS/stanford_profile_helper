@@ -1,0 +1,22 @@
+name: Quote
+description: 'A quote element.'
+slots:
+  text:
+    title: 'Quote Text'
+    description: 'The contents of the quote.'
+  bio:
+    title: "Author's Bio"
+    description: ''
+  name:
+    title: "Author's Name"
+    description: 'The author of the quote'
+  src:
+    title: 'Image Source'
+    description: 'The uri path to the image'
+  alt:
+    title: 'Image alt text'
+    description: 'The alt text html property'
+libraryOverrides:
+  css:
+    component:
+      ../../../dist/css/quote.css: {  }

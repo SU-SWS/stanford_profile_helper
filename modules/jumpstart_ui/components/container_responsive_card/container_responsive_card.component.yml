@@ -1,0 +1,15 @@
+name: 'Container Responsive Card'
+description: 'This card component comes with several fields to ensure flexibility.'
+slots:
+  image:
+    title: Image
+    description: 'The cards image.'
+  eyebrow:
+    title: Eyebrow
+    description: 'Text eyebrow. Second in the reading order.'
+  heading:
+    title: Heading
+    description: 'Text heading. First in the reading order.'
+  body:
+    title: Body
+    description: 'An open variable for anything. Generally this would be for WYSIWYG editor contents'

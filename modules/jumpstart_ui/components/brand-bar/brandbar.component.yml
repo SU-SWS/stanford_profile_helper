@@ -1,0 +1,19 @@
+name: 'Brand Bar'
+description: 'Stanford brand bar with the wordmark logo that links to the Stanford homepage. The brand bar sits at the very top of a website.'
+variants:
+  default:
+    title: Default
+    description: Default
+  bright:
+    title: Bright
+    description: 'White wordmark on bright red background'
+  dark:
+    title: Dark
+    description: 'White wordmark on dark grey background'
+  white:
+    title: White
+    description: 'Cardinal red wordmark on white background'
+libraryOverrides:
+  css:
+    component:
+      ../../../dist/css/brand-bar.css: {  }

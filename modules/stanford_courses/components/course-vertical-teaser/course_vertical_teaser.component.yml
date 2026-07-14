@@ -1,0 +1,25 @@
+name: 'Course Vertical Teaser'
+description: 'Course Vertical Teaser'
+variants:
+  default:
+    title: Default
+  h3_header:
+    title: 'H3 Header'
+slots:
+  course_code:
+    title: 'Course Code'
+    description: 'The course subject and code'
+  course_academic_year:
+    title: 'Course Academic Year'
+    description: 'The academic year offered'
+  course_title:
+    title: Title
+    description: 'The course title'
+  course_url:
+    title: URL
+    description: 'The link to the course'
+libraryOverrides:
+  css:
+    component:
+      ../../../dist/css/course-vertical-teaser.css:
+        weight: 1000

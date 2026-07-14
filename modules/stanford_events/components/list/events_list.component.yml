@@ -1,0 +1,77 @@
+name: 'Events List Item'
+description: 'Building block component for the events list page.'
+variants:
+  default:
+    title: Default
+  h3_header:
+    title: 'H3 Header'
+slots:
+  start_month:
+    title: 'Start Month'
+    description: 'Event Month'
+  start_date:
+    title: 'Start Date'
+    description: 'Event date'
+  end_month:
+    title: 'End Month'
+    description: 'Event Month'
+  end_date:
+    title: 'End Date'
+    description: 'Event ending date'
+  event_type:
+    title: 'Event Type'
+    description: 'The type of the event.'
+  headline:
+    title: Headline
+    description: 'Text heading'
+  subheadline:
+    title: Subheadline
+    description: 'Text subheadline.'
+  dek:
+    title: Dek
+    description: 'This is the dek specific to news items.'
+  url:
+    title: 'URL for event'
+    description: 'URL for event.'
+  date_time:
+    title: 'Date and time for event'
+    description: 'Date and time for the event.'
+  location:
+    title: 'Location for event'
+    description: 'Location for the event.'
+  address:
+    title: 'Formatted location for event'
+    description: 'Formatted location for the event.'
+  location_organization:
+    title: 'Company name'
+    description: 'Manually entered address for event'
+  location_address_line1:
+    title: 'Address Line 1'
+    description: 'Manually entered address for event'
+  location_address_line2:
+    title: 'Address Line 2'
+    description: 'Manually entered address for event'
+  location_locality:
+    title: Locality/City
+    description: 'Manually entered address for event'
+  location_administrative_area:
+    title: 'Administrative Area/State'
+    description: 'Manually entered address for event'
+  location_dependent_locality:
+    title: 'Dependent Locality'
+    description: 'Manually entered address for event'
+  location_country_code:
+    title: Country
+    description: 'Manually entered address for event'
+  location_postal_code:
+    title: 'Postal Code'
+    description: 'Manually entered address for event'
+  location_sorting_code:
+    title: 'Sorting Code'
+    description: 'Manually entered address for event'
+  edit:
+    title: 'Edit this Event'
+    description: 'Button to edit the content.'
+libraryOverrides:
+  dependencies:
+    - stanford_events/events_list

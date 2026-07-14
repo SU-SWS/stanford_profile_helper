@@ -1,0 +1,25 @@
+name: 'Event Schedule'
+description: 'A place time and people paragraph.'
+slots:
+  time:
+    title: Time
+    description: 'The events time span'
+  headline:
+    title: Headline
+    description: 'The schedule item headline'
+  description:
+    title: Description
+    description: 'A description of the schedule item'
+  location:
+    title: Location
+    description: 'Where this thing is.'
+  url:
+    title: URL
+    description: 'Link the heading to something.'
+  speakers:
+    title: Speakers
+    description: 'A rendered list of speakers.'
+libraryOverrides:
+  css:
+    component:
+      ../../../dist/css/stanford_events.event-schedule.css: {  }

@@ -1,0 +1,22 @@
+name: 'Basic Page Types List'
+description: 'Building block component for the basic page types list page.'
+slots:
+  category:
+    title: Topic
+    description: 'The term from the basic page types taxonomy.'
+  title:
+    title: Title
+    description: 'The title of the page'
+  description:
+    title: 'Page Description'
+    description: 'The page description'
+  page_image:
+    title: 'Page Image'
+    description: 'The page image from the page metadata.'
+  footer:
+    title: Footer
+    description: 'An open footer area.'
+libraryOverrides:
+  css:
+    component:
+      ../../../dist/css/component/basic-page-type-list.css: {  }

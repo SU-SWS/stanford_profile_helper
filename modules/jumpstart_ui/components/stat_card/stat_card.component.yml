@@ -1,0 +1,25 @@
+name: 'Stat Card'
+description: 'One of the primary building block components. This card component comes with several fields to ensure flexibility.'
+slots:
+  card_image:
+    title: Image
+    description: 'The cards image.'
+  card_icon:
+    title: Icon
+  card_super_headline:
+    title: 'Super Headline'
+    description: 'Text heading'
+  card_stat:
+    title: 'Stat Text'
+  card_headline:
+    title: Headline
+    description: 'Text heading'
+  card_body:
+    title: Body
+    description: 'An open variable for anything. Generally this would be for WYSIWYG editor contents'
+  card_link:
+    title: Link
+    description: 'A plain text string of just the URL'
+libraryOverrides:
+  dependencies:
+    - jumpstart_ui/components.stat_card

@@ -1,0 +1,13 @@
+name: Logo
+description: 'For displaying the Stanford University logo using custom font and glyphs. Can be used with the generic logo twig template.'
+slots:
+  href:
+    title: 'Logo Link'
+    description: 'The URL that the logo links to.'
+  logo_text:
+    title: 'Logo Text'
+    description: 'The text for the ligature logo - either Stanford<br>University or Stanford.'
+libraryOverrides:
+  css:
+    component:
+      ../../../dist/css/logo.css: {  }

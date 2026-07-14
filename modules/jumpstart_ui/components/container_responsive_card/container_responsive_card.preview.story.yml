@@ -1,0 +1,6 @@
+name: Preview
+slots:
+  image: "<img src='https://picsum.photos/900/900/' alt='Example Image' />"
+  eyebrow: 'This is a super headline'
+  heading: 'This is the headline'
+  body: '<p>Sample text goes here and this card should be able to handle a few lines.</p>'

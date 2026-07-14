@@ -1,0 +1,43 @@
+name: Media
+description: 'Media element'
+variants:
+  default:
+    title: Default
+    description: Default
+  image:
+    title: Image
+    description: 'An image type'
+  video:
+    title: Video
+    description: 'A video type'
+  audio:
+    title: Audio
+    description: 'An audio type'
+slots:
+  media_caption:
+    title: 'Media caption text'
+    description: 'Contains html markup'
+  media_image_src:
+    title: 'Image source'
+    description: 'absolute or relative'
+  media_link:
+    title: 'Media link'
+    description: 'What to link the media to'
+  media_link_attributes:
+    title: 'Wrapper link attributes'
+    description: "eg: rel='noopener'"
+  media_video_src:
+    title: 'Video Source'
+    description: 'The source media file for a video type'
+  media_audio_src:
+    title: 'Audio Source'
+    description: 'The source media file for the audio type'
+  media_content_attributes:
+    title: 'Content attributes'
+    description: 'eg: autoplay loop muted'
+  media_custom:
+    title: 'Custom embed'
+    description: 'Usually an iframe'
+libraryOverrides:
+  dependencies:
+    - jumpstart_ui/components.media

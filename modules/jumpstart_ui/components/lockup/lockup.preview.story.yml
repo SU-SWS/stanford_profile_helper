@@ -1,0 +1,8 @@
+name: Preview
+slots:
+  link: 'https://www.stanford.edu/'
+  line1: 'Required First Line'
+  line2: 'Optional Second Line'
+  line3: 'Optional Tertiary Line'
+  line4: 'Optional 4th Line'
+  line5: 'Line 5 of the unit/site name text '

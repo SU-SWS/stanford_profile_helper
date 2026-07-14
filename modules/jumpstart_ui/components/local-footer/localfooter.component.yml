@@ -1,0 +1,71 @@
+name: 'Local Footer'
+description: 'Local footer element as specified by the Identity Guidelines.'
+slots:
+  lockup_title:
+    title: lockup_title
+    description: 'The text to use as line1 in the lockup unless'
+  headercontent:
+    title: headercontent
+    description: 'Optional open variable for placing arbitrary content'
+  cell1:
+    title: cell1
+    description: 'Optional open variable for placing arbitrary content'
+  cell2:
+    title: cell2
+    description: 'Optional open variable for placing arbitrary content'
+  cell3:
+    title: cell3
+    description: 'Optional open variable for placing arbitrary content'
+  address:
+    title: address
+    description: 'Optional open variable for address content.'
+  action_links:
+    title: action_links
+    description: 'Either a structured array of links that get rendered'
+  social_links:
+    title: social_links
+    description: 'Either a structured array of links that get rendered'
+  primary_links_header:
+    title: primary_links_header
+  primary_links:
+    title: primary_links
+    description: 'Either a structured array of links that get rendered'
+  secondary_links_header:
+    title: secondary_links_header
+  secondary_links:
+    title: secondary_links
+    description: 'Either a structured array of links that get rendered'
+  signup_form_content:
+    title: signup_form_content
+    description: 'An open variable for placing content above the form.'
+  signup_form_action:
+    title: signup_form_action
+    description: 'The url that the form should submit to.'
+  signup_form_method:
+    title: signup_form_method
+    description: 'The http method in which the form should use (get|post)'
+  signup_form_field_email:
+    title: signup_form_field_email
+    description: 'The name and id of the email field.'
+  signup_form_field_email_placeholder:
+    title: signup_form_field_email_placeholder
+    description: 'The placeholder text for the field.'
+  signup_form_field_submit:
+    title: signup_form_field_submit
+    description: 'The name and id of the submit button.'
+  signup_form_field_submit_value:
+    title: signup_form_field_submit_value
+    description: 'The value of the submit button.'
+  signup_form_fields:
+    title: signup_form_fields
+    description: 'Option variable that allows you to put any additional'
+  weblogin_url:
+    title: weblogin_url
+    description: 'Optional - The url in which a user goes to login with.'
+  weblogin_text:
+    title: weblogin_text
+    description: 'The text to display for the weblogin button link.'
+libraryOverrides:
+  css:
+    component:
+      ../../../dist/css/local-footer.css: {  }

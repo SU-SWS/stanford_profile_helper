@@ -1,0 +1,8 @@
+name: Preview
+slots:
+  alert_icon: '<i class="su-far su-fa-bell"></i>'
+  alert_label: Information
+  alert_header: 'Alert Header.'
+  alert_text: 'This message was brought to you by the good people at Stanford Web Services.'
+  alert_dismiss: true
+  alert_footer: '<a href="#" class="su-link su-link--action">Action Link</a>'

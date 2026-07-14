@@ -1,0 +1,99 @@
+{#
+/**
+ * @file
+ * Hero Component
+ *
+ * A big graphic for use as a focal point or a large video.
+ *
+ * Available variables:
+ * - attributes: For additional HTML attributes not already provided.
+ * - modifier_class: Additional css classes to change look and behaviour.
+ * - media: iframe or HTML5 video players
+ * - image: A full HTML entity for an image. Can be img or picture.
+ * - super_headline: Text heading
+ * - headline: Text heading
+ * - body: An open variable for anything. Generally this would be for
+ *     WYSIWYG editor contents.
+ * - cta_link: The href value for the cta field link
+ * - cta_attributes: Any html attributes on the cta link that need to be
+ *     added. For example: _target.
+ * - cta_label: The clickable text for the CTA link
+ * - button_link: The href property of the button component.
+ * - button_label: The text label of the button component.
+ */
+#}
+
+{#
+Sanitize the Drupal
+#}
+{%- if super_headline|render_clean is empty -%}
+  {%- set super_headline = null -%}
+{%- endif -%}
+{%- if headline|render_clean is empty -%}
+  {%- set headline = null -%}
+{%- endif -%}
+{%- if body|render_clean is empty -%}
+  {%- set body = null -%}
+{%- endif -%}
+{%- if cta_label|render_clean is empty -%}
+  {%- set cta_label = null -%}
+{%- endif -%}
+{%- if button_label|render_clean is empty -%}
+  {%- set button_label = null -%}
+{%- endif -%}
+
+{% if modifier_class is not empty %}
+  {% set attributes = attributes.addClass(modifier_class) %}
+{% endif %}
+
+{% if overlay_position is not empty %}
+  {% set attributes = attributes.addClass("overlay-" ~ overlay_position) %}
+{% endif %}
+
+{% if wrapper_class is not empty %}
+  {% set attributes = attributes.addClass(wrapper_class) %}
+{% endif %}
+
+{% if link is empty and button_link|render_clean is not empty %}
+  {% set link = button_link|render_clean %}
+{% endif %}
+
+<div{{ attributes.addClass("su-hero") }}>
+
+  {# Hero Image or Video #}
+  {% block media %}
+    {% if media is not empty or image is not empty %}
+      <div class="su-hero__media">
+        {% if 'su-hero--youtube' in modifier_class %}
+          {# Support for: iframe #}
+          {{ media }}
+        {% else %}
+          {# Support for: img or picture #}
+          {{ image }}
+        {% endif %}
+      </div>
+    {% endif %}
+  {% endblock %}
+
+  {%- if
+    super_headline is not empty or
+    headline is not empty or
+    body is not empty or
+    link is not empty -%}
+    {# We reuse the card component here. #}
+    {% include "@jumpstart_ui/components/card/card.html.twig" with
+      {
+        "modifier_class": "su-hero__card",
+        "card_super_headline": super_headline|render_clean,
+        "card_headline": headline|render_clean,
+        "card_body": body,
+        "card_link": link,
+        "card_button_label": button_label,
+        "card_cta_label": cta_label,
+        "card_headline_tag": header_tag,
+        "card_headline_attributes": create_attribute({class: (header_classes ~ (visually_hide_header ? " visually-hidden": null))|trim})
+      }
+      only %}
+  {%- endif -%}
+</div>
+

@@ -1,0 +1,19 @@
+name: 'Date Stacked'
+description: 'A pretty calendar date thing.'
+variants:
+  default:
+    title: Default
+    description: Default
+  no-background:
+    title: 'No Background'
+    description: 'No background color.'
+slots:
+  month_of_year:
+    title: 'The month of the year'
+    description: 'eg: Oct.'
+  day_of_month:
+    title: 'Day of month'
+    description: 'eg: 31'
+libraryOverrides:
+  dependencies:
+    - jumpstart_ui/components.date_stacked

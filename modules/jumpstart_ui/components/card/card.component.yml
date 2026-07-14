@@ -1,0 +1,75 @@
+name: Card
+description: 'One of the primary building block compontents. This card component comes with several fields to ensure flexibility.'
+variants:
+  default:
+    title: Default
+    description: Default
+  linked:
+    title: 'Vertical wrapped in link'
+    description: 'Like default but, the whole card is wrapped in a link'
+  postcard:
+    title: Postcard
+    description: 'Horizontal postcard type card'
+  minimal:
+    title: Minimal
+    description: 'Minimal type card'
+  icon:
+    title: Icon
+    description: 'Icon type card'
+  video:
+    title: Video
+    description: 'Video type card'
+  embed:
+    title: Embed
+    description: 'Embed type card'
+slots:
+  card_image:
+    title: Image
+    description: 'The cards image.'
+  card_super_headline:
+    title: 'Super Headline'
+    description: 'Text heading'
+  card_headline:
+    title: Headline
+    description: 'Text heading'
+  card_body:
+    title: Body
+    description: 'An open variable for anything. Generally this would be for WYSIWYG editor contents'
+  card_link:
+    title: 'Link URL'
+    description: 'A plain text string of just the URL'
+  card_cta_attributes:
+    title: 'CTA Attributes'
+    description: 'Additional html attributes to add to the call to action button'
+  card_cta_label:
+    title: 'Link Label'
+    description: 'The clickable text for the CTA link'
+  card_button_label:
+    title: 'Button Label'
+    description: 'The text label of the button component'
+  card_media_wrapper_modifier_class:
+    title: 'Modifier class for the media wrapper'
+    description: 'eg: su-aspect-ratio'
+  card_media_image_src:
+    title: 'Image source'
+    description: 'Image source for media'
+  card_media_icon_image_src:
+    title: 'Icon source'
+    description: 'Img file.'
+  card_media_video_src:
+    title: 'Video Source file'
+    description: 'eg: /something.mp4'
+  card_media_content_attributes:
+    title: 'Media attributes'
+    description: "eg: autoplay loop muted alt='Example image'"
+  card_media_custom:
+    title: 'Custom embed code'
+    description: 'iframes and such'
+  card_allow_media_link:
+    title: 'Allow Media Link'
+    description: 'Allows the media to be linked'
+  card_icon_font_class:
+    title: 'Icon card font class'
+libraryOverrides:
+  dependencies:
+    - jumpstart_ui/components.card

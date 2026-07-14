@@ -15,6 +15,16 @@ const config = {
   wdsPort: 3001,
 };
 
+const componentFiles = glob.sync('./components/**/*.scss');
+
+// 2. Reduce them into an object format: { chunkName: 'filePath' }
+const entryObject = componentFiles.reduce((acc, file) => {
+  // Turn "./src/pages/home/index.js" into "home/index"
+  const entryName = path.relative('./dist/css', file).replace(/\.[^/.]+$/, "");
+  acc[entryName] = file;
+  return acc;
+}, {});
+
 var webpackConfig = {
   entry: {
     "jumpstart_ui":    path.resolve("lib/scss/jumpstart_ui.scss"),
@@ -29,7 +39,6 @@ var webpackConfig = {
     "cta":                  path.resolve("lib/scss/components/cta.component.scss"),
     "date-stacked":         path.resolve("lib/scss/components/date-stacked.component.scss"),
     "global-footer":        path.resolve("lib/scss/components/global-footer.component.scss"),
-    "hero":                 path.resolve("lib/scss/components/hero.component.scss"),
     "link":                 path.resolve("lib/scss/components/link.component.scss"),
     "local-footer":         path.resolve("lib/scss/components/local-footer.component.scss"),
     "lockup":               path.resolve("lib/scss/components/lockup.component.scss"),
@@ -38,6 +47,7 @@ var webpackConfig = {
     "quote":                path.resolve("lib/scss/components/quote.component.scss"),
     "stat_card":            path.resolve("lib/scss/components/stat_card.component.scss"),
     "layout.media-content-layout": path.resolve("lib/scss/layouts/media-content-layout.scss"),
+    ...entryObject
   },
   output: {
     path: config.distFolder,

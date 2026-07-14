@@ -1,0 +1,19 @@
+name: 'Person CTA'
+description: 'A small person postcard like call out.'
+slots:
+  image:
+    title: Image
+    description: Image
+  name:
+    title: 'Person Name'
+    description: 'Persons full name'
+  title:
+    title: Title
+    description: 'Persons full position or title'
+  link:
+    title: 'Person Name Link'
+    description: 'Add a link to the person name.'
+libraryOverrides:
+  css:
+    component:
+      ../../../dist/css/stanford_events.person-cta.css: {  }
