@@ -69,4 +69,29 @@ class JumpstartUiParagraphHooks {
     ];
   }
 
+  #[Hook('preprocess_paragraph__stanford_media_caption')]
+  public function preprocessParagraphStanfordMediaCaption(&$variables) {
+    $variables['content'] = [
+      '#type' => 'component',
+      '#component' => 'jumpstart_ui:media',
+      '#slots' => [
+        'image' => $variables['content']['su_media_caption_media'] ?? NULL,
+        'caption' => $variables['content']['su_media_caption_caption'] ?? NULL,
+        'link' => $variables['content']['su_media_caption_link']?? null,
+      ],
+    ];
+  }
+
+  #[Hook('preprocess_paragraph__stanford_accordion')]
+  public function preprocessParagraphStanfordAccordion(&$variables) {
+    $variables['content'] = [
+      '#type' => 'component',
+      '#component' => 'jumpstart_ui:accordion',
+      '#slots' => [
+        'title' => $variables['content']['su_accordion_title'] ?? NULL,
+        'contents' => $variables['content']['su_accordion_body'] ?? NULL,
+      ],
+    ];
+  }
+
 }

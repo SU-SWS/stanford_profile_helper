@@ -1,3 +1,4 @@
+'$schema': 'https://git.drupalcode.org/project/drupal/-/raw/10.1.x/core/modules/sdc/src/metadata.schema.json'
 name: Accordion
 description: 'Collapsible accordion.'
 slots:
@@ -7,12 +8,3 @@ slots:
   contents:
     title: Contents
     description: 'The contents of the accordion body.'
-libraryOverrides:
-  css:
-    component:
-      ../../../dist/css/accordion.css: {  }
-  js:
-    accordion.js: {  }
-  dependencies:
-    - core/jquery
-    - core/once
