@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\jumpstart_ui\Hook;
 
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\Routing\RouteObjectInterface;
 
 class JumpstartUiParagraphHooks {
 
@@ -77,7 +78,7 @@ class JumpstartUiParagraphHooks {
       '#slots' => [
         'image' => $variables['content']['su_media_caption_media'] ?? NULL,
         'caption' => $variables['content']['su_media_caption_caption'] ?? NULL,
-        'link' => $variables['content']['su_media_caption_link']?? null,
+        'link' => $variables['content']['su_media_caption_link'] ?? NULL,
       ],
     ];
   }
@@ -90,6 +91,27 @@ class JumpstartUiParagraphHooks {
       '#slots' => [
         'title' => $variables['content']['su_accordion_title'] ?? NULL,
         'contents' => $variables['content']['su_accordion_body'] ?? NULL,
+      ],
+    ];
+  }
+
+  #[Hook('preprocess_paragraph__stanford_page_title_banner')]
+  public function preprocessParagraphStanfordPageTitleBanner(&$variables) {
+    $request = \Drupal::request();
+    $route = $request->attributes->get(RouteObjectInterface::ROUTE_OBJECT);
+
+    $page_title = $route ? \Drupal::service('title_resolver')
+      ->getTitle($request, $route) : NULL;
+
+    $variables['content'] = [
+      '#type' => 'component',
+      '#component' => 'jumpstart_ui:hero',
+      '#props' => [
+        'header_tag' => "h1",
+      ],
+      '#slots' => [
+        'image' => $variables['content']['su_title_banner_image'] ?? NULL,
+        'headline' => $page_title,
       ],
     ];
   }

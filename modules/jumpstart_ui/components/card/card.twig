@@ -6,13 +6,7 @@
 {% if headline|render_clean is empty %}
   {% set headline = null %}
 {% endif %}
-
-{#
-You are not allowed to have both action and button at the same time so remove the button
-#}
-{% if cta_label is not empty %}
-  {% set button_label = null %}
-{% endif %}
+{% set button_label = button_label|render_clean %}
 
 
 {{ image }}
@@ -23,14 +17,11 @@ Attributes get passed along so we need to ensure only what we want trickles down
 {% if attributes is empty %}
   {% set attributes = create_attribute() %}
 {% endif %}
+{% set attributes = attributes.addClass("su-card") %}
 
 {% if modifier_class is not empty %}
   {% set attributes = attributes.addClass(modifier_class) %}
 {% endif %}
-
-{% set attributes = attributes.addClass("su-card") %}
-
-
 
 {% if headline_attributes is empty %}
   {% set headline_attributes = create_attribute() %}
@@ -43,11 +34,6 @@ Attributes get passed along so we need to ensure only what we want trickles down
 {% if header_classes is not empty %}
   {% set headline_attributes = headline_attributes.addClass(header_classes) %}
 {% endif %}
-
-{%- if template_path_media is empty -%}
-  {%- set template_path_media = "@decanter/components/media/media.twig" -%}
-{%- endif -%}
-
 
 <{{ is_article or headline is not empty ? "article" : "div" }} {{ attributes }}>
 {# For variant where whole card is a link, add an <a> within the outer wrapper <div> #}
@@ -71,7 +57,7 @@ Attributes get passed along so we need to ensure only what we want trickles down
   {{ body }}
 
   {# Card CTA Link #}
-  {%- if cta_label is not empty %}
+  {%- if cta_label|render_clean is not empty %}
     <a{{ cta_attributes }} href="{{ link }}"
                            class="su-link su-card__link su-link--action">
       {{ cta_label }}
@@ -89,4 +75,3 @@ Attributes get passed along so we need to ensure only what we want trickles down
 </div>{# end of .su-card__contents #}
 
 </{{ is_article or headline is not empty ? "article" : "div" }}>
-

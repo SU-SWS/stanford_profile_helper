@@ -23,24 +23,6 @@
  */
 #}
 
-{#
-Sanitize the Drupal
-#}
-{%- if super_headline|render_clean is empty -%}
-  {%- set super_headline = null -%}
-{%- endif -%}
-{%- if headline|render_clean is empty -%}
-  {%- set headline = null -%}
-{%- endif -%}
-{%- if body|render_clean is empty -%}
-  {%- set body = null -%}
-{%- endif -%}
-{%- if cta_label|render_clean is empty -%}
-  {%- set cta_label = null -%}
-{%- endif -%}
-{%- if button_label|render_clean is empty -%}
-  {%- set button_label = null -%}
-{%- endif -%}
 
 {% if modifier_class is not empty %}
   {% set attributes = attributes.addClass(modifier_class) %}
@@ -52,10 +34,6 @@ Sanitize the Drupal
 
 {% if wrapper_class is not empty %}
   {% set attributes = attributes.addClass(wrapper_class) %}
-{% endif %}
-
-{% if link is empty and button_link|render_clean is not empty %}
-  {% set link = button_link|render_clean %}
 {% endif %}
 
 <div{{ attributes.addClass("su-hero") }}>
@@ -84,8 +62,8 @@ Sanitize the Drupal
     {{ include("jumpstart_ui:card",
       {
         "modifier_class": "su-hero__card",
-        "super_headline": super_headline|render_clean,
-        "headline": headline|render_clean,
+        "super_headline": super_headline,
+        "headline": headline,
         "body": body,
         "link": link,
         "button_label": button_label,
@@ -94,4 +72,5 @@ Sanitize the Drupal
       }, with_context = false) }}
   {%- endif -%}
 </div>
+
 
