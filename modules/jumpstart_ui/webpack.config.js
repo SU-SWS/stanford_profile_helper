@@ -35,7 +35,6 @@ var webpackConfig = {
     "alert":                path.resolve("lib/scss/components/alert.component.scss"),
     "brand-bar":            path.resolve("lib/scss/components/brand-bar.component.scss"),
     "button":               path.resolve("lib/scss/components/button.component.scss"),
-    "card":                 path.resolve("lib/scss/components/card.component.scss"),
     "cta":                  path.resolve("lib/scss/components/cta.component.scss"),
     "date-stacked":         path.resolve("lib/scss/components/date-stacked.component.scss"),
     "global-footer":        path.resolve("lib/scss/components/global-footer.component.scss"),

@@ -81,19 +81,17 @@ Sanitize the Drupal
     body is not empty or
     link is not empty -%}
     {# We reuse the card component here. #}
-    {% include "@jumpstart_ui/components/card/card.html.twig" with
+    {{ include("jumpstart_ui:card",
       {
         "modifier_class": "su-hero__card",
-        "card_super_headline": super_headline|render_clean,
-        "card_headline": headline|render_clean,
-        "card_body": body,
-        "card_link": link,
-        "card_button_label": button_label,
-        "card_cta_label": cta_label,
-        "card_headline_tag": header_tag,
-        "card_headline_attributes": create_attribute({class: (header_classes ~ (visually_hide_header ? " visually-hidden": null))|trim})
-      }
-      only %}
+        "super_headline": super_headline|render_clean,
+        "headline": headline|render_clean,
+        "body": body,
+        "link": link,
+        "button_label": button_label,
+        "header_tag": header_tag,
+        "headline_attributes": create_attribute({class: (header_classes ~ (visually_hide_header ? " visually-hidden": null))|trim})
+      }, with_context = false) }}
   {%- endif -%}
 </div>
 

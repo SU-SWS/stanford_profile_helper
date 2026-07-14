@@ -1,0 +1,92 @@
+{#
+# Sanitize some of the Drupalness in the picky fields.
+#}
+{%- set cta_label = cta_label|render_clean -%}
+{%- set link = link|render_clean -%}
+{% if headline|render_clean is empty %}
+  {% set headline = null %}
+{% endif %}
+
+{#
+You are not allowed to have both action and button at the same time so remove the button
+#}
+{% if cta_label is not empty %}
+  {% set button_label = null %}
+{% endif %}
+
+
+{{ image }}
+
+{#
+Attributes get passed along so we need to ensure only what we want trickles down to the nested templates.
+#}
+{% if attributes is empty %}
+  {% set attributes = create_attribute() %}
+{% endif %}
+
+{% if modifier_class is not empty %}
+  {% set attributes = attributes.addClass(modifier_class) %}
+{% endif %}
+
+{% set attributes = attributes.addClass("su-card") %}
+
+
+
+{% if headline_attributes is empty %}
+  {% set headline_attributes = create_attribute() %}
+{% endif %}
+
+{% if visually_hide_header %}
+  {% set headline_attributes = headline_attributes.addClass("visually-hidden") %}
+{% endif %}
+
+{% if header_classes is not empty %}
+  {% set headline_attributes = headline_attributes.addClass(header_classes) %}
+{% endif %}
+
+{%- if template_path_media is empty -%}
+  {%- set template_path_media = "@decanter/components/media/media.twig" -%}
+{%- endif -%}
+
+
+<{{ is_article or headline is not empty ? "article" : "div" }} {{ attributes }}>
+{# For variant where whole card is a link, add an <a> within the outer wrapper <div> #}
+
+  {# We use the media component here except for the two variants with icons in the media field. #}
+
+<div class="su-card__contents">
+  {# Card Super Headline #}
+  {% if super_headline is not empty %}
+    <div class="su-card__superhead">{{ super_headline }}</div>
+  {% endif -%}
+
+  {# Card Headline #}
+  {%- if headline is not empty %}
+  <{{ header_tag|default('h2') }}{{ headline_attributes }}>
+  {{- headline -}}
+</{{ header_tag|default('h2') }}>
+{% endif -%}
+
+  {# An open field for body content #}
+  {{ body }}
+
+  {# Card CTA Link #}
+  {%- if cta_label is not empty %}
+    <a{{ cta_attributes }} href="{{ link }}"
+                           class="su-link su-card__link su-link--action">
+      {{ cta_label }}
+    </a>
+  {% endif -%}
+
+  {# Big ol link button. Adds a BEM class for targeting. #}
+  {%- if button_label is not empty %}
+    <div class="su-card__button">
+      <a{{ cta_attributes }} href="{{ link }}" class="su-link su-button">
+        {{ button_label }}
+      </a>
+    </div>
+  {% endif -%}
+</div>{# end of .su-card__contents #}
+
+</{{ is_article or headline is not empty ? "article" : "div" }}>
+

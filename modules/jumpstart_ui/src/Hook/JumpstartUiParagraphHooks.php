@@ -5,14 +5,11 @@ declare(strict_types=1);
 namespace Drupal\jumpstart_ui\Hook;
 
 use Drupal\Core\Hook\Attribute\Hook;
-use Drupal\Core\Template\Attribute;
 
 class JumpstartUiParagraphHooks {
 
   #[Hook('preprocess_paragraph__stanford_banner')]
   public function preprocessParagraphStanfordBanner(&$variables) {
-    $headline_attributes = new Attribute();
-
     /** @var \Drupal\paragraphs\ParagraphInterface $paragraph */
     $paragraph = $variables['paragraph'];
 
@@ -31,7 +28,6 @@ class JumpstartUiParagraphHooks {
       ],
       '#slots' => [
         'image' => $variables['content']['su_banner_image'] ?? NULL,
-        //        'super_headline' =>
         'headline' => $variables['content']['su_banner_header'] ?? NULL,
         'body' => [
           $variables['content']['su_banner_sup_header'] ?? NULL,
@@ -41,18 +37,36 @@ class JumpstartUiParagraphHooks {
         'button_label' => $variables['content']['su_banner_button'][0]['#title'] ?? NULL,
       ],
     ];
-    /**
-     * {{ include('jumpstart_ui:hero', {
-     * image: elements.su_banner_image,
-     * super_headline: elements.su_banner_sup_header,
-     * headline: elements.su_banner_header,
-     * body: elements.su_banner_body,
-     * cta_link: elements.su_banner_button.0["#url_title"],
-     * cta_label: elements.su_banner_button.0["#title"],
-     * button_link: elements.su_banner_button.0["#url_title"],
-     * button_label: elements.su_banner_button.0["#title"]
-     * }, with_context = false) }}
-     */
+  }
+
+  #[Hook('preprocess_paragraph__stanford_card')]
+  public function preprocessParagraphStanfordCard(&$variables) {
+    /** @var \Drupal\paragraphs\ParagraphInterface $paragraph */
+    $paragraph = $variables['paragraph'];
+
+    $header_behavior = $paragraph->getBehaviorSetting('su_card_styles', 'heading', 'h2');
+    preg_match('/^(\w+)(.*)$/', $header_behavior, $header_tag);
+    $link_style = $paragraph->getBehaviorSetting('su_card_styles', 'link_style', 'button');
+    $variables['content'] = [
+      '#type' => 'component',
+      '#component' => 'jumpstart_ui:card',
+      '#props' => [
+        'header_tag' => $header_tag[1],
+        'header_classes' => isset($header_tag[2]) ? trim(str_replace('.', ' ', $header_tag[2])) : NULL,
+        'visually_hide_header' => (bool) $paragraph->getBehaviorSetting('su_card_styles', 'hide_heading', FALSE),
+      ],
+      '#slots' => [
+        'image' => $variables['content']['su_card_media'] ?? NULL,
+        'headline' => $variables['content']['su_card_header'] ?? NULL,
+        'body' => [
+          $variables['content']['su_card_super_header'] ?? NULL,
+          $variables['content']['su_card_body'] ?? NULL,
+        ],
+        'link' => isset($variables['content']['su_card_link'][0]['#url']) ? $variables['content']['su_card_link'][0]['#url']->toString() : NULL,
+        'button_label' => $link_style != 'action' ? $variables['content']['su_card_link'][0]['#title'] ?? NULL : NULL,
+        'cta_label' => $link_style == 'action' ? $variables['content']['su_card_link'][0]['#title'] ?? NULL : NULL,
+      ],
+    ];
   }
 
 }
