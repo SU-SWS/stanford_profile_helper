@@ -53,6 +53,7 @@ class Path extends NextPath {
     $config = parent::defaultConfiguration();
     $config['method'] = 'GET';
     $config['aggregate'] = FALSE;
+    $config['original_additional_paths'] = NULL;
     return $config;
   }
 
@@ -98,7 +99,11 @@ class Path extends NextPath {
    */
   public function revalidate(EntityActionEvent $event): bool {
     $revalidated = FALSE;
-    $this->configuration['additional_paths'] = self::adjustAdditionalPaths($this->configuration['additional_paths'], $event->getEntity());
+    if ($this->configuration['original_additional_paths'] === NULL) {
+      $this->configuration['original_additional_paths'] = $this->configuration['additional_paths'] ?? '';
+    }
+    $this->configuration['additional_paths'] = self::adjustAdditionalPaths($this->configuration['original_additional_paths'], $event->getEntity());
+
     if ($this->configuration['method'] != 'POST') {
       return parent::revalidate($event);
     }
@@ -120,15 +125,12 @@ class Path extends NextPath {
       return FALSE;
     }
 
-    $modifiedPaths = [];
-    $tags = [];
+    $tagPaths = array_map(fn($p) => str_replace('/tags/', '', $p), array_filter($paths, fn($path) => str_starts_with($path, '/tags/')));
+    $modifiedPaths = array_filter($paths, fn($path) => !str_starts_with($path, '/tags/'));
 
-    foreach ($paths as $path) {
-      if (!str_starts_with($path, '/tags/')) {
-        $modifiedPaths[] = $path;
-        continue;
-      }
-      foreach (explode('/', str_replace('/tags/', '', $path)) as $tag) {
+    $tags = [];
+    foreach ($tagPaths as $tagPath) {
+      foreach (explode('/', $tagPath) as $tag) {
         $tags[] = $tag;
       }
     }
@@ -221,7 +223,7 @@ class Path extends NextPath {
    */
   protected static function adjustAdditionalPaths(?string $paths = NULL, ContentEntityInterface $entity): ?string {
     return \Drupal::token()
-      ->replace($paths, [$entity->getEntityTypeId() => $entity], ['clear' => TRUE]);
+      ->replacePlain($paths, [$entity->getEntityTypeId() => $entity], ['clear' => TRUE]);
   }
 
 }

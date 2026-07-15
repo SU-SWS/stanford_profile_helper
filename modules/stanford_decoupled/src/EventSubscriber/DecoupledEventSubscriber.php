@@ -111,15 +111,13 @@ final class DecoupledEventSubscriber implements EventSubscriberInterface {
       throw new \Exception('No revalidate url set.');
     }
 
-    $modifiedPaths = [];
     $tags = [];
 
-    foreach ($paths as $path) {
-      if (!str_starts_with($path, '/tags/')) {
-        $modifiedPaths[] = $path;
-        continue;
-      }
-      foreach (explode('/', str_replace('/tags/', '', $path)) as $tag) {
+    $tagPaths = array_map(fn($p) => str_replace('/tags/', '', $p), array_filter($paths, fn($path) => str_starts_with($path, '/tags/')));
+    $modifiedPaths = array_filter($paths, fn($path) => !str_starts_with($path, '/tags/'));
+
+    foreach ($tagPaths as $tagPath) {
+      foreach (explode('/', $tagPath) as $tag) {
         $tags[] = $tag;
       }
     }
@@ -157,7 +155,7 @@ final class DecoupledEventSubscriber implements EventSubscriberInterface {
     if ($this->nextSettingsManager->isDebug()) {
       $this->loggerFactory->get('stanford_decoupled')
         ->notice('Successfully revalidated path %path & tag %tag for the site %site. URL: %url', [
-          '%path' => implode(', ', $paths),
+          '%path' => implode(', ', $modifiedPaths),
           '%tag' => implode(', ', $tags),
           '%site' => $site->label(),
           '%url' => $revalidate_url->toString(),
