@@ -75,35 +75,11 @@ jumpstart_ui:
   dependencies:
     - core/jquery
 
-components.hero:
-  css:
-    base:
-      dist/css/hero.css: {}
-components.card:
-  css:
-    base:
-      dist/css/card.css: {}
 
 components.date_stacked:
   css:
     base:
       dist/date-stacked/date-stacked.css: {}
-
-components.media:
-  css:
-    base:
-      dist/css/media.css: {}
-
-components.stat_card:
-  css:
-    base:
-      dist/css/stat_card.css: {}
-  js:
-    lib/js/stat_card.js: {}
-  dependencies:
-    - core/jquery
-    - core/once
-    - jumpstart_ui/countup
 
 components.container_responsive_card:
   css:

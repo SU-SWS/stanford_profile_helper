@@ -1,25 +1,43 @@
+'$schema': 'https://git.drupalcode.org/project/drupal/-/raw/10.1.x/core/modules/sdc/src/metadata.schema.json'
 name: 'Stat Card'
 description: 'One of the primary building block components. This card component comes with several fields to ensure flexibility.'
+props:
+  type: object
+  properties:
+    bg_color:
+      title: Background Color
+      type: string
+    icon_color:
+      title: Icon Color
+      type: string
+    stat_color:
+      title: Stat Color
+      type: string
+    centered_text:
+      title: Centered Text
+      type: boolean
 slots:
-  card_image:
+  image:
     title: Image
     description: 'The cards image.'
-  card_icon:
+  icon:
     title: Icon
-  card_super_headline:
+  super_headline:
     title: 'Super Headline'
     description: 'Text heading'
-  card_stat:
+  stat:
     title: 'Stat Text'
-  card_headline:
+  headline:
     title: Headline
     description: 'Text heading'
-  card_body:
+  body:
     title: Body
     description: 'An open variable for anything. Generally this would be for WYSIWYG editor contents'
-  card_link:
+  link:
     title: Link
     description: 'A plain text string of just the URL'
 libraryOverrides:
   dependencies:
-    - jumpstart_ui/components.stat_card
+    - jumpstart_ui/countup
+    - core/jquery
+    - core/once

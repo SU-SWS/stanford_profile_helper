@@ -38,11 +38,9 @@ var webpackConfig = {
     "date-stacked":         path.resolve("lib/scss/components/date-stacked.component.scss"),
     "global-footer":        path.resolve("lib/scss/components/global-footer.component.scss"),
     "link":                 path.resolve("lib/scss/components/link.component.scss"),
-    "local-footer":         path.resolve("lib/scss/components/local-footer.component.scss"),
     "lockup":               path.resolve("lib/scss/components/lockup.component.scss"),
     "logo":                 path.resolve("lib/scss/components/logo.component.scss"),
     "quote":                path.resolve("lib/scss/components/quote.component.scss"),
-    "stat_card":            path.resolve("lib/scss/components/stat_card.component.scss"),
     "layout.media-content-layout": path.resolve("lib/scss/layouts/media-content-layout.scss"),
     ...entryObject
   },

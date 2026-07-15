@@ -1,12 +1,19 @@
+'$schema': 'https://git.drupalcode.org/project/drupal/-/raw/10.1.x/core/modules/sdc/src/metadata.schema.json'
 name: 'Local Footer'
 description: 'Local footer element as specified by the Identity Guidelines.'
+props:
+  type: object
+  properties:
+    custom_lockup:
+      title: Use a custom lockup
+      type: boolean
+    lockup_option:
+      title: Lockup Choice
+      type: string
 slots:
   lockup_title:
     title: lockup_title
     description: 'The text to use as line1 in the lockup unless'
-  headercontent:
-    title: headercontent
-    description: 'Optional open variable for placing arbitrary content'
   cell1:
     title: cell1
     description: 'Optional open variable for placing arbitrary content'
@@ -44,28 +51,31 @@ slots:
   signup_form_method:
     title: signup_form_method
     description: 'The http method in which the form should use (get|post)'
-  signup_form_field_email:
-    title: signup_form_field_email
-    description: 'The name and id of the email field.'
-  signup_form_field_email_placeholder:
-    title: signup_form_field_email_placeholder
-    description: 'The placeholder text for the field.'
-  signup_form_field_submit:
-    title: signup_form_field_submit
-    description: 'The name and id of the submit button.'
   signup_form_field_submit_value:
     title: signup_form_field_submit_value
     description: 'The value of the submit button.'
-  signup_form_fields:
-    title: signup_form_fields
-    description: 'Option variable that allows you to put any additional'
   weblogin_url:
     title: weblogin_url
     description: 'Optional - The url in which a user goes to login with.'
   weblogin_text:
     title: weblogin_text
     description: 'The text to display for the weblogin button link.'
-libraryOverrides:
-  css:
-    component:
-      ../../../dist/css/local-footer.css: {  }
+  site_logo:
+    title: Logo
+  image_alt:
+    title: Logo alt text
+  line1:
+    title: Lockup line 1
+    description: 'The url that the form should submit to.'
+  line2:
+    title: Lockup line 2
+    description: 'The http method in which the form should use (get|post)'
+  line3:
+    title: Lockup line 3
+    description: 'The value of the submit button.'
+  line4:
+    title: Lockup line 4
+    description: 'Optional - The url in which a user goes to login with.'
+  line5:
+    title: Lockup line 5
+    description: 'The text to display for the weblogin button link.'

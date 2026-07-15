@@ -1,3 +1,4 @@
+'$schema': 'https://git.drupalcode.org/project/drupal/-/raw/10.1.x/core/modules/sdc/src/metadata.schema.json'
 name: 'Event Schedule'
 description: 'A place time and people paragraph.'
 slots:
@@ -19,7 +20,3 @@ slots:
   speakers:
     title: Speakers
     description: 'A rendered list of speakers.'
-libraryOverrides:
-  css:
-    component:
-      ../../../dist/css/stanford_events.event-schedule.css: {  }

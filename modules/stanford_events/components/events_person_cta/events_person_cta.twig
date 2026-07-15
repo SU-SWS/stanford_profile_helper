@@ -16,21 +16,21 @@
 
 <div{{ attributes.addClass('su-person-cta') }}>
   {%- if image|render_clean('<img> <picture>') is not empty -%}
-  <div {{ image_attributes.addClass('su-person-cta__image') }}>
-    {{ image }}
-  </div>
+    <div {{ image_attributes.addClass('su-person-cta__image') }}>
+      {{ image }}
+    </div>
   {%- endif -%}
   <div {{ content_attributes.addClass('su-person-cta__content') }}>
     {%- if name|render_clean is not empty -%}
-    <p class="su-person-cta__name">
-      {%- if link|render_clean is not empty -%}
+      <p class="su-person-cta__name">
+        {%- if link|render_clean is not empty -%}
         <a href="{{ link|render_clean }}" {{ link_attributes }}>
-      {%- endif -%}
-      {{- name|render_clean -}}
-      {%- if link|render_clean is not empty -%}
+          {%- endif -%}
+          {{- name|render_clean -}}
+          {%- if link|render_clean is not empty -%}
         </a>
-      {%- endif -%}
-    </p>
+        {%- endif -%}
+      </p>
     {%- endif -%}
     {%- if title|render_clean is not empty -%}
       <p class="su-person-cta__title">{{ title|render_clean }}</p>

@@ -389,7 +389,7 @@
 .content {
   .su-event-schedule {
     .ptype-stanford-person-cta {
-      @include modular-spacing('margin-bottom', 0);
+      margin-bottom: 1.8rem !important;
     }
   }
 }

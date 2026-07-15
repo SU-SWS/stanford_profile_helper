@@ -1,3 +1,4 @@
+'$schema': 'https://git.drupalcode.org/project/drupal/-/raw/10.1.x/core/modules/sdc/src/metadata.schema.json'
 name: 'Person CTA'
 description: 'A small person postcard like call out.'
 slots:
@@ -13,7 +14,3 @@ slots:
   link:
     title: 'Person Name Link'
     description: 'Add a link to the person name.'
-libraryOverrides:
-  css:
-    component:
-      ../../../dist/css/stanford_events.person-cta.css: {  }

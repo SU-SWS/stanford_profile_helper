@@ -116,4 +116,32 @@ class JumpstartUiParagraphHooks {
     ];
   }
 
+  #[Hook('preprocess_paragraph__stanford_stat_card')]
+  public function preprocessParagraphStanfordStatCard(&$variables) {
+    /** @var \Drupal\paragraphs\ParagraphInterface $paragraph */
+    $paragraph = $variables['paragraph'];
+    $header_behavior = $paragraph->get('su_stat_headline_lvl')?->getString() ?? 'h2';
+    preg_match('/^(\w+)(.*)$/', $header_behavior, $header_tag);
+
+    $variables['content'] = [
+      '#type' => 'component',
+      '#component' => 'jumpstart_ui:stat_card',
+      '#props' => [
+        'bg_color' => $paragraph->get('su_stat_bg_color')?->getString(),
+        'icon_color' => $paragraph->get('su_stat_icon_color')?->getString() ?? NULL,
+        'stat_color' => $paragraph->get('su_stat_stat_color')?->getString() ?? NULL,
+        'centered_text' => (bool) $paragraph->get('su_stat_centered')?->getString() ?? FALSE,
+      ],
+      '#slots' => [
+        'image' => $variables['content']['su_stat_image'] ?? NULL,
+        'icon' => $variables['content']['su_stat_icon'] ?? NULL,
+        'stat' => $variables['content']['su_stat_stat'] ?? NULL,
+        'super_headline' => $variables['content']['su_stat_superhead'] ?? NULL,
+        'headline' => $variables['content']['su_stat_headline'] ?? NULL,
+        'body' => $variables['content']['su_stat_body'] ?? NULL,
+        'link' => $variables['content']['su_stat_button'] ?? NULL,
+      ],
+    ];
+  }
+
 }
