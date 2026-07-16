@@ -1,0 +1,54 @@
+{% set attributes = attributes.addClass(['su-lockup', modifier_class]) %}
+
+<div {{ attributes }}>
+  {% if link is not empty %}
+  <a href="{{ link }}" {{ link_attributes }}>
+    {% endif %}
+    <div class="su-lockup__cell1">
+      {% block cell1 %}
+        <div class="su-lockup__wordmark-wrapper">
+          <span class="su-lockup__wordmark">Stanford</span>
+          {% if line4 is not empty %}
+            <span
+              class="su-lockup__line4" {{ region_attributes.line4 }}>{{ line4 }}</span>
+          {% endif %}
+        </div>
+      {% endblock %}
+    </div>
+
+    {#- Cell container #2 -#}
+    {% block cell2 %}
+      {% if line1 is not empty or line2 is not empty or line3 is not empty %}
+        <div class="su-lockup__cell2">
+          {% if line1 is not empty %}
+            <span
+              class="su-lockup__line1" {{ region_attributes.line1 }}>{{ line1 }}</span>
+          {% endif %}
+
+          {% if line2 is not empty %}
+            <span
+              class="su-lockup__line2" {{ region_attributes.line2 }}>{{ line2 }}</span>
+          {% endif %}
+
+          {% if line3 is not empty %}
+            <span
+              class="su-lockup__line3" {{ region_attributes.line3 }}>{{ line3 }}</span>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endblock %}
+
+    {#- Line 5 of Site Name - Optional -#}
+    {% if line5 is not empty %}
+      <div class="su-lockup__line5 {{ region_attributes.line5 }}">
+        {%- block cell3 -%}
+          {{- line5 -}}
+        {% endblock %}
+      </div>
+    {% endif %}
+    {% if link is not empty %}
+  </a>
+  {% endif %}
+</div>
+
+

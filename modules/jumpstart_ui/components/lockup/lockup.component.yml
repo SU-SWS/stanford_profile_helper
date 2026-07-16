@@ -1,67 +1,26 @@
+'$schema': 'https://git.drupalcode.org/project/drupal/-/raw/10.1.x/core/modules/sdc/src/metadata.schema.json'
 name: Lockup
 description: 'A lockup with the Stanford wordmark logo and department/unit name. It is used in the header of a website and links to the homepage of the department/unit. When building a department lockup, besides the Stanford wordmark, the most obvious element should be the most granular relevant department.'
-variants:
-  a:
-    title: 'Option A'
-    description: 'Option A'
-  b:
-    title: 'Option B'
-    description: 'Option B'
-  c:
-    title: 'Option C'
-    description: 'Option C'
-  d:
-    title: 'Option D'
-    description: 'Option D'
-  e:
-    title: 'Option E'
-    description: 'Option E'
-  f:
-    title: 'Option F'
-    description: 'Option F'
-  g:
-    title: 'Option G'
-    description: 'Option G'
-  h:
-    title: 'Option H'
-    description: 'Option H'
-  i:
-    title: 'Option I'
-    description: 'Option I'
-  j:
-    title: 'Option J'
-    description: 'Option J'
-  k:
-    title: 'Option K'
-    description: 'Option K'
-  l:
-    title: 'Option L'
-    description: 'Option L'
-  m:
-    title: 'Option M'
-    description: 'Option M'
-  'n':
-    title: 'Option N'
-    description: 'Option N'
-  o:
-    title: 'Option O'
-    description: 'Option O'
-  p:
-    title: 'Option P'
-    description: 'Option P'
-  q:
-    title: 'Option Q'
-    description: 'Option Q'
-  r:
-    title: 'Option R'
-    description: 'Option R'
-  s:
-    title: 'Option S'
-    description: 'Option S'
-  t:
-    title: 'Option T'
-    description: 'Option T'
+props:
+  type: object
+  properties:
+    lockup_style:
+      title: Lockup Style
+      type: string
+      examples:
+        - a
+        - b
+        - c
 slots:
+  cell1:
+    title: Cell 1
+    description: Block for cell 1
+  cell2:
+    title: Cell 1
+    description: Block for cell 1
+  cell3:
+    title: Cell 1
+    description: Block for cell 1
   link:
     title: 'Lockup Link'
     description: 'The URL that the lockup links to.'
@@ -80,7 +39,3 @@ slots:
   line5:
     title: 'Line 5'
     description: 'Line 5 of the unit/site name text (at the bottom part of the lockup).'
-libraryOverrides:
-  css:
-    component:
-      ../../../dist/css/lockup.css: {  }

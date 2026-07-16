@@ -1,4 +1,3 @@
-{{ dpm() }}
 {# Sanitize the weblogin text. #}
 {%- set weblogin_text = weblogin_text|render_clean -%}
 {%- if weblogin_text is empty -%}
@@ -43,7 +42,7 @@
     <div class="su-local-footer__header">
 
       {% if use_logo == "0" %}
-        {% embed "@decanter/components/lockup/lockup.twig" with lockup_options %}
+        {% embed "jumpstart_ui:lockup" with lockup_options %}
 
           {% set image_alt = line1 %}
           {# if the option was set to logo only. Remove the lines. #}
@@ -68,7 +67,7 @@
 
         {% endembed %}
       {% else %}
-        {% include "@decanter/components/lockup/lockup.twig" with lockup_options only %}
+        {% include "jumpstart_ui:lockup" with lockup_options only %}
       {% endif %}
       {# Web login button #}
       {% if weblogin_url is not empty %}

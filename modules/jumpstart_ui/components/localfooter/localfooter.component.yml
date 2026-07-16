@@ -60,22 +60,6 @@ slots:
   weblogin_text:
     title: weblogin_text
     description: 'The text to display for the weblogin button link.'
-  site_logo:
-    title: Logo
-  image_alt:
-    title: Logo alt text
-  line1:
-    title: Lockup line 1
-    description: 'The url that the form should submit to.'
-  line2:
-    title: Lockup line 2
-    description: 'The http method in which the form should use (get|post)'
-  line3:
-    title: Lockup line 3
-    description: 'The value of the submit button.'
-  line4:
-    title: Lockup line 4
-    description: 'Optional - The url in which a user goes to login with.'
-  line5:
-    title: Lockup line 5
-    description: 'The text to display for the weblogin button link.'
+  lockup:
+    title: Lockup
+    description: Site lockup
