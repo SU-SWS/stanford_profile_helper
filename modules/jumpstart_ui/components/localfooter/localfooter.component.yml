@@ -10,10 +10,10 @@ props:
     lockup_option:
       title: Lockup Choice
       type: string
+    use_default_logo:
+      title: Use default logo for lockup
+      type: boolean
 slots:
-  lockup_title:
-    title: lockup_title
-    description: 'The text to use as line1 in the lockup unless'
   cell1:
     title: cell1
     description: 'Optional open variable for placing arbitrary content'
@@ -60,6 +60,27 @@ slots:
   weblogin_text:
     title: weblogin_text
     description: 'The text to display for the weblogin button link.'
-  lockup:
-    title: Lockup
-    description: Site lockup
+  site_logo:
+    title: Site Logo
+    description: Site Logo
+  site_logo_alt:
+    title: Site Logo Alt
+    description: Site Logo Alt
+  lockup_title:
+    title: Lockup Title
+    description: 'The text to use as line1 in the lockup unless'
+  line1:
+    title: line 1
+    description: line1
+  line2:
+    title: line 2
+    description: line2
+  line3:
+    title: line 3
+    description: line3
+  line4:
+    title: line 4
+    description: line4
+  line5:
+    title: line 5
+    description: line5

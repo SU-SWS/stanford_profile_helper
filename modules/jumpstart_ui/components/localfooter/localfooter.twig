@@ -1,3 +1,5 @@
+{% set attributes = attributes.addClass('su-local-footer') %}
+
 {# Sanitize the weblogin text. #}
 {%- set weblogin_text = weblogin_text|render_clean -%}
 {%- if weblogin_text is empty -%}
@@ -10,10 +12,17 @@
 {%- set signup_form_field_submit_value = signup_form_field_submit_value|render_clean -%}
 {%- set primary_links_header = primary_links_header|render_clean -%}
 
-{% set attributes = attributes.addClass('su-local-footer') %}
-
 {# Pass through custom lockup settings #}
+
 {%- set lockup_title = lockup_title|render_clean -%}
+{% set line1 = line1|render_clean %}
+{% set line2 = line2|render_clean %}
+{% set line3 = line3|render_clean %}
+{% set line4 = line4|render_clean %}
+{% set line5 = line5|render_clean %}
+{% set site_logo = site_logo|render_clean %}
+{% set site_logo_alt = site_logo_alt|render_clean %}
+
 {% if line1|render_clean is empty %}
   {% set line1 = lockup_title %}
 {% endif %}
@@ -22,17 +31,15 @@
 {%- if custom_lockup -%}
   {%- set lockup_options =
     {
-      "modifier_class": lockup_option,
-      "line1": line1,
-      "line2": line2,
-      "line3": line3,
-      "line4": line4,
-      "line5": line5,
+      "modifier_class": "su-lockup--option-" ~ lockup_option,
+      "line1": line1|render_clean,
+      "line2": line2|render_clean,
+      "line3": line3|render_clean,
+      "line4": line4|render_clean,
+      "line5": line5|render_clean,
       "link": url('<front>'),
     } -%}
-{%- endif -%}
-
-{%- if lockup_options is empty -%}
+{%- else -%}
   {%- set lockup_options = { "modifier_class": 'su-lockup--option-a', "line1": lockup_title, "attributes": attributes|without('id') } -%}
 {%- endif -%}
 
@@ -41,7 +48,7 @@
   {% if lockup_title is not empty or weblogin_url is not empty %}
     <div class="su-local-footer__header">
 
-      {% if use_logo == "0" %}
+      {% if not use_default_logo %}
         {% embed "jumpstart_ui:lockup" with lockup_options %}
 
           {% set image_alt = line1 %}

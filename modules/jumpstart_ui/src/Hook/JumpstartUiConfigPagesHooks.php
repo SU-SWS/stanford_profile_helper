@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace Drupal\jumpstart_ui\Hook;
 
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 
 class JumpstartUiConfigPagesHooks {
+
+  public function __construct(protected ConfigFactoryInterface $configFactory) {}
 
   #[Hook('preprocess_config_pages__stanford_local_footer')]
   public function preprocessConfigPagesLocalFooter(&$variables) {
@@ -29,11 +32,12 @@ class JumpstartUiConfigPagesHooks {
       '#type' => 'component',
       '#component' => 'jumpstart_ui:localfooter',
       '#props' => [
-        'custom_lockup' => TRUE,
-        'lockup_option' => 'a',
+        'custom_lockup' => !$config_page->get('su_local_foot_use_loc')?->getString(),
+        'lockup_option' => $config_page->get('su_local_foot_loc_op')?->getString(),
+        'use_default_logo' => !!$config_page->get('su_local_foot_use_logo')?->getString(),
       ],
       '#slots' => [
-        'lockup_title' => NULL,
+        'lockup_title' => $this->configFactory->get('system.site')->get('name'),
         'cell1' => $variables['content']['su_local_foot_pr_co'] ?? NULL,
         'cell2' => [
           '#type' => 'container',
@@ -68,27 +72,15 @@ class JumpstartUiConfigPagesHooks {
         'signup_form_field_submit_value' => $variables['content']['su_local_foot_f_button'] ?? NULL,
         'weblogin_text' => $variables['content']['su_local_foot_sunet_t'] ?? NULL,
         'weblogin_url' => '/saml/login',
-        'lockup' => [
-          '#type' => 'component',
-          '#component' => 'jumpstart_ui:lockup',
-          '#props' => [
-            'lockup_style' => $config_page->get('su_local_foot_loc_op')
-              ?->getString() ?: 'a',
-          ],
-          '#slots' => [
-            'link' => '/',
-            'site_logo' => $variables['content']['su_local_foot_loc_img'] ?? NULL,
-            'image_alt' => 'image alt',
-            'line1' => $variables['content']['su_local_foot_line_1'] ?? NULL,
-            'line2' => $variables['content']['su_local_foot_line_2'] ?? NULL,
-            'line3' => $variables['content']['su_local_foot_line_3'] ?? NULL,
-            'line4' => $variables['content']['su_local_foot_line_4'] ?? NULL,
-            'line5' => $variables['content']['su_local_foot_line_5'] ?? NULL,
-          ],
-        ],
+        'site_logo' => $variables['content']['su_local_foot_loc_img'] ?? NULL,
+        'site_logo_alt' => 'image alt',
+        'line1' => $variables['content']['su_local_foot_line_1'] ?? NULL,
+        'line2' => $variables['content']['su_local_foot_line_2'] ?? NULL,
+        'line3' => $variables['content']['su_local_foot_line_3'] ?? NULL,
+        'line4' => $variables['content']['su_local_foot_line_4'] ?? NULL,
+        'line5' => $variables['content']['su_local_foot_line_5'] ?? NULL,
       ],
     ];
-    dpm($variables['content']);
   }
 
 }
