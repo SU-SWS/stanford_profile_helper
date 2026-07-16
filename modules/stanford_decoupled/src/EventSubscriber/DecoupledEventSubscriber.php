@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\stanford_decoupled\EventSubscriber;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
@@ -51,7 +52,8 @@ final class DecoupledEventSubscriber implements EventSubscriberInterface {
     protected ClientInterface $client,
     protected Connection $database,
     protected ModuleHandlerInterface $moduleHandler,
-    protected LoggerChannelFactoryInterface $loggerFactory
+    protected LoggerChannelFactoryInterface $loggerFactory,
+    protected ConfigFactoryInterface $configFactory,
   ) {}
 
   /**
@@ -170,8 +172,15 @@ final class DecoupledEventSubscriber implements EventSubscriberInterface {
    *   Next module event.
    */
   public function onNextEntityAction(EntityActionEvent $event) {
-    if ($this->state->get('stanford_decoupled.stop_propagation', FALSE)) {
-      $event->stopPropagation();
+    $entity = $event->getEntity();
+
+    // If the current entity is the home page, set the entity url to "/" instead
+    // of the alias of the node.
+    if ($entity->getEntityTypeId() == 'node') {
+      $front_path = $this->configFactory->get('system.site')->get('page.front');
+      if ($front_path == '/node/' . $entity->id()) {
+        $event->setEntityUrl('/');
+      }
     }
 
     // When the site is not on an Acquia environment and running via the CLI, we

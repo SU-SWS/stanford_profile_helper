@@ -9,6 +9,7 @@ services:
      - '@database'
      - '@module_handler'
      - '@logger.factory'
+     - '@config.factory'
     tags:
       - { name: event_subscriber }
   stanford_decoupled.config_overrider:
