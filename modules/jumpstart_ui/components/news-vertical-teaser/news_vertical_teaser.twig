@@ -1,0 +1,72 @@
+{#
+/**
+ * @file
+ * News Vertical Teaser.
+ *
+ * Vertical Teaser for News
+ *
+ * Available variables:
+ * - attributes: For additional HTML attributes not already provided.
+ * - image: Hero image for card
+ * - headline: Title of card
+ * - topics: Topic selected. Dynamically altered vi news-banner.js
+ * - source: The source field.
+ * - url: A url to wrap the image and heading with
+ */
+#}
+
+{% set attributes = attributes.addClass(['su-card', 'su-news-vertical-teaser']) %}
+
+{%- set url_link_type = "su-link--action" -%}
+
+{# If the news source url is set go there instead of the default. #}
+{%- if source|render|striptags("<drupal-render-placeholder>")|trim is not empty -%}
+  {%- set url = source -%}
+  {%- set attributes = attributes.addClass('su-news-external') -%}
+  {%- set url_link_type = "su-link--external" -%}
+{%- endif %}
+
+{%- if url_attributes is empty -%}
+  {% set url_attributes = create_attribute() -%}
+{%- endif -%}
+
+{% set url = url|render|striptags("<drupal-render-placeholder>")|trim %}
+
+<article{{ attributes }}>
+  {%- if url is not empty -%}
+    <a {{ url_attributes.addClass('su-news-vertical-teaser__link') }} href="{{ url }}">
+  {%- endif -%}
+  <figure class="su-media su-media--image su-card__media">
+    <div class="su-media__wrapper">
+      {{- image -}}
+    </div>
+  </figure>
+  <div class="su-news-header">
+    <{{ header_tag|default('h2') }} class="su-link su-card__link {{ url_link_type }}">
+      {{- headline -}}
+    </{{ header_tag|default('h2') }}>
+  </div>
+  {%- if url is not empty -%}
+    </a>
+  {%- endif -%}
+
+  <div class="su-card__contents">
+
+    {% if date is not empty %}
+      <div class="su-news-date">
+        {{ date }}
+      </div>
+    {% endif %}
+
+    {% if dek is not empty %}
+      <div class="su-news-dek">
+        {{ dek }}
+      </div>
+    {% endif %}
+
+    <div class="news-vertical-teaser__topics">{{ topics }}</div>
+  </div>
+  {%- if footer is not empty -%}
+    <div class="news-vertical-teaser__footer">{{ footer }}</div>
+  {%- endif -%}
+</article>

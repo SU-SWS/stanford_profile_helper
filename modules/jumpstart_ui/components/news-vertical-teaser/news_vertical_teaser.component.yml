@@ -1,0 +1,37 @@
+'$schema': 'https://git.drupalcode.org/project/drupal/-/raw/10.1.x/core/modules/sdc/src/metadata.schema.json'
+name: 'News Vertical Teaser'
+description: 'News Vertical Teaser'
+props:
+  type: object
+  properties:
+    header_tag:
+      title: Header Tag Element
+      type: string
+      examples:
+        - h2
+        - h3
+        - h4
+        - div
+slots:
+  image:
+    title: Image
+    description: 'The vertical teaser image.'
+  headline:
+    title: Headline
+    description: 'Text heading'
+  date:
+    title: Date
+  dek:
+    title: Dek
+  topics:
+    title: Topics
+    description: 'Associated terms from the topics taxonomy'
+  source:
+    title: Source
+    description: 'The source field.'
+  url:
+    title: 'URL for item'
+    description: 'URL for image and heading'
+  footer:
+    title: Footer
+    description: 'The footer area.'
