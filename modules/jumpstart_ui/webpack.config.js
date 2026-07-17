@@ -15,7 +15,10 @@ const config = {
   wdsPort: 3001,
 };
 
-const componentFiles = glob.sync('./components/**/*.scss');
+const componentFiles = glob.sync('./components/**/*.scss').filter(path => {
+  const pathParts = path.split('/');
+  return !pathParts[pathParts.length - 1].startsWith('_');
+});
 
 // 2. Reduce them into an object format: { chunkName: 'filePath' }
 const entryObject = componentFiles.reduce((acc, file) => {

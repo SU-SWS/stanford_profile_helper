@@ -28,13 +28,16 @@ class JumpstartUiConfigPagesHooks {
       ];
     }
 
-    $variables['content'] = [
+    $component = [
       '#type' => 'component',
       '#component' => 'jumpstart_ui:localfooter',
       '#props' => [
-        'custom_lockup' => !$config_page->get('su_local_foot_use_loc')?->getString(),
-        'lockup_option' => $config_page->get('su_local_foot_loc_op')?->getString(),
-        'use_default_logo' => !!$config_page->get('su_local_foot_use_logo')?->getString(),
+        'custom_lockup' => !$config_page->get('su_local_foot_use_loc')
+          ?->getString(),
+        'lockup_option' => $config_page->get('su_local_foot_loc_op')
+          ?->getString(),
+        'use_default_logo' => !!$config_page->get('su_local_foot_use_logo')
+          ?->getString(),
       ],
       '#slots' => [
         'lockup_title' => $this->configFactory->get('system.site')->get('name'),
@@ -80,6 +83,14 @@ class JumpstartUiConfigPagesHooks {
         'line4' => $variables['content']['su_local_foot_line_4'] ?? NULL,
         'line5' => $variables['content']['su_local_foot_line_5'] ?? NULL,
       ],
+    ];
+    $variables['content'] = [
+      'contextual_links' => $variables['content']['contextual_links'] ?? NULL,
+      'contents' => [
+        '#access' => FALSE,
+        ...$variables['content'],
+      ],
+      'component' => $component,
     ];
   }
 

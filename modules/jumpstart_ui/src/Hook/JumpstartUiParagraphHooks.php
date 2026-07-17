@@ -18,24 +18,28 @@ class JumpstartUiParagraphHooks {
     preg_match('/^(\w+)(.*)$/', $header_behavior, $header_tag);
 
     $variables['content'] = [
-      '#type' => 'component',
-      '#component' => 'jumpstart_ui:hero',
-      '#props' => [
-        'header_tag' => $header_tag[1],
-        'header_classes' => isset($header_tag[2]) ? trim(str_replace('.', ' ', $header_tag[2])) : NULL,
-        'visually_hide_header' => (bool) $paragraph->getBehaviorSetting('hero_pattern', 'hide_heading', FALSE),
-        'overlay_position' => $paragraph->getBehaviorSetting('hero_pattern', 'overlay_position', 'left'),
-        'wrapper_class' => 'bottom-margin-' . $paragraph->getBehaviorSetting('hero_pattern', 'space_below', 'default'),
-      ],
-      '#slots' => [
-        'image' => $variables['content']['su_banner_image'] ?? NULL,
-        'headline' => $variables['content']['su_banner_header'] ?? NULL,
-        'body' => [
-          $variables['content']['su_banner_sup_header'] ?? NULL,
-          $variables['content']['su_banner_body'] ?? NULL,
+      'contextual_links' => $variables['content']['contextual_links'] ?? NULL,
+      'contents' => ['#access' => FALSE, ...$variables['content']],
+      'component' => [
+        '#type' => 'component',
+        '#component' => 'jumpstart_ui:hero',
+        '#props' => [
+          'header_tag' => $header_tag[1],
+          'header_classes' => isset($header_tag[2]) ? trim(str_replace('.', ' ', $header_tag[2])) : NULL,
+          'visually_hide_header' => (bool) $paragraph->getBehaviorSetting('hero_pattern', 'hide_heading', FALSE),
+          'overlay_position' => $paragraph->getBehaviorSetting('hero_pattern', 'overlay_position', 'left'),
+          'wrapper_class' => 'bottom-margin-' . $paragraph->getBehaviorSetting('hero_pattern', 'space_below', 'default'),
         ],
-        'button_link' => isset($variables['content']['su_banner_button'][0]['#url']) ? $variables['content']['su_banner_button'][0]['#url']->toString() : NULL,
-        'button_label' => $variables['content']['su_banner_button'][0]['#title'] ?? NULL,
+        '#slots' => [
+          'image' => $variables['content']['su_banner_image'] ?? NULL,
+          'headline' => $variables['content']['su_banner_header'] ?? NULL,
+          'body' => [
+            $variables['content']['su_banner_sup_header'] ?? NULL,
+            $variables['content']['su_banner_body'] ?? NULL,
+          ],
+          'button_link' => isset($variables['content']['su_banner_button'][0]['#url']) ? $variables['content']['su_banner_button'][0]['#url']->toString() : NULL,
+          'button_label' => $variables['content']['su_banner_button'][0]['#title'] ?? NULL,
+        ],
       ],
     ];
   }
@@ -49,23 +53,27 @@ class JumpstartUiParagraphHooks {
     preg_match('/^(\w+)(.*)$/', $header_behavior, $header_tag);
     $link_style = $paragraph->getBehaviorSetting('su_card_styles', 'link_style', 'button');
     $variables['content'] = [
-      '#type' => 'component',
-      '#component' => 'jumpstart_ui:card',
-      '#props' => [
-        'header_tag' => $header_tag[1],
-        'header_classes' => isset($header_tag[2]) ? trim(str_replace('.', ' ', $header_tag[2])) : NULL,
-        'visually_hide_header' => (bool) $paragraph->getBehaviorSetting('su_card_styles', 'hide_heading', FALSE),
-      ],
-      '#slots' => [
-        'image' => $variables['content']['su_card_media'] ?? NULL,
-        'headline' => $variables['content']['su_card_header'] ?? NULL,
-        'body' => [
-          $variables['content']['su_card_super_header'] ?? NULL,
-          $variables['content']['su_card_body'] ?? NULL,
+      'contextual_links' => $variables['content']['contextual_links'] ?? NULL,
+      'contents' => ['#access' => FALSE, ...$variables['content']],
+      'component' => [
+        '#type' => 'component',
+        '#component' => 'jumpstart_ui:card',
+        '#props' => [
+          'header_tag' => $header_tag[1],
+          'header_classes' => isset($header_tag[2]) ? trim(str_replace('.', ' ', $header_tag[2])) : NULL,
+          'visually_hide_header' => (bool) $paragraph->getBehaviorSetting('su_card_styles', 'hide_heading', FALSE),
         ],
-        'link' => isset($variables['content']['su_card_link'][0]['#url']) ? $variables['content']['su_card_link'][0]['#url']->toString() : NULL,
-        'button_label' => $link_style != 'action' ? $variables['content']['su_card_link'][0]['#title'] ?? NULL : NULL,
-        'cta_label' => $link_style == 'action' ? $variables['content']['su_card_link'][0]['#title'] ?? NULL : NULL,
+        '#slots' => [
+          'image' => $variables['content']['su_card_media'] ?? NULL,
+          'headline' => $variables['content']['su_card_header'] ?? NULL,
+          'body' => [
+            $variables['content']['su_card_super_header'] ?? NULL,
+            $variables['content']['su_card_body'] ?? NULL,
+          ],
+          'link' => isset($variables['content']['su_card_link'][0]['#url']) ? $variables['content']['su_card_link'][0]['#url']->toString() : NULL,
+          'button_label' => $link_style != 'action' ? $variables['content']['su_card_link'][0]['#title'] ?? NULL : NULL,
+          'cta_label' => $link_style == 'action' ? $variables['content']['su_card_link'][0]['#title'] ?? NULL : NULL,
+        ],
       ],
     ];
   }
@@ -73,12 +81,16 @@ class JumpstartUiParagraphHooks {
   #[Hook('preprocess_paragraph__stanford_media_caption')]
   public function preprocessParagraphStanfordMediaCaption(&$variables) {
     $variables['content'] = [
-      '#type' => 'component',
-      '#component' => 'jumpstart_ui:media',
-      '#slots' => [
-        'image' => $variables['content']['su_media_caption_media'] ?? NULL,
-        'caption' => $variables['content']['su_media_caption_caption'] ?? NULL,
-        'link' => $variables['content']['su_media_caption_link'] ?? NULL,
+      'contextual_links' => $variables['content']['contextual_links'] ?? NULL,
+      'contents' => ['#access' => FALSE, ...$variables['content']],
+      'component' => [
+        '#type' => 'component',
+        '#component' => 'jumpstart_ui:media',
+        '#slots' => [
+          'image' => $variables['content']['su_media_caption_media'] ?? NULL,
+          'caption' => $variables['content']['su_media_caption_caption'] ?? NULL,
+          'link' => $variables['content']['su_media_caption_link'] ?? NULL,
+        ],
       ],
     ];
   }
@@ -86,11 +98,15 @@ class JumpstartUiParagraphHooks {
   #[Hook('preprocess_paragraph__stanford_accordion')]
   public function preprocessParagraphStanfordAccordion(&$variables) {
     $variables['content'] = [
-      '#type' => 'component',
-      '#component' => 'jumpstart_ui:accordion',
-      '#slots' => [
-        'title' => $variables['content']['su_accordion_title'] ?? NULL,
-        'contents' => $variables['content']['su_accordion_body'] ?? NULL,
+      'contextual_links' => $variables['content']['contextual_links'] ?? NULL,
+      'contents' => ['#access' => FALSE, ...$variables['content']],
+      'component' => [
+        '#type' => 'component',
+        '#component' => 'jumpstart_ui:accordion',
+        '#slots' => [
+          'title' => $variables['content']['su_accordion_title'] ?? NULL,
+          'contents' => $variables['content']['su_accordion_body'] ?? NULL,
+        ],
       ],
     ];
   }
@@ -104,14 +120,18 @@ class JumpstartUiParagraphHooks {
       ->getTitle($request, $route) : NULL;
 
     $variables['content'] = [
-      '#type' => 'component',
-      '#component' => 'jumpstart_ui:hero',
-      '#props' => [
-        'header_tag' => "h1",
-      ],
-      '#slots' => [
-        'image' => $variables['content']['su_title_banner_image'] ?? NULL,
-        'headline' => $page_title,
+      'contextual_links' => $variables['content']['contextual_links'] ?? NULL,
+      'contents' => ['#access' => FALSE, ...$variables['content']],
+      'component' => [
+        '#type' => 'component',
+        '#component' => 'jumpstart_ui:hero',
+        '#props' => [
+          'header_tag' => "h1",
+        ],
+        '#slots' => [
+          'image' => $variables['content']['su_title_banner_image'] ?? NULL,
+          'headline' => $page_title,
+        ],
       ],
     ];
   }
@@ -120,26 +140,34 @@ class JumpstartUiParagraphHooks {
   public function preprocessParagraphStanfordStatCard(&$variables) {
     /** @var \Drupal\paragraphs\ParagraphInterface $paragraph */
     $paragraph = $variables['paragraph'];
-    $header_behavior = $paragraph->get('su_stat_headline_lvl')?->getString() ?? 'h2';
+    $header_behavior = $paragraph->get('su_stat_headline_lvl')
+      ?->getString() ?? 'h2';
     preg_match('/^(\w+)(.*)$/', $header_behavior, $header_tag);
 
     $variables['content'] = [
-      '#type' => 'component',
-      '#component' => 'jumpstart_ui:stat_card',
-      '#props' => [
-        'bg_color' => $paragraph->get('su_stat_bg_color')?->getString(),
-        'icon_color' => $paragraph->get('su_stat_icon_color')?->getString() ?? NULL,
-        'stat_color' => $paragraph->get('su_stat_stat_color')?->getString() ?? NULL,
-        'centered_text' => (bool) $paragraph->get('su_stat_centered')?->getString() ?? FALSE,
-      ],
-      '#slots' => [
-        'image' => $variables['content']['su_stat_image'] ?? NULL,
-        'icon' => $variables['content']['su_stat_icon'] ?? NULL,
-        'stat' => $variables['content']['su_stat_stat'] ?? NULL,
-        'super_headline' => $variables['content']['su_stat_superhead'] ?? NULL,
-        'headline' => $variables['content']['su_stat_headline'] ?? NULL,
-        'body' => $variables['content']['su_stat_body'] ?? NULL,
-        'link' => $variables['content']['su_stat_button'] ?? NULL,
+      'contextual_links' => $variables['content']['contextual_links'] ?? NULL,
+      'contents' => ['#access' => FALSE, ...$variables['content']],
+      'component' => [
+        '#type' => 'component',
+        '#component' => 'jumpstart_ui:stat_card',
+        '#props' => [
+          'bg_color' => $paragraph->get('su_stat_bg_color')?->getString(),
+          'icon_color' => $paragraph->get('su_stat_icon_color')
+              ?->getString() ?? NULL,
+          'stat_color' => $paragraph->get('su_stat_stat_color')
+              ?->getString() ?? NULL,
+          'centered_text' => (bool) $paragraph->get('su_stat_centered')
+              ?->getString() ?? FALSE,
+        ],
+        '#slots' => [
+          'image' => $variables['content']['su_stat_image'] ?? NULL,
+          'icon' => $variables['content']['su_stat_icon'] ?? NULL,
+          'stat' => $variables['content']['su_stat_stat'] ?? NULL,
+          'super_headline' => $variables['content']['su_stat_superhead'] ?? NULL,
+          'headline' => $variables['content']['su_stat_headline'] ?? NULL,
+          'body' => $variables['content']['su_stat_body'] ?? NULL,
+          'link' => $variables['content']['su_stat_button'] ?? NULL,
+        ],
       ],
     ];
   }

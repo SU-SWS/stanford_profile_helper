@@ -46,30 +46,3 @@ slots:
   address:
     title: 'Formatted location for event'
     description: 'Formatted location for the event.'
-  location_organization:
-    title: 'Company name'
-    description: 'Manually entered address for event'
-  location_address_line1:
-    title: 'Address Line 1'
-    description: 'Manually entered address for event'
-  location_address_line2:
-    title: 'Address Line 2'
-    description: 'Manually entered address for event'
-  location_locality:
-    title: Locality/City
-    description: 'Manually entered address for event'
-  location_administrative_area:
-    title: 'Administrative Area/State'
-    description: 'Manually entered address for event'
-  location_dependent_locality:
-    title: 'Dependent Locality'
-    description: 'Manually entered address for event'
-  location_country_code:
-    title: Country
-    description: 'Manually entered address for event'
-  location_postal_code:
-    title: 'Postal Code'
-    description: 'Manually entered address for event'
-  location_sorting_code:
-    title: 'Sorting Code'
-    description: 'Manually entered address for event'

@@ -1,5 +1,5 @@
 const path = require('path');
-const glob = require('glob')
+const glob = require('glob');
 const Webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -16,7 +16,10 @@ const config = {
   wdsPort: 3001,
 };
 
-const componentFiles = glob.sync('./components/**/*.scss');
+const componentFiles = glob.sync('./components/**/*.scss').filter(path => {
+  const pathParts = path.split('/');
+  return !pathParts[pathParts.length - 1].startsWith('_');
+});
 
 // 2. Reduce them into an object format: { chunkName: 'filePath' }
 const entryObject = componentFiles.reduce((acc, file) => {
@@ -32,7 +35,6 @@ var webpackConfig = {
     'stanford_events.views': path.resolve('lib/scss/stanford_events.views.scss'),
     'stanford_events.event-filter-menu': path.resolve('lib/scss/components/event-filter-menu/stanford_events.event-filter-menu.scss'),
     'stanford_events.event-list': path.resolve('lib/scss/components/event-list/stanford_events.event-list.scss'),
-    'stanford_events.event-card': path.resolve('lib/scss/components/event-card/stanford_events.event-card.scss'),
     // Event Series.
     '../../modules/stanford_events_series/dist/css/stanford_events_series.node': path.resolve(seriesSrcSass, 'stanford_events_series.node.scss'),
     '../../modules/stanford_events_series/dist/css/stanford_events_series.views': path.resolve(seriesSrcSass, 'stanford_events_series.views.scss'),
