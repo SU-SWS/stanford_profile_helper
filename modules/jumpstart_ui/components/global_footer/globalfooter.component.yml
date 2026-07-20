@@ -1,6 +1,0 @@
-name: 'Global Footer'
-description: 'Global footer element as specified by the Identity Guidelines.'
-libraryOverrides:
-  css:
-    component:
-      ../../../dist/css/global-footer.css: {  }

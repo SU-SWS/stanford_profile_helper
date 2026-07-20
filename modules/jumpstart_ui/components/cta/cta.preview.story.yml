@@ -1,8 +1,0 @@
-name: Preview
-slots:
-  image_src: 'https://picsum.photos/500/500/?random'
-  image_alt: 'This is the alt text field'
-  button_text: 'Button Label'
-  link: 'https://www.stanford.edu'
-  icon_src: 'https://decanter.stanford.edu/kss-assets/alert-info.svg'
-  icon_alt: 'This is the icon alt text field'

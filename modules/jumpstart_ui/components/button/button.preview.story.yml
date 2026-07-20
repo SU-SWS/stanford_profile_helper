@@ -1,6 +1,0 @@
-name: Preview
-slots:
-  button_label: 'Submit me.'
-  button_value: submit
-  button_name: submit.
-  button_type: submit.

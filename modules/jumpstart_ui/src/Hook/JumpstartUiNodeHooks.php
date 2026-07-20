@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Drupal\jumpstart_ui\Hook;
 
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Hook\Attribute\Hook;
-use Drupal\Core\Render\Attribute\RenderElement;
-use Drupal\Core\Render\Element;
-use Drupal\Core\Render\Renderer;
+use Drupal\Core\Link;
 use Drupal\node\NodeInterface;
 use function Symfony\Component\String\u;
 
@@ -24,9 +23,37 @@ class JumpstartUiNodeHooks {
     }
     $bundle = u($node->bundle())->camel()->toString();
     $method = "{$bundle}View";
+    $build['#attributes']['class'][] = Html::cleanCssIdentifier('node--' . $node->bundle());
+    $build['#attributes']['class'][] = Html::cleanCssIdentifier('node--' . $view_mode . '--' . $node->bundle());
     if (method_exists($this, $method)) {
       $this->$method($build, $node, $view_mode);
     }
+  }
+
+  protected function stanfordCourseView(&$build, NodeInterface $node, string $view_mode) {
+    $link = Link::fromTextAndUrl($node->label(), $node->toUrl());
+    $build = [
+      'contents' => ['#access' => FALSE, ...$build],
+      'component' => [
+        '#type' => 'component',
+        '#component' => 'jumpstart_ui:course_vertical_teaser',
+        '#attributes' => $build['#attributes'] ?? [],
+        '#attached' => $build['#attached'] ?? [],
+        '#props' => [
+          'header_tag' => $view_mode == 'stanford_h3_card' ? 'h3' : 'h2',
+        ],
+        '#slots' => [
+          'course_code' => [
+            $build['su_course_subject'] ?? NULL,
+            $build['su_course_code'] ?? NULL,
+          ],
+          'course_academic_year' => $build['su_course_academic_year'] ?? NULL,
+          'course_title' => $node->label(),
+          'course_url' => $build['su_course_link'] ?? $node->toUrl()
+              ->toString(),
+        ],
+      ],
+    ];
   }
 
   protected function stanfordEventView(&$build, NodeInterface $node, string $view_mode) {
@@ -62,10 +89,52 @@ class JumpstartUiNodeHooks {
     ];
   }
 
-  //  protected function stanfordEventSeriesView(&$build, NodeInterface $node, string $view_mode) {}
-  //
-  //  protected function stanfordMediaView(&$build, NodeInterface $node, string $view_mode) {}
-  //
+  protected function stanfordEventSeriesView(&$build, NodeInterface $node, string $view_mode) {
+    $build = [
+      'contents' => ['#access' => FALSE, ...$build],
+      'component' => [
+        '#type' => 'component',
+        '#component' => 'jumpstart_ui:card',
+        '#attributes' => $build['#attributes'] ?? [],
+        '#attached' => $build['#attached'] ?? [],
+        '#props' => [
+          'header_tag' => $view_mode == 'stanford_h3_card' ? 'h3' : 'h2',
+        ],
+        '#slots' => [
+          'headline' => $node->label(),
+          'body' => $build['su_event_series_subheadline'] ?? [],
+        ],
+      ],
+    ];
+  }
+
+  protected function stanfordMediaView(&$build, NodeInterface $node, string $view_mode) {
+    $link = Link::fromTextAndUrl($node->label(), $node->toUrl());
+    $build = [
+      'contents' => ['#access' => FALSE, ...$build],
+      'component' => [
+        '#type' => 'component',
+        '#component' => 'jumpstart_ui:container_responsive_card',
+        '#attributes' => $build['#attributes'] ?? [],
+        '#attached' => $build['#attached'] ?? [],
+        '#slots' => [
+          'image' => $build['su_media_image'] ?? NULL,
+          'heading' => [
+            '#type' => 'html_tag',
+            '#tag' => $view_mode == 'stanford_h3_card' ? 'h3' : 'h2',
+            '#value' => $link->toString(),
+          ],
+          'body' => [
+            $build['su_media_date'] ?? NULL,
+            $build['su_media_dek'] ?? NULL,
+            $build['su_media_series'] ?? NULL,
+            $build['su_media_category'] ?? NULL,
+          ],
+        ],
+      ],
+    ];
+  }
+
   protected function stanfordNewsView(&$build, NodeInterface $node, string $view_mode) {
     $build = [
       'contents' => ['#access' => FALSE, ...$build],
@@ -75,7 +144,7 @@ class JumpstartUiNodeHooks {
         '#attributes' => $build['#attributes'] ?? [],
         '#attached' => $build['#attached'] ?? [],
         '#props' => [
-          'header_tag' => 'h3',
+          'header_tag' => $view_mode == 'stanford_h3_card' ? 'h3' : 'h2',
         ],
         '#slots' => [
           'image' => $build['su_news_featured_media'] ?? NULL,
@@ -97,8 +166,33 @@ class JumpstartUiNodeHooks {
   }
   //
   //  protected function stanfordOpportunityView(&$build, NodeInterface $node, string $view_mode) {}
-  //
-  //  protected function stanfordPageView(&$build, NodeInterface $node, string $view_mode) {}
+
+  protected function stanfordPageView(&$build, NodeInterface $node, string $view_mode) {
+    $build = [
+      'contents' => ['#access' => FALSE, ...$build],
+      'component' => [
+        '#type' => 'component',
+        '#component' => 'jumpstart_ui:card',
+        '#attributes' => $build['#attributes'] ?? [],
+        '#attached' => $build['#attached'] ?? [],
+        '#props' => [
+          'header_tag' => $view_mode == 'stanford_h3_card' ? 'h3' : 'h2',
+        ],
+        '#slots' => [
+          'image' => $build['su_page_image'] ?? $build['su_page_banner'] ?? NULL,
+          'body' => [
+            [
+              '#type' => 'html_tag',
+              '#tag' => 'a',
+              '#value' => $node->label(),
+              '#attributes' => ['href' => $node->toUrl()->toString()],
+            ],
+            $build['su_page_description'] ?? NULL,
+          ],
+        ],
+      ],
+    ];
+  }
 
   protected function stanfordPersonView(&$build, NodeInterface $node, string $view_mode) {
     $attributes = $build['#attributes'] ?? [];
@@ -111,7 +205,7 @@ class JumpstartUiNodeHooks {
         '#attributes' => $attributes,
         '#attached' => $build['#attached'] ?? [],
         '#props' => [
-          'header_tag' => 'h3',
+          'header_tag' => $view_mode == 'stanford_h3_card' ? 'h3' : 'h2',
         ],
         '#slots' => [
           'image' => $build['su_person_photo'] ?? NULL,

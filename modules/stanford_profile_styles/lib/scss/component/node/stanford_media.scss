@@ -1,7 +1,7 @@
 @charset 'UTF-8';
 @import '../../config';
 
-.node--stanford-media {
+.node--stanford-media:not(.stanford-responsive-card) {
   .title {
     h1 {
       @include type-b;
@@ -61,6 +61,7 @@
 
   .su-media-series {
     border-top: 1px solid $su-color-black-30;
+
     > div {
       @include responsive-spacing('margin-bottom', -2);
       display: block;
@@ -119,7 +120,7 @@
         }
       }
     }
-}
+  }
 
   .media-content-related-series {
     @include responsive-spacing('padding', 0 1 null 1);
@@ -320,9 +321,9 @@
   }
 }
 
-.ds-entity--stanford-media {
+.node--stanford-media {
   // Card and teaser display styles.
-  .stanford-simple-card {
+  &.stanford-responsive-card {
     @include responsive-spacing('padding', 1);
 
     border: 1px solid $su-color-black-20;
@@ -366,7 +367,7 @@
 .media-content {
   &.list {
     .su-list-unstyled {
-      >li {
+      > li {
         &:last-child {
           padding-bottom: 0;
         }
@@ -405,9 +406,9 @@
 
 // Default media list
 .paragraph--view-mode--default {
-  .stanford-simple-card {
+  .stanford-responsive-card {
     .image {
-      @container simple-card (min-width: 500px) {
+      @container responsive-card (min-width: 500px) {
         order: unset;
       }
     }

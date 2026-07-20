@@ -15,19 +15,6 @@ defaults: &defaults
 jumpstart_ui_one_column:
   <<: *defaults
 
-jumpstart_ui_one_column_overlay:
-  <<: *defaults
-  label: Stanford One Column with Overlay
-  regions:
-    main:
-      label: Main
-    overlay:
-      label: Overlay
-  template: one-column-overlay
-  icon_map:
-    - [main]
-    - [overlay]
-
 # Two Column
 jumpstart_ui_two_column:
   <<: *defaults

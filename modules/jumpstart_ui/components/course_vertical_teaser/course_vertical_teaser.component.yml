@@ -1,0 +1,26 @@
+name: 'Course Vertical Teaser'
+description: 'Course Vertical Teaser'
+props:
+  type: object
+  properties:
+    header_tag:
+      title: Header Tag Element
+      type: string
+      examples:
+        - h2
+        - h3
+        - h4
+        - div
+slots:
+  course_code:
+    title: 'Course Code'
+    description: 'The course subject and code'
+  course_academic_year:
+    title: 'Course Academic Year'
+    description: 'The academic year offered'
+  course_title:
+    title: Title
+    description: 'The course title'
+  course_url:
+    title: URL
+    description: 'The link to the course'

@@ -1,7 +1,0 @@
-name: Preview
-slots:
-  text: 'This is the actual quote. Lorem ipsur adipisicing elit, sed do eiusmod tempor incididunt ut labore et...'
-  bio: "Jane Doe's title<br/>Jane Doe's company"
-  name: 'Jane Doe'
-  src: 'https://picsum.photos/900/1600/?random'
-  alt: 'This is the image alt text field'

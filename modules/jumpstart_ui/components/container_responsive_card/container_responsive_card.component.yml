@@ -1,15 +1,20 @@
-name: 'Container Responsive Card'
-description: 'This card component comes with several fields to ensure flexibility.'
+'$schema': 'https://git.drupalcode.org/project/drupal/-/raw/10.1.x/core/modules/sdc/src/metadata.schema.json'
+name: Container Responsive Card
+status: stable
+props:
+  type: object
+  properties:
+    image_position:
+      type: string
+      title: Image Position in Horizontal
+      # @todo Add examples here.
+      examples: []
 slots:
   image:
     title: Image
-    description: 'The cards image.'
-  eyebrow:
-    title: Eyebrow
-    description: 'Text eyebrow. Second in the reading order.'
   heading:
     title: Heading
-    description: 'Text heading. First in the reading order.'
+  eyebrow:
+    title: Eyebrow
   body:
     title: Body
-    description: 'An open variable for anything. Generally this would be for WYSIWYG editor contents'

@@ -1,11 +1,11 @@
 @charset 'UTF-8';
-@import '../config';
+@import '../../lib/scss/jumpstart_ui.config';
 @import 'decanter/core/src/scss/decanter-no-markup';
 
-.stanford-simple-card {
-  container: simple-card / inline-size;
+.stanford-responsive-card {
+  container: responsive-card / inline-size;
 
-  .simple-card-interior-wrapper {
+  .card-interior-wrapper {
     display: flex;
     flex-direction: column;
 
@@ -14,13 +14,13 @@
         gap: 10px;
       }
 
-    @container simple-card (min-width: 500px) {
+    @container responsive-card (min-width: 500px) {
       flex-direction: row;
       gap: 20px;
     }
   }
 
-  .simple-card-interior {
+  .card-interior {
     display: flex;
     flex-direction: column;
     flex-grow: 1
@@ -29,7 +29,7 @@
   .image {
     order: -999;
 
-    @container simple-card (min-width: 500px) {
+    @container responsive-card (min-width: 500px) {
       width: 200px;
     }
   }

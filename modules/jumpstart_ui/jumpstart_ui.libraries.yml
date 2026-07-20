@@ -75,17 +75,6 @@ jumpstart_ui:
   dependencies:
     - core/jquery
 
-
-components.date_stacked:
-  css:
-    base:
-      dist/date-stacked/date-stacked.css: {}
-
-components.container_responsive_card:
-  css:
-    base:
-      dist/css/container_responsive_card.css: {}
-
 anchorjs:
   remote: https://www.bryanbraun.com/anchorjs/
   version: 5.0.0
