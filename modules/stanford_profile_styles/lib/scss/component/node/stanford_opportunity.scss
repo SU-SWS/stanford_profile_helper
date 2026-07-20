@@ -419,7 +419,7 @@
 .ds-entity--stanford-opportunity {
   height: 100%;
 
-  .su-card {
+  &.su-card {
     height: 100%; // Equal height cards.
     position: relative;
 

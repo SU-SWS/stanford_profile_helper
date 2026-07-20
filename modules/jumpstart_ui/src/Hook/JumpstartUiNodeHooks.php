@@ -101,7 +101,12 @@ class JumpstartUiNodeHooks {
           'header_tag' => $view_mode == 'stanford_h3_card' ? 'h3' : 'h2',
         ],
         '#slots' => [
-          'headline' => $node->label(),
+          'headline' => [
+            '#type' => 'html_tag',
+            '#tag' => 'a',
+            '#attributes' => ['href' => $node->toUrl()->toString()],
+            '#value' => $node->label(),
+          ],
           'body' => $build['su_event_series_subheadline'] ?? [],
         ],
       ],
@@ -164,8 +169,38 @@ class JumpstartUiNodeHooks {
       ],
     ];
   }
-  //
-  //  protected function stanfordOpportunityView(&$build, NodeInterface $node, string $view_mode) {}
+
+  protected function stanfordOpportunityView(&$build, NodeInterface $node, string $view_mode) {
+    $attributes = $build['#attributes'] ?? [];
+    $attributes['class'][] = 'ds-entity--stanford-opportunity';
+    $build = [
+      'contents' => ['#access' => FALSE, ...$build],
+      'component' => [
+        '#type' => 'component',
+        '#component' => 'jumpstart_ui:card',
+        '#attributes' => $attributes,
+        '#attached' => $build['#attached'] ?? [],
+        '#props' => [
+          'header_tag' => $view_mode == 'stanford_h3_card' ? 'h3' : 'h2',
+        ],
+        '#slots' => [
+          'image' => $build['su_opp_image'] ?? NULL,
+          'super_headline' => $build['su_opp_type'] ?? NULL,
+          'headline' => [
+            '#type' => 'html_tag',
+            '#tag' => 'a',
+            '#attributes' => ['href' => $node->toUrl()->toString()],
+            '#value' => $node->label(),
+          ],
+          'body' => [
+            $build['su_opp_summary'] ?? NULL,
+            $build['su_opp_card_footer'] ?? NULL,
+            $build['su_opp_icon'] ?? NULL,
+          ],
+        ],
+      ],
+    ];
+  }
 
   protected function stanfordPageView(&$build, NodeInterface $node, string $view_mode) {
     $build = [
@@ -180,15 +215,13 @@ class JumpstartUiNodeHooks {
         ],
         '#slots' => [
           'image' => $build['su_page_image'] ?? $build['su_page_banner'] ?? NULL,
-          'body' => [
-            [
-              '#type' => 'html_tag',
-              '#tag' => 'a',
-              '#value' => $node->label(),
-              '#attributes' => ['href' => $node->toUrl()->toString()],
-            ],
-            $build['su_page_description'] ?? NULL,
+          'headline' => [
+            '#type' => 'html_tag',
+            '#tag' => 'a',
+            '#value' => $node->label(),
+            '#attributes' => ['href' => $node->toUrl()->toString()],
           ],
+          'body' => $build['su_page_description'] ?? NULL,
         ],
       ],
     ];
@@ -221,8 +254,55 @@ class JumpstartUiNodeHooks {
     ];
   }
 
-  //  protected function stanfordPolicyView(&$build, NodeInterface $node, string $view_mode) {}
-  //
-  //  protected function stanfordPublicationView(&$build, NodeInterface $node, string $view_mode) {}
+  protected function stanfordPolicyView(&$build, NodeInterface $node, string $view_mode) {
+    $build = [
+      'contents' => ['#access' => FALSE, ...$build],
+      'component' => [
+        '#type' => 'component',
+        '#component' => 'jumpstart_ui:card',
+        '#attributes' => $build['#attributes'] ?? [],
+        '#attached' => $build['#attached'] ?? [],
+        '#props' => [
+          'header_tag' => $view_mode == 'stanford_h3_card' ? 'h3' : 'h2',
+        ],
+        '#slots' => [
+          'headline' => [
+            '#type' => 'html_tag',
+            '#tag' => 'a',
+            '#value' => $node->label(),
+            '#attributes' => ['href' => $node->toUrl()->toString()],
+          ],
+          'body' => $build['body'] ?? NULL,
+        ],
+      ],
+    ];
+  }
+
+  protected function stanfordPublicationView(&$build, NodeInterface $node, string $view_mode) {
+    $citation_type = $node->get('su_publication_citation')
+      ->get(0)?->entity?->getBundleEntity()->label();
+    $build = [
+      'contents' => ['#access' => FALSE, ...$build],
+      'component' => [
+        '#type' => 'component',
+        '#component' => 'jumpstart_ui:card',
+        '#attributes' => $build['#attributes'] ?? [],
+        '#attached' => $build['#attached'] ?? [],
+        '#props' => [
+          'header_tag' => $view_mode == 'stanford_h3_card' ? 'h3' : 'h2',
+        ],
+        '#slots' => [
+          'super_headline' => $citation_type ?: 'Publication',
+          'headline' => [
+            '#type' => 'html_tag',
+            '#tag' => 'a',
+            '#value' => $node->label(),
+            '#attributes' => ['href' => $node->toUrl()->toString()],
+          ],
+          'body' => $build['su_publication_topics'] ?? NULL,
+        ],
+      ],
+    ];
+  }
 
 }
