@@ -1,27 +1,27 @@
 name: 'News List Item'
 description: 'Building block component for the news list page.'
 slots:
-  news_list_image:
+  image:
     title: Image
     description: 'The list image.'
-  news_list_publishing_date:
+  publishing_date:
     title: Date
     description: 'Publishing date'
-  news_list_headline:
+  headline:
     title: Headline
     description: 'Text heading'
-  news_list_dek:
+  dek:
     title: Dek
     description: 'This is the dek specific to news items.'
-  news_list_topics:
+  topics:
     title: Topics
     description: 'Associated terms from the topics taxonomy.'
-  news_source:
+  source:
     title: Source
     description: 'The source field.'
-  news_url:
+  url:
     title: 'URL for item'
     description: 'URL for image and heading'
-  news_list_footer:
+  footer:
     title: Footer
     description: 'An open footer area.'

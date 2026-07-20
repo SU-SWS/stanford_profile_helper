@@ -534,7 +534,7 @@
 .ds-entity--stanford-opportunity {
 
   // Uses the news default list template.
-  .su-news-article {
+  &.su-news-article {
     @include responsive-spacing('padding', 1 null);
 
     border-bottom: 1px solid $su-color-black-30;

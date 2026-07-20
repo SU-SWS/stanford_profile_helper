@@ -12,15 +12,15 @@ props:
         - h4
         - div
 slots:
-  course_code:
+  code:
     title: 'Course Code'
     description: 'The course subject and code'
-  course_academic_year:
+  academic_year:
     title: 'Course Academic Year'
     description: 'The academic year offered'
-  course_title:
+  title:
     title: Title
     description: 'The course title'
-  course_url:
+  url:
     title: URL
     description: 'The link to the course'

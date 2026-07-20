@@ -1,33 +1,24 @@
 name: 'Course List Item'
 description: 'Building block component for the Course list page.'
-variants:
-  default:
-    title: Default
-  h3_header:
-    title: 'H3 Header'
 slots:
-  course_list_code:
+  code:
     title: 'Course Code'
     description: 'The course code'
-  course_list_academic_year:
+  academic_year:
     title: 'Academic Year'
     description: 'Academic year'
-  course_list_quarters:
+  quarters:
     title: Quarters
     description: 'Quarters offered'
-  course_list_title:
+  title:
     title: Title
     description: 'Title of the course'
-  course_list_instructors:
+  instructors:
     title: Instructors
     description: 'The list of instructors teaching the course'
-  course_list_description:
+  description:
     title: Description
     description: 'The course description'
-  course_list_url:
+  url:
     title: 'URL for item'
     description: 'URL for title'
-libraryOverrides:
-  css:
-    component:
-      ../../../dist/css/course-list-item.css: {  }

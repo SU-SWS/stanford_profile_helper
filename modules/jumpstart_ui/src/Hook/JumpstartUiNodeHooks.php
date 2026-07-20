@@ -31,7 +31,34 @@ class JumpstartUiNodeHooks {
   }
 
   protected function stanfordCourseView(&$build, NodeInterface $node, string $view_mode) {
-    $link = Link::fromTextAndUrl($node->label(), $node->toUrl());
+    if ($view_mode == 'teaser') {
+      $build = [
+        'contents' => ['#access' => FALSE, ...$build],
+        'component' => [
+          '#type' => 'component',
+          '#component' => 'jumpstart_ui:course_list',
+          '#attributes' => $build['#attributes'] ?? [],
+          '#attached' => $build['#attached'] ?? [],
+          '#props' => [
+            'header_tag' => $view_mode == 'stanford_h3_card' ? 'h3' : 'h2',
+          ],
+          '#slots' => [
+            'code' => [
+              $build['su_course_subject'] ?? NULL,
+              $build['su_course_code'] ?? NULL,
+            ],
+            'academic_year' => $build['su_course_academic_year'] ?? NULL,
+            'quarters' => $build['su_course_quarters'] ?? NULL,
+            'title' => $node->label(),
+            'instructors' => $build['su_course_instructors'] ?? NULL,
+            'description' => $build['body'] ?? NULL,
+            'url' => $build['su_course_link'] ?? $node->toUrl()
+                ->toString(),
+          ],
+        ],
+      ];
+      return;
+    }
     $build = [
       'contents' => ['#access' => FALSE, ...$build],
       'component' => [
@@ -43,13 +70,13 @@ class JumpstartUiNodeHooks {
           'header_tag' => $view_mode == 'stanford_h3_card' ? 'h3' : 'h2',
         ],
         '#slots' => [
-          'course_code' => [
+          'code' => [
             $build['su_course_subject'] ?? NULL,
             $build['su_course_code'] ?? NULL,
           ],
-          'course_academic_year' => $build['su_course_academic_year'] ?? NULL,
-          'course_title' => $node->label(),
-          'course_url' => $build['su_course_link'] ?? $node->toUrl()
+          'academic_year' => $build['su_course_academic_year'] ?? NULL,
+          'title' => $node->label(),
+          'url' => $build['su_course_link'] ?? $node->toUrl()
               ->toString(),
         ],
       ],
@@ -67,7 +94,7 @@ class JumpstartUiNodeHooks {
         '#type' => 'component',
         '#attributes' => $build['#attributes'] ?? [],
         '#attached' => $build['#attached'] ?? [],
-        '#component' => 'jumpstart_ui:event_card',
+        '#component' => $view_mode == 'teaser' ? 'jumpstart_ui:event_list' : 'jumpstart_ui:event_card',
         '#props' => [
           'header_tag' => $view_mode == 'stanford_h3_card' ? 'h3' : 'h2',
         ],
@@ -79,6 +106,7 @@ class JumpstartUiNodeHooks {
           'event_type' => $build['su_event_type'] ?? NULL,
           'headline' => $build['title'] ?? NULL,
           'subheadline' => $build['su_event_subheadline'] ?? NULL,
+          'dek' => $build['su_event_dek'] ?? NULL,
           'url' => $node->get('su_event_source')->getString() ?: $node->toUrl()
             ->toString(),
           'date_time' => $build['su_event_date_time'] ?? NULL,
@@ -145,7 +173,7 @@ class JumpstartUiNodeHooks {
       'contents' => ['#access' => FALSE, ...$build],
       'component' => [
         '#type' => 'component',
-        '#component' => 'jumpstart_ui:news_vertical_teaser',
+        '#component' => $view_mode == 'teaser' ? 'jumpstart_ui:news_list' : 'jumpstart_ui:news_vertical_teaser',
         '#attributes' => $build['#attributes'] ?? [],
         '#attached' => $build['#attached'] ?? [],
         '#props' => [
@@ -163,7 +191,7 @@ class JumpstartUiNodeHooks {
             $build['su_news_topics'] ?? NULL,
             $build['su_news_spotlight_filters'] ?? NULL,
           ],
-          'source' => $build['su_news_source'] ?? NULL,
+          'source' => $build['su_news_source'] ?? $node->toUrl()->toString(),
           'url' => $node->toUrl()->toString(),
         ],
       ],
@@ -177,7 +205,7 @@ class JumpstartUiNodeHooks {
       'contents' => ['#access' => FALSE, ...$build],
       'component' => [
         '#type' => 'component',
-        '#component' => 'jumpstart_ui:card',
+        '#component' => $view_mode == 'teaser' ? 'jumpstart_ui:news_list' : 'jumpstart_ui:card',
         '#attributes' => $attributes,
         '#attached' => $build['#attached'] ?? [],
         '#props' => [
@@ -197,6 +225,9 @@ class JumpstartUiNodeHooks {
             $build['su_opp_card_footer'] ?? NULL,
             $build['su_opp_icon'] ?? NULL,
           ],
+          'dek' => $build['su_opp_summary'] ?? NULL,
+          'topics' => $build['su_opp_type'] ?? NULL,
+          'footer' => $build['su_opp_card_footer'] ?? NULL,
         ],
       ],
     ];

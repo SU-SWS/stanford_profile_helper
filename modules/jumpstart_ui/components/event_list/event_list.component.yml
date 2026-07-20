@@ -1,0 +1,41 @@
+name: 'Events List Item'
+description: 'Building block component for the events list page.'
+slots:
+  start_month:
+    title: 'Start Month'
+    description: 'Event Month'
+  start_date:
+    title: 'Start Date'
+    description: 'Event date'
+  end_month:
+    title: 'End Month'
+    description: 'Event Month'
+  end_date:
+    title: 'End Date'
+    description: 'Event ending date'
+  event_type:
+    title: 'Event Type'
+    description: 'The type of the event.'
+  headline:
+    title: Headline
+    description: 'Text heading'
+  subheadline:
+    title: Subheadline
+    description: 'Text subheadline.'
+  dek:
+    title: Dek
+    description: 'This is the dek specific to news items.'
+  url:
+    title: 'URL for event'
+    description: 'URL for event.'
+  date_time:
+    title: 'Date and time for event'
+    description: 'Date and time for the event.'
+  location:
+    title: 'Location for event'
+    description: 'Location for the event.'
+  address:
+    title: 'Formatted location for event'
+    description: 'Formatted location for the event.'
+
+
