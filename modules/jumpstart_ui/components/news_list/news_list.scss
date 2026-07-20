@@ -1,4 +1,7 @@
-@charset "UTF-8";
+@charset 'UTF-8';
+
+@import '../../lib/scss/jumpstart_ui.config';
+@import 'news_list_newsletter_signup';
 
 // When the view is placed via a view field center it and max it out.
 .field--name-su-news-view-field {
