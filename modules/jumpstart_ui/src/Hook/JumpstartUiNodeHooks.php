@@ -18,7 +18,14 @@ class JumpstartUiNodeHooks {
    */
   #[Hook('node_view')]
   public function nodeView(array &$build, NodeInterface $node, EntityViewDisplayInterface $display, $view_mode) {
-    if ($view_mode == 'full' || $view_mode == '_custom') {
+    $skip_view_modes = [
+      'full',
+      'default',
+      '_custom',
+      'printable',
+      'search_indexing',
+    ];
+    if (in_array($view_mode, $skip_view_modes)) {
       return;
     }
     $bundle = u($node->bundle())->camel()->toString();
