@@ -115,4 +115,34 @@ class JumpstartUiConfigPagesHooks {
     ];
   }
 
+  #[Hook('preprocess_config_pages__stanford_global_message')]
+  public function preprocessConfigPagesGlobalMessage(&$variables) {
+    /** @var \Drupal\config_pages\ConfigPagesInterface $config_page */
+    $config_page = $variables['config_pages'];
+    $level = $config_page->get('su_global_msg_type')->getString();
+
+    $variables['content'] = [
+      'contextual_links' => $variables['content']['contextual_links'] ?? NULL,
+      'contents' => [
+        '#access' => FALSE,
+        ...$variables['content'],
+      ],
+      'component' => [
+        '#type' => 'component',
+        '#component' => 'jumpstart_ui:alert',
+        '#props' => [
+          'level' => $level,
+        ],
+        '#slots' => [
+          'label' => $variables['content']['su_global_msg_label'] ?? NULL,
+          'message' => [
+            $variables['content']['su_global_msg_header'] ?? NULL,
+            $variables['content']['su_global_msg_message'] ?? NULL,
+            $variables['content']['su_global_msg_link'] ?? NULL,
+          ],
+        ],
+      ],
+    ];
+  }
+
 }

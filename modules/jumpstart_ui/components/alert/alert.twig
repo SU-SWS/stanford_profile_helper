@@ -1,0 +1,53 @@
+
+{% set level = level|render ~ '' %}
+{%- set attributes = attributes.addClass('su-alert') -%}
+
+{# Default Icon for Alerts. #}
+{%- set fa_class = "su-fa-bell" -%}
+{# Icon for error style. #}
+{% if level == "error" %}
+  {%- set attributes = attributes.addClass(['su-alert--error', 'su-alert--text-light']) -%}
+  {%- set fa_class = "su-fa-exclamation-triangle" -%}
+{%- endif -%}
+
+{# Icon for success style. #}
+{% if level == "success" %}
+  {%- set attributes = attributes.addClass(['su-alert--success', 'su-alert--text-light']) -%}
+  {%- set fa_class = "su-fa-check-circle" -%}
+{%- endif -%}
+
+{# Icon for warning style. #}
+{% if level == "warning" %}
+  {%- set attributes = attributes.addClass('su-alert--warning') -%}
+  {%- set fa_class = "su-fa-exclamation-circle" -%}
+{%- endif -%}
+
+{# Icon for info style. #}
+{% if level == "info" %}
+  {%- set attributes = attributes.addClass(['su-alert--info', 'su-alert--text-light']) -%}
+  {%- set fa_class = "su-fa-info-circle" -%}
+{%- endif -%}
+
+{% set label = label|render_clean %}
+{% set header = header|render_clean %}
+
+<div{{ attributes }}>
+  <div class="centered-container">
+    <div class="su-alert__header">
+        <span class="su-alert__icon">
+          <i class="su-fas {{ fa_class }}"></i>
+        </span>
+      {%- if label is not empty -%}
+        <span class="su-alert__label">{{- label -}}</span>
+      {%- endif -%}
+    </div>
+
+    <div class="su-alert__body">
+      {%- if message is not empty -%}
+        <div class="su-alert__text">
+          {{- message -}}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>

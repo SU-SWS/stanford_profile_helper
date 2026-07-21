@@ -73,6 +73,29 @@ function stanford_publication_entity_extra_field_info() {
 }
 
 /**
+ * Implements hook_entity_view().
+ */
+function stanford_publication_entity_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  if (
+    ($view_mode == 'default' || $view_mode == 'full') &&
+    $entity instanceof NodeInterface &&
+    $entity->bundle() == 'stanford_publication' &&
+    $display->getComponent('citation_type') &&
+    $citation = _stanford_pubs_get_citation_entity($entity)
+  ) {
+    $citation_type = \Drupal::entityTypeManager()
+      ->getStorage('citation_type')
+      ->load($citation->bundle());
+
+    $citation_type = $citation_type->label() == 'Other' ? 'Publication' : $citation_type->label();
+    $build['citation_type'] = [
+      '#type' => 'markup',
+      '#markup' => $citation_type,
+    ];
+  }
+}
+
+/**
  * Implements hook_form_FORM_ID_alter().
  */
 function stanford_publication_form_taxonomy_overview_terms_alter(&$form, FormStateInterface $form_state) {

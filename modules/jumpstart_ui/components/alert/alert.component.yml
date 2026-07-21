@@ -1,0 +1,21 @@
+'$schema': 'https://git.drupalcode.org/project/drupal/-/raw/10.1.x/core/modules/sdc/src/metadata.schema.json'
+name: Alert
+status: stable
+props:
+  type: object
+  properties:
+    level:
+      type: string
+      title: Level
+      examples:
+        - plain
+        - success
+        - info
+        - warning
+        - error
+slots:
+  label:
+    title: Label
+  message:
+    title: Message
+

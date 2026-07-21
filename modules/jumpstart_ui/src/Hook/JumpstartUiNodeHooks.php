@@ -269,7 +269,6 @@ class JumpstartUiNodeHooks {
     $attributes = $build['#attributes'] ?? [];
     $attributes['class'][] = 'ds-entity--stanford-person';
     $build = [
-      'contents' => ['#access' => FALSE, ...$build],
       'component' => [
         '#type' => 'component',
         '#component' => 'jumpstart_ui:card',
