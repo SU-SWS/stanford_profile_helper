@@ -7,13 +7,29 @@ namespace Drupal\jumpstart_ui\Hook;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\Path\PathMatcherInterface;
+use Drupal\Core\Routing\RedirectDestinationInterface;
+use Drupal\Core\Session\AccountProxyInterface;
+use Drupal\Core\Url;
 
 class JumpstartUiConfigPagesHooks {
 
-  public function __construct(protected ConfigFactoryInterface $configFactory) {}
+  public function __construct(
+    protected ConfigFactoryInterface $configFactory,
+    protected PathMatcherInterface $pathMatcher,
+    protected RedirectDestinationInterface $redirectDestination,
+    protected AccountProxyInterface $account
+  ) {}
 
   #[Hook('preprocess_config_pages__stanford_local_footer')]
   public function preprocessConfigPagesLocalFooter(&$variables) {
+    $redirectDestination = preg_replace('/\?.*$/', '', $this->redirectDestination->get());
+    if ($this->pathMatcher->isFrontPage()) {
+      $redirectDestination = '/';
+    }
+
+    $login_path = Url::fromRoute('samlauth.saml_controller_login', ['destination' => $redirectDestination]);
+
     /** @var \Drupal\config_pages\ConfigPagesInterface $config_page */
     $config_page = $variables['config_pages'];
 
@@ -74,7 +90,7 @@ class JumpstartUiConfigPagesHooks {
         'signup_form_method' => $variables['content']['su_local_foot_f_method'] ?? NULL,
         'signup_form_field_submit_value' => $variables['content']['su_local_foot_f_button'] ?? NULL,
         'weblogin_text' => $variables['content']['su_local_foot_sunet_t'] ?? NULL,
-        'weblogin_url' => '/saml/login',
+        'weblogin_url' => $this->account->isAnonymous() ? $login_path->toString() : NULL,
         'site_logo' => $variables['content']['su_local_foot_loc_img'] ?? NULL,
         'site_logo_alt' => 'image alt',
         'line1' => $variables['content']['su_local_foot_line_1'] ?? NULL,
@@ -82,6 +98,11 @@ class JumpstartUiConfigPagesHooks {
         'line3' => $variables['content']['su_local_foot_line_3'] ?? NULL,
         'line4' => $variables['content']['su_local_foot_line_4'] ?? NULL,
         'line5' => $variables['content']['su_local_foot_line_5'] ?? NULL,
+      ],
+      '#cache' => [
+        'contexts' => [
+          'url.path',
+        ],
       ],
     ];
     $variables['content'] = [
