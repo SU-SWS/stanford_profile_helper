@@ -1,3 +1,5 @@
+@import "../../lib/scss/jumpstart_ui.config";
+
 // basic list styles
 .su-basic-page-types-list {
   @include modular-spacing("padding-top", 4);

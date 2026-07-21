@@ -16,13 +16,13 @@
 
 <div{{ attributes }}>
 
-{%- block block_category  %}
+{%- block category  %}
 {% if category|render_clean is not empty %}
     <div class="su-basic-page-list__category">{{- category -}}</div>
 {% endif %}
 {% endblock -%}
 
-{%- block block_title  %}
+{%- block title  %}
 {% if title|render_clean is not empty %}
     <div>
         {% if page_image|render_clean('<img><picture>') is not empty %}
@@ -33,14 +33,14 @@
 {% endif %}
 {% endblock -%}
 
-{%- block block_description  %}
+{%- block description  %}
 {% if description|render_clean is not empty %}
     <div class="su-basic-page-list__description">{{- description -}}</div>
 {% endif %}
 {% endblock -%}
 
 
-{%- block block_footer  %}
+{%- block footer  %}
 {% if footer|render_clean is not empty %}
     <div class="su-basic-page-list__footer">{{- footer -}}</div>
 {% endif %}

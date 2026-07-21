@@ -1,4 +1,4 @@
-name: 'Basic Page Types List'
+name: 'Basic Page List'
 description: 'Building block component for the basic page types list page.'
 slots:
   category:
@@ -16,7 +16,3 @@ slots:
   footer:
     title: Footer
     description: 'An open footer area.'
-libraryOverrides:
-  css:
-    component:
-      ../../../dist/css/component/basic-page-type-list.css: {  }
