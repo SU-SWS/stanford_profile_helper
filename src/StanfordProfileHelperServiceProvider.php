@@ -18,6 +18,11 @@ class StanfordProfileHelperServiceProvider extends ServiceProviderBase {
       $definition = $container->getDefinition('search_api_algolia.helper');
       $definition->setClass('Drupal\stanford_profile_helper\SearchApiAlgoliaHelper');
     }
+
+    if ($container->hasDefinition('ui_patterns_legacy.configuration_updater')) {
+      $definition = $container->getDefinition('ui_patterns_legacy.configuration_updater');
+      $definition->setClass('Drupal\stanford_profile_helper\Service\UiPatternsConfigurationUpdater');
+    }
   }
 
 }
