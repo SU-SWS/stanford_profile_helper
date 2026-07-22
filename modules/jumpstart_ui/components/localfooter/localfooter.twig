@@ -32,11 +32,11 @@
   {%- set lockup_options =
     {
       "modifier_class": "su-lockup--option-" ~ lockup_option,
-      "line1": line1|render_clean,
-      "line2": line2|render_clean,
-      "line3": line3|render_clean,
-      "line4": line4|render_clean,
-      "line5": line5|render_clean,
+      "line1": line1,
+      "line2": line2,
+      "line3": line3,
+      "line4": line4,
+      "line5": line5,
       "link": url('<front>'),
     } -%}
 {%- else -%}
@@ -48,7 +48,7 @@
   {% if lockup_title is not empty or weblogin_url is not empty %}
     <div class="su-local-footer__header">
 
-      {% if not use_default_logo %}
+      {% if not use_default_logo and site_logo is not empty %}
         {% embed "jumpstart_ui:lockup" with lockup_options %}
 
           {% set image_alt = line1 %}
@@ -74,7 +74,7 @@
 
         {% endembed %}
       {% else %}
-        {% include "jumpstart_ui:lockup" with lockup_options only %}
+        {{ include("jumpstart_ui:lockup", lockup_options, with_context = false) }}
       {% endif %}
       {# Web login button #}
       {% if weblogin_url is not empty %}
