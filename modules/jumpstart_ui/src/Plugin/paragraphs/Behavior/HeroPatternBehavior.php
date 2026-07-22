@@ -96,9 +96,10 @@ class HeroPatternBehavior extends ParagraphsBehaviorBase {
         //'center' => $this->t('Center Transparent Overlay'),
       ],
     ];
-    $allowOverlayColor = (bool) \Drupal::state()->get('allow_hero_pattern_overlay_color');
+    $allowOverlayColor = (bool) \Drupal::state()
+      ->get('allow_hero_pattern_overlay_color');
     if ($allowOverlayColor) {
-      $form['overlay_position']['#options']['center'] =  $this->t('Center Transparent Overlay');
+      $form['overlay_position']['#options']['center'] = $this->t('Center Transparent Overlay');
     }
     $form['overlay_color_wrapper'] = [
       '#type' => 'container',
@@ -169,13 +170,9 @@ class HeroPatternBehavior extends ParagraphsBehaviorBase {
 
   /**
    * {@inheritDoc}
+   *
+   * @codeCoverageIgnore Changes are handled in the preprocess hook.
    */
-  public function view(array &$build, ParagraphInterface $paragraph, EntityViewDisplayInterface $display, $view_mode) {
-    // FYI: this adds the class one level above than the pattern template.
-    if ($color = $paragraph->getBehaviorSetting('hero_pattern', 'overlay_color')) {
-      $build['#attributes']['class'][] = 'overlay-color-' . strtolower(str_replace('#', '', $color));
-    }
-    $build['#attributes']['class'][] = 'bottom-margin-' . $paragraph->getBehaviorSetting('hero_pattern', 'space_below', 'default');
-  }
+  public function view(array &$build, ParagraphInterface $paragraph, EntityViewDisplayInterface $display, $view_mode) {}
 
 }

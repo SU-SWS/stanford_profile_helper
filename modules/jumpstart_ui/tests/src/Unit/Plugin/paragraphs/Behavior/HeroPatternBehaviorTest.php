@@ -83,16 +83,6 @@ class HeroPatternBehaviorTest extends UnitTestCase {
     $this->assertEquals('right', $form['overlay_position']['#default_value']);
   }
 
-  public function testView() {
-    $plugin = HeroPatternBehavior::create(\Drupal::getContainer(), [], '', []);
-    $build = [];
-    $paragraph = $this->createMock(Paragraph::class);
-    $paragraph->method('getBehaviorSetting')->willReturn('right');
-    $display = $this->createMock(EntityViewDisplayInterface::class);
-    $plugin->view($build, $paragraph, $display, 'foo');
-    $this->assertEquals('overlay-right', $build['#attributes']['class'][0]);
-  }
-
   /**
    * Load and get mock display entities.
    *
