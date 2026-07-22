@@ -230,10 +230,6 @@ function stanford_profile_helper_filter_info_alter(&$info) {
  * Implements hook_theme().
  */
 function stanford_profile_helper_theme($existing, $type, $theme, $path) {
-  $themes['block__stanford_basic_search'] = [
-    'template' => 'block--stanford-basic-search',
-    'original hook' => 'block',
-  ];
   $themes['rabbit_hole_message'] = [
     'variables' => ['destination' => NULL],
   ];

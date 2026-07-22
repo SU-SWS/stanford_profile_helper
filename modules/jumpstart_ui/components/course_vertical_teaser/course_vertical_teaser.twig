@@ -31,12 +31,11 @@
 {%- endif -%}
 
 {% set url = url|render|striptags("<drupal-render-placeholder>")|trim %}
-{% set header_tag = variant == 'h3_header' ? 'h3' : 'h2' %}
 
 <article{{ attributes.addClass(classes) }}>
 
   <div class="su-course-link">
-    <{{ header_tag }} class="su-link su-card__link {{ url_link_type }}">
+    <{{ header_tag|default('h2') }} class="su-link su-card__link {{ url_link_type }}">
     {%- if url is not empty -%}
       <a {{ url_attributes.addClass('su-course-vertical-teaser__link') }} href="{{ url }}" >
     {%- endif -%}
@@ -44,7 +43,7 @@
     {%- if url is not empty -%}
       </a>
     {%- endif -%}
-    </{{ header_tag }}>
+    </{{ header_tag|default('h2') }}>
   </div>
 
   {%- if code|render_clean is not empty or academic_year|render_clean is not empty -%}

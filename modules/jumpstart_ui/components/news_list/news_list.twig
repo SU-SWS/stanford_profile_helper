@@ -31,7 +31,7 @@
 {%- if image|render|striptags('<drupal-render-placeholder><img><picture>')|trim is empty -%}
   {%- set attributes = attributes.addClass('su-news-list-image__empty') -%}
 {%- endif %}
-{% set header_tag = variant == 'h3_header' ? 'h3' : 'h2' %}
+
 <article{{ attributes }}>
 
   {# Wrapper for the top grid layout #}
@@ -43,9 +43,9 @@
         {%- endif -%}
 
         {% if headline|render_clean %}
-        <{{ header_tag }}>
-        {{- headline -}}
-      </{{ header_tag }}>
+        <{{ header_tag|default('h2') }}>
+          {{- headline -}}
+      </{{ header_tag|default('h2') }}>
       {% endif %}
 
       {%- if url is not empty -%}

@@ -91,9 +91,18 @@ class JumpstartUiNodeHooks {
   }
 
   protected function stanfordEventView(&$build, NodeInterface $node, string $view_mode) {
-    $date = $node->get('su_event_date_time')->get(0)->getValue();
-    [$startMonth, $startDay] = explode(' ', date('M j', (int) $date['value']));
-    [$endMonth, $endDay] = explode(' ', date('M j', (int) $date['end_value']));
+    $date = $node->get('su_event_date_time')->get(0)?->getValue();
+    $startMonth = $startDay = $endMonth = $endDay = NULL;
+    if ($date) {
+      [
+        $startMonth,
+        $startDay,
+      ] = explode(' ', date('M j', (int) $date['value']));
+      [
+        $endMonth,
+        $endDay,
+      ] = explode(' ', date('M j', (int) $date['end_value']));
+    }
 
     $build = [
       'contents' => ['#access' => FALSE, ...$build],
@@ -103,7 +112,7 @@ class JumpstartUiNodeHooks {
         '#attached' => $build['#attached'] ?? [],
         '#component' => $view_mode == 'teaser' ? 'jumpstart_ui:event_list' : 'jumpstart_ui:event_card',
         '#props' => [
-          'header_tag' => $view_mode == 'stanford_h3_card' ? 'h3' : 'h2',
+          'header_tag' => $view_mode == 'stanford_h3_card' || $view_mode == 'teaser' ? 'h3' : 'h2',
         ],
         '#slots' => [
           'start_month' => $startMonth,
@@ -275,7 +284,7 @@ class JumpstartUiNodeHooks {
         '#attributes' => $attributes,
         '#attached' => $build['#attached'] ?? [],
         '#props' => [
-          'header_tag' => $view_mode == 'stanford_h3_card' ? 'h3' : 'h2',
+          'header_tag' => str_contains($view_mode, 'h3') ? 'h3' : 'h2',
         ],
         '#slots' => [
           'image' => $build['su_person_photo'] ?? NULL,

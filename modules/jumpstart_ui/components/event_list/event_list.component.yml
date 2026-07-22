@@ -1,5 +1,16 @@
 name: 'Events List Item'
 description: 'Building block component for the events list page.'
+props:
+  type: object
+  properties:
+    header_tag:
+      title: Header Tag Element
+      type: string
+      examples:
+        - h2
+        - h3
+        - h4
+        - div
 slots:
   start_month:
     title: 'Start Month'

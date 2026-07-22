@@ -36,7 +36,6 @@ Template for an Event List Item.
     {%- set link_attributes = link_attributes.addClass('su-link--external') -%}
   {%- endif %}
 {%- endif -%}
-{% set header_tag = variant == 'h3_header' ? 'h3' : 'h2' %}
 
 <article {{ attributes }}>
   <div class="su-event-list-item__date">
@@ -67,7 +66,7 @@ Template for an Event List Item.
     {%- if url|render_clean is empty -%}
     {{- headline -}}
     {%- else -%}
-    <{{ header_tag }}><a {{ link_attributes }} href="{{ url|render_clean }}">{{ headline|render_clean }}</a></{{ header_tag }}>
+    <{{ header_tag|default('h2') }}><a {{ link_attributes }} href="{{ url|render_clean }}">{{ headline|render_clean }}</a></{{ header_tag|default('h2') }}>
   {%- endif -%}
 
   {# Event Subheadline  #}
