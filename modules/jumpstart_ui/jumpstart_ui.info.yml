@@ -10,8 +10,6 @@ dependencies:
   - drupal:breakpoint
   - ds:ds
   - ui_patterns:ui_patterns
-  - ui_patterns_layouts:ui_patterns_layouts
-  - ui_patterns_library:ui_patterns_library
 
 components:
   namespaces:

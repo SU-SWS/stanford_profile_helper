@@ -34,8 +34,6 @@ dependencies:
   - stanford_media:stanford_media
   - taxonomy_menu:taxonomy_menu
   - ui_patterns:ui_patterns
-  - ui_patterns:ui_patterns_layouts
-  - ui_patterns:ui_patterns_library
   - ui_patterns:ui_patterns_views
   - views_block_filter_block:views_block_filter_block
   - views_infinite_scroll:views_infinite_scroll

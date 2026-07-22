@@ -42,8 +42,6 @@ dependencies:
   - stanford_profile_helper:stanford_courses_importer
   - taxonomy_menu:taxonomy_menu
   - ui_patterns:ui_patterns
-  - ui_patterns:ui_patterns_layouts
-  - ui_patterns:ui_patterns_library
   - ui_patterns:ui_patterns_views
   - ultimate_cron:ultimate_cron
   - views_infinite_scroll:views_infinite_scroll

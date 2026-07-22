@@ -25,7 +25,6 @@ class PatternMediaTest extends KernelTestBase {
     'components',
     'file',
     'ui_patterns',
-    'ui_patterns_ds',
     'node',
     'user',
   ];
