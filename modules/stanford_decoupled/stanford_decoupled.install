@@ -22,6 +22,7 @@ function stanford_decoupled_schema() {
         'not null' => TRUE,
       ],
     ],
+    'primary key' => ['site', 'path'],
   ];
   return $schema;
 }
