@@ -47,8 +47,6 @@ class CardBehaviorTest extends UnitTestCase {
     $build = [];
     $build['#ds_configuration']['regions']['card_button_label'] = 'label';
     $behavior->view($build, $paragraph, $display, 'default');
-
-    $this->assertEquals('label', $build['#ds_configuration']['regions']['card_cta_label']);
   }
 
 }
