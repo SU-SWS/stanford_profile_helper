@@ -8,19 +8,11 @@
  * The entire footer can be made to "stick" to the bottom of the browser window by including the @sticky-footer mixin.
  */
 #}
-{% if template_path_logo is empty -%}
-  {%- set template_path_logo = "@decanter/components/logo/logo.twig" -%}
-{%- endif %}
-{% if external_link_text is empty -%}
-  {%- set external_link_text -%}
-    <span class="su-global-footer__link-a11y"> (link is external)</span>
-  {% endset %}
-{%- endif %}
 
 <div class="su-global-footer {{ modifier_class }}">
   <div class="su-global-footer__container">
     <div class="su-global-footer__brand">
-      {%- include template_path_logo -%}
+      {{ include("jumpstart_ui:stanford_logo", {}, with_context = false) }}
     </div>
     <div class="su-global-footer__content">
       <nav aria-label="global footer menu">

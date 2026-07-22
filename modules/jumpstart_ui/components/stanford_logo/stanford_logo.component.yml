@@ -1,0 +1,8 @@
+'$schema': 'https://git.drupalcode.org/project/drupal/-/raw/10.1.x/core/modules/sdc/src/metadata.schema.json'
+name: Stanford Logo
+status: stable
+slots:
+  name:
+    title: Name
+  path:
+    title: Path
