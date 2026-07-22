@@ -1,28 +1,3 @@
-{#
-/**
- * @file
- * Hero Component
- *
- * A big graphic for use as a focal point or a large video.
- *
- * Available variables:
- * - attributes: For additional HTML attributes not already provided.
- * - modifier_class: Additional css classes to change look and behaviour.
- * - media: iframe or HTML5 video players
- * - image: A full HTML entity for an image. Can be img or picture.
- * - super_headline: Text heading
- * - headline: Text heading
- * - body: An open variable for anything. Generally this would be for
- *     WYSIWYG editor contents.
- * - cta_link: The href value for the cta field link
- * - cta_attributes: Any html attributes on the cta link that need to be
- *     added. For example: _target.
- * - cta_label: The clickable text for the CTA link
- * - button_link: The href property of the button component.
- * - button_label: The text label of the button component.
- */
-#}
-
 
 {% if modifier_class is not empty %}
   {% set attributes = attributes.addClass(modifier_class) %}
@@ -65,7 +40,7 @@
         "super_headline": super_headline,
         "headline": headline,
         "body": body,
-        "link": link,
+        "link": button_link,
         "button_label": button_label,
         "header_tag": header_tag,
         "headline_attributes": create_attribute({class: (header_classes ~ (visually_hide_header ? " visually-hidden": null))|trim})
