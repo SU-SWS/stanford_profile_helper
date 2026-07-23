@@ -617,7 +617,7 @@ function stanford_profile_helper_xmlsitemap_link_alter(array &$link, array $cont
 function stanford_profile_helper_config_readonly_whitelist_patterns() {
   $default_theme = \Drupal::config('system.theme')->get('default');
   // Allow the theme settings to be changed in the UI.
-  $patterns = ["$default_theme.settings", 'next.next_site.*'];
+  $patterns = ["$default_theme.settings"];
 
   // Allow the form to be submitted in the UI for specific routes that don't
   // alter the configuration, such as resetting the order of taxonomy terms.
@@ -703,118 +703,6 @@ function stanford_profile_helper_taxonomy_term_update(TermInterface $entity) {
       ->condition('route_param_key', 'taxonomy_term=' . $entity->id())
       ->execute();
     \Drupal::service('router.builder')->rebuild();
-  }
-}
-
-/**
- * Implements hook_preprocess_pattern_NAME().
- */
-function stanford_profile_helper_preprocess_pattern_alert(&$variables) {
-  $entity_type = $variables['context']->getProperty('entity_type');
-  $bundle = $variables['context']->getProperty('bundle');
-  $entity = $variables['context']->getProperty('entity');
-
-  // Global Messages!
-  if ($entity_type == "config_pages" && $bundle == "stanford_global_message") {
-    // Validate that the entity has the field we need so we don't 500 the site.
-    if (!$entity->hasField('su_global_msg_type')) {
-      \Drupal::logger('stanford_profile_helper')
-        ->error("Global Messages Config Block is missing the field su_global_msg_type");
-      return;
-    }
-
-    $color = $entity->get('su_global_msg_type')->getString();
-    $variables['attributes']->addClass("su-alert--" . $color);
-    $dark_bgs = ['error', 'info', 'success'];
-    if (in_array($color, $dark_bgs)) {
-      $variables['attributes']->addClass("su-alert--text-light");
-    }
-  }
-}
-
-/**
- * Implements hook_preprocess_pattern_NAME().
- */
-function stanford_profile_helper_preprocess_pattern_localfooter(&$variables) {
-  $entity_type = $variables['context']->getProperty('entity_type');
-  $bundle = $variables['context']->getProperty('bundle');
-  $entity = $variables['context']->getProperty('entity');
-
-  // If the pattern has already been rendered and the 2nd cell is already a
-  // markup object or other, we can't manipulate it.
-  if (!is_array($variables['cell2'])) {
-    return;
-  }
-  $second_content = $variables['cell2']['su_local_foot_se_co'] ?? [];
-  $third_content = $variables['cell2']['su_local_foot_tr2_co'] ?? [];
-
-  // The local footer pattern from Decanter doesn't have equal columns for each
-  // of the 3 content blocks. To avoid having to completely rewrite the
-  // template, we can use some special markup to wrap a couple fields with the
-  // necessary classes to simulate the 4 equal columns. If the user populates
-  // 1, 2, and 4 content blocks, then the 2nd block will stretch to fill take
-  // the area of the missing 3rd block.
-  if (\Drupal::service('renderer')->render($third_content)) {
-    $variables['cell2'] = [
-      '#type' => 'container',
-      '#attributes' => ['class' => ['flex-container']],
-      'second' => [
-        '#type' => 'container',
-        '#attributes' => ['class' => ['flex-md-6-of-12', 'su-margin-bottom-1']],
-        'contents' => $second_content,
-      ],
-      'third' => [
-        '#type' => 'container',
-        '#attributes' => ['class' => ['flex-md-6-of-12']],
-        'contents' => $variables['cell2']['su_local_foot_tr2_co'],
-      ],
-    ];
-  }
-
-  // Local Footer!
-  if ($entity_type == "config_pages" && $bundle == "stanford_local_footer") {
-    // If the lockup updates are not enabled just end.
-    if (
-      !$entity->hasField('su_local_foot_use_loc')
-      || $entity->get('su_local_foot_use_loc')->getString() === "1"
-    ) {
-      return;
-    }
-
-    // Enable custom lockup.
-    $variables['custom_lockup'] = TRUE;
-
-    // Lockup customizations are enabled.
-    $variables['line1'] = $entity->get('su_local_foot_line_1')->getString();
-    $variables['line2'] = $entity->get('su_local_foot_line_2')->getString();
-    $variables['line3'] = $entity->get('su_local_foot_line_3')->getString();
-    $variables['line4'] = $entity->get('su_local_foot_line_4')->getString();
-    $variables['line5'] = $entity->get('su_local_foot_line_5')->getString();
-    $variables['use_logo'] = $entity->get('su_local_foot_use_logo')
-      ->getString();
-    $file_field = $entity->get('su_local_foot_loc_img');
-
-    // Check if there is a file.
-    if (isset($file_field->entity)) {
-      $file_uri = $file_field->entity->getFileUri();
-      $variables['site_logo'] = \Drupal::service('file_url_generator')
-        ->generateAbsoluteString($file_uri);
-    }
-    else {
-      $variables['use_logo'] = "1";
-    }
-
-    // Check if there is a link and patch it through.
-    $link = $entity->get('su_local_foot_loc_link')->getString();
-    if ($link) {
-      $variables['lockup_link'] = [
-        '#markup' => URL::fromUri($link)->toString(TRUE)->getGeneratedUrl(),
-      ];
-    }
-
-    // Pass through the lockup option.
-    $option = $entity->get('su_local_foot_loc_op')->getString();
-    $variables['lockup_option'] = 'su-lockup--option-' . $option;
   }
 }
 

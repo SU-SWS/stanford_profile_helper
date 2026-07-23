@@ -38,30 +38,7 @@ class HeroPatternBehavior extends ParagraphsBehaviorBase {
    * {@inheritDoc}
    */
   public static function isApplicable(ParagraphsTypeInterface $paragraphs_type) {
-    $display_storage = \Drupal::entityTypeManager()
-      ->getStorage('entity_view_display');
-    $display_ids = $display_storage->getQuery()
-      ->accessCheck()
-      ->condition('id', "paragraph.{$paragraphs_type->id()}.", 'STARTS_WITH')
-      ->execute();
-
-    // No displays exist for this paragraph for some reason, let's bail.
-    if (empty($display_ids)) {
-      return FALSE;
-    }
-
-    /** @var \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display */
-    foreach ($display_storage->loadMultiple($display_ids) as $display) {
-      if ($layout = $display->getThirdPartySetting('ds', 'layout')) {
-        if (!empty($layout['id']) && $layout['id'] == 'pattern_hero') {
-          // If any of the displays for the given paragraph are configured to
-          // display as the hero pattern, this behavior applicable and can be
-          // enabled.
-          return TRUE;
-        }
-      }
-    }
-    return FALSE;
+    return $paragraphs_type->id() === 'stanford_banner';
   }
 
   /**

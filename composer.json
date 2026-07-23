@@ -84,7 +84,6 @@
         "drupal/smart_trim": ">=2.1",
         "drupal/taxonomy_menu": ">=3.6",
         "drupal/token_or": ">=2.3",
-        "drupal/ui_patterns": "^1.7",
         "drupal/ultimate_cron": ">=2.0@alpha",
         "drupal/viewfield": "^3.0@beta",
         "drupal/views_block_filter_block": ">=2.0",

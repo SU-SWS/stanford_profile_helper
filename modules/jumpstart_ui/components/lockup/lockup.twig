@@ -1,4 +1,4 @@
-{% set attributes = attributes.addClass(['su-lockup', modifier_class]) %}
+{% set attributes = attributes.addClass(['su-lockup', 'su-lockup--option-' ~ lockup_style|default('a')]) %}
 
 <div {{ attributes }}>
   {% if link is not empty %}

@@ -9,7 +9,6 @@ dependencies:
   - drupal:block
   - drupal:breakpoint
   - ds:ds
-  - ui_patterns:ui_patterns
 
 components:
   namespaces:

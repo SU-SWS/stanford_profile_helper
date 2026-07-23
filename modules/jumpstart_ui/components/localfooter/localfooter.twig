@@ -5,6 +5,7 @@
 {%- if weblogin_text is empty -%}
   {%- set weblogin_url = '' -%}
 {%- endif -%}
+{% set weblogin_url = weblogin_url|render_clean %}
 
 {# Work with Drupal and format it for this template. #}
 {%- set signup_form_method = signup_form_method|render_clean -%}
@@ -27,20 +28,20 @@
   {% set line1 = lockup_title %}
 {% endif %}
 
+{%- set lockup_options = {lockup_style: 'a', line1: lockup_title } -%}
+
 {# Pass through the custom lockup settings. #}
 {%- if custom_lockup -%}
   {%- set lockup_options =
     {
-      "modifier_class": "su-lockup--option-" ~ lockup_option,
-      "line1": line1,
-      "line2": line2,
-      "line3": line3,
-      "line4": line4,
-      "line5": line5,
-      "link": url('<front>'),
+      lockup_style: lockup_option,
+      line1: line1,
+      line2: line2,
+      line3: line3,
+      line4: line4,
+      line5: line5,
+      link: url('<front>'),
     } -%}
-{%- else -%}
-  {%- set lockup_options = { "modifier_class": 'su-lockup--option-a', "line1": lockup_title, "attributes": attributes|without('id') } -%}
 {%- endif -%}
 
 <div{{ attributes }}>
@@ -78,9 +79,7 @@
       {% endif %}
       {# Web login button #}
       {% if weblogin_url is not empty %}
-        <a{{ weblogin_attributes }} href="{{ weblogin_url }}"
-                                    class="su-link su-link--internal"
-                                    rel="nofollow">
+        <a href="{{ weblogin_url }}" class="su-link su-link--internal" rel="nofollow">
           {{ weblogin_text|default('Web Login') }}
         </a>
       {% endif %}
