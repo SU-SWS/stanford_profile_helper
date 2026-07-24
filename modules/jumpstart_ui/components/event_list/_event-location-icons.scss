@@ -1,0 +1,24 @@
+.su-event-list-item {
+  .views-field-su-event-location,
+  .views-field-su-event-address {
+    display:flex;
+  }
+
+  .map-icon {
+    @include modular-spacing('padding', null -2 null null);
+
+    &::before {
+      color: $su-color-black;
+      font-family: 'Font Awesome 5 Free';
+      // Need this for the new version of FA. Will go away later.
+      font-weight: $su-font-semi-bold;
+      // Need to switch to the SU icons.
+      content: "\f3c5";
+    }
+
+    &+ span,
+    &+ div {
+      margin-right: 5px;
+    }
+  }
+}

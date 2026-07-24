@@ -1,8 +1,8 @@
 @charset 'UTF-8';
 @import '../../lib/scss/jumpstart_ui.config';
 @import 'event-date-time-icons';
+@import 'event-location-icons';
 @import '../event_card/event-stacked-date--card';
-
 
 // Heading spacing
 .heading-h1,
@@ -118,19 +118,6 @@ h1 {
 
       // Often this is a long zoom link, so overflow-wrap it.
       overflow-wrap: anywhere;
-
-      > .map-icon {
-        @include modular-spacing('padding', null -2 null null);
-
-        &::before {
-          color: $su-color-black;
-          font-family: 'Font Awesome 5 Free';
-          // Need this for the new version of FA. Will go away later.
-          font-weight: $su-font-semi-bold;
-          // Need to switch to the SU icons.
-          content: "\f3c5";
-        }
-      }
     }
 
     .views-field-su-event-address {
@@ -139,30 +126,11 @@ h1 {
 
       // Align multirow text with the icon.
       display: flex;
-
-      > .map-icon {
-        @include modular-spacing('padding', null -2 null null);
-
-        &::before {
-          color: $su-color-black;
-          font-family: 'Font Awesome 5 Free';
-          // Need this for the new version of FA. Will go away later.
-          font-weight: $su-font-semi-bold;
-          // Need to switch to the SU icons.
-          content: "\f3c5";
-        }
-      }
     }
 
     .views-field-su-entered-event-address {
       &.views-field-su-event-address {
         display: block;
-
-        .map-icon {
-          &+ span {
-            margin-right: 5px;
-          }
-        }
 
         span:nth-child(n+3) {
           display: block;
