@@ -8,6 +8,7 @@ props:
       title: Header Tag Element
       type: string
       enum:
+        - h1
         - h2
         - h3
         - h4

@@ -1,7 +1,7 @@
 {% set attributes = attributes.addClass('su-local-footer') %}
 
 {# Sanitize the weblogin text. #}
-{%- if weblogin_text -%}
+{%- if not weblogin_text -%}
   {%- set weblogin_url = '' -%}
 {%- endif -%}
 

@@ -27,14 +27,15 @@
     {# We reuse the card component here. #}
     {{ include("jumpstart_ui:card",
       {
-        "modifier_class": "su-hero__card",
-        "super_headline": super_headline,
-        "headline": headline,
-        "body": body,
-        "link": button_link,
-        "button_label": button_label,
-        "header_tag": header_tag,
-        "headline_attributes": create_attribute({class: (header_classes ~ (visually_hide_header ? " visually-hidden": null))|trim})
+        modifier_class: "su-hero__card",
+        super_headline: super_headline,
+        headline: headline,
+        body: body,
+        link: button_link,
+        button_label: button_label,
+        header_tag: header_tag,
+        header_classes: header_classes,
+        visually_hide_header: visually_hide_header
       }, with_context = false) }}
   {%- endif -%}
 </div>
