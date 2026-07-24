@@ -45,6 +45,6 @@ slots:
   event_type:
     title: 'Event Type'
     description: 'The type of the event.'
-  location:
-    title: 'Location for event'
+  address:
+    title: 'Free address information'
     description: 'Location for the event.'
