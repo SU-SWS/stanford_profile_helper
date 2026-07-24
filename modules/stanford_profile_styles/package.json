@@ -10,22 +10,22 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@babel/core": "^7.27.1",
-    "@babel/preset-env": "^7.27.2",
-    "babel-loader": "^10.0.0",
-    "css-loader": "^7.1.2",
+    "@babel/core": "^7.29.7",
+    "@babel/preset-env": "^7.29.7",
+    "babel-loader": "^10.1.1",
+    "css-loader": "^7.1.4",
     "decanter": "^6.3.3",
     "filemanager-webpack-plugin": "^8.0.0",
-    "mini-css-extract-plugin": "^2.9.2",
+    "mini-css-extract-plugin": "^2.10.2",
     "optimize-css-assets-webpack-plugin": "^6.0.1",
-    "postcss-loader": "^8.1.1",
-    "postcss-preset-env": "^10.1.6",
-    "sass": "^1.93.2",
-    "sass-loader": "^16.0.5",
+    "postcss-loader": "^8.2.1",
+    "postcss-preset-env": "^10.6.1",
+    "sass": "^1.101.7",
+    "sass-loader": "^16.0.8",
     "style-loader": "^4.0.0",
-    "webpack": "^5.99.9",
+    "webpack": "^5.109.0",
     "webpack-cli": "^6.0.1",
-    "webpack-remove-empty-scripts": "^1.0.4"
+    "webpack-remove-empty-scripts": "^1.1.1"
   },
   "packageManager": "yarn@4.9.1"
 }

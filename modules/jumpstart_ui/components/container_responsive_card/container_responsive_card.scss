@@ -5,7 +5,7 @@
 .stanford-responsive-card {
   container: responsive-card / inline-size;
 
-  .card-interior-wrapper {
+  .responsive-card-interior-wrapper {
     display: flex;
     flex-direction: column;
 
@@ -20,7 +20,7 @@
     }
   }
 
-  .card-interior {
+  .responsive-card-interior {
     display: flex;
     flex-direction: column;
     flex-grow: 1

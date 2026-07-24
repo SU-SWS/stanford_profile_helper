@@ -1,7 +1,7 @@
 @charset 'UTF-8';
 @import '../../config';
 
-.node--stanford-media:not(.stanford-responsive-card) {
+.node-page--stanford-media {
   .title {
     h1 {
       @include type-b;
@@ -267,7 +267,7 @@
 // Media Category badge. Used on cards, node, lists, etc.
 // The template is in SB field--su-media-category.html.twig
 .views-field-su-media-category,
-.simple-card-interior {
+.responsive-card-interior {
   .video,
   .audio,
   .podcast,
@@ -321,9 +321,9 @@
   }
 }
 
-.node--stanford-media {
+.ds-entity--stanford-media {
   // Card and teaser display styles.
-  &.stanford-responsive-card {
+  .stanford-responsive-card {
     @include responsive-spacing('padding', 1);
 
     border: 1px solid $su-color-black-20;
