@@ -22,16 +22,14 @@
     {% endif %}
   {% endblock -%}
 
-  {%- block title %}
-    {% if title %}
-      <div>
-        {% if page_image|render_clean('<img><picture>') is not empty %}
-          <div class="su-basic-page-list__image">{{- page_image -}}</div>
-        {% endif %}
-        <h2 class="su-basic-page-list__title">{{- title -}}</h2>
-      </div>
-    {% endif %}
-  {% endblock -%}
+  {% if title %}
+    <div>
+      {% if page_image|render_clean('<img><picture>') is not empty %}
+        <div class="su-basic-page-list__image">{{- page_image -}}</div>
+      {% endif %}
+      <h2 class="su-basic-page-list__title">{{- title -}}</h2>
+    </div>
+  {% endif %}
 
   {%- block description %}
     {% if description|render_clean is not empty %}
