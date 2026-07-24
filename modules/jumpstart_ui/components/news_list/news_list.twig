@@ -20,12 +20,10 @@
 {%- set attributes = attributes.addClass(['su-news-article', modifier_class]) -%}
 
 {# If the news source url is set go there instead of the default. #}
-{%- if source|render|striptags("<drupal-render-placeholder>")|trim is not empty -%}
+{%- if source -%}
   {%- set url = source -%}
   {%- set attributes = attributes.addClass('su-news-external') -%}
 {%- endif %}
-
-{% set url = url|render|striptags("<drupal-render-placeholder>")|trim %}
 
 {# If the news image is empty, create a class. #}
 {%- if image|render|striptags('<drupal-render-placeholder><img><picture>')|trim is empty -%}
@@ -38,41 +36,41 @@
   <header class="su-news-list__header">
     <div class="su-news-list__headline-dek">
       {# Link for headline h2 #}
-      {%- if url is not empty -%}
-      <a {{ url_attributes }} href="{{ url }}">
+      {%- if url -%}
+      <a href="{{ url }}">
         {%- endif -%}
 
-        {% if headline|render_clean %}
+        {% if headline %}
         <{{ header_tag|default('h2') }}>
           {{- headline -}}
       </{{ header_tag|default('h2') }}>
       {% endif %}
 
-      {%- if url is not empty -%}
+      {%- if url -%}
         </a>
       {%- endif -%}
 
       {# News List Dek #}
-      {% if dek|render|striptags('<drupal-render-placeholder>')|trim is not empty %}
-        <p class="su-news-list__dek">{{ dek|render_clean }}</p>
+      {% if dek %}
+        <p class="su-news-list__dek">{{ dek }}</p>
       {% endif %}
     </div>
 
     {# Add the image and link only if they both exist. #}
     {% if image|render|striptags('<drupal-render-placeholder><img><picture>')|trim is not empty -%}
-      {%- if url is not empty -%}
-        <a {{ url_attributes }} href="{{ url }}" aria-hidden="true" tabindex="-1">
+      {%- if url -%}
+        <a href="{{ url }}" aria-hidden="true" tabindex="-1">
       {%- endif -%}
       {{- image -}}
-      {%- if url is not empty -%}
+      {%- if url -%}
         </a>
       {%- endif -%}
     {%- endif -%}
 
     {# Since CSS Grid is used, always render an element even if it's empty. #}
     <div class="su-news-list__item-date">
-      {% if publishing_date|render|striptags('<drupal-render-placeholder>')|trim is not empty %}
-        <p>{{ publishing_date|render_clean }}</p>
+      {% if publishing_date %}
+        <p>{{ publishing_date }}</p>
       {% endif -%}
     </div>
 

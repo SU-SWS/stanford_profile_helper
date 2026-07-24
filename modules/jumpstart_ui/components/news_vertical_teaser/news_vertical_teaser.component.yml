@@ -7,31 +7,33 @@ props:
     header_tag:
       title: Header Tag Element
       type: string
-      examples:
+      enum:
         - h2
         - h3
         - h4
         - div
+    headline:
+      title: Headline
+      type: string
+    date:
+      title: Date
+      type: string
+    dek:
+      title: Dek
+      type: string
+    source:
+      title: Source
+      type: string
+    url:
+      title: 'URL for item'
+      type: string
 slots:
   image:
     title: Image
     description: 'The vertical teaser image.'
-  headline:
-    title: Headline
-    description: 'Text heading'
-  date:
-    title: Date
-  dek:
-    title: Dek
   topics:
     title: Topics
     description: 'Associated terms from the topics taxonomy'
-  source:
-    title: Source
-    description: 'The source field.'
-  url:
-    title: 'URL for item'
-    description: 'URL for image and heading'
   footer:
     title: Footer
     description: 'The footer area.'

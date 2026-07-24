@@ -1,20 +1,10 @@
 {%- set attributes = attributes.addClass(['su-card', 'su-event-card', 'su-event-list-item', modifier_class]) -%}
-{%- set event_url = event_url|render_clean -%}
-
-{# Clean up the date fields. #}
-{%- set start_date = start_date|render_clean -%}
-{%- set end_date = end_date|render_clean -%}
-{%- set start_month = start_month|render_clean -%}
-{%- set end_month = end_month|render_clean -%}
-{%- set url = url|render_clean -%}
-{%- set subheadline = subheadline|render_clean -%}
-{%- set dek = dek|render_clean -%}
 
 {# Separate URL and title #}
 {%- set link_attributes = create_attribute({'class': ['su-link']}) -%}
 {%- set is_external = false -%}
-{%- if url|render_clean is not empty -%}
-  {%- set is_external = url|render|striptags|split('//')[1] ? true : false -%}
+{%- if url -%}
+  {%- set is_external = url|split('//')[1] ? true : false -%}
   {%- if is_external -%}
     {%- set link_attributes = link_attributes.addClass('su-link--external') -%}
   {%- endif %}
@@ -46,29 +36,29 @@
     {%- endif -%}
 
     {# Event Title  #}
-    {%- if url|render_clean is empty -%}
-    <{{ header_tag }}>{{- headline|render_clean -}}</a></{{ header_tag }}>
+    {%- if url is empty -%}
+    <{{ header_tag }}>{{- headline -}}</a></{{ header_tag }}>
     {%- else -%}
-    <{{ header_tag }}><a {{ link_attributes }} href="{{ url|render_clean }}">{{ headline|render_clean }}</a></{{ header_tag }}>
+    <{{ header_tag }}><a {{ link_attributes }} href="{{ url }}">{{ headline }}</a></{{ header_tag }}>
   {%- endif -%}
 
   {# Event Subheadline  #}
-  {%- if subheadline is not empty %}
+  {%- if subheadline %}
     <div class="event-list-item__subheadline">{{- subheadline -}}</div>
   {%- endif -%}
 
   {# Event Dek  #}
-  {%- if dek is not empty %}
+  {%- if dek %}
     <div class="event-list_item__dek"> {{- dek -}}</div>
   {% endif -%}
 
   {# Event Date/Time  #}
-  {%- if date_time|render_clean is not empty %}
+  {%- if date_time is not empty %}
     <div class="views-field-su-event-date-time"><span class="date-icon" aria-hidden="true"></span> <div>{{- date_time -}}</div></div>
   {%- endif -%}
 
   {# Event Location  #}
-  {%- if location|render_clean is not empty %}
+  {%- if location is not empty %}
     <div class="views-field-su-event-location"><span class="map-icon" aria-hidden="true"></span> {{- location -}}</div>
   {%- endif -%}
 
@@ -76,13 +66,5 @@
   {%- if  address|render_clean is not empty %}
     <div class="views-field-su-event-address"><span class="map-icon" aria-hidden="true"></span> {{- address -}}</div>
   {%- endif -%}
-
-  {# Manually Entered Event Location Address  #}
-  <div class="views-field-su-event-address views-field-su-entered-event-address">
-
-    {% if (location_organization|render_clean is not empty) or  (location_address_line1|render_clean is not empty) %}
-      <span class="map-icon" aria-hidden="true"></span>
-    {% endif %}
-  </div>
   </div>
 </article>

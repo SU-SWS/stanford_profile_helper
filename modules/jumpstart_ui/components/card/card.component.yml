@@ -7,7 +7,7 @@ props:
     header_tag:
       title: Header Tag Element
       type: string
-      examples:
+      enum:
         - h2
         - h3
         - h4
@@ -26,26 +26,28 @@ props:
     modifier_class:
       title: Classes to modify card
       type: string
+    super_headline:
+      title: 'Super Headline'
+      type: string
+    headline:
+      title: Headline
+      type: string
+    headline_url:
+      title: Headline URL
+      type: string
+    link:
+      title: 'Link URL'
+      type: string
+    cta_label:
+      title: 'Link Label'
+      type: string
+    button_label:
+      title: 'Button Label'
+      type: string
 slots:
   image:
     title: Image
     description: 'The cards image.'
-  super_headline:
-    title: 'Super Headline'
-    description: 'Text heading'
-  headline:
-    title: Headline
-    description: 'Text heading'
   body:
     title: Body
     description: 'An open variable for anything. Generally this would be for WYSIWYG editor contents'
-  link:
-    title: 'Link URL'
-    description: 'A plain text string of just the URL'
-  cta_label:
-    title: 'Link Label'
-    description: 'The clickable text for the CTA link'
-  button_label:
-    title: 'Button Label'
-    description: 'The text label of the button component'
-

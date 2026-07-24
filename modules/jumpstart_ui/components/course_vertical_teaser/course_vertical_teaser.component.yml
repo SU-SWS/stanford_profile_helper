@@ -6,21 +6,21 @@ props:
     header_tag:
       title: Header Tag Element
       type: string
-      examples:
+      enum:
         - h2
         - h3
         - h4
         - div
-slots:
-  code:
-    title: 'Course Code'
-    description: 'The course subject and code'
-  academic_year:
-    title: 'Course Academic Year'
-    description: 'The academic year offered'
-  title:
-    title: Title
-    description: 'The course title'
-  url:
-    title: URL
-    description: 'The link to the course'
+    code:
+      title: Course Code
+      type: string
+    academic_year:
+      title: 'Course Academic Year'
+      type: string
+    title:
+      title: Title
+      type: string
+    url:
+      title: URL
+      type: string
+

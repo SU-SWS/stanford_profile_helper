@@ -20,21 +20,15 @@
 {%- set url_link_type = "su-link--action" -%}
 
 {# If the news source url is set go there instead of the default. #}
-{%- if source|render|striptags("<drupal-render-placeholder>")|trim is not empty -%}
+{%- if source -%}
   {%- set url = source -%}
   {%- set attributes = attributes.addClass('su-news-external') -%}
   {%- set url_link_type = "su-link--external" -%}
 {%- endif %}
 
-{%- if url_attributes is empty -%}
-  {% set url_attributes = create_attribute() -%}
-{%- endif -%}
-
-{% set url = url|render|striptags("<drupal-render-placeholder>")|trim %}
-
 <article{{ attributes }}>
-  {%- if url is not empty -%}
-    <a {{ url_attributes.addClass('su-news-vertical-teaser__link') }} href="{{ url }}">
+  {%- if url  -%}
+    <a class="su-news-vertical-teaser__link" href="{{ url }}">
   {%- endif -%}
   <figure class="su-media su-media--image su-card__media">
     <div class="su-media__wrapper">
@@ -46,19 +40,19 @@
       {{- headline -}}
     </{{ header_tag|default('h2') }}>
   </div>
-  {%- if url is not empty -%}
+  {%- if url -%}
     </a>
   {%- endif -%}
 
   <div class="su-card__contents">
 
-    {% if date is not empty %}
+    {% if date %}
       <div class="su-news-date">
         {{ date }}
       </div>
     {% endif %}
 
-    {% if dek is not empty %}
+    {% if dek %}
       <div class="su-news-dek">
         {{ dek }}
       </div>

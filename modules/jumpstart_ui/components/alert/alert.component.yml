@@ -7,15 +7,16 @@ props:
     level:
       type: string
       title: Level
-      examples:
+      enum:
         - plain
         - success
         - info
         - warning
         - error
+    label:
+      title: Label
+      type: string
 slots:
-  label:
-    title: Label
   message:
     title: Message
 

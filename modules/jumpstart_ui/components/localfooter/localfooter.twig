@@ -1,30 +1,11 @@
 {% set attributes = attributes.addClass('su-local-footer') %}
 
 {# Sanitize the weblogin text. #}
-{%- set weblogin_text = weblogin_text|render_clean -%}
-{%- if weblogin_text is empty -%}
+{%- if weblogin_text -%}
   {%- set weblogin_url = '' -%}
 {%- endif -%}
-{% set weblogin_url = weblogin_url|render_clean %}
 
-{# Work with Drupal and format it for this template. #}
-{%- set signup_form_method = signup_form_method|render_clean -%}
-{%- set signup_form_action = signup_form_action|render_clean -%}
-{%- set signup_form_field_submit_value = signup_form_field_submit_value|render_clean -%}
-{%- set primary_links_header = primary_links_header|render_clean -%}
-
-{# Pass through custom lockup settings #}
-
-{%- set lockup_title = lockup_title|render_clean -%}
-{% set line1 = line1|render_clean %}
-{% set line2 = line2|render_clean %}
-{% set line3 = line3|render_clean %}
-{% set line4 = line4|render_clean %}
-{% set line5 = line5|render_clean %}
-{% set site_logo = site_logo|render_clean %}
-{% set site_logo_alt = site_logo_alt|render_clean %}
-
-{% if line1|render_clean is empty %}
+{% if not line1 %}
   {% set line1 = lockup_title %}
 {% endif %}
 
@@ -46,10 +27,10 @@
 
 <div{{ attributes }}>
   {# The header is completely optional and won't render if there isn't any content #}
-  {% if lockup_title is not empty or weblogin_url is not empty %}
+  {% if lockup_title or weblogin_url %}
     <div class="su-local-footer__header">
 
-      {% if not use_default_logo and site_logo is not empty %}
+      {% if not use_default_logo and site_logo %}
         {% embed "jumpstart_ui:lockup" with lockup_options %}
 
           {% set image_alt = line1 %}
@@ -67,7 +48,7 @@
             <div class="su-lockup__logo-wrapper">
               <img src="{{ site_logo }}" alt="{{ image_alt }}"
                    class="su-lockup__custom-logo"/>
-              {% if line4 is not empty %}
+              {% if line4 %}
                 <span class="su-lockup__line4">{{ line4 }}</span>
               {% endif %}
             </div>
@@ -78,7 +59,7 @@
         {{ include("jumpstart_ui:lockup", lockup_options, with_context = false) }}
       {% endif %}
       {# Web login button #}
-      {% if weblogin_url is not empty %}
+      {% if weblogin_url %}
         <a href="{{ weblogin_url }}" class="su-link su-link--internal" rel="nofollow">
           {{ weblogin_text|default('Web Login') }}
         </a>
@@ -150,7 +131,7 @@
       The signup form is optional. If it doesn't meet your content needs
       use the cell3 variable instead.
       #}
-      {% if signup_form_action is not empty %}
+      {% if signup_form_action %}
         <div class="su-signup-form">
           {# Add any additional markup above the form with this variable. #}
           {{ signup_form_content }}

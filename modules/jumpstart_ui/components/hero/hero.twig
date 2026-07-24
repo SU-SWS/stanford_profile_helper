@@ -1,9 +1,4 @@
-
-{% if modifier_class is not empty %}
-  {% set attributes = attributes.addClass(modifier_class) %}
-{% endif %}
-
-{% if overlay_position is not empty %}
+{% if overlay_position %}
   {% set attributes = attributes.addClass("overlay-" ~ overlay_position) %}
 {% endif %}
 
@@ -14,8 +9,8 @@
 <div{{ attributes.addClass("su-hero") }}>
 
   {# Hero Image or Video #}
-  {% block media %}
-    {% if media is not empty or image is not empty %}
+  {% block image %}
+    {% if image is not empty %}
       <div class="su-hero__media">
         {% if 'su-hero--youtube' in modifier_class %}
           {# Support for: iframe #}
@@ -28,11 +23,7 @@
     {% endif %}
   {% endblock %}
 
-  {%- if
-    super_headline is not empty or
-    headline is not empty or
-    body is not empty or
-    link is not empty -%}
+  {%- if show_card -%}
     {# We reuse the card component here. #}
     {{ include("jumpstart_ui:card",
       {
@@ -47,5 +38,3 @@
       }, with_context = false) }}
   {%- endif -%}
 </div>
-
-

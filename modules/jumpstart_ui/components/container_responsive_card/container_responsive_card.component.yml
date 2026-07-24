@@ -4,17 +4,13 @@ status: stable
 props:
   type: object
   properties:
-    image_position:
+    eyebrow:
+      title: Eyebrow
       type: string
-      title: Image Position in Horizontal
-      # @todo Add examples here.
-      examples: []
 slots:
+  heading:
+    title: Title
   image:
     title: Image
-  heading:
-    title: Heading
-  eyebrow:
-    title: Eyebrow
   body:
     title: Body

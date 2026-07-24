@@ -7,42 +7,42 @@ props:
     header_tag:
       title: Header Tag Element
       type: string
-      examples:
+      enum:
         - h2
         - h3
         - h4
         - div
+    start_month:
+      title: 'Start Month'
+      type: string
+    start_date:
+      title: 'Start Date'
+      type: number
+    end_month:
+      title: 'End Month'
+      type: string
+    end_date:
+      title: 'End Date'
+      type: number
+    headline:
+      title: Headline
+      type: string
+    subheadline:
+      title: Subheadline
+      type: string
+    url:
+      title: 'URL for event'
+      type: string
+    date_time:
+      title: 'Date and time for event'
+      type: string
+    location:
+      title: 'Location for event'
+      type: string
 slots:
-  start_month:
-    title: 'Start Month'
-    description: 'Event Month'
-  start_date:
-    title: 'Start Date'
-    description: 'Event date'
-  end_month:
-    title: 'End Month'
-    description: 'Event Month'
-  end_date:
-    title: 'End Date'
-    description: 'Event ending date'
   event_type:
     title: 'Event Type'
     description: 'The type of the event.'
-  headline:
-    title: Headline
-    description: 'Text heading'
-  subheadline:
-    title: Subheadline
-    description: 'Text subheadline.'
-  url:
-    title: 'URL for event'
-    description: 'URL for event.'
-  date_time:
-    title: 'Date and time for event'
-    description: 'Date and time for the event.'
-  location:
-    title: 'Location for event'
-    description: 'Location for the event.'
   address:
     title: 'Formatted location for event'
     description: 'Formatted location for the event.'

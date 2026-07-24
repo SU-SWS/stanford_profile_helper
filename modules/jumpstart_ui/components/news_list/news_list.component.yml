@@ -1,27 +1,30 @@
 name: 'News List Item'
 description: 'Building block component for the news list page.'
+props:
+  type: object
+  properties:
+    publishing_date:
+      title: Date
+      type: string
+    headline:
+      title: Headline
+      type: string
+    dek:
+      title: Dek
+      type: string
+    source:
+      title: Source
+      type: string
+    url:
+      title: 'URL for item'
+      type: string
 slots:
   image:
     title: Image
     description: 'The list image.'
-  publishing_date:
-    title: Date
-    description: 'Publishing date'
-  headline:
-    title: Headline
-    description: 'Text heading'
-  dek:
-    title: Dek
-    description: 'This is the dek specific to news items.'
   topics:
     title: Topics
     description: 'Associated terms from the topics taxonomy.'
-  source:
-    title: Source
-    description: 'The source field.'
-  url:
-    title: 'URL for item'
-    description: 'URL for image and heading'
   footer:
     title: Footer
     description: 'An open footer area.'

@@ -22,35 +22,25 @@
   ]
 -%}
 
-{# We use rabbit hole to forward to ExploreCourses, which makes it an external, but this might change #}
-{%- set url_link_type = "su-link--external" -%}
-
-
-{%- if url_attributes is empty -%}
-  {% set url_attributes = create_attribute() -%}
-{%- endif -%}
-
-{% set url = url|render|striptags("<drupal-render-placeholder>")|trim %}
-
 <article{{ attributes.addClass(classes) }}>
 
   <div class="su-course-link">
-    <{{ header_tag|default('h2') }} class="su-link su-card__link {{ url_link_type }}">
-    {%- if url is not empty -%}
-      <a {{ url_attributes.addClass('su-course-vertical-teaser__link') }} href="{{ url }}" >
+    <{{ header_tag|default('h2') }} class="su-link su-card__link su-link--external">
+    {%- if url -%}
+      <a class="su-course-vertical-teaser__link" href="{{ url }}" >
     {%- endif -%}
       {{- title -}}
-    {%- if url is not empty -%}
+    {%- if url -%}
       </a>
     {%- endif -%}
     </{{ header_tag|default('h2') }}>
   </div>
 
-  {%- if code|render_clean is not empty or academic_year|render_clean is not empty -%}
+  {%- if code or academic_year -%}
   <div class="su-course-header">
-    {%- if code|render_clean is not empty -%}<strong>{{ code|render|striptags|replace({'\n': ''})}}</strong>{%-  endif -%}
-    {%- if code|render_clean is not empty and academic_year|render_clean  is not empty -%} &nbsp;|&nbsp;{%-  endif -%}
-    {%- if academic_year is not empty -%}{{ academic_year }}{%-  endif -%}
+    {%- if code -%}<strong>{{ code }}</strong>{%-  endif -%}
+    {%- if code and academic_year -%}&nbsp;|&nbsp;{%-  endif -%}
+    {{ academic_year }}
   </div>
   {%-  endif -%}
 

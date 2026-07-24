@@ -1,16 +1,15 @@
 {% set attributes = attributes.addClass(['su-lockup', 'su-lockup--option-' ~ lockup_style|default('a')]) %}
 
-<div {{ attributes }}>
-  {% if link is not empty %}
-  <a href="{{ link }}" {{ link_attributes }}>
+<div{{ attributes }}>
+  {% if link %}
+  <a href="{{ link }}">
     {% endif %}
     <div class="su-lockup__cell1">
       {% block cell1 %}
         <div class="su-lockup__wordmark-wrapper">
           <span class="su-lockup__wordmark">Stanford</span>
-          {% if line4 is not empty %}
-            <span
-              class="su-lockup__line4" {{ region_attributes.line4 }}>{{ line4 }}</span>
+          {% if line4 %}
+            <span class="su-lockup__line4">{{ line4 }}</span>
           {% endif %}
         </div>
       {% endblock %}
@@ -18,35 +17,32 @@
 
     {#- Cell container #2 -#}
     {% block cell2 %}
-      {% if line1 is not empty or line2 is not empty or line3 is not empty %}
+      {% if line1 or line2 or line3 %}
         <div class="su-lockup__cell2">
-          {% if line1 is not empty %}
-            <span
-              class="su-lockup__line1" {{ region_attributes.line1 }}>{{ line1 }}</span>
+          {% if line1 %}
+            <span class="su-lockup__line1">{{ line1 }}</span>
           {% endif %}
 
-          {% if line2 is not empty %}
-            <span
-              class="su-lockup__line2" {{ region_attributes.line2 }}>{{ line2 }}</span>
+          {% if line2 %}
+            <span class="su-lockup__line2">{{ line2 }}</span>
           {% endif %}
 
-          {% if line3 is not empty %}
-            <span
-              class="su-lockup__line3" {{ region_attributes.line3 }}>{{ line3 }}</span>
+          {% if line3 %}
+            <span class="su-lockup__line3">{{ line3 }}</span>
           {% endif %}
         </div>
       {% endif %}
     {% endblock %}
 
     {#- Line 5 of Site Name - Optional -#}
-    {% if line5 is not empty %}
-      <div class="su-lockup__line5 {{ region_attributes.line5 }}">
+    {% if line5 %}
+      <div class="su-lockup__line5">
         {%- block cell3 -%}
           {{- line5 -}}
         {% endblock %}
       </div>
     {% endif %}
-    {% if link is not empty %}
+    {% if link %}
   </a>
   {% endif %}
 </div>

@@ -7,7 +7,7 @@ props:
     header_tag:
       title: Header Tag Element
       type: string
-      examples:
+      enum:
         - h2
         - h3
         - h4
@@ -20,52 +20,43 @@ props:
     visually_hide_header:
       title: Visually hide header
       type: boolean
-      examples:
-        - true
-        - false
     overlay_position:
       title: Position of card overlay
       type: string
-      examples:
+      enum:
         - left
         - right
+        - center
     wrapper_class:
       title: Pattern Wrapper Classes
       type: string
       examples:
         - bottom-margin-none
+    super_headline:
+      title: 'Super Headline'
+      type: string
+    headline:
+      title: Headline
+      type: string
+    cta_link:
+      title: 'CTA Link'
+      type: string
+    cta_label:
+      title: 'CTA Label'
+      type: string
+    button_link:
+      title: 'Button Link'
+      type: string
+    button_label:
+      title: 'Button Label'
+      type: string
+    show_card:
+      title: Show card
+      type: boolean
 slots:
   image:
     title: Image
     description: 'A full HTML entity for an image. Can be img or picture.'
-  media:
-    title: Media
-    description: 'iframe or HTML5 video players'
-  super_headline:
-    title: 'Super Headline'
-    description: 'Text heading'
-  headline:
-    title: Headline
-    description: 'The text headline'
-  headline_tag:
-    title: 'Headline Tag'
-    description: 'Tag element for the headline'
   body:
     title: Content
     description: 'An open variable for anything. Generally this would be for WYSIWYG editor contents.'
-  cta_link:
-    title: 'CTA Link'
-    description: 'The href value for the cta field link'
-  cta_attributes:
-    title: 'CTA element attributes'
-    description: 'Any html attributes on the cta link that need to be added. For example: _target.'
-  cta_label:
-    title: 'CTA Label'
-    description: 'The clickable text for the CTA link'
-  button_link:
-    title: 'Button Link'
-    description: 'The href property of the button element'
-  button_label:
-    title: 'Button Label'
-    description: 'The text label of the button component.'
-

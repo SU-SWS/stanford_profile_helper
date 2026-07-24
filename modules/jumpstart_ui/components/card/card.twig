@@ -34,7 +34,7 @@ Attributes get passed along so we need to ensure only what we want trickles down
 {% endif %}
 
 <{{ is_article or headline is not empty ? "article" : "div" }} {{ attributes }}>
-  {{ image }}
+{{ image }}
 <div class="su-card__contents">
   {# Card Super Headline #}
   {% if super_headline is not empty %}
@@ -42,9 +42,11 @@ Attributes get passed along so we need to ensure only what we want trickles down
   {% endif -%}
 
   {# Card Headline #}
-  {%- if headline is not empty %}
+  {%- if headline %}
   <{{ header_tag|default('h2') }}{{ headline_attributes }}>
-  {{- headline -}}
+  {% if headline_url %}<a href="{{ headline_url }}">{% endif %}
+    {{- headline -}}
+    {% if headline_url %}</a>{% endif %}
 </{{ header_tag|default('h2') }}>
 {% endif -%}
 

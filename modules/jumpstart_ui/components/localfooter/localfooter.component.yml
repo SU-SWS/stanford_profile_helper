@@ -13,6 +13,52 @@ props:
     use_default_logo:
       title: Use default logo for lockup
       type: boolean
+    primary_links_header:
+      title: primary_links_header
+      type: string
+    secondary_links_header:
+      title: secondary_links_header
+      type: string
+    signup_form_action:
+      title: signup_form_action
+      type: string
+    signup_form_method:
+      title: signup_form_method
+      type: string
+      enum: ["POST", "GET"]
+    signup_form_field_submit_value:
+      title: signup_form_field_submit_value
+      type: string
+    weblogin_url:
+      title: weblogin_url
+      type: string
+    weblogin_text:
+      title: weblogin_text
+      type: string
+    site_logo:
+      title: Site Logo
+      type: string
+    site_logo_alt:
+      title: Site Logo Alt
+      type: string
+    lockup_title:
+      title: Lockup Title
+      type: string
+    line1:
+      title: line 1
+      type: string
+    line2:
+      title: line 2
+      type: string
+    line3:
+      title: line 3
+      type: string
+    line4:
+      title: line 4
+      type: string
+    line5:
+      title: line 5
+      type: string
 slots:
   cell1:
     title: cell1
@@ -32,55 +78,12 @@ slots:
   social_links:
     title: social_links
     description: 'Either a structured array of links that get rendered'
-  primary_links_header:
-    title: primary_links_header
   primary_links:
     title: primary_links
     description: 'Either a structured array of links that get rendered'
-  secondary_links_header:
-    title: secondary_links_header
   secondary_links:
     title: secondary_links
     description: 'Either a structured array of links that get rendered'
   signup_form_content:
     title: signup_form_content
     description: 'An open variable for placing content above the form.'
-  signup_form_action:
-    title: signup_form_action
-    description: 'The url that the form should submit to.'
-  signup_form_method:
-    title: signup_form_method
-    description: 'The http method in which the form should use (get|post)'
-  signup_form_field_submit_value:
-    title: signup_form_field_submit_value
-    description: 'The value of the submit button.'
-  weblogin_url:
-    title: weblogin_url
-    description: 'Optional - The url in which a user goes to login with.'
-  weblogin_text:
-    title: weblogin_text
-    description: 'The text to display for the weblogin button link.'
-  site_logo:
-    title: Site Logo
-    description: Site Logo
-  site_logo_alt:
-    title: Site Logo Alt
-    description: Site Logo Alt
-  lockup_title:
-    title: Lockup Title
-    description: 'The text to use as line1 in the lockup unless'
-  line1:
-    title: line 1
-    description: line1
-  line2:
-    title: line 2
-    description: line2
-  line3:
-    title: line 3
-    description: line3
-  line4:
-    title: line 4
-    description: line4
-  line5:
-    title: line 5
-    description: line5

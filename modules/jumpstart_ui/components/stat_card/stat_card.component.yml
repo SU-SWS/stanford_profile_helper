@@ -16,20 +16,22 @@ props:
     centered_text:
       title: Centered Text
       type: boolean
+    super_headline:
+      title: 'Super Headline'
+      type: string
+    stat:
+      title: 'Stat Text'
+      type: string
+    headline:
+      title: Headline
+      description: 'Text heading'
+      type: string
 slots:
   image:
     title: Image
     description: 'The cards image.'
   icon:
     title: Icon
-  super_headline:
-    title: 'Super Headline'
-    description: 'Text heading'
-  stat:
-    title: 'Stat Text'
-  headline:
-    title: Headline
-    description: 'Text heading'
   body:
     title: Body
     description: 'An open variable for anything. Generally this would be for WYSIWYG editor contents'

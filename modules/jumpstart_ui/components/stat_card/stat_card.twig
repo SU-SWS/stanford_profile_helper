@@ -1,9 +1,9 @@
 {% set attributes = attributes.addClass(["su-stat-card", "su-card"]) %}
-{% set isArticle = headline|render_clean is not empty %}
+{% set isArticle = headline is not empty %}
 
-{% set has_headline = headline|render_clean is not empty %}
-{% set has_super_headline = super_headline|render_clean is not empty %}
-{% set has_stat = stat|render_clean is not empty %}
+{% set has_headline = headline is not empty %}
+{% set has_super_headline = super_headline is not empty %}
+{% set has_stat = stat is not empty %}
 
 {% if bg_color %}
   {% set attributes = attributes.addClass("stat-bg-" ~ bg_color) %}
