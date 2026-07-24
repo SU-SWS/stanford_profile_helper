@@ -20,9 +20,6 @@ props:
     visually_hide_header:
       title: Visually hide header
       type: boolean
-      examples:
-        - true
-        - false
     modifier_class:
       title: Classes to modify card
       type: string

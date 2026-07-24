@@ -4,6 +4,22 @@ description: 'One of the primary building block components. This card component 
 props:
   type: object
   properties:
+    header_tag:
+      title: Header Tag Element
+      type: string
+      enum:
+        - h2
+        - h3
+        - h4
+        - div
+    header_classes:
+      title: Header Tag Classes
+      type: string
+      examples:
+        - splash
+    visually_hide_header:
+      title: Visually hide header
+      type: boolean
     bg_color:
       title: Background Color
       type: string
