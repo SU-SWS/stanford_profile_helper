@@ -19,7 +19,7 @@ class StanfordEventHooks {
         $variables['attributes']['data-end-date'] = $date_time[0]['end_value'];
       }
     }
-    $variables['attached']['library'][] = 'stanford_events/event_node';
+    $variables['#attached']['library'][] = 'stanford_events/event_node';
   }
 
 }
