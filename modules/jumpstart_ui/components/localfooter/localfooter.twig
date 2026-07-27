@@ -99,9 +99,9 @@
 
       {% if primary_links is not empty %}
         <nav aria-label="footer primary nav">
-          {% if primary_links_header is not empty %}
+          {% if primary_links_header %}
             <h2 class="su-local-footer__list-heading">
-              {{ primary_links_header|default("Primary Links") }}
+              {{ primary_links_header }}
             </h2>
           {% endif %}
 
@@ -111,9 +111,9 @@
 
       {% if secondary_links is not empty %}
         <nav aria-label="footer secondary nav">
-          {% if secondary_links_header is not empty %}
+          {% if secondary_links_header %}
             <h2 class="su-local-footer__list-heading">
-              {{ secondary_links_header|default("Secondary Links") }}
+              {{ secondary_links_header }}
             </h2>
           {% endif %}
 

@@ -12,6 +12,9 @@ props:
     dek:
       title: Dek
       type: string
+    quote:
+      title: Quote
+      type: string
     source:
       title: Source
       type: string

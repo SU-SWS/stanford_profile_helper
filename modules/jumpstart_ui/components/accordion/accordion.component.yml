@@ -8,3 +8,7 @@ slots:
   contents:
     title: Contents
     description: 'The contents of the accordion body.'
+libraryOverrides:
+  dependencies:
+    - core/jquery
+    - core/once

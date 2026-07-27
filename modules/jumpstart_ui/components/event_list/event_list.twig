@@ -31,7 +31,7 @@ Template for an Event List Item.
   {%- endif %}
 {%- endif -%}
 
-<article {{ attributes }}>
+<article{{ attributes }}>
   <div class="su-event-list-item__date">
     <div class="su-date-stacked su-date-stacked--no-background"
          aria-hidden="true">
@@ -59,25 +59,27 @@ Template for an Event List Item.
     {%- endif -%}
 
     {# Event Title  #}
-    {%- if url is empty -%}
-    {{- headline -}}
-    {%- else -%}
-    <{{ header_tag|default('h2') }}><a {{ link_attributes }}
-      href="{{ url }}">{{ headline }}</a></{{ header_tag|default('h2') }}>
-  {%- endif -%}
+    {% if headline %}
+    <{{ header_tag|default('h2') }}>
+    {%- if url -%}<a {{ link_attributes }}href="{{ url }}">{% endif %}
+      {{- headline -}}
+      {%- if url -%}</a>{%- endif -%}
+  </{{ header_tag|default('h2') }}>
+  {% endif %}
+
 
   {# Event Subheadline  #}
-  {%- if subheadline is not empty %}
+  {%- if subheadline %}
     <div class="event-list-item__subheadline">{{- subheadline -}}</div>
   {%- endif -%}
 
   {# Event Dek  #}
-  {%- if dek is not empty %}
+  {%- if dek %}
     <div class="event-list_item__dek"> {{- dek -}}</div>
   {% endif -%}
 
   {# Event Date/Time  #}
-  {%- if date_time is not empty %}
+  {%- if date_time %}
     <div class="views-field-su-event-date-time"><span class="date-icon"
                                                       aria-hidden="true"></span>
       <div>{{- date_time -}}</div>
@@ -86,15 +88,15 @@ Template for an Event List Item.
 
   {# Event Location  #}
   {%- if location is not empty %}
-    <div class="views-field-su-event-location"><span class="map-icon"
-                                                     aria-hidden="true"></span> {{- location -}}
+    <div class="views-field-su-event-location">
+      <span class="map-icon" aria-hidden="true"></span> {{- location -}}
     </div>
   {%- endif -%}
 
   {# Event Location Address  #}
   {%- if address|render_clean is not empty %}
-    <div class="views-field-su-event-address"><span class="map-icon"
-                                                    aria-hidden="true"></span> {{- address -}}
+    <div class="views-field-su-event-address">
+      <span class="map-icon" aria-hidden="true"></span> {{- address -}}
     </div>
   {%- endif -%}
   </div>

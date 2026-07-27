@@ -36,24 +36,18 @@
   <header class="su-news-list__header">
     <div class="su-news-list__headline-dek">
       {# Link for headline h2 #}
-      {%- if url -%}
-      <a href="{{ url }}">
-        {%- endif -%}
+      {% if headline %}
+      <{{ header_tag|default('h2') }}>
+      {%- if url -%}<a href="{{ url }}">{%- endif -%}
+        {{- headline -}}
+        {%- if url -%}</a>{%- endif -%}
+    </{{ header_tag|default('h2') }}>
+    {% endif %}
 
-        {% if headline %}
-        <{{ header_tag|default('h2') }}>
-          {{- headline -}}
-      </{{ header_tag|default('h2') }}>
-      {% endif %}
-
-      {%- if url -%}
-        </a>
-      {%- endif -%}
-
-      {# News List Dek #}
-      {% if dek %}
-        <p class="su-news-list__dek">{{ dek }}</p>
-      {% endif %}
+    {# News List Dek #}
+    {% if dek or quote %}
+      <p class="su-news-list__dek">{{ quote ?? dek }}</p>
+    {% endif %}
     </div>
 
     {# Add the image and link only if they both exist. #}

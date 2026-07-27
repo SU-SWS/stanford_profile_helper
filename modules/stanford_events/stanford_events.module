@@ -8,29 +8,10 @@
  */
 
 use Drupal\views\ViewExecutable;
-use Drupal\node\NodeInterface;
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Cache\Cache;
 use Drupal\views\Plugin\views\cache\CachePluginBase;
-use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Render\Element;
-
-/**
- * Implements hook_page_attachments.
- */
-function stanford_events_page_attachments(array &$attachments) {
-
-  // Get the node from the route.
-  $node = \Drupal::routeMatch()->getParameter('node');
-
-  // Not a node.. Then just continue.
-  if (!$node instanceof NodeInterface || $node->bundle() != 'stanford_event') {
-    return;
-  }
-
-  $attachments['#attached']['library'][] = 'stanford_events/event_node';
-}
 
 /**
  * Implements hook_views_post_render().
@@ -84,24 +65,6 @@ function stanford_events_views_post_render(ViewExecutable $view, &$output, Cache
 
 }
 
-/**
- * Implements hook_ENTITY_TYPE_view().
- */
-function stanford_events_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
-
-  // Only run on stanford event items.
-  if ($entity->bundle() !== "stanford_event" || $view_mode != "view") {
-    return;
-  }
-
-  if ($entity->hasField('su_event_date_time')) {
-    $date_time = $entity->get('su_event_date_time')->getValue();
-    if (!empty($date_time[0]['end_value'])) {
-      $build['#attributes']['data-end-date'] = $date_time[0]['end_value'];
-    }
-  }
-
-}
 
 /**
  * Callback for views ds group title formatter.

@@ -16,6 +16,9 @@
 #}
 
 {% set attributes = attributes.addClass(['su-card', 'su-news-vertical-teaser']) %}
+{% if is_spotlight %}
+  {% set attributes = attributes.addClass("news-spotlight") %}
+{% endif %}
 
 {%- set url_link_type = "su-link--action" -%}
 
@@ -27,21 +30,22 @@
 {%- endif %}
 
 <article{{ attributes }}>
-  {%- if url  -%}
-    <a class="su-news-vertical-teaser__link" href="{{ url }}">
-  {%- endif -%}
-  <figure class="su-media su-media--image su-card__media">
-    <div class="su-media__wrapper">
-      {{- image -}}
-    </div>
-  </figure>
-  <div class="su-news-header">
-    <{{ header_tag|default('h2') }} class="su-link su-card__link {{ url_link_type }}">
+  {%- if url -%}
+  <a class="su-news-vertical-teaser__link" href="{{ url }}">
+    {%- endif -%}
+    <figure class="su-media su-media--image su-card__media">
+      <div class="su-media__wrapper">
+        {{- image -}}
+      </div>
+    </figure>
+    <div class="su-news-header">
+      <{{ header_tag|default('h2') }} class="su-link
+      su-card__link {{ url_link_type }}">
       {{- headline -}}
     </{{ header_tag|default('h2') }}>
-  </div>
-  {%- if url -%}
-    </a>
+    </div>
+    {%- if url -%}
+  </a>
   {%- endif -%}
 
   <div class="su-card__contents">
@@ -52,9 +56,10 @@
       </div>
     {% endif %}
 
-    {% if dek %}
+    {% if dek or quote %}
       <div class="su-news-dek">
         {{ dek }}
+        {% if quote %}<p>{{ quote }}</p>{% endif %}
       </div>
     {% endif %}
 

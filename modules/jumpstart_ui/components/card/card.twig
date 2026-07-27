@@ -1,43 +1,28 @@
 {#
 # Sanitize some of the Drupalness in the picky fields.
 #}
-{%- set cta_label = cta_label|render_clean -%}
-{%- set link = link|render_clean -%}
-{% if headline|render_clean is empty %}
-  {% set headline = null %}
-{% endif %}
-{% set button_label = button_label|render_clean %}
-
-
-{#
-Attributes get passed along so we need to ensure only what we want trickles down to the nested templates.
-#}
-{% if attributes is empty %}
-  {% set attributes = create_attribute() %}
-{% endif %}
-{% set attributes = attributes.addClass("su-card") %}
-
-{% if modifier_class is not empty %}
-  {% set attributes = attributes.addClass(modifier_class) %}
-{% endif %}
+{% set attributes = attributes.addClass(["su-card", modifier_class]) %}
 
 {% if headline_attributes is empty %}
   {% set headline_attributes = create_attribute() %}
+{% endif %}
+
+{% if headline_url %}
+  {% set headline_attributes = headline_attributes.addClass("su-card__link") %}
 {% endif %}
 
 {% if visually_hide_header %}
   {% set headline_attributes = headline_attributes.addClass("visually-hidden") %}
 {% endif %}
 
-{% if header_classes is not empty %}
-  {% set headline_attributes = headline_attributes.addClass(header_classes) %}
-{% endif %}
+{% set headline_attributes = headline_attributes.addClass(header_classes) %}
 
-<{{ is_article or headline is not empty ? "article" : "div" }} {{ attributes }}>
+<{{ is_article or headline is not empty ? "article" : "div" }}{{ attributes }}>
+
 {{ image }}
 <div class="su-card__contents">
   {# Card Super Headline #}
-  {% if super_headline is not empty %}
+  {% if super_headline %}
     <div class="su-card__superhead">{{ super_headline }}</div>
   {% endif -%}
 
@@ -54,17 +39,16 @@ Attributes get passed along so we need to ensure only what we want trickles down
   {{ body }}
 
   {# Card CTA Link #}
-  {%- if cta_label|render_clean is not empty %}
-    <a{{ cta_attributes }} href="{{ link }}"
-                           class="su-link su-card__link su-link--action">
+  {%- if cta_label %}
+    <a href="{{ link }}" class="su-link su-card__link su-link--action">
       {{ cta_label }}
     </a>
   {% endif -%}
 
   {# Big ol link button. Adds a BEM class for targeting. #}
-  {%- if button_label is not empty %}
+  {%- if button_label %}
     <div class="su-card__button">
-      <a{{ cta_attributes }} href="{{ link }}" class="su-link su-button">
+      <a href="{{ link }}" class="su-link su-button">
         {{ button_label }}
       </a>
     </div>

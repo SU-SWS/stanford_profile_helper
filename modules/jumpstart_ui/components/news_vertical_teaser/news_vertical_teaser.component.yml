@@ -12,6 +12,9 @@ props:
         - h3
         - h4
         - div
+    is_spotlight:
+      title: Is news a spotlight
+      type: boolean
     headline:
       title: Headline
       type: string
@@ -20,6 +23,9 @@ props:
       type: string
     dek:
       title: Dek
+      type: string
+    quote:
+      title: Quote
       type: string
     source:
       title: Source

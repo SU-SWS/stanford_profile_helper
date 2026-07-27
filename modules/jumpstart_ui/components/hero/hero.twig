@@ -5,6 +5,9 @@
 {% if wrapper_class is not empty %}
   {% set attributes = attributes.addClass(wrapper_class) %}
 {% endif %}
+{% if not show_card and (headline or button_link or button_label or super_headline) %}
+  {% set show_card = true %}
+{% endif %}
 
 <div{{ attributes.addClass("su-hero") }}>
 
