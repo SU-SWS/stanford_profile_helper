@@ -4,6 +4,9 @@ description: 'One of the primary building block compontents. This card component
 props:
   type: object
   properties:
+    plain:
+      title: Plain style
+      type: boolean
     header_tag:
       title: Header Tag Element
       type: string

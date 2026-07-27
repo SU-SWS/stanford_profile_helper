@@ -2,6 +2,9 @@
 # Sanitize some of the Drupalness in the picky fields.
 #}
 {% set attributes = attributes.addClass(["su-card", modifier_class]) %}
+{% if plain %}
+  {% set attributes = attributes.addClass("su-card--minimal") %}
+{% endif %}
 
 {% if headline_attributes is empty %}
   {% set headline_attributes = create_attribute() %}
