@@ -65,7 +65,6 @@ function stanford_events_views_post_render(ViewExecutable $view, &$output, Cache
 
 }
 
-
 /**
  * Callback for views ds group title formatter.
  *
