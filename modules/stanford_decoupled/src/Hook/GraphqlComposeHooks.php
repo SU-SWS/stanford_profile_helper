@@ -29,10 +29,10 @@ class GraphqlComposeHooks {
       }
     }
 
-    foreach ($results as $result) {
-      if ($result instanceof ParagraphInterface) {
-        $behaviors = $result->getAllBehaviorSettings();
-        $result->set('behavior_settings', $behaviors ? json_encode($behaviors) : NULL);
+    foreach ($results as $item) {
+      if ($item instanceof ParagraphInterface) {
+        $behaviors = $item->getAllBehaviorSettings();
+        $item->set('behavior_settings', $behaviors ? json_encode($behaviors) : NULL);
       }
     }
   }
