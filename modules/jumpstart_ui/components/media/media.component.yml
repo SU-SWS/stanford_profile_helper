@@ -1,0 +1,14 @@
+'$schema': 'https://git.drupalcode.org/project/drupal/-/raw/10.1.x/core/modules/sdc/src/metadata.schema.json'
+name: Media
+description: 'Media element'
+slots:
+  caption:
+    title: 'Media caption text'
+    description: 'Contains html markup'
+  image:
+    title: 'Image'
+    description: 'absolute or relative'
+  link:
+    title: 'Media link'
+    description: 'What to link the media to'
+

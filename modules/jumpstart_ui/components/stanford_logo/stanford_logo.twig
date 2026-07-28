@@ -1,0 +1,6 @@
+
+{% set attributes = attributes.addClass('su-logo') %}
+
+<a {{ attributes }} id="su-logo" aria-hidden="true" tabindex="-1" href="{{ path|default('https://www.stanford.edu') }}">
+  {{ name|default('Stanford<br>University')|raw }}
+</a>

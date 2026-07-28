@@ -14,10 +14,6 @@ use Drupal\views\Plugin\views\cache\CachePluginBase;
  */
 function stanford_news_theme() {
   return [
-    'field__node__su_news_topics' => [
-      'template' => 'field/field--node--su-news-topics',
-      'base hook' => 'field',
-    ],
     'signup_block' => [
       'variables' => [
         'form_action' => NULL,

@@ -8,29 +8,10 @@
  */
 
 use Drupal\views\ViewExecutable;
-use Drupal\node\NodeInterface;
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Cache\Cache;
 use Drupal\views\Plugin\views\cache\CachePluginBase;
-use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Render\Element;
-
-/**
- * Implements hook_page_attachments.
- */
-function stanford_events_page_attachments(array &$attachments) {
-
-  // Get the node from the route.
-  $node = \Drupal::routeMatch()->getParameter('node');
-
-  // Not a node.. Then just continue.
-  if (!$node instanceof NodeInterface || $node->bundle() != 'stanford_event') {
-    return;
-  }
-
-  $attachments['#attached']['library'][] = 'stanford_events/event_node';
-}
 
 /**
  * Implements hook_views_post_render().
@@ -79,25 +60,6 @@ function stanford_events_views_post_render(ViewExecutable $view, &$output, Cache
     unset($output['#cache']['tags'][$term_list_position]);
     foreach ($view->filter['vid']->value as $term_type) {
       $output['#cache']['tags'][] = "term_list:$term_type";
-    }
-  }
-
-}
-
-/**
- * Implements hook_ENTITY_TYPE_view().
- */
-function stanford_events_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
-
-  // Only run on stanford event items.
-  if ($entity->bundle() !== "stanford_event" || $view_mode != "view") {
-    return;
-  }
-
-  if ($entity->hasField('su_event_date_time')) {
-    $date_time = $entity->get('su_event_date_time')->getValue();
-    if (!empty($date_time[0]['end_value'])) {
-      $build['#attributes']['data-end-date'] = $date_time[0]['end_value'];
     }
   }
 
@@ -212,27 +174,5 @@ function stanford_events_preprocess_field_multiple_value_form(&$variables) {
       $variables['button']['add_more_button_stanford_person_cta']['add_more']['#value'] = t('Add another speaker');
       $variables['button']['add_more_button_stanford_person_cta']['#value'] = t('Add another speaker');
     }
-  }
-}
-
-/**
- * Implements hook_preprocess_HOOK().
- */
-function stanford_events_preprocess_pattern_events_list(&$variables) {
-  $renderer = \Drupal::service('renderer');
-  $values = $variables;
-
-  // Make sure we have a string, not a Markup or array.
-  $start = (string) (is_array($values['start_month']) ? $renderer->renderInIsolation($values['start_month']) : $values['start_month']);
-  $end = (string) is_array($values['end_month']) ? $renderer->renderInIsolation($values['end_month']) : $values['end_month'];
-
-  $start_month = strtolower(trim(strip_tags($start))) ?: NULL;
-  $end_month = strtolower(trim(strip_tags($end))) ?: NULL;
-
-  if ($start_month) {
-    $variables['start_month_full'] = date('F', strtotime($start_month));
-  }
-  if ($end_month) {
-    $variables['end_month_full'] = date('F', strtotime($end_month));
   }
 }

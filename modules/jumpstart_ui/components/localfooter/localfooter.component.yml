@@ -1,0 +1,89 @@
+'$schema': 'https://git.drupalcode.org/project/drupal/-/raw/10.1.x/core/modules/sdc/src/metadata.schema.json'
+name: 'Local Footer'
+description: 'Local footer element as specified by the Identity Guidelines.'
+props:
+  type: object
+  properties:
+    custom_lockup:
+      title: Use a custom lockup
+      type: boolean
+    lockup_option:
+      title: Lockup Choice
+      type: string
+    use_default_logo:
+      title: Use default logo for lockup
+      type: boolean
+    primary_links_header:
+      title: primary_links_header
+      type: string
+    secondary_links_header:
+      title: secondary_links_header
+      type: string
+    signup_form_action:
+      title: signup_form_action
+      type: string
+    signup_form_method:
+      title: signup_form_method
+      type: string
+      enum: ["POST", "GET"]
+    signup_form_field_submit_value:
+      title: signup_form_field_submit_value
+      type: string
+    weblogin_url:
+      title: weblogin_url
+      type: string
+    weblogin_text:
+      title: weblogin_text
+      type: string
+    site_logo:
+      title: Site Logo
+      type: string
+    site_logo_alt:
+      title: Site Logo Alt
+      type: string
+    lockup_title:
+      title: Lockup Title
+      type: string
+    line1:
+      title: line 1
+      type: string
+    line2:
+      title: line 2
+      type: string
+    line3:
+      title: line 3
+      type: string
+    line4:
+      title: line 4
+      type: string
+    line5:
+      title: line 5
+      type: string
+slots:
+  cell1:
+    title: cell1
+    description: 'Optional open variable for placing arbitrary content'
+  cell2:
+    title: cell2
+    description: 'Optional open variable for placing arbitrary content'
+  cell3:
+    title: cell3
+    description: 'Optional open variable for placing arbitrary content'
+  address:
+    title: address
+    description: 'Optional open variable for address content.'
+  action_links:
+    title: action_links
+    description: 'Either a structured array of links that get rendered'
+  social_links:
+    title: social_links
+    description: 'Either a structured array of links that get rendered'
+  primary_links:
+    title: primary_links
+    description: 'Either a structured array of links that get rendered'
+  secondary_links:
+    title: secondary_links
+    description: 'Either a structured array of links that get rendered'
+  signup_form_content:
+    title: signup_form_content
+    description: 'An open variable for placing content above the form.'

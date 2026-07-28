@@ -208,8 +208,7 @@
       }
 
       h3 {
-        @include type-e;
-        margin-bottom: 0;
+        @include type-c;
         word-break: break-word;
       }
     }

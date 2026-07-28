@@ -1,0 +1,82 @@
+{#
+/**
+ * @file
+ * News Banner.
+ *
+ * Basic Page Banner for news.
+ *
+ * Available variables:
+ * - attributes: For additional HTML attributes not already provided.
+ * - image: The list image.
+ * - publishing_date: This is the published date.
+ * - headline: This is the headline.
+ * - dek: This is the dek specific to news items.
+ * - topics: Associated terms from the topics taxonomy.
+ * - source: The source field.
+ * - url: A url to wrap the image and heading with
+ */
+#}
+
+{%- set attributes = attributes.addClass(['su-news-article', modifier_class]) -%}
+
+{# If the news source url is set go there instead of the default. #}
+{%- if source -%}
+  {%- set url = source -%}
+  {%- set attributes = attributes.addClass('su-news-external') -%}
+{%- endif %}
+
+{# If the news image is empty, create a class. #}
+{%- if image|render|striptags('<drupal-render-placeholder><img><picture>')|trim is empty -%}
+  {%- set attributes = attributes.addClass('su-news-list-image__empty') -%}
+{%- endif %}
+
+<article{{ attributes }}>
+
+  {# Wrapper for the top grid layout #}
+  <header class="su-news-list__header">
+    <div class="su-news-list__headline-dek">
+      {# Link for headline h2 #}
+      {% if headline %}
+      <{{ header_tag|default('h2') }}>
+      {%- if url -%}<a href="{{ url }}">{%- endif -%}
+        {{- headline -}}
+        {%- if url -%}</a>{%- endif -%}
+    </{{ header_tag|default('h2') }}>
+    {% endif %}
+
+    {# News List Dek #}
+    {% if dek or quote %}
+      <p class="su-news-list__dek">{{ quote ?? dek }}</p>
+    {% endif %}
+    </div>
+
+    {# Add the image and link only if they both exist. #}
+    {% if image|render|striptags('<drupal-render-placeholder><img><picture>')|trim is not empty -%}
+      {%- if url -%}
+        <a href="{{ url }}" aria-hidden="true" tabindex="-1">
+      {%- endif -%}
+      {{- image -}}
+      {%- if url -%}
+        </a>
+      {%- endif -%}
+    {%- endif -%}
+
+    {# Since CSS Grid is used, always render an element even if it's empty. #}
+    <div class="su-news-list__item-date">
+      {% if publishing_date %}
+        <p>{{ publishing_date }}</p>
+      {% endif -%}
+    </div>
+
+  </header>
+
+  {%- if topics|render|striptags('<drupal-render-placeholder>')|trim is not empty %}
+    <div class="su-news-list__topics">
+      {{- topics -}}
+    </div>
+  {% endif -%}
+
+  {%- if footer|render|striptags('<drupal-render-placeholder>')|trim is not empty -%}
+    {{ footer }}
+  {%- endif -%}
+</article>

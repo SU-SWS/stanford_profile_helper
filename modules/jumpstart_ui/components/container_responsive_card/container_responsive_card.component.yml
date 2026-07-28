@@ -1,0 +1,16 @@
+'$schema': 'https://git.drupalcode.org/project/drupal/-/raw/10.1.x/core/modules/sdc/src/metadata.schema.json'
+name: Container Responsive Card
+status: stable
+props:
+  type: object
+  properties:
+    eyebrow:
+      title: Eyebrow
+      type: string
+slots:
+  heading:
+    title: Title
+  image:
+    title: Image
+  body:
+    title: Body

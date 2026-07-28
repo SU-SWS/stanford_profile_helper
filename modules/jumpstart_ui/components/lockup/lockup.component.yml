@@ -1,0 +1,41 @@
+'$schema': 'https://git.drupalcode.org/project/drupal/-/raw/10.1.x/core/modules/sdc/src/metadata.schema.json'
+name: Lockup
+description: 'A lockup with the Stanford wordmark logo and department/unit name. It is used in the header of a website and links to the homepage of the department/unit. When building a department lockup, besides the Stanford wordmark, the most obvious element should be the most granular relevant department.'
+props:
+  type: object
+  properties:
+    lockup_style:
+      title: Lockup Style
+      type: string
+      examples:
+        - a
+        - b
+        - c
+    link:
+      title: 'Lockup Link'
+      type: string
+    line1:
+      title: 'Line 1'
+      type: string
+    line2:
+      title: 'Line 2'
+      type: string
+    line3:
+      title: 'Line 3'
+      type: string
+    line4:
+      title: 'Line 4'
+      type: string
+    line5:
+      title: 'Line 5'
+      type: string
+slots:
+  cell1:
+    title: Cell 1
+    description: Block for cell 1
+  cell2:
+    title: Cell 1
+    description: Block for cell 1
+  cell3:
+    title: Cell 1
+    description: Block for cell 1

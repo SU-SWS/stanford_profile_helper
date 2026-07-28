@@ -1,0 +1,61 @@
+{#
+# Sanitize some of the Drupalness in the picky fields.
+#}
+{% set attributes = attributes.addClass(["su-card", modifier_class]) %}
+{% if plain %}
+  {% set attributes = attributes.addClass("su-card--minimal") %}
+{% endif %}
+
+{% if headline_attributes is empty %}
+  {% set headline_attributes = create_attribute() %}
+{% endif %}
+
+{% if headline_url %}
+  {% set headline_attributes = headline_attributes.addClass("su-card__link") %}
+{% endif %}
+
+{% if visually_hide_header %}
+  {% set headline_attributes = headline_attributes.addClass("visually-hidden") %}
+{% endif %}
+
+{% set headline_attributes = headline_attributes.addClass(header_classes) %}
+
+<{{ is_article or headline is not empty ? "article" : "div" }}{{ attributes }}>
+
+{{ image }}
+<div class="su-card__contents">
+  {# Card Super Headline #}
+  {% if super_headline %}
+    <div class="su-card__superhead">{{ super_headline }}</div>
+  {% endif -%}
+
+  {# Card Headline #}
+  {%- if headline %}
+  <{{ header_tag|default('h2') }}{{ headline_attributes }}>
+  {% if headline_url %}<a href="{{ headline_url }}">{% endif %}
+    {{- headline -}}
+    {% if headline_url %}</a>{% endif %}
+</{{ header_tag|default('h2') }}>
+{% endif -%}
+
+  {# An open field for body content #}
+  {{ body }}
+
+  {# Card CTA Link #}
+  {%- if cta_label %}
+    <a href="{{ link }}" class="su-link su-card__link su-link--action">
+      {{ cta_label }}
+    </a>
+  {% endif -%}
+
+  {# Big ol link button. Adds a BEM class for targeting. #}
+  {%- if button_label %}
+    <div class="su-card__button">
+      <a href="{{ link }}" class="su-link su-button">
+        {{ button_label }}
+      </a>
+    </div>
+  {% endif -%}
+</div>{# end of .su-card__contents #}
+
+</{{ is_article or headline is not empty ? "article" : "div" }}>

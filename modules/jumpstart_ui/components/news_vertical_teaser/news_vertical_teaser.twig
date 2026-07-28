@@ -1,0 +1,71 @@
+{#
+/**
+ * @file
+ * News Vertical Teaser.
+ *
+ * Vertical Teaser for News
+ *
+ * Available variables:
+ * - attributes: For additional HTML attributes not already provided.
+ * - image: Hero image for card
+ * - headline: Title of card
+ * - topics: Topic selected. Dynamically altered vi news-banner.js
+ * - source: The source field.
+ * - url: A url to wrap the image and heading with
+ */
+#}
+
+{% set attributes = attributes.addClass(['su-card', 'su-news-vertical-teaser']) %}
+{% if is_spotlight %}
+  {% set attributes = attributes.addClass("news-spotlight") %}
+{% endif %}
+
+{%- set url_link_type = "su-link--action" -%}
+
+{# If the news source url is set go there instead of the default. #}
+{%- if source -%}
+  {%- set url = source -%}
+  {%- set attributes = attributes.addClass('su-news-external') -%}
+  {%- set url_link_type = "su-link--external" -%}
+{%- endif %}
+
+<article{{ attributes }}>
+  {%- if url -%}
+  <a class="su-news-vertical-teaser__link" href="{{ url }}">
+    {%- endif -%}
+    <figure class="su-media su-media--image su-card__media">
+      <div class="su-media__wrapper">
+        {{- image -}}
+      </div>
+    </figure>
+    <div class="su-news-header">
+      <{{ header_tag|default('h2') }} class="su-link
+      su-card__link {{ url_link_type }}">
+      {{- headline -}}
+    </{{ header_tag|default('h2') }}>
+    </div>
+    {%- if url -%}
+  </a>
+  {%- endif -%}
+
+  <div class="su-card__contents">
+
+    {% if date %}
+      <div class="su-news-date">
+        {{ date }}
+      </div>
+    {% endif %}
+
+    {% if dek or quote %}
+      <div class="su-news-dek">
+        {{ dek }}
+        {% if quote %}<p>{{ quote }}</p>{% endif %}
+      </div>
+    {% endif %}
+
+    <div class="news-vertical-teaser__topics">{{ topics }}</div>
+  </div>
+  {%- if footer is not empty -%}
+    <div class="news-vertical-teaser__footer">{{ footer }}</div>
+  {%- endif -%}
+</article>

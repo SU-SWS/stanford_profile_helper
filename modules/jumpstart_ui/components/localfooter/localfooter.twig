@@ -1,0 +1,151 @@
+{% set attributes = attributes.addClass('su-local-footer') %}
+
+{# Sanitize the weblogin text. #}
+{%- if not weblogin_text -%}
+  {%- set weblogin_url = '' -%}
+{%- endif -%}
+
+{% if not line1 %}
+  {% set line1 = lockup_title %}
+{% endif %}
+
+{%- set lockup_options = {lockup_style: 'a', line1: lockup_title } -%}
+
+{# Pass through the custom lockup settings. #}
+{%- if custom_lockup -%}
+  {%- set lockup_options =
+    {
+      lockup_style: lockup_option,
+      line1: line1,
+      line2: line2,
+      line3: line3,
+      line4: line4,
+      line5: line5,
+      link: url('<front>'),
+    } -%}
+{%- endif -%}
+
+<div{{ attributes }}>
+  {# The header is completely optional and won't render if there isn't any content #}
+  {% if lockup_title or weblogin_url %}
+    <div class="su-local-footer__header">
+
+      {% if not use_default_logo and site_logo %}
+        {% embed "jumpstart_ui:lockup" with lockup_options %}
+
+          {% set image_alt = line1 %}
+          {# if the option was set to logo only. Remove the lines. #}
+          {% if 'su-lockup--option-none' in lockup_option %}
+            {% set line1 = '' %}
+            {% set line2 = '' %}
+            {% set line3 = '' %}
+            {% set line4 = '' %}
+            {% set line5 = '' %}
+          {% endif %}
+
+          {# Override cell 1 with the logo. #}
+          {% block cell1 %}
+            <div class="su-lockup__logo-wrapper">
+              <img src="{{ site_logo }}" alt="{{ image_alt }}"
+                   class="su-lockup__custom-logo"/>
+              {% if line4 %}
+                <span class="su-lockup__line4">{{ line4 }}</span>
+              {% endif %}
+            </div>
+          {% endblock %}
+
+        {% endembed %}
+      {% else %}
+        {{ include("jumpstart_ui:lockup", lockup_options, with_context = false) }}
+      {% endif %}
+      {# Web login button #}
+      {% if weblogin_url %}
+        <a href="{{ weblogin_url }}" class="su-link su-link--internal" rel="nofollow">
+          {{ weblogin_text|default('Web Login') }}
+        </a>
+      {% endif %}
+    </div>
+  {% endif %}
+  {#
+  Container for the content cells. These cells have a specific and rigid
+  responsive behaviour so they are not optional. Empty cells will still
+  render and create whitespace.
+  #}
+  <div class="su-local-footer__columns">
+    {# Content Cell 1 - For action and social media links. #}
+    <div class="su-local-footer__cell1">
+
+      {#
+      The address is optional so don't put non-address content in it.
+      Use the `cell1` variable instead.
+      #}
+      {% if address|render|striptags|trim is not empty %}
+        <h2 class="su-sr-only-element">Address</h2>
+        <address class="su-local-footer__address">
+          {{ address }}
+        </address>
+      {% endif %}
+      {# Stylized links. See local-footer.json for structure for macro. #}
+
+      {{ action_links }}
+
+      {# Stylized links. See local-footer.json for structure for macro. #}
+      {{ social_links }}
+      {# Use this var if you would like to place your own content in to this cell. #}
+      {{ cell1 }}
+    </div>
+    {# Content Cell 2 - For primary and secondary link lists. #}
+    <div class="su-local-footer__cell2">
+
+      {% if primary_links is not empty %}
+        <nav aria-label="footer primary nav">
+          {% if primary_links_header %}
+            <h2 class="su-local-footer__list-heading">
+              {{ primary_links_header }}
+            </h2>
+          {% endif %}
+
+          {{ primary_links }}
+        </nav>
+      {% endif %}
+
+      {% if secondary_links is not empty %}
+        <nav aria-label="footer secondary nav">
+          {% if secondary_links_header %}
+            <h2 class="su-local-footer__list-heading">
+              {{ secondary_links_header }}
+            </h2>
+          {% endif %}
+
+          {{ secondary_links }}
+        </nav>
+      {% endif %}
+      {# If you want to provide all of our own markup use the cell2 var. #}
+      {{ cell2 }}
+    </div>
+    {#
+    Cell 3 - For the signup form.
+    #}
+    <div class="su-local-footer__cell3">
+      {#
+      The signup form is optional. If it doesn't meet your content needs
+      use the cell3 variable instead.
+      #}
+      {% if signup_form_action %}
+        <div class="su-signup-form">
+          {# Add any additional markup above the form with this variable. #}
+          {{ signup_form_content }}
+          <form action="{{ signup_form_action|default("/") }}" method="{{ signup_form_method|default('post') }}">
+            <input type="email" id="{{ signup_form_field_email_id|default('signup-email') }}" aria-label="{{ signup_form_field_email_aria_label|default('email address') }}" name="{{ signup_form_field_email_name|default('signup_email') }}" placeholder="{{ signup_form_field_email_placeholder|default('email address') }}" {{ signup_form_field_email_required|default('required') }} />
+            {# Add any additional fields or markup to this form using this variable. #}
+            {{ signup_form_fields }}
+            <input type="submit" id="{{ signup_form_field_submit_id|default('signup-submit') }}" name="{{ signup_form_field_submit_name|default('submit') }}" value ="{{ signup_form_field_submit_value|default('Sign-up') }}" />
+          </form>
+        </div>
+      {% endif %}
+      {# If you want to provide all of our own markup use the cell3 var. #}
+      {{ cell3 }}
+    </div>
+  </div>
+</div>
+

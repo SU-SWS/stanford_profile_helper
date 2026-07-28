@@ -17,9 +17,7 @@ const config = {
 
 var webpackConfig = {
   entry: {
-    "stanford_courses.styles": path.resolve("lib/scss/stanford_courses.scss"),
-    "course-list-item": path.resolve("lib/scss/course-list-item.scss"),
-    "course-vertical-teaser": path.resolve("lib/scss/course-vertical-teaser.scss")
+    "stanford_courses.styles": path.resolve("lib/scss/stanford_courses.scss")
   },
   output: {
     path: config.distFolder,

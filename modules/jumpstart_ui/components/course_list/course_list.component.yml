@@ -1,0 +1,27 @@
+name: 'Course List Item'
+description: 'Building block component for the Course list page.'
+props:
+  type: object
+  properties:
+    code:
+      title: 'Course Code'
+      type: string
+    academic_year:
+      title: 'Academic Year'
+      type: string
+    title:
+      title: Title
+      type: string
+    url:
+      title: 'URL for item'
+      type: string
+slots:
+  quarters:
+    title: Quarters
+    description: 'Quarters offered'
+  instructors:
+    title: Instructors
+    description: 'The list of instructors teaching the course'
+  description:
+    title: Description
+    description: 'The course description'

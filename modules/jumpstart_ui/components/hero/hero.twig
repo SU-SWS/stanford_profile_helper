@@ -1,0 +1,44 @@
+{% if overlay_position %}
+  {% set attributes = attributes.addClass("overlay-" ~ overlay_position) %}
+{% endif %}
+
+{% if wrapper_class is not empty %}
+  {% set attributes = attributes.addClass(wrapper_class) %}
+{% endif %}
+{% if not show_card and (headline or button_link or button_label or super_headline) %}
+  {% set show_card = true %}
+{% endif %}
+
+<div{{ attributes.addClass("su-hero") }}>
+
+  {# Hero Image or Video #}
+  {% block image %}
+    {% if image is not empty %}
+      <div class="su-hero__media">
+        {% if 'su-hero--youtube' in modifier_class %}
+          {# Support for: iframe #}
+          {{ media }}
+        {% else %}
+          {# Support for: img or picture #}
+          {{ image }}
+        {% endif %}
+      </div>
+    {% endif %}
+  {% endblock %}
+
+  {%- if show_card -%}
+    {# We reuse the card component here. #}
+    {{ include("jumpstart_ui:card",
+      {
+        modifier_class: "su-hero__card",
+        super_headline: super_headline,
+        headline: headline,
+        body: body,
+        link: button_link,
+        button_label: button_label,
+        header_tag: header_tag,
+        header_classes: header_classes,
+        visually_hide_header: visually_hide_header
+      }, with_context = false) }}
+  {%- endif -%}
+</div>

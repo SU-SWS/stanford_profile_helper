@@ -1,0 +1,66 @@
+{% set attributes = attributes.addClass(["su-stat-card", "su-card"]) %}
+{% set isArticle = headline is not empty %}
+
+{% if bg_color %}
+  {% set attributes = attributes.addClass("stat-bg-" ~ bg_color) %}
+{% endif %}
+
+{% if icon_color %}
+  {% set attributes = attributes.addClass("stat-icon-" ~ icon_color) %}
+{% endif %}
+
+{% if stat_color %}
+  {% set attributes = attributes.addClass("stat-stat-" ~ stat_color) %}
+{% endif %}
+
+{% if centered_text %}
+  {% set attributes = attributes.addClass("stat-centered") %}
+{% endif %}
+
+{% if headline_attributes is empty %}
+  {% set headline_attributes = create_attribute() %}
+{% endif %}
+
+{% if visually_hide_header %}
+  {% set headline_attributes = headline_attributes.addClass("visually-hidden") %}
+{% endif %}
+
+{% if header_classes is not empty %}
+  {% set headline_attributes = headline_attributes.addClass(header_classes) %}
+{% endif %}
+
+<{{ isArticle ? "article" : "div" }}{{ attributes }}>
+{% if image %}
+  <div class="stat-card-image">{{ image }}</div>
+{% endif %}
+<div class="su-card__contents">
+  {% if stat or super_headline or stat %}
+    <div class="stat-card-header">
+      {% if headline %}
+        <div class="stat-card-headline">
+          <{{ header_tag|default('h2') }}{{ headline_attributes }}>
+            {{- headline -}}
+        </{{ header_tag|default('h2') }}>
+        </div>
+      {% endif %}
+      {% if stat %}
+        <div class="stat-card-stat">{{ stat }}</div>
+      {% endif %}
+      {% if super_headline %}
+        <div class="stat-card-super-headline">{{ super_headline }}</div>
+      {% endif %}
+      {% if icon %}
+        <div class="stat-card-icon">{{ icon }}</div>
+      {% endif %}
+    </div>
+  {% endif %}
+  <div>
+    {% if body|render_clean %}
+      <div class="stat-card-body">{{ body }}</div>
+    {% endif %}
+    {% if link|render_clean %}
+      <div class="stat-card-link">{{ link }}</div>
+    {% endif %}
+  </div>
+</div>
+</{{ isArticle ? "article" : "div" }}>

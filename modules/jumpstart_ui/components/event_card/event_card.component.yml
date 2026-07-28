@@ -1,0 +1,48 @@
+'$schema': 'https://git.drupalcode.org/project/drupal/-/raw/10.1.x/core/modules/sdc/src/metadata.schema.json'
+name: 'Events Card Item'
+description: 'Building block component for the events list page.'
+props:
+  type: object
+  properties:
+    header_tag:
+      title: Header Tag Element
+      type: string
+      enum:
+        - h2
+        - h3
+        - h4
+        - div
+    start_month:
+      title: 'Start Month'
+      type: string
+    start_date:
+      title: 'Start Date'
+      type: number
+    end_month:
+      title: 'End Month'
+      type: string
+    end_date:
+      title: 'End Date'
+      type: number
+    headline:
+      title: Headline
+      type: string
+    subheadline:
+      title: Subheadline
+      type: string
+    url:
+      title: 'URL for event'
+      type: string
+    date_time:
+      title: 'Date and time for event'
+      type: string
+    location:
+      title: 'Location for event'
+      type: string
+slots:
+  event_type:
+    title: 'Event Type'
+    description: 'The type of the event.'
+  address:
+    title: 'Formatted location for event'
+    description: 'Formatted location for the event.'

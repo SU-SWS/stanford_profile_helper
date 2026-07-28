@@ -32,6 +32,14 @@ class StanfordDecoupledHooks {
   public function __construct(protected ConfigFactoryInterface $configFactory, protected RouteMatchInterface $routeMatch) {}
 
   /**
+   * Implements hook_config_readonly_whitelist_patterns().
+   */
+  #[Hook('config_readonly_whitelist_patterns')]
+  public function configReadonlyWhitelistPatterns() {
+    return ['next.next_site.*', 'next.next_entity_type_config.*'];
+  }
+
+  /**
    * Implements hook_library_info_alter().
    */
   #[Hook('library_info_alter')]

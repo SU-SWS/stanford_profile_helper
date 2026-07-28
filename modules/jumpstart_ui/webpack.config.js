@@ -15,29 +15,36 @@ const config = {
   wdsPort: 3001,
 };
 
+const componentFiles = glob.sync('./components/**/*.scss').filter(path => {
+  const pathParts = path.split('/');
+  return !pathParts[pathParts.length - 1].startsWith('_');
+});
+
+// 2. Reduce them into an object format: { chunkName: 'filePath' }
+const entryObject = componentFiles.reduce((acc, file) => {
+  // Turn "./src/pages/home/index.js" into "home/index"
+  const entryName = path.relative('./dist/css', file).replace(/\.[^/.]+$/, "");
+  acc[entryName] = file;
+  return acc;
+}, {});
+
 var webpackConfig = {
   entry: {
     "jumpstart_ui":    path.resolve("lib/scss/jumpstart_ui.scss"),
     "jumpstart_ui.base":    path.resolve("lib/scss/jumpstart_ui.base.scss"),
     "jumpstart_ui.layout":  path.resolve("lib/scss/jumpstart_ui.layout.scss"),
     "anchor_nav":           path.resolve("lib/scss/components/anchor_nav.component.scss"),
-    "accordion":            path.resolve("lib/scss/components/accordion.component.scss"),
-    "alert":                path.resolve("lib/scss/components/alert.component.scss"),
     "brand-bar":            path.resolve("lib/scss/components/brand-bar.component.scss"),
     "button":               path.resolve("lib/scss/components/button.component.scss"),
-    "card":                 path.resolve("lib/scss/components/card.component.scss"),
     "cta":                  path.resolve("lib/scss/components/cta.component.scss"),
     "date-stacked":         path.resolve("lib/scss/components/date-stacked.component.scss"),
     "global-footer":        path.resolve("lib/scss/components/global-footer.component.scss"),
-    "hero":                 path.resolve("lib/scss/components/hero.component.scss"),
     "link":                 path.resolve("lib/scss/components/link.component.scss"),
-    "local-footer":         path.resolve("lib/scss/components/local-footer.component.scss"),
     "lockup":               path.resolve("lib/scss/components/lockup.component.scss"),
     "logo":                 path.resolve("lib/scss/components/logo.component.scss"),
-    "media":                path.resolve("lib/scss/components/media.component.scss"),
     "quote":                path.resolve("lib/scss/components/quote.component.scss"),
-    "stat_card":            path.resolve("lib/scss/components/stat_card.component.scss"),
     "layout.media-content-layout": path.resolve("lib/scss/layouts/media-content-layout.scss"),
+    ...entryObject
   },
   output: {
     path: config.distFolder,

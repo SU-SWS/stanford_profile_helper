@@ -17,10 +17,7 @@ const config = {
 
 var webpackConfig = {
   entry: {
-    "news-node":            path.resolve("lib/scss/components/news-node/index.scss"),
-    "news-list-item":       path.resolve("lib/scss/components/news-list-item/index.scss"),
-    "newsletter":           path.resolve("lib/scss/components/newsletter/index.scss"),
-    "news-vertical-teaser": path.resolve("lib/scss/components/news-vertical-teaser/index.scss")
+    "news-node":            path.resolve("lib/scss/components/news-node/index.scss")
   },
   output: {
     path: config.distFolder,

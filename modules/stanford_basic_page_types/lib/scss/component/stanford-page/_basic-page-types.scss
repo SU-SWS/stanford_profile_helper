@@ -18,7 +18,7 @@
 
 // Card styles
 .ds-entity--stanford-page {
-  & .su-card {
+  .su-card {
 
     @include grid-media-max("md") {
       @include modular-spacing("margin-bottom", 2);

@@ -1,0 +1,103 @@
+{#
+Event list item
+
+Template for an Event List Item.
+
+* Available variables:
+* - attributes: For additional HTML attributes not already provided.
+* - modifier_class: Additional CSS classes to change look and behavior.
+* - start_month: Starting month of the event.
+* - start_date: Date of the event
+* - end_month: Ending month of the event if it spans more than one day.
+* - end_date: Ending day of the event if it spans more than one day.
+* - audience: Optional audience for the event.
+* - headline: Title of the event. Can be a link off to another website.
+* - subheadline: Optional subtile for the event.
+* - dek: Descriptive dek/deck for the event.
+* - date_time: Date and time for the event.
+* - location: Where it is being held.
+#}
+
+{%- set attributes = attributes.addClass(['su-event-list-item', modifier_class]) -%}
+
+
+{# Separate URL and title #}
+{%- set link_attributes = create_attribute({'class': ['su-link']}) -%}
+{%- set is_external = false -%}
+{%- if url -%}
+  {%- set is_external = url|split('//')[1] ? true : false -%}
+  {%- if is_external -%}
+    {%- set link_attributes = link_attributes.addClass('su-link--external') -%}
+  {%- endif %}
+{%- endif -%}
+
+<article{{ attributes }}>
+  <div class="su-event-list-item__date">
+    <div class="su-date-stacked su-date-stacked--no-background"
+         aria-hidden="true">
+      <span class="su-event-start-month">{{ start_month }}</span>
+      <span class="su-event-start-date">{{ start_date }}</span>
+    </div>
+
+    {# Seperator and end date should be conditional #}
+    {%- if start_date != end_date or start_month != end_month %}
+      <span class="su-event-list-item__date__seperator" aria-hidden="true">&ndash; to &ndash;</span>
+
+      <div class="su-date-stacked su-date-stacked--no-background"
+           aria-hidden="true">
+        <span class="su-event-end-month">{{ end_month }}</span>
+        <span class="su-event-end-date">{{ end_date }}</span>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="su-event-list-item__details">
+
+    {# Event Type  #}
+    {%- if event_type|render_clean is not empty %}
+      <span class="event-list-item__type">{{- event_type -}}</span>
+    {%- endif -%}
+
+    {# Event Title  #}
+    {% if headline %}
+    <{{ header_tag|default('h2') }}>
+    {%- if url -%}<a {{ link_attributes }}href="{{ url }}">{% endif %}
+      {{- headline -}}
+      {%- if url -%}</a>{%- endif -%}
+  </{{ header_tag|default('h2') }}>
+  {% endif %}
+
+
+  {# Event Subheadline  #}
+  {%- if subheadline %}
+    <div class="event-list-item__subheadline">{{- subheadline -}}</div>
+  {%- endif -%}
+
+  {# Event Dek  #}
+  {%- if dek %}
+    <div class="event-list_item__dek"> {{- dek -}}</div>
+  {% endif -%}
+
+  {# Event Date/Time  #}
+  {%- if date_time %}
+    <div class="views-field-su-event-date-time"><span class="date-icon"
+                                                      aria-hidden="true"></span>
+      <div>{{- date_time -}}</div>
+    </div>
+  {%- endif -%}
+
+  {# Event Location  #}
+  {%- if location is not empty %}
+    <div class="views-field-su-event-location">
+      <span class="map-icon" aria-hidden="true"></span> {{- location -}}
+    </div>
+  {%- endif -%}
+
+  {# Event Location Address  #}
+  {%- if address|render_clean is not empty %}
+    <div class="views-field-su-event-address">
+      <span class="map-icon" aria-hidden="true"></span> {{- address -}}
+    </div>
+  {%- endif -%}
+  </div>
+</article>

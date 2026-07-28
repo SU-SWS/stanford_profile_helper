@@ -22,6 +22,7 @@ function stanford_decoupled_schema() {
         'not null' => TRUE,
       ],
     ],
+    'primary key' => ['site', 'path'],
   ];
   return $schema;
 }
@@ -38,3 +39,24 @@ function stanford_decoupled_update_10003() {
   }
 }
 
+/**
+ * Add composite primary key (site, path) to the {stanford_decoupled_revalidation} table.
+ */
+function stanford_decoupled_update_10004() {
+  $schema = \Drupal::database()->schema();
+  $table = 'stanford_decoupled_revalidation';
+
+  if (!$schema->tableExists($table)) {
+    throw new \Exception("Table $table does not exist.");
+  }
+
+  // Drop any existing primary key first — addPrimaryKey() fails
+  // if one is already defined.
+  if ($schema->indexExists($table, 'PRIMARY')) {
+    $schema->dropPrimaryKey($table);
+  }
+
+  // Add the composite primary key. Column order matters for
+  // query performance — put the more selective column first.
+  $schema->addPrimaryKey($table, ['site', 'path']);
+}

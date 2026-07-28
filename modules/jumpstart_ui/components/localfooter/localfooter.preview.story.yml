@@ -1,0 +1,24 @@
+name: Preview
+slots:
+  lockup_title: lockup_title
+  headercontent: headercontent
+  cell1: cell1
+  cell2: cell2
+  cell3: cell3
+  address: address
+  action_links: '<ul><a href="#">action_links</a></ul>'
+  social_links: '<ul><a href="#">social_links</a></ul>'
+  primary_links_header: primary_links_header
+  primary_links: '<ul><a href="#">primary_links</a></ul>'
+  secondary_links_header: secondary_links_header
+  secondary_links: '<ul><a href="#">secondary_links</a></ul>'
+  signup_form_content: signup_form_content
+  signup_form_action: signup_form_action
+  signup_form_method: POST
+  signup_form_field_email: signup_form_field_email
+  signup_form_field_email_placeholder: signup_form_field_email_placeholder
+  signup_form_field_submit: signup_form_field_submit
+  signup_form_field_submit_value: signup_form_field_submit_value
+  signup_form_fields: signup_form_fields
+  weblogin_url: /user
+  weblogin_text: weblogin_text

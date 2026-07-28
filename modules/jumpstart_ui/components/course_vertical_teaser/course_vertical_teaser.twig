@@ -1,0 +1,46 @@
+{#
+/**
+ * @file
+ * Course Vertical Teaser.
+ *
+ * Vertical Teaser for Courses
+ *
+ * Available variables:
+ * - attributes: For additional HTML attributes not already provided.
+ * - code: The subject and course number
+ * - academic_year: Academic year offered
+ * - title: The course title.
+ * - url: The url to the course
+ */
+#}
+
+{%- set classes = [
+  'su-card',
+  'su-course-vertical-teaser',
+  'su-course-external',
+  'no-ext-link'
+] -%}
+
+<article{{ attributes.addClass(classes) }}>
+
+  <div class="su-course-link">
+    <{{ header_tag|default('h2') }} class="su-link su-card__link su-link--external">
+    {%- if url -%}
+    <a class="su-course-vertical-teaser__link" href="{{ url }}">
+      {%- endif -%}
+      {{- title -}}
+      {%- if url -%}
+    </a>
+    {%- endif -%}
+  </{{ header_tag|default('h2') }}>
+  </div>
+
+  {%- if code or academic_year -%}
+    <div class="su-course-header">
+      {% if code %}<strong>{{ code }}</strong>{% endif %}
+      {%- if code and academic_year -%}&nbsp;|&nbsp;{%- endif -%}
+      {{ academic_year }}
+    </div>
+  {%- endif -%}
+
+</article>

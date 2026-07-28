@@ -1,0 +1,25 @@
+
+{% set attributes = attributes.addClass('su-media') %}
+
+{% if modifier_class is not empty %}
+  {% set attributes = attributes.addClass(modifier_class) %}
+{% endif %}
+
+
+
+<figure {{ attributes }}>
+
+  {# Wrapper for the media element where aspect ratio mixin can be applied to #}
+  <div class="su-media__wrapper">
+      {{ image }}
+  </div>
+
+  {% if link %}
+    <span class="su-media__link">{{ link }}</span>
+  {% endif %}
+
+  {# Optional caption #}
+  {%- if caption -%}
+    <figcaption class="su-media__caption">{{ caption }}</figcaption>
+  {%- endif -%}
+</figure>

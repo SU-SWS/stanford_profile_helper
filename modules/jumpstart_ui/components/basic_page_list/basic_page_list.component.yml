@@ -1,0 +1,21 @@
+name: 'Basic Page List'
+description: 'Building block component for the basic page types list page.'
+props:
+  type: object
+  properties:
+    title:
+      title: Title
+      type: string
+slots:
+  category:
+    title: Topic
+    description: 'The term from the basic page types taxonomy.'
+  description:
+    title: 'Page Description'
+    description: 'The page description'
+  page_image:
+    title: 'Page Image'
+    description: 'The page image from the page metadata.'
+  footer:
+    title: Footer
+    description: 'An open footer area.'

@@ -1,0 +1,54 @@
+'$schema': 'https://git.drupalcode.org/project/drupal/-/raw/10.1.x/core/modules/sdc/src/metadata.schema.json'
+name: Card
+description: 'One of the primary building block compontents. This card component comes with several fields to ensure flexibility.'
+props:
+  type: object
+  properties:
+    plain:
+      title: Plain style
+      type: boolean
+    header_tag:
+      title: Header Tag Element
+      type: string
+      enum:
+        - h1
+        - h2
+        - h3
+        - h4
+        - div
+    header_classes:
+      title: Header Tag Classes
+      type: string
+      examples:
+        - splash
+    visually_hide_header:
+      title: Visually hide header
+      type: boolean
+    modifier_class:
+      title: Classes to modify card
+      type: string
+    super_headline:
+      title: 'Super Headline'
+      type: string
+    headline:
+      title: Headline
+      type: string
+    headline_url:
+      title: Headline URL
+      type: string
+    link:
+      title: 'Link URL'
+      type: string
+    cta_label:
+      title: 'Link Label'
+      type: string
+    button_label:
+      title: 'Button Label'
+      type: string
+slots:
+  image:
+    title: Image
+    description: 'The cards image.'
+  body:
+    title: Body
+    description: 'An open variable for anything. Generally this would be for WYSIWYG editor contents'

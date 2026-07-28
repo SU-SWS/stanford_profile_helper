@@ -1,0 +1,57 @@
+{#
+/**
+ * @file
+ * Course List teaser.
+ *
+ * Basic list item for courses.
+ *
+ * Available variables:
+ * - attributes: For additional HTML attributes not already provided.
+ * - code
+ * - academic_year
+ * - quarters
+ * - title
+ * - instructors
+ * - description
+ * - url
+ *
+ */
+#}
+{%- set attributes = attributes.addClass(['su-course-list-item', 'no-ext-link', modifier_class]) -%}
+
+<article{{ attributes }}>
+
+  <div class="su-course-list__title">
+    {% if title %}
+      <h3>
+        {%- if url -%}<a href="{{ url }}">{%- endif -%}
+          {{- title -}}
+          {%- if url -%}</a>{%- endif -%}
+      </h3>
+    {% endif %}
+  </div>
+
+  {%- if code or academic_year -%}
+    <header class="su-course-list__header">
+      {%- if code -%}
+        <strong>{{ code }}</strong>{%- endif -%}
+      {%- if code and academic_year -%}&nbsp;|&nbsp;{%- endif -%}
+      {{ academic_year }}
+      {{ quarters }}
+    </header>
+  {%- endif -%}
+
+  {%- if instructors|render_clean is not empty -%}
+    <div class="su-course-list__instructors">
+      <span class="instructor-label">Instructors: </span>{{ instructors }}
+    </div>
+  {%- endif -%}
+
+  {%- if description|render_clean is not empty -%}
+    <div class="su-course-list__description">
+      {{ description }}
+    </div>
+  {%- endif -%}
+
+
+</article>
