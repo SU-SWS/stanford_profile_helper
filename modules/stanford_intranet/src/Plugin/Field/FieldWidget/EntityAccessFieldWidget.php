@@ -9,6 +9,7 @@ use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\State\StateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\stanford_profile_helper\StanfordProfileHelper;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -63,7 +64,7 @@ class EntityAccessFieldWidget extends WidgetBase {
     foreach ($items as $item) {
       $default_value[] = $item->getValue()['role'];
     }
-    if (empty($options = _stanford_profile_helper_get_assignable_roles())) {
+    if (empty($options = StanfordProfileHelper::getAssignableRoles())) {
       return $element;
     }
 

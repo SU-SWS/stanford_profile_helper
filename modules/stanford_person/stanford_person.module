@@ -7,97 +7,10 @@
  * Long description.
  */
 
-use Drupal\Core\Cache\Cache;
 use Drupal\Core\File\FileExists;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\file\Entity\File;
 use Drupal\media\Entity\Media;
-use Drupal\node\NodeInterface;
-use Drupal\taxonomy\TermInterface;
-use Drupal\views\Plugin\views\cache\CachePluginBase;
-use Drupal\views\ViewExecutable;
-
-/**
- * Implements hook_preprocess_node().
- */
-function stanford_person_page_attachments(array &$attachments) {
-  // Get the node from the route.
-  $node = \Drupal::routeMatch()->getParameter('node');
-
-  // Not a node.. Then just continue.
-  if ($node instanceof NodeInterface && $node->getType() == 'stanford_person') {
-    // Check for our type and add library if a match.
-    $attachments['#attached']['library'][] = 'stanford_person/node';
-  }
-}
-
-/**
- * Implements hook_views_post_render().
- *
- * Views render arrays contain a cache tag "node_list". This cache tag is
- * cleared every time ANY node is created, edited or deleted. When this happens
- * every view on the site gets its cache flushed. This causes poor performance
- * since a view would get flushed even if it has no relation to that node. To
- * assist in cache tags, we create a custom cache tag based on the node type
- * filter on the view. Its a small improvement but will have huge impact in
- * keeping cached renders much longer.
- *
- * @see stanford_person_node_presave()
- * @see stanford_person_taxonomy_term_presave ()
- */
-function stanford_person_views_post_render(ViewExecutable $view, &$output, CachePluginBase $cache) {
-
-  // Node Base Table Views.
-  switch ($view->id()) {
-    case 'stanford_person':
-      $node_list_position = array_search('node_list', $output['#cache']['tags']);
-      unset($output['#cache']['tags'][$node_list_position]);
-      foreach ($view->filter['type']->value as $node_type) {
-        $output['#cache']['tags'][] = "node_list:$node_type";
-      }
-      $output['#attached']['library'][] = 'stanford_person/views';
-      break;
-
-    case 'taxonomy_term_pages':
-      if ($view->current_display == 'people_terms') {
-        $output['#attached']['library'][] = 'stanford_person/views';
-      }
-      break;
-
-    case 'stanford_person_list_terms_first':
-      $output['#attached']['library'][] = 'stanford_person/views';
-
-    case 'stanford_person_terms':
-      $term_list_position = array_search('term_list', $output['#cache']['tags']);
-      unset($output['#cache']['tags'][$term_list_position]);
-      foreach ($view->filter['vid']->value as $term_type) {
-        $output['#cache']['tags'][] = "term_list:$term_type";
-      }
-      break;
-  }
-}
-
-/**
- * Implements hook_ENTITY_TYPE_presave().
- *
- * @see stanford_person_views_post_render()
- */
-function stanford_person_node_presave(NodeInterface $entity) {
-  if ($entity->bundle() == "stanford_person") {
-    Cache::invalidateTags(["node_list:{$entity->bundle()}"]);
-  }
-}
-
-/**
- * Implements hook_ENTITY_TYPE_presave().
- *
- * @see stanford_person_views_post_render()
- */
-function stanford_person_taxonomy_term_presave(TermInterface $entity) {
-  if ($entity->bundle() == "stanford_person_types") {
-    Cache::invalidateTags(["term_list:{$entity->bundle()}"]);
-  }
-}
 
 /**
  * Install/Update function for setting the default image on the photo field.

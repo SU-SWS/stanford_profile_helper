@@ -11,6 +11,7 @@ use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\field\FieldStorageConfigInterface;
+use Drupal\Core\Url;
 use Drupal\menu_link_content\MenuLinkContentInterface;
 use Drupal\stanford_profile_helper\StanfordProfileHelper;
 
@@ -157,6 +158,50 @@ class EntityObjectHooks {
     $destination = $entity->get('redirect_redirect')->getString();
     if ($internal_path = self::lookupInternalPath($destination)) {
       $entity->set('redirect_redirect', $internal_path);
+    }
+  }
+
+  /**
+   * Purge the redirect source path so it works immediately without any
+   * further intervention.
+   *
+   * @param \Drupal\Core\Entity\ContentEntityInterface $redirect
+   *   Redirect being saved.
+   */
+  #[Hook('redirect_presave')]
+  public function purgeRedirectSource(ContentEntityInterface $redirect): void {
+    if (\Drupal::moduleHandler()->moduleExists('purge_processor_lateruntime')) {
+      $source = $redirect->get('redirect_source')->getString();
+      self::purgePath($source);
+    }
+  }
+
+  /**
+   * Purges a relative path using the generated absolute url.
+   *
+   * @param string $path
+   *   Drupal site relative path.
+   *
+   * @throws \Drupal\purge\Plugin\Purge\Invalidation\Exception\InvalidExpressionException
+   * @throws \Drupal\purge\Plugin\Purge\Invalidation\Exception\MissingExpressionException
+   * @throws \Drupal\purge\Plugin\Purge\Invalidation\Exception\TypeUnsupportedException
+   */
+  protected static function purgePath(string $path): void {
+    $url = Url::fromUserInput('/' . trim($path, '/'), ['absolute' => TRUE])
+      ->toString(TRUE)->getGeneratedUrl();
+
+    $purgeInvalidationFactory = \Drupal::service('purge.invalidation.factory');
+    $purgeProcessors = \Drupal::service('purge.processors');
+    $purgePurgers = \Drupal::service('purge.purgers');
+
+    $processor = $purgeProcessors->get('lateruntime');
+    $invalidations = [$purgeInvalidationFactory->get('url', $url)];
+
+    try {
+      $purgePurgers->invalidate($processor, $invalidations);
+    }
+    catch (\Exception $e) {
+      \Drupal::logger('stanford_profile_helper')->error($e->getMessage());
     }
   }
 

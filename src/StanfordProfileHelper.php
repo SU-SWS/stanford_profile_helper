@@ -3,13 +3,13 @@
 namespace Drupal\stanford_profile_helper;
 
 use Drupal\Core\Cache\Cache;
-use Drupal\Core\Security\TrustedCallbackInterface;
 use Drupal\stanford_profile_helper\Event\MenuCacheEvent;
+use Drupal\user\RoleInterface;
 
 /**
  * Module helper methods and service.
  */
-class StanfordProfileHelper implements TrustedCallbackInterface {
+class StanfordProfileHelper {
 
   /**
    * Remove some cache tags from a render array.
@@ -44,31 +44,23 @@ class StanfordProfileHelper implements TrustedCallbackInterface {
   }
 
   /**
-   * {@inheritDoc}
-   */
-  public static function trustedCallbacks(): array {
-    return ['preRenderDsEntity'];
-  }
-
-  /**
-   * PreRender the ds entity to add contextual links.
-   *
-   * @param array $element
-   *   Entity render array.
+   * Get available roles, limited if the role_delegation module is enabled.
    *
    * @return array
-   *   Altered render array.
+   *   Keyed array of role id and role label.
    */
-  public static function preRenderDsEntity(array $element): array {
-    $module_handler = \Drupal::moduleHandler();
-    if (isset($element['#contextual_links']) && $module_handler->moduleExists('contextual')) {
-      $placeholder = [
-        '#type' => 'contextual_links_placeholder',
-        '#id' => _contextual_links_to_id($element['#contextual_links']),
-      ];
-      $element['#prefix'] = \Drupal::service('renderer')->render($placeholder);
+  public static function getAssignableRoles(): array {
+    if (\Drupal::moduleHandler()->moduleExists('role_delegation')) {
+      /** @var \Drupal\role_delegation\DelegatableRolesInterface $role_delegation */
+      $role_delegation = \Drupal::service('delegatable_roles');
+      return $role_delegation->getAssignableRoles(\Drupal::currentUser());
     }
-    return $element;
+
+    $roles = \Drupal::entityTypeManager()
+      ->getStorage('user_role')
+      ->loadMultiple();
+    unset($roles[RoleInterface::ANONYMOUS_ID]);
+    return array_map(fn($role) => $role->label(), $roles);
   }
 
 }

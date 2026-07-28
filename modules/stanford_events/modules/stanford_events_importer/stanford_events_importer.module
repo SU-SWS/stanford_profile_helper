@@ -7,77 +7,8 @@
  * Long description.
  */
 
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\stanford_events_importer\StanfordEventsImporter;
 use Drupal\Core\Cache\CacheBackendInterface;
-use Drupal\Core\Cache\Cache;
-use Drupal\Core\Entity\EntityInterface;
-
-/**
- * Implements hook_form_FORM_ID_alter().
- *
- * Alter the config form to add the migrate_tools UI.
- */
-function stanford_events_importer_form_config_pages_stanford_events_importer_form_alter(array &$form, FormStateInterface $form_state) {
-  $user = \Drupal::currentUser();
-  $form['actions']['#type'] = 'fieldset';
-  $form['actions']['#weight'] = 99;
-  $form['actions']['import'] = [
-    '#type' => 'submit',
-    '#value' => t('Save & Import'),
-    '#name' => 'op',
-    '#button_type' => "primary",
-    '#submit' => [
-      "::submitForm",
-      "::save",
-      "stanford_events_importer_form_config_pages_stanford_events_importer_form_alter_submit",
-    ],
-  ];
-
-  $form['actions']['update_opts'] = [
-    '#type' => 'submit',
-    '#value' => t('Update Org & Category Options'),
-    '#name' => 'op',
-    '#submit' => ["stanford_events_importer_update_opts"],
-    '#access' => $user->hasPermission("administer migrations"),
-  ];
-
-  return $form;
-}
-
-/**
- * Implements hook_ENTITY_TYPE_presave().
- */
-function stanford_events_importer_config_pages_presave(EntityInterface $entity) {
-  // Clear out config and migration cache to allow config overrides to take
-  // effect.
-  if ($entity->bundle() == 'stanford_events_importer') {
-    \Drupal::service('plugin.manager.migration')->clearCachedDefinitions();
-    Cache::invalidateTags([
-      'config:migrate_plus.migration.stanford_localist_importer',
-      'migration_plugins',
-    ]);
-  }
-}
-
-/**
- * Submit handler for the config form override.
- *
- * @param array $form
- *   The form array.
- * @param \Drupal\Core\Form\FormStateInterface $form_state
- *   The form state.
- */
-function stanford_events_importer_form_config_pages_stanford_events_importer_form_alter_submit(array &$form, FormStateInterface $form_state) {
-  \Drupal::service('plugin.manager.migration')->clearCachedDefinitions();
-  Cache::invalidateTags([
-    'config:migrate_plus.migration.stanford_localist_importer',
-    'migration_plugins',
-  ]);
-  $migration_service = \Drupal::service('stanford_migrate')
-    ->setBatchExecution(TRUE);
-  $migration_service->executeMigrationId('stanford_localist_importer');
-}
+use Drupal\stanford_events_importer\StanfordEventsImporter;
 
 /**
  * Fetch and save to state the org & category data.
