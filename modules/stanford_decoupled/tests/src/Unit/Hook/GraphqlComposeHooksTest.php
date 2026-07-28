@@ -77,11 +77,9 @@ class GraphqlComposeHooksTest extends UnitTestCase {
 
     $this->hooks->fieldResultsAlter($results, NULL, $plugin, $this->context);
 
-    // Due to the dangling-reference bug described above, the last element
-    // ends up duplicating the first element's converted value.
     $this->assertSame([
       ['id' => 1, 'label' => 'Layout One'],
-      ['id' => 1, 'label' => 'Layout One'],
+      ['id' => 2, 'label' => 'Layout Two'],
     ], $results);
   }
 
