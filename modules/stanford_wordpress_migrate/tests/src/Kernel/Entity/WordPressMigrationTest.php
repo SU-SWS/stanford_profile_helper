@@ -7,10 +7,12 @@ namespace Drupal\Tests\stanford_wordpress_migrate\Kernel\Entity;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\stanford_wordpress_migrate\Entity\WordPressMigration;
 use Drupal\stanford_wordpress_migrate\WordPressMigrationInterface;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Kernel tests for WordPressMigration entity.
  */
+#[RunTestsInSeparateProcesses]
 class WordPressMigrationTest extends KernelTestBase {
 
   /**

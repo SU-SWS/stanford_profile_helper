@@ -8,11 +8,13 @@ use Drupal\Core\Form\FormState;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\stanford_layout_paragraphs\Layouts\TwoColumn;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Kernel tests for TwoColumn layout.
  */
 #[CoversClass(TwoColumn::class)]
+#[RunTestsInSeparateProcesses]
 class TwoColumnTest extends KernelTestBase {
 
   /**

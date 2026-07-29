@@ -6,10 +6,12 @@ use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\node\Entity\Node;
 use Drupal\node\Entity\NodeType;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Test rabbit hole message block.
  */
+#[RunTestsInSeparateProcesses]
 class RabbitHoleMessageBlockTest extends KernelTestBase {
 
   /**

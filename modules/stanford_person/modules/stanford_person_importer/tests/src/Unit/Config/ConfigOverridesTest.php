@@ -25,6 +25,11 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class ConfigOverridesTest extends UnitTestCase {
 
   /**
+   * @var int
+   */
+  protected $count;
+
+  /**
    * Config overrider service.
    *
    * @var \Drupal\config_pages_overrides\Config\ConfigOverrides

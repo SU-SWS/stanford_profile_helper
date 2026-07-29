@@ -12,12 +12,14 @@ use Drupal\taxonomy\Entity\Term;
 use Drupal\taxonomy\Entity\Vocabulary;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests for StanfordDecoupledEntityTrackHooks.
  */
 #[CoversClass(StanfordDecoupledEntityTrackHooks::class)]
 #[Group('stanford_decoupled')]
+#[RunTestsInSeparateProcesses]
 class StanfordDecoupledEntityTrackHooksTest extends KernelTestBase {
 
   /**

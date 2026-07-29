@@ -9,10 +9,12 @@ use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\stanford_intranet\Commands\IntranetCommands;
 use Drupal\Tests\stanford_intranet\Kernel\IntranetKernelTestBase;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Drush commands tests.
  */
+#[RunTestsInSeparateProcesses]
 class IntranetCommandsTest extends IntranetKernelTestBase {
 
   /**

@@ -5,10 +5,12 @@ namespace Drupal\Tests\stanford_profile_helper\Kernel\EventSubscriber;
 use Drupal\Tests\stanford_profile_helper\Kernel\SuProfileHelperKernelTestBase;
 use Drupal\views\Entity\View;
 use Drupal\views\Views;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Test the event subscriber.
  */
+#[RunTestsInSeparateProcesses]
 class ViewsHooksTest extends SuProfileHelperKernelTestBase {
 
   /**

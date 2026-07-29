@@ -9,10 +9,12 @@ use Drupal\search_api\Event\IndexingItemsEvent;
 use Drupal\search_api\Event\SearchApiEvents;
 use Drupal\search_api\IndexInterface;
 use Drupal\search_api\Item\ItemInterface;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Test the event subscriber.
  */
+#[RunTestsInSeparateProcesses]
 class SearchApiSubscriberTest extends KernelTestBase {
 
   /**

@@ -10,10 +10,12 @@ use Drupal\node\Entity\NodeType;
 use Drupal\media\Entity\MediaType;
 use Drupal\stanford_wordpress_migrate\Entity\WordPressMigration;
 use Drupal\stanford_wordpress_migrate\Wizard\ImportAddWizard;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Kernel tests for ImportAddWizard.
  */
+#[RunTestsInSeparateProcesses]
 class ImportAddWizardTest extends KernelTestBase {
 
   /**

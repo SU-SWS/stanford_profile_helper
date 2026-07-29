@@ -13,10 +13,12 @@ use Drupal\node\Entity\NodeType;
 use Drupal\paragraphs\Entity\ParagraphsType;
 use Drupal\stanford_decoupled\Hook\StanfordDecoupledHooks;
 use Drupal\taxonomy\Entity\Vocabulary;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Kernel tests for StanfordDecoupledHooks.
  */
+#[RunTestsInSeparateProcesses]
 class StanfordDecoupledHooksTest extends KernelTestBase {
 
   /**

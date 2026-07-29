@@ -3,9 +3,11 @@
 namespace Drupal\Tests\stanford_profile_helper\Kernel;
 
 use Drupal\stanford_profile_helper\SearchApiAlgoliaHelper;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  */
+#[RunTestsInSeparateProcesses]
 class StanfordProfileHelperServiceProviderTest extends SuProfileHelperKernelTestBase {
 
   protected function setUp(): void {

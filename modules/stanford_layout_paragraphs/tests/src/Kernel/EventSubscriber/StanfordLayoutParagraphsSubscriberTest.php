@@ -7,10 +7,12 @@ use Drupal\layout_paragraphs\Event\LayoutParagraphsAllowedTypesEvent;
 use Drupal\layout_paragraphs\LayoutParagraphsComponent;
 use Drupal\layout_paragraphs\LayoutParagraphsLayout;
 use Drupal\paragraphs\ParagraphInterface;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Test event subscriber.
  */
+#[RunTestsInSeparateProcesses]
 class StanfordLayoutParagraphsSubscriberTest extends KernelTestBase {
 
   /**

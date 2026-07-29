@@ -7,10 +7,12 @@ use Drupal\google_analytics\Event\GoogleAnalyticsConfigEvent;
 use Drupal\google_analytics\GaAccount;
 use Drupal\google_analytics\GaJavascriptObject;
 use Drupal\Tests\stanford_profile_helper\Kernel\SuProfileHelperKernelTestBase;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Test the event subscriber.
  */
+#[RunTestsInSeparateProcesses]
 class GoogleAnalyticsSubscriberTest extends SuProfileHelperKernelTestBase {
 
   public function testConfigChanges() {

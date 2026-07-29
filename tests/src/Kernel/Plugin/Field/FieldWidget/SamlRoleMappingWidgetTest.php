@@ -13,12 +13,14 @@ use Drupal\node\Entity\NodeType;
 use Drupal\stanford_profile_helper\Plugin\Field\FieldWidget\SamlRoleMappingWidget;
 use Drupal\user\Entity\Role;
 use Drupal\user\Entity\User;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Class SamlRoleMappingWidgetTest.
  *
  * @package Drupal\Tests\stanford_profile_helper\Kernel\Plugin\Field\FieldWidget
  */
+#[RunTestsInSeparateProcesses]
 class SamlRoleMappingWidgetTest extends KernelTestBase {
 
   /**

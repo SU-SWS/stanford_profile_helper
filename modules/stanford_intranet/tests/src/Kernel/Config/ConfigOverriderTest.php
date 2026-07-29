@@ -4,10 +4,12 @@ namespace Drupal\Tests\stanford_intranet\Kernel\Config;
 
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\Tests\stanford_intranet\Kernel\IntranetKernelTestBase;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Class ConfigOverriderTest.
  */
+#[RunTestsInSeparateProcesses]
 class ConfigOverriderTest extends IntranetKernelTestBase {
 
   /**

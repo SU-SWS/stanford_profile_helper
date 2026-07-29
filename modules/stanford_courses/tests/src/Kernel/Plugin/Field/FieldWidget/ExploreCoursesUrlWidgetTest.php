@@ -17,10 +17,12 @@ use Psr\Http\Message\ResponseInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 
 use Drupal\stanford_courses\Plugin\Field\FieldWidget\ExploreCoursesUrlWidget;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Class ExploreCoursesUrlWidgetTest.php.
  */
+#[RunTestsInSeparateProcesses]
 class ExploreCoursesUrlWidgetTest extends KernelTestBase {
 
   /**

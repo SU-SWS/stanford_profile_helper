@@ -10,12 +10,14 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests for StanfordDecoupledRouteSubscriber.
  */
 #[CoversClass(StanfordDecoupledRouteSubscriber::class)]
 #[Group('stanford_decoupled')]
+#[RunTestsInSeparateProcesses]
 class StanfordDecoupledRouteSubscriberTest extends KernelTestBase {
 
   /**

@@ -4,10 +4,12 @@ namespace Drupal\Tests\stanford_profile_helper\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\stanford_profile_helper\MenuActiveTrailsCacheContextOverride;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Class MenuActiveTrailsCacheContextOverrideTest.
  */
+#[RunTestsInSeparateProcesses]
 class MenuActiveTrailsCacheContextOverrideTest extends KernelTestBase {
 
   /**

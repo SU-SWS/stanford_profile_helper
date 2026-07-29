@@ -11,11 +11,13 @@ use Drupal\KernelTests\KernelTestBase;
 use Drupal\node\Entity\Node;
 use Drupal\node\Entity\NodeType;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Class TimeDurationFormatterTest.
  */
 #[Group('stanford_profile_helper')]
+#[RunTestsInSeparateProcesses]
 class TimeDurationFormatterTest extends KernelTestBase {
 
   /**

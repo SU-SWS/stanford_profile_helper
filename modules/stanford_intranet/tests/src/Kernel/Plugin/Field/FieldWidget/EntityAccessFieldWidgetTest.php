@@ -9,7 +9,9 @@ use Drupal\stanford_intranet\Plugin\Field\FieldType\EntityAccessFieldType;
 use Drupal\Tests\stanford_intranet\Kernel\IntranetKernelTestBase;
 use Drupal\user\Entity\Role;
 use Drupal\user\Entity\User;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
+#[RunTestsInSeparateProcesses]
 class EntityAccessFieldWidgetTest extends IntranetKernelTestBase {
 
   /**

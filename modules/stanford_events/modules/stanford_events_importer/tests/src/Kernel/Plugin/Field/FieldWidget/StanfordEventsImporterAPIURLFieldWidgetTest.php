@@ -11,10 +11,12 @@ use Drupal\node\Entity\NodeType;
 use Drupal\node\Entity\Node;
 use Drupal\stanford_events_importer\StanfordEventsImporter;
 use Drupal\Core\Cache\CacheBackendInterface;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Class StanfordEventsImporterAPIURLFieldWidgetTest.php
  */
+#[RunTestsInSeparateProcesses]
 class StanfordEventsImporterAPIURLFieldWidgetTest extends KernelTestBase {
 
   /**

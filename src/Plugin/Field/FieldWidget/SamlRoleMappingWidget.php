@@ -12,6 +12,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\stanford_profile_helper\StanfordProfileHelper;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -96,7 +97,7 @@ class SamlRoleMappingWidget extends WidgetBase {
     $element['role_population']['add']['role_id'] = [
       '#type' => 'select',
       '#title' => $this->t('Add Role'),
-      '#options' => _stanford_profile_helper_get_assignable_roles(),
+      '#options' => StanfordProfileHelper::getAssignableRoles(),
     ];
 
     $element['role_population']['add']['workgroup'] = [

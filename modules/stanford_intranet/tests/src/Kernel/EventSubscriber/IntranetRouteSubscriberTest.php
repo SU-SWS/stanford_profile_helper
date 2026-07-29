@@ -16,10 +16,12 @@ use Drupal\search_api\IndexInterface;
 use Drupal\search_api\Item\ItemInterface;
 use Drupal\stanford_intranet\Plugin\Field\FieldType\EntityAccessFieldType;
 use Symfony\Component\Routing\RouteCollection;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Route subscriber.
  */
+#[RunTestsInSeparateProcesses]
 class IntranetRouteSubscriberTest extends KernelTestBase {
 
   /**

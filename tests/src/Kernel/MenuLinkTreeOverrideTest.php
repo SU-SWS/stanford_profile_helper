@@ -10,10 +10,12 @@ use Drupal\node\Entity\NodeType;
 use Drupal\stanford_profile_helper\MenuLinkTreeOverride;
 use Drupal\system\Entity\Menu;
 use Drupal\user\RoleInterface;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Class MenuLinkTreeOverrideTest.
  */
+#[RunTestsInSeparateProcesses]
 class MenuLinkTreeOverrideTest extends KernelTestBase {
 
   /**

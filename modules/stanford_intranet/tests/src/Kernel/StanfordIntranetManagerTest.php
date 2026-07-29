@@ -7,10 +7,12 @@ use Drupal\Core\StreamWrapper\StreamWrapperManager;
 use Drupal\file\Entity\File;
 use Drupal\file\FileInterface;
 use Drupal\image\Entity\ImageStyle;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Test intranet manager service.
  */
+#[RunTestsInSeparateProcesses]
 class StanfordIntranetManagerTest extends IntranetKernelTestBase {
 
   public function setup(): void {

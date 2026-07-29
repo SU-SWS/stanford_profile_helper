@@ -16,9 +16,11 @@ use Drupal\stanford_fields\Form\StanfordFieldBookAdminEditForm;
 use Drupal\stanford_policy\Hook\StanfordPolicyHooks;
 use Drupal\user\Entity\Role;
 use Drupal\user\RoleInterface;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  */
+#[RunTestsInSeparateProcesses]
 class StanfordPolicySubscriberTest extends KernelTestBase {
 
   protected static $modules = [

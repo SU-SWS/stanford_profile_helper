@@ -6,10 +6,12 @@ namespace Drupal\Tests\stanford_wordpress_migrate\Kernel\Wizard;
 
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\stanford_wordpress_migrate\Wizard\ImportEditWizard;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Kernel tests for ImportEditWizard.
  */
+#[RunTestsInSeparateProcesses]
 class ImportEditWizardTest extends KernelTestBase {
 
   /**
