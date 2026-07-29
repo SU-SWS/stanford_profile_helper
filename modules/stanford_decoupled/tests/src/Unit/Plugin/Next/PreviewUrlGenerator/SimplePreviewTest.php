@@ -16,12 +16,11 @@ use Drupal\next\Entity\NextSiteInterface;
 use Drupal\next\PreviewSecretGeneratorInterface;
 use Drupal\stanford_decoupled\Plugin\Next\PreviewUrlGenerator\SimplePreview;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-/**
- * @coversDefaultClass \Drupal\stanford_decoupled\Plugin\Next\PreviewUrlGenerator\SimplePreview
- */
+#[CoversClass(SimplePreview::class)]
 class SimplePreviewTest extends UnitTestCase {
 
   /**
@@ -48,17 +47,11 @@ class SimplePreviewTest extends UnitTestCase {
     \Drupal::setContainer($this->container);
   }
 
-  /**
-   * @covers ::defaultConfiguration
-   */
   public function testDefaultConfiguration() {
     $plugin = SimplePreview::create($this->container, [], '', []);
     $this->assertEquals(['vercel_bypass' => ''], $plugin->defaultConfiguration());
   }
 
-  /**
-   * @covers ::buildConfigurationForm
-   */
   public function testBuildConfigurationForm() {
     $plugin = SimplePreview::create($this->container, [], '', []);
     $form_state = $this->createMock(FormStateInterface::class);
@@ -70,9 +63,6 @@ class SimplePreviewTest extends UnitTestCase {
     $this->assertEquals('', $form['vercel_bypass']['#default_value']);
   }
 
-  /**
-   * @covers ::buildConfigurationForm
-   */
   public function testBuildConfigurationFormWithExistingValue() {
     $plugin = SimplePreview::create($this->container, ['vercel_bypass' => 'my-token'], '', []);
     $form_state = $this->createMock(FormStateInterface::class);
@@ -82,9 +72,6 @@ class SimplePreviewTest extends UnitTestCase {
     $this->assertEquals('my-token', $form['vercel_bypass']['#default_value']);
   }
 
-  /**
-   * @covers ::submitConfigurationForm
-   */
   public function testSubmitConfigurationForm() {
     $plugin = SimplePreview::create($this->container, [], '', []);
     $form_state = $this->createMock(FormStateInterface::class);
@@ -99,9 +86,6 @@ class SimplePreviewTest extends UnitTestCase {
     $this->assertEquals('new-bypass-token', $config['vercel_bypass']);
   }
 
-  /**
-   * @covers ::generate
-   */
   public function testGenerator() {
     $plugin = SimplePreview::create($this->container, [], '', []);
 
@@ -117,9 +101,6 @@ class SimplePreviewTest extends UnitTestCase {
     $this->assertEquals('http://example.test/foo/bar?slug=/bar/foo&secret=baz', $url);
   }
 
-  /**
-   * @covers ::generate
-   */
   public function testGeneratorWithVercelBypass() {
     $plugin = SimplePreview::create($this->container, ['vercel_bypass' => 'bypass-secret'], '', []);
 
@@ -138,9 +119,6 @@ class SimplePreviewTest extends UnitTestCase {
     );
   }
 
-  /**
-   * @covers ::generate
-   */
   public function testGeneratorReturnsNullOnInvalidPreviewUrl() {
     $plugin = SimplePreview::create($this->container, [], '', []);
 
@@ -157,9 +135,6 @@ class SimplePreviewTest extends UnitTestCase {
     $this->assertNull($result);
   }
 
-  /**
-   * @covers ::validate
-   */
   public function testValidate() {
     $plugin = SimplePreview::create($this->container, [], '', []);
     // validate() is a no-op; ensure it can be called without error.

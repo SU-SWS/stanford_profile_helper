@@ -12,10 +12,12 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Kernel tests for ImporterStep1SourceSelectForm.
  */
+#[RunTestsInSeparateProcesses]
 class ImporterStep1SourceSelectFormTest extends KernelTestBase {
 
   /**

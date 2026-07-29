@@ -3,12 +3,14 @@
 namespace Drupal\Tests\stanford_publication\Kernel;
 
 use Drupal\stanford_publication\Entity\CitationType;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Access controller for the Citation type entity.
  *
  * @see \Drupal\stanford_publication\Entity\Citation.
  */
+#[RunTestsInSeparateProcesses]
 class CitationTypeAccessControlHandlerTest extends PublicationTestBase {
 
   /**

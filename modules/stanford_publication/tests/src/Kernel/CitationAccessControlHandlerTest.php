@@ -4,10 +4,12 @@ namespace Drupal\Tests\stanford_publication\Kernel;
 
 use Drupal\Core\Session\AccountInterface;
 use Drupal\stanford_publication\Entity\Citation;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Class CitationAccessControlHandlerTest.
  */
+#[RunTestsInSeparateProcesses]
 class CitationAccessControlHandlerTest extends PublicationTestBase {
 
   /**

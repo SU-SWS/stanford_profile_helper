@@ -6,10 +6,12 @@ use Drupal\KernelTests\Core\Entity\EntityKernelTestBase;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\Row;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Class ExploreCoursesMigrationPluginsTest.
  */
+#[RunTestsInSeparateProcesses]
 class ExploreCoursesMigrationPluginsTest extends EntityKernelTestBase {
 
   /**

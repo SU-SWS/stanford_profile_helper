@@ -6,10 +6,12 @@ use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\Session\AccountProxy;
 use Drupal\stanford_notifications\Entity\Notification;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Class NotificationServiceTest.
  */
+#[RunTestsInSeparateProcesses]
 class NotificationServiceTest extends StanfordNotificationTestBase {
 
   /**

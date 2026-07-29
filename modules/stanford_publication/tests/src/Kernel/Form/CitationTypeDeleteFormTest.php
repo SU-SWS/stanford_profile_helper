@@ -5,10 +5,12 @@ namespace Drupal\Tests\stanford_publication\Kernel\Form;
 use Drupal\Core\Form\FormState;
 use Drupal\stanford_publication\Entity\CitationType;
 use Drupal\Tests\stanford_publication\Kernel\PublicationTestBase;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Class CitationTypeDeleteFormTest.
  */
+#[RunTestsInSeparateProcesses]
 class CitationTypeDeleteFormTest extends PublicationTestBase {
 
   /**

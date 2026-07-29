@@ -6,9 +6,11 @@ use Drupal\file\Entity\File;
 use Drupal\image\Entity\ImageStyle;
 use Drupal\KernelTests\KernelTestBase;
 use Shaper\Util\Context;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  */
+#[RunTestsInSeparateProcesses]
 class Base64ImageTest extends KernelTestBase {
 
   protected static $modules = [

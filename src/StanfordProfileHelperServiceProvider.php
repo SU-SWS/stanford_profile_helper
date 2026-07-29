@@ -19,6 +19,15 @@ class StanfordProfileHelperServiceProvider extends ServiceProviderBase {
       $definition->setClass('Drupal\stanford_profile_helper\SearchApiAlgoliaHelper');
     }
 
+    $this->alterUiPatternsServices($container);
+  }
+
+  /**
+   * Replace the ui patterns update service to prevent breaking updates.
+   *
+   * @codeCoverageIgnore
+   */
+  protected function alterUiPatternsServices(ContainerBuilder $container) {
     if ($container->hasDefinition('ui_patterns_legacy.configuration_updater')) {
       $definition = $container->getDefinition('ui_patterns_legacy.configuration_updater');
       $definition->setClass('Drupal\stanford_profile_helper\Service\UiPatternsConfigurationUpdater');

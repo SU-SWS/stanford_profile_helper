@@ -8,10 +8,12 @@ use Drupal\Core\Form\FormState;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\stanford_wordpress_migrate\Entity\WordPressMigration;
 use Drupal\stanford_wordpress_migrate\Form\ImporterStepReviewForm;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Kernel tests for ImporterStepReviewForm.
  */
+#[RunTestsInSeparateProcesses]
 class ImporterStepReviewFormTest extends KernelTestBase {
 
   /**

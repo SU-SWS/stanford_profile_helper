@@ -12,12 +12,14 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpFoundation\Request;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Test the ViewFieldController.
  */
 #[Group('stanford_profile_helper')]
 #[CoversClass(ViewFieldController::class)]
+#[RunTestsInSeparateProcesses]
 class ViewFieldControllerTest extends SuProfileHelperKernelTestBase {
 
   /**

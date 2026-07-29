@@ -4,10 +4,12 @@ namespace Drupal\Tests\stanford_profile_helper\Kernel\Plugin\search_api\processo
 
 use Drupal\search_api\Item\Field;
 use Drupal\search_api\Utility\Utility;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Drupal\Tests\search_api\Kernel\Processor\CustomValueTest as SearchApiCustomValueTest;
 
 /**
  */
+#[RunTestsInSeparateProcesses]
 class CustomValueTest extends SearchApiCustomValueTest {
 
   /**

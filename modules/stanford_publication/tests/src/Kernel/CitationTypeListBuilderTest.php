@@ -4,10 +4,12 @@ namespace Drupal\Tests\stanford_publication\Kernel;
 
 use Drupal\Core\Session\AccountInterface;
 use Drupal\stanford_publication\Entity\CitationType;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Class CitationTypeListBuilderTest
  */
+#[RunTestsInSeparateProcesses]
 class CitationTypeListBuilderTest extends PublicationTestBase {
 
   /**

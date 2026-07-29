@@ -10,10 +10,12 @@ use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\stanford_profile_helper\Hook\ConfigPagesHooks;
 use Drupal\Tests\stanford_profile_helper\Kernel\SuProfileHelperKernelTestBase;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Test the event subscriber.
  */
+#[RunTestsInSeparateProcesses]
 class ConfigPagesHooksTest extends SuProfileHelperKernelTestBase {
 
   public function testConfigPages() {

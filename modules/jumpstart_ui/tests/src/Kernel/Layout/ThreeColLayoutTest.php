@@ -7,11 +7,13 @@ use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Drupal\Core\Template\Attribute;
 use Twig\Loader\FilesystemLoader;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 
 /**
  * Class ThreeColLayoutTest.
  */
+#[RunTestsInSeparateProcesses]
 class ThreeColLayoutTest extends KernelTestBase {
 
   /**

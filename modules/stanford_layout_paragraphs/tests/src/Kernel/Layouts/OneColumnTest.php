@@ -8,11 +8,13 @@ use Drupal\Core\Form\FormState;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\stanford_layout_paragraphs\Layouts\OneColumn;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Kernel tests for OneColumn layout.
  */
 #[CoversClass(OneColumn::class)]
+#[RunTestsInSeparateProcesses]
 class OneColumnTest extends KernelTestBase {
 
   /**

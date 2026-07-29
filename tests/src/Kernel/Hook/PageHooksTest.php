@@ -6,10 +6,12 @@ namespace Drupal\Tests\stanford_profile_helper\Kernel\EventSubscriber;
 
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Tests\stanford_profile_helper\Kernel\SuProfileHelperKernelTestBase;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Hooks that are at the page level.
  */
+#[RunTestsInSeparateProcesses]
 class PageHooksTest extends SuProfileHelperKernelTestBase {
 
   public function testPageAttachments() {

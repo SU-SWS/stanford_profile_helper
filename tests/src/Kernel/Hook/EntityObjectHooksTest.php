@@ -9,10 +9,12 @@ use Drupal\node\Entity\Node;
 use Drupal\path_alias\Entity\PathAlias;
 use Drupal\redirect\Entity\Redirect;
 use Drupal\Tests\stanford_profile_helper\Kernel\SuProfileHelperKernelTestBase;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Test the event subscriber.
  */
+#[RunTestsInSeparateProcesses]
 class EntityObjectHooksTest extends SuProfileHelperKernelTestBase {
 
   protected $strictConfigSchema = FALSE;

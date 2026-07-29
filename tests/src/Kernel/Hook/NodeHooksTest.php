@@ -5,10 +5,12 @@ namespace Drupal\Tests\stanford_profile_helper\Kernel\EventSubscriber;
 use Drupal\node\Entity\Node;
 use Drupal\Tests\stanford_profile_helper\Kernel\SuProfileHelperKernelTestBase;
 use Drupal\user\Entity\Role;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Test the event subscriber.
  */
+#[RunTestsInSeparateProcesses]
 class NodeHooksTest extends SuProfileHelperKernelTestBase {
 
   /**

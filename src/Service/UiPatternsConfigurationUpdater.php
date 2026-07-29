@@ -6,9 +6,11 @@ namespace Drupal\stanford_profile_helper\Service;
 
 use Drupal\ui_patterns_legacy\Service\ConfigurationUpdater;
 
+/**
+ * @codeCoverageIgnore
+ */
 class UiPatternsConfigurationUpdater extends ConfigurationUpdater {
 
-  public function migrateConfiguration(string $filter = '*'): void {
-  }
+  public function migrateConfiguration(string $filter = '*'): void {}
 
 }

@@ -5,10 +5,12 @@ namespace Drupal\Tests\stanford_publication\Kernel\Entity;
 use Drupal\stanford_publication\Entity\Citation;
 use Drupal\stanford_publication\Entity\CitationInterface;
 use Drupal\Tests\stanford_publication\Kernel\PublicationTestBase;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Class CitationTest
  */
+#[RunTestsInSeparateProcesses]
 class CitationTest extends PublicationTestBase {
 
   /**

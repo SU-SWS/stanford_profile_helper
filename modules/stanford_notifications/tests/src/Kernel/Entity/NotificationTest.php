@@ -4,10 +4,12 @@ namespace Drupal\Tests\stanford_notifications\Kernel\Entity;
 
 use Drupal\stanford_notifications\Entity\Notification;
 use Drupal\Tests\stanford_notifications\Kernel\StanfordNotificationTestBase;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Class NotificationTest.
  */
+#[RunTestsInSeparateProcesses]
 class NotificationTest extends StanfordNotificationTestBase {
 
   /**
