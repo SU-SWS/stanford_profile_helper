@@ -8,6 +8,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Password\PasswordGeneratorInterface;
+use Drupal\Core\State\StateInterface;
 use Drupal\Core\Url;
 use Drupal\next\Event\EntityActionEvent;
 use Drupal\next\Event\EntityActionEventInterface;
@@ -35,7 +36,8 @@ final class StanfordDecoupledCommands extends DrushCommands {
     protected readonly UuidInterface $uuid,
     protected readonly PasswordGeneratorInterface $passwordGenerator,
     protected readonly EventDispatcherInterface $eventDispatcher,
-    protected readonly ConfigFactoryInterface $configFactory
+    protected readonly ConfigFactoryInterface $configFactory,
+    protected readonly StateInterface $state
   ) {
     parent::__construct();
   }
@@ -122,6 +124,9 @@ final class StanfordDecoupledCommands extends DrushCommands {
       $this->configFactory->getEditable('system.theme')
         ->set('default', 'stanford_profile_admin_theme')
         ->save();
+      $this->state->set('stanford_intranet', TRUE);
+      $this->state->set('stanford_intranet.allow_file_uploads', 'public');
+      $this->state->set('stanford_intranet.no_granular_access', TRUE);
     }
 
     $output = [
