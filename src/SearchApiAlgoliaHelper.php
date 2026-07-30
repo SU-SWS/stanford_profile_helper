@@ -2,7 +2,7 @@
 
 namespace Drupal\stanford_profile_helper;
 
-use Algolia\AlgoliaSearch\SearchClient;
+use Algolia\AlgoliaSearch\Api\SearchClient;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\search_api\IndexInterface;
@@ -64,8 +64,7 @@ class SearchApiAlgoliaHelper extends SapiAlgoliaHelper {
    */
   public static function deleteRecords(string|int $objet_id, string $index_name, string $app_id, string $app_key) {
     $client = SearchClient::create($app_id, $app_key);
-    $index = $client->initIndex($index_name);
-    $index->deleteObject($objet_id);
+    $client->deleteObject($index_name, $objet_id);
   }
 
 }
