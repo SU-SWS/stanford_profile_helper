@@ -84,7 +84,7 @@ class FormHooksTest extends UnitTestCase {
     $this->assertEquals('submit', $updateOpts['#type']);
     $this->assertEquals('Update Org & Category Options', (string) $updateOpts['#value']);
     $this->assertEquals('op', $updateOpts['#name']);
-    $this->assertSame(['stanford_events_importer_update_opts'], $updateOpts['#submit']);
+    $this->assertSame([[$this->buildHooks()::class, 'updateOpts']], $updateOpts['#submit']);
     $this->assertTrue($updateOpts['#access']);
   }
 

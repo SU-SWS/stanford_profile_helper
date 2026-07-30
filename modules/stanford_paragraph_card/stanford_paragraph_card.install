@@ -6,19 +6,8 @@
  */
 
 /**
- * Move card link styles to paragraph behavior.
+ * Implements hook_update_last_removed().
  */
-function stanford_paragraph_card_update_8001(&$sandbox) {
-  $paragraph_storage = \Drupal::entityTypeManager()
-    ->getStorage('paragraph');
-  $paragraph_ids = $paragraph_storage->getQuery()
-    ->accessCheck(FALSE)
-    ->condition('type', 'stanford_card')
-    ->condition('su_card_link_display', 'action')
-    ->execute();
-  /** @var \Drupal\paragraphs\ParagraphInterface $paragraph */
-  foreach ($paragraph_storage->loadMultiple($paragraph_ids) as $paragraph) {
-    $paragraph->setBehaviorSettings('su_card_styles', ['link_style' => 'action']);
-    $paragraph->save();
-  }
+function stanford_paragraph_card_update_last_removed() {
+  return 8001;
 }
