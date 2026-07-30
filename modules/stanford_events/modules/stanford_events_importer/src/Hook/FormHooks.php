@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Drupal\stanford_events_importer\Hook;
 
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Session\AccountProxyInterface;
+use Drupal\stanford_events_importer\StanfordEventsImporter;
 
 /**
  * Form hooks for stanford_events_importer.
@@ -47,7 +49,7 @@ class FormHooks {
       '#type' => 'submit',
       '#value' => t('Update Org & Category Options'),
       '#name' => 'op',
-      '#submit' => ["stanford_events_importer_update_opts"],
+      '#submit' => [[self::class, 'updateOpts']],
       '#access' => $this->currentUser->hasPermission("administer migrations"),
     ];
 
@@ -72,5 +74,48 @@ class FormHooks {
       ->setBatchExecution(TRUE);
     $migration_service->executeMigrationId('stanford_localist_importer');
   }
+
+
+  /**
+   * Fetch and save to state the org & category data.
+   */
+  public static function updateOpts() {
+    $client = \Drupal::httpClient();
+    $importer = new StanfordEventsImporter($client);
+    $cat_xml_raw = $importer->fetchXML();
+
+    $args = [
+      'guids' => '/CategoryList/Category/guid',
+      'label' => '/CategoryList/Category/name',
+    ];
+
+    // Get the formatted key->value pairs.
+    $key_val = $importer->parseXML($cat_xml_raw, $args);
+
+    // Set the state storage for this site.
+    \Drupal::cache()
+      ->set(StanfordEventsImporter::CACHE_KEY_CAT, $key_val, CacheBackendInterface::CACHE_PERMANENT, ['stanford_events_importer']);
+
+    // Organizations.
+    // --------------------------------------------------------------------------.
+    $org_xml_raw = $importer->fetchXML('organization-list');
+
+    $args = [
+      'guids' => '/OrganizationList/Organization/guid',
+      'label' => '/OrganizationList/Organization/name',
+    ];
+
+    // Get the formatted key->value pairs.
+    $key_val = $importer->parseXML($org_xml_raw, $args);
+
+    // Set the state storage for this site.
+    \Drupal::cache()
+      ->set(StanfordEventsImporter::CACHE_KEY_ORG, $key_val, CacheBackendInterface::CACHE_PERMANENT, ['stanford_events_importer']);
+
+    // Done.
+    \Drupal::messenger()
+      ->addStatus('Updated category and organization information.');
+  }
+
 
 }

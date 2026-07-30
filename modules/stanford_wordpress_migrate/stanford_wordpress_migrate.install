@@ -1,37 +1,8 @@
 <?php
 
-use Drupal\stanford_wordpress_migrate\Entity\WordPressMigration;
-
 /**
- * Update wordpress migrate entities.
+ * Implements hook_update_last_removed().
  */
-function stanford_wordpress_migrate_update_11000() {
-  /** @var \Drupal\stanford_wordpress_migrate\Entity\WordPressMigration $wp */
-  foreach (WordPressMigration::loadMultiple() as $wp) {
-    $config = $wp->getConfiguration();
-    if (isset($config['content'])) {
-      $config['node'] = $config['content'];
-      unset($config['content']);
-      $wp->set('configuration', $config)->save();
-    }
-  }
-}
-
-/**
- * Update wordpress migrate entities.
- */
-function stanford_wordpress_migrate_update_11001() {
-  /** @var \Drupal\stanford_wordpress_migrate\Entity\WordPressMigration $wp */
-  foreach (WordPressMigration::loadMultiple() as $wp) {
-    $config = $wp->getConfiguration();
-    if (isset($config['taxonomies'])) {
-      foreach($config['taxonomies'] as $taxMapping){
-        $config['taxonomy_term'][$taxMapping['source']] = [
-          $taxMapping['destination'] => []
-        ];
-      }
-      unset($config['taxonomies']);
-      $wp->set('configuration', $config)->save();
-    }
-  }
+function stanford_wordpress_migrate_update_last_removed() {
+  return 11001;
 }

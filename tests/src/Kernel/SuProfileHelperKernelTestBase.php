@@ -2,7 +2,6 @@
 
 namespace Drupal\Tests\stanford_profile_helper\Kernel;
 
-use Drupal\Core\Site\Settings;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\node\Entity\NodeType;
 
@@ -52,9 +51,6 @@ abstract class SuProfileHelperKernelTestBase extends KernelTestBase {
   protected function setUp(): void {
     parent::setUp();
     $this->container->get('module_installer')->install(['paragraphs']);
-    $site_settings = Settings::getAll();
-    $site_settings['STANFORD_PROFILE_HELPER_DISABLE_NEXT'] = TRUE;
-    new Settings($site_settings);
 
     $this->installEntitySchema('node');
     $this->installEntitySchema('user');
