@@ -51,15 +51,21 @@ class ConfigOverrider implements ConfigFactoryOverrideInterface {
     if (!$this->state->get('stanford_intranet', FALSE)) {
       return $overrides;
     }
-    $overrides['system.file']['default_scheme'] = 'private';
-    foreach ($names as $name) {
-      if (str_starts_with($name, 'field.storage.')) {
-        $scheme = $this->configFactory->getEditable($name)
-          ->getOriginal('settings.uri_scheme', FALSE);
-        // If the field isn't an file or image field, it won't have a upload
-        // scheme.
-        if ($scheme == 'public') {
-          $overrides[$name]['settings']['uri_scheme'] = 'private';
+
+    // The state will be `TRUE` if allowing file uploads, still change the
+    // upload scheme. But if we want to make the files public, no need to change
+    // the config.
+    if ($this->state->get('stanford_intranet.allow_file_uploads') != 'public') {
+      $overrides['system.file']['default_scheme'] = 'private';
+      foreach ($names as $name) {
+        if (str_starts_with($name, 'field.storage.')) {
+          $scheme = $this->configFactory->getEditable($name)
+            ->getOriginal('settings.uri_scheme', FALSE);
+          // If the field isn't a file or image field, it won't have an upload
+          // scheme.
+          if ($scheme == 'public') {
+            $overrides[$name]['settings']['uri_scheme'] = 'private';
+          }
         }
       }
     }
@@ -71,7 +77,6 @@ class ConfigOverrider implements ConfigFactoryOverrideInterface {
 
     if (in_array('r4032login.settings', $names)) {
       $overrides['r4032login.settings']['display_denied_message'] = FALSE;
-      // $overrides['r4032login.settings']['user_login_path'] = '/saml/login';
     }
 
     return $overrides;

@@ -56,7 +56,9 @@ class EntityAccessFieldWidget extends WidgetBase {
    * {@inheritdoc}
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
-    if (!$this->state->get('stanford_intranet', FALSE)) {
+    $is_intranet = $this->state->get('stanford_intranet', FALSE);
+    $add_access = $this->state->get('stanford_intranet.no_granular_access', FALSE);
+    if (!$is_intranet || $add_access) {
       return $element;
     }
 
