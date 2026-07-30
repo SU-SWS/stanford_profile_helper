@@ -21,7 +21,7 @@
       line3: line3,
       line4: line4,
       line5: line5,
-      link: url('<front>'),
+      link: lockup_link ?? url('<front>'),
     } -%}
 {%- endif -%}
 
@@ -58,9 +58,13 @@
       {% else %}
         {{ include("jumpstart_ui:lockup", lockup_options, with_context = false) }}
       {% endif %}
+
+      {% block header_content %}
+      {% endblock %}
       {# Web login button #}
       {% if weblogin_url %}
-        <a href="{{ weblogin_url }}" class="su-link su-link--internal" rel="nofollow">
+        <a href="{{ weblogin_url }}" class="su-link su-link--internal"
+           rel="nofollow">
           {{ weblogin_text|default('Web Login') }}
         </a>
       {% endif %}
@@ -135,11 +139,19 @@
         <div class="su-signup-form">
           {# Add any additional markup above the form with this variable. #}
           {{ signup_form_content }}
-          <form action="{{ signup_form_action|default("/") }}" method="{{ signup_form_method|default('post') }}">
-            <input type="email" id="{{ signup_form_field_email_id|default('signup-email') }}" aria-label="{{ signup_form_field_email_aria_label|default('email address') }}" name="{{ signup_form_field_email_name|default('signup_email') }}" placeholder="{{ signup_form_field_email_placeholder|default('email address') }}" {{ signup_form_field_email_required|default('required') }} />
+          <form action="{{ signup_form_action|default("/") }}"
+                method="{{ signup_form_method|default('post') }}">
+            <input type="email"
+                   id="{{ signup_form_field_email_id|default('signup-email') }}"
+                   aria-label="{{ signup_form_field_email_aria_label|default('email address') }}"
+                   name="{{ signup_form_field_email_name|default('signup_email') }}"
+                   placeholder="{{ signup_form_field_email_placeholder|default('email address') }}" {{ signup_form_field_email_required|default('required') }} />
             {# Add any additional fields or markup to this form using this variable. #}
             {{ signup_form_fields }}
-            <input type="submit" id="{{ signup_form_field_submit_id|default('signup-submit') }}" name="{{ signup_form_field_submit_name|default('submit') }}" value ="{{ signup_form_field_submit_value|default('Sign-up') }}" />
+            <input type="submit"
+                   id="{{ signup_form_field_submit_id|default('signup-submit') }}"
+                   name="{{ signup_form_field_submit_name|default('submit') }}"
+                   value="{{ signup_form_field_submit_value|default('Sign-up') }}"/>
           </form>
         </div>
       {% endif %}

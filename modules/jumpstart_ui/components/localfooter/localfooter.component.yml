@@ -59,7 +59,12 @@ props:
     line5:
       title: line 5
       type: string
+    lockup_link:
+      title: Lockup Link
+      type: string
 slots:
+  header_content:
+    title: Header content
   cell1:
     title: cell1
     description: 'Optional open variable for placing arbitrary content'
