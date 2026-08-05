@@ -19,7 +19,6 @@ dependencies:
   - drupal:taxonomy
   - drupal:text
   - drupal:user
-  - ds:ds
   - element_class_formatter:element_class_formatter
   - field_formatter_class:field_formatter_class
   - field_group:field_group

@@ -8,7 +8,6 @@ dependencies:
   - components:components
   - drupal:block
   - drupal:breakpoint
-  - ds:ds
 
 components:
   namespaces:
