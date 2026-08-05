@@ -44,7 +44,8 @@ class AlgoliaHooks {
   public function nodeUpdate(NodeInterface $node) {
     if (
       ($node->hasField('deleted') && $node->get('deleted')->getString()) ||
-      (!$node->isPublished() && $node->getOriginal()?->isPublished())
+      (!$node->isPublished() && $node->getOriginal()?->isPublished()) ||
+      ($node->hasField('su_search_exclusion') && $node->get('su_search_exclusion')->getString())
     ) {
       self::clearAlgolia($node);
     }

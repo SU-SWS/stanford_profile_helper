@@ -3,6 +3,8 @@
 namespace Drupal\Tests\stanford_profile_helper\Kernel\EventSubscriber;
 
 use Drupal\config_pages\ConfigPagesLoaderServiceInterface;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\node\Entity\Node;
 use Drupal\node\Entity\NodeType;
 use Drupal\search_api\IndexInterface;
@@ -130,6 +132,77 @@ class AlgoliaHooksTest extends SuProfileHelperKernelTestBase {
 
     // Update the node but keep it published.
     $this->node->setTitle('Updated Title');
+    $this->node->save();
+  }
+
+  /**
+   * Add the su_search_exclusion and su_metatags fields to the 'page' bundle
+   * and reload the test node so its field definitions are up to date.
+   *
+   * Both fields are added together since NodeHooks::alterMetatags() also
+   * runs on node_presave and expects su_metatags to exist alongside
+   * su_search_exclusion.
+   */
+  protected function addSearchExclusionField(): void {
+    FieldStorageConfig::create([
+      'field_name' => 'su_search_exclusion',
+      'entity_type' => 'node',
+      'type' => 'boolean',
+    ])->save();
+    FieldConfig::create([
+      'field_name' => 'su_search_exclusion',
+      'entity_type' => 'node',
+      'bundle' => 'page',
+    ])->save();
+
+    FieldStorageConfig::create([
+      'field_name' => 'su_metatags',
+      'entity_type' => 'node',
+      'type' => 'string_long',
+    ])->save();
+    FieldConfig::create([
+      'field_name' => 'su_metatags',
+      'entity_type' => 'node',
+      'bundle' => 'page',
+    ])->save();
+
+    \Drupal::service('entity_field.manager')->clearCachedFieldDefinitions();
+    $this->node = Node::load($this->node->id());
+  }
+
+  /**
+   * Test node_update hook clears the index when search exclusion is enabled.
+   */
+  public function testNodeUpdateSearchExclusion() {
+    $this->addSearchExclusionField();
+
+    // Create a mock search_api_algolia.helper service.
+    $helper = $this->createMock(SearchApiAlgoliaHelper::class);
+    $helper->expects($this->once())
+      ->method('entityDelete')
+      ->with($this->node);
+
+    $this->container->set('search_api_algolia.helper', $helper);
+
+    // Enable the search exclusion flag while keeping the node published.
+    $this->node->set('su_search_exclusion', TRUE);
+    $this->node->save();
+  }
+
+  /**
+   * Search exclusion field exists but is disabled — index must not clear.
+   */
+  public function testNodeUpdateSearchExclusionDisabled() {
+    $this->addSearchExclusionField();
+
+    // Create a mock that should not be called.
+    $helper = $this->createMock(SearchApiAlgoliaHelper::class);
+    $helper->expects($this->never())
+      ->method('entityDelete');
+
+    $this->container->set('search_api_algolia.helper', $helper);
+
+    $this->node->set('su_search_exclusion', FALSE);
     $this->node->save();
   }
 
