@@ -46,7 +46,7 @@
 
     {# News List Dek #}
     {% if dek or quote %}
-      <p class="su-news-list__dek">{{ quote ?? dek }}</p>
+      <p class="su-news-list__dek">{{ quote ?: dek }}</p>
     {% endif %}
     </div>
 
