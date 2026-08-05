@@ -63,6 +63,8 @@ class NodeHooks {
    */
   #[Hook('node_presave')]
   public function preSaveNode(NodeInterface $entity): void {
+    $this->alterMetatags($entity);
+
     // Invalidate any search result cached so the updated/new content will be
     // displayed for previously searched terms.
     Cache::invalidateTags(['config:views.view.search']);
@@ -123,6 +125,25 @@ class NodeHooks {
         }
       }
     }
+  }
+
+  /**
+   * Alter the metatags for a node if the node should not be in searches.
+   *
+   * @param \Drupal\node\NodeInterface $node
+   *   Node entity being saved.
+   */
+  protected function alterMetatags(NodeInterface $node): void {
+    if (!$node->hasField('su_search_exclusion')) {
+      return;
+    }
+
+    $tags = json_decode($node->get('su_metatags')->getString(), TRUE) ?? [];
+    unset($tags['robots']);
+    if (!!$node->get('su_search_exclusion')?->getString()) {
+      $tags['robots'] = 'noindex, nofollow';
+    }
+    $node->set('su_metatags', json_encode($tags));
   }
 
   /**

@@ -59,6 +59,113 @@ class NodeHooksTest extends UnitTestCase {
     $method->invoke($this->hooks, $node);
   }
 
+  /**
+   * Invoke the protected alterMetatags method via reflection.
+   */
+  protected function callAlterMetatags(NodeInterface $node): void {
+    $method = new \ReflectionMethod(NodeHooks::class, 'alterMetatags');
+    $method->setAccessible(TRUE);
+    $method->invoke($this->hooks, $node);
+  }
+
+  // -----------------------------------------------------------------------
+  // alterMetatags tests.
+  // -----------------------------------------------------------------------
+
+  /**
+   * Node lacks the su_search_exclusion field — metatags are left untouched.
+   */
+  public function testAlterMetatagsNoSearchExclusionField() {
+    $node = $this->createMock(NodeInterface::class);
+    $node->method('hasField')->with('su_search_exclusion')->willReturn(FALSE);
+    $node->expects($this->never())->method('get');
+    $node->expects($this->never())->method('set');
+
+    $this->callAlterMetatags($node);
+  }
+
+  /**
+   * Exclusion is enabled — robots noindex/nofollow tag is added.
+   */
+  public function testAlterMetatagsExclusionEnabledAddsRobotsTag() {
+    $metatagsField = $this->createMock(FieldItemListInterface::class);
+    $metatagsField->method('getString')->willReturn('');
+
+    $exclusionField = $this->createMock(FieldItemListInterface::class);
+    $exclusionField->method('getString')->willReturn('1');
+
+    $node = $this->createMock(NodeInterface::class);
+    $node->method('hasField')->with('su_search_exclusion')->willReturn(TRUE);
+    $node->method('get')->willReturnMap([
+      ['su_metatags', $metatagsField],
+      ['su_search_exclusion', $exclusionField],
+    ]);
+    $node->expects($this->once())
+      ->method('set')
+      ->with('su_metatags', $this->callback(function ($value) {
+        $tags = json_decode($value, TRUE);
+        return $tags['robots'] === 'noindex, nofollow';
+      }));
+
+    $this->callAlterMetatags($node);
+  }
+
+  /**
+   * Exclusion is disabled — an existing robots tag is removed while other
+   * tags are preserved.
+   */
+  public function testAlterMetatagsExclusionDisabledRemovesRobotsTag() {
+    $existing = json_encode([
+      'robots' => 'noindex, nofollow',
+      'description' => 'Foo',
+    ]);
+
+    $metatagsField = $this->createMock(FieldItemListInterface::class);
+    $metatagsField->method('getString')->willReturn($existing);
+
+    $exclusionField = $this->createMock(FieldItemListInterface::class);
+    $exclusionField->method('getString')->willReturn('0');
+
+    $node = $this->createMock(NodeInterface::class);
+    $node->method('hasField')->with('su_search_exclusion')->willReturn(TRUE);
+    $node->method('get')->willReturnMap([
+      ['su_metatags', $metatagsField],
+      ['su_search_exclusion', $exclusionField],
+    ]);
+    $node->expects($this->once())
+      ->method('set')
+      ->with('su_metatags', $this->callback(function ($value) {
+        $tags = json_decode($value, TRUE);
+        return !array_key_exists('robots', $tags) && $tags['description'] === 'Foo';
+      }));
+
+    $this->callAlterMetatags($node);
+  }
+
+  /**
+   * Empty existing metatags JSON does not raise an error and defaults to an
+   * empty tag array when exclusion is disabled.
+   */
+  public function testAlterMetatagsHandlesEmptyMetatagsJson() {
+    $metatagsField = $this->createMock(FieldItemListInterface::class);
+    $metatagsField->method('getString')->willReturn('');
+
+    $exclusionField = $this->createMock(FieldItemListInterface::class);
+    $exclusionField->method('getString')->willReturn('0');
+
+    $node = $this->createMock(NodeInterface::class);
+    $node->method('hasField')->with('su_search_exclusion')->willReturn(TRUE);
+    $node->method('get')->willReturnMap([
+      ['su_metatags', $metatagsField],
+      ['su_search_exclusion', $exclusionField],
+    ]);
+    $node->expects($this->once())
+      ->method('set')
+      ->with('su_metatags', json_encode([]));
+
+    $this->callAlterMetatags($node);
+  }
+
   // -----------------------------------------------------------------------
   // pathautoPatternAlter tests.
   // -----------------------------------------------------------------------
