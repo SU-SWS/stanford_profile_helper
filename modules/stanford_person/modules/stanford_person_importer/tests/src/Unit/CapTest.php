@@ -172,22 +172,22 @@ class CapTest extends UnitTestCase {
   public function testUrls() {
     $url = urldecode($this->service->getOrganizationUrl(['foo', 'bar'])
       ->toString());
-    $this->assertEquals('https://cap.stanford.edu/cap-api/api/profiles/v1?orgCodes=FOO,BAR', $url);
+    $this->assertEquals('https://api.stanford.edu/profiles/v1?orgCodes=FOO,BAR', $url);
 
     $url = urldecode($this->service->getOrganizationUrl(['foo', 'bar'], TRUE)
       ->toString());
-    $this->assertEquals('https://cap.stanford.edu/cap-api/api/profiles/v1?orgCodes=FOO,BAR&includeChildren=true', $url);
+    $this->assertEquals('https://api.stanford.edu/profiles/v1?orgCodes=FOO,BAR&includeChildren=true', $url);
 
     $url = urldecode($this->service->getWorkgroupUrl(['foo:bar_-baz'])
       ->toString());
-    $this->assertEquals('https://cap.stanford.edu/cap-api/api/profiles/v1?privGroups=FOO:BAR_-BAZ', $url);
+    $this->assertEquals('https://api.stanford.edu/profiles/v1?privGroups=FOO:BAR_-BAZ', $url);
 
     $url = urldecode($this->service->getSunetUrl(['foobarbaz'])->toString());
-    $this->assertEquals('https://cap.stanford.edu/cap-api/api/profiles/v1?uids=foobarbaz&ps=1', $url);
+    $this->assertEquals('https://api.stanford.edu/profiles/v1?uids=foobarbaz&ps=1', $url);
 
     $sunets = array_fill(0, 20, 'foo');
     $url = urldecode($this->service->getSunetUrl($sunets)->toString());
-    $this->assertEquals("https://cap.stanford.edu/cap-api/api/profiles/v1?uids=foo&ps=1", $url);
+    $this->assertEquals("https://api.stanford.edu/profiles/v1?uids=foo&ps=1", $url);
   }
 
   /**
