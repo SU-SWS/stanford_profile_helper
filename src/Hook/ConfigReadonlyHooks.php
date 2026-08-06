@@ -48,7 +48,7 @@ class ConfigReadonlyHooks {
     // don't alter the configuration, such as resetting the order of
     // taxonomy terms.
     $routes_to_config = [
-      'entity.taxonomy_vocabulary.reset_form' => ['taxonomy.vocabulary.*'],
+      'entity.taxonomy_vocabulary.overview_form' => ['taxonomy.vocabulary.*'],
       'entity.search_api_index.rebuild_tracker' => ['search_api.index.*'],
       'entity.search_api_index.clear' => ['search_api.index.*'],
       'entity.search_api_index.reindex' => ['search_api.index.*'],
