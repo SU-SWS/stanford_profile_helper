@@ -24,7 +24,7 @@ interface CapInterface {
   /**
    * The actual CAP API.
    */
-  const CAP_URL = 'https://cap.stanford.edu/cap-api/api/profiles/v1';
+  const CAP_URL = 'https://api.stanford.edu/profiles/v1';
 
   /**
    * Set the CAP Client ID.
