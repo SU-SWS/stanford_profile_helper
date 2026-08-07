@@ -93,7 +93,7 @@ class ConfigReadonlyHooksTest extends UnitTestCase {
     $themeConfig = $this->createMock(ImmutableConfig::class);
     $themeConfig->method('get')->with('default')->willReturn('olivero');
     $this->configFactory->method('get')->with('system.theme')->willReturn($themeConfig);
-    $this->routeMatch->method('getRouteName')->willReturn('entity.taxonomy_vocabulary.reset_form');
+    $this->routeMatch->method('getRouteName')->willReturn('entity.taxonomy_vocabulary.overview_form');
 
     $patterns = $this->hooks->configReadonlyWhitelistPatterns();
     $this->assertSame(['olivero.settings', 'taxonomy.vocabulary.*'], $patterns);
