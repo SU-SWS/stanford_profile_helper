@@ -35,7 +35,7 @@
 
           {% set image_alt = line1 %}
           {# if the option was set to logo only. Remove the lines. #}
-          {% if 'su-lockup--option-none' in lockup_option %}
+          {% if lockup_style == "none" %}
             {% set line1 = '' %}
             {% set line2 = '' %}
             {% set line3 = '' %}
