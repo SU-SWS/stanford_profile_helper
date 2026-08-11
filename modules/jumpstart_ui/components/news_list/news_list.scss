@@ -197,14 +197,6 @@
   }
 }
 
-.views-infinite-scroll-content-wrapper {
-  @include modular-spacing('margin-bottom', 5);
-
-  & + .js-pager__items {
-    @include modular-spacing('margin-bottom', 8);
-  }
-}
-
 .su-news-external {
   .su-news-list__item {
     a {

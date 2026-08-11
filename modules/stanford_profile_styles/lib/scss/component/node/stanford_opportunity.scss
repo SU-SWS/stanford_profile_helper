@@ -2,7 +2,7 @@
 @import '../../config';
 @import 'stanford_page';
 
-.node--stanford-opportunity {
+.node-page--stanford-opportunity {
   @include responsive-spacing('margin-bottom', 6);
 
   // adjusting layout for meantime
@@ -542,10 +542,6 @@
 
     .su-news-list__topics {
       order: -1;
-    }
-
-    .su-opp-type-list {
-      @include responsive-spacing('padding-bottom', 1);
     }
 
     .su-basic-page-list__image {
