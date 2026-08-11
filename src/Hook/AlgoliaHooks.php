@@ -42,11 +42,16 @@ class AlgoliaHooks {
    */
   #[Hook('node_update')]
   public function nodeUpdate(NodeInterface $node) {
-    if (
-      ($node->hasField('deleted') && $node->get('deleted')->getString()) ||
-      (!$node->isPublished() && $node->getOriginal()?->isPublished()) ||
-      ($node->hasField('su_search_exclusion') && $node->get('su_search_exclusion')->getString())
-    ) {
+    $deleted = $node->hasField('deleted') &&
+      $node->get('deleted')->getString();
+
+    $unpublished = !$node->isPublished() &&
+      $node->getOriginal()?->isPublished();
+
+    $excluded = $node->hasField('su_search_exclusion') &&
+      $node->get('su_search_exclusion')->getString();
+
+    if ($deleted || $unpublished || $excluded) {
       self::clearAlgolia($node);
     }
   }
@@ -175,7 +180,11 @@ class AlgoliaHooks {
     // allow facets to be used for "filters.Foo"
     foreach ($data as $tid) {
       $terms = $termStorage->loadAllParents($tid);
-      $structured_data[array_pop($terms)->label()][] = reset($terms)->label();
+      if (!$terms) {
+        continue;
+      }
+      $parent = array_pop($terms)->label();
+      $structured_data[$parent][] = reset($terms)->label();
     }
 
     return $structured_data;
