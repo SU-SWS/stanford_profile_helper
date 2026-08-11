@@ -7,39 +7,39 @@
 /* ---  Mixins --- */
 @mixin anchor-mobile-styles() {
   /* --- mobile anchor nav - same for both horizontal and vertical --- */
-    background-color: #F9F9F9;
-    border: 1px solid #C0C0BF;
-    border-radius: 46px;
-    padding-top: 0;
-    padding-bottom: 0;  
-    @include responsive-spacing('padding-left', 3);
-    @include responsive-spacing('padding-right', 3);
-    max-height: 61px;
-    max-width: 245px;
-    width: fit-content;
-    margin: 0px auto 32px auto; // specific to design specs.
-    height: 53px; // specific to design specs.
+  background-color: #F9F9F9;
+  border: 1px solid #C0C0BF;
+  border-radius: 46px;
+  padding-top: 0;
+  padding-bottom: 0;
+  @include responsive-spacing('padding-left', 3);
+  @include responsive-spacing('padding-right', 3);
+  max-height: 61px;
+  max-width: 245px;
+  width: fit-content;
+  margin: 0 auto 32px auto; // specific to design specs.
+  height: 53px; // specific to design specs.
 
-    @media screen and (min-width: 768px){
-      margin-bottom: 35px; // specific to design specs.
-      height: 59px; // specific to design specs.
-    }
-    @media screen and (min-width: 992px){
-      margin-bottom: 45px; // specific to design specs.
-    }
+  @media screen and (min-width: 768px) {
+    margin-bottom: 35px; // specific to design specs.
+    height: 59px; // specific to design specs.
+  }
+  @media screen and (min-width: 992px) {
+    margin-bottom: 45px; // specific to design specs.
+  }
 }
 
 @mixin anchor-mobile-link-styles() {
   /* --- mobile anchor nav button styles - same for both horizontal and vertical --- */
   button {
-    padding-top: 18px;  // mixin for this?
+    padding-top: 18px; // mixin for this?
     padding-bottom: 18px; // mixin for this?
 
-    @media screen and (min-width: 768px){
-      padding-top: 18px; 
+    @media screen and (min-width: 768px) {
+      padding-top: 18px;
     }
-    @media screen and (max-width: 767px){
-      padding-top: 15px; 
+    @media screen and (max-width: 767px) {
+      padding-top: 15px;
     }
   }
 }
@@ -50,9 +50,9 @@
     width: 280px;
     height: fit-content;
     position: absolute;
-    right: 0px;
+    right: 0;
     top: 70px;
-    margin: 0px;
+    margin: 0;
     background-color: #f9f9f9;
     border: 1px solid #C0C0BF;
     border-radius: 6px;
@@ -62,21 +62,16 @@
     max-height: 433px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     transition: .2s ease;
-  
+
     &.hidden {
-      height: 0px;
-      padding-top: 0px;
-      padding-bottom: 0px;
+      height: 0;
+      padding-top: 0;
+      padding-bottom: 0;
       transition: .05s ease;
       top: 50px;
       right: 0;
-      display: block;
       opacity: 0;
       overflow: hidden;
-
-      li {
-        display: none;
-      }
     }
 
     @media screen and (max-width: 1199px) {
@@ -97,14 +92,14 @@
   vertical-align: middle;
   margin-right: 10px;
   background-color: #f9f9f9;
-  // @include responsive-spacing('padding-top', 0); 
+  // @include responsive-spacing('padding-top', 0);
 
 }
 
 @mixin icon-before--3-bars() {
   &::before {
     // add the leading icon before this section, just for mobile
-    content: url('bars-3-bottom-left.svg'); 
+    content: url('bars-3-bottom-left.svg');
     @include hamburger-styles();
 
     // i saw fontawesome included in jumpstart_ui.config.scss but not hero icons so we might be including that as needed.
@@ -115,8 +110,8 @@
   &::before {
     // add the leading icon and "On This Page" for the wide horizontal label
     content: " On This Page";
-    background: url('bars-3-bottom-left.svg') no-repeat; 
-    
+    background: url('bars-3-bottom-left.svg') no-repeat;
+
     @include hamburger-styles();
     width: 120px;
     padding-left: 30px;
@@ -127,7 +122,7 @@
   &::before {
     // add the leading icon and "On This Page" for the left side nav label
     content: " On This Page";
-    background: url('bars-3-bottom-left.svg') no-repeat left center;    
+    background: url('bars-3-bottom-left.svg') no-repeat left center;
     @include hamburger-styles();
     width: 130px;
     padding-left: 30px;
@@ -148,7 +143,7 @@ $su-color-black-50: #979694;
     li {
       margin-bottom: 0;
       margin-top: 2px;
-    
+
       a {
         font-size: 17px;
         font-weight: $su-font-regular;
@@ -163,7 +158,7 @@ $su-color-black-50: #979694;
       }
     }
   }
-  
+
   button {
     // unset inherited button styles
     padding: 0;
@@ -174,7 +169,7 @@ $su-color-black-50: #979694;
     font-size: 17px;
     line-height: 21px;
 
-    &:hover, 
+    &:hover,
     &:focus {
       background-color: transparent;
       box-shadow: none;
@@ -185,7 +180,7 @@ $su-color-black-50: #979694;
       transition: 0.2s ease;
       color: $su-color-digital-red;
       padding-left: 10px;
-      padding-right: 0px;
+      padding-right: 0;
     }
 
     // Rotate Chevron down when expanded
@@ -193,7 +188,7 @@ $su-color-black-50: #979694;
       i {
         transform: rotate(-180deg);
         padding-right: 10px;
-        padding-left: 0px;
+        padding-left: 0;
         padding-bottom: 1px;
       }
     }
@@ -216,8 +211,8 @@ $su-color-black-50: #979694;
     @include overflow-menu-styles();
     margin-left: auto;
     margin-right: auto;
-    
-    @media screen and (min-width: 1200px){
+
+    @media screen and (min-width: 1200px) {
       margin-bottom: 48px; // specific to design specs.
       max-width: 1000px;
       height: 61px; // specific to design specs.
@@ -228,7 +223,7 @@ $su-color-black-50: #979694;
       align-items: center;
       gap: 27px;
       font-size: 17px;
-      padding: 18px 0px; // mixin for this?
+      padding: 18px0; // mixin for this?
       margin: 0;
     }
 
@@ -242,17 +237,17 @@ $su-color-black-50: #979694;
       // mobile first width:
       max-width: 169px; // specific to design specs.
       width: fit-content;
-      margin: 0 auto 0px; 
+      margin: 0 auto0;
 
       ul:first-child:before {
         content: unset;
       }
 
-      @media screen and (min-width: 1200px){
+      @media screen and (min-width: 1200px) {
         max-width: 1000px;
         min-width: fit-content;
         // width: 890px;
-        margin: 0 auto 0px; // note that the h2 following the horizontal nav has top margin to create the full spacing between
+        margin: 0 auto0; // note that the h2 following the horizontal nav has top margin to create the full spacing between
 
         ul:first-child {
           @include icon-before-with-text();
@@ -262,14 +257,14 @@ $su-color-black-50: #979694;
       @include anchor-mobile-link-styles();
       // show more section - overflow control
       button {
-        
-        @media screen and (max-width: 1199px){
+
+        @media screen and (max-width: 1199px) {
           // add icon before button on mobile only (instead of on nav)
           @include icon-before--3-bars();
           margin: 0 auto;
         }
 
-        @media screen and (min-width: 1200px){  
+        @media screen and (min-width: 1200px) {
           @include responsive-spacing('padding-left', 2);
         }
       }
@@ -291,9 +286,9 @@ $su-color-black-50: #979694;
       text-wrap: wrap;
       margin-bottom: 27px;
     }
-    
+
     li:last-child {
-      margin-bottom: 0px;
+      margin-bottom: 0;
     }
   }
 
@@ -310,7 +305,7 @@ $su-color-black-50: #979694;
         @include anchor-mobile-link-styles();
 
         button {
-          @media screen and (max-width: 991px){
+          @media screen and (max-width: 991px) {
             // add icon before button on mobile only (instead of on the nav element)
             @include icon-before--3-bars();
             margin: 0 auto;
@@ -318,7 +313,7 @@ $su-color-black-50: #979694;
         }
 
         ul:first-child {
-          margin: 0px;
+          margin: 0;
         }
       }
     }
@@ -344,35 +339,36 @@ $su-color-black-50: #979694;
             margin-bottom: 10px;
 
             &:last-child {
-              margin-bottom: 0px;
+              margin-bottom: 0;
             }
           }
 
           // remove margin between the 2 lists when overflow is expanded
           &:has( + ul) {
-            margin-bottom: 0px;
+            margin-bottom: 0;
           }
+
           & + ul {
-            margin-top: 0px;
+            margin-top: 0;
           }
         }
       }
 
       .overflow-items {
-        padding-top: 0px;
-        padding-bottom: 0px;
+        padding-top: 0;
+        padding-bottom: 0;
         @include responsive-spacing('padding-left', 0);
         @include responsive-spacing('padding-right', 0);
         transition: .2s ease;
-  
+
         &.hidden {
-          height: 0px;
-          margin: 0px;
+          height: 0;
+          margin: 0;
           transition: .05s ease;
           display: block;
           opacity: 0;
           overflow: hidden;
-    
+
           li {
             display: none;
           }
@@ -382,9 +378,9 @@ $su-color-black-50: #979694;
         .overflow-item {
           margin-bottom: 10px;
         }
-        
+
         li:last-child {
-          margin-bottom: 0px;
+          margin-bottom: 0;
         }
       }
     }
