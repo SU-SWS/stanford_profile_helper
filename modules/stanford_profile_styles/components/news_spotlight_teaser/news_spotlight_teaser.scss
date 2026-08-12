@@ -1,0 +1,225 @@
+@charset "UTF-8";
+@import "../config";
+@import "decanter/core/src/scss/decanter-no-markup";
+
+.su-list-unstyled.grid-container-3:has(.news-spotlight) {
+  @include grid-media-max("md") {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Spotlight Image Card styles for List, Filtered List, and Related Spotlights.
+.news-teaser--small {
+  .spotlight-media {
+    padding: 3.6rem 3.6rem 0 3.6rem;
+
+    .field-media-image {
+      aspect-ratio: 1/1;
+      overflow: hidden;
+      object-fit: cover;
+      width: 10rem;
+      height: 100%;
+
+      @include grid-media("md") {
+        width: 16rem;
+      }
+    }
+  }
+}
+
+// Spotlight Card styles for Teaser, List, Filtered List, and Related Spotlights.
+.news-spotlight {
+  background-color: $su-color-white;
+  container-type: inline-size;
+
+  .news-spotlight-teaser {
+    border: 1px solid $su-color-black-20;
+    box-shadow: none;
+    position: relative;
+
+    .spotlight-media {
+      flex-shrink: 0;
+      overflow: hidden;
+
+      img {
+        transition: transform 0.3s ease-in-out,
+          -webkit-transform 0.3s ease-in-out;
+      }
+    }
+
+    &:hover,
+    &:focus {
+      img {
+        transform: scale(1.03);
+      }
+    }
+
+    // Display images on small screens
+    @include grid-media-max("sm") {
+      .news-spotlight-teaser__link {
+        padding-top: 0;
+      }
+
+      img {
+        display: block;
+      }
+    }
+
+    .spotlight-contents {
+      display: flex;
+      flex-direction: column;
+      overflow-wrap: break-word;
+      padding: 3.6rem 3.6rem;
+
+      .spotlight-headline {
+        @include modular-spacing("margin-top", 3);
+
+        order: 1;
+
+        h2,
+        h3 {
+          margin: 0;
+          padding: 0;
+
+          .su-link {
+            color: $su-color-black;
+            text-decoration: none;
+            font-size: 1.6rem;
+            font-weight: 700;
+            width: 100%;
+
+            @include grid-media("md") {
+              font-size: 2.1rem;
+            }
+
+            &:hover,
+            &:focus {
+              text-decoration: underline;
+            }
+
+            &::after {
+              mask: none;
+              background-color: transparent;
+              font-family: "Font Awesome 6 Free";
+              content: "\f061";
+              font-size: 1.6rem;
+              margin-left: 0.6rem;
+              margin-bottom: 0;
+            }
+
+            // Stretch-Link styles - makes entire card clickable
+            &::before {
+              display: block;
+              position: absolute;
+              top: 0;
+              right: 0;
+              bottom: 0;
+              left: 0;
+              z-index: 1;
+              pointer-events: auto;
+              content: "";
+              background-color: transparent;
+            }
+          }
+        }
+      }
+
+      // Quote styling
+      .spotlight-quote {
+        > p {
+          @include type-c;
+          @include serif;
+
+          line-height: 1.2;
+          font-weight: $su-font-black;
+          color: $su-color-black;
+          margin-bottom: 0;
+        }
+      }
+
+      .spotlight-date {
+        @include modular-spacing("margin-bottom", 0);
+
+        font-size: 1.6rem;
+        font-weight: $su-font-regular;
+        color: $su-color-black-70;
+
+        @include grid-media-min("md") {
+          font-size: 1.8rem;
+        }
+      }
+
+      // Quote styling
+      @container (width >= 480px) {
+        .spotlight-contents {
+          .spotlight-quote > p {
+            @include type-b;
+          }
+        }
+      }
+
+      .spotlight-filters {
+        order: 2;
+        display: block;
+        font-size: 1.6rem;
+        color: $su-color-black-70;
+
+        @include grid-media-min("md") {
+          font-size: 1.8rem;
+        }
+      }
+    }
+
+    &.news-spotlight--large {
+      @container (width > 630px) {
+        display: flex;
+        flex-direction: row;
+
+        .spotlight-media {
+          padding: 3.6rem 0 3.6rem 3.6rem;
+
+          .field-media-image {
+            aspect-ratio: 1/1;
+            overflow: hidden;
+            object-fit: cover;
+            width: 24rem;
+            height: 100%;
+          }
+        }
+      }
+    }
+
+    &.news-teaser--small {
+      @container (width > 530px) {
+        display: flex;
+        flex-direction: row;
+
+        .spotlight-media {
+          padding: 3.6rem 0 3.6rem 3.6rem;
+        }
+
+        .spotlight-contents {
+          .spotlight-quote > p {
+            @include type-c;
+          }
+        }
+
+        @container (width >= 576px) {
+          .spotlight-contents {
+            .spotlight-quote > p {
+              @include type-b;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Spotlight Date hidden modifier for No Date List.
+.spotlight-card-large-no-date,
+.spotlight-card-small-no-date {
+  .spotlight-date {
+    display: none;
+  }
+}

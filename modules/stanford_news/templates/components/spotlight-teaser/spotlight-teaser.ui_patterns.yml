@@ -1,0 +1,37 @@
+spotlight-teaser:
+  label: Spotlight Teaser
+  description: "Spotlight Teaser"
+  variants:
+    large_image:
+      label: Spotlight Teaser - Large
+      modifier_class: "news-spotlight--large"
+    small_image:
+      label: Spotlight Teaser - Small
+      modifier_class: "news-teaser--small"
+  fields:
+    headline:
+      type: text
+      label: "Title"
+      description: "News title/headline"
+      preview: "This is a headline"
+    quote:
+      type: text
+      label: "Quote/Big Text"
+      description: "The quote or big text field"
+      preview: "This is a compelling quote"
+    media:
+      type: text
+      label: "Featured Media"
+      description: "The featured media image."
+      preview: "<img src='https://picsum.photos/900/900/' alt='Example Image' />"
+    filters:
+      type: text
+      label: "Spotlight Filters"
+      description: "Spotlight filter terms"
+      preview: "Filter terms"
+    date:
+      type: text
+      label: "Publication Date"
+      description: "Publishing date"
+      preview: "January 1, 2025"
+  use: "stanford_profile_styles:news_spotlight_teaser"
