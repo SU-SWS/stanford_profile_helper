@@ -237,3 +237,16 @@ function jumpstart_ui_preprocess_pattern_hero(&$variables) {
     $variables['card_headline_attributes'] = $headline_attributes;
   }
 }
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function jumpstart_ui_preprocess_paragraph__stanford_entity(&$variables) {
+  /** @var \Drupal\paragraphs\ParagraphInterface $paragraph */
+  $paragraph = $variables['paragraph'];
+
+  // Pass the spotlight image size setting to the template if it exists.
+  if (isset($variables['content']['#spotlight_image_size'])) {
+    $variables['spotlight_image_size'] = $variables['content']['#spotlight_image_size'];
+  }
+}
