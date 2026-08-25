@@ -1,17 +1,21 @@
 
-(($ ) => {
+(($, once ) => {
   Drupal.behaviors.newsNode = {
     attach: function attach(context, settings) {
+      $(once('news-more-topics', '.su-new-more-topics', context)).each(function() {
+        $('a', this).unwrap()
+        $('a:not(:last-child)', this).after(',')
+      })
 
       if (settings?.stanfordNews?.hideSocial) {
         return;
       }
 
-      $('.news-social-media', context).prepend('<div class="widget-wrapper-print"><a href="" class="share-print su-news-header__social-print"><i class="fas fa-print" aria-hidden="true"></i><span>' + Drupal.t('Print Article') + '</span></a></div>');
-      $('.news-social-media', context).prepend('<div class="widget-wrapper-forward"><a href="" class="share-forward su-news-header__social-forward"><i class="fas fa-envelope" aria-hidden="true"></i><span>' + Drupal.t('Forward Email') + '</span></a></div>');
-      $('.news-social-media', context).prepend('<div class="widget-wrapper-linkedin"><a href="" class="share-linkedin su-news-header__social-linkedin"><i aria-hidden="true"></i><span>' + Drupal.t('Stanford LinkedIn') + '</span></a></div>');
-      $('.news-social-media', context).prepend('<div class="widget-wrapper-twitter"><a href="" class="share-twitter su-news-header__social-twitter"><i aria-hidden="true"></i><span>' + Drupal.t('Stanford Twitter') + '</span></a></div>');
-      $('.news-social-media', context).prepend('<div class="widget-wrapper-fb"><a href="" class="share-fb su-news-header__social-facebook"><i aria-hidden="true"></i><span>' + Drupal.t('Stanford Facebook') + '</span></a></div>');
+      $('.news-social-media', context).prepend('<div class="widget-wrapper-print"><a href="#" class="share-print su-news-header__social-print"><i class="fas fa-print" aria-hidden="true"></i><span>' + Drupal.t('Print Article') + '</span></a></div>');
+      $('.news-social-media', context).prepend('<div class="widget-wrapper-forward"><a href="#" class="share-forward su-news-header__social-forward"><i class="fas fa-envelope" aria-hidden="true"></i><span>' + Drupal.t('Forward Email') + '</span></a></div>');
+      $('.news-social-media', context).prepend('<div class="widget-wrapper-linkedin"><a href="#" class="share-linkedin su-news-header__social-linkedin"><i aria-hidden="true"></i><span>' + Drupal.t('Stanford LinkedIn') + '</span></a></div>');
+      $('.news-social-media', context).prepend('<div class="widget-wrapper-twitter"><a href="#" class="share-twitter su-news-header__social-twitter"><i aria-hidden="true"></i><span>' + Drupal.t('Stanford Twitter') + '</span></a></div>');
+      $('.news-social-media', context).prepend('<div class="widget-wrapper-fb"><a href="#" class="share-fb su-news-header__social-facebook"><i aria-hidden="true"></i><span>' + Drupal.t('Stanford Facebook') + '</span></a></div>');
 
       // Get the current URL.
       var pathname = window.location;
@@ -54,4 +58,4 @@
 
     },
   };
-})(jQuery);
+})(jQuery, once);

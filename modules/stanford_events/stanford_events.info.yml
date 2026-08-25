@@ -44,9 +44,6 @@ dependencies:
   - views_block_filter_block:views_block_filter_block
   - views_infinite_scroll:views_infinite_scroll
   - views_taxonomy_term_name_depth:views_taxonomy_term_name_depth
-components:
-  namespaces:
-    events: templates/components
 default_content:
   menu_link_content:
     - d91b714a-4609-41c5-a9c4-d8140ed3a764

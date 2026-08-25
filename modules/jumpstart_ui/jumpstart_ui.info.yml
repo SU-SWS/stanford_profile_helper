@@ -12,5 +12,4 @@ dependencies:
 components:
   namespaces:
     jumpstart_ui: templates
-    decanter: dist/templates/decanter
 

@@ -43,6 +43,3 @@ dependencies:
   - ultimate_cron:ultimate_cron
   - views_infinite_scroll:views_infinite_scroll
   - views_taxonomy_term_name_depth:views_taxonomy_term_name_depth
-components:
-  namespaces:
-    stanford-courses: templates/components

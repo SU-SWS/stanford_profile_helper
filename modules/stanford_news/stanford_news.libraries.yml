@@ -51,11 +51,9 @@ news_node:
   dependencies:
     - core/jquery
     - core/drupal
+    - core/once
 
 news_list:
-  css:
-    base:
-      dist/css/news-list-item.css: {}
   js:
     lib/js/news-list.js: {}
   dependencies:
@@ -66,9 +64,3 @@ newsletter_signup:
     base:
       dist/css/newsletter.css: {}
 
-news_vertical_teaser:
-  css:
-    base:
-      dist/css/news-vertical-teaser.css: {}
-  dependencies:
-    - jumpstart_ui/components.card
