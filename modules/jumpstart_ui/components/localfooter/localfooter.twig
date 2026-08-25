@@ -94,7 +94,11 @@
         <ul class="su-local-footer__action-links">
           {% for link in action_links %}
             <li>
-              <a href="{{ link.url }}">{{ link.title }}</a>
+              {% if link.url %}
+                <a href="{{ link.url }}">{{ link.title }}</a>
+              {% else %}
+                <span>{{ link.title }}</span>
+              {% endif %}
             </li>
           {% endfor %}
         </ul>
@@ -136,7 +140,11 @@
           <ul class="su-local-footer__primary-links">
             {% for link in primary_links %}
               <li>
-                <a href="{{ link.url }}">{{ link.title }}</a>
+                {% if link.url %}
+                  <a href="{{ link.url }}">{{ link.title }}</a>
+                {% else %}
+                  <span>{{ link.title }}</span>
+                {% endif %}
               </li>
             {% endfor %}
           </ul>
@@ -155,7 +163,11 @@
           <ul class="su-local-footer__secondary-links">
             {% for link in secondary_links %}
               <li>
-                <a href="{{ link.url }}">{{ link.title }}</a>
+                {% if link.url %}
+                  <a href="{{ link.url }}">{{ link.title }}</a>
+                {% else %}
+                  <span>{{ link.title }}</span>
+                {% endif %}
               </li>
             {% endfor %}
           </ul>
