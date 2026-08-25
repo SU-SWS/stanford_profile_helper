@@ -62,6 +62,46 @@ props:
     lockup_link:
       title: Lockup Link
       type: string
+    action_links:
+      title: Action Links
+      type: array
+      items:
+        type: object
+        properties:
+          url:
+            type: string
+          title:
+            type: string
+    social_links:
+      title: Social Links
+      type: array
+      items:
+        type: object
+        properties:
+          url:
+            type: string
+          title:
+            type: string
+    primary_links:
+      title: Primary Links
+      type: array
+      items:
+        type: object
+        properties:
+          url:
+            type: string
+          title:
+            type: string
+    secondary_links:
+      title: Secondary Links
+      type: array
+      items:
+        type: object
+        properties:
+          url:
+            type: string
+          title:
+            type: string
 slots:
   header_content:
     title: Header content
@@ -77,18 +117,6 @@ slots:
   address:
     title: address
     description: 'Optional open variable for address content.'
-  action_links:
-    title: action_links
-    description: 'Either a structured array of links that get rendered'
-  social_links:
-    title: social_links
-    description: 'Either a structured array of links that get rendered'
-  primary_links:
-    title: primary_links
-    description: 'Either a structured array of links that get rendered'
-  secondary_links:
-    title: secondary_links
-    description: 'Either a structured array of links that get rendered'
   signup_form_content:
     title: signup_form_content
     description: 'An open variable for placing content above the form.'

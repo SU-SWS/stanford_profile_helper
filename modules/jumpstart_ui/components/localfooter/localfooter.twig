@@ -89,19 +89,43 @@
           {{ address }}
         </address>
       {% endif %}
-      {# Stylized links. See local-footer.json for structure for macro. #}
 
-      {{ action_links }}
+      {% if action_links %}
+        <ul class="su-local-footer__action-links">
+          {% for link in action_links %}
+            <li>
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
 
-      {# Stylized links. See local-footer.json for structure for macro. #}
-      {{ social_links }}
+
+      {% if social_links %}
+        <ul class="su-local-footer__social-links">
+          {% for link in social_links %}
+
+            {% set host = link.url|replace({'https://': '', 'http://': ''})|split('/')|first|split('.') %}
+            {% set host = host|length == 2 ? host[0] : host[1] %}
+
+            <li>
+              <a class="su-local-footer__social-{{ host }}" href="{{ link.url }}">
+                <i></i>
+                <span>{{ link.title }}</span>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
       {# Use this var if you would like to place your own content in to this cell. #}
       {{ cell1 }}
     </div>
+
     {# Content Cell 2 - For primary and secondary link lists. #}
     <div class="su-local-footer__cell2">
 
-      {% if primary_links is not empty %}
+      {% if primary_links %}
         <nav aria-label="footer primary nav">
           {% if primary_links_header %}
             <h2 class="su-local-footer__list-heading">
@@ -109,11 +133,18 @@
             </h2>
           {% endif %}
 
-          {{ primary_links }}
+          <ul class="su-local-footer__primary-links">
+            {% for link in primary_links %}
+              <li>
+                <a href="{{ link.url }}">{{ link.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+
         </nav>
       {% endif %}
 
-      {% if secondary_links is not empty %}
+      {% if secondary_links %}
         <nav aria-label="footer secondary nav">
           {% if secondary_links_header %}
             <h2 class="su-local-footer__list-heading">
@@ -121,15 +152,19 @@
             </h2>
           {% endif %}
 
-          {{ secondary_links }}
+          <ul class="su-local-footer__secondary-links">
+            {% for link in secondary_links %}
+              <li>
+                <a href="{{ link.url }}">{{ link.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
         </nav>
       {% endif %}
-      {# If you want to provide all of our own markup use the cell2 var. #}
+
       {{ cell2 }}
     </div>
-    {#
-    Cell 3 - For the signup form.
-    #}
+
     <div class="su-local-footer__cell3">
       {#
       The signup form is optional. If it doesn't meet your content needs
