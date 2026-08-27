@@ -1,5 +1,21 @@
 # Stanford Profile Helper
 
+11.0.0
+--------------------------------------------------------------------------------
+_Release Date: 2026-08-27_
+
+- Refactor display logic to use SDC instead of UI Patterns (#542)
+- Move module hooks to OOP hooks classes (#543)
+- Remove old update hooks (#544)
+- Configure an intranet for a decoupled site via the drush command (#545)
+- Allow reordering taxonomy terms when config readonly is enabled (#548)
+- Update CAP API url (#547)
+- Hooks to configure nobots and remove from algolia if the node is to be excluded from search (#546)
+- Fix decoupled revalidation issues, including home page invalidation and token handling (#541)
+- Fix algolia logic to process filter term fields
+- Fix citation entity definition
+- Removed references to non-existent CSS/JS files in library definitions
+
 10.2.9
 --------------------------------------------------------------------------------
 _Release Date: 2026-07-02_
