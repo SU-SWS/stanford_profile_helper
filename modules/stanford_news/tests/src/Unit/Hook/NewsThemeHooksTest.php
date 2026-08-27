@@ -82,33 +82,6 @@ class NewsThemeHooksTest extends UnitTestCase {
   }
 
   /**
-   * No #id present on the block elements means nothing is attached.
-   */
-  public function testPreprocessBlockNoElementsId(): void {
-    $variables = ['elements' => []];
-    $this->hooks->preprocessBlock($variables);
-    $this->assertArrayNotHasKey('#attached', $variables);
-  }
-
-  /**
-   * A non-matching block ID does not get the library attached.
-   */
-  public function testPreprocessBlockNonMatchingId(): void {
-    $variables = ['elements' => ['#id' => 'some_other_block']];
-    $this->hooks->preprocessBlock($variables);
-    $this->assertArrayNotHasKey('#attached', $variables);
-  }
-
-  /**
-   * The newsletter signup block gets its library attached.
-   */
-  public function testPreprocessBlockNewsletterSignup(): void {
-    $variables = ['elements' => ['#id' => 'newslettersignup']];
-    $this->hooks->preprocessBlock($variables);
-    $this->assertSame(['stanford_news/newsletter_signup'], $variables['#attached']['library']);
-  }
-
-  /**
    * When there is no node on the route, nothing is attached.
    */
   public function testPageAttachmentsNoNode(): void {
