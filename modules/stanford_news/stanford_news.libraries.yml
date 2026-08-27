@@ -58,6 +58,3 @@ news_list:
     lib/js/news-list.js: {}
   dependencies:
     - core/jquery
-
-newsletter_signup: {}
-

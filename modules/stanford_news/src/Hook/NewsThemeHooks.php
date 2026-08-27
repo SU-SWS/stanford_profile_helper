@@ -36,19 +36,6 @@ class NewsThemeHooks {
   }
 
   /**
-   * Implements hook_preprocess_block().
-   */
-  #[Hook('preprocess_block')]
-  public function preprocessBlock(&$variables): void {
-    // Attach Library to the signup block wherever it goes.
-    if (!empty($variables['elements']['#id'])) {
-      if ($variables['elements']['#id'] == 'newslettersignup') {
-        $variables['#attached']['library'][] = 'stanford_news/newsletter_signup';
-      }
-    }
-  }
-
-  /**
    * Implements hook_page_attachments().
    */
   #[Hook('page_attachments')]
