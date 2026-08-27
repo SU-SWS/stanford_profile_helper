@@ -59,8 +59,5 @@ news_list:
   dependencies:
     - core/jquery
 
-newsletter_signup:
-  css:
-    base:
-      dist/css/newsletter.css: {}
+newsletter_signup: {}
 

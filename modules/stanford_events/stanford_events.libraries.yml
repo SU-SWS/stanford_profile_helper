@@ -63,14 +63,8 @@ event_views:
     - core/jquery
 
 event_card:
-  css:
-    base:
-      dist/css/stanford_events.event-card.css: {}
   dependencies:
     - jumpstart_ui/components.card
 events_list:
-  css:
-    base:
-      dist/css/stanford_events.event-list.css: {}
   dependencies:
     - stanford_events/event_card
