@@ -142,6 +142,7 @@ class NodeHooks {
     unset($tags['robots']);
     if (!!$node->get('su_search_exclusion')?->getString()) {
       $tags['robots'] = 'noindex, nofollow';
+      $node->xmlsitemap['status'] = 0;
     }
     $node->set('su_metatags', json_encode($tags));
   }
