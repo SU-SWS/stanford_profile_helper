@@ -28,8 +28,8 @@ class StanfordProfileHelperServiceProvider extends ServiceProviderBase {
    * @codeCoverageIgnore
    */
   protected function alterUiPatternsServices(ContainerBuilder $container) {
-    if ($container->hasDefinition('ui_patterns_legacy.configuration_updater')) {
-      $definition = $container->getDefinition('ui_patterns_legacy.configuration_updater');
+    if ($container->hasDefinition('Drupal\ui_patterns_legacy\Service\ConfigurationUpdater')) {
+      $definition = $container->getDefinition('Drupal\ui_patterns_legacy\Service\ConfigurationUpdater');
       $definition->setClass('Drupal\stanford_profile_helper\Service\UiPatternsConfigurationUpdater');
     }
   }
