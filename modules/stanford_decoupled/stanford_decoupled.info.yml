@@ -3,7 +3,7 @@ type: module
 description: 'JsonAPI and GraphQL helper for decoupled sites.'
 core_version_requirement: ^11.2
 package: Stanford
-version: 11.0.1
+version: 11.0.2
 dependencies:
   - entity_usage:entity_usage
   - graphql_compose:graphql_compose_layout_paragraphs
