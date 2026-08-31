@@ -1,5 +1,10 @@
 # Stanford Profile Helper
 
+11.0.3
+--------------------------------------------------------------------------------
+_Release Date: 2026-08-31_
+- Improved anchor link navigation by ignore hidden links and any wrapped with `.no-anchor`.
+
 11.0.2
 --------------------------------------------------------------------------------
 _Release Date: 2026-08-28_
