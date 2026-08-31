@@ -9,7 +9,7 @@
   {% set show_card = true %}
 {% endif %}
 
-<div{{ attributes.addClass("su-hero") }}>
+<div{{ attributes.addClass(["su-hero", "no-anchor"]) }}>
 
   {# Hero Image or Video #}
   {% block image %}
