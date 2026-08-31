@@ -3,7 +3,7 @@ type: module
 description: 'Migrate a WordPress site into Drupal'
 core_version_requirement: ^11.2
 package: Stanford
-version: 11.0.2
+version: 11.0.3
 dependencies:
   - stanford_migrate:stanford_migrate
   - drupal:media
