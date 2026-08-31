@@ -20,7 +20,7 @@
 
 {% set headline_attributes = headline_attributes.addClass(header_classes) %}
 
-<{{ is_article or headline is not empty ? "article" : "div" }}{{ attributes }}>
+<{{ headline ? "article" : "div" }}{{ attributes }}>
 
 {{ image }}
 <div class="su-card__contents">
@@ -58,4 +58,4 @@
   {% endif -%}
 </div>{# end of .su-card__contents #}
 
-</{{ is_article or headline is not empty ? "article" : "div" }}>
+</{{ headline ? "article" : "div" }}>

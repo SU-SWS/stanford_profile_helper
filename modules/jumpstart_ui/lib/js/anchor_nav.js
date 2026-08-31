@@ -1,9 +1,11 @@
 (($) => {
   document.addEventListener('DOMContentLoaded', () => {
-    anchors.add('#page-content h2:not(.visually-hidden):not(.no-anchor)');
+    const $headings = $('#page-content h2')
+      .filter(":visible")
+      .filter((i, item) => $(item).closest('.no-anchor').length === 0 && $(item).closest('.visually-hidden').length === 0);
 
-    const $headings = $('#page-content h2:not(.visually-hidden):not(.no-anchor)[id]')
-      .filter((i, item) => $(item).closest('.node-stanford-page-su-page-banner').length === 0);
+    $headings.addClass('anchor-link')
+    anchors.add('.anchor-link');
 
     // If no links exist, don't add the markup.
     if ($headings.length === 0) {
