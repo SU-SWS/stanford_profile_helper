@@ -1,5 +1,7 @@
 <div{{ attributes.addClass(['su-brand-bar', 'su-brand-bar--default'])}}>
-  <div class="su-brand-bar__container">
-    <a class="su-brand-bar__logo" href="https://www.stanford.edu">Stanford University{{ external_link_text }}</a>
-  </div>
+  {% block logo %}
+    <div class="su-brand-bar__container">
+      <a class="su-brand-bar__logo" href="https://www.stanford.edu">Stanford University{{ external_link_text }}</a>
+    </div>
+  {% endblock %}
 </div>

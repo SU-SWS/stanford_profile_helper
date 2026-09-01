@@ -1,19 +1,20 @@
 {% set attributes = attributes.addClass(['su-lockup', 'su-lockup--option-' ~ lockup_style|default('a')]) %}
-
 <div{{ attributes }}>
   {% if link %}
   <a href="{{ link }}">
     {% endif %}
+    {% if line4 or not hide_wordmark %}
     <div class="su-lockup__cell1">
       {% block cell1 %}
         <div class="su-lockup__wordmark-wrapper">
-          <span class="su-lockup__wordmark">Stanford</span>
+          {% if not hide_wordmark %}<span class="su-lockup__wordmark">Stanford</span>{% endif %}
           {% if line4 %}
             <span class="su-lockup__line4">{{ line4 }}</span>
           {% endif %}
         </div>
       {% endblock %}
     </div>
+    {% endif %}
 
     {#- Cell container #2 -#}
     {% block cell2 %}

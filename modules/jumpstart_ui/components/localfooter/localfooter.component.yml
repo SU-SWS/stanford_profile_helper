@@ -41,6 +41,9 @@ props:
     site_logo_alt:
       title: Site Logo Alt
       type: string
+    hide_lockup_wordmark:
+      title: Hide Lockup Wordmark
+      type: boolean
     lockup_title:
       title: Lockup Title
       type: string
@@ -103,6 +106,8 @@ props:
           title:
             type: string
 slots:
+  lockup:
+    title: Lockup
   header_content:
     title: Header content
   cell1:

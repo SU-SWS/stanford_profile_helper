@@ -51,8 +51,12 @@ class IntranetRouteSubscriber extends RouteSubscriberBase {
    */
   public function alterRoutes(RouteCollection $collection) {
     if ($this->state->get('stanford_intranet')) {
-      $collection->get('xmlsitemap.sitemap_xml')?->setRequirement('_access', 'FALSE');
-      $collection->get('xmlsitemap.sitemap_xsl')?->setRequirement('_access', 'FALSE');
+      $collection->get('xmlsitemap.sitemap_xml')
+        ?->setRequirement('_role', 'authenticated')
+        ?->setOption('_auth', ['basic_auth', 'cookie']);
+      $collection->get('xmlsitemap.sitemap_xsl')
+        ?->setRequirement('_role', 'authenticated')
+        ?->setOption('_auth', ['basic_auth', 'cookie']);
     }
   }
 

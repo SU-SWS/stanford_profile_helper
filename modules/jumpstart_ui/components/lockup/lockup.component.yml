@@ -29,6 +29,9 @@ props:
     line5:
       title: 'Line 5'
       type: string
+    hide_wordmark:
+      title: Hide Stanford Wordmark
+      type: boolean
 slots:
   cell1:
     title: Cell 1
