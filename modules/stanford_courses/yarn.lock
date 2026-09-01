@@ -3740,7 +3740,7 @@ __metadata:
   linkType: hard
 
 "glob@npm:^11.0.3":
-  version: 11.0.3
+  version: 11.0.4
   resolution: "glob@npm:11.0.3"
   dependencies:
     foreground-child: "npm:^3.3.1"
