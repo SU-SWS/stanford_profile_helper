@@ -1,0 +1,40 @@
+{#
+/**
+ * Person CTA - Events
+ */
+#}
+
+
+{%- set link_attributes = create_attribute({'class': ['su-link']}) -%}
+{%- set is_external = false -%}
+{%- if url -%}
+  {%- set is_external = link|split('//')[1] ? true : false -%}
+  {%- if is_external -%}
+    {%- set link_attributes = link_attributes.addClass('su-link--external') -%}
+  {%- endif %}
+{%- endif -%}
+
+<div{{ attributes.addClass('su-person-cta') }}>
+  {% block image %}
+    <div class="su-person-cta__image">
+      {{ image }}
+    </div>
+  {% endblock %}
+
+  <div class="su-person-cta__content">
+    {% if name %}
+      <p class="su-person-cta__name">
+        {% if url %}
+        <a href="{{ url }}" {{ link_attributes }}>
+          {% endif %}
+          {{ name }}
+          {% if url %}
+        </a>
+        {%- endif -%}
+      </p>
+    {% endif %}
+    {% if title %}
+      <p class="su-person-cta__title">{{ title }}</p>
+    {% endif %}
+  </div>
+</div>
