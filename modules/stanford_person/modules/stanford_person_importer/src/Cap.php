@@ -7,6 +7,7 @@ use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Drupal\Core\Site\Settings;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\taxonomy\TermInterface;
@@ -279,7 +280,7 @@ class Cap implements CapInterface {
 
     $options = ['query' => ['access_token' => $this->getAccessToken()]];
     // AA00 is the root level of all Stanford.
-    $result = $this->getApiResponse(Url::fromUri(self::API_URL . '/cap/v1/orgs/AA00', $options));
+    $result = $this->getApiResponse(self::getApiUrl('/cap/v1/orgs/AA00', $options));
 
     if ($result) {
       $this->cache->set('cap:org_data', $result, time() + 60 * 60 * 24 * 7, [
@@ -303,7 +304,7 @@ class Cap implements CapInterface {
     }
 
     $options = ['query' => ['grant_type' => 'client_credentials']];
-    $result = $this->getApiResponse(Url::fromUri(self::AUTH_URL, $options), [
+    $result = $this->getApiResponse(self::getAuthUrl($options), [
       'auth' => [$this->clientId, $this->clientSecret],
     ]);
 
@@ -315,6 +316,34 @@ class Cap implements CapInterface {
     }
 
     return $result['access_token'] ?? NULL;
+  }
+
+  /**
+   * Get the API url.
+   *
+   * @param string|null $path
+   *   API path to append.
+   * @param array $options
+   *   Options to pass into the Url::fromUri() method.
+   *
+   * @return \Drupal\Core\Url
+   *   Full url of the API.
+   */
+  protected static function getApiUrl(?string $path = NULL, array $options = []): Url {
+    return Url::fromUri(Settings::get('CAP_API_URL', self::API_URL) . $path, $options);
+  }
+
+  /**
+   * Get the OAuth url.
+   *
+   * @param array $options
+   *    Options to pass into the Url::fromUri() method.
+   *
+   * @return \Drupal\Core\Url
+   *   Full url of the OAuth service.
+   */
+  protected static function getAuthUrl(array $options = []): Url {
+    return Url::fromUri(Settings::get('CAP_AUTH_URL', self::AUTH_URL), $options);
   }
 
 }
