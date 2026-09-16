@@ -26,7 +26,7 @@ class LayoutHooks {
   #[Hook('preprocess_layout')]
   public function preprocessLayout(&$variables): void {
     $current_route = $this->routeMatch->getRouteName();
-    if (str_starts_with($current_route, 'layout_builder.')) {
+    if ($current_route && str_starts_with($current_route, 'layout_builder.')) {
       // Add a flag if the user is currently in layout builder. This allows the
       // template to make it easier for users to move blocks in layout builder.
       $variables['layout_builder_admin'] = TRUE;
