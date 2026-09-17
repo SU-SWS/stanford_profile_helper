@@ -11,8 +11,10 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Url;
 use Drupal\Core\State\StateInterface;
 use Drupal\block\BlockInterface;
+use Drupal\menu_link_content\MenuLinkContentInterface;
 use Drupal\node\NodeInterface;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\stanford_intranet\Hook\AccessHooks;
@@ -21,6 +23,7 @@ use Drupal\Tests\UnitTestCase;
 use Drupal\user\RoleInterface;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
 /**
  * Unit tests for AccessHooks.
@@ -334,6 +337,137 @@ class AccessHooksTest extends UnitTestCase {
 
     $result = $this->hooks->entityAccess($entity, 'view', $account);
     $this->assertTrue($result->isForbidden());
+  }
+
+  /**
+   * Sitemap links are untouched when the intranet is disabled.
+   */
+  public function testXmlsitemapLinkAlterIntranetDisabled() {
+    $this->state->method('get')->willReturn(FALSE);
+
+    $entity = $this->createMock(NodeInterface::class);
+    $entity->expects($this->never())->method('access');
+
+    $link = ['loc' => '/node/1', 'access' => 0];
+    $this->hooks->xmlsitemapLinkAlter($link, ['entity' => $entity]);
+    $this->assertEquals(0, $link['access']);
+  }
+
+  /**
+   * Links without an entity or a path are untouched.
+   */
+  public function testXmlsitemapLinkAlterNoEntity() {
+    $this->state->method('get')->willReturn(TRUE);
+
+    $link = ['loc' => '/foo/bar', 'access' => 0];
+    $this->hooks->xmlsitemapLinkAlter($link, []);
+    $this->assertEquals(0, $link['access']);
+
+    $entity = $this->createMock(NodeInterface::class);
+    $entity->expects($this->never())->method('access');
+    $link = ['loc' => '/', 'access' => 0];
+    $this->hooks->xmlsitemapLinkAlter($link, ['entity' => $entity]);
+    $this->assertEquals(0, $link['access']);
+  }
+
+  /**
+   * Entities with role specific access stay out of the sitemap.
+   */
+  public function testXmlsitemapLinkAlterRestrictedEntity() {
+    $this->state->method('get')->willReturn(TRUE);
+
+    $field = $this->createMock(FieldItemListInterface::class);
+    $field->method('count')->willReturn(1);
+
+    $entity = $this->createMock(NodeInterface::class);
+    $entity->method('hasField')
+      ->with(EntityAccessFieldType::FIELD_NAME)
+      ->willReturn(TRUE);
+    $entity->method('get')
+      ->with(EntityAccessFieldType::FIELD_NAME)
+      ->willReturn($field);
+    $entity->expects($this->never())->method('access');
+
+    $link = ['loc' => '/node/1', 'access' => 0];
+    $this->hooks->xmlsitemapLinkAlter($link, ['entity' => $entity]);
+    $this->assertEquals(0, $link['access']);
+  }
+
+  /**
+   * Access is re-checked as an authenticated user for unrestricted entities.
+   */
+  public function testXmlsitemapLinkAlterAccessRecheck() {
+    $this->state->method('get')->willReturn(TRUE);
+
+    $field = $this->createMock(FieldItemListInterface::class);
+    $field->method('count')->willReturn(0);
+
+    $entity = $this->createMock(NodeInterface::class);
+    $entity->method('hasField')->willReturn(TRUE);
+    $entity->method('get')->willReturn($field);
+    $entity->expects($this->once())
+      ->method('access')
+      ->with('view', $this->callback(function ($account) {
+        // The uid must differ from the anonymous user or the statically cached
+        // access result of xmlsitemap's own check is returned instead.
+        return in_array(RoleInterface::AUTHENTICATED_ID, $account->getRoles())
+          && $account->id() !== 0;
+      }))
+      ->willReturn(TRUE);
+
+    $link = ['loc' => '/node/1', 'access' => 0];
+    $this->hooks->xmlsitemapLinkAlter($link, ['entity' => $entity]);
+    $this->assertEquals(1, $link['access']);
+  }
+
+  /**
+   * Entities an authenticated user can't view are kept out of the sitemap.
+   */
+  public function testXmlsitemapLinkAlterAccessDenied() {
+    $this->state->method('get')->willReturn(TRUE);
+
+    $entity = $this->createMock(NodeInterface::class);
+    $entity->method('hasField')->willReturn(FALSE);
+    $entity->method('access')->willReturn(FALSE);
+
+    $link = ['loc' => '/node/1', 'access' => 1];
+    $this->hooks->xmlsitemapLinkAlter($link, ['entity' => $entity]);
+    $this->assertEquals(0, $link['access']);
+  }
+
+  /**
+   * Menu links are checked against the route they link to.
+   */
+  public function testXmlsitemapLinkAlterMenuLink() {
+    $this->state->method('get')->willReturn(TRUE);
+
+    $url = $this->createMock(Url::class);
+    $url->expects($this->once())->method('access')->willReturn(TRUE);
+
+    $entity = $this->createMock(MenuLinkContentInterface::class);
+    $entity->method('hasField')->willReturn(FALSE);
+    $entity->expects($this->never())->method('access');
+    $entity->method('getUrlObject')->willReturn($url);
+
+    $link = ['loc' => '/search', 'access' => 0];
+    $this->hooks->xmlsitemapLinkAlter($link, ['entity' => $entity]);
+    $this->assertEquals(1, $link['access']);
+  }
+
+  /**
+   * A link that can't resolve its access is left as xmlsitemap built it.
+   */
+  public function testXmlsitemapLinkAlterAccessException() {
+    $this->state->method('get')->willReturn(TRUE);
+
+    $entity = $this->createMock(MenuLinkContentInterface::class);
+    $entity->method('hasField')->willReturn(FALSE);
+    $entity->method('getUrlObject')
+      ->willThrowException(new RouteNotFoundException());
+
+    $link = ['loc' => '/node/1', 'access' => 1];
+    $this->hooks->xmlsitemapLinkAlter($link, ['entity' => $entity]);
+    $this->assertEquals(1, $link['access']);
   }
 
   /**

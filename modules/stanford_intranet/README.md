@@ -31,6 +31,15 @@ It is possible to disable the intranet later, but it is not recommended due to t
 1. `drush sset stanford_intranet.allow_file_uploads 1`
 1. `drush @<site_alias> cr`
 
+## XML Sitemap
+The sitemap at `/sitemap.xml` requires an authenticated user when the intranet is enabled. XmlSitemap decides what
+belongs in the sitemap by checking access as an anonymous user, which is always denied on an intranet, so the sitemap
+links are instead built from what any authenticated user can view. Pages with role specific access are never added to
+the sitemap.
+
+Links that were saved before the intranet was enabled keep their old access value until the entity is saved again, so
+run `drush @<site_alias> xmlsitemap:rebuild` to add the existing pages to the sitemap.
+
 ## Additional Resources
 * [SWS Dev Guide: Intranet](https://sws-devguide.stanford.edu/site-building/drupal-8/intranet)
 * [Drupal State API Overview](https://www.drupal.org/docs/8/api/state-api/overview)
