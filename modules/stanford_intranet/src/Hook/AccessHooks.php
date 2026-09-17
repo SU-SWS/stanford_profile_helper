@@ -8,9 +8,12 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Session\UserSession;
 use Drupal\Core\State\StateInterface;
+use Drupal\menu_link_content\MenuLinkContentInterface;
 use Drupal\node\NodeInterface;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\stanford_intranet\Plugin\Field\FieldType\EntityAccessFieldType;
@@ -87,6 +90,57 @@ class AccessHooks {
       return AccessResult::forbidden();
     }
     return AccessResult::neutral();
+  }
+
+  /**
+   * Implements hook_xmlsitemap_link_alter().
+   */
+  #[Hook('xmlsitemap_link_alter')]
+  public function xmlsitemapLinkAlter(array &$link, array $context): void {
+    if (!$this->state->get('stanford_intranet', FALSE)) {
+      return;
+    }
+
+    $entity = $context['entity'] ?? NULL;
+    if (!$entity instanceof FieldableEntityInterface || trim((string) ($link['loc'] ?? ''), '/') === '') {
+      return;
+    }
+
+    // Entities with role specific access are kept out of the sitemap so that
+    // the restricted urls aren't disclosed to every authenticated user.
+    if (
+      $entity->hasField(EntityAccessFieldType::FIELD_NAME) &&
+      $entity->get(EntityAccessFieldType::FIELD_NAME)->count()
+    ) {
+      return;
+    }
+
+    // XmlSitemap decides if a link belongs in the sitemap by checking access as
+    // an anonymous user, which is always forbidden above when the intranet is
+    // enabled. Check the access again as a generic authenticated user so the
+    // pages any logged-in user can see are able to generate in the sitemap.
+    // Unpublished entities are still denied since they have no grants.
+    //
+    // The uid matters for two reasons: entity access results are statically
+    // cached per uid and xmlsitemap just checked this entity as the anonymous
+    // user, so uid 0 would return that cached "forbidden" result instead of
+    // re-evaluating. A negative uid also can't match the author grant of an
+    // entity owned by the anonymous user.
+    $account = new UserSession([
+      'uid' => -1,
+      'roles' => [RoleInterface::AUTHENTICATED_ID],
+    ]);
+
+    try {
+      // Menu links are their own entity but they point somewhere else, so
+      // check the access of the linked route instead of the menu link itself.
+      $link['access'] = $entity instanceof MenuLinkContentInterface
+        ? $entity->getUrlObject()->access($account)
+        : $entity->access('view', $account);
+    }
+    catch (\Exception $e) {
+      // Leave the link as xmlsitemap built it if the access can't be checked.
+    }
   }
 
   /**
