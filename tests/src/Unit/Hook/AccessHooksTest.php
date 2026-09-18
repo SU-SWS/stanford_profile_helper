@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\stanford_profile_helper\Unit\Hook;
 
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\ImmutableConfig;
 use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\Field\FieldItemList;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\GeneratedUrl;
@@ -577,6 +580,226 @@ class AccessHooksTest extends UnitTestCase {
     $account = $this->createMock(AccountInterface::class);
 
     $result = $this->hooks->nodeAccess($node, 'update', $account);
+    $this->assertTrue($result->isNeutral());
+  }
+
+  // -----------------------------------------------------------------------
+  // paragraphAccess()
+  // -----------------------------------------------------------------------
+
+  /**
+   * Builds a child paragraph belonging to a layout.
+   *
+   * @param string|null $parentUuid
+   *   The layout_paragraphs "parent_uuid" behavior setting of the child.
+   * @param bool $published
+   *   Whether the child paragraph is published.
+   *
+   * @return \Drupal\paragraphs\ParagraphInterface
+   *   Mocked child paragraph.
+   */
+  protected function mockLayoutChild(?string $parentUuid, bool $published): ParagraphInterface {
+    $child = $this->createMock(ParagraphInterface::class);
+    $child->method('getBehaviorSetting')
+      ->with('layout_paragraphs', 'parent_uuid')
+      ->willReturn($parentUuid);
+    $child->method('isPublished')->willReturn($published);
+    return $child;
+  }
+
+  /**
+   * Builds a layout paragraph and the account viewing it.
+   *
+   * @param array $children
+   *   Child paragraphs held by the parent's paragraph field.
+   * @param \Drupal\Core\Access\AccessResultInterface|null $editAccess
+   *   The account's "update" access to the layout. Defaults to neutral, which
+   *   means the account cannot edit it.
+   * @param string $bundle
+   *   Bundle of the layout paragraph itself.
+   *
+   * @return array
+   *   The layout paragraph and the account, in that order.
+   */
+  protected function mockLayoutScenario(array $children, ?AccessResultInterface $editAccess = NULL, string $bundle = 'stanford_layout'): array {
+    $account = $this->createMock(AccountInterface::class);
+
+    // Each field item exposes its referenced paragraph via ->entity.
+    $items = [];
+    foreach ($children as $child) {
+      $item = new \stdClass();
+      $item->entity = $child;
+      $items[] = $item;
+    }
+
+    // The parent's paragraph field must be iterable, so mock the concrete
+    // FieldItemList: getIterator() comes from \Traversable and is therefore
+    // absent from mocks built off FieldItemListInterface.
+    $parentFieldItems = $this->createMock(FieldItemList::class);
+    $parentFieldItems->method('getIterator')->willReturn(new \ArrayIterator($items));
+
+    $parent = $this->createMock(NodeInterface::class);
+    $parent->method('get')->with('su_page_components')->willReturn($parentFieldItems);
+
+    $parentFieldName = $this->createMock(FieldItemListInterface::class);
+    $parentFieldName->method('getString')->willReturn('su_page_components');
+
+    $layout = $this->createMock(ParagraphInterface::class);
+    $layout->method('bundle')->willReturn($bundle);
+    $layout->method('uuid')->willReturn('layout-uuid-1');
+    $layout->method('getParentEntity')->willReturn($parent);
+    $layout->method('get')->with('parent_field_name')->willReturn($parentFieldName);
+    // Asserts the hook forwards the account and asks for "update" access.
+    $layout->method('access')
+      ->with('update', $account, TRUE)
+      ->willReturn($editAccess ?? AccessResult::neutral());
+
+    return [$layout, $account];
+  }
+
+  /**
+   * A layout with no children is hidden from users who can't edit it.
+   */
+  public function testParagraphAccessForbiddenWhenLayoutHasNoChildren(): void {
+    [$layout, $account] = $this->mockLayoutScenario([]);
+
+    $result = $this->hooks->paragraphAccess($layout, 'view', $account);
+    $this->assertTrue($result->isForbidden());
+    $this->assertSame('No published children in the layout.', $result->getReason());
+  }
+
+  /**
+   * Children belonging to a different layout don't keep this layout visible.
+   */
+  public function testParagraphAccessForbiddenWhenChildrenBelongToOtherLayout(): void {
+    [$layout, $account] = $this->mockLayoutScenario([
+      $this->mockLayoutChild('some-other-layout-uuid', TRUE),
+    ]);
+
+    $result = $this->hooks->paragraphAccess($layout, 'view', $account);
+    $this->assertTrue($result->isForbidden());
+  }
+
+  /**
+   * A layout whose only children are unpublished is hidden.
+   */
+  public function testParagraphAccessForbiddenWhenAllChildrenUnpublished(): void {
+    [$layout, $account] = $this->mockLayoutScenario([
+      $this->mockLayoutChild('layout-uuid-1', FALSE),
+      $this->mockLayoutChild('layout-uuid-1', FALSE),
+    ]);
+
+    $result = $this->hooks->paragraphAccess($layout, 'view', $account);
+    $this->assertTrue($result->isForbidden());
+  }
+
+  /**
+   * Explicitly forbidden edit access counts as "cannot edit", same as neutral.
+   */
+  public function testParagraphAccessForbiddenWhenEditAccessIsForbidden(): void {
+    [$layout, $account] = $this->mockLayoutScenario([], AccessResult::forbidden());
+
+    $result = $this->hooks->paragraphAccess($layout, 'view', $account);
+    $this->assertTrue($result->isForbidden());
+  }
+
+  /**
+   * An empty layout stays visible to a user who can edit it.
+   *
+   * Editors need empty layouts to remain visible so they can add content.
+   */
+  public function testParagraphAccessNeutralWhenUserCanEditEmptyLayout(): void {
+    [$layout, $account] = $this->mockLayoutScenario([], AccessResult::allowed());
+
+    $result = $this->hooks->paragraphAccess($layout, 'view', $account);
+    $this->assertTrue($result->isNeutral());
+  }
+
+  /**
+   * A layout with a published child of its own remains visible.
+   */
+  public function testParagraphAccessNeutralWhenLayoutHasPublishedChild(): void {
+    [$layout, $account] = $this->mockLayoutScenario([
+      $this->mockLayoutChild('layout-uuid-1', TRUE),
+    ]);
+
+    $result = $this->hooks->paragraphAccess($layout, 'view', $account);
+    $this->assertTrue($result->isNeutral());
+  }
+
+  /**
+   * One published child is enough, even alongside hidden siblings.
+   */
+  public function testParagraphAccessNeutralWhenOneOfManyChildrenIsPublished(): void {
+    [$layout, $account] = $this->mockLayoutScenario([
+      $this->mockLayoutChild('layout-uuid-1', FALSE),
+      $this->mockLayoutChild('some-other-layout-uuid', TRUE),
+      $this->mockLayoutChild('layout-uuid-1', TRUE),
+    ]);
+
+    $result = $this->hooks->paragraphAccess($layout, 'view', $account);
+    $this->assertTrue($result->isNeutral());
+  }
+
+  /**
+   * The forbidden result carries the edit check's cacheability.
+   *
+   * Without this the result could be reused for an account whose edit access
+   * differs.
+   */
+  public function testParagraphAccessForbiddenMergesEditAccessCacheability(): void {
+    $editAccess = AccessResult::neutral()
+      ->addCacheContexts(['user.permissions'])
+      ->addCacheTags(['node:7']);
+    [$layout, $account] = $this->mockLayoutScenario([], $editAccess);
+
+    $result = $this->hooks->paragraphAccess($layout, 'view', $account);
+    $this->assertTrue($result->isForbidden());
+    $this->assertContains('user.permissions', $result->getCacheContexts());
+    $this->assertContains('node:7', $result->getCacheTags());
+  }
+
+  /**
+   * The neutral result for editors also carries the edit check's cacheability.
+   */
+  public function testParagraphAccessNeutralMergesEditAccessCacheability(): void {
+    $editAccess = AccessResult::allowed()
+      ->addCacheContexts(['user.permissions'])
+      ->addCacheTags(['node:7']);
+    [$layout, $account] = $this->mockLayoutScenario([], $editAccess);
+
+    $result = $this->hooks->paragraphAccess($layout, 'view', $account);
+    $this->assertTrue($result->isNeutral());
+    $this->assertContains('user.permissions', $result->getCacheContexts());
+    $this->assertContains('node:7', $result->getCacheTags());
+  }
+
+  /**
+   * Non-view operations never run the edit check.
+   *
+   * This is what keeps the hook from recursing: the edit check re-enters
+   * entity access with the "update" operation, which lands here again.
+   */
+  public function testParagraphAccessSkipsEditCheckForNonViewOperation(): void {
+    $layout = $this->createMock(ParagraphInterface::class);
+    $layout->method('bundle')->willReturn('stanford_layout');
+    $layout->expects($this->never())->method('access');
+    $account = $this->createMock(AccountInterface::class);
+
+    $result = $this->hooks->paragraphAccess($layout, 'update', $account);
+    $this->assertTrue($result->isNeutral());
+  }
+
+  /**
+   * Paragraphs of other bundles are left alone without an edit check.
+   */
+  public function testParagraphAccessSkipsEditCheckForOtherBundle(): void {
+    $layout = $this->createMock(ParagraphInterface::class);
+    $layout->method('bundle')->willReturn('stanford_card');
+    $layout->expects($this->never())->method('access');
+    $account = $this->createMock(AccountInterface::class);
+
+    $result = $this->hooks->paragraphAccess($layout, 'view', $account);
     $this->assertTrue($result->isNeutral());
   }
 
