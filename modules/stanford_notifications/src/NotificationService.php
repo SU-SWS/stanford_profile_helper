@@ -164,7 +164,7 @@ class NotificationService implements NotificationServiceInterface {
   /**
    * {@inheritDoc}
    */
-  public function clearUserNotifications(AccountInterface $account = NULL) {
+  public function clearUserNotifications(AccountInterface $account) {
     foreach ($this->getUserNotifications($account) as $notification) {
       $notification->delete();
     }

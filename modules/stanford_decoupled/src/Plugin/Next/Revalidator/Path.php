@@ -221,7 +221,7 @@ class Path extends NextPath {
    * @return string|null
    *   Adjusted paths.
    */
-  protected static function adjustAdditionalPaths(?string $paths = NULL, ContentEntityInterface $entity): ?string {
+  protected static function adjustAdditionalPaths(?string $paths, ContentEntityInterface $entity): ?string {
     return \Drupal::token()
       ->replacePlain($paths, [$entity->getEntityTypeId() => $entity], ['clear' => TRUE]);
   }

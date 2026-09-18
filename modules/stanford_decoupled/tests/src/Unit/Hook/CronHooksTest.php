@@ -118,7 +118,7 @@ class CronHooksTest extends UnitTestCase {
       ->willReturn(1000);
     $this->state->expects($this->once())
       ->method('set')
-      ->with('stanford-decoupled-last-ran', $this->isType('int'));
+      ->with('stanford-decoupled-last-ran', $this->isInt());
 
     $storage = $this->mockNodeStorage([]);
     $storage->expects($this->once())->method('loadMultiple')->with([])->willReturn([]);

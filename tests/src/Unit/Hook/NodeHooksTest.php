@@ -94,7 +94,7 @@ class NodeHooksTest extends UnitTestCase {
     $exclusionField = $this->createMock(FieldItemListInterface::class);
     $exclusionField->method('getString')->willReturn('1');
 
-    $node = $this->createMock(NodeInterface::class);
+    $node = $this->createMock(SitemapNodeDouble::class);
     $node->method('hasField')->with('su_search_exclusion')->willReturn(TRUE);
     $node->method('get')->willReturnMap([
       ['su_metatags', $metatagsField],
@@ -408,3 +408,14 @@ class NodeHooksTest extends UnitTestCase {
   }
 
 }
+
+/**
+ * Node double that tolerates the dynamic properties Drupal entities expose.
+ *
+ * Real content entities route undeclared property access through
+ * ContentEntityBase::&__get(), so `$node->xmlsitemap['status']` never creates
+ * a dynamic property. Mocks built straight off NodeInterface have no such
+ * magic, and writing to one triggers PHP 8.2's dynamic property deprecation.
+ */
+#[\AllowDynamicProperties]
+abstract class SitemapNodeDouble implements NodeInterface, \IteratorAggregate {}
