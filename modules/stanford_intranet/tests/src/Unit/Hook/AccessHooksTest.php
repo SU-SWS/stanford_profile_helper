@@ -539,8 +539,8 @@ class AccessHooksTest extends UnitTestCase {
     $this->assertSame('stanford_intranet_author', $grants[1]['realm']);
     $this->assertSame(42, $grants[1]['gid']);
     $this->assertSame(1, $grants[1]['grant_view']);
-    $this->assertSame(1, $grants[1]['grant_update']);
-    $this->assertSame(1, $grants[1]['grant_delete']);
+    $this->assertSame(0, $grants[1]['grant_update']);
+    $this->assertSame(0, $grants[1]['grant_delete']);
   }
 
   /**
@@ -580,6 +580,9 @@ class AccessHooksTest extends UnitTestCase {
     $this->assertSame(0, $grants[1]['grant_delete']);
     $this->assertSame('stanford_intranet_author', $grants[2]['realm']);
     $this->assertSame(7, $grants[2]['gid']);
+    $this->assertSame(1, $grants[2]['grant_view']);
+    $this->assertSame(0, $grants[2]['grant_update']);
+    $this->assertSame(0, $grants[2]['grant_delete']);
   }
 
   /**
