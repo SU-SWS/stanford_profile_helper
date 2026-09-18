@@ -3,20 +3,21 @@
 namespace Drupal\stanford_profile_helper\Plugin\search_api\processor;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\search_api\Attribute\SearchApiProcessor;
 use Drupal\search_api\Processor\FieldsProcessorPluginBase;
 
 /**
  * Search API processor to remove only the desired html tags.
- *
- * @SearchApiProcessor(
- *    id = "remove_tags",
- *    label = @Translation("Remove Specific HTML Tags"),
- *    description = @Translation("Similiar to 'strip_tags', but choose only which tags to strip from fields."),
- *    stages = {
- *      "preprocess_index" = 0,
- *    }
- *  )
  */
+#[SearchApiProcessor(
+  id: 'remove_tags',
+  label: new TranslatableMarkup('Remove Specific HTML Tags'),
+  description: new TranslatableMarkup("Similiar to 'strip_tags', but choose only which tags to strip from fields."),
+  stages: [
+    'preprocess_index' => 0,
+  ],
+)]
 class RemoveTags extends FieldsProcessorPluginBase {
 
   /**

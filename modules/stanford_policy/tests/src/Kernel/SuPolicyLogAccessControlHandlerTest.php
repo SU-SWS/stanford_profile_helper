@@ -92,7 +92,6 @@ class SuPolicyLogAccessControlHandlerTest extends KernelTestBase {
 
     $this->installEntitySchema('user');
     $this->installEntitySchema('su_policy_log');
-    $this->installSchema('system', ['sequences']);
     $this->installSchema('book', ['book']);
     $this->installConfig(['stanford_policy']);
 

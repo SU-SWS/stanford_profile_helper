@@ -173,7 +173,7 @@ class StanfordPolicyHooksTest extends UnitTestCase {
    * title synced from the su_policy_title field.
    */
   public function testOnEntityPreSaveEmptyBookPid(): void {
-    $entity = $this->createMock(NodeInterface::class);
+    $entity = $this->createMock(BookNodeDouble::class);
     $entity->book = [];
     $entity->method('bundle')->willReturn('stanford_policy');
 
@@ -191,7 +191,7 @@ class StanfordPolicyHooksTest extends UnitTestCase {
    * A stanford_policy node with book pid of -1 also gets its title synced.
    */
   public function testOnEntityPreSaveBookPidMinusOne(): void {
-    $entity = $this->createMock(NodeInterface::class);
+    $entity = $this->createMock(BookNodeDouble::class);
     $entity->book = ['pid' => -1];
     $entity->method('bundle')->willReturn('stanford_policy');
 
@@ -210,7 +210,7 @@ class StanfordPolicyHooksTest extends UnitTestCase {
    * pid) is left untouched.
    */
   public function testOnEntityPreSaveBookPidSet(): void {
-    $entity = $this->createMock(NodeInterface::class);
+    $entity = $this->createMock(BookNodeDouble::class);
     $entity->book = ['pid' => 5];
     $entity->method('bundle')->willReturn('stanford_policy');
     $entity->expects($this->never())->method('set');
@@ -327,3 +327,14 @@ class StanfordPolicyHooksTest extends UnitTestCase {
   }
 
 }
+
+/**
+ * Node double that tolerates the dynamic properties Drupal entities expose.
+ *
+ * Real content entities route undeclared property access through
+ * ContentEntityBase::&__get(), so `$node->book['pid']` never creates a dynamic
+ * property. Mocks built straight off NodeInterface have no such magic, and
+ * writing to one triggers PHP 8.2's dynamic property deprecation.
+ */
+#[\AllowDynamicProperties]
+abstract class BookNodeDouble implements NodeInterface, \IteratorAggregate {}

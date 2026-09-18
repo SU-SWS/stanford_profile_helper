@@ -2,20 +2,21 @@
 
 namespace Drupal\stanford_profile_helper\Plugin\search_api\processor;
 
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\search_api\Attribute\SearchApiProcessor;
 use Drupal\search_api\Processor\FieldsProcessorPluginBase;
 
 /**
  * Search API processor to run html_entity_decode().
- *
- * @SearchApiProcessor(
- *    id = "decode_html_entities",
- *    label = @Translation("Decode HTML Entities"),
- *    description = @Translation("Run html_entity_decode on the contents. Use this before other proceses"),
- *    stages = {
- *      "preprocess_index" = 0,
- *    }
- *  )
  */
+#[SearchApiProcessor(
+  id: 'decode_html_entities',
+  label: new TranslatableMarkup('Decode HTML Entities'),
+  description: new TranslatableMarkup('Run html_entity_decode on the contents. Use this before other proceses'),
+  stages: [
+    'preprocess_index' => 0,
+  ],
+)]
 class DecodeHtmlEntities extends FieldsProcessorPluginBase {
 
   /**

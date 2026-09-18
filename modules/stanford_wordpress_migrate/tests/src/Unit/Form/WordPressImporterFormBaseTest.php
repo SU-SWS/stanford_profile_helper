@@ -111,7 +111,7 @@ class WordPressImporterFormBaseTest extends UnitTestCase {
 
     $form_state->expects($this->once())
       ->method('setTemporaryValue')
-      ->with(['wizard', 'api-routes'], $this->isType('array'));
+      ->with(['wizard', 'api-routes'], $this->isArray());
 
     // Create a mock form that extends the base class
     $mockForm = $this->getMockBuilder(WordPressImporterFormBase::class)

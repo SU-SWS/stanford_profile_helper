@@ -13,6 +13,7 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\State\StateInterface;
 use Drupal\node\NodeInterface;
+use Drupal\paragraphs\ParagraphInterface;
 
 /**
  * Hooks that control access to entities and fields.
@@ -119,6 +120,36 @@ class AccessHooks {
     $locked_node_ids = $this->state->get('stanford_profile_helper.locked_admin_nodes', []);
     if (in_array($node->id(), $locked_node_ids)) {
       return $op === 'view' ? AccessResult::forbiddenIf($account->isAnonymous()) : AccessResult::forbidden();
+    }
+    return AccessResult::neutral();
+  }
+
+  /**
+   * Implements hook_ENTITY_TYPE_access().
+   */
+  #[Hook('paragraph_access')]
+  public function paragraphAccess(ParagraphInterface $entity, $operation, AccountInterface $account) {
+    // The "view" guard must stay first: the edit check below re-enters entity
+    // access with the "update" operation, and this condition is what stops
+    // that second pass from recursing.
+    if ($operation == 'view' && $entity->bundle() == 'stanford_layout') {
+      // Users who can edit the layout keep seeing it even when it holds
+      // nothing, otherwise they'd have no way to add content to it.
+      $editAccess = $entity->access('update', $account, TRUE);
+      if ($editAccess->isAllowed()) {
+        return AccessResult::neutral()->addCacheableDependency($editAccess);
+      }
+
+      $layoutUuid = $entity->uuid();
+
+      /** @var \Drupal\Core\Entity\FieldableEntityInterface $parent */
+      $parent = $entity->getParentEntity();
+      $parentField = $entity->get('parent_field_name')->getString();
+
+      $children = array_map(fn($item) => $item->entity, iterator_to_array($parent->get($parentField)->getIterator()));
+      $children = array_filter($children, fn(ParagraphInterface $child) => $child->getBehaviorSetting('layout_paragraphs', 'parent_uuid') == $layoutUuid && $child->isPublished());
+      return AccessResult::forbiddenIf(!$children, 'No published children in the layout.')
+        ->addCacheableDependency($editAccess);
     }
     return AccessResult::neutral();
   }
