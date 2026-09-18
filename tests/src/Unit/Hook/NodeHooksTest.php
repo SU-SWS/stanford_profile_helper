@@ -85,6 +85,24 @@ class NodeHooksTest extends UnitTestCase {
   }
 
   /**
+   * Node has the exclusion field but no su_metatags field.
+   *
+   * There is nowhere to store a robots tag, so the node is left untouched
+   * rather than erroring on the missing field.
+   */
+  public function testAlterMetatagsNoMetatagsField() {
+    $node = $this->createMock(NodeInterface::class);
+    $node->method('hasField')->willReturnMap([
+      ['su_search_exclusion', TRUE],
+      ['su_metatags', FALSE],
+    ]);
+    $node->expects($this->never())->method('get');
+    $node->expects($this->never())->method('set');
+
+    $this->callAlterMetatags($node);
+  }
+
+  /**
    * Exclusion is enabled — robots noindex/nofollow tag is added.
    */
   public function testAlterMetatagsExclusionEnabledAddsRobotsTag() {
@@ -95,7 +113,10 @@ class NodeHooksTest extends UnitTestCase {
     $exclusionField->method('getString')->willReturn('1');
 
     $node = $this->createMock(SitemapNodeDouble::class);
-    $node->method('hasField')->with('su_search_exclusion')->willReturn(TRUE);
+    $node->method('hasField')->willReturnMap([
+      ['su_search_exclusion', TRUE],
+      ['su_metatags', TRUE],
+    ]);
     $node->method('get')->willReturnMap([
       ['su_metatags', $metatagsField],
       ['su_search_exclusion', $exclusionField],
@@ -108,6 +129,54 @@ class NodeHooksTest extends UnitTestCase {
       }));
 
     $this->callAlterMetatags($node);
+  }
+
+  /**
+   * Exclusion also flags the node to be left out of the XML sitemap.
+   */
+  public function testAlterMetatagsExclusionEnabledExcludesFromSitemap() {
+    $metatagsField = $this->createMock(FieldItemListInterface::class);
+    $metatagsField->method('getString')->willReturn('');
+
+    $exclusionField = $this->createMock(FieldItemListInterface::class);
+    $exclusionField->method('getString')->willReturn('1');
+
+    $node = $this->createMock(SitemapNodeDouble::class);
+    $node->method('hasField')->willReturnMap([
+      ['su_search_exclusion', TRUE],
+      ['su_metatags', TRUE],
+    ]);
+    $node->method('get')->willReturnMap([
+      ['su_metatags', $metatagsField],
+      ['su_search_exclusion', $exclusionField],
+    ]);
+
+    $this->callAlterMetatags($node);
+    $this->assertSame(0, $node->xmlsitemap['status']);
+  }
+
+  /**
+   * A node that isn't excluded is left alone in the XML sitemap.
+   */
+  public function testAlterMetatagsExclusionDisabledLeavesSitemapAlone() {
+    $metatagsField = $this->createMock(FieldItemListInterface::class);
+    $metatagsField->method('getString')->willReturn('');
+
+    $exclusionField = $this->createMock(FieldItemListInterface::class);
+    $exclusionField->method('getString')->willReturn('0');
+
+    $node = $this->createMock(SitemapNodeDouble::class);
+    $node->method('hasField')->willReturnMap([
+      ['su_search_exclusion', TRUE],
+      ['su_metatags', TRUE],
+    ]);
+    $node->method('get')->willReturnMap([
+      ['su_metatags', $metatagsField],
+      ['su_search_exclusion', $exclusionField],
+    ]);
+
+    $this->callAlterMetatags($node);
+    $this->assertFalse(isset($node->xmlsitemap));
   }
 
   /**
@@ -127,7 +196,10 @@ class NodeHooksTest extends UnitTestCase {
     $exclusionField->method('getString')->willReturn('0');
 
     $node = $this->createMock(NodeInterface::class);
-    $node->method('hasField')->with('su_search_exclusion')->willReturn(TRUE);
+    $node->method('hasField')->willReturnMap([
+      ['su_search_exclusion', TRUE],
+      ['su_metatags', TRUE],
+    ]);
     $node->method('get')->willReturnMap([
       ['su_metatags', $metatagsField],
       ['su_search_exclusion', $exclusionField],
@@ -154,7 +226,10 @@ class NodeHooksTest extends UnitTestCase {
     $exclusionField->method('getString')->willReturn('0');
 
     $node = $this->createMock(NodeInterface::class);
-    $node->method('hasField')->with('su_search_exclusion')->willReturn(TRUE);
+    $node->method('hasField')->willReturnMap([
+      ['su_search_exclusion', TRUE],
+      ['su_metatags', TRUE],
+    ]);
     $node->method('get')->willReturnMap([
       ['su_metatags', $metatagsField],
       ['su_search_exclusion', $exclusionField],

@@ -134,7 +134,10 @@ class NodeHooks {
    *   Node entity being saved.
    */
   protected function alterMetatags(NodeInterface $node): void {
-    if (!$node->hasField('su_search_exclusion')) {
+    if (
+      !$node->hasField('su_search_exclusion') ||
+      !$node->hasField('su_metatags')
+    ) {
       return;
     }
 
