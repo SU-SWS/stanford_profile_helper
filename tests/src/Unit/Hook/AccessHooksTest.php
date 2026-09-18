@@ -7,7 +7,9 @@ namespace Drupal\Tests\stanford_profile_helper\Unit\Hook;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Cache\Context\CacheContextsManager;
 use Drupal\Core\Config\ImmutableConfig;
+use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemList;
 use Drupal\Core\Field\FieldItemListInterface;
@@ -63,6 +65,16 @@ class AccessHooksTest extends UnitTestCase {
    */
   protected function setUp(): void {
     parent::setUp();
+
+    // Cache::mergeContexts() validates tokens against the container inside an
+    // assert(), so anything touching cache contexts needs it stubbed. Without
+    // this the cacheability tests only pass when zend.assertions is off.
+    $cacheContextsManager = $this->createMock(CacheContextsManager::class);
+    $cacheContextsManager->method('assertValidTokens')->willReturn(TRUE);
+    $container = new ContainerBuilder();
+    $container->set('cache_contexts_manager', $cacheContextsManager);
+    \Drupal::setContainer($container);
+
     $this->configFactory = $this->createMock(ConfigFactoryInterface::class);
     $this->routeMatch = $this->createMock(RouteMatchInterface::class);
     $this->state = $this->createMock(StateInterface::class);
