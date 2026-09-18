@@ -184,12 +184,20 @@ class AccessHooks {
       }
       $grants[] = $grant;
     }
+    // Authors keep view access to their own content so that the intranet role
+    // restrictions never hide a node from the person who wrote it. Update and
+    // delete are deliberately left off: grants are keyed on the uid and are
+    // only recalculated when the node is saved, so an author grant that allowed
+    // editing would outlive any role change. A user demoted to a role with no
+    // editing permissions would keep an Edit tab on everything they had
+    // previously authored. Leaving these at 0 hands the decision back to the
+    // node permissions of whatever roles the user currently holds.
     $grants[] = [
       'realm' => 'stanford_intranet_author',
       'gid' => $node->getOwner()->id(),
       'grant_view' => 1,
-      'grant_update' => 1,
-      'grant_delete' => 1,
+      'grant_update' => 0,
+      'grant_delete' => 0,
     ];
 
     return $grants;

@@ -40,6 +40,19 @@ the sitemap.
 Links that were saved before the intranet was enabled keep their old access value until the entity is saved again, so
 run `drush @<site_alias> xmlsitemap:rebuild` to add the existing pages to the sitemap.
 
+## Node Access Grants
+Two realms are written for every published node that has the access field:
+
+* `stanford_intranet_roles` — one record per role configured on the node, carrying whichever of view, update
+  and delete the site manager selected. A node with nothing configured is treated as viewable by any
+  authenticated user.
+* `stanford_intranet_author` — a view only record keyed on the uid of the node author.
+
+The author record intentionally does not grant update or delete. Grant records are keyed on a uid and are only
+recalculated when the node is saved, so an author grant that allowed editing would survive any later change to
+that user's roles, leaving them with an Edit tab on their old content long after losing the permission to use
+it. Editing is left to the node permissions of the roles the user currently holds.
+
 ## Additional Resources
 * [SWS Dev Guide: Intranet](https://sws-devguide.stanford.edu/site-building/drupal-8/intranet)
 * [Drupal State API Overview](https://www.drupal.org/docs/8/api/state-api/overview)
