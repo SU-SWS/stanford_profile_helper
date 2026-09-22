@@ -78,7 +78,7 @@ final class StanfordDecoupledCommands extends DrushCommands {
     $site->setRevalidateSecret($options['revalidation-secret'] ?: $this->uuid->generate());
     $site->setBaseUrl($domain);
     $site->setRevalidateUrl("$domain/api/revalidate");
-    $site->setPreviewUrl("$domain/api/draft");
+    $site->setPreviewUrl("$domain/preview");
 
     $site->save();
 
