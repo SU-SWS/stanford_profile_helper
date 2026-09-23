@@ -5367,7 +5367,7 @@ __metadata:
   linkType: hard
 
 "postcss-custom-media@npm:^11.0.5":
-  version: 11.0.5
+  version: 11.0.6
   resolution: "postcss-custom-media@npm:11.0.5"
   dependencies:
     "@csstools/cascade-layer-name-parser": "npm:^2.0.4"

@@ -1,5 +1,16 @@
 # Stanford Profile Helper
 
+11.0.6
+--------------------------------------------------------------------------------
+_Release Date: 2026-09-23_
+- Prevent an event in the trash from causing an error with the event importer (#561)
+- Safety check for field when minipulating metatags
+- Hide paragraph layout rows when the children are unpublished or it is empty (#560)
+- Intranet author grants no longer allow update and delete (D8CORE-7839) (#559)
+- Allow sitemaps on intranets, reduced to pages an authenticated user can view (#558)
+- PHP8.4 deprecation fix for null when expecting a string
+- Allow CAP API url overrides via settings.php files (#557)
+
 11.0.5
 --------------------------------------------------------------------------------
 _Release Date: 2026-09-08_
