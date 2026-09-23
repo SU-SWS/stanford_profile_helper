@@ -216,8 +216,8 @@ class EventsImporterSubscriberTest extends UnitTestCase {
       ->method('getString')
       ->willReturnOnConsecutiveCalls('67890', '78901');
     $field->expects($this->exactly(2))
-      ->method('count')
-      ->willReturn(1);
+      ->method('isEmpty')
+      ->willReturn(FALSE);
 
     $node1 = $this->createMock(NodeInterface::class);
     $node1->expects($this->once())

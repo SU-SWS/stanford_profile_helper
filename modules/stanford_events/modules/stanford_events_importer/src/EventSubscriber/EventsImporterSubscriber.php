@@ -54,7 +54,7 @@ final class EventsImporterSubscriber implements EventSubscriberInterface {
       ->getQualifiedMapTableName(), 'map')
       ->fields('map', ['destid1', 'sourceid1'])
       ->condition('source_row_status', MigrateIdMapInterface::STATUS_IGNORED)
-      ->orderBy('last_imported', 'ASC')
+      ->orderBy('last_imported')
       ->execute();
     while ($row = $query->fetchAssoc()) {
       $this->queueNode((int) $row['destid1'], (int) $row['sourceid1']);
@@ -73,20 +73,19 @@ final class EventsImporterSubscriber implements EventSubscriberInterface {
    */
   protected function queueNode(int $nid, int $instanceId): void {
     $queue = $this->queue->get('localist_event_checker');
+    /** @var \Drupal\node\NodeInterface $node */
     $node = $this->entityTypeManager->getStorage('node')->load($nid);
 
     if (
-      !$node->hasField('su_event_localist_id') ||
-      !$node->get('su_event_localist_id')->count()
+      $node?->hasField('su_event_localist_id') &&
+      !$node->get('su_event_localist_id')->isEmpty()
     ) {
-      return;
+      $queue->createItem([
+        (int) $node->get('su_event_localist_id')?->getString(),
+        $nid,
+        $instanceId,
+      ]);
     }
-
-    $queue->createItem([
-      (int) $node->get('su_event_localist_id')?->getString(),
-      $nid,
-      $instanceId,
-    ]);
   }
 
 }
