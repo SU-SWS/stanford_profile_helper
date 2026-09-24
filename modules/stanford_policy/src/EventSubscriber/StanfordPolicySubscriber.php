@@ -2,6 +2,7 @@
 
 namespace Drupal\stanford_policy\EventSubscriber;
 
+use Drupal\book\BookInterface;
 use Drupal\book\BookManagerInterface;
 use Drupal\config_pages\ConfigPagesLoaderServiceInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -86,7 +87,8 @@ class StanfordPolicySubscriber implements EventSubscriberInterface {
    */
   public function modifyPolicyEntity(NodeInterface $node): void {
     // Book settings not set.
-    if ($node->bundle() != 'stanford_policy' || empty($node->book['pid'])) {
+    $book = $node instanceof BookInterface ? $node->getBook() : [];
+    if ($node->bundle() != 'stanford_policy' || empty($book['pid'])) {
       return;
     }
 
