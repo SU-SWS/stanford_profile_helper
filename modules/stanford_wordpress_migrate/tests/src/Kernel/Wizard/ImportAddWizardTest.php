@@ -11,11 +11,13 @@ use Drupal\media\Entity\MediaType;
 use Drupal\stanford_wordpress_migrate\Entity\WordPressMigration;
 use Drupal\stanford_wordpress_migrate\Wizard\ImportAddWizard;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Kernel tests for ImportAddWizard.
  */
 #[RunTestsInSeparateProcesses]
+#[Group('stanford_wordpress_migrate')]
 class ImportAddWizardTest extends KernelTestBase {
 
   /**

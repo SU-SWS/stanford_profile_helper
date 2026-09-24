@@ -6,10 +6,12 @@ use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Tests\UnitTestCase;
 use Drupal\jumpstart_ui\Plugin\Block\SkipNavAnchorBlock;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class SkipNavAnchorBlockTest
  */
+#[Group('jumpstart_ui')]
 class SkipNavAnchorBlockTest extends UnitTestCase {
 
   /**
@@ -43,7 +45,7 @@ class SkipNavAnchorBlockTest extends UnitTestCase {
   /**
    * {@inheritDoc}
    */
-  public function setup(): void {
+  protected function setUp(): void {
     parent::setUp();
 
     $container = new ContainerBuilder();

@@ -11,6 +11,7 @@ use Drupal\link\Plugin\Field\FieldWidget\LinkWidget;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Cache\CacheBackendInterface;
+use Drupal\stanford_events_importer\Hook\FormHooks;
 use Drupal\stanford_events_importer\StanfordEventsImporter;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -149,8 +150,9 @@ class StanfordEventsImporterAPIURLFieldWidget extends LinkWidget {
     }
 
     // If not in cache. Try to get it.
-    stanford_events_importer_update_opts();
-    return $this->cache->get(StanfordEventsImporter::CACHE_KEY_ORG)->data;
+    FormHooks::updateOpts();
+    $cache = $this->cache->get(StanfordEventsImporter::CACHE_KEY_ORG);
+    return $cache ? $cache->data : [];
   }
 
   /**
@@ -165,8 +167,9 @@ class StanfordEventsImporterAPIURLFieldWidget extends LinkWidget {
     }
 
     // If not in cache. Try to get it.
-    stanford_events_importer_update_opts();
-    return $this->cache->get(StanfordEventsImporter::CACHE_KEY_CAT)->data;
+    FormHooks::updateOpts();
+    $cache = $this->cache->get(StanfordEventsImporter::CACHE_KEY_CAT);
+    return $cache ? $cache->data : [];
   }
 
   /**

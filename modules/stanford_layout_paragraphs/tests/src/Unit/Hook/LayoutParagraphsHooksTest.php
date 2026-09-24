@@ -9,7 +9,6 @@ use Drupal\stanford_layout_paragraphs\Hook\LayoutParagraphsHooks;
 use Drupal\Tests\UnitTestCase;
 use Drupal\views\Plugin\views\query\QueryPluginBase;
 use Drupal\views\ViewExecutable;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -18,7 +17,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  * Unit tests for LayoutParagraphsHooks.
  */
 #[Group('stanford_layout_paragraphs')]
-#[CoversClass(LayoutParagraphsHooks::class)]
 class LayoutParagraphsHooksTest extends UnitTestCase {
 
   /**

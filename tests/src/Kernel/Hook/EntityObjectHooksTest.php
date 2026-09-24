@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Tests\stanford_profile_helper\Kernel\EventSubscriber;
+namespace Drupal\Tests\stanford_profile_helper\Kernel\Hook;
 
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
@@ -10,10 +10,12 @@ use Drupal\path_alias\Entity\PathAlias;
 use Drupal\redirect\Entity\Redirect;
 use Drupal\Tests\stanford_profile_helper\Kernel\SuProfileHelperKernelTestBase;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test the event subscriber.
  */
+#[Group('stanford_profile_helper')]
 #[RunTestsInSeparateProcesses]
 class EntityObjectHooksTest extends SuProfileHelperKernelTestBase {
 

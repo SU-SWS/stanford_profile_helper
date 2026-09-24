@@ -9,14 +9,12 @@ use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Extension\ThemeHandlerInterface;
 use Drupal\stanford_profile_helper\Hook\PatternHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for PatternHooks.
  */
 #[Group('stanford_profile_helper')]
-#[CoversClass(PatternHooks::class)]
 class PatternHooksTest extends UnitTestCase {
 
   /**
@@ -99,7 +97,6 @@ class PatternHooksTest extends UnitTestCase {
    */
   protected function callExtensionEnabled(Extension $extension): bool {
     $method = new \ReflectionMethod(PatternHooks::class, 'extensionEnabled');
-    $method->setAccessible(TRUE);
     return $method->invoke($this->hooks, $extension);
   }
 

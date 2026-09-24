@@ -22,14 +22,12 @@ use Drupal\node\NodeInterface;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\stanford_profile_helper\Hook\AccessHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for AccessHooks.
  */
 #[Group('stanford_profile_helper')]
-#[CoversClass(AccessHooks::class)]
 class AccessHooksTest extends UnitTestCase {
 
   /**

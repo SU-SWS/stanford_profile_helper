@@ -17,7 +17,6 @@ use Drupal\next\NextEntityTypeManagerInterface;
 use Drupal\node\NodeInterface;
 use Drupal\stanford_decoupled\Hook\CronHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
@@ -32,7 +31,6 @@ if (!function_exists('next_entity_update')) {
  * Unit tests for CronHooks.
  */
 #[Group('stanford_decoupled')]
-#[CoversClass(CronHooks::class)]
 class CronHooksTest extends UnitTestCase {
 
   /**

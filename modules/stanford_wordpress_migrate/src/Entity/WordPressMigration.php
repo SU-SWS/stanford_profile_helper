@@ -73,17 +73,17 @@ class WordPressMigration extends ContentEntityBase implements WordPressMigration
     $fields += static::publishedBaseFieldDefinitions($entity_type);
 
     $fields['label'] = BaseFieldDefinition::create('string')
-      ->setLabel(t('Label'))
+      ->setLabel(new TranslatableMarkup('Label'))
       ->setRequired(TRUE)
       ->setSetting('max_length', 255);
 
     $fields['base_url'] = BaseFieldDefinition::create('string')
-      ->setLabel(t('Base URL'))
+      ->setLabel(new TranslatableMarkup('Base URL'))
       ->setRequired(TRUE)
       ->setSetting('max_length', 255);
 
     $fields['configuration'] = BaseFieldDefinition::create('map')
-      ->setLabel(t('Configuration'))
+      ->setLabel(new TranslatableMarkup('Configuration'))
       ->setDefaultValue([]);
 
     return $fields;

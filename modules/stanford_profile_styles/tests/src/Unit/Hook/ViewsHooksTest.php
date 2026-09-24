@@ -8,14 +8,12 @@ use Drupal\stanford_profile_styles\Hook\ViewsHooks;
 use Drupal\Tests\UnitTestCase;
 use Drupal\views\ViewEntityInterface;
 use Drupal\views\ViewExecutable;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for ViewsHooks.
  */
 #[Group('stanford_profile_styles')]
-#[CoversClass(ViewsHooks::class)]
 class ViewsHooksTest extends UnitTestCase {
 
   /**

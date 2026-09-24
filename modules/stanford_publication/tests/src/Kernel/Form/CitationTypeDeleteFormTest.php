@@ -6,11 +6,13 @@ use Drupal\Core\Form\FormState;
 use Drupal\stanford_publication\Entity\CitationType;
 use Drupal\Tests\stanford_publication\Kernel\PublicationTestBase;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class CitationTypeDeleteFormTest.
  */
 #[RunTestsInSeparateProcesses]
+#[Group('stanford_publication')]
 class CitationTypeDeleteFormTest extends PublicationTestBase {
 
   /**

@@ -9,10 +9,12 @@ use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\stanford_wordpress_migrate\WordPressMigrateFieldProcessorPluginBase;
 use Drupal\stanford_wordpress_migrate\WordPressMigrationInterface;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for WordPressMigrateFieldProcessorPluginBase.
  */
+#[Group('stanford_wordpress_migrate')]
 class WordPressMigrateFieldProcessorPluginBaseTest extends UnitTestCase {
 
   /**

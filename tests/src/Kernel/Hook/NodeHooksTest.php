@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Tests\stanford_profile_helper\Kernel\EventSubscriber;
+namespace Drupal\Tests\stanford_profile_helper\Kernel\Hook;
 
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
@@ -8,10 +8,12 @@ use Drupal\node\Entity\Node;
 use Drupal\Tests\stanford_profile_helper\Kernel\SuProfileHelperKernelTestBase;
 use Drupal\user\Entity\Role;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test the event subscriber.
  */
+#[Group('stanford_profile_helper')]
 #[RunTestsInSeparateProcesses]
 class NodeHooksTest extends SuProfileHelperKernelTestBase {
 

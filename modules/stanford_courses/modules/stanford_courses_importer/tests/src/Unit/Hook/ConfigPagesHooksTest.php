@@ -10,14 +10,12 @@ use Drupal\config_pages\ConfigPagesInterface;
 use Drupal\migrate\Plugin\MigrationPluginManager;
 use Drupal\stanford_courses_importer\Hook\ConfigPagesHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for ConfigPagesHooks.
  */
 #[Group('stanford_courses_importer')]
-#[CoversClass(ConfigPagesHooks::class)]
 class ConfigPagesHooksTest extends UnitTestCase {
 
   /**

@@ -40,8 +40,10 @@ class ViewsHooks {
     if (in_array($id, $allow_list)) {
       $output['#attached']['library'][] = 'stanford_events_series/event_series_views';
 
-      $node_list_position = array_search('node_list', $output['#cache']['tags']);
-      unset($output['#cache']['tags'][$node_list_position]);
+      $node_list_position = array_search('node_list', $output['#cache']['tags'] ?? []);
+      if ($node_list_position !== FALSE) {
+        unset($output['#cache']['tags'][$node_list_position]);
+      }
       foreach ($view->filter['type']->value as $node_type) {
         $output['#cache']['tags'][] = "node_list:$node_type";
       }

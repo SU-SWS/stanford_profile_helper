@@ -6,10 +6,12 @@ use Drupal\stanford_profile_admin\Routing\RouteSubscriber;
 use Drupal\Tests\UnitTestCase;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class RouteSubscriberTest
  */
+#[Group('stanford_profile_admin')]
 class RouteSubscriberTest extends UnitTestCase {
 
   /**

@@ -7,14 +7,12 @@ namespace Drupal\Tests\jumpstart_ui\Unit\Hook;
 use Drupal\Core\Routing\AdminContext;
 use Drupal\jumpstart_ui\Hook\PageHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for PageHooks.
  */
 #[Group('jumpstart_ui')]
-#[CoversClass(PageHooks::class)]
 class PageHooksTest extends UnitTestCase {
 
   /**

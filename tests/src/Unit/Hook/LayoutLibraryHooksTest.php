@@ -9,14 +9,12 @@ use Drupal\stanford_profile_helper\Form\LayoutLibraryIconForm;
 use Drupal\stanford_profile_helper\Hook\LayoutLibraryHooks;
 use Drupal\stanford_profile_helper\StanfordLayoutListBuilder;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for LayoutLibraryHooks.
  */
 #[Group('stanford_profile_helper')]
-#[CoversClass(LayoutLibraryHooks::class)]
 class LayoutLibraryHooksTest extends UnitTestCase {
 
   /**

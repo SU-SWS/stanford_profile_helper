@@ -12,11 +12,13 @@ use Drupal\node\Entity\Node;
 use Drupal\stanford_events_importer\StanfordEventsImporter;
 use Drupal\Core\Cache\CacheBackendInterface;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class StanfordEventsImporterAPIURLFieldWidgetTest.php
  */
 #[RunTestsInSeparateProcesses]
+#[Group('stanford_events_importer')]
 class StanfordEventsImporterAPIURLFieldWidgetTest extends KernelTestBase {
 
   /**
@@ -28,6 +30,7 @@ class StanfordEventsImporterAPIURLFieldWidgetTest extends KernelTestBase {
     'user',
     'link',
     'field',
+    'migrate',
     'stanford_events',
     'stanford_events_importer',
     'config_pages',
@@ -36,7 +39,7 @@ class StanfordEventsImporterAPIURLFieldWidgetTest extends KernelTestBase {
   /**
    * {@inheritDoc}
    */
-  public function setup(): void {
+  protected function setUp(): void {
     parent::setUp();
     $this->installEntitySchema('user');
     $this->installEntitySchema('node');

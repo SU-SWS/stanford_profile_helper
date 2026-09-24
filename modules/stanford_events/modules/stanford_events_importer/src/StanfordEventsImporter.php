@@ -89,9 +89,12 @@ class StanfordEventsImporter {
   public function parseXML(string $raw, array $options) {
     libxml_use_internal_errors(TRUE);
     $xml = simplexml_load_string($raw);
+    if ($xml === FALSE) {
+      return FALSE;
+    }
 
-    $guids = $xml->xpath($options['guids']);
-    $labels = $xml->xpath($options['label']);
+    $guids = $xml->xpath($options['guids']) ?: [];
+    $labels = $xml->xpath($options['label']) ?: [];
 
     array_walk($guids, function(&$val) {
       $val = $val->__toString();

@@ -8,14 +8,12 @@ use Drupal\stanford_notifications\Hook\StanfordNotificationsHooks;
 use Drupal\stanford_notifications\NotificationServiceInterface;
 use Drupal\Tests\UnitTestCase;
 use Drupal\user\UserInterface;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for StanfordNotificationsHooks.
  */
 #[Group('stanford_notifications')]
-#[CoversClass(StanfordNotificationsHooks::class)]
 class StanfordNotificationsHooksTest extends UnitTestCase {
 
   /**

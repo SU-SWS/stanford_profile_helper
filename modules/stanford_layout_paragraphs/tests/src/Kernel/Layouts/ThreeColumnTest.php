@@ -7,14 +7,14 @@ namespace Drupal\Tests\stanford_layout_paragraphs\Kernel\Layouts;
 use Drupal\Core\Form\FormState;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\stanford_layout_paragraphs\Layouts\ThreeColumn;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Kernel tests for ThreeColumn layout.
  */
-#[CoversClass(ThreeColumn::class)]
 #[RunTestsInSeparateProcesses]
+#[Group('stanford_layout_paragraphs')]
 class ThreeColumnTest extends KernelTestBase {
 
   /**

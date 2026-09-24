@@ -14,13 +14,11 @@ use Drupal\node\NodeInterface;
 use Drupal\stanford_profile_helper\EventSubscriber\EntityEventSubscriber;
 use Drupal\stanford_profile_helper\StanfordDefaultContentInterface;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
  * Test the EntityEventSubscriber.
  */
 #[Group('stanford_profile_helper')]
-#[CoversClass(EntityEventSubscriber::class)]
 class EntityEventSubscriberTest extends UnitTestCase {
 
   /**

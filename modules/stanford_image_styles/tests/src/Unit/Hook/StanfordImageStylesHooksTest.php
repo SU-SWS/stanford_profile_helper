@@ -8,14 +8,12 @@ use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\image\ImageStyleInterface;
 use Drupal\stanford_image_styles\Hook\StanfordImageStylesHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for StanfordImageStylesHooks.
  */
 #[Group('stanford_image_styles')]
-#[CoversClass(StanfordImageStylesHooks::class)]
 class StanfordImageStylesHooksTest extends UnitTestCase {
 
   /**

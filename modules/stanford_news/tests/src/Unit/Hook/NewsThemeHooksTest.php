@@ -10,7 +10,6 @@ use Drupal\node\NodeInterface;
 use Drupal\stanford_news\Hook\NewsThemeHooks;
 use Drupal\taxonomy\TermInterface;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -18,7 +17,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  * Unit tests for NewsThemeHooks.
  */
 #[Group('stanford_news')]
-#[CoversClass(NewsThemeHooks::class)]
 class NewsThemeHooksTest extends UnitTestCase {
 
   /**

@@ -10,10 +10,12 @@ use Drupal\stanford_wordpress_migrate\WordPressMigrationInterface;
 use Drupal\Tests\UnitTestCase;
 use GuzzleHttp\ClientInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for WordPressImporterFormBase.
  */
+#[Group('stanford_wordpress_migrate')]
 class WordPressImporterFormBaseTest extends UnitTestCase {
 
   /**

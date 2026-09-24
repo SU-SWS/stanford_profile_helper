@@ -12,7 +12,7 @@ class LayoutLibraryHooks {
    * Implements hook_entity_type_alter().
    */
   #[Hook('entity_type_alter')]
-  function entityTypeAlter(array &$entity_types) {
+  public function entityTypeAlter(array &$entity_types) {
     if (isset($entity_types['layout'])) {
       /** @var \Drupal\Core\Entity\EntityTypeInterface $layout */
       $layout = $entity_types['layout'];

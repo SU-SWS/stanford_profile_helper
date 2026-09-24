@@ -11,18 +11,19 @@ use Drupal\node\Entity\NodeType;
 use Drupal\node\Entity\Node;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Promise\PromiseInterface;
-use GuzzleHttp\Psr7\Stream;
 use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\ResponseInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 
 use Drupal\stanford_courses\Plugin\Field\FieldWidget\ExploreCoursesUrlWidget;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class ExploreCoursesUrlWidgetTest.php.
  */
 #[RunTestsInSeparateProcesses]
+#[Group('stanford_courses')]
 class ExploreCoursesUrlWidgetTest extends KernelTestBase {
 
   /**
@@ -40,7 +41,7 @@ class ExploreCoursesUrlWidgetTest extends KernelTestBase {
   /**
    * {@inheritDoc}.
    */
-  public function setup(): void {
+  protected function setUp(): void {
     parent::setUp();
     $this->installEntitySchema('user');
     $this->installEntitySchema('node');

@@ -5,10 +5,12 @@ namespace Drupal\Tests\stanford_profile_helper\Unit\Plugin\Filter;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\stanford_profile_helper\Plugin\Filter\Mathjax;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class MathjaxTest.
  */
+#[Group('stanford_profile_helper')]
 class MathjaxTest extends UnitTestCase {
 
   /**

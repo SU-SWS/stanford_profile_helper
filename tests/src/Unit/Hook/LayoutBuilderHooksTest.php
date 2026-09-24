@@ -6,14 +6,12 @@ namespace Drupal\Tests\stanford_profile_helper\Unit\Hook;
 
 use Drupal\stanford_profile_helper\Hook\LayoutBuilderHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for LayoutBuilderHooks.
  */
 #[Group('stanford_profile_helper')]
-#[CoversClass(LayoutBuilderHooks::class)]
 class LayoutBuilderHooksTest extends UnitTestCase {
 
   /**

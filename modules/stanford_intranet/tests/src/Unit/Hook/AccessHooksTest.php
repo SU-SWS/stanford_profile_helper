@@ -21,7 +21,6 @@ use Drupal\stanford_intranet\Hook\AccessHooks;
 use Drupal\stanford_intranet\Plugin\Field\FieldType\EntityAccessFieldType;
 use Drupal\Tests\UnitTestCase;
 use Drupal\user\RoleInterface;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
@@ -29,7 +28,6 @@ use Symfony\Component\Routing\Exception\RouteNotFoundException;
  * Unit tests for AccessHooks.
  */
 #[Group('stanford_intranet')]
-#[CoversClass(AccessHooks::class)]
 class AccessHooksTest extends UnitTestCase {
 
   /**
@@ -690,6 +688,40 @@ class AccessHooksTest extends UnitTestCase {
       ->with('stanford_intranet.rids', ['authenticated' => 1]);
 
     $this->hooks->userRolePredelete($role);
+  }
+
+  /**
+   * Roles without a registered grant id don't produce a grant.
+   */
+  public function testNodeAccessRecordsSkipsUnmappedRoles() {
+    $node = $this->createMock(NodeInterface::class);
+    $node->method('isPublished')->willReturn(TRUE);
+    $node->method('hasField')->with(EntityAccessFieldType::FIELD_NAME)->willReturn(TRUE);
+
+    $this->state->method('get')
+      ->willReturnCallback($this->stateGetCallback([
+        'stanford_intranet' => TRUE,
+        'stanford_intranet.rids' => ['site_manager' => 222],
+      ]));
+
+    $field_list = $this->createMock(FieldItemListInterface::class);
+    $field_list->method('getValue')->willReturn([
+      ['role' => 'deleted_role', 'access' => ['view']],
+      ['role' => 'site_manager', 'access' => ['view', 'update']],
+    ]);
+    $node->method('get')->with(EntityAccessFieldType::FIELD_NAME)->willReturn($field_list);
+
+    $owner = $this->createMock(AccountInterface::class);
+    $owner->method('id')->willReturn(42);
+    $node->method('getOwner')->willReturn($owner);
+
+    $grants = $this->hooks->nodeAccessRecords($node);
+
+    $this->assertCount(2, $grants);
+    $this->assertSame('stanford_intranet_roles', $grants[0]['realm']);
+    $this->assertSame(222, $grants[0]['gid']);
+    $this->assertSame(1, $grants[0]['grant_update']);
+    $this->assertSame('stanford_intranet_author', $grants[1]['realm']);
   }
 
 }

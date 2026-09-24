@@ -11,6 +11,8 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\State\StateInterface;
 use Drupal\Core\StreamWrapper\StreamWrapperManager;
 use Drupal\file\FileInterface;
+use Drupal\file\FileRepositoryInterface;
+use Drupal\file\FileUsage\FileUsageInterface;
 
 /**
  * Hooks that control file downloads and access on the intranet.
@@ -24,10 +26,16 @@ class FileHooks {
    *   Core state service.
    * @param \Drupal\Core\Extension\ModuleHandlerInterface $moduleHandler
    *   Core module handler service.
+   * @param \Drupal\file\FileRepositoryInterface $fileRepository
+   *   File repository service.
+   * @param \Drupal\file\FileUsage\FileUsageInterface $fileUsage
+   *   File usage service.
    */
   public function __construct(
     protected StateInterface $state,
     protected ModuleHandlerInterface $moduleHandler,
+    protected FileRepositoryInterface $fileRepository,
+    protected FileUsageInterface $fileUsage,
   ) {}
 
   /**
@@ -48,13 +56,12 @@ class FileHooks {
         ->invokeAll('file_download', [str_replace('.png', '', $uri)]);
     }
 
-    $file_repository = \Drupal::service('file.repository');
-    $file = $file_repository->loadByUri($uri);
+    $file = $this->fileRepository->loadByUri($uri);
     if (!$file) {
       return;
     }
 
-    $usage_list = \Drupal::service('file.usage')->listUsage($file);
+    $usage_list = $this->fileUsage->listUsage($file);
     // Allow icon files to be viewed. All other files on the system are referenced
     // via media entities, so they will go through normal access checks. This
     // allows media library icons, paragraph type icons, etc to be viewed and
@@ -69,7 +76,7 @@ class FileHooks {
    */
   #[Hook('file_access')]
   public function fileAccess(FileInterface $file, $operation, AccountInterface $account) {
-    $usage = \Drupal::service('file.usage')->listUsage($file);
+    $usage = $this->fileUsage->listUsage($file);
 
     // Allow the user to "download" the file if it meets the conditions. This
     // allows images that are saved on config pages to be viewed by authenticated

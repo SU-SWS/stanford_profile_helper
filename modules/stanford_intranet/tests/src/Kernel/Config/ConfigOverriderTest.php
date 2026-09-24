@@ -5,11 +5,13 @@ namespace Drupal\Tests\stanford_intranet\Kernel\Config;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\Tests\stanford_intranet\Kernel\IntranetKernelTestBase;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class ConfigOverriderTest.
  */
 #[RunTestsInSeparateProcesses]
+#[Group('stanford_intranet')]
 class ConfigOverriderTest extends IntranetKernelTestBase {
 
   /**

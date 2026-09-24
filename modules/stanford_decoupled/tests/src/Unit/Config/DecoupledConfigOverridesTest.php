@@ -9,10 +9,12 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\Query\QueryInterface;
 use Drupal\stanford_decoupled\Config\DecoupledConfigOverrides;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class SulCleanHtmlTest.
  */
+#[Group('stanford_decoupled')]
 class DecoupledConfigOverridesTest extends UnitTestCase {
 
   protected $cacheData;

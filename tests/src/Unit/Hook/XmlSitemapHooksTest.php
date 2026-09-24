@@ -10,14 +10,12 @@ use Drupal\Core\State\StateInterface;
 use Drupal\stanford_profile_helper\Hook\XmlSitemapHooks;
 use Drupal\Tests\UnitTestCase;
 use Drupal\xmlsitemap\XmlSitemapInterface;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for XmlSitemapHooks.
  */
 #[Group('stanford_profile_helper')]
-#[CoversClass(XmlSitemapHooks::class)]
 class XmlSitemapHooksTest extends UnitTestCase {
 
   /**

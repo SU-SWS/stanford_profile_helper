@@ -7,10 +7,12 @@ namespace Drupal\Tests\stanford_wordpress_migrate\Unit\Plugin\WordPressMigrateFi
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\stanford_wordpress_migrate\Plugin\WordPressMigrateFieldProcessor\SmartDateField;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for SmartDateField plugin.
  */
+#[Group('stanford_wordpress_migrate')]
 class SmartDateFieldTest extends UnitTestCase {
 
   /**

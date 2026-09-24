@@ -8,14 +8,12 @@ use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Form\FormState;
 use Drupal\Tests\UnitTestCase;
 use Drupal\jumpstart_ui\Plugin\Block\AnchorLinkNavigationBlock;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for AnchorLinkNavigationBlock.
  */
 #[Group('jumpstart_ui')]
-#[CoversClass(AnchorLinkNavigationBlock::class)]
 class AnchorLinkNavigationBlockTest extends UnitTestCase {
 
   /**

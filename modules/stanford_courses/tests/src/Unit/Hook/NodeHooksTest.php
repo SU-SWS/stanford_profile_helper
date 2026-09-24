@@ -9,14 +9,12 @@ use Drupal\node\NodeInterface;
 use Drupal\pathauto\PathautoPatternInterface;
 use Drupal\stanford_courses\Hook\NodeHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for NodeHooks.
  */
 #[Group('stanford_courses')]
-#[CoversClass(NodeHooks::class)]
 class NodeHooksTest extends UnitTestCase {
 
   /**

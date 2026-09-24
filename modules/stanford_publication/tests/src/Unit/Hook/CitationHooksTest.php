@@ -18,14 +18,12 @@ use Drupal\node\NodeInterface;
 use Drupal\stanford_publication\Entity\CitationInterface;
 use Drupal\stanford_publication\Hook\CitationHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for CitationHooks.
  */
 #[Group('stanford_publication')]
-#[CoversClass(CitationHooks::class)]
 class CitationHooksTest extends UnitTestCase {
 
   /**

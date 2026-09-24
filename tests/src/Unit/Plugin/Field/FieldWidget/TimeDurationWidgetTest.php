@@ -11,7 +11,6 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\stanford_profile_helper\Plugin\Field\FieldWidget\TimeDurationWidget;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -19,7 +18,6 @@ use PHPUnit\Framework\Attributes\Group;
  * Test the TimeDurationWidget.
  */
 #[Group('stanford_profile_helper')]
-#[CoversClass(TimeDurationWidget::class)]
 class TimeDurationWidgetTest extends UnitTestCase {
 
   protected $widget;

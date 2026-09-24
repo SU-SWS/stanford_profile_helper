@@ -16,11 +16,11 @@ use Drupal\next\Entity\NextSiteInterface;
 use Drupal\next\PreviewSecretGeneratorInterface;
 use Drupal\stanford_decoupled\Plugin\Next\PreviewUrlGenerator\SimplePreview;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use PHPUnit\Framework\Attributes\Group;
 
-#[CoversClass(SimplePreview::class)]
+#[Group('stanford_decoupled')]
 class SimplePreviewTest extends UnitTestCase {
 
   /**

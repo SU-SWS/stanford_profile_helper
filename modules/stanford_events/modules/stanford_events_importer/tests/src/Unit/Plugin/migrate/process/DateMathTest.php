@@ -6,10 +6,12 @@ use Drupal\stanford_events_importer\Plugin\migrate\process\DateMath;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\Row;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class DateMathTest.
  */
+#[Group('stanford_events_importer')]
 class DateMathTest extends UnitTestCase {
 
   /**

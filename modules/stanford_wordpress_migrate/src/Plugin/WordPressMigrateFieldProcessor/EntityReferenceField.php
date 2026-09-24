@@ -52,7 +52,7 @@ class EntityReferenceField extends WordPressMigrateFieldProcessorPluginBase {
   protected function getPossibleTermMigrations(FieldDefinitionInterface $destField): array {
     $ids = [];
     $settings = $destField->getSetting('handler_settings');
-    $target_bundles = $settings['target_bundles'] ?: [];
+    $target_bundles = $settings['target_bundles'] ?? [];
 
     foreach ($this->migration->getConfigurationValue('taxonomy_term', []) as $source => $destinations) {
       foreach (array_keys($destinations) as $destination) {
@@ -61,7 +61,7 @@ class EntityReferenceField extends WordPressMigrateFieldProcessorPluginBase {
         }
 
         $id = 'wordpress_terms:' . basename($source) . "__$destination";
-        if (isset($ids[$id])) {
+        if (in_array($id, $ids)) {
           $id .= '-' . $this->migration->id();
         }
         $ids[] = $id;

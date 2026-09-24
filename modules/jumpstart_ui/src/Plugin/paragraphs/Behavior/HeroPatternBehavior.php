@@ -5,11 +5,13 @@ namespace Drupal\jumpstart_ui\Plugin\paragraphs\Behavior;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\State\StateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\paragraphs\Attribute\ParagraphsBehavior;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\paragraphs\ParagraphsBehaviorBase;
 use Drupal\paragraphs\ParagraphsTypeInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class HeroPatternBehavior.
@@ -20,6 +22,22 @@ use Drupal\paragraphs\ParagraphsTypeInterface;
   description: new TranslatableMarkup('Display options for the hero pattern paragraph.')
 )]
 class HeroPatternBehavior extends ParagraphsBehaviorBase {
+
+  /**
+   * Core state service.
+   *
+   * @var \Drupal\Core\State\StateInterface
+   */
+  protected StateInterface $state;
+
+  /**
+   * {@inheritDoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
+    $instance->state = $container->get('state');
+    return $instance;
+  }
 
   /**
    * {@inheritDoc}
@@ -73,8 +91,7 @@ class HeroPatternBehavior extends ParagraphsBehaviorBase {
         //'center' => $this->t('Center Transparent Overlay'),
       ],
     ];
-    $allowOverlayColor = (bool) \Drupal::state()
-      ->get('allow_hero_pattern_overlay_color');
+    $allowOverlayColor = (bool) $this->state->get('allow_hero_pattern_overlay_color');
     if ($allowOverlayColor) {
       $form['overlay_position']['#options']['center'] = $this->t('Center Transparent Overlay');
     }

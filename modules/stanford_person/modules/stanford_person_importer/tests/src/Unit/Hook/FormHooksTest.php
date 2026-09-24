@@ -10,14 +10,12 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\stanford_person_importer\Cap;
 use Drupal\stanford_person_importer\Hook\FormHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for FormHooks.
  */
 #[Group('stanford_person_importer')]
-#[CoversClass(FormHooks::class)]
 class FormHooksTest extends UnitTestCase {
 
   /**

@@ -4,6 +4,7 @@ namespace Drupal\Tests\stanford_publication\Kernel;
 
 use Drupal\stanford_publication\Entity\CitationType;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Access controller for the Citation type entity.
@@ -11,6 +12,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * @see \Drupal\stanford_publication\Entity\Citation.
  */
 #[RunTestsInSeparateProcesses]
+#[Group('stanford_publication')]
 class CitationTypeAccessControlHandlerTest extends PublicationTestBase {
 
   /**

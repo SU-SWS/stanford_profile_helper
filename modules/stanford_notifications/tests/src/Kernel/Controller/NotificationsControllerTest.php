@@ -8,11 +8,13 @@ use Drupal\stanford_notifications\Entity\Notification;
 use Drupal\Tests\stanford_notifications\Kernel\StanfordNotificationTestBase;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class NotificationsControllerTest.
  */
 #[RunTestsInSeparateProcesses]
+#[Group('stanford_notifications')]
 class NotificationsControllerTest extends StanfordNotificationTestBase {
 
   /**

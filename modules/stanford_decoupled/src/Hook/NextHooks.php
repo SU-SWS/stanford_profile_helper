@@ -141,7 +141,7 @@ class NextHooks {
   public function nextSitePreviewAlter(array &$preview, array $context): void {
     // Only use the preview for nodes. Prevent the preview from any other entity
     // type that might have a revalidation configured, like redirects.
-    if ($context['entity']->getEntityTypeid() != 'node') {
+    if ($context['entity']->getEntityTypeId() != 'node') {
       $preview = $context['original_build'][0]['content'];
     }
 

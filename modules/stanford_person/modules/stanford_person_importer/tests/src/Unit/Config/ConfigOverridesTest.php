@@ -18,10 +18,12 @@ use Drupal\stanford_person_importer\Config\ConfigOverrides;
 use Drupal\Tests\UnitTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class ConfigOverridesTest.
  */
+#[Group('stanford_person_importer')]
 class ConfigOverridesTest extends UnitTestCase {
 
   /**
@@ -53,7 +55,7 @@ class ConfigOverridesTest extends UnitTestCase {
   /**
    * {@inheritDoc}
    */
-  public function setup(): void {
+  protected function setUp(): void {
     parent::setUp();
     $this->configPagesService = $this->createMock(ConfigPagesLoaderServiceInterface::class);
 

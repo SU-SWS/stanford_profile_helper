@@ -16,7 +16,6 @@ use Drupal\stanford_fields\Event\BookOutlineUpdatedEvent;
 use Drupal\stanford_policy\EventSubscriber\StanfordPolicySubscriber;
 use Drupal\stanford_policy\Hook\StanfordPolicyHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
@@ -24,7 +23,6 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  * Unit tests for StanfordPolicyHooks.
  */
 #[Group('stanford_policy')]
-#[CoversClass(StanfordPolicyHooks::class)]
 class StanfordPolicyHooksTest extends UnitTestCase {
 
   /**

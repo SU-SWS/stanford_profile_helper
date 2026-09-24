@@ -6,14 +6,12 @@ namespace Drupal\Tests\stanford_profile_helper\Unit\Hook;
 
 use Drupal\stanford_profile_helper\Hook\ParagraphHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for ParagraphHooks.
  */
 #[Group('stanford_profile_helper')]
-#[CoversClass(ParagraphHooks::class)]
 class ParagraphHooksTest extends UnitTestCase {
 
   /**

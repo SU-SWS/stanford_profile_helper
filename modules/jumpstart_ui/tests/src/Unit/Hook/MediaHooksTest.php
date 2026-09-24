@@ -7,14 +7,12 @@ namespace Drupal\Tests\jumpstart_ui\Unit\Hook;
 use Drupal\jumpstart_ui\Hook\MediaHooks;
 use Drupal\media\MediaInterface;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for MediaHooks.
  */
 #[Group('jumpstart_ui')]
-#[CoversClass(MediaHooks::class)]
 class MediaHooksTest extends UnitTestCase {
 
   /**

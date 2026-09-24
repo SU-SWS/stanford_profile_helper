@@ -15,14 +15,12 @@ use Drupal\pathauto\PathautoPatternInterface;
 use Drupal\stanford_profile_helper\Hook\NodeHooks;
 use Drupal\stanford_profile_helper\StanfordDefaultContentInterface;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for NodeHooks.
  */
 #[Group('stanford_profile_helper')]
-#[CoversClass(NodeHooks::class)]
 class NodeHooksTest extends UnitTestCase {
 
   /**
@@ -55,7 +53,6 @@ class NodeHooksTest extends UnitTestCase {
    */
   protected function callBuildAVTranscript(NodeInterface $node): void {
     $method = new \ReflectionMethod(NodeHooks::class, 'buildAVTranscript');
-    $method->setAccessible(TRUE);
     $method->invoke($this->hooks, $node);
   }
 
@@ -64,7 +61,6 @@ class NodeHooksTest extends UnitTestCase {
    */
   protected function callAlterMetatags(NodeInterface $node): void {
     $method = new \ReflectionMethod(NodeHooks::class, 'alterMetatags');
-    $method->setAccessible(TRUE);
     $method->invoke($this->hooks, $node);
   }
 

@@ -8,10 +8,12 @@ use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\stanford_wordpress_migrate\Plugin\WordPressMigrateFieldProcessor\EntityReferenceField;
 use Drupal\stanford_wordpress_migrate\WordPressMigrationInterface;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for EntityReferenceField plugin.
  */
+#[Group('stanford_wordpress_migrate')]
 class EntityReferenceFieldTest extends UnitTestCase {
 
   /**
@@ -183,6 +185,45 @@ class EntityReferenceFieldTest extends UnitTestCase {
     $result = $method->invoke($this->plugin, $field);
 
     $this->assertEquals([], $result);
+  }
+
+  /**
+   * Test getPossibleTermMigrations gives duplicate migrations unique ids.
+   */
+  public function testGetPossibleTermMigrationsDuplicateIds(): void {
+    $field = $this->createMock(FieldDefinitionInterface::class);
+    $field->method('getSetting')
+      ->with('handler_settings')
+      ->willReturn(['target_bundles' => ['tags']]);
+
+    $this->migration->method('id')->willReturn(5);
+    $this->migration->method('getConfigurationValue')
+      ->with('taxonomy_term', [])
+      ->willReturn([
+        'wp-json/wp/v2/tags' => ['tags' => []],
+        'wp-json/wp/v1/tags' => ['tags' => []],
+      ]);
+
+    $method = new \ReflectionMethod($this->plugin, 'getPossibleTermMigrations');
+    $result = $method->invoke($this->plugin, $field);
+    $this->assertEquals([
+      'wordpress_terms:tags__tags',
+      'wordpress_terms:tags__tags-5',
+    ], $result);
+  }
+
+  /**
+   * Test getPossibleTermMigrations without handler settings.
+   */
+  public function testGetPossibleTermMigrationsNoHandlerSettings(): void {
+    $field = $this->createMock(FieldDefinitionInterface::class);
+    $field->method('getSetting')->with('handler_settings')->willReturn(NULL);
+
+    $this->migration->method('getConfigurationValue')
+      ->willReturn(['wp-json/wp/v2/tags' => ['tags' => []]]);
+
+    $method = new \ReflectionMethod($this->plugin, 'getPossibleTermMigrations');
+    $this->assertEquals([], $method->invoke($this->plugin, $field));
   }
 
 }

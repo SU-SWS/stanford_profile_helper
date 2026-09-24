@@ -8,10 +8,12 @@ use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\stanford_wordpress_migrate\WordPressMigrateFieldProcessorInterface;
 use Drupal\stanford_wordpress_migrate\WordPressMigrationInterface;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for WordPressMigrateFieldProcessorInterface.
  */
+#[Group('stanford_wordpress_migrate')]
 class WordPressMigrateFieldProcessorInterfaceTest extends UnitTestCase {
 
   /**

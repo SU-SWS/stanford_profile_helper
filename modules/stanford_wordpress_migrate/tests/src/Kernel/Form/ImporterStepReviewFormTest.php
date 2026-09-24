@@ -9,11 +9,13 @@ use Drupal\KernelTests\KernelTestBase;
 use Drupal\stanford_wordpress_migrate\Entity\WordPressMigration;
 use Drupal\stanford_wordpress_migrate\Form\ImporterStepReviewForm;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Kernel tests for ImporterStepReviewForm.
  */
 #[RunTestsInSeparateProcesses]
+#[Group('stanford_wordpress_migrate')]
 class ImporterStepReviewFormTest extends KernelTestBase {
 
   /**

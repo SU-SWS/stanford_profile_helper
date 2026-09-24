@@ -9,10 +9,12 @@ use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\stanford_wordpress_migrate\Plugin\WordPressMigrateFieldProcessor\TextField;
 use Drupal\stanford_wordpress_migrate\WordPressMigrationInterface;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for TextField plugin.
  */
+#[Group('stanford_wordpress_migrate')]
 class TextFieldTest extends UnitTestCase {
 
   /**

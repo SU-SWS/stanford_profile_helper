@@ -10,8 +10,10 @@ use Drupal\Tests\stanford_intranet\Kernel\IntranetKernelTestBase;
 use Drupal\user\Entity\Role;
 use Drupal\user\Entity\User;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 #[RunTestsInSeparateProcesses]
+#[Group('stanford_intranet')]
 class EntityAccessFieldWidgetTest extends IntranetKernelTestBase {
 
   /**
@@ -22,7 +24,7 @@ class EntityAccessFieldWidgetTest extends IntranetKernelTestBase {
   /**
    * {@inheritDoc}
    */
-  public function setup(): void {
+  protected function setUp(): void {
     parent::setUp();
 
     /** @var \Drupal\Core\Entity\Display\EntityFormDisplayInterface $form_display */

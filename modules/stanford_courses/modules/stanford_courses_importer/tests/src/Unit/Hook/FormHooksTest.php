@@ -11,14 +11,12 @@ use Drupal\migrate\Plugin\MigrationPluginManager;
 use Drupal\stanford_courses_importer\Hook\FormHooks;
 use Drupal\stanford_migrate\StanfordMigrateInterface;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for FormHooks.
  */
 #[Group('stanford_courses_importer')]
-#[CoversClass(FormHooks::class)]
 class FormHooksTest extends UnitTestCase {
 
   /**

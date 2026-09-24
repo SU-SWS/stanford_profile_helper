@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Tests\stanford_profile_helper\Kernel\EventSubscriber;
+namespace Drupal\Tests\stanford_profile_helper\Kernel\Hook;
 
 use Drupal\config_pages\ConfigPagesLoaderServiceInterface;
 use Drupal\config_pages\Entity\ConfigPages;
@@ -11,10 +11,12 @@ use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\stanford_profile_helper\Hook\ConfigPagesHooks;
 use Drupal\Tests\stanford_profile_helper\Kernel\SuProfileHelperKernelTestBase;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test the event subscriber.
  */
+#[Group('stanford_profile_helper')]
 #[RunTestsInSeparateProcesses]
 class ConfigPagesHooksTest extends SuProfileHelperKernelTestBase {
 

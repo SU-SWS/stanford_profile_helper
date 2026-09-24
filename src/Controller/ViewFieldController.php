@@ -56,7 +56,7 @@ class ViewFieldController extends ControllerBase {
    *   Autocomplete suggestions.
    */
   public function handleArgumentsAutocomplete(Request $request, string $view, string $display) {
-    $input = Xss::filter($request->query->get('q'));
+    $input = Xss::filter($request->query->getString('q'));
 
     if (!$input) {
       return new JsonResponse([]);

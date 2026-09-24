@@ -17,11 +17,13 @@ use Drupal\search_api\Item\ItemInterface;
 use Drupal\stanford_intranet\Plugin\Field\FieldType\EntityAccessFieldType;
 use Symfony\Component\Routing\RouteCollection;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Route subscriber.
  */
 #[RunTestsInSeparateProcesses]
+#[Group('stanford_intranet')]
 class IntranetRouteSubscriberTest extends KernelTestBase {
 
   /**

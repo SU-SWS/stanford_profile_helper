@@ -10,10 +10,12 @@ use Drupal\datetime\Plugin\Field\FieldType\DateTimeItem;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 use Drupal\stanford_wordpress_migrate\Plugin\WordPressMigrateFieldProcessor\DateTimeField;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for DateTimeField plugin.
  */
+#[Group('stanford_wordpress_migrate')]
 class DateTimeFieldTest extends UnitTestCase {
 
   /**

@@ -14,11 +14,17 @@ use Drupal\paragraphs\Entity\ParagraphsType;
 use Drupal\stanford_decoupled\Hook\StanfordDecoupledHooks;
 use Drupal\taxonomy\Entity\Vocabulary;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\stanford_decoupled\Plugin\Next\Revalidator\Path;
 
 /**
  * Kernel tests for StanfordDecoupledHooks.
  */
 #[RunTestsInSeparateProcesses]
+#[Group('stanford_decoupled')]
 class StanfordDecoupledHooksTest extends KernelTestBase {
 
   /**
@@ -395,6 +401,44 @@ class StanfordDecoupledHooksTest extends KernelTestBase {
     $config = $this->config('graphql_compose.settings');
     // Verify the config key format is correct.
     $this->assertTrue($config->get('field_config.node.article.field_test_field.enabled'));
+  }
+
+  /**
+   * Test the hooks that only change behavior on decoupled sites.
+   */
+  public function testDecoupledOnlyHooks(): void {
+    $this->assertEquals(['next.next_site.*', 'next.next_entity_type_config.*'], $this->hooks->configReadonlyWhitelistPatterns());
+
+    $plugins = ['path' => ['class' => 'Foo']];
+    $this->hooks->nextRevalidatorInfoAlter($plugins);
+    $this->assertEquals(Path::class, $plugins['path']['class']);
+
+    $route_match = $this->createMock(RouteMatchInterface::class);
+    $route_match->method('getRouteName')->willReturn('entity.node.canonical');
+    $hooks = new StanfordDecoupledHooks($this->container->get('config.factory'), $route_match);
+
+    $layout = $this->createMock(EntityInterface::class);
+    $account = $this->createMock(AccountInterface::class);
+
+    // Not decoupled: the editoria11y library is kept and layouts are not
+    // viewable.
+    \Drupal::cache()->set('stanford_decoupled', FALSE);
+    $libraries = ['editoria11y' => []];
+    $hooks->libraryInfoAlter($libraries, 'editoria11y');
+    $this->assertNotEmpty($libraries);
+    $this->assertFalse($hooks->layoutAccess($layout, 'view', $account)->isAllowed());
+
+    // Decoupled: the library is removed only for editoria11y on node pages.
+    \Drupal::cache()->set('stanford_decoupled', TRUE);
+    $libraries = ['foo' => []];
+    $hooks->libraryInfoAlter($libraries, 'other_module');
+    $this->assertNotEmpty($libraries);
+    $libraries = ['editoria11y' => []];
+    $hooks->libraryInfoAlter($libraries, 'editoria11y');
+    $this->assertEmpty($libraries);
+
+    $this->assertTrue($hooks->layoutAccess($layout, 'view', $account)->isAllowed());
+    $this->assertFalse($hooks->layoutAccess($layout, 'update', $account)->isAllowed());
   }
 
 }

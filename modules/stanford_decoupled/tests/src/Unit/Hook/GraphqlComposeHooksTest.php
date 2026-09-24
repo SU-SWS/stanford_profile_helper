@@ -11,14 +11,12 @@ use Drupal\graphql_compose\Plugin\GraphQLCompose\GraphQLComposeFieldTypeInterfac
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\stanford_decoupled\Hook\GraphqlComposeHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for GraphqlComposeHooks.
  */
 #[Group('stanford_decoupled')]
-#[CoversClass(GraphqlComposeHooks::class)]
 class GraphqlComposeHooksTest extends UnitTestCase {
 
   /**

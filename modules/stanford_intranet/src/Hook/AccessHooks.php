@@ -160,7 +160,7 @@ class AccessHooks {
       return $grants;
     }
 
-    $rids = $this->state->get('stanford_intranet.rids');
+    $rids = $this->state->get('stanford_intranet.rids', []);
     $node_field_values = $node->get(EntityAccessFieldType::FIELD_NAME)
       ->getValue();
 
@@ -171,6 +171,10 @@ class AccessHooks {
     }
 
     foreach ($node_field_values as $value) {
+      // A role that was deleted, or never registered, has no grant id.
+      if (!isset($rids[$value['role']])) {
+        continue;
+      }
       $grant = [
         'realm' => 'stanford_intranet_roles',
         'gid' => $rids[$value['role']],

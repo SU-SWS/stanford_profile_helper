@@ -6,13 +6,14 @@ use Drupal\KernelTests\KernelTestBase;
 use Drupal\layout_paragraphs\Event\LayoutParagraphsAllowedTypesEvent;
 use Drupal\layout_paragraphs\LayoutParagraphsComponent;
 use Drupal\layout_paragraphs\LayoutParagraphsLayout;
-use Drupal\paragraphs\ParagraphInterface;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test event subscriber.
  */
 #[RunTestsInSeparateProcesses]
+#[Group('stanford_layout_paragraphs')]
 class StanfordLayoutParagraphsSubscriberTest extends KernelTestBase {
 
   /**

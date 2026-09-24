@@ -20,14 +20,12 @@ use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\node\NodeInterface;
 use Drupal\stanford_events_importer\EventSubscriber\EventsImporterSubscriber;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Tests for EventsImporterSubscriber.
  */
 #[Group('stanford_events_importer')]
-#[CoversClass(EventsImporterSubscriber::class)]
 class EventsImporterSubscriberTest extends UnitTestCase {
 
   /**

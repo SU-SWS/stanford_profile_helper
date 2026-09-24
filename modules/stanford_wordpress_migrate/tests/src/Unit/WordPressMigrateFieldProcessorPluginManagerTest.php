@@ -9,10 +9,12 @@ use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\stanford_wordpress_migrate\WordPressMigrateFieldProcessorInterface;
 use Drupal\stanford_wordpress_migrate\WordPressMigrateFieldProcessorPluginManager;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for WordPressMigrateFieldProcessorPluginManager.
  */
+#[Group('stanford_wordpress_migrate')]
 class WordPressMigrateFieldProcessorPluginManagerTest extends UnitTestCase {
 
   /**

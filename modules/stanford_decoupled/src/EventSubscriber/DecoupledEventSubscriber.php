@@ -107,11 +107,10 @@ final class DecoupledEventSubscriber implements EventSubscriberInterface {
    */
   protected function revalidatePaths(NextSiteInterface $site, array $paths): void {
     $secret = $site->getRevalidateSecret();
-    $revalidate_url = Url::fromUri($site->getRevalidateUrl());
-
-    if (!$revalidate_url) {
+    if (!$site->getRevalidateUrl()) {
       throw new \Exception('No revalidate url set.');
     }
+    $revalidate_url = Url::fromUri($site->getRevalidateUrl());
 
     $tags = [];
 

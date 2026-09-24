@@ -5,7 +5,9 @@ namespace Drupal\Tests\stanford_profile_helper\Unit\Plugin\Block;
 use Drupal\Component\Uuid\UuidInterface;
 use Drupal\stanford_profile_helper\Plugin\Block\PDBlock;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
+#[Group('stanford_profile_helper')]
 class PDBlockTest extends UnitTestCase {
 
   public function testBuild() {

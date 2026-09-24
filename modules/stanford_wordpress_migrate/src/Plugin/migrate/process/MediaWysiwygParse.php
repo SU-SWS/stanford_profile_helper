@@ -128,11 +128,11 @@ class MediaWysiwygParse extends ProcessPluginBase implements ContainerFactoryPlu
    */
   protected function getMediaTokenFromMarkup(string $markup): ?string {
     if (str_contains($markup, '<img ')) {
-      preg_match('/src="(.*)"/', $markup, $imageSource);
-      preg_match('/alt="(.*)"/', $markup, $imageAlt);
+      preg_match('/src="(.*?)"/', $markup, $imageSource);
+      preg_match('/alt="(.*?)"/', $markup, $imageAlt);
 
       // Only download images that match the configured domain.
-      if (!str_contains($imageSource[1], $this->configuration['image_domain'])) {
+      if (empty($imageSource[1]) || !str_contains($imageSource[1], $this->configuration['image_domain'])) {
         return NULL;
       }
 

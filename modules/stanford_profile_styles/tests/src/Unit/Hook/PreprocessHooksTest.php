@@ -9,14 +9,12 @@ use Drupal\Core\Template\Attribute;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\stanford_profile_styles\Hook\PreprocessHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for PreprocessHooks.
  */
 #[Group('stanford_profile_styles')]
-#[CoversClass(PreprocessHooks::class)]
 class PreprocessHooksTest extends UnitTestCase {
 
   /**

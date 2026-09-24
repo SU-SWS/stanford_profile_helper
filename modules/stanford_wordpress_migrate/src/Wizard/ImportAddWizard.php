@@ -116,7 +116,7 @@ class ImportAddWizard extends EntityFormWizardBase {
         foreach (array_keys($destinationMapping) as $destination) {
           $destination_label = $this->entityTypeManager->getStorage($bundle_entity_type)
             ->load($destination)
-            ->label();
+            ?->label() ?? $destination;
 
           $key = $entity_type_id . '--' . basename($source) . '--';
           $key .= u($destination)

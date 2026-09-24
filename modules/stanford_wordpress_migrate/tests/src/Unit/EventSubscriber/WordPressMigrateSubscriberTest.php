@@ -16,10 +16,12 @@ use Drupal\migrate\Plugin\MigrationPluginManager;
 use Drupal\stanford_wordpress_migrate\EventSubscriber\WordPressMigrateSubscriber;
 use Drupal\Tests\UnitTestCase;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for WordPressMigrateSubscriber.
  */
+#[Group('stanford_wordpress_migrate')]
 class WordPressMigrateSubscriberTest extends UnitTestCase {
 
   /**

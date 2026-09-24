@@ -32,7 +32,7 @@ abstract class IntranetKernelTestBase extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setup(): void {
+  protected function setUp(): void {
     parent::setUp();
     $this->installEntitySchema('node');
     $this->installEntitySchema('user');

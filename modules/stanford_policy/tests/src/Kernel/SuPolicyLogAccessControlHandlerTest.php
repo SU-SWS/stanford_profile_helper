@@ -9,14 +9,12 @@ use Drupal\stanford_policy\Entity\SuPolicyLog;
 use Drupal\stanford_policy\SuPolicyLogAccessControlHandler;
 use Drupal\user\Entity\Role;
 use Drupal\user\Entity\User;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Kernel tests for SuPolicyLogAccessControlHandler.
  */
-#[CoversClass(SuPolicyLogAccessControlHandler::class)]
 #[Group('stanford_policy')]
 #[RunTestsInSeparateProcesses]
 class SuPolicyLogAccessControlHandlerTest extends KernelTestBase {

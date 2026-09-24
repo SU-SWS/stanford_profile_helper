@@ -8,14 +8,12 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\stanford_profile_admin\Hook\StanfordProfileAdminHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for StanfordProfileAdminHooks.
  */
 #[Group('stanford_profile_admin')]
-#[CoversClass(StanfordProfileAdminHooks::class)]
 class StanfordProfileAdminHooksTest extends UnitTestCase {
 
   /**

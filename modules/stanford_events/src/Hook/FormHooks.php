@@ -6,11 +6,14 @@ namespace Drupal\stanford_events\Hook;
 
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Render\Element;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
  * Form/field widget hooks for stanford_events.
  */
 class FormHooks {
+
+  use StringTranslationTrait;
 
   /**
    * Implements hook_preprocess_field_multiple_value_form().
@@ -41,16 +44,16 @@ class FormHooks {
       $child_element = &$variables['element'][$child];
 
       if (isset($child_element['add_more_button_stanford_person_cta'])) {
-        $child_element['add_more_button_stanford_person_cta']['#value'] = t('Add another speaker');
+        $child_element['add_more_button_stanford_person_cta']['#value'] = $this->t('Add another speaker');
       }
 
       if ($variables['element']['#field_name'] == "su_schedule_speaker") {
-        $variables['element']['add_more']['#value'] = t('Add another speaker');
-        $variables['element']['add_more']['add_more_button_stanford_person_cta']['#value'] = t('Add another speaker');
-        $variables['element']['add_more_button_stanford_person_cta']['#value'] = t('Add another speaker');
-        $variables['button']['add_more']['#value'] = t('Add another speaker');
-        $variables['button']['add_more_button_stanford_person_cta']['add_more']['#value'] = t('Add another speaker');
-        $variables['button']['add_more_button_stanford_person_cta']['#value'] = t('Add another speaker');
+        $variables['element']['add_more']['#value'] = $this->t('Add another speaker');
+        $variables['element']['add_more']['add_more_button_stanford_person_cta']['#value'] = $this->t('Add another speaker');
+        $variables['element']['add_more_button_stanford_person_cta']['#value'] = $this->t('Add another speaker');
+        $variables['button']['add_more']['#value'] = $this->t('Add another speaker');
+        $variables['button']['add_more_button_stanford_person_cta']['add_more']['#value'] = $this->t('Add another speaker');
+        $variables['button']['add_more_button_stanford_person_cta']['#value'] = $this->t('Add another speaker');
       }
     }
   }

@@ -15,10 +15,12 @@ use Drupal\Tests\UnitTestCase;
 use Symfony\Component\Validator\Context\ExecutionContext;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class RedirectSourceTrashConstraintValidatorTest.
  */
+#[Group('stanford_profile_helper')]
 class RedirectSourceTrashConstraintValidatorTest extends UnitTestCase {
 
   /**

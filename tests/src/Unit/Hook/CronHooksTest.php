@@ -18,14 +18,12 @@ use Drupal\stanford_profile_helper\Hook\CronHooks;
 use Drupal\taxonomy\TermInterface;
 use Drupal\user\UserInterface;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for CronHooks.
  */
 #[Group('stanford_profile_helper')]
-#[CoversClass(CronHooks::class)]
 class CronHooksTest extends UnitTestCase {
 
   /**

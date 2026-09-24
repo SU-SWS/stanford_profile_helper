@@ -95,7 +95,7 @@ class ImporterStep2EntitySelectForm extends WordPressImporterFormBase {
 
     $form['add_more'] = [
       '#type' => 'submit',
-      '#value' => t('Add Another'),
+      '#value' => $this->t('Add Another'),
       '#submit' => [[self::class, 'addAnother']],
       '#ajax' => [
         'callback' => [self::class, 'addAnotherAjax'],

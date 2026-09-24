@@ -8,14 +8,12 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\node\NodeInterface;
 use Drupal\stanford_events\Hook\StanfordEventHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for StanfordEventHooks.
  */
 #[Group('stanford_events')]
-#[CoversClass(StanfordEventHooks::class)]
 class StanfordEventHooksTest extends UnitTestCase {
 
   /**

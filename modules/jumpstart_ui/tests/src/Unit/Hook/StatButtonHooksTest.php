@@ -10,14 +10,12 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\jumpstart_ui\Hook\StatButtonHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for StatButtonHooks.
  */
 #[Group('jumpstart_ui')]
-#[CoversClass(StatButtonHooks::class)]
 class StatButtonHooksTest extends UnitTestCase {
 
   /**

@@ -9,10 +9,12 @@ use Drupal\Tests\UnitTestCase;
 use Drupal\jumpstart_ui\Plugin\TwigPlugin\JumpstartUITwig;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class JumpstartUITwigTest
  */
+#[Group('jumpstart_ui')]
 class JumpstartUITwigTest extends UnitTestCase {
 
   /**
@@ -25,7 +27,7 @@ class JumpstartUITwigTest extends UnitTestCase {
   /**
    * {@inheritDoc}
    */
-  public function setup(): void {
+  protected function setUp(): void {
     parent::setUp();
     $container = new ContainerBuilder();
     $container->set('string_translation', $this->getStringTranslationStub());

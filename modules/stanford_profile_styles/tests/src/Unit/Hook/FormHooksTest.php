@@ -10,14 +10,12 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\node\NodeInterface;
 use Drupal\stanford_profile_styles\Hook\FormHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for FormHooks.
  */
 #[Group('stanford_profile_styles')]
-#[CoversClass(FormHooks::class)]
 class FormHooksTest extends UnitTestCase {
 
   /**

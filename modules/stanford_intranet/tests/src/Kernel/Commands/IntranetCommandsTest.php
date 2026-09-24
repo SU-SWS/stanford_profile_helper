@@ -7,27 +7,29 @@ use Drupal\config_pages\Entity\ConfigPagesType;
 use Drupal\externalauth\AuthmapInterface;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
-use Drupal\stanford_intranet\Commands\IntranetCommands;
+use Drupal\stanford_intranet\Drush\Commands\IntranetCommands;
 use Drupal\Tests\stanford_intranet\Kernel\IntranetKernelTestBase;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Drush commands tests.
  */
 #[RunTestsInSeparateProcesses]
+#[Group('stanford_intranet')]
 class IntranetCommandsTest extends IntranetKernelTestBase {
 
   /**
    * Drush commands.
    *
-   * @var \Drupal\stanford_intranet\Commands\IntranetCommands
+   * @var \Drupal\stanford_intranet\Drush\Commands\IntranetCommands
    */
   protected $commands;
 
   /**
    * {@inheritDoc}
    */
-  public function setup(): void {
+  protected function setUp(): void {
     parent::setUp();
     $this->installEntitySchema('config_pages');
     ConfigPagesType::create([

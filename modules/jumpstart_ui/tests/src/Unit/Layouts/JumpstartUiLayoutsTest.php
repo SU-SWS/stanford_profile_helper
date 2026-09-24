@@ -6,16 +6,18 @@ use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Form\FormState;
 use Drupal\jumpstart_ui\Layouts\JumpstartUiLayouts;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class JumpstartUiLayoutsTest.
  */
+#[Group('jumpstart_ui')]
 class JumpstartUiLayoutsTest extends UnitTestCase {
 
   /**
    * {@inheritDoc}
    */
-  public function setup(): void {
+  protected function setUp(): void {
     parent::setUp();
     $container = new ContainerBuilder();
     $container->set('string_translation', $this->getStringTranslationStub());
@@ -61,6 +63,23 @@ class JumpstartUiLayoutsTest extends UnitTestCase {
 
     $this->assertEquals('fooBar', $config['extra_classes']);
     $this->assertEquals('centered-container', $config['centered']);
+  }
+
+  /**
+   * Empty or padded extra classes are cleaned up on submit.
+   */
+  public function testLayoutFormExtraClassesCleanup() {
+    $object = new JumpstartUiLayouts(['label' => ''], '', []);
+    $form = [];
+    $form_state = new FormState();
+    $form_state->setValue('label', 'Admin Label');
+
+    $object->submitConfigurationForm($form, $form_state);
+    $this->assertSame('', $object->getConfiguration()['extra_classes']);
+
+    $form_state->setValue('extra_classes', '  foo   bar ');
+    $object->submitConfigurationForm($form, $form_state);
+    $this->assertSame('foo bar', $object->getConfiguration()['extra_classes']);
   }
 
 }
