@@ -42,7 +42,7 @@
     "require": {
         "php": ">=8.3",
         "drupal/core": "^11.2 || ^12",
-        "drupal/graphql_compose": "^2.0",
+        "drupal/graphql_compose": "^3.0",
         "drupal/layout_paragraphs": "^2.0",
         "seboettg/collection": "^3.1",
         "su-sws/stanford_fields": "^9.0"
