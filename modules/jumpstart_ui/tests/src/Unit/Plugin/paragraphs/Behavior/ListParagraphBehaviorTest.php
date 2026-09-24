@@ -10,10 +10,12 @@ use Drupal\jumpstart_ui\Plugin\paragraphs\Behavior\ListParagraphBehavior;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\paragraphs\ParagraphsTypeInterface;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class ListParagraphBehaviorTest
  */
+#[Group('jumpstart_ui')]
 class ListParagraphBehaviorTest extends UnitTestCase {
 
   /**
@@ -26,7 +28,7 @@ class ListParagraphBehaviorTest extends UnitTestCase {
   /**
    * {@inheritDoc}
    */
-  public function setup(): void {
+  protected function setUp(): void {
     parent::setUp();
 
     $field_manager = $this->createMock(EntityFieldManagerInterface::class);

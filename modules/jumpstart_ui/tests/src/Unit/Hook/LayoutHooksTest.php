@@ -7,14 +7,12 @@ namespace Drupal\Tests\jumpstart_ui\Unit\Hook;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\jumpstart_ui\Hook\LayoutHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for LayoutHooks.
  */
 #[Group('jumpstart_ui')]
-#[CoversClass(LayoutHooks::class)]
 class LayoutHooksTest extends UnitTestCase {
 
   /**

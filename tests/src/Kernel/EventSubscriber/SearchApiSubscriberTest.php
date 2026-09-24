@@ -10,10 +10,12 @@ use Drupal\search_api\Event\SearchApiEvents;
 use Drupal\search_api\IndexInterface;
 use Drupal\search_api\Item\ItemInterface;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test the event subscriber.
  */
+#[Group('stanford_profile_helper')]
 #[RunTestsInSeparateProcesses]
 class SearchApiSubscriberTest extends KernelTestBase {
 

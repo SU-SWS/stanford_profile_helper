@@ -6,10 +6,12 @@ namespace Drupal\Tests\stanford_wordpress_migrate\Unit\Wizard;
 
 use Drupal\stanford_wordpress_migrate\Wizard\ImportAddWizard;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for ImportAddWizard.
  */
+#[Group('stanford_wordpress_migrate')]
 class ImportAddWizardTest extends UnitTestCase {
 
   /**

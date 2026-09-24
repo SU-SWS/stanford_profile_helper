@@ -1,7 +1,7 @@
 name: 'Stanford WordPress Migrate'
 type: module
 description: 'Migrate a WordPress site into Drupal'
-core_version_requirement: ^11.2
+core_version_requirement: ^11.2 || ^12
 package: Stanford
 version: 11.0.6
 dependencies:

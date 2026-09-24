@@ -13,10 +13,12 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use function Symfony\Component\String\s;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for WordPressMigrateController.
  */
+#[Group('stanford_wordpress_migrate')]
 class WordPressMigrateControllerTest extends UnitTestCase {
 
   /**
@@ -146,6 +148,20 @@ class WordPressMigrateControllerTest extends UnitTestCase {
 
     $data = json_decode($result->getContent(), TRUE);
     $this->assertEquals([['value' => 'foo', 'label' => 'foo']], $data);
+  }
+
+  /**
+   * Test handleSourcesAutocomplete method without a search string.
+   */
+  public function testHandleSourcesAutocompleteNoQuery(): void {
+    $request = new Request(['sources' => ['foo', 'bar']]);
+
+    $result = $this->controller->handleSourcesAutocomplete($request);
+    $data = json_decode($result->getContent(), TRUE);
+    $this->assertEquals([
+      ['value' => 'foo', 'label' => 'foo'],
+      ['value' => 'bar', 'label' => 'bar'],
+    ], $data);
   }
 
 }

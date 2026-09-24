@@ -7,14 +7,12 @@ namespace Drupal\Tests\stanford_profile_helper\Unit\Hook;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\stanford_profile_helper\Hook\ViewFieldHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit test for ViewFieldHooks.
  */
 #[Group('stanford_profile_helper')]
-#[CoversClass(ViewFieldHooks::class)]
 class ViewFieldHooksTest extends UnitTestCase {
 
   /**

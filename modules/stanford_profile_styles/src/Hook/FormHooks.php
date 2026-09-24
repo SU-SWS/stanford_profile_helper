@@ -6,6 +6,7 @@ namespace Drupal\stanford_profile_styles\Hook;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
  * Form alter hooks.
@@ -59,9 +60,9 @@ class FormHooks {
 
     $form['advanced']['#type'] = 'vertical_tabs';
     $form['meta']['#type'] = 'details';
-    $form['meta']['#title'] = t('Publishing Information');
+    $form['meta']['#title'] = new TranslatableMarkup('Publishing Information');
     $form['layout_selection']['#type'] = 'details';
-    $form['layout_selection']['#title'] = t('Layout Options');
+    $form['layout_selection']['#title'] = new TranslatableMarkup('Layout Options');
     $form['layout_selection']['#group'] = "advanced";
     $form['layout_selection']['#weight'] = -11;
     $form['#attached']['library'][] = 'stanford_profile_styles/admin.node_forms';

@@ -8,14 +8,12 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\node\NodeInterface;
 use Drupal\stanford_person\Hook\PageAttachmentHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for PageAttachmentHooks.
  */
 #[Group('stanford_person')]
-#[CoversClass(PageAttachmentHooks::class)]
 class PageAttachmentHooksTest extends UnitTestCase {
 
   /**

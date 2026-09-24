@@ -40,7 +40,8 @@
         "drupal/search_api": "<1.41.0"
     },
     "require": {
-        "drupal/core": "^11.2",
+        "php": ">=8.3",
+        "drupal/core": "^11.2 || ^12",
         "drupal/graphql_compose": "^2.0",
         "drupal/layout_paragraphs": "^2.0",
         "seboettg/collection": "^3.1",
@@ -126,7 +127,7 @@
             "Drupal\\Tests\\stanford_policy\\": "modules/stanford_policy/tests/src",
             "Drupal\\Tests\\stanford_profile_admin\\": "modules/stanford_profile_admin/tests/src",
             "Drupal\\Tests\\stanford_profile_drush\\": "modules/stanford_profile_drush/tests/src",
-            "Drupal\\Tests\\stanford_profile_helper\\": "src",
+            "Drupal\\Tests\\stanford_profile_helper\\": "tests/src",
             "Drupal\\Tests\\stanford_publication\\": "modules/stanford_publication/tests/src"
         }
     },
@@ -134,11 +135,6 @@
         "sort-packages": true
     },
     "extra": {
-        "drush": {
-            "services": {
-                "drush.services.yml": "^9"
-            }
-        },
         "patches": {
             "drupal/default_content": {
                 "https://www.drupal.org/project/default_content/issues/3217798": "https://www.drupal.org/files/issues/2022-12-21/3217798-5_0.patch"

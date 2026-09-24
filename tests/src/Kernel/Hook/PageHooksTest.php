@@ -2,15 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Drupal\Tests\stanford_profile_helper\Kernel\EventSubscriber;
+namespace Drupal\Tests\stanford_profile_helper\Kernel\Hook;
 
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Tests\stanford_profile_helper\Kernel\SuProfileHelperKernelTestBase;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Hooks that are at the page level.
  */
+#[Group('stanford_profile_helper')]
 #[RunTestsInSeparateProcesses]
 class PageHooksTest extends SuProfileHelperKernelTestBase {
 

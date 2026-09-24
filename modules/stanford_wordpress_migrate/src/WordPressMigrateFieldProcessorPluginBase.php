@@ -17,7 +17,7 @@ abstract class WordPressMigrateFieldProcessorPluginBase extends PluginBase imple
    *
    * @var \Drupal\stanford_wordpress_migrate\WordPressMigrationInterface|null
    */
-  protected ?WordPressMigrationInterface $migration;
+  protected ?WordPressMigrationInterface $migration = NULL;
 
   /**
    * Plugin constructor.

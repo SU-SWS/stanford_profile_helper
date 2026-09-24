@@ -6,14 +6,12 @@ namespace Drupal\Tests\stanford_profile_helper\Unit\Hook;
 
 use Drupal\stanford_profile_helper\Hook\FieldGroupHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for FieldGroupHooks.
  */
 #[Group('stanford_profile_helper')]
-#[CoversClass(FieldGroupHooks::class)]
 class FieldGroupHooksTest extends UnitTestCase {
 
   /**

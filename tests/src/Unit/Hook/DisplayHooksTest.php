@@ -7,14 +7,12 @@ namespace Drupal\Tests\stanford_profile_helper\Unit\Hook;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\stanford_profile_helper\Hook\DisplayHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for DisplayHooks.
  */
 #[Group('stanford_profile_helper')]
-#[CoversClass(DisplayHooks::class)]
 class DisplayHooksTest extends UnitTestCase {
 
   /**

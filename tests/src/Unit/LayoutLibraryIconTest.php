@@ -16,14 +16,12 @@ use Drupal\file\FileUsage\FileUsageInterface;
 use Drupal\layout_library\Entity\Layout;
 use Drupal\stanford_profile_helper\LayoutLibraryIcon;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test the LayoutLibraryIcon service.
  */
 #[Group('stanford_profile_helper')]
-#[CoversClass(LayoutLibraryIcon::class)]
 class LayoutLibraryIconTest extends UnitTestCase {
 
   /**

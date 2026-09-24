@@ -9,14 +9,12 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Template\Attribute;
 use Drupal\stanford_profile_helper\Hook\ThemeHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for ThemeHooks.
  */
 #[Group('stanford_profile_helper')]
-#[CoversClass(ThemeHooks::class)]
 class ThemeHooksTest extends UnitTestCase {
 
   /**

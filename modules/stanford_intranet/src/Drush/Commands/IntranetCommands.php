@@ -1,19 +1,24 @@
 <?php
 
-namespace Drupal\stanford_intranet\Commands;
+namespace Drupal\stanford_intranet\Drush\Commands;
 
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Password\PasswordGeneratorInterface;
 use Drupal\Core\State\StateInterface;
 use Drupal\externalauth\AuthmapInterface;
 use Drupal\stanford_intranet\StanfordIntranetManagerInterface;
+use Drush\Attributes as CLI;
 use Drush\Commands\DrushCommands;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Stanford Intranet Drush commands.
  */
 class IntranetCommands extends DrushCommands {
+
+  use AutowireTrait;
 
   /**
    * Entity Type Manager Service.
@@ -64,7 +69,15 @@ class IntranetCommands extends DrushCommands {
    * @param \Drupal\stanford_intranet\StanfordIntranetManagerInterface $intranet_manager
    *   Intranet manager service.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, StateInterface $state, AuthmapInterface $authmap, PasswordGeneratorInterface $password_generator, StanfordIntranetManagerInterface $intranet_manager) {
+  public function __construct(
+    EntityTypeManagerInterface $entity_type_manager,
+    StateInterface $state,
+    AuthmapInterface $authmap,
+    PasswordGeneratorInterface $password_generator,
+    #[Autowire(service: 'stanford_intranet.manager')]
+    StanfordIntranetManagerInterface $intranet_manager,
+  ) {
+    parent::__construct();
     $this->entityTypeManager = $entity_type_manager;
     $this->state = $state;
     $this->authmap = $authmap;
@@ -74,29 +87,22 @@ class IntranetCommands extends DrushCommands {
 
   /**
    * Move files from public to the private file system.
-   *
-   * @command stanford-intranet:move-files
    */
+  #[CLI\Command(name: 'stanford-intranet:move-files')]
   public function moveIntranetFiles() {
     $this->intranetManager->moveIntranetFiles();
   }
 
   /**
    * Enable and configure the intranet.
-   *
-   * @command stanford-intranet:setup
-   * @option roles
-   *   Comma delimited list of new roles to create
-   * @option affiliations
-   *   Comma delimited list of affiliations to limit login restrictions.
-   * @option users
-   *   Comma delimited list of SunetIDs to create users from.
-   * @option workgroups
-   *   Comma delimited list of workgroup to limit login access
-   * @option role-mapping
-   *   Comma delimited list of role mappings in the form `workgroup=role_name`
-   * @usage stanford-intranet:setup --roles='Site Group' --workgroups=foo:bar --role-mapping='Foo Bar=site_manager'
    */
+  #[CLI\Command(name: 'stanford-intranet:setup')]
+  #[CLI\Option(name: 'roles', description: 'Comma delimited list of new roles to create')]
+  #[CLI\Option(name: 'affiliations', description: 'Comma delimited list of affiliations to limit login restrictions.')]
+  #[CLI\Option(name: 'users', description: 'Comma delimited list of SunetIDs to create users from.')]
+  #[CLI\Option(name: 'workgroups', description: 'Comma delimited list of workgroup to limit login access')]
+  #[CLI\Option(name: 'role-mapping', description: 'Comma delimited list of role mappings in the form `workgroup=role_name`')]
+  #[CLI\Usage(name: "stanford-intranet:setup --roles='Site Group' --workgroups=foo:bar --role-mapping='Foo Bar=site_manager'", description: 'Enable the intranet with a custom role, workgroup restriction and role mapping.')]
   public function setupIntranet($options = [
     'roles' => '',
     'affiliations' => '',

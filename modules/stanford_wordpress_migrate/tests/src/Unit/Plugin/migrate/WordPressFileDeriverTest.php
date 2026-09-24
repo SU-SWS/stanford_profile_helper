@@ -17,10 +17,12 @@ use Drupal\stanford_wordpress_migrate\WordPressMigrationInterface;
 use Drupal\Tests\Core\Database\Stub\Select;
 use Drupal\Tests\UnitTestCase;
 use GuzzleHttp\ClientInterface;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for WordPressFileDeriver plugin.
  */
+#[Group('stanford_wordpress_migrate')]
 class WordPressFileDeriverTest extends UnitTestCase {
 
   /**

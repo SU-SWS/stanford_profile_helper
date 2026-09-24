@@ -9,14 +9,12 @@ use Drupal\Core\Routing\AdminContext;
 use Drupal\Core\State\StateInterface;
 use Drupal\stanford_intranet\Hook\AssetHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for AssetHooks.
  */
 #[Group('stanford_intranet')]
-#[CoversClass(AssetHooks::class)]
 class AssetHooksTest extends UnitTestCase {
 
   /**

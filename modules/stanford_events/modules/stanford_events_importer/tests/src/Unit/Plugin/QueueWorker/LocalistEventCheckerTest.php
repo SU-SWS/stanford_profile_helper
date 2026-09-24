@@ -15,14 +15,12 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Tests for LocalistEventChecker queue worker.
  */
 #[Group('stanford_events_importer')]
-#[CoversClass(LocalistEventChecker::class)]
 class LocalistEventCheckerTest extends UnitTestCase {
 
   /**
@@ -221,6 +219,27 @@ class LocalistEventCheckerTest extends UnitTestCase {
       ->method('getStorage');
 
     $this->queueWorker->processItem([$sourceId, $destId, $instanceId]);
+  }
+
+  /**
+   * A node that was already deleted doesn't break the queue worker.
+   */
+  public function testProcessItemNodeAlreadyDeleted(): void {
+    $response = new Response(200, [], Utils::streamFor(json_encode([
+      'event' => ['event_instances' => []],
+    ])));
+    $this->httpClient->method('get')->willReturn($response);
+
+    $storage = $this->createMock(EntityStorageInterface::class);
+    $storage->expects($this->once())
+      ->method('load')
+      ->with(67890)
+      ->willReturn(NULL);
+    $this->entityTypeManager->method('getStorage')
+      ->with('node')
+      ->willReturn($storage);
+
+    $this->queueWorker->processItem([12345, 67890, 54321]);
   }
 
 }

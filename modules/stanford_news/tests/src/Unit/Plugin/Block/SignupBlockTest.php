@@ -7,10 +7,12 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\stanford_news\Plugin\Block\SignupBlock;
 use Drupal\Tests\UnitTestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class SignupBlockTest.
  */
+#[Group('stanford_news')]
 class SignupBlockTest extends UnitTestCase {
 
   /**
@@ -21,7 +23,7 @@ class SignupBlockTest extends UnitTestCase {
   /**
    * {@inheritDoc}
    */
-  public function setup(): void {
+  protected function setUp(): void {
     parent::setUp();
     $config = [
       "id" => "signup_block",

@@ -5,10 +5,12 @@ namespace Drupal\Tests\stanford_profile_helper\Kernel\Hook;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\user\Entity\Role;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class EventSubscriberTest.
  */
+#[Group('stanford_profile_helper')]
 #[RunTestsInSeparateProcesses]
 class UserHooksTest extends KernelTestBase {
 
@@ -31,7 +33,7 @@ class UserHooksTest extends KernelTestBase {
   /**
    * {@inheritDoc}
    */
-  public function setup(): void {
+  protected function setUp(): void {
     parent::setUp();
     $this->installEntitySchema('node');
     $this->installEntitySchema('user');

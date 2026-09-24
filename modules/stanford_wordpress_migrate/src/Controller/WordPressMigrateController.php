@@ -46,7 +46,7 @@ class WordPressMigrateController extends ControllerBase {
    */
   public function handleSourcesAutocomplete(Request $request) {
     $results = [];
-    $input = Xss::filter($request->query->get('q'));
+    $input = Xss::filter((string) $request->query->get('q', ''));
     $query = $request->query->getIterator();
     if (!isset($query['sources'])) {
       return new JsonResponse([]);

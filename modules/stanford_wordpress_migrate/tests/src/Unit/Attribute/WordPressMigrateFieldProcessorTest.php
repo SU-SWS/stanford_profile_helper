@@ -7,10 +7,12 @@ namespace Drupal\Tests\stanford_wordpress_migrate\Unit\Attribute;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\stanford_wordpress_migrate\Attribute\WordPressMigrateFieldProcessor;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for WordPressMigrateFieldProcessor attribute.
  */
+#[Group('stanford_wordpress_migrate')]
 class WordPressMigrateFieldProcessorTest extends UnitTestCase {
 
   /**

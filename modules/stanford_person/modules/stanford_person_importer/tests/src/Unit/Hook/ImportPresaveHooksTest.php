@@ -18,14 +18,12 @@ use Drupal\stanford_migrate\StanfordMigrateInterface;
 use Drupal\stanford_person_importer\CapInterface;
 use Drupal\stanford_person_importer\Hook\ImportPresaveHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for ImportPresaveHooks.
  */
 #[Group('stanford_person_importer')]
-#[CoversClass(ImportPresaveHooks::class)]
 class ImportPresaveHooksTest extends UnitTestCase {
 
   /**

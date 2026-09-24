@@ -12,14 +12,12 @@ use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\stanford_profile_helper\Hook\ConfigReadonlyHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for ConfigReadonlyHooks.
  */
 #[Group('stanford_profile_helper')]
-#[CoversClass(ConfigReadonlyHooks::class)]
 class ConfigReadonlyHooksTest extends UnitTestCase {
 
   /**

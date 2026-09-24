@@ -10,14 +10,12 @@ use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\stanford_profile_helper\Hook\MediaHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for MediaHooks.
  */
 #[Group('stanford_profile_helper')]
-#[CoversClass(MediaHooks::class)]
 class MediaHooksTest extends UnitTestCase {
 
   /**

@@ -6,9 +6,11 @@ use Drupal\search_api\Item\Field;
 use Drupal\search_api\Utility\Utility;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Drupal\Tests\search_api\Kernel\Processor\CustomValueTest as SearchApiCustomValueTest;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  */
+#[Group('stanford_profile_helper')]
 #[RunTestsInSeparateProcesses]
 class CustomValueTest extends SearchApiCustomValueTest {
 

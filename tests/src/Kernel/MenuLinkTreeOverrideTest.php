@@ -11,10 +11,12 @@ use Drupal\stanford_profile_helper\MenuLinkTreeOverride;
 use Drupal\system\Entity\Menu;
 use Drupal\user\RoleInterface;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class MenuLinkTreeOverrideTest.
  */
+#[Group('stanford_profile_helper')]
 #[RunTestsInSeparateProcesses]
 class MenuLinkTreeOverrideTest extends KernelTestBase {
 
@@ -33,7 +35,7 @@ class MenuLinkTreeOverrideTest extends KernelTestBase {
     'rabbit_hole',
   ];
 
-  public function setUp(): void {
+  protected function setUp(): void {
     parent::setUp();
     $this->installEntitySchema('user');
     $this->installEntitySchema('node');

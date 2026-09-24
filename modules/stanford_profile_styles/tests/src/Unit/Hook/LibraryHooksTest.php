@@ -14,14 +14,12 @@ use Drupal\filter\FilterFormatInterface;
 use Drupal\node\NodeInterface;
 use Drupal\stanford_profile_styles\Hook\LibraryHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for LibraryHooks.
  */
 #[Group('stanford_profile_styles')]
-#[CoversClass(LibraryHooks::class)]
 class LibraryHooksTest extends UnitTestCase {
 
   /**

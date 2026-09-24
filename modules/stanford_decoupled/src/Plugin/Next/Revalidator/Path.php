@@ -161,11 +161,10 @@ class Path extends NextPath {
 
       try {
         $secret = $site->getRevalidateSecret();
-        $revalidate_url = Url::fromUri($site->getRevalidateUrl());
-
-        if (!$revalidate_url) {
+        if (!$site->getRevalidateUrl()) {
           throw new \Exception('No revalidate url set.');
         }
+        $revalidate_url = Url::fromUri($site->getRevalidateUrl());
 
         if ($this->nextSettingsManager->isDebug()) {
           $this->logger->notice('(@action): Revalidating path %path for the site %site. URL: %url', [

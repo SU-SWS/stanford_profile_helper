@@ -7,14 +7,12 @@ namespace Drupal\Tests\stanford_events\Unit\Hook;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\stanford_events\Hook\FormHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for FormHooks.
  */
 #[Group('stanford_events')]
-#[CoversClass(FormHooks::class)]
 class FormHooksTest extends UnitTestCase {
 
   /**

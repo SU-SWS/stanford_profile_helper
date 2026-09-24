@@ -10,14 +10,12 @@ use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\stanford_decoupled\Hook\TokenHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for TokenHooks.
  */
 #[Group('stanford_decoupled')]
-#[CoversClass(TokenHooks::class)]
 class TokenHooksTest extends UnitTestCase {
 
   /**

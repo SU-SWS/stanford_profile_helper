@@ -18,15 +18,16 @@ use Drupal\stanford_person_importer\Cap;
 use Drupal\taxonomy\TermInterface;
 use Drupal\Tests\UnitTestCase;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Psr7\Stream;
 use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class CapTest.
  */
+#[Group('stanford_person_importer')]
 class CapTest extends UnitTestCase {
 
   /**
@@ -60,7 +61,7 @@ class CapTest extends UnitTestCase {
   /**
    * {@inheritDoc}
    */
-  public function setup(): void {
+  protected function setUp(): void {
     parent::setUp();
     $guzzle = $this->createMock(ClientInterface::class);
     $guzzle->method('request')

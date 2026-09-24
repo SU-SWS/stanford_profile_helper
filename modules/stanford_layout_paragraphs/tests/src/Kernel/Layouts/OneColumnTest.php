@@ -7,14 +7,14 @@ namespace Drupal\Tests\stanford_layout_paragraphs\Kernel\Layouts;
 use Drupal\Core\Form\FormState;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\stanford_layout_paragraphs\Layouts\OneColumn;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Kernel tests for OneColumn layout.
  */
-#[CoversClass(OneColumn::class)]
 #[RunTestsInSeparateProcesses]
+#[Group('stanford_layout_paragraphs')]
 class OneColumnTest extends KernelTestBase {
 
   /**

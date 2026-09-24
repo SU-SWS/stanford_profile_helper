@@ -1,5 +1,5 @@
 name: 'Stanford Events Series'
-core_version_requirement: ^11.2
+core_version_requirement: ^11.2 || ^12
 description: 'A series is a collection of events.'
 type: module
 version: 11.0.6

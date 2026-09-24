@@ -13,11 +13,13 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Kernel tests for WordPressImporterFormBase.
  */
 #[RunTestsInSeparateProcesses]
+#[Group('stanford_wordpress_migrate')]
 class WordPressImporterFormBaseTest extends KernelTestBase {
 
   /**

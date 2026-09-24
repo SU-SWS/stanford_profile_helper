@@ -70,12 +70,12 @@ class JumpstartUiLayouts extends LayoutDefault implements PluginFormInterface {
    */
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
     parent::submitConfigurationForm($form, $form_state);
-    $classes = explode(' ', $form_state->getValue('extra_classes'));
+    $classes = explode(' ', (string) $form_state->getValue('extra_classes'));
+    $classes = array_map('trim', $classes);
     $classes = array_map([
       '\Drupal\Component\Utility\Html',
       'cleanCssIdentifier',
     ], $classes);
-    array_walk($classes, 'trim');
     $this->configuration['extra_classes'] = implode(' ', array_filter($classes));
     $this->configuration['centered'] = $form_state->getValue('centered') ? 'centered-container' : NULL;
     $this->configuration['columns'] = $form_state->getValue('columns');

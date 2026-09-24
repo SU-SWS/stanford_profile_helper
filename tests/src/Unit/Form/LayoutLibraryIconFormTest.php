@@ -16,14 +16,12 @@ use Drupal\layout_library\Entity\Layout;
 use Drupal\stanford_profile_helper\Form\LayoutLibraryIconForm;
 use Drupal\stanford_profile_helper\LayoutLibraryIconInterface;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test the LayoutLibraryIconForm.
  */
 #[Group('stanford_profile_helper')]
-#[CoversClass(LayoutLibraryIconForm::class)]
 class LayoutLibraryIconFormTest extends UnitTestCase {
 
   protected $form;

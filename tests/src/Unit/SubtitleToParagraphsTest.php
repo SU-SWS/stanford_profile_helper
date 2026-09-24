@@ -6,14 +6,12 @@ namespace Drupal\Tests\stanford_profile_helper\Unit;
 
 use Drupal\stanford_profile_helper\SubtitleToParagraphs;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test the SubtitleToParagraphs converter.
  */
 #[Group('stanford_profile_helper')]
-#[CoversClass(SubtitleToParagraphs::class)]
 class SubtitleToParagraphsTest extends UnitTestCase {
 
   /**
@@ -45,7 +43,6 @@ SRT;
     $converter = new SubtitleToParagraphs();
     $reflection = new \ReflectionClass($converter);
     $method = $reflection->getMethod('timeToSeconds');
-    $method->setAccessible(TRUE);
 
     $this->assertEquals(0.0, $method->invoke($converter, '00:00:00,000'));
     $this->assertEquals(1.5, $method->invoke($converter, '00:00:01,500'));
@@ -60,7 +57,6 @@ SRT;
     $converter = new SubtitleToParagraphs();
     $reflection = new \ReflectionClass($converter);
     $method = $reflection->getMethod('cleanText');
-    $method->setAccessible(TRUE);
 
     $this->assertEquals('Hello world', $method->invoke($converter, '  Hello   world  '));
     $this->assertEquals('Hello world', $method->invoke($converter, '<i>Hello</i> <b>world</b>'));
@@ -90,7 +86,6 @@ SRT;
     $converter = new SubtitleToParagraphs();
     $reflection = new \ReflectionClass($converter);
     $method = $reflection->getMethod('parseSrt');
-    $method->setAccessible(TRUE);
 
     $subtitles = $method->invoke($converter, $srt);
 
@@ -120,7 +115,6 @@ SRT;
     $converter = new SubtitleToParagraphs();
     $reflection = new \ReflectionClass($converter);
     $method = $reflection->getMethod('parseSrt');
-    $method->setAccessible(TRUE);
 
     $subtitles = $method->invoke($converter, $srt);
 
@@ -157,7 +151,6 @@ SRT;
     $converter = new SubtitleToParagraphs(maxGapSeconds: 0.1, minParagraphLength: 50);
     $reflection = new \ReflectionClass($converter);
     $method = $reflection->getMethod('createParagraphs');
-    $method->setAccessible(TRUE);
 
     $paragraphs = $method->invoke($converter, $subtitles);
 
@@ -188,7 +181,6 @@ SRT;
     $converter = new SubtitleToParagraphs(maxGapSeconds: 0.1);
     $reflection = new \ReflectionClass($converter);
     $method = $reflection->getMethod('createParagraphs');
-    $method->setAccessible(TRUE);
 
     $paragraphs = $method->invoke($converter, $subtitles);
 
@@ -210,7 +202,6 @@ SRT;
     $converter = new SubtitleToParagraphs(minParagraphLength: 50);
     $reflection = new \ReflectionClass($converter);
     $method = $reflection->getMethod('mergeParagraphs');
-    $method->setAccessible(TRUE);
 
     $merged = $method->invoke($converter, $paragraphs);
 
@@ -225,7 +216,6 @@ SRT;
     $converter = new SubtitleToParagraphs();
     $reflection = new \ReflectionClass($converter);
     $method = $reflection->getMethod('createParagraphs');
-    $method->setAccessible(TRUE);
 
     $paragraphs = $method->invoke($converter, []);
 
@@ -257,7 +247,6 @@ SRT;
     $converter = new SubtitleToParagraphs();
     $reflection = new \ReflectionClass($converter);
     $method = $reflection->getMethod('parseSrt');
-    $method->setAccessible(TRUE);
 
     $subtitles = $method->invoke($converter, $srt);
 
@@ -277,7 +266,6 @@ SRT;
     $converter = new SubtitleToParagraphs();
     $reflection = new \ReflectionClass($converter);
     $method = $reflection->getMethod('parseSrt');
-    $method->setAccessible(TRUE);
 
     $subtitles = $method->invoke($converter, $srt);
 
@@ -307,7 +295,6 @@ SRT;
     $converter = new SubtitleToParagraphs(maxGapSeconds: 0.1);
     $reflection = new \ReflectionClass($converter);
     $method = $reflection->getMethod('createParagraphs');
-    $method->setAccessible(TRUE);
 
     $paragraphs = $method->invoke($converter, $subtitles);
 
@@ -357,9 +344,7 @@ SRT;
 
     $reflection = new \ReflectionClass($converter);
     $maxGapProperty = $reflection->getProperty('maxGapSeconds');
-    $maxGapProperty->setAccessible(TRUE);
     $minLengthProperty = $reflection->getProperty('minParagraphLength');
-    $minLengthProperty->setAccessible(TRUE);
 
     $this->assertEquals(5.0, $maxGapProperty->getValue($converter));
     $this->assertEquals(100, $minLengthProperty->getValue($converter));

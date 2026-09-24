@@ -8,14 +8,12 @@ use Drupal\stanford_events\Hook\ViewsHooks;
 use Drupal\Tests\UnitTestCase;
 use Drupal\views\Plugin\views\cache\CachePluginBase;
 use Drupal\views\ViewExecutable;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for ViewsHooks.
  */
 #[Group('stanford_events')]
-#[CoversClass(ViewsHooks::class)]
 class ViewsHooksTest extends UnitTestCase {
 
   /**
@@ -135,6 +133,21 @@ class ViewsHooksTest extends UnitTestCase {
 
     $this->assertArrayNotHasKey('#attached', $output);
     $this->assertSame(['node_list', 'term_list'], $output['#cache']['tags']);
+  }
+
+  /**
+   * Other cache tags are kept when the list tags aren't present.
+   */
+  public function testViewsPostRenderWithoutListTags(): void {
+    $view = $this->createViewMock('stanford_events', ['stanford_event']);
+    $output = ['#cache' => ['tags' => ['some_tag', 'other_tag']]];
+    $this->hooks->viewsPostRender($view, $output, $this->cache);
+    $this->assertEquals(['some_tag', 'other_tag', 'node_list:stanford_event'], array_values($output['#cache']['tags']));
+
+    $view = $this->createViewMock('stanford_event_terms_utility', [], ['event_types']);
+    $output = [];
+    $this->hooks->viewsPostRender($view, $output, $this->cache);
+    $this->assertEquals(['term_list:event_types'], $output['#cache']['tags']);
   }
 
 }

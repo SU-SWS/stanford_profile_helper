@@ -9,14 +9,12 @@ use Drupal\node\NodeInterface;
 use Drupal\stanford_intranet\Hook\StanfordIntranetHooks;
 use Drupal\stanford_intranet\Plugin\Field\FieldType\EntityAccessFieldType;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for StanfordIntranetHooks.
  */
 #[Group('stanford_intranet')]
-#[CoversClass(StanfordIntranetHooks::class)]
 class StanfordIntranetHooksTest extends UnitTestCase {
 
   /**

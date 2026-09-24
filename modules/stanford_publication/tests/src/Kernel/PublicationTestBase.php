@@ -8,8 +8,6 @@ use Drupal\node\Entity\NodeType;
 
 /**
  * Class PublicationTestBase.
- *
- * @group stanford_publication
  */
 abstract class PublicationTestBase extends KernelTestBase {
 
@@ -37,7 +35,7 @@ abstract class PublicationTestBase extends KernelTestBase {
   /**
    * {@inheritDoc}
    */
-  public function setup(): void {
+  protected function setUp(): void {
     parent::setUp();
     $this->installEntitySchema('user');
     $this->installEntitySchema('node');

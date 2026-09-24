@@ -75,8 +75,8 @@ class Citation extends ContentEntityBase implements CitationInterface {
     $fields = parent::baseFieldDefinitions($entity_type);
 
     $fields['title'] = BaseFieldDefinition::create('string')
-      ->setLabel(t('Title'))
-      ->setDescription(t('The title of the Citation.'))
+      ->setLabel(new TranslatableMarkup('Title'))
+      ->setDescription(new TranslatableMarkup('The title of the Citation.'))
       ->setSettings([
         'max_length' => 255,
         'text_processing' => 0,
@@ -95,27 +95,27 @@ class Citation extends ContentEntityBase implements CitationInterface {
       ->setDisplayConfigurable('view', TRUE);
 
     $fields['created'] = BaseFieldDefinition::create('created')
-      ->setLabel(t('Created'))
-      ->setDescription(t('The time that the entity was created.'));
+      ->setLabel(new TranslatableMarkup('Created'))
+      ->setDescription(new TranslatableMarkup('The time that the entity was created.'));
 
     $fields['changed'] = BaseFieldDefinition::create('changed')
-      ->setLabel(t('Changed'))
-      ->setDescription(t('The time that the entity was last edited.'));
+      ->setLabel(new TranslatableMarkup('Changed'))
+      ->setDescription(new TranslatableMarkup('The time that the entity was last edited.'));
 
     $fields['parent_id'] = BaseFieldDefinition::create('string')
-      ->setLabel(t('Parent ID'))
-      ->setDescription(t('The ID of the parent entity of which this entity is referenced.'))
+      ->setLabel(new TranslatableMarkup('Parent ID'))
+      ->setDescription(new TranslatableMarkup('The ID of the parent entity of which this entity is referenced.'))
       ->setSetting('is_ascii', TRUE);
 
     $fields['parent_type'] = BaseFieldDefinition::create('string')
-      ->setLabel(t('Parent type'))
-      ->setDescription(t('The entity parent type to which this entity is referenced.'))
+      ->setLabel(new TranslatableMarkup('Parent type'))
+      ->setDescription(new TranslatableMarkup('The entity parent type to which this entity is referenced.'))
       ->setSetting('is_ascii', TRUE)
       ->setSetting('max_length', EntityTypeInterface::ID_MAX_LENGTH);
 
     $fields['parent_field_name'] = BaseFieldDefinition::create('string')
-      ->setLabel(t('Parent field name'))
-      ->setDescription(t('The entity parent field name to which this entity is referenced.'))
+      ->setLabel(new TranslatableMarkup('Parent field name'))
+      ->setDescription(new TranslatableMarkup('The entity parent field name to which this entity is referenced.'))
       ->setSetting('is_ascii', TRUE)
       ->setSetting('max_length', FieldStorageConfig::NAME_MAX_LENGTH);
 

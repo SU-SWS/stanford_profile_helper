@@ -14,11 +14,13 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Kernel tests for ImporterStep5FieldMappingForm.
  */
 #[RunTestsInSeparateProcesses]
+#[Group('stanford_wordpress_migrate')]
 class ImporterStep5FieldMappingFormTest extends KernelTestBase {
 
   /**
@@ -270,6 +272,39 @@ class ImporterStep5FieldMappingFormTest extends KernelTestBase {
     $result = ImporterStep5FieldMappingForm::destinationChangedAjax($form, $form_state);
 
     $this->assertEquals($form['field_mapping'][0]['destination_settings'], $result);
+  }
+
+  /**
+   * Test validateCustomProcessSettings with various process configurations.
+   */
+  public function testValidateCustomProcessSettingsPlugins(): void {
+    $parents = ['field_mapping', 0, 'destination_settings', 'settings'];
+    $element = ['#parents' => $parents];
+    $form = [];
+
+    // A known plugin is valid.
+    $form_state = new FormState();
+    $form_state->setValue($parents, "plugin: default_value\ndefault_value: test");
+    ImporterStep5FieldMappingForm::validateCustomProcessSettings($element, $form_state, $form);
+    $this->assertEmpty($form_state->getErrors());
+
+    // YAML that isn't a list of process plugins.
+    $form_state = new FormState();
+    $form_state->setValue($parents, 'just a string');
+    ImporterStep5FieldMappingForm::validateCustomProcessSettings($element, $form_state, $form);
+    $this->assertStringContainsString('Plugin not set', (string) current($form_state->getErrors()));
+
+    // A process without a plugin.
+    $form_state = new FormState();
+    $form_state->setValue($parents, "- default_value: test");
+    ImporterStep5FieldMappingForm::validateCustomProcessSettings($element, $form_state, $form);
+    $this->assertStringContainsString('Plugin not set', (string) current($form_state->getErrors()));
+
+    // An unknown plugin.
+    $form_state = new FormState();
+    $form_state->setValue($parents, "- plugin: default_value\n- plugin: not_a_real_plugin");
+    ImporterStep5FieldMappingForm::validateCustomProcessSettings($element, $form_state, $form);
+    $this->assertStringContainsString('Plugin not_a_real_plugin does not exist', (string) current($form_state->getErrors()));
   }
 
 }

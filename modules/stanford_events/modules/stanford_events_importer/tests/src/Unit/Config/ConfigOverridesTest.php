@@ -5,10 +5,12 @@ namespace Drupal\Tests\stanford_events_importer\Unit\Config;
 use Drupal\config_pages\ConfigPagesLoaderServiceInterface;
 use Drupal\stanford_events_importer\Config\ConfigOverrides;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Config override test.
  */
+#[Group('stanford_events_importer')]
 class ConfigOverridesTest extends UnitTestCase {
 
   protected $configPages;
@@ -18,7 +20,7 @@ class ConfigOverridesTest extends UnitTestCase {
   /**
    * {@inheritDoc}
    */
-  public function setup(): void {
+  protected function setUp(): void {
     parent::setUp();
     $this->configPages = $this->createMock(ConfigPagesLoaderServiceInterface::class);
     $this->configPages->method('getValue')->willReturnCallback([$this, 'getConfigPagesValue']);

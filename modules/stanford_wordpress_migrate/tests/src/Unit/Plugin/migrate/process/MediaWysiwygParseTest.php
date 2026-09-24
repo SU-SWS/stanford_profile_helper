@@ -16,10 +16,13 @@ use Drupal\stanford_wordpress_migrate\Plugin\migrate\process\MediaWysiwygParse;
 use Drupal\Tests\UnitTestCase;
 use GuzzleHttp\ClientInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use PHPUnit\Framework\Attributes\Group;
+use Drupal\Core\Logger\LoggerChannelInterface;
 
 /**
  * Unit tests for MediaWysiwygParse process plugin.
  */
+#[Group('stanford_wordpress_migrate')]
 class MediaWysiwygParseTest extends UnitTestCase {
 
   /**
@@ -578,6 +581,112 @@ class MediaWysiwygParseTest extends UnitTestCase {
 
     $result = $method->invoke($this->plugin, 'https://example.com/test.jpg', 'public://test.jpg');
     $this->assertSame($file, $result);
+  }
+
+  /**
+   * Test image sources are read up to the closing quote of the attribute.
+   */
+  public function testGetMediaTokenFromMarkupImageWithMoreAttributes(): void {
+    $fileStorage = $this->createMock(EntityStorageInterface::class);
+    $mediaStorage = $this->createMock(EntityStorageInterface::class);
+    $file = $this->createMock(FileInterface::class);
+    $media = $this->createMock(MediaInterface::class);
+
+    $this->entityTypeManager->method('getStorage')
+      ->willReturnMap([
+        ['file', $fileStorage],
+        ['media', $mediaStorage],
+      ]);
+    $fileStorage->expects($this->once())
+      ->method('loadByProperties')
+      ->with(['uri' => 'public://media/image/wordpress/wysiwyg/photo.jpg'])
+      ->willReturn([$file]);
+    $file->method('id')->willReturn(3);
+    $mediaStorage->expects($this->once())
+      ->method('loadByProperties')
+      ->with(['bundle' => 'image', 'field_media_image' => 3])
+      ->willReturn([$media]);
+    $media->method('uuid')->willReturn('image-uuid');
+
+    $method = new \ReflectionMethod($this->plugin, 'getMediaTokenFromMarkup');
+    $result = $method->invoke($this->plugin, '<img src="https://example.com/photo.jpg" alt="A photo" width="100">');
+    $this->assertStringContainsString('data-entity-uuid="image-uuid"', $result);
+  }
+
+  /**
+   * Test an image tag without a source is left alone.
+   */
+  public function testGetMediaTokenFromMarkupImageWithoutSource(): void {
+    $this->entityTypeManager->expects($this->never())->method('getStorage');
+
+    $method = new \ReflectionMethod($this->plugin, 'getMediaTokenFromMarkup');
+    $this->assertNull($method->invoke($this->plugin, '<img alt="No source">'));
+  }
+
+  /**
+   * Test YouTube embeds become oEmbed video media.
+   */
+  public function testGetEmbedMediaYoutube(): void {
+    $mediaStorage = $this->createMock(EntityStorageInterface::class);
+    $media = $this->createMock(MediaInterface::class);
+    $this->entityTypeManager->method('getStorage')
+      ->with('media')
+      ->willReturn($mediaStorage);
+
+    $video_url = 'https://www.youtube.com/watch?v=abc-123';
+    $mediaStorage->expects($this->once())
+      ->method('loadByProperties')
+      ->with(['bundle' => 'video', 'field_media_oembed_video' => $video_url])
+      ->willReturn([]);
+    $mediaStorage->expects($this->once())
+      ->method('create')
+      ->with([
+        'bundle' => 'video',
+        'name' => NULL,
+        'field_media_oembed_video' => $video_url,
+      ])
+      ->willReturn($media);
+    $media->expects($this->once())->method('save');
+
+    $method = new \ReflectionMethod($this->plugin, 'getEmbedMedia');
+    $result = $method->invoke($this->plugin, '<iframe src="https://www.youtube.com/embed/abc-123" title="Video"></iframe>');
+    $this->assertSame($media, $result);
+  }
+
+  /**
+   * Test new embeddable media logs a warning when missing a title.
+   */
+  public function testGetEmbedMediaWithoutTitle(): void {
+    $logger = $this->createMock(LoggerChannelInterface::class);
+    $logger->expects($this->once())
+      ->method('warning')
+      ->with($this->stringContains('does not contain a title'));
+    $loggerFactory = $this->createMock(LoggerChannelFactoryInterface::class);
+    $loggerFactory->method('get')->willReturn($logger);
+
+    $mediaStorage = $this->createMock(EntityStorageInterface::class);
+    $media = $this->createMock(MediaInterface::class);
+    $this->entityTypeManager->method('getStorage')->willReturn($mediaStorage);
+    $mediaStorage->method('loadByProperties')->willReturn([]);
+
+    $iframe = '<iframe src="https://example.com/embed"></iframe>';
+    $mediaStorage->expects($this->once())
+      ->method('create')
+      ->with($this->callback(fn($values) => $values['bundle'] == 'embeddable' && $values['field_media_embeddable_code'] == $iframe && str_starts_with($values['name'], 'Imported Embed Code - ')))
+      ->willReturn($media);
+    $media->expects($this->once())->method('save');
+
+    $plugin = new MediaWysiwygParse(
+      ['image_domain' => 'example.com'],
+      'media_wysiwyg_parse',
+      [],
+      $this->fileSystem,
+      $this->httpClient,
+      $this->entityTypeManager,
+      $loggerFactory
+    );
+    $method = new \ReflectionMethod($plugin, 'getEmbedMedia');
+    $this->assertSame($media, $method->invoke($plugin, $iframe));
   }
 
 }

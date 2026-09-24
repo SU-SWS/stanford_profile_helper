@@ -9,14 +9,12 @@ use Drupal\node\NodeInterface;
 use Drupal\stanford_publication\Hook\LibraryHooks;
 use Drupal\Tests\UnitTestCase;
 use Drupal\views\ViewExecutable;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for LibraryHooks.
  */
 #[Group('stanford_publication')]
-#[CoversClass(LibraryHooks::class)]
 class LibraryHooksTest extends UnitTestCase {
 
   /**

@@ -13,10 +13,12 @@ use Drupal\config_pages\ConfigPagesLoaderServiceInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\StreamWrapper\StreamWrapperManagerInterface;
 use Drupal\Core\StreamWrapper\StreamWrapperInterface;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class ConfigOverridesTest
  */
+#[Group('stanford_profile_helper')]
 class ConfigOverridesTest extends UnitTestCase {
 
   protected $logoFile;

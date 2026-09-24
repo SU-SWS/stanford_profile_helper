@@ -8,14 +8,12 @@ use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\stanford_person_importer\Hook\HelpHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for HelpHooks.
  */
 #[Group('stanford_person_importer')]
-#[CoversClass(HelpHooks::class)]
 class HelpHooksTest extends UnitTestCase {
 
   /**

@@ -6,10 +6,12 @@ use Drupal\Core\Render\RenderContext;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\stanford_profile_helper\StanfordProfileHelper;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class StanfordProfileHelperTest.
  */
+#[Group('stanford_profile_helper')]
 #[RunTestsInSeparateProcesses]
 class StanfordProfileHelperTest extends KernelTestBase {
 

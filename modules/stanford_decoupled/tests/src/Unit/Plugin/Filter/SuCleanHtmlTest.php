@@ -9,10 +9,12 @@ use Drupal\Core\Entity\Query\QueryInterface;
 use Drupal\Tests\UnitTestCase;
 use Drupal\stanford_decoupled\Plugin\Filter\SuCleanHtml;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class SulCleanHtmlTest.
  */
+#[Group('stanford_decoupled')]
 class SuCleanHtmlTest extends UnitTestCase {
 
   public static function filterDataProvider() {

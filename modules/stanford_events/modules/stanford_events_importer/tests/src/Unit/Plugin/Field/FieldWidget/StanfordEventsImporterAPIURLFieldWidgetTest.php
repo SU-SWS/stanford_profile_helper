@@ -9,10 +9,15 @@ use Drupal\Tests\UnitTestCase;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
+use PHPUnit\Framework\Attributes\Group;
+use Drupal\Core\Messenger\MessengerInterface;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Psr7\Response;
 
 /**
  * Class StanfordEventsImporterAPIURLFieldWidget
  */
+#[Group('stanford_events_importer')]
 class StanfordEventsImporterAPIURLFieldWidgetTest extends UnitTestCase {
 
   /**
@@ -42,7 +47,7 @@ class StanfordEventsImporterAPIURLFieldWidgetTest extends UnitTestCase {
   /**
    * Test.
    */
-  public function setup(): void {
+  protected function setUp(): void {
     parent::setUp();
     $plugin_id = "stanford_events_importer_apiurl_field_widget";
 
@@ -203,6 +208,33 @@ class StanfordEventsImporterAPIURLFieldWidgetTest extends UnitTestCase {
    */
   public function testIsApplicable() {
     $this->assertTrue(StanfordEventsImporterAPIURLFieldWidget::isApplicable($this->field_definition));
+  }
+
+  /**
+   * Options missing from the cache are fetched from the feed.
+   */
+  public function testOptionsFetchedOnEmptyCache() {
+    $cached = new \stdClass();
+    $cached->data = [279 => 'AASA'];
+    $cache = $this->createMock(CacheBackendInterface::class);
+    $cache->method('get')->willReturnOnConsecutiveCalls(FALSE, $cached, FALSE, FALSE);
+
+    $client = $this->createMock(ClientInterface::class);
+    $client->expects($this->exactly(4))
+      ->method('request')
+      ->willReturn(new Response(200, [], '<OrganizationList><Organization><guid>279</guid><name>AASA</name></Organization></OrganizationList>'));
+    $this->container->set('http_client', $client);
+    $this->container->set('cache.default', $cache);
+    $this->container->set('messenger', $this->createMock(MessengerInterface::class));
+
+    $plugin = new StanfordEventsImporterAPIURLFieldWidget('stanford_events_importer_apiurl_field_widget', [], $this->field_definition, [], [], $cache);
+
+    $get_orgs = new \ReflectionMethod($plugin, 'getOrgOptions');
+    $this->assertEquals([279 => 'AASA'], $get_orgs->invoke($plugin));
+
+    // Nothing could be cached, so no options are available.
+    $get_cats = new \ReflectionMethod($plugin, 'getCatOptions');
+    $this->assertEquals([], $get_cats->invoke($plugin));
   }
 
 }

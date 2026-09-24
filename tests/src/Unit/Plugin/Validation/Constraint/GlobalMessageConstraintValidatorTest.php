@@ -10,10 +10,12 @@ use Drupal\Tests\UnitTestCase;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Context\ExecutionContext;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class GlobalMessageConstraintValidatorTest.
  */
+#[Group('stanford_profile_helper')]
 class GlobalMessageConstraintValidatorTest extends UnitTestCase {
 
   /**

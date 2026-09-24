@@ -1,7 +1,7 @@
 name: 'Stanford Events'
 type: module
 description: 'Event content type, views, and importer.'
-core_version_requirement: ^11.2
+core_version_requirement: ^11.2 || ^12
 package: Stanford
 version: 11.0.6
 dependencies:
@@ -9,7 +9,7 @@ dependencies:
   - auto_entitylabel:auto_entitylabel
   - components:components
   - default_content:default_content
-  - drual:field
+  - drupal:field
   - drupal:breakpoint
   - drupal:datetime
   - drupal:file

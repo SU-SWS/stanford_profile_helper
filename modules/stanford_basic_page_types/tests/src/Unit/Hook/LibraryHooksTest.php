@@ -9,14 +9,12 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\node\NodeInterface;
 use Drupal\stanford_basic_page_types\Hook\LibraryHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for LibraryHooks.
  */
 #[Group('stanford_basic_page_types')]
-#[CoversClass(LibraryHooks::class)]
 class LibraryHooksTest extends UnitTestCase {
 
   /**

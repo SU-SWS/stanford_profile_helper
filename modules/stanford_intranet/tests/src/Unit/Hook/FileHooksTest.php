@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\stanford_intranet\Unit\Hook;
 
-use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\State\StateInterface;
@@ -13,14 +12,12 @@ use Drupal\file\FileRepositoryInterface;
 use Drupal\file\FileUsage\FileUsageInterface;
 use Drupal\stanford_intranet\Hook\FileHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for FileHooks.
  */
 #[Group('stanford_intranet')]
-#[CoversClass(FileHooks::class)]
 class FileHooksTest extends UnitTestCase {
 
   /**
@@ -38,11 +35,18 @@ class FileHooksTest extends UnitTestCase {
   protected ModuleHandlerInterface $moduleHandler;
 
   /**
-   * The container builder used to stub \Drupal::service() calls.
+   * Mocked file repository service.
    *
-   * @var \Drupal\Core\DependencyInjection\ContainerBuilder
+   * @var \Drupal\file\FileRepositoryInterface&\PHPUnit\Framework\MockObject\MockObject
    */
-  protected ContainerBuilder $container;
+  protected FileRepositoryInterface $fileRepository;
+
+  /**
+   * Mocked file usage service.
+   *
+   * @var \Drupal\file\FileUsage\FileUsageInterface&\PHPUnit\Framework\MockObject\MockObject
+   */
+  protected FileUsageInterface $fileUsage;
 
   /**
    * The hook class under test.
@@ -58,30 +62,23 @@ class FileHooksTest extends UnitTestCase {
     parent::setUp();
     $this->state = $this->createMock(StateInterface::class);
     $this->moduleHandler = $this->createMock(ModuleHandlerInterface::class);
-    $this->hooks = new FileHooks($this->state, $this->moduleHandler);
-
-    $this->container = new ContainerBuilder();
-    \Drupal::setContainer($this->container);
+    $this->fileRepository = $this->createMock(FileRepositoryInterface::class);
+    $this->fileUsage = $this->createMock(FileUsageInterface::class);
+    $this->hooks = new FileHooks($this->state, $this->moduleHandler, $this->fileRepository, $this->fileUsage);
   }
 
   /**
-   * Sets the mocked file.repository service on the container.
+   * Set what the mocked file repository loads for any uri.
    */
-  protected function setFileRepository($return): FileRepositoryInterface {
-    $repository = $this->createMock(FileRepositoryInterface::class);
-    $repository->method('loadByUri')->willReturn($return);
-    $this->container->set('file.repository', $repository);
-    return $repository;
+  protected function setFileRepository($return): void {
+    $this->fileRepository->method('loadByUri')->willReturn($return);
   }
 
   /**
-   * Sets the mocked file.usage service on the container.
+   * Set the usage the mocked file usage service reports for any file.
    */
-  protected function setFileUsage(array $return): FileUsageInterface {
-    $usage = $this->createMock(FileUsageInterface::class);
-    $usage->method('listUsage')->willReturn($return);
-    $this->container->set('file.usage', $usage);
-    return $usage;
+  protected function setFileUsage(array $return): void {
+    $this->fileUsage->method('listUsage')->willReturn($return);
   }
 
   /**

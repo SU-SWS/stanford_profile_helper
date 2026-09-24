@@ -8,10 +8,12 @@ use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\stanford_wordpress_migrate\Plugin\WordPressMigrateFieldProcessor\StringField;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for StringField plugin.
  */
+#[Group('stanford_wordpress_migrate')]
 class StringFieldTest extends UnitTestCase {
 
   /**

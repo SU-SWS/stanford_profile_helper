@@ -15,14 +15,12 @@ use Drupal\Core\Url;
 use Drupal\next\Entity\NextEntityTypeConfigInterface;
 use Drupal\stanford_decoupled\Hook\NextHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for NextHooks.
  */
 #[Group('stanford_decoupled')]
-#[CoversClass(NextHooks::class)]
 class NextHooksTest extends UnitTestCase {
 
   /**

@@ -8,14 +8,12 @@ use Drupal\stanford_events_series\Hook\ViewsHooks;
 use Drupal\Tests\UnitTestCase;
 use Drupal\views\Plugin\views\cache\CachePluginBase;
 use Drupal\views\ViewExecutable;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for ViewsHooks.
  */
 #[Group('stanford_events_series')]
-#[CoversClass(ViewsHooks::class)]
 class ViewsHooksTest extends UnitTestCase {
 
   /**
@@ -92,6 +90,16 @@ class ViewsHooksTest extends UnitTestCase {
 
     $this->assertArrayNotHasKey('#attached', $output);
     $this->assertSame(['node_list'], $output['#cache']['tags']);
+  }
+
+  /**
+   * Other cache tags are kept when the node list tag isn't present.
+   */
+  public function testViewsPostRenderWithoutListTag(): void {
+    $view = $this->createViewMock('stanford_event_series', ['stanford_event_series']);
+    $output = ['#cache' => ['tags' => ['some_tag']]];
+    $this->hooks->viewsPostRender($view, $output, $this->cache);
+    $this->assertEquals(['some_tag', 'node_list:stanford_event_series'], array_values($output['#cache']['tags']));
   }
 
 }

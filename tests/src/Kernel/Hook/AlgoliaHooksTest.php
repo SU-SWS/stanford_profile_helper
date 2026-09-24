@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Tests\stanford_profile_helper\Kernel\EventSubscriber;
+namespace Drupal\Tests\stanford_profile_helper\Kernel\Hook;
 
 use Drupal\config_pages\ConfigPagesLoaderServiceInterface;
 use Drupal\field\Entity\FieldConfig;
@@ -15,7 +15,6 @@ use Drupal\stanford_profile_helper\Hook\AlgoliaHooks;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\taxonomy\Entity\Vocabulary;
 use Drupal\Tests\stanford_profile_helper\Kernel\SuProfileHelperKernelTestBase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpFoundation\Request;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -24,7 +23,6 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Test the Algolia hooks.
  */
 #[Group('stanford_profile_helper')]
-#[CoversClass(AlgoliaHooks::class)]
 #[RunTestsInSeparateProcesses]
 class AlgoliaHooksTest extends SuProfileHelperKernelTestBase {
 

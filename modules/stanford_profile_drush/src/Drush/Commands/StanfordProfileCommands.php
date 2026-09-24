@@ -1,19 +1,19 @@
 <?php
 
-namespace Drupal\stanford_profile_drush\Commands;
+namespace Drupal\stanford_profile_drush\Drush\Commands;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drush\Commands\DrushCommands;
 use Drush\Attributes as CLI;
+use Drush\Commands\DrushCommands;
 
 /**
- * Class StanfordProfileCommands.
- *
- * @package Drupal\stanford_profile_drush\Commands
- * @codeCoverageIgnore
+ * Stanford Profile Drush commands.
  */
 class StanfordProfileCommands extends DrushCommands {
+
+  use AutowireTrait;
 
   /**
    * Drush command constructor.
@@ -25,17 +25,22 @@ class StanfordProfileCommands extends DrushCommands {
    */
   public function __construct(
     protected ConfigFactoryInterface $configFactory,
-    protected EntityTypeManagerInterface $entityTypeManager
-  ) {}
+    protected EntityTypeManagerInterface $entityTypeManager,
+  ) {
+    parent::__construct();
+  }
 
+  /**
+   * Unpublish the node that is set as the site's front page.
+   */
   #[CLI\Command(name: 'stanford-profile:unpublish-homepage', aliases: ['su:unpublish-home'])]
-  public function unpublishHomepage() {
+  public function unpublishHomepage(): void {
     $homepage = $this->configFactory->get('system.site')->get('page.front');
-    $nid = (int) str_replace('/node/', '', $homepage);
+    $nid = (int) str_replace('/node/', '', (string) $homepage);
     if ($nid) {
       $this->entityTypeManager->getStorage('node')
         ->load($nid)
-        ->setUnpublished()
+        ?->setUnpublished()
         ->save();
     }
   }

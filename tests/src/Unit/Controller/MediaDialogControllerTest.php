@@ -8,10 +8,12 @@ use Drupal\Core\Entity\EntityViewBuilderInterface;
 use Drupal\media\MediaInterface;
 use Drupal\stanford_profile_helper\Controller\MediaDialogController;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test the MediaDialogController.
  */
+#[Group('stanford_profile_helper')]
 class MediaDialogControllerTest extends UnitTestCase {
 
   /**
@@ -53,7 +55,6 @@ class MediaDialogControllerTest extends UnitTestCase {
     $this->controller = new MediaDialogController();
     $reflection = new \ReflectionClass($this->controller);
     $property = $reflection->getProperty('entityTypeManager');
-    $property->setAccessible(TRUE);
     $property->setValue($this->controller, $this->entityTypeManager);
   }
 

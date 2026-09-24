@@ -13,9 +13,6 @@ use Drupal\pathauto\PathautoPatternInterface;
 class NodeHooks {
 
   /**
-   * Implements hook_pathauto_alias_alter().
-   */
-  /**
    * Implements hook_pathauto_pattern_alter().
    */
   #[Hook('pathauto_pattern_alter')]

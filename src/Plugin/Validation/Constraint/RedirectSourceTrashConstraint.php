@@ -6,6 +6,7 @@ namespace Drupal\stanford_profile_helper\Plugin\Validation\Constraint;
 
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Validation\Attribute\Constraint;
+use Symfony\Component\Validator\Attribute\HasNamedArguments;
 use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 /**
@@ -19,6 +20,14 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 )]
 final class RedirectSourceTrashConstraint extends SymfonyConstraint {
 
-  public string $message = 'The source path %path appears to be a valid path. The path may currently exist in the trash.';
+  #[HasNamedArguments]
+  public function __construct(
+    mixed $options = NULL,
+    public string $message = 'The source path %path appears to be a valid path. The path may currently exist in the trash.',
+    ?array $groups = NULL,
+    mixed $payload = NULL,
+  ) {
+    parent::__construct($options, $groups, $payload);
+  }
 
 }

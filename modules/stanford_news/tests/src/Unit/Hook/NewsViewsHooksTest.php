@@ -9,14 +9,12 @@ use Drupal\stanford_news\Hook\NewsViewsHooks;
 use Drupal\Tests\UnitTestCase;
 use Drupal\views\Plugin\views\cache\CachePluginBase;
 use Drupal\views\ViewExecutable;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for NewsViewsHooks.
  */
 #[Group('stanford_news')]
-#[CoversClass(NewsViewsHooks::class)]
 class NewsViewsHooksTest extends UnitTestCase {
 
   /**

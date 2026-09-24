@@ -12,14 +12,12 @@ use Drupal\Core\Entity\Query\QueryInterface;
 use Drupal\Core\State\StateInterface;
 use Drupal\stanford_events\Hook\CronHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for CronHooks.
  */
 #[Group('stanford_events')]
-#[CoversClass(CronHooks::class)]
 class CronHooksTest extends UnitTestCase {
 
   /**

@@ -6,11 +6,13 @@ use Drupal\stanford_publication\Entity\Citation;
 use Drupal\stanford_publication\Entity\CitationInterface;
 use Drupal\Tests\stanford_publication\Kernel\PublicationTestBase;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class CitationTest
  */
 #[RunTestsInSeparateProcesses]
+#[Group('stanford_publication')]
 class CitationTest extends PublicationTestBase {
 
   /**

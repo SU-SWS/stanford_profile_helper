@@ -102,7 +102,7 @@ final class LocalistEventChecker extends QueueWorkerBase implements ContainerFac
   protected function deleteNode(int $nid) {
     $this->entityTypeManager->getStorage('node')
       ->load($nid)
-      ->delete();
+      ?->delete();
   }
 
 }

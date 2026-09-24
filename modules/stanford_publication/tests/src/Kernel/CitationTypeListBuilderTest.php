@@ -5,11 +5,13 @@ namespace Drupal\Tests\stanford_publication\Kernel;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\stanford_publication\Entity\CitationType;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class CitationTypeListBuilderTest
  */
 #[RunTestsInSeparateProcesses]
+#[Group('stanford_publication')]
 class CitationTypeListBuilderTest extends PublicationTestBase {
 
   /**

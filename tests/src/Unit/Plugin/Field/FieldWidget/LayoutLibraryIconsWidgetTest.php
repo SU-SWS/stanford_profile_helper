@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\stanford_profile_helper\Unit\Plugin\Field\FieldWidget;
 
+use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
@@ -18,14 +19,12 @@ use Drupal\layout_library\Entity\Layout;
 use Drupal\stanford_profile_helper\LayoutLibraryIconInterface;
 use Drupal\stanford_profile_helper\Plugin\Field\FieldWidget\LayoutLibraryIconsWidget;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test the LayoutLibraryIconsWidget.
  */
 #[Group('stanford_profile_helper')]
-#[CoversClass(LayoutLibraryIconsWidget::class)]
 class LayoutLibraryIconsWidgetTest extends UnitTestCase {
 
   protected $widget;
@@ -188,12 +187,38 @@ class LayoutLibraryIconsWidgetTest extends UnitTestCase {
     // Use reflection to access protected method.
     $reflection = new \ReflectionClass($this->widget);
     $method = $reflection->getMethod('getEmptyLabel');
-    $method->setAccessible(TRUE);
 
     $label = $method->invoke($this->widget);
     $this->assertInstanceOf(TranslatableMarkup::class, $label);
     // Check the untranslated string.
     $this->assertEquals('- Default -', $label->getUntranslatedString());
+  }
+
+  /**
+   * The widget is created from the container and applies to layout fields.
+   */
+  public function testCreateAndIsApplicable() {
+    $container = new ContainerBuilder();
+    $container->set('stanford_profile_helper.layout_library_icon', $this->layoutLibraryIcon);
+    $container->set('entity_type.manager', $this->entityTypeManager);
+    $container->set('renderer', $this->renderer);
+
+    $field_storage_definition = $this->createMock(FieldStorageDefinitionInterface::class);
+    $field_storage_definition->method('getPropertyNames')->willReturn(['target_id']);
+    $field_definition = $this->createMock(FieldDefinitionInterface::class);
+    $field_definition->method('getFieldStorageDefinition')->willReturn($field_storage_definition);
+    $field_definition->method('getName')
+      ->willReturnOnConsecutiveCalls('layout_selection', 'field_other');
+
+    $widget = LayoutLibraryIconsWidget::create($container, [
+      'field_definition' => $field_definition,
+      'settings' => [],
+      'third_party_settings' => [],
+    ], 'layout_library_icons', []);
+    $this->assertInstanceOf(LayoutLibraryIconsWidget::class, $widget);
+
+    $this->assertTrue(LayoutLibraryIconsWidget::isApplicable($field_definition));
+    $this->assertFalse(LayoutLibraryIconsWidget::isApplicable($field_definition));
   }
 
 }

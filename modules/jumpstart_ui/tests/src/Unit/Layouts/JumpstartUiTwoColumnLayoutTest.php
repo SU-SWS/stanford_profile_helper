@@ -6,16 +6,18 @@ use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Form\FormState;
 use Drupal\jumpstart_ui\Layouts\JumpstartUiTwoColumnLayout;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class JumpstartUiTwoColumnLayoutTest.
  */
+#[Group('jumpstart_ui')]
 class JumpstartUiTwoColumnLayoutTest extends UnitTestCase {
 
   /**
    * {@inheritDoc}
    */
-  public function setup(): void {
+  protected function setUp(): void {
     parent::setUp();
     $container = new ContainerBuilder();
     $container->set('string_translation', $this->getStringTranslationStub());

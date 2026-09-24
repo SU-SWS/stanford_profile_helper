@@ -10,10 +10,12 @@ use Drupal\paragraphs\Entity\ParagraphsType;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\stanford_paragraph_card\Plugin\paragraphs\Behavior\CardBehavior;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
+#[Group('stanford_paragraph_card')]
 class CardBehaviorTest extends UnitTestCase {
 
-  public function setup(): void {
+  protected function setUp(): void {
     parent::setUp();
     $container = new ContainerBuilder();
     $container->set('string_translation', $this->getStringTranslationStub());

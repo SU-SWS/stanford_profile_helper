@@ -208,7 +208,7 @@ abstract class WordPressMigrationDeriverBase extends DeriverBase implements Cont
     if (!$response->hasHeader('X-WP-Total')) {
       return [];
     }
-    $total_count = $response->getHeaderLine('X-WP-Total');
+    $total_count = (int) $response->getHeaderLine('X-WP-Total');
     $total_pages = (int) ceil($total_count / 100);
     $urls = [];
     for ($page = 1; $page <= $total_pages; $page++) {

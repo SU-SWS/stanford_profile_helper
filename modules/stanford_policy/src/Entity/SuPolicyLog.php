@@ -67,7 +67,7 @@ class SuPolicyLog extends ContentEntityBase implements SuPolicyLogInterface {
     $fields = parent::baseFieldDefinitions($entity_type);
 
     $fields['status'] = BaseFieldDefinition::create('boolean')
-      ->setLabel(t('Status'))
+      ->setLabel(new TranslatableMarkup('Status'))
       ->setDefaultValue(TRUE)
       ->setSetting('on_label', 'Enabled')
       ->setDisplayOptions('form', [
@@ -89,7 +89,7 @@ class SuPolicyLog extends ContentEntityBase implements SuPolicyLogInterface {
       ->setDisplayConfigurable('view', TRUE);
 
     $fields['uid'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('Author'))
+      ->setLabel(new TranslatableMarkup('Author'))
       ->setSetting('target_type', 'user')
       ->setDefaultValueCallback(static::class . '::getDefaultEntityOwner')
       ->setDisplayOptions('form', [
@@ -110,8 +110,8 @@ class SuPolicyLog extends ContentEntityBase implements SuPolicyLogInterface {
       ->setDisplayConfigurable('view', TRUE);
 
     $fields['created'] = BaseFieldDefinition::create('created')
-      ->setLabel(t('Authored on'))
-      ->setDescription(t('The time that the policy log was created.'))
+      ->setLabel(new TranslatableMarkup('Authored on'))
+      ->setDescription(new TranslatableMarkup('The time that the policy log was created.'))
       ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'timestamp',
@@ -125,8 +125,8 @@ class SuPolicyLog extends ContentEntityBase implements SuPolicyLogInterface {
       ->setDisplayConfigurable('view', TRUE);
 
     $fields['changed'] = BaseFieldDefinition::create('changed')
-      ->setLabel(t('Changed'))
-      ->setDescription(t('The time that the policy log was last edited.'));
+      ->setLabel(new TranslatableMarkup('Changed'))
+      ->setDescription(new TranslatableMarkup('The time that the policy log was last edited.'));
 
     return $fields;
   }

@@ -15,16 +15,18 @@ use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\paragraphs\Entity\ParagraphsType;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class TeaserParagraphBehaviorTest
  */
+#[Group('jumpstart_ui')]
 class TeaserParagraphBehaviorTest extends UnitTestCase {
 
   /**
    * {@inheritDoc}
    */
-  public function setup(): void {
+  protected function setUp(): void {
     parent::setUp();
 
     $field_manager = $this->createMock(EntityFieldManagerInterface::class);
@@ -77,7 +79,36 @@ class TeaserParagraphBehaviorTest extends UnitTestCase {
     ];
     $plugin->view($build, $paragraph, $display, 'foo');
     $this->assertContains('visually-hidden', $build['su_entity_headline']['#attributes']['class']);
-    $this->assertContains('stanford_h3_card', $build['su_entity_item'][0]['#cache']['keys']);
+    $this->assertEquals(['foobar', 'stanford_h3_card'], $build['su_entity_item'][0]['#cache']['keys']);
+  }
+
+  /**
+   * The card view mode cache key is swapped for the h3 card key.
+   */
+  public function testViewReplacesCardCacheKey() {
+    $plugin = TeaserParagraphBehavior::create(\Drupal::getContainer(), [], '', []);
+
+    $paragraph = $this->createMock(Paragraph::class);
+    $paragraph->method('getBehaviorSetting')->willReturn('show');
+    $display = $this->createMock(EntityViewDisplayInterface::class);
+
+    $build = [
+      'su_entity_headline' => ['foo'],
+      'su_entity_item' => [
+        [
+          '#view_mode' => 'stanford_card',
+          '#cache' => ['keys' => ['entity_view', 'node', 1, 'stanford_card']],
+        ],
+        // Items without render cache keys aren't given any.
+        ['#view_mode' => 'stanford_card'],
+      ],
+    ];
+    $plugin->view($build, $paragraph, $display, 'foo');
+    $this->assertEquals('stanford_h3_card', $build['su_entity_item'][0]['#view_mode']);
+    $this->assertEquals(['entity_view', 'node', 1, 'stanford_h3_card'], $build['su_entity_item'][0]['#cache']['keys']);
+    $this->assertEquals('stanford_h3_card', $build['su_entity_item'][1]['#view_mode']);
+    $this->assertArrayNotHasKey('#cache', $build['su_entity_item'][1]);
+    $this->assertArrayNotHasKey('#attributes', $build['su_entity_headline']);
   }
 
   /**

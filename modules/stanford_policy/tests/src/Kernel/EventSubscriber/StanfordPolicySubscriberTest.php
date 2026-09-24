@@ -17,10 +17,12 @@ use Drupal\stanford_policy\Hook\StanfordPolicyHooks;
 use Drupal\user\Entity\Role;
 use Drupal\user\RoleInterface;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  */
 #[RunTestsInSeparateProcesses]
+#[Group('stanford_policy')]
 class StanfordPolicySubscriberTest extends KernelTestBase {
 
   protected static $modules = [
@@ -49,7 +51,7 @@ class StanfordPolicySubscriberTest extends KernelTestBase {
    */
   protected $childNode;
 
-  public function setup(): void {
+  protected function setUp(): void {
     parent::setUp();
     $this->installEntitySchema('node');
     $this->installEntitySchema('user');

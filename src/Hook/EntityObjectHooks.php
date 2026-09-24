@@ -27,7 +27,7 @@ class EntityObjectHooks {
    * Alter entity types.
    */
   #[Hook('entity_type_alter')]
-  function stanford_profile_helper_entity_type_alter(array &$entity_types) {
+  public function entityTypeAlter(array &$entity_types) {
     if (isset($entity_types['menu_link_content'])) {
       $entity_types['menu_link_content']->addConstraint('menu_link_item_url_constraint');
     }
@@ -43,7 +43,7 @@ class EntityObjectHooks {
    * Alter entity base fields for non-bundles.
    */
   #[Hook('entity_base_field_info_alter')]
-  function stanford_profile_helper_entity_base_field_info_alter(&$fields, EntityTypeInterface $entity_type) {
+  public function entityBaseFieldInfoAlter(&$fields, EntityTypeInterface $entity_type) {
     if ($entity_type->id() == 'redirect') {
       $fields['redirect_source']->addConstraint('redirect_source_trash', []);
     }
@@ -53,7 +53,7 @@ class EntityObjectHooks {
    * Alter entity base fields for bundles.
    */
   #[Hook('entity_bundle_field_info_alter')]
-  function stanford_profile_helper_entity_bundle_field_info_alter(&$fields, EntityTypeInterface $entity_type, $bundle) {
+  public function entityBundleFieldInfoAlter(&$fields, EntityTypeInterface $entity_type, $bundle) {
     if (
       $entity_type->id() == 'config_pages' &&
       $bundle == 'stanford_global_message' &&

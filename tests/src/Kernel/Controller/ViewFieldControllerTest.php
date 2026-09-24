@@ -8,7 +8,6 @@ use Drupal\stanford_profile_helper\Controller\ViewFieldController;
 use Drupal\taxonomy\Entity\Vocabulary;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\Tests\stanford_profile_helper\Kernel\SuProfileHelperKernelTestBase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +17,6 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
  * Test the ViewFieldController.
  */
 #[Group('stanford_profile_helper')]
-#[CoversClass(ViewFieldController::class)]
 #[RunTestsInSeparateProcesses]
 class ViewFieldControllerTest extends SuProfileHelperKernelTestBase {
 
@@ -34,6 +32,7 @@ class ViewFieldControllerTest extends SuProfileHelperKernelTestBase {
    */
   protected function setUp(): void {
     parent::setUp();
+    $this->installConfig(['pathauto']);
     $this->controller = ViewFieldController::create(\Drupal::getContainer());
   }
 
@@ -80,6 +79,8 @@ class ViewFieldControllerTest extends SuProfileHelperKernelTestBase {
     $this->assertContains('Another Test', $labels);
     $this->assertContains('Testing One', $labels);
     $this->assertContains('Testing Two', $labels);
+    // Suggestions are cleaned the same way pathauto cleans aliases.
+    $this->assertContains('testing-one', array_column($results, 'value'));
   }
 
   /**

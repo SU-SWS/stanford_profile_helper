@@ -6,12 +6,12 @@ namespace Drupal\Tests\stanford_layout_paragraphs\Unit\Layouts;
 
 use Drupal\stanford_layout_paragraphs\Layouts\OneColumnWide;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for OneColumnWide layout.
  */
-#[CoversClass(OneColumnWide::class)]
+#[Group('stanford_layout_paragraphs')]
 class OneColumnWideTest extends UnitTestCase {
 
   /**

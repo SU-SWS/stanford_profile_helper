@@ -7,11 +7,13 @@ use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\Row;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class ExploreCoursesMigrationPluginsTest.
  */
 #[RunTestsInSeparateProcesses]
+#[Group('stanford_courses_importer')]
 class ExploreCoursesMigrationPluginsTest extends EntityKernelTestBase {
 
   /**
@@ -54,7 +56,7 @@ class ExploreCoursesMigrationPluginsTest extends EntityKernelTestBase {
   /**
    * {@inheritDoc}.
    */
-  public function setup(): void {
+  protected function setUp(): void {
     parent::setUp();
     $this->processManager = $this->container->get('plugin.manager.migrate.process');
     $this->section_xml = <<<DATA

@@ -7,12 +7,12 @@ namespace Drupal\Tests\stanford_layout_paragraphs\Unit\Layouts;
 use Drupal\Core\Form\FormState;
 use Drupal\stanford_layout_paragraphs\Layouts\LayoutWithBgColorTrait;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for LayoutWithBgColorTrait.
  */
-#[CoversClass(LayoutWithBgColorTrait::class)]
+#[Group('stanford_layout_paragraphs')]
 class LayoutWithBgColorTraitTest extends UnitTestCase {
 
   /**

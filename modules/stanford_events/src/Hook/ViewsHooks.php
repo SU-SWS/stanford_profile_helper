@@ -46,8 +46,10 @@ class ViewsHooks {
     if (in_array($id, $allow_list_node)) {
       $output['#attached']['library'][] = 'stanford_events/event_views';
 
-      $node_list_position = array_search('node_list', $output['#cache']['tags']);
-      unset($output['#cache']['tags'][$node_list_position]);
+      $node_list_position = array_search('node_list', $output['#cache']['tags'] ?? []);
+      if ($node_list_position !== FALSE) {
+        unset($output['#cache']['tags'][$node_list_position]);
+      }
       foreach ($view->filter['type']->value as $node_type) {
         $output['#cache']['tags'][] = "node_list:$node_type";
       }
@@ -57,8 +59,10 @@ class ViewsHooks {
     if (in_array($id, $allow_list_term)) {
       $output['#attached']['library'][] = 'stanford_events/event_views';
 
-      $term_list_position = array_search('term_list', $output['#cache']['tags']);
-      unset($output['#cache']['tags'][$term_list_position]);
+      $term_list_position = array_search('term_list', $output['#cache']['tags'] ?? []);
+      if ($term_list_position !== FALSE) {
+        unset($output['#cache']['tags'][$term_list_position]);
+      }
       foreach ($view->filter['vid']->value as $term_type) {
         $output['#cache']['tags'][] = "term_list:$term_type";
       }

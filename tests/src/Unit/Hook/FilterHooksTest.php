@@ -9,14 +9,12 @@ use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\stanford_profile_helper\Hook\FilterHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for FilterHooks.
  */
 #[Group('stanford_profile_helper')]
-#[CoversClass(FilterHooks::class)]
 class FilterHooksTest extends UnitTestCase {
 
   /**

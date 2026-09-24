@@ -1,5 +1,5 @@
 name: 'Stanford Events Importer'
-core_version_requirement: ^11.2
+core_version_requirement: ^11.2 || ^12
 description: 'Migrate importer for stanford events.'
 type: module
 version: 11.0.6

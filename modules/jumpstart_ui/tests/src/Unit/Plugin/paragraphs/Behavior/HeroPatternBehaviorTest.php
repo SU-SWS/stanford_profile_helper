@@ -16,16 +16,18 @@ use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\paragraphs\Entity\ParagraphsType;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class HeroPatternBehaviorTest
  */
+#[Group('jumpstart_ui')]
 class HeroPatternBehaviorTest extends UnitTestCase {
 
   /**
    * {@inheritDoc}
    */
-  public function setup(): void {
+  protected function setUp(): void {
     parent::setUp();
 
     $field_manager = $this->createMock(EntityFieldManagerInterface::class);
@@ -85,6 +87,50 @@ class HeroPatternBehaviorTest extends UnitTestCase {
         ->willReturn($ds_settings);
     }
     return $return;
+  }
+
+  /**
+   * The overlay colour options only show when allowed by state.
+   */
+  public function testFormOverlayColor() {
+    $state = $this->createMock(StateInterface::class);
+    $state->method('get')
+      ->with('allow_hero_pattern_overlay_color')
+      ->willReturn(TRUE);
+    \Drupal::getContainer()->set('state', $state);
+
+    $plugin = HeroPatternBehavior::create(\Drupal::getContainer(), [], '', []);
+    $paragraph = $this->createMock(ParagraphInterface::class);
+    $form = [];
+    $form = $plugin->buildBehaviorForm($paragraph, $form, new FormState());
+    $this->assertArrayHasKey('center', $form['overlay_position']['#options']);
+    $this->assertTrue($form['overlay_color_wrapper']['#access']);
+    $this->assertTrue($form['overlay_color_wrapper']['overlay_color']['#access']);
+  }
+
+  /**
+   * The overlay colour is moved out of its wrapper when saved.
+   */
+  public function testSubmitBehaviorForm() {
+    $plugin = HeroPatternBehavior::create(\Drupal::getContainer(), [], 'hero_pattern', []);
+
+    $saved = [];
+    $paragraph = $this->createMock(ParagraphInterface::class);
+    $paragraph->method('setBehaviorSettings')
+      ->willReturnCallback(function ($plugin_id, $settings) use (&$saved) {
+        $saved = $settings;
+      });
+
+    $form = [];
+    $form_state = new FormState();
+    $form_state->setValues([
+      'overlay_position' => 'center',
+      'overlay_color_wrapper' => ['overlay_color' => '#620059'],
+    ]);
+    $plugin->submitBehaviorForm($paragraph, $form, $form_state);
+
+    $this->assertEquals(['overlay_position' => 'center', 'overlay_color' => '#620059'], $form_state->getValues());
+    $this->assertEquals(['overlay_position' => 'center', 'overlay_color' => '#620059'], $saved);
   }
 
 }

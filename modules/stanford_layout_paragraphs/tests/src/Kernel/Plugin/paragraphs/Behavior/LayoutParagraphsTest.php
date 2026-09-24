@@ -7,11 +7,13 @@ use Drupal\KernelTests\KernelTestBase;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\stanford_layout_paragraphs\Plugin\paragraphs\Behavior\LayoutParagraphs;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test layout paragraph plugin overriddes.
  */
 #[RunTestsInSeparateProcesses]
+#[Group('stanford_layout_paragraphs')]
 class LayoutParagraphsTest extends KernelTestBase {
 
   /**

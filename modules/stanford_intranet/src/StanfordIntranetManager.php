@@ -98,7 +98,7 @@ class StanfordIntranetManager implements StanfordIntranetManagerInterface {
       }
       $uri = $file->getFileUri();
       $new_uri = str_replace('public://', 'private://', $uri);
-      $directory = dirname($new_uri);
+      $directory = $this->fileSystem->dirname($new_uri);
 
       $this->fileSystem->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS);
       $this->fileRepository->move($file, str_replace('public://', 'private://', $uri));

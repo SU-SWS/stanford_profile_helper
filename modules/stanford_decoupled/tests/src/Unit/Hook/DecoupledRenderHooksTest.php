@@ -12,14 +12,12 @@ use Drupal\stanford_decoupled\Hook\DecoupledRenderHooks;
 use Drupal\Tests\UnitTestCase;
 use Drupal\views\Plugin\views\query\QueryPluginBase;
 use Drupal\views\ViewExecutable;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for DecoupledRenderHooks.
  */
 #[Group('stanford_decoupled')]
-#[CoversClass(DecoupledRenderHooks::class)]
 class DecoupledRenderHooksTest extends UnitTestCase {
 
   /**

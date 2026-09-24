@@ -8,11 +8,13 @@ use Drupal\KernelTests\KernelTestBase;
 use Drupal\stanford_wordpress_migrate\Entity\WordPressMigration;
 use Drupal\stanford_wordpress_migrate\WordPressMigrationInterface;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Kernel tests for WordPressMigration entity.
  */
 #[RunTestsInSeparateProcesses]
+#[Group('stanford_wordpress_migrate')]
 class WordPressMigrationTest extends KernelTestBase {
 
   /**

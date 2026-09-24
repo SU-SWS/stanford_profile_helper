@@ -8,10 +8,12 @@ use Drupal\google_analytics\GaAccount;
 use Drupal\google_analytics\GaJavascriptObject;
 use Drupal\Tests\stanford_profile_helper\Kernel\SuProfileHelperKernelTestBase;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test the event subscriber.
  */
+#[Group('stanford_profile_helper')]
 #[RunTestsInSeparateProcesses]
 class GoogleAnalyticsSubscriberTest extends SuProfileHelperKernelTestBase {
 

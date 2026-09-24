@@ -7,11 +7,13 @@ use Drupal\Core\Session\AccountProxy;
 use Drupal\stanford_notifications\Entity\Notification;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class NotificationServiceTest.
  */
 #[RunTestsInSeparateProcesses]
+#[Group('stanford_notifications')]
 class NotificationServiceTest extends StanfordNotificationTestBase {
 
   /**
@@ -22,7 +24,7 @@ class NotificationServiceTest extends StanfordNotificationTestBase {
   /**
    * {@inheritDoc}
    */
-  public function setup(): void {
+  protected function setUp(): void {
     parent::setUp();
     $this->service = \Drupal::service('notification_service');
   }

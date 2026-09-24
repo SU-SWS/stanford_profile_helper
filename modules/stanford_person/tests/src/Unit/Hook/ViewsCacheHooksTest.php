@@ -12,14 +12,12 @@ use Drupal\taxonomy\TermInterface;
 use Drupal\Tests\UnitTestCase;
 use Drupal\views\Plugin\views\cache\CachePluginBase;
 use Drupal\views\ViewExecutable;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for ViewsCacheHooks.
  */
 #[Group('stanford_person')]
-#[CoversClass(ViewsCacheHooks::class)]
 class ViewsCacheHooksTest extends UnitTestCase {
 
   /**

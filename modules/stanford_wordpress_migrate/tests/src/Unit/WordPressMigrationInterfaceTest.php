@@ -8,10 +8,12 @@ use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityPublishedInterface;
 use Drupal\stanford_wordpress_migrate\WordPressMigrationInterface;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for WordPressMigrationInterface.
  */
+#[Group('stanford_wordpress_migrate')]
 class WordPressMigrationInterfaceTest extends UnitTestCase {
 
   /**

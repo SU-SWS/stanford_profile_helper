@@ -10,14 +10,12 @@ use Drupal\config_pages\ConfigPagesInterface;
 use Drupal\migrate\Plugin\MigrationPluginManager;
 use Drupal\stanford_events_importer\Hook\ConfigPagesHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for ConfigPagesHooks.
  */
 #[Group('stanford_events_importer')]
-#[CoversClass(ConfigPagesHooks::class)]
 class ConfigPagesHooksTest extends UnitTestCase {
 
   /**
@@ -46,13 +44,10 @@ class ConfigPagesHooksTest extends UnitTestCase {
    */
   protected function setUp(): void {
     parent::setUp();
-    $this->hooks = new ConfigPagesHooks();
+    $this->migrationManager = $this->createMock(MigrationPluginManager::class);
+    $this->hooks = new ConfigPagesHooks($this->migrationManager);
 
     $container = new ContainerBuilder();
-
-    $this->migrationManager = $this->createMock(MigrationPluginManager::class);
-    $container->set('plugin.manager.migration', $this->migrationManager);
-
     $this->cacheTagsInvalidator = $this->createMock(CacheTagsInvalidatorInterface::class);
     $container->set('cache_tags.invalidator', $this->cacheTagsInvalidator);
 

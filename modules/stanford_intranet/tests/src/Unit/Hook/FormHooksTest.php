@@ -8,14 +8,12 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\stanford_intranet\Hook\FormHooks;
 use Drupal\stanford_intranet\Plugin\Field\FieldType\EntityAccessFieldType;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for FormHooks.
  */
 #[Group('stanford_intranet')]
-#[CoversClass(FormHooks::class)]
 class FormHooksTest extends UnitTestCase {
 
   /**

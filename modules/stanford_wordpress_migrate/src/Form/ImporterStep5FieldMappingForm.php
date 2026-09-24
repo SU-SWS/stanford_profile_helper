@@ -5,7 +5,8 @@ namespace Drupal\stanford_wordpress_migrate\Form;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Serialization\Yaml;
+use Drupal\Component\Serialization\Yaml;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\stanford_wordpress_migrate\WordPressMigrateFieldProcessorPluginManager;
 use Drupal\stanford_wordpress_migrate\WordPressMigrationInterface;
 use GuzzleHttp\ClientInterface;
@@ -115,7 +116,7 @@ class ImporterStep5FieldMappingForm extends WordPressImporterFormBase {
 
     $form['add_more'] = [
       '#type' => 'submit',
-      '#value' => t('Add Another'),
+      '#value' => $this->t('Add Another'),
       '#submit' => [[self::class, 'addAnother']],
       '#ajax' => [
         'callback' => [self::class, 'addAnotherAjax'],
@@ -280,17 +281,22 @@ class ImporterStep5FieldMappingForm extends WordPressImporterFormBase {
       return;
     }
 
+    if (!is_array($yaml)) {
+      $form_state->setError($element, new TranslatableMarkup('Invalid process configuration: Plugin not set.'));
+      return;
+    }
     $yaml = isset($yaml['plugin']) ? [$yaml] : $yaml;
 
     /** @var \Drupal\migrate\Plugin\MigratePluginManager $processPluginManager */
     $processPluginManager = \Drupal::service('plugin.manager.migrate.process');
     foreach ($yaml as $process) {
       if (!isset($process['plugin'])) {
-        $form_state->setError($element, t('Invalid process configuration: Plugin not set.'));
+        $form_state->setError($element, new TranslatableMarkup('Invalid process configuration: Plugin not set.'));
+        continue;
       }
 
       if (!$processPluginManager->hasDefinition($process['plugin'])) {
-        $form_state->setError($element, t('Invalid plugin. Plugin @id does not exist.', ['@id' => $process['plugin']]));
+        $form_state->setError($element, new TranslatableMarkup('Invalid plugin. Plugin @id does not exist.', ['@id' => $process['plugin']]));
       }
     }
   }
@@ -366,7 +372,7 @@ class ImporterStep5FieldMappingForm extends WordPressImporterFormBase {
       $response = $this->client->request('GET', "$baseUrl/wp-json$endpoint?per_page=1", ['timeout' => 5]);
       $response = json_decode((string) $response->getBody(), TRUE, 512, JSON_THROW_ON_ERROR);
 
-      return array_unique($this->flattenArrayAndGetKeys($response[0]));
+      return array_unique($this->flattenArrayAndGetKeys($response[0] ?? []));
     }
     catch (\Throwable $e) {
       return [];

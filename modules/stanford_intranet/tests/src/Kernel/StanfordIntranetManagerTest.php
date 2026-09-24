@@ -8,14 +8,16 @@ use Drupal\file\Entity\File;
 use Drupal\file\FileInterface;
 use Drupal\image\Entity\ImageStyle;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test intranet manager service.
  */
 #[RunTestsInSeparateProcesses]
+#[Group('stanford_intranet')]
 class StanfordIntranetManagerTest extends IntranetKernelTestBase {
 
-  public function setup(): void {
+  protected function setUp(): void {
     parent::setUp();
     $this->setSetting('file_private_path', $this->container->getParameter('site.path') . '/private');
     mkdir($this->container->getParameter('site.path') . '/private', 0777, TRUE);

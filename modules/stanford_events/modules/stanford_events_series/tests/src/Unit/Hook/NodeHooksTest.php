@@ -9,14 +9,12 @@ use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\node\NodeInterface;
 use Drupal\stanford_events_series\Hook\NodeHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for NodeHooks.
  */
 #[Group('stanford_events_series')]
-#[CoversClass(NodeHooks::class)]
 class NodeHooksTest extends UnitTestCase {
 
   /**

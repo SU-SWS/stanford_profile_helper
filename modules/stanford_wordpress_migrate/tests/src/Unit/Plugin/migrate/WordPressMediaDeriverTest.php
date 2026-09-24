@@ -19,10 +19,12 @@ use Drupal\stanford_wordpress_migrate\WordPressMigrationInterface;
 use Drupal\Tests\UnitTestCase;
 use GuzzleHttp\ClientInterface;
 use Psr\Http\Message\ResponseInterface;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for WordPressMediaDeriver plugin.
  */
+#[Group('stanford_wordpress_migrate')]
 class WordPressMediaDeriverTest extends UnitTestCase {
 
   /**

@@ -7,14 +7,14 @@ namespace Drupal\Tests\stanford_layout_paragraphs\Kernel\Layouts;
 use Drupal\Core\Form\FormState;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\stanford_layout_paragraphs\Layouts\TwoColumn;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Kernel tests for TwoColumn layout.
  */
-#[CoversClass(TwoColumn::class)]
 #[RunTestsInSeparateProcesses]
+#[Group('stanford_layout_paragraphs')]
 class TwoColumnTest extends KernelTestBase {
 
   /**
@@ -69,6 +69,18 @@ class TwoColumnTest extends KernelTestBase {
     $this->assertNull($config['bottom_padding']);
     $this->assertNull($config['bottom_margin']);
     $this->assertNull($config['vertical_dividers']);
+  }
+
+  /**
+   * The column width options are offered in the configuration form.
+   */
+  public function testColumnWidthOptions(): void {
+    $form = $this->layout->buildConfigurationForm([], new FormState());
+    $this->assertEquals([
+      '50-50' => 'Equal Columns',
+      '33-67' => 'Larger Right Column',
+      '67-33' => 'Larger Left Column',
+    ], $form['column_widths']['#options']);
   }
 
   /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Tests\stanford_profile_helper\Unit\search_api\processor;
+namespace Drupal\Tests\stanford_profile_helper\Unit\Plugin\search_api\processor;
 
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Render\ElementInfoManagerInterface;
@@ -9,7 +9,9 @@ use Drupal\search_api\Utility\DataTypeHelperInterface;
 use Drupal\search_api\Utility\FieldsHelperInterface;
 use Drupal\stanford_profile_helper\Plugin\search_api\processor\DecodeHtmlEntities;
 use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
+#[Group('stanford_profile_helper')]
 class DecodeHtmlEntitiesTest extends UnitTestCase {
 
   /**

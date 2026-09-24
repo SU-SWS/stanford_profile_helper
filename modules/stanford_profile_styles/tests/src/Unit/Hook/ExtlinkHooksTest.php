@@ -8,14 +8,12 @@ use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\config_pages\ConfigPagesLoaderServiceInterface;
 use Drupal\stanford_profile_styles\Hook\ExtlinkHooks;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for ExtlinkHooks.
  */
 #[Group('stanford_profile_styles')]
-#[CoversClass(ExtlinkHooks::class)]
 class ExtlinkHooksTest extends UnitTestCase {
 
   /**

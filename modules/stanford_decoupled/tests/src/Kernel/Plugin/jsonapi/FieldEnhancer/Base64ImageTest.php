@@ -7,10 +7,12 @@ use Drupal\image\Entity\ImageStyle;
 use Drupal\KernelTests\KernelTestBase;
 use Shaper\Util\Context;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  */
 #[RunTestsInSeparateProcesses]
+#[Group('stanford_decoupled')]
 class Base64ImageTest extends KernelTestBase {
 
   protected static $modules = [

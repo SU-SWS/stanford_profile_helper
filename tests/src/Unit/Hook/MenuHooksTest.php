@@ -18,14 +18,12 @@ use Drupal\stanford_profile_helper\Hook\MenuHooks;
 use Drupal\taxonomy\TermInterface;
 use Drupal\taxonomy_menu\Plugin\Menu\TaxonomyMenuMenuLink;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for MenuHooks.
  */
 #[Group('stanford_profile_helper')]
-#[CoversClass(MenuHooks::class)]
 class MenuHooksTest extends UnitTestCase {
 
   /**
@@ -65,7 +63,6 @@ class MenuHooksTest extends UnitTestCase {
    */
   protected function callCheckAdminMenuAccess(array &$menu_items): void {
     $method = new \ReflectionMethod(MenuHooks::class, 'checkAdminMenuAccess');
-    $method->setAccessible(TRUE);
     $method->invokeArgs($this->hooks, [&$menu_items]);
   }
 

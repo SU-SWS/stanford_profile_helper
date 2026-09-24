@@ -13,14 +13,12 @@ use Drupal\Core\Routing\RouteBuilderInterface;
 use Drupal\stanford_profile_helper\Hook\TaxonomyHooks;
 use Drupal\taxonomy\TermInterface;
 use Drupal\Tests\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Unit tests for TaxonomyHooks.
  */
 #[Group('stanford_profile_helper')]
-#[CoversClass(TaxonomyHooks::class)]
 class TaxonomyHooksTest extends UnitTestCase {
 
   /**

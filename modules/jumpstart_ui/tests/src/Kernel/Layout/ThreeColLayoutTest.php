@@ -8,12 +8,14 @@ use Symfony\Component\DependencyInjection\Definition;
 use Drupal\Core\Template\Attribute;
 use Twig\Loader\FilesystemLoader;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\Attributes\Group;
 
 
 /**
  * Class ThreeColLayoutTest.
  */
 #[RunTestsInSeparateProcesses]
+#[Group('jumpstart_ui')]
 class ThreeColLayoutTest extends KernelTestBase {
 
   /**

@@ -10,10 +10,12 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Stream;
 use GuzzleHttp\Psr7\Utils;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class StanfordEventsImporterTest
  */
+#[Group('stanford_events_importer')]
 class StanfordEventsImporterTest extends UnitTestCase {
 
   /**
@@ -31,7 +33,7 @@ class StanfordEventsImporterTest extends UnitTestCase {
    */
   public $xml;
 
-  public function setup(): void {
+  protected function setUp(): void {
     parent::setUp();
     $this->client = $this->createMock(ClientInterface::class);
     $this->client->method('request')
@@ -174,6 +176,17 @@ EOD;
     ];
     $val = $this->plugin->parseXML('<root><item>stuff</item></root>', $args);
     $this->assertFalse($val);
+  }
+
+  /**
+   * Malformed XML returns FALSE instead of erroring.
+   */
+  public function testParseInvalidXml() {
+    $args = [
+      'guids' => '/CategoryList/Category/guid',
+      'label' => '/CategoryList/Category/name',
+    ];
+    $this->assertFalse($this->plugin->parseXML('<CategoryList><Category>', $args));
   }
 
 }

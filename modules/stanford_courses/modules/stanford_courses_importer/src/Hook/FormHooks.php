@@ -7,11 +7,14 @@ namespace Drupal\stanford_courses_importer\Hook;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
  * Form hooks for stanford_courses_importer.
  */
 class FormHooks {
+
+  use StringTranslationTrait;
 
   /**
    * Implements hook_form_FORM_ID_alter().
@@ -24,7 +27,7 @@ class FormHooks {
 
     $form['actions']['import'] = [
       '#type' => 'submit',
-      '#value' => t('Save & Import'),
+      '#value' => $this->t('Save & Import'),
       '#name' => 'op',
       '#button_type' => 'primary',
       '#submit' => [

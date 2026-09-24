@@ -7,10 +7,12 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Tests\UnitTestCase;
 use Drupal\jumpstart_ui\Plugin\Block\PageHeadingBlock;
 use Drupal\Core\Form\FormState;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class PageHeadingBlockTest
  */
+#[Group('jumpstart_ui')]
 class PageHeadingBlockTest extends UnitTestCase {
 
   /**
@@ -44,7 +46,7 @@ class PageHeadingBlockTest extends UnitTestCase {
   /**
    * {@inheritDoc}
    */
-  public function setup(): void {
+  protected function setUp(): void {
     parent::setUp();
 
     $container = new ContainerBuilder();
