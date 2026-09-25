@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\stanford_policy\Unit\Hook;
 
+use Drupal\book\BookInterface;
 use Drupal\book\BookManagerInterface;
 use Drupal\config_pages\ConfigPagesInterface;
 use Drupal\config_pages\ConfigPagesLoaderServiceInterface;
@@ -172,7 +173,7 @@ class StanfordPolicyHooksTest extends UnitTestCase {
    */
   public function testOnEntityPreSaveEmptyBookPid(): void {
     $entity = $this->createMock(BookNodeDouble::class);
-    $entity->book = [];
+    $entity->method('getBook')->willReturn([]);
     $entity->method('bundle')->willReturn('stanford_policy');
 
     $field_item = $this->createMock(FieldItemListInterface::class);
@@ -190,7 +191,7 @@ class StanfordPolicyHooksTest extends UnitTestCase {
    */
   public function testOnEntityPreSaveBookPidMinusOne(): void {
     $entity = $this->createMock(BookNodeDouble::class);
-    $entity->book = ['pid' => -1];
+    $entity->method('getBook')->willReturn(['pid' => -1]);
     $entity->method('bundle')->willReturn('stanford_policy');
 
     $field_item = $this->createMock(FieldItemListInterface::class);
@@ -209,7 +210,7 @@ class StanfordPolicyHooksTest extends UnitTestCase {
    */
   public function testOnEntityPreSaveBookPidSet(): void {
     $entity = $this->createMock(BookNodeDouble::class);
-    $entity->book = ['pid' => 5];
+    $entity->method('getBook')->willReturn(['pid' => 5]);
     $entity->method('bundle')->willReturn('stanford_policy');
     $entity->expects($this->never())->method('set');
     $entity->expects($this->never())->method('setChangedTime');
@@ -327,12 +328,6 @@ class StanfordPolicyHooksTest extends UnitTestCase {
 }
 
 /**
- * Node double that tolerates the dynamic properties Drupal entities expose.
- *
- * Real content entities route undeclared property access through
- * ContentEntityBase::&__get(), so `$node->book['pid']` never creates a dynamic
- * property. Mocks built straight off NodeInterface have no such magic, and
- * writing to one triggers PHP 8.2's dynamic property deprecation.
+ * Node double for book pages, which use book's Book bundle class.
  */
-#[\AllowDynamicProperties]
-abstract class BookNodeDouble implements NodeInterface, \IteratorAggregate {}
+abstract class BookNodeDouble implements NodeInterface, BookInterface, \IteratorAggregate {}

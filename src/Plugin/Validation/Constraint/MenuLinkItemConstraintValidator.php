@@ -3,7 +3,6 @@
 namespace Drupal\stanford_profile_helper\Plugin\Validation\Constraint;
 
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
-use Drupal\path_alias\AliasManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\Constraint;
@@ -17,7 +16,7 @@ class MenuLinkItemConstraintValidator extends ConstraintValidator implements Con
   /**
    * Current request.
    *
-   * @var \Drupal\path_alias\AliasManagerInterface
+   * @var \Symfony\Component\HttpFoundation\Request|null
    */
   protected $request;
 
