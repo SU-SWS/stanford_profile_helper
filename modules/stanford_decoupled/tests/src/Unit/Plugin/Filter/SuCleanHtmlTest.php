@@ -69,12 +69,12 @@ class SuCleanHtmlTest extends UnitTestCase {
       ],
       'not decoupled' => [
         "<!-- foo -->\n<div>foo</div>\n<div><a href=\"/node/1\" data-entity-type=\"node\">foo</a></div>",
-        "<!-- foo -->\n<div>foo</div>\n<div><a href=\"/node/1\" data-entity-type=\"node\">foo</a></div>",
+        "<!-- foo -->\n<div>foo</div>\n<div><a href=\"/foo-bar\" data-entity-type=\"node\">foo</a></div>",
         FALSE,
       ],
-      'not decoupled media links' => [
-        '<a href="/media/10">file</a><a href="/media/11">video</a>',
-        '<a href="/sites/default/files/foo.pdf">file</a><a href="/media/11">video</a>',
+      'not decoupled entity links' => [
+        '<a href="/media/10">file</a><a href="/media/11">video</a><a href="/node/1#bar">bar</a><a href="/node/2">missing</a>',
+        '<a href="/sites/default/files/foo.pdf">file</a><a href="/media/11">video</a><a href="/foo-bar#bar">bar</a><a href="/node/2">missing</a>',
         FALSE,
       ],
     ];
