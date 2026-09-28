@@ -86,7 +86,7 @@ class StanfordDecoupledHooksTest extends KernelTestBase {
     ]);
 
     // Initialize the GraphQL config.
-    $this->config('graphql_compose.settings')->save();
+    $this->config('graphql_compose.settings.graphql_compose_server')->save();
 
     $this->hooks = new StanfordDecoupledHooks($this->container->get('config.factory'), $this->container->get('current_route_match'));
   }
@@ -102,7 +102,7 @@ class StanfordDecoupledHooksTest extends KernelTestBase {
 
     $this->hooks->onNodeTypeCreate($nodeType);
 
-    $config = $this->config('graphql_compose.settings');
+    $config = $this->config('graphql_compose.settings.graphql_compose_server');
     $this->assertTrue($config->get('entity_config.node.article.enabled'));
     $this->assertTrue($config->get('entity_config.node.article.query_load_enabled'));
     $this->assertTrue($config->get('entity_config.node.article.edges_enabled'));
@@ -120,7 +120,7 @@ class StanfordDecoupledHooksTest extends KernelTestBase {
 
     $this->hooks->onNodeTypeCreate($pageType);
 
-    $config = $this->config('graphql_compose.settings');
+    $config = $this->config('graphql_compose.settings.graphql_compose_server');
     $this->assertTrue($config->get('entity_config.node.page.enabled'));
     $this->assertTrue($config->get('entity_config.node.page.query_load_enabled'));
     $this->assertTrue($config->get('entity_config.node.page.edges_enabled'));
@@ -133,7 +133,7 @@ class StanfordDecoupledHooksTest extends KernelTestBase {
 
     $this->hooks->onNodeTypeCreate($newsType);
 
-    $config = $this->config('graphql_compose.settings');
+    $config = $this->config('graphql_compose.settings.graphql_compose_server');
     $this->assertTrue($config->get('entity_config.node.news.enabled'));
     $this->assertTrue($config->get('entity_config.node.news.query_load_enabled'));
   }
@@ -149,7 +149,7 @@ class StanfordDecoupledHooksTest extends KernelTestBase {
 
     $this->hooks->onEntityBundleCreate($vocabulary);
 
-    $config = $this->config('graphql_compose.settings');
+    $config = $this->config('graphql_compose.settings.graphql_compose_server');
     $this->assertTrue($config->get('entity_config.taxonomy_term.tags.enabled'));
     $this->assertTrue($config->get('entity_config.taxonomy_term.tags.query_load_enabled'));
   }
@@ -166,7 +166,7 @@ class StanfordDecoupledHooksTest extends KernelTestBase {
 
     $this->hooks->onEntityBundleCreate($mediaType);
 
-    $config = $this->config('graphql_compose.settings');
+    $config = $this->config('graphql_compose.settings.graphql_compose_server');
     $this->assertTrue($config->get('entity_config.media.image.enabled'));
     $this->assertTrue($config->get('entity_config.media.image.query_load_enabled'));
   }
@@ -182,7 +182,7 @@ class StanfordDecoupledHooksTest extends KernelTestBase {
 
     $this->hooks->onEntityBundleCreate($paragraphType);
 
-    $config = $this->config('graphql_compose.settings');
+    $config = $this->config('graphql_compose.settings.graphql_compose_server');
     $this->assertTrue($config->get('entity_config.paragraph.text_block.enabled'));
     $this->assertTrue($config->get('entity_config.paragraph.text_block.query_load_enabled'));
   }
@@ -198,7 +198,7 @@ class StanfordDecoupledHooksTest extends KernelTestBase {
 
     $this->hooks->onEntityBundleCreate($configPagesType);
 
-    $config = $this->config('graphql_compose.settings');
+    $config = $this->config('graphql_compose.settings.graphql_compose_server');
     $this->assertTrue($config->get('entity_config.config_pages.site_settings.enabled'));
     $this->assertTrue($config->get('entity_config.config_pages.site_settings.query_load_enabled'));
   }
@@ -230,7 +230,7 @@ class StanfordDecoupledHooksTest extends KernelTestBase {
 
     $this->hooks->onFieldConfigCreate($field);
 
-    $config = $this->config('graphql_compose.settings');
+    $config = $this->config('graphql_compose.settings.graphql_compose_server');
     $this->assertTrue($config->get('field_config.node.article.field_test.enabled'));
   }
 
@@ -262,7 +262,7 @@ class StanfordDecoupledHooksTest extends KernelTestBase {
 
     $this->hooks->onFieldConfigCreate($field);
 
-    $config = $this->config('graphql_compose.settings');
+    $config = $this->config('graphql_compose.settings.graphql_compose_server');
     $this->assertTrue($config->get('field_config.media.image.field_caption.enabled'));
   }
 
@@ -293,7 +293,7 @@ class StanfordDecoupledHooksTest extends KernelTestBase {
 
     $this->hooks->onFieldConfigCreate($field);
 
-    $config = $this->config('graphql_compose.settings');
+    $config = $this->config('graphql_compose.settings.graphql_compose_server');
     $this->assertTrue($config->get('field_config.taxonomy_term.tags.field_color.enabled'));
   }
 
@@ -307,7 +307,7 @@ class StanfordDecoupledHooksTest extends KernelTestBase {
 
     $method->invoke($this->hooks, 'test.config.key', 'test_value');
 
-    $config = $this->config('graphql_compose.settings');
+    $config = $this->config('graphql_compose.settings.graphql_compose_server');
     $this->assertEquals('test_value', $config->get('test.config.key'));
   }
 
@@ -327,7 +327,7 @@ class StanfordDecoupledHooksTest extends KernelTestBase {
 
     $method->invoke($this->hooks, 'test.array.key', $testArray);
 
-    $config = $this->config('graphql_compose.settings');
+    $config = $this->config('graphql_compose.settings.graphql_compose_server');
     $this->assertEquals($testArray, $config->get('test.array.key'));
     $this->assertTrue($config->get('test.array.key.enabled'));
     $this->assertEquals('value1', $config->get('test.array.key.setting1'));
@@ -353,7 +353,7 @@ class StanfordDecoupledHooksTest extends KernelTestBase {
     $this->hooks->onNodeTypeCreate($pageType);
 
     // Both should be enabled.
-    $config = $this->config('graphql_compose.settings');
+    $config = $this->config('graphql_compose.settings.graphql_compose_server');
     $this->assertTrue($config->get('entity_config.node.article.enabled'));
     $this->assertTrue($config->get('entity_config.node.page.enabled'));
   }
@@ -369,7 +369,7 @@ class StanfordDecoupledHooksTest extends KernelTestBase {
 
     $this->hooks->onNodeTypeCreate($nodeType);
 
-    $config = $this->config('graphql_compose.settings');
+    $config = $this->config('graphql_compose.settings.graphql_compose_server');
     // Verify the config key format is correct.
     $this->assertTrue($config->get('entity_config.node.test_content_type.enabled'));
   }
@@ -398,7 +398,7 @@ class StanfordDecoupledHooksTest extends KernelTestBase {
 
     $this->hooks->onFieldConfigCreate($field);
 
-    $config = $this->config('graphql_compose.settings');
+    $config = $this->config('graphql_compose.settings.graphql_compose_server');
     // Verify the config key format is correct.
     $this->assertTrue($config->get('field_config.node.article.field_test_field.enabled'));
   }
