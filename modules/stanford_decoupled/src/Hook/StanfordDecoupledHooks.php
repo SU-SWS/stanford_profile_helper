@@ -144,7 +144,7 @@ class StanfordDecoupledHooks {
    *   New value of config.
    */
   protected function setGraphqlConfig(string $key, $value): void {
-    $graphQlConfig = $this->configFactory->getEditable('graphql_compose.settings');
+    $graphQlConfig = $this->configFactory->getEditable('graphql_compose.settings.graphql_compose_server');
     $graphQlConfig->set($key, $value);
     $graphQlConfig->save();
   }
