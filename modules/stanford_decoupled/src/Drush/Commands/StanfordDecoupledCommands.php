@@ -16,7 +16,7 @@ use Drupal\next\Event\EntityEvents;
 use Drush\Attributes as CLI;
 use Drush\Boot\DrupalBootLevels;
 use Drush\Commands\DrushCommands;
-use Psr\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Drush commands used for various tasks within a decoupled site.

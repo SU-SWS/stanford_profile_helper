@@ -2,6 +2,7 @@
 
 namespace Drupal\stanford_policy\Hook;
 
+use Drupal\book\BookInterface;
 use Drupal\book\BookManagerInterface;
 use Drupal\config_pages\ConfigPagesInterface;
 use Drupal\config_pages\ConfigPagesLoaderServiceInterface;
@@ -66,9 +67,10 @@ class StanfordPolicyHooks {
     // label if the field changed. Use the "Changed" field to determine if this
     // has already been done because the node will be re-saved with the book
     // outline update.
+    $book = $entity instanceof BookInterface ? $entity->getBook() : [];
     if (
       $entity->bundle() == 'stanford_policy' &&
-      (empty($entity->book['pid']) || $entity->book['pid'] == -1)
+      (empty($book['pid']) || $book['pid'] == -1)
     ) {
       $entity->set('title', trim($entity->get('su_policy_title')->getString()));
       $entity->setChangedTime(time());

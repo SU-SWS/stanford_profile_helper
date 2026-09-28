@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\jumpstart_ui\Kernel\Layout;
 
+use Drupal\Core\Template\TwigThemeEngine;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -44,9 +45,9 @@ class ThreeColLayoutTest extends KernelTestBase {
     // Boot twig environment.
     $twig = \Drupal::service('twig');
     $template = \Drupal::service('extension.list.module')
-        ->getPath('jumpstart_ui') . '/templates/layouts/three-column.html.twig';
+        ->getPath('jumpstart_ui') . '/templates/layouts/three-column';
     $props = $this->getProps();
-    $this->setRawContent((string) twig_render_template($template, $props));
+    $this->setRawContent((string) $this->container->get(TwigThemeEngine::class)->renderTemplate($template, $props));
     $this->assertText("Somebody once told me php unit is gonna rule me");
     $this->assertText("This aint the most fun that Ive had");
     $this->assertText("Im looking for the right class to base my tests off of and I wanna go straight to bed");

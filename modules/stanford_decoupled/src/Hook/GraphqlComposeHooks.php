@@ -22,13 +22,6 @@ class GraphqlComposeHooks {
    */
   #[Hook('graphql_compose_field_results_alter')]
   public function fieldResultsAlter(array &$results, $entity, GraphQLComposeFieldTypeInterface $plugin, FieldContext $context) {
-    $field_definition = $plugin->getFieldDefinition();
-    if ($field_definition->getName() == 'layout_selection') {
-      foreach ($results as &$result) {
-        $result = ['id' => $result->id(), 'label' => $result->label()];
-      }
-    }
-
     foreach ($results as $item) {
       if ($item instanceof ParagraphInterface) {
         $behaviors = $item->getAllBehaviorSettings();

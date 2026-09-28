@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\jumpstart_ui\Kernel\Layout;
 
+use Drupal\Core\Template\TwigThemeEngine;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -44,9 +45,9 @@ class OneColLayoutTest extends KernelTestBase {
     // Boot twig environment.
     $twig = \Drupal::service('twig');
     $template = \Drupal::service('extension.list.module')
-        ->getPath('jumpstart_ui') . '/templates/layouts/one-column.html.twig';
+        ->getPath('jumpstart_ui') . '/templates/layouts/one-column';
     $props = $this->getProps();
-    $this->setRawContent((string) twig_render_template($template, $props));
+    $this->setRawContent((string) $this->container->get(TwigThemeEngine::class)->renderTemplate($template, $props));
     $this->assertText("Somebody once told me php unit is gonna rule me");
     $this->assertStringContainsString("boy-is-this-a-neat-class", $this->getRawContent());
     $this->assertStringContainsString("flex-12-of-12", $this->getRawContent());
@@ -60,10 +61,10 @@ class OneColLayoutTest extends KernelTestBase {
     // Boot twig environment.
     $twig = \Drupal::service('twig');
     $template = \Drupal::service('extension.list.module')
-        ->getPath('jumpstart_ui') . '/templates/layouts/one-column.html.twig';
+        ->getPath('jumpstart_ui') . '/templates/layouts/one-column';
     $props = $this->getProps();
     $props['settings']['columns'] = 'flex-6-of-12';
-    $this->setRawContent((string) twig_render_template($template, $props));
+    $this->setRawContent((string) $this->container->get(TwigThemeEngine::class)->renderTemplate($template, $props));
     $this->assertText("Somebody once told me php unit is gonna rule me");
     $this->assertStringContainsString("boy-is-this-a-neat-class", $this->getRawContent());
     $this->assertStringContainsString("flex-6-of-12", $this->getRawContent());
@@ -77,8 +78,8 @@ class OneColLayoutTest extends KernelTestBase {
     // Boot twig environment.
     $twig = \Drupal::service('twig');
     $template = \Drupal::service('extension.list.module')
-        ->getPath('jumpstart_ui') . '/templates/layouts/one-column.html.twig';
-    $this->setRawContent((string) twig_render_template($template, []));
+        ->getPath('jumpstart_ui') . '/templates/layouts/one-column';
+    $this->setRawContent((string) $this->container->get(TwigThemeEngine::class)->renderTemplate($template, []));
     $this->assertNotEmpty($this->getRawContent());
     $this->assertStringNotContainsString("boy-is-this-a-neat-class", $this->getRawContent());
     $this->assertStringNotContainsString("flex-12-of-12", $this->getRawContent());
@@ -92,10 +93,10 @@ class OneColLayoutTest extends KernelTestBase {
     // Boot twig environment.
     $twig = \Drupal::service('twig');
     $template = \Drupal::service('extension.list.module')
-        ->getPath('jumpstart_ui') . '/templates/layouts/one-column.html.twig';
+        ->getPath('jumpstart_ui') . '/templates/layouts/one-column';
     $props = $this->getProps();
     unset($props['region_attributes']);
-    $this->setRawContent((string) twig_render_template($template, $props));
+    $this->setRawContent((string) $this->container->get(TwigThemeEngine::class)->renderTemplate($template, $props));
     $this->assertText("Somebody once told me php unit is gonna rule me");
     $this->assertStringContainsString("boy-is-this-a-neat-class", $this->getRawContent());
     $this->assertStringNotContainsString("flex-12-of-12", $this->getRawContent());

@@ -9,7 +9,7 @@ use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Hook\Attribute\Hook;
-use Drupal\entity_usage\EntityUsageBulkInterface;
+use Drupal\entity_usage\EntityUsageInterface;
 use Drupal\next\Event\EntityActionEvent;
 use Drupal\next\Event\EntityActionEventInterface;
 use Drupal\stanford_decoupled\Config\DecoupledConfigOverrides;
@@ -24,7 +24,7 @@ class StanfordDecoupledEntityTrackHooks {
     protected ConfigFactoryInterface $configFactory,
     protected EntityTypeManagerInterface $entityTypeManager,
     #[Autowire(service: 'entity_usage.usage')]
-    protected EntityUsageBulkInterface $entityUsage,
+    protected EntityUsageInterface $entityUsage,
   ) {}
 
   /**

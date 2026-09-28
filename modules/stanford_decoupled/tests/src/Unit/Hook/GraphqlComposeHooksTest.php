@@ -58,44 +58,21 @@ class GraphqlComposeHooksTest extends UnitTestCase {
   }
 
   /**
-   * When the field is 'layout_selection', each result is converted to a
-   * simple id/label array.
+   * Layout selection results are passed through as entities so GraphQL
+   * Compose can resolve them with its entity data producers.
    */
   public function testFieldResultsAlterLayoutSelection(): void {
-    $entity1 = $this->createMock(EntityInterface::class);
-    $entity1->method('id')->willReturn(1);
-    $entity1->method('label')->willReturn('Layout One');
-
-    $entity2 = $this->createMock(EntityInterface::class);
-    $entity2->method('id')->willReturn(2);
-    $entity2->method('label')->willReturn('Layout Two');
-
-    $results = [$entity1, $entity2];
+    $entity = $this->createMock(EntityInterface::class);
+    $results = [$entity];
     $plugin = $this->mockPlugin('layout_selection');
 
     $this->hooks->fieldResultsAlter($results, NULL, $plugin, $this->context);
 
-    $this->assertSame([
-      ['id' => 1, 'label' => 'Layout One'],
-      ['id' => 2, 'label' => 'Layout Two'],
-    ], $results);
+    $this->assertSame([$entity], $results);
   }
 
   /**
-   * Empty results with the layout_selection field: nothing to iterate,
-   * no errors.
-   */
-  public function testFieldResultsAlterLayoutSelectionEmpty(): void {
-    $results = [];
-    $plugin = $this->mockPlugin('layout_selection');
-
-    $this->hooks->fieldResultsAlter($results, NULL, $plugin, $this->context);
-
-    $this->assertSame([], $results);
-  }
-
-  /**
-   * Non-layout_selection field with a paragraph result that has behavior
+   * Field with a paragraph result that has behavior
    * settings: behavior_settings is set to the JSON-encoded settings.
    */
   public function testFieldResultsAlterParagraphWithBehaviors(): void {
@@ -114,7 +91,7 @@ class GraphqlComposeHooksTest extends UnitTestCase {
   }
 
   /**
-   * Non-layout_selection field with a paragraph result that has no behavior
+   * Field with a paragraph result that has no behavior
    * settings: behavior_settings is set to NULL.
    */
   public function testFieldResultsAlterParagraphWithoutBehaviors(): void {
@@ -131,7 +108,7 @@ class GraphqlComposeHooksTest extends UnitTestCase {
   }
 
   /**
-   * Non-paragraph, non-layout_selection results are left untouched.
+   * Non-paragraph results are left untouched.
    */
   public function testFieldResultsAlterNonParagraphResult(): void {
     $entity = $this->createMock(EntityInterface::class);

@@ -89,8 +89,9 @@ class StanfordPolicySubscriberTest extends KernelTestBase {
     NodeType::create(['type' => 'stanford_policy'])->save();
 
     \Drupal::configFactory()->getEditable('book.settings')
-      ->set('allowed_types', ['stanford_policy'])
-      ->set('child_type', 'stanford_policy')
+      ->set('allowed_types', [
+        ['content_type' => 'stanford_policy', 'child_type' => 'stanford_policy'],
+      ])
       ->save();
 
     $fields = [
