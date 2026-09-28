@@ -146,8 +146,9 @@ class AccessHooks {
       $parent = $entity->getParentEntity();
       $parentField = $entity->get('parent_field_name')->getString();
 
-      $children = array_map(fn($item) => $item->entity, iterator_to_array($parent->get($parentField)->getIterator()));
-      $children = array_filter($children, fn(ParagraphInterface $child) => $child->getBehaviorSetting('layout_paragraphs', 'parent_uuid') == $layoutUuid && $child->isPublished());
+      $children = iterator_to_array($parent->get($parentField)->getIterator());
+      $children = array_filter(array_map(fn($item) => $item->entity, $children));
+      $children = array_filter($children, fn(ParagraphInterface $child) => $child->isPublished() && $child->getBehaviorSetting('layout_paragraphs', 'parent_uuid') == $layoutUuid);
       return AccessResult::forbiddenIf(!$children, 'No published children in the layout.')
         ->addCacheableDependency($editAccess);
     }
