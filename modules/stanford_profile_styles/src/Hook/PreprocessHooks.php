@@ -20,6 +20,7 @@ class PreprocessHooks {
     $wysiwyg_fields = ['text', 'text_with_summary', 'text_long'];
     if (in_array($variables['field_type'], $wysiwyg_fields)) {
       $variables['attributes']['class'][] = 'su-wysiwyg-text';
+      $variables['attributes']['class'][] = 'clearfix';
       $variables['#attached']['library'][] = 'stanford_profile_styles/paragraph.wysiwyg';
     }
   }
