@@ -43,3 +43,19 @@ function stanford_profile_helper_post_update_algolia_trash_delete(&$sandbox) {
   }
   $trash_manager->setTrashContext('active');
 }
+
+/**
+ * Fix graphql compose server config.
+ */
+function stanford_profile_helper_post_update_graphql_compose() {
+  $cf = \Drupal::configFactory();
+  $serverConfig = \Drupal::service('config.storage.sync')
+    ->read('graphql_compose.settings.graphql_compose_server');
+
+  if ($serverConfig) {
+    $cf->getEditable('graphql_compose.settings')->delete();
+    $cf->getEditable('graphql_compose.settings.graphql_compose_server')
+      ->setData($serverConfig)
+      ->save();
+  }
+}
