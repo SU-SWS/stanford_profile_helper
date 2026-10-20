@@ -38,6 +38,13 @@ class StanfordEventsImporterAPIURLFieldWidget extends LinkWidget {
   protected $cache;
 
   /**
+   * If the options feeds have been fetched during this request.
+   *
+   * @var bool
+   */
+  protected static bool $optionsFetched = FALSE;
+
+  /**
    * {@inheritdoc}
    */
   public static function defaultSettings() {
@@ -145,14 +152,7 @@ class StanfordEventsImporterAPIURLFieldWidget extends LinkWidget {
    *   An array of select form options.
    */
   protected function getOrgOptions() {
-    if ($cache = $this->cache->get(StanfordEventsImporter::CACHE_KEY_ORG)) {
-      return $cache->data;
-    }
-
-    // If not in cache. Try to get it.
-    FormHooks::updateOpts();
-    $cache = $this->cache->get(StanfordEventsImporter::CACHE_KEY_ORG);
-    return $cache ? $cache->data : [];
+    return $this->getCachedOptions(StanfordEventsImporter::CACHE_KEY_ORG);
   }
 
   /**
@@ -162,13 +162,30 @@ class StanfordEventsImporterAPIURLFieldWidget extends LinkWidget {
    *   An array of select form options.
    */
   protected function getCatOptions() {
-    if ($cache = $this->cache->get(StanfordEventsImporter::CACHE_KEY_CAT)) {
+    return $this->getCachedOptions(StanfordEventsImporter::CACHE_KEY_CAT);
+  }
+
+  /**
+   * Get a list of options from cache, fetching the feeds if they're missing.
+   *
+   * @param string $cache_key
+   *   Cache id of the options list.
+   *
+   * @return array
+   *   An array of select form options.
+   */
+  protected function getCachedOptions(string $cache_key): array {
+    if ($cache = $this->cache->get($cache_key)) {
       return $cache->data;
     }
 
-    // If not in cache. Try to get it.
-    FormHooks::updateOpts();
-    $cache = $this->cache->get(StanfordEventsImporter::CACHE_KEY_CAT);
+    // Both lists are fetched together, so only try once per request. This
+    // avoids repeated requests and warnings when the feed is unavailable.
+    if (!self::$optionsFetched) {
+      self::$optionsFetched = TRUE;
+      FormHooks::updateOpts();
+      $cache = $this->cache->get($cache_key);
+    }
     return $cache ? $cache->data : [];
   }
 

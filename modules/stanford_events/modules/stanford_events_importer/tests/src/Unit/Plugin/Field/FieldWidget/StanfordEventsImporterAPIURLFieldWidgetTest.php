@@ -211,16 +211,20 @@ class StanfordEventsImporterAPIURLFieldWidgetTest extends UnitTestCase {
   }
 
   /**
-   * Options missing from the cache are fetched from the feed.
+   * Options missing from the cache are fetched from the feed only once.
    */
   public function testOptionsFetchedOnEmptyCache() {
+    // The fetch flag is static, so reset it in case another test set it.
+    (new \ReflectionProperty(StanfordEventsImporterAPIURLFieldWidget::class, 'optionsFetched'))->setValue(NULL, FALSE);
+
     $cached = new \stdClass();
     $cached->data = [279 => 'AASA'];
     $cache = $this->createMock(CacheBackendInterface::class);
-    $cache->method('get')->willReturnOnConsecutiveCalls(FALSE, $cached, FALSE, FALSE);
+    $cache->method('get')->willReturnOnConsecutiveCalls(FALSE, $cached, FALSE);
 
     $client = $this->createMock(ClientInterface::class);
-    $client->expects($this->exactly(4))
+    // One fetch of the category and organization feeds for both option lists.
+    $client->expects($this->exactly(2))
       ->method('request')
       ->willReturn(new Response(200, [], '<OrganizationList><Organization><guid>279</guid><name>AASA</name></Organization></OrganizationList>'));
     $this->container->set('http_client', $client);
@@ -232,7 +236,7 @@ class StanfordEventsImporterAPIURLFieldWidgetTest extends UnitTestCase {
     $get_orgs = new \ReflectionMethod($plugin, 'getOrgOptions');
     $this->assertEquals([279 => 'AASA'], $get_orgs->invoke($plugin));
 
-    // Nothing could be cached, so no options are available.
+    // Nothing could be cached, and the feeds aren't requested again.
     $get_cats = new \ReflectionMethod($plugin, 'getCatOptions');
     $this->assertEquals([], $get_cats->invoke($plugin));
   }

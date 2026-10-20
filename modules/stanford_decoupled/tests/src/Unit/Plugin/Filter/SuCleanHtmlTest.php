@@ -63,6 +63,10 @@ class SuCleanHtmlTest extends UnitTestCase {
         '<a href="/node/1">foo</a><a href="/node/1#bar">bar</a><a href="/node/2?baz=1">baz</a><a href="/node/1/edit">edit</a>',
         '<a href="/foo-bar">foo</a><a href="/foo-bar#bar">bar</a><a href="/node/2?baz=1">baz</a><a href="/node/1/edit">edit</a>',
       ],
+      'node links with leading zeros' => [
+        '<a href="/node/001">foo</a><a href="/node/1#bar">bar</a>',
+        '<a href="/foo-bar">foo</a><a href="/foo-bar#bar">bar</a>',
+      ],
       'media links' => [
         '<a href="/media/10">file</a><a href="/media/10#page=2">page</a><a href="/media/11">video</a><a href="/media/12">missing</a><a href="/media/10/edit">edit</a>',
         '<a href="http://example.com/sites/default/files/foo.pdf">file</a><a href="http://example.com/sites/default/files/foo.pdf#page=2">page</a><a href="/media/11">video</a><a href="/media/12">missing</a><a href="/media/10/edit">edit</a>',

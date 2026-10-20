@@ -12,6 +12,7 @@ use Drupal\Core\Form\FormState;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\PathProcessor\OutboundPathProcessorInterface;
+use Drupal\Core\Site\Settings;
 use Drupal\Core\Url;
 use Drupal\Core\Utility\UnroutedUrlAssembler;
 use Drupal\stanford_person_importer\Cap;
@@ -189,6 +190,24 @@ class CapTest extends UnitTestCase {
     $sunets = array_fill(0, 20, 'foo');
     $url = urldecode($this->service->getSunetUrl($sunets)->toString());
     $this->assertEquals("https://api.stanford.edu/profiles/v1?uids=foo&ps=1", $url);
+  }
+
+  /**
+   * Profile urls use the API url from settings when it's overridden.
+   */
+  public function testUrlsSettingsOverride() {
+    new Settings(['CAP_API_URL' => 'https://api-test.stanford.edu']);
+
+    $url = urldecode($this->service->getOrganizationUrl(['foo'])->toString());
+    $this->assertEquals('https://api-test.stanford.edu/profiles/v1?orgCodes=FOO', $url);
+
+    $url = urldecode($this->service->getWorkgroupUrl(['foo:bar'])->toString());
+    $this->assertEquals('https://api-test.stanford.edu/profiles/v1?privGroups=FOO:BAR', $url);
+
+    $url = urldecode($this->service->getSunetUrl(['foo'])->toString());
+    $this->assertEquals('https://api-test.stanford.edu/profiles/v1?uids=foo&ps=1', $url);
+
+    new Settings([]);
   }
 
   /**
