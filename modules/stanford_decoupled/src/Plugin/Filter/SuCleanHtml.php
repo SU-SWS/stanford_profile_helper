@@ -174,7 +174,7 @@ class SuCleanHtml extends FilterBase implements ContainerFactoryPluginInterface 
     /** @var \DOMElement $link */
     foreach ($xpath->query('//a[@href]') as $link) {
       if (preg_match($pattern, $link->getAttribute('href'), $matches)) {
-        $links[$matches[1]][$matches[2]][] = [$link, $matches[3] ?? ''];
+        $links[$matches[1]][(int) $matches[2]][] = [$link, $matches[3] ?? ''];
       }
     }
 

@@ -169,7 +169,7 @@ class Cap implements CapInterface {
     if ($children) {
       $query['includeChildren'] = 'true';
     }
-    return Url::fromUri(self::CAP_URL, ['query' => $query]);
+    return self::getApiUrl('/profiles/v1', ['query' => $query]);
   }
 
   /**
@@ -177,7 +177,7 @@ class Cap implements CapInterface {
    */
   public function getWorkgroupUrl(array $workgroups): Url {
     $workgroups = preg_replace('/[^A-Z,:~\-_0-9]/', '', strtoupper(implode(',', array_unique($workgroups))));
-    return Url::fromUri(self::CAP_URL, ['query' => ['privGroups' => $workgroups]]);
+    return self::getApiUrl('/profiles/v1', ['query' => ['privGroups' => $workgroups]]);
   }
 
   /**
@@ -186,7 +186,7 @@ class Cap implements CapInterface {
   public function getSunetUrl(array $sunetids): Url {
     $sunetids = array_unique($sunetids);
     $query = ['uids' => implode(',', $sunetids), 'ps' => count($sunetids)];
-    return Url::fromUri(self::CAP_URL, ['query' => $query]);
+    return self::getApiUrl('/profiles/v1', ['query' => $query]);
   }
 
   /**

@@ -1,5 +1,18 @@
 # Stanford Profile Helper
 
+11.1.0
+--------------------------------------------------------------------------------
+_Release Date: 2026-10-20_
+- Post Update hook to prevent annoying config import failure
+- Add clearfix class to all wysiwyg fields
+- Configure mathjax for safe mode
+- Filter out empty paragraphs during access check (#568)
+- Convert /media/## and /node/## to correct urls (#567)
+- Updated graphql Compose settings config name (#566)
+- Update graphql_compose and book module (#564)
+- Update accessibility link in global footer (#565)
+- Refactor deprecation issues and prep code for D12 (#563)
+
 11.0.6
 --------------------------------------------------------------------------------
 _Release Date: 2026-09-23_

@@ -6,6 +6,9 @@ namespace Drupal\stanford_profile_helper\Hook;
 
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\Core\Entity\RevisionableInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Hook\Attribute\Hook;
@@ -29,8 +32,10 @@ class AccessHooks {
    *   Current route match service.
    * @param \Drupal\Core\State\StateInterface $state
    *   Core state service.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   *   Entity type manager service.
    */
-  public function __construct(protected ConfigFactoryInterface $configFactory, protected RouteMatchInterface $routeMatch, protected StateInterface $state) {}
+  public function __construct(protected ConfigFactoryInterface $configFactory, protected RouteMatchInterface $routeMatch, protected StateInterface $state, protected EntityTypeManagerInterface $entityTypeManager) {}
 
   /**
    * Implements hook_entity_field_access().
@@ -140,19 +145,96 @@ class AccessHooks {
         return AccessResult::neutral()->addCacheableDependency($editAccess);
       }
 
-      $layoutUuid = $entity->uuid();
+      $result = AccessResult::neutral()
+        ->addCacheableDependency($editAccess)
+        ->addCacheableDependency($entity);
 
-      /** @var \Drupal\Core\Entity\FieldableEntityInterface $parent */
-      $parent = $entity->getParentEntity();
       $parentField = $entity->get('parent_field_name')->getString();
+      $parent = $this->getLayoutParent($entity, $parentField);
+      // Without a parent there's no way to know what the layout holds.
+      if (!$parent) {
+        return $result;
+      }
+      $result->addCacheableDependency($parent);
 
+      $layoutUuid = $entity->uuid();
       $children = iterator_to_array($parent->get($parentField)->getIterator());
       $children = array_filter(array_map(fn($item) => $item->entity, $children));
+      // Publishing or moving any sibling can change the outcome.
+      array_walk($children, fn(ParagraphInterface $child) => $result->addCacheableDependency($child));
       $children = array_filter($children, fn(ParagraphInterface $child) => $child->isPublished() && $child->getBehaviorSetting('layout_paragraphs', 'parent_uuid') == $layoutUuid);
       return AccessResult::forbiddenIf(!$children, 'No published children in the layout.')
-        ->addCacheableDependency($editAccess);
+        ->inheritCacheability($result);
     }
     return AccessResult::neutral();
+  }
+
+  /**
+   * Get the parent revision that holds the given layout paragraph.
+   *
+   * The paragraph's parent entity is always the default revision, which isn't
+   * the one being rendered on previews, revision pages or the latest version
+   * of moderated content.
+   *
+   * @param \Drupal\paragraphs\ParagraphInterface $paragraph
+   *   Layout paragraph.
+   * @param string $parentField
+   *   Field on the parent that references the paragraph.
+   *
+   * @return \Drupal\Core\Entity\FieldableEntityInterface|null
+   *   The parent entity, or NULL if it can't be determined.
+   */
+  protected function getLayoutParent(ParagraphInterface $paragraph, string $parentField): ?FieldableEntityInterface {
+    $parentType = $paragraph->get('parent_type')->getString();
+    $parentId = $paragraph->get('parent_id')->getString();
+    if (!$parentType || !$parentId || !$parentField) {
+      return NULL;
+    }
+
+    // Previews, revision pages and latest version pages provide the parent
+    // revision being rendered as a route parameter.
+    foreach ($this->routeMatch->getParameters() as $parameter) {
+      if (
+        $parameter instanceof FieldableEntityInterface &&
+        $parameter->getEntityTypeId() == $parentType &&
+        $parameter->id() == $parentId &&
+        $parameter->hasField($parentField)
+      ) {
+        return $parameter;
+      }
+    }
+
+    $parent = $paragraph->getParentEntity();
+    if (!$parent instanceof FieldableEntityInterface || !$parent->hasField($parentField)) {
+      return NULL;
+    }
+
+    $revisionId = $paragraph->getRevisionId();
+    if (!$revisionId || !$parent instanceof RevisionableInterface) {
+      return $parent;
+    }
+    foreach ($parent->get($parentField) as $item) {
+      if ($item->target_revision_id == $revisionId) {
+        return $parent;
+      }
+    }
+
+    // The default revision doesn't contain this paragraph revision, so find
+    // the latest parent revision that does.
+    $storage = $this->entityTypeManager->getStorage($parentType);
+    $entityType = $storage->getEntityType();
+    $parentRevisionIds = $storage->getQuery()
+      ->accessCheck(FALSE)
+      ->allRevisions()
+      ->condition($entityType->getKey('id'), $parentId)
+      ->condition("$parentField.target_revision_id", $revisionId)
+      ->sort($entityType->getKey('revision'), 'DESC')
+      ->range(0, 1)
+      ->execute();
+
+    /** @var \Drupal\Core\Entity\RevisionableStorageInterface $storage */
+    $revision = $parentRevisionIds ? $storage->loadRevision(key($parentRevisionIds)) : NULL;
+    return $revision instanceof FieldableEntityInterface ? $revision : $parent;
   }
 
 }

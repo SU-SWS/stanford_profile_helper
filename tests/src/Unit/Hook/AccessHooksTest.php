@@ -10,6 +10,9 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Cache\Context\CacheContextsManager;
 use Drupal\Core\Config\ImmutableConfig;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Entity\Query\QueryInterface;
+use Drupal\Core\Entity\RevisionableStorageInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemList;
 use Drupal\Core\Field\FieldItemListInterface;
@@ -17,6 +20,7 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\GeneratedUrl;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\State\StateInterface;
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Drupal\Core\Url;
 use Drupal\node\NodeInterface;
 use Drupal\paragraphs\ParagraphInterface;
@@ -59,6 +63,13 @@ class AccessHooksTest extends UnitTestCase {
   protected StateInterface $state;
 
   /**
+   * Mocked entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected EntityTypeManagerInterface $entityTypeManager;
+
+  /**
    * {@inheritDoc}
    */
   protected function setUp(): void {
@@ -76,7 +87,8 @@ class AccessHooksTest extends UnitTestCase {
     $this->configFactory = $this->createMock(ConfigFactoryInterface::class);
     $this->routeMatch = $this->createMock(RouteMatchInterface::class);
     $this->state = $this->createMock(StateInterface::class);
-    $this->hooks = new AccessHooks($this->configFactory, $this->routeMatch, $this->state);
+    $this->entityTypeManager = $this->createMock(EntityTypeManagerInterface::class);
+    $this->hooks = new AccessHooks($this->configFactory, $this->routeMatch, $this->state, $this->entityTypeManager);
   }
 
   /**
@@ -470,7 +482,7 @@ class AccessHooksTest extends UnitTestCase {
     [$field_definition, $account, $items] = $this->mockTitleFieldScenario('stanford_page_title_banner');
     $this->routeMatch = $this->createMock(RouteMatchInterface::class);
     $this->routeMatch->method('getRouteName')->willReturn('some.other.route');
-    $this->hooks = new AccessHooks($this->configFactory, $this->routeMatch, $this->state);
+    $this->hooks = new AccessHooks($this->configFactory, $this->routeMatch, $this->state, $this->createMock(EntityTypeManagerInterface::class));
 
     $result = $this->hooks->entityFieldAccess('view', $field_definition, $account, $items);
     $this->assertTrue($result->isNeutral());
@@ -486,7 +498,7 @@ class AccessHooksTest extends UnitTestCase {
     $otherNode = $this->createMock(NodeInterface::class);
     $otherNode->method('id')->willReturn(123);
     $this->routeMatch->method('getParameter')->with('node')->willReturn($otherNode);
-    $this->hooks = new AccessHooks($this->configFactory, $this->routeMatch, $this->state);
+    $this->hooks = new AccessHooks($this->configFactory, $this->routeMatch, $this->state, $this->createMock(EntityTypeManagerInterface::class));
 
     $result = $this->hooks->entityFieldAccess('view', $field_definition, $account, $items);
     $this->assertTrue($result->isNeutral());
@@ -614,7 +626,52 @@ class AccessHooksTest extends UnitTestCase {
       ->with('layout_paragraphs', 'parent_uuid')
       ->willReturn($parentUuid);
     $child->method('isPublished')->willReturn($published);
+    $child->method('getCacheContexts')->willReturn([]);
+    $child->method('getCacheTags')->willReturn(['paragraph:' . spl_object_id($child)]);
+    $child->method('getCacheMaxAge')->willReturn(-1);
     return $child;
+  }
+
+  /**
+   * Builds a parent node holding the given child paragraphs.
+   *
+   * @param array $children
+   *   Child paragraphs held by the parent's paragraph field.
+   * @param int $revisionId
+   *   Revision id of the layout paragraph the parent's field references.
+   *
+   * @return \Drupal\node\NodeInterface
+   *   Mocked parent node.
+   */
+  protected function mockLayoutParent(array $children, int $revisionId = 10): NodeInterface {
+    // Each field item exposes its referenced paragraph via ->entity. The first
+    // item is the layout paragraph itself.
+    $layoutItem = new \stdClass();
+    $layoutItem->entity = NULL;
+    $layoutItem->target_revision_id = $revisionId;
+    $items = [$layoutItem];
+    foreach ($children as $child) {
+      $item = new \stdClass();
+      $item->entity = $child;
+      $item->target_revision_id = NULL;
+      $items[] = $item;
+    }
+
+    // The parent's paragraph field must be iterable, so mock the concrete
+    // FieldItemList: getIterator() comes from \Traversable and is therefore
+    // absent from mocks built off FieldItemListInterface.
+    $parentFieldItems = $this->createMock(FieldItemList::class);
+    $parentFieldItems->method('getIterator')->willReturnCallback(fn() => new \ArrayIterator($items));
+
+    $parent = $this->createMock(NodeInterface::class);
+    $parent->method('get')->with('su_page_components')->willReturn($parentFieldItems);
+    $parent->method('hasField')->with('su_page_components')->willReturn(TRUE);
+    $parent->method('getEntityTypeId')->willReturn('node');
+    $parent->method('id')->willReturn(7);
+    $parent->method('getCacheContexts')->willReturn([]);
+    $parent->method('getCacheTags')->willReturn(['node:7']);
+    $parent->method('getCacheMaxAge')->willReturn(-1);
+    return $parent;
   }
 
   /**
@@ -627,38 +684,36 @@ class AccessHooksTest extends UnitTestCase {
    *   means the account cannot edit it.
    * @param string $bundle
    *   Bundle of the layout paragraph itself.
+   * @param \Drupal\node\NodeInterface|null|false $parent
+   *   Parent entity returned by getParentEntity(). FALSE builds one holding
+   *   the children, NULL simulates a missing parent.
    *
    * @return array
    *   The layout paragraph and the account, in that order.
    */
-  protected function mockLayoutScenario(array $children, ?AccessResultInterface $editAccess = NULL, string $bundle = 'stanford_layout'): array {
+  protected function mockLayoutScenario(array $children, ?AccessResultInterface $editAccess = NULL, string $bundle = 'stanford_layout', NodeInterface|null|false $parent = FALSE): array {
     $account = $this->createMock(AccountInterface::class);
+    $this->routeMatch->method('getParameters')->willReturn(new ParameterBag());
 
-    // Each field item exposes its referenced paragraph via ->entity.
-    $items = [];
-    foreach ($children as $child) {
-      $item = new \stdClass();
-      $item->entity = $child;
-      $items[] = $item;
+    $fields = [];
+    foreach ([
+      'parent_field_name' => 'su_page_components',
+      'parent_type' => 'node',
+      'parent_id' => '7',
+    ] as $field_name => $value) {
+      $fields[$field_name] = $this->createMock(FieldItemListInterface::class);
+      $fields[$field_name]->method('getString')->willReturn($value);
     }
-
-    // The parent's paragraph field must be iterable, so mock the concrete
-    // FieldItemList: getIterator() comes from \Traversable and is therefore
-    // absent from mocks built off FieldItemListInterface.
-    $parentFieldItems = $this->createMock(FieldItemList::class);
-    $parentFieldItems->method('getIterator')->willReturn(new \ArrayIterator($items));
-
-    $parent = $this->createMock(NodeInterface::class);
-    $parent->method('get')->with('su_page_components')->willReturn($parentFieldItems);
-
-    $parentFieldName = $this->createMock(FieldItemListInterface::class);
-    $parentFieldName->method('getString')->willReturn('su_page_components');
 
     $layout = $this->createMock(ParagraphInterface::class);
     $layout->method('bundle')->willReturn($bundle);
     $layout->method('uuid')->willReturn('layout-uuid-1');
-    $layout->method('getParentEntity')->willReturn($parent);
-    $layout->method('get')->with('parent_field_name')->willReturn($parentFieldName);
+    $layout->method('getRevisionId')->willReturn(10);
+    $layout->method('getParentEntity')->willReturn($parent === FALSE ? $this->mockLayoutParent($children) : $parent);
+    $layout->method('get')->willReturnCallback(fn($field_name) => $fields[$field_name]);
+    $layout->method('getCacheContexts')->willReturn([]);
+    $layout->method('getCacheTags')->willReturn(['paragraph:1']);
+    $layout->method('getCacheMaxAge')->willReturn(-1);
     // Asserts the hook forwards the account and asks for "update" access.
     $layout->method('access')
       ->with('update', $account, TRUE)
@@ -808,6 +863,74 @@ class AccessHooksTest extends UnitTestCase {
     $layout->method('bundle')->willReturn('stanford_card');
     $layout->expects($this->never())->method('access');
     $account = $this->createMock(AccountInterface::class);
+
+    $result = $this->hooks->paragraphAccess($layout, 'view', $account);
+    $this->assertTrue($result->isNeutral());
+  }
+
+  /**
+   * A layout without a parent entity is left alone instead of erroring.
+   */
+  public function testParagraphAccessNeutralWhenParentIsMissing(): void {
+    [$layout, $account] = $this->mockLayoutScenario([], NULL, 'stanford_layout', NULL);
+
+    $result = $this->hooks->paragraphAccess($layout, 'view', $account);
+    $this->assertTrue($result->isNeutral());
+  }
+
+  /**
+   * The result depends on the parent and every child paragraph.
+   */
+  public function testParagraphAccessCarriesParentAndChildCacheability(): void {
+    $child = $this->mockLayoutChild('layout-uuid-1', TRUE);
+    [$layout, $account] = $this->mockLayoutScenario([$child]);
+
+    $result = $this->hooks->paragraphAccess($layout, 'view', $account);
+    $this->assertTrue($result->isNeutral());
+    $this->assertContains('node:7', $result->getCacheTags());
+    $this->assertContains('paragraph:1', $result->getCacheTags());
+    $this->assertContains('paragraph:' . spl_object_id($child), $result->getCacheTags());
+  }
+
+  /**
+   * The parent revision from the route, such as a preview, is checked.
+   */
+  public function testParagraphAccessUsesRouteParentRevision(): void {
+    // The default revision has no children, the previewed revision does.
+    [$layout, $account] = $this->mockLayoutScenario([]);
+    $preview = $this->mockLayoutParent([$this->mockLayoutChild('layout-uuid-1', TRUE)]);
+    $this->routeMatch = $this->createMock(RouteMatchInterface::class);
+    $this->routeMatch->method('getParameters')->willReturn(new ParameterBag(['node_preview' => $preview]));
+    $this->hooks = new AccessHooks($this->configFactory, $this->routeMatch, $this->state, $this->entityTypeManager);
+
+    $result = $this->hooks->paragraphAccess($layout, 'view', $account);
+    $this->assertTrue($result->isNeutral());
+  }
+
+  /**
+   * The parent revision that holds the layout revision is checked.
+   */
+  public function testParagraphAccessLoadsParentRevisionHoldingLayout(): void {
+    // The default revision references a different layout revision and has no
+    // children. Revision 20 of the parent holds this layout and a child.
+    $default = $this->mockLayoutParent([], 9);
+    [$layout, $account] = $this->mockLayoutScenario([], NULL, 'stanford_layout', $default);
+    $revision = $this->mockLayoutParent([$this->mockLayoutChild('layout-uuid-1', TRUE)]);
+
+    $query = $this->createMock(QueryInterface::class);
+    foreach (['accessCheck', 'allRevisions', 'condition', 'sort', 'range'] as $method) {
+      $query->method($method)->willReturnSelf();
+    }
+    $query->expects($this->once())->method('execute')->willReturn([20 => 7]);
+
+    $entityType = $this->createMock(\Drupal\Core\Entity\EntityTypeInterface::class);
+    $entityType->method('getKey')->willReturnMap([['id', 'nid'], ['revision', 'vid']]);
+
+    $storage = $this->createMock(RevisionableStorageInterface::class);
+    $storage->method('getEntityType')->willReturn($entityType);
+    $storage->method('getQuery')->willReturn($query);
+    $storage->method('loadRevision')->with(20)->willReturn($revision);
+    $this->entityTypeManager->method('getStorage')->with('node')->willReturn($storage);
 
     $result = $this->hooks->paragraphAccess($layout, 'view', $account);
     $this->assertTrue($result->isNeutral());
