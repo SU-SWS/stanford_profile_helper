@@ -97,7 +97,7 @@
         "su-sws/drupal-patches": "^11.0",
         "su-sws/react_paragraphs": ">=8.2",
         "su-sws/stanford_media": ">=10.0",
-        "su-sws/stanford_migrate": ">=8.4"
+        "su-sws/stanford_migrate": ">=9.4"
     },
     "replace": {
         "drupal/response_code_condition": "1.1.0"
