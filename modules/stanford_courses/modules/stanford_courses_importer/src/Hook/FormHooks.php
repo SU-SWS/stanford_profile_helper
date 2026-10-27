@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\stanford_courses_importer\Hook;
 
-use Drupal\Core\Cache\Cache;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -49,11 +48,8 @@ class FormHooks {
    *   The form state.
    */
   public static function importSubmit(array &$form, FormStateInterface $form_state): void {
+    // Rebuild the definitions in case the saved values enabled the migration.
     \Drupal::service('plugin.manager.migration')->clearCachedDefinitions();
-    Cache::invalidateTags([
-      'config:migrate_plus.migration.stanford_courses_importer',
-      'migration_plugins',
-    ]);
     $migration_service = \Drupal::service('stanford_migrate')
       ->setBatchExecution(TRUE);
     $migration_service->executeMigrationId('stanford_courses');

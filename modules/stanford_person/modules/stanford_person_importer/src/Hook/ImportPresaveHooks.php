@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\stanford_person_importer\Hook;
 
-use Drupal\Core\Cache\Cache;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\config_pages\ConfigPagesInterface;
@@ -74,9 +73,9 @@ class ImportPresaveHooks {
           ->updateOrganizations();
       }
 
-      // Invalidate the migration cache since some of the org codes or
-      // workgroups probably changed.
-      Cache::invalidateTags(['migration_plugins']);
+      // The config page overrides the migration status, which decides if the
+      // migration plugin exists, so the definitions have to be rebuilt.
+      \Drupal::service('plugin.manager.migration')->clearCachedDefinitions();
     }
   }
 

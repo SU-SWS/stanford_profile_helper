@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\stanford_events_importer\Unit\Hook;
 
-use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
-use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\config_pages\ConfigPagesInterface;
 use Drupal\migrate\Plugin\MigrationPluginManager;
 use Drupal\stanford_events_importer\Hook\ConfigPagesHooks;
@@ -33,25 +31,12 @@ class ConfigPagesHooksTest extends UnitTestCase {
   protected $migrationManager;
 
   /**
-   * The mocked cache tags invalidator.
-   *
-   * @var \Drupal\Core\Cache\CacheTagsInvalidatorInterface|\PHPUnit\Framework\MockObject\MockObject
-   */
-  protected $cacheTagsInvalidator;
-
-  /**
    * {@inheritDoc}
    */
   protected function setUp(): void {
     parent::setUp();
     $this->migrationManager = $this->createMock(MigrationPluginManager::class);
     $this->hooks = new ConfigPagesHooks($this->migrationManager);
-
-    $container = new ContainerBuilder();
-    $this->cacheTagsInvalidator = $this->createMock(CacheTagsInvalidatorInterface::class);
-    $container->set('cache_tags.invalidator', $this->cacheTagsInvalidator);
-
-    \Drupal::setContainer($container);
   }
 
   /**
@@ -62,7 +47,6 @@ class ConfigPagesHooksTest extends UnitTestCase {
     $entity->method('bundle')->willReturn('some_other_bundle');
 
     $this->migrationManager->expects($this->never())->method('clearCachedDefinitions');
-    $this->cacheTagsInvalidator->expects($this->never())->method('invalidateTags');
 
     $this->hooks->configPagesPresave($entity);
   }
@@ -75,12 +59,6 @@ class ConfigPagesHooksTest extends UnitTestCase {
     $entity->method('bundle')->willReturn('stanford_events_importer');
 
     $this->migrationManager->expects($this->once())->method('clearCachedDefinitions');
-    $this->cacheTagsInvalidator->expects($this->once())
-      ->method('invalidateTags')
-      ->with([
-        'config:migrate_plus.migration.stanford_localist_importer',
-        'migration_plugins',
-      ]);
 
     $this->hooks->configPagesPresave($entity);
   }

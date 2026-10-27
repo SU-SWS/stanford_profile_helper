@@ -80,3 +80,15 @@ function stanford_person_importer_post_update_8002(&$sandbox) {
   }
   \Drupal::messenger()->addMessage(t('Re-run the Person Importer to rebuild the images that were incorrectly imported the first time.'));
 }
+
+/**
+ * Use the CAP source plugin to build the person importer urls.
+ */
+function stanford_person_importer_post_update_8003() {
+  $config = \Drupal::configFactory()
+    ->getEditable('migrate_plus.migration.su_stanford_person');
+  if (!$config->isNew() && $config->get('source.plugin') == 'url') {
+    $config->set('source.plugin', 'cap_url')->save();
+    \Drupal::service('plugin.manager.migration')->clearCachedDefinitions();
+  }
+}
