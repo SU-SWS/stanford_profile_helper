@@ -72,6 +72,10 @@ class ImportPresaveHooks {
           ->setClientSecret($entity->get('su_person_cap_password')->getString())
           ->updateOrganizations();
       }
+
+      // The config page overrides the migration status, which decides if the
+      // migration plugin exists, so the definitions have to be rebuilt.
+      \Drupal::service('plugin.manager.migration')->clearCachedDefinitions();
     }
   }
 

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Drupal\Tests\stanford_person_importer\Unit\Hook;
 
 use Drupal\config_pages\ConfigPagesInterface;
-use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -13,6 +12,7 @@ use Drupal\Core\Entity\Query\QueryInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\media\MediaInterface;
+use Drupal\migrate\Plugin\MigrationPluginManager;
 use Drupal\node\NodeInterface;
 use Drupal\stanford_migrate\StanfordMigrateInterface;
 use Drupal\stanford_person_importer\CapInterface;
@@ -32,7 +32,7 @@ class ImportPresaveHooksTest extends UnitTestCase {
    * @return array{
    *   stanford_migrate: \PHPUnit\Framework\MockObject\MockObject&\Drupal\stanford_migrate\StanfordMigrateInterface,
    *   cap: \PHPUnit\Framework\MockObject\MockObject&\Drupal\stanford_person_importer\CapInterface,
-   *   invalidator: \PHPUnit\Framework\MockObject\MockObject&\Drupal\Core\Cache\CacheTagsInvalidatorInterface,
+   *   migration_manager: \PHPUnit\Framework\MockObject\MockObject&\Drupal\migrate\Plugin\MigrationPluginManager,
    * }
    *   The mocked services keyed by short name.
    */
@@ -41,18 +41,18 @@ class ImportPresaveHooksTest extends UnitTestCase {
     $cap = $this->createMock(CapInterface::class);
     $cap->method('setClientId')->willReturnSelf();
     $cap->method('setClientSecret')->willReturnSelf();
-    $invalidator = $this->createMock(CacheTagsInvalidatorInterface::class);
+    $migration_manager = $this->createMock(MigrationPluginManager::class);
 
     $container = new ContainerBuilder();
     $container->set('stanford_migrate', $stanford_migrate);
     $container->set('stanford_person_importer.cap', $cap);
-    $container->set('cache_tags.invalidator', $invalidator);
+    $container->set('plugin.manager.migration', $migration_manager);
     \Drupal::setContainer($container);
 
     return [
       'stanford_migrate' => $stanford_migrate,
       'cap' => $cap,
-      'invalidator' => $invalidator,
+      'migration_manager' => $migration_manager,
     ];
   }
 
@@ -201,7 +201,7 @@ class ImportPresaveHooksTest extends UnitTestCase {
    */
   public function testConfigPagesPresaveOtherBundle() {
     $services = $this->setUpContainer();
-    $services['invalidator']->expects($this->never())->method('invalidateTags');
+    $services['migration_manager']->expects($this->never())->method('clearCachedDefinitions');
     $services['cap']->expects($this->never())->method('updateOrganizations');
 
     $entity_type_manager = $this->createMock(EntityTypeManagerInterface::class);
@@ -215,14 +215,15 @@ class ImportPresaveHooksTest extends UnitTestCase {
   }
 
   /**
-   * When no org code terms exist yet, the CAP service updates organizations.
+   * When no org code terms exist yet, the CAP service updates organizations
+   * and the migration definitions are rebuilt.
    */
   public function testConfigPagesPresaveNoExistingTermsUpdatesOrgs() {
     $services = $this->setUpContainer();
     $services['cap']->expects($this->once())->method('setClientId')->with('user1');
     $services['cap']->expects($this->once())->method('setClientSecret')->with('pass1');
     $services['cap']->expects($this->once())->method('updateOrganizations');
-    $services['invalidator']->expects($this->never())->method('invalidateTags');
+    $services['migration_manager']->expects($this->once())->method('clearCachedDefinitions');
 
     $entity_type_manager = $this->createMock(EntityTypeManagerInterface::class);
     $entity_type_manager->method('getStorage')
@@ -246,12 +247,13 @@ class ImportPresaveHooksTest extends UnitTestCase {
   }
 
   /**
-   * When org code terms already exist, the CAP service is not called again.
+   * When org code terms already exist, the CAP service is not called again
+   * but the migration definitions are still rebuilt.
    */
   public function testConfigPagesPresaveExistingTermsSkipsUpdate() {
     $services = $this->setUpContainer();
     $services['cap']->expects($this->never())->method('updateOrganizations');
-    $services['invalidator']->expects($this->never())->method('invalidateTags');
+    $services['migration_manager']->expects($this->once())->method('clearCachedDefinitions');
 
     $entity_type_manager = $this->createMock(EntityTypeManagerInterface::class);
     $entity_type_manager->method('getStorage')
