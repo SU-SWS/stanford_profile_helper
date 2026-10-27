@@ -90,13 +90,30 @@ class CapUrl extends StanfordUrl implements RequirementsInterface {
   }
 
   /**
+   * Urls have been built from the CAP API.
+   *
+   * @var bool
+   */
+  protected bool $urlsBuilt = FALSE;
+
+  /**
+   * {@inheritDoc}
+   */
+  public function getSourceUrls(): array {
+    if (!$this->urlsBuilt) {
+      $this->sourceUrls = $this->getImporterUrls();
+      $this->configuration['urls'] = $this->sourceUrls;
+      $this->urlsBuilt = TRUE;
+    }
+    return $this->sourceUrls;
+  }
+
+  /**
    * {@inheritDoc}
    */
   public function getDataParserPlugin(): DataParserPluginInterface {
-    if (!isset($this->dataParserPlugin)) {
-      $this->sourceUrls = $this->getImporterUrls();
-      $this->configuration['urls'] = $this->sourceUrls;
-    }
+    // The data parser needs the urls when it's created.
+    $this->getSourceUrls();
     return parent::getDataParserPlugin();
   }
 

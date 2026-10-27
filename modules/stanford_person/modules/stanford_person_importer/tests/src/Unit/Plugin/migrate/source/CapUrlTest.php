@@ -179,6 +179,7 @@ class CapUrlTest extends UnitTestCase {
     ];
     $this->assertEquals($expected_urls, array_map('urldecode', $this->parserConfiguration['urls']));
     $this->assertEquals(implode(', ', $this->parserConfiguration['urls']), (string) $plugin);
+    $this->assertSame($this->parserConfiguration['urls'], $plugin->getSourceUrls());
   }
 
   /**
