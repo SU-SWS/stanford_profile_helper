@@ -145,9 +145,9 @@ class Cap implements CapInterface {
    * @return bool|array
    *   Response string or false if failed.
    */
-  protected function getApiResponse(Url $url, array $options = []) {
+  protected function getApiResponse(Url $url, array $options = [], $method = 'GET') {
     try {
-      $response = $this->client->request('GET', $url->toString(TRUE)
+      $response = $this->client->request($method, $url->toString(TRUE)
         ->getGeneratedUrl(), $options);
     }
     catch (GuzzleException|\Exception $e) {
@@ -194,8 +194,8 @@ class Cap implements CapInterface {
    */
   public function getTotalProfileCount(Url $url): int {
     $token = $this->getAccessToken();
-    $url->mergeOptions(['query' => ['ps' => 1, 'access_token' => $token]]);
-    $response = $this->getApiResponse($url);
+    $url->mergeOptions(['query' => ['ps' => 1]]);
+    $response = $this->getApiResponse($url, ['headers' => ['Authorization' => 'Bearer ' . $token]]);
     return (int) ($response['totalCount'] ?? 0);
   }
 
@@ -303,10 +303,10 @@ class Cap implements CapInterface {
       return $cache->data['access_token'];
     }
 
-    $options = ['query' => ['grant_type' => 'client_credentials']];
-    $result = $this->getApiResponse(self::getAuthUrl($options), [
+    $result = $this->getApiResponse(self::getAuthUrl(), [
       'auth' => [$this->clientId, $this->clientSecret],
-    ]);
+      'form_params' => ['grant_type' => 'client_credentials'],
+    ], 'POST');
 
     if ($result) {
       $this->cache->set('cap:access_token', $result, time() + $result['expires_in'] - 3600, [
