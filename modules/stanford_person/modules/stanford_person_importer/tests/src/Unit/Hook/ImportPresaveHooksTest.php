@@ -215,17 +215,14 @@ class ImportPresaveHooksTest extends UnitTestCase {
   }
 
   /**
-   * When no org code terms exist yet, the CAP service updates organizations
-   * and the migration plugin cache is invalidated.
+   * When no org code terms exist yet, the CAP service updates organizations.
    */
   public function testConfigPagesPresaveNoExistingTermsUpdatesOrgs() {
     $services = $this->setUpContainer();
     $services['cap']->expects($this->once())->method('setClientId')->with('user1');
     $services['cap']->expects($this->once())->method('setClientSecret')->with('pass1');
     $services['cap']->expects($this->once())->method('updateOrganizations');
-    $services['invalidator']->expects($this->once())
-      ->method('invalidateTags')
-      ->with(['migration_plugins']);
+    $services['invalidator']->expects($this->never())->method('invalidateTags');
 
     $entity_type_manager = $this->createMock(EntityTypeManagerInterface::class);
     $entity_type_manager->method('getStorage')
@@ -249,15 +246,12 @@ class ImportPresaveHooksTest extends UnitTestCase {
   }
 
   /**
-   * When org code terms already exist, the CAP service is not called again
-   * but the migration plugin cache is still invalidated.
+   * When org code terms already exist, the CAP service is not called again.
    */
   public function testConfigPagesPresaveExistingTermsSkipsUpdate() {
     $services = $this->setUpContainer();
     $services['cap']->expects($this->never())->method('updateOrganizations');
-    $services['invalidator']->expects($this->once())
-      ->method('invalidateTags')
-      ->with(['migration_plugins']);
+    $services['invalidator']->expects($this->never())->method('invalidateTags');
 
     $entity_type_manager = $this->createMock(EntityTypeManagerInterface::class);
     $entity_type_manager->method('getStorage')

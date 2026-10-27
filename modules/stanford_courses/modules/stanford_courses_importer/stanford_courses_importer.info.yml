@@ -5,6 +5,8 @@ core_version_requirement: ^11.2 || ^12
 package: Stanford
 version: 11.1.0
 dependencies:
+  - config_pages:config_pages
   - stanford_courses:stanford_courses
+  - stanford_migrate:stanford_migrate
   - migrate_tools:migrate_tools
   - migrate_plus:migrate_plus

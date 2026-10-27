@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\stanford_person_importer\Hook;
 
-use Drupal\Core\Cache\Cache;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\config_pages\ConfigPagesInterface;
@@ -73,10 +72,6 @@ class ImportPresaveHooks {
           ->setClientSecret($entity->get('su_person_cap_password')->getString())
           ->updateOrganizations();
       }
-
-      // Invalidate the migration cache since some of the org codes or
-      // workgroups probably changed.
-      Cache::invalidateTags(['migration_plugins']);
     }
   }
 

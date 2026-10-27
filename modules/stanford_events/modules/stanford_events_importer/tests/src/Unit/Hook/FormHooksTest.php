@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\stanford_events_importer\Unit\Hook;
 
-use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountProxyInterface;
@@ -111,7 +110,7 @@ class FormHooksTest extends UnitTestCase {
   }
 
   /**
-   * The static submit handler clears migration caches and runs the import.
+   * The static submit handler rebuilds the migrations and runs the import.
    */
   public function testImportSubmit(): void {
     $container = new ContainerBuilder();
@@ -119,15 +118,6 @@ class FormHooksTest extends UnitTestCase {
     $migrationManager = $this->createMock(MigrationPluginManager::class);
     $migrationManager->expects($this->once())->method('clearCachedDefinitions');
     $container->set('plugin.manager.migration', $migrationManager);
-
-    $cacheTagsInvalidator = $this->createMock(CacheTagsInvalidatorInterface::class);
-    $cacheTagsInvalidator->expects($this->once())
-      ->method('invalidateTags')
-      ->with([
-        'config:migrate_plus.migration.stanford_localist_importer',
-        'migration_plugins',
-      ]);
-    $container->set('cache_tags.invalidator', $cacheTagsInvalidator);
 
     $migrateService = $this->createMock(StanfordMigrateInterface::class);
     $migrateService->expects($this->once())
