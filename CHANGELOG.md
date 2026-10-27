@@ -1,5 +1,16 @@
 # Stanford Profile Helper
 
+11.1.2
+--------------------------------------------------------------------------------
+_Release Date: 2026-10-27_
+- Fixup cap url plugin
+- Require stanford_migrate 9.4 for the source url getter
+
+11.1.1
+--------------------------------------------------------------------------------
+_Release Date: 2026-10-27_
+- Update all migrations from config overrides to source plugins (#570)
+
 11.1.0
 --------------------------------------------------------------------------------
 _Release Date: 2026-10-20_
