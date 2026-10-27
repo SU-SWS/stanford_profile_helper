@@ -63,7 +63,7 @@ class LocalistUrl extends StanfordUrl {
     $feed_urls = $this->configPages->getValue('stanford_events_importer', 'su_localist_url', [], 'uri') ?? [];
     $urls = [...$bookmark_urls, ...$feed_urls];
     sort($urls);
-    return $urls;
+    return array_values($urls);
   }
 
 }
