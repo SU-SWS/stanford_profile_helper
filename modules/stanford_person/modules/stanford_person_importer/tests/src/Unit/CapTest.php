@@ -9,6 +9,7 @@ use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\Query\QueryInterface;
 use Drupal\Core\Form\FormState;
+use Drupal\Core\Http\ClientFactory;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\PathProcessor\OutboundPathProcessorInterface;
@@ -18,9 +19,11 @@ use Drupal\Core\Utility\UnroutedUrlAssembler;
 use Drupal\stanford_person_importer\Cap;
 use Drupal\taxonomy\TermInterface;
 use Drupal\Tests\UnitTestCase;
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Psr7\Utils;
-use Psr\Http\Message\ResponseInterface;
+use GuzzleHttp\Client;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Promise\Create;
+use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\RequestInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use PHPUnit\Framework\Attributes\Group;
@@ -53,6 +56,13 @@ class CapTest extends UnitTestCase {
   protected $guzzleBody = '';
 
   /**
+   * Requests sent through the mock guzzle handler.
+   *
+   * @var \Psr\Http\Message\RequestInterface[]
+   */
+  protected $requests = [];
+
+  /**
    * The simulated cache data object.
    *
    * @var \stdClass
@@ -64,9 +74,9 @@ class CapTest extends UnitTestCase {
    */
   protected function setUp(): void {
     parent::setUp();
-    $guzzle = $this->createMock(ClientInterface::class);
-    $guzzle->method('request')
-      ->willReturnCallback([$this, 'guzzleRequestCallback']);
+    $client_factory = $this->createMock(ClientFactory::class);
+    $client_factory->method('fromOptions')
+      ->willReturnCallback([$this, 'clientFactoryCallback']);
 
     $entity_type_manager = $this->getEntityTypeManager();
 
@@ -80,7 +90,8 @@ class CapTest extends UnitTestCase {
     $logger_factory = $this->createMock(LoggerChannelFactoryInterface::class);
     $logger_factory->method('get')->wilLReturn($logger);
 
-    $this->service = new Cap($guzzle, $entity_type_manager, $cache, $database, $logger_factory);
+    $this->service = new Cap($client_factory, $entity_type_manager, $cache, $database, $logger_factory);
+    $this->service->setClientId('foo')->setClientSecret('bar');
 
     $request_stack = new RequestStack();
     $request_stack->push(new Request());
@@ -122,6 +133,7 @@ class CapTest extends UnitTestCase {
     $this->guzzleBody = json_encode([
       'expires_in' => 100,
       'access_token' => 'foo-bar-baz',
+      'token_type' => 'Bearer',
     ]);
     $success = $this->service->setClientId('foo')
       ->setClientSecret('bar')
@@ -156,13 +168,16 @@ class CapTest extends UnitTestCase {
       'su_person_cap_username' => [['value' => 'foo']],
       'su_person_cap_password' => [['value' => 'bar']],
     ]);
+    $this->guzzleStatusCode = 401;
     $this->service::validateCredentials($element, $form_state, $form);
     $this->assertTrue($form_state::hasAnyErrors());
     $form_state->clearErrors();
 
+    $this->guzzleStatusCode = 200;
     $this->guzzleBody = json_encode([
       'expires_in' => 100,
       'access_token' => 'foo-bar-baz',
+      'token_type' => 'Bearer',
     ]);
     $this->service::validateCredentials($element, $form_state, $form);
     $this->assertFalse($form_state::hasAnyErrors());
@@ -218,8 +233,13 @@ class CapTest extends UnitTestCase {
       'totalCount' => 123,
       'expires_in' => 100,
       'access_token' => 'foo',
+      'token_type' => 'Bearer',
     ]);
     $this->assertEquals(123, $this->service->getTotalProfileCount(Url::fromUri('http://localhost')));
+
+    // The OAuth middleware attached the bearer token to the API request.
+    $api_request = end($this->requests);
+    $this->assertEquals('Bearer foo', $api_request->getHeaderLine('Authorization'));
 
     $this->guzzleBody = NULL;
     $this->expectException(\JsonException::class);
@@ -233,6 +253,7 @@ class CapTest extends UnitTestCase {
     $body = [
       'expires_in' => 100,
       'access_token' => 'foo',
+      'token_type' => 'Bearer',
       'name' => 'foo',
       'orgCodes' => ['foo', 'bar'],
       'children' => [['name' => 'baz', 'orgCodes' => ['baz']]],
@@ -252,18 +273,24 @@ class CapTest extends UnitTestCase {
   }
 
   /**
-   * Mock guzzle client request callback.
+   * Mock client factory callback that uses the mock guzzle handler.
    */
-  public function guzzleRequestCallback() {
+  public function clientFactoryCallback(array $options = []) {
+    $handler_stack = $options['handler'] ?? HandlerStack::create();
+    $handler_stack->setHandler([$this, 'guzzleHandlerCallback']);
+    $options['handler'] = $handler_stack;
+    return new Client($options);
+  }
+
+  /**
+   * Mock guzzle handler callback.
+   */
+  public function guzzleHandlerCallback(RequestInterface $request) {
+    $this->requests[] = $request;
     if ($this->guzzleStatusCode == 0) {
       throw new \Exception('It failed');
     }
-    $response = $this->createMock(ResponseInterface::class);
-    $response->method('getStatusCode')
-      ->willReturn($this->guzzleStatusCode);
-    $response->method('getBody')
-      ->willReturn(Utils::streamFor($this->guzzleBody));
-    return $response;
+    return Create::promiseFor(new Response($this->guzzleStatusCode, [], $this->guzzleBody));
   }
 
   /**

@@ -6,6 +6,7 @@ use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Http\ClientFactory;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -13,6 +14,10 @@ use Drupal\Core\Url;
 use Drupal\taxonomy\TermInterface;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\HandlerStack;
+use Sainsburys\Guzzle\Oauth2\GrantType\ClientCredentials;
+use Sainsburys\Guzzle\Oauth2\GrantType\GrantTypeBase;
+use Sainsburys\Guzzle\Oauth2\Middleware\OAuthMiddleware;
 
 /**
  * Stanford CAP API helper service.
@@ -38,9 +43,23 @@ class Cap implements CapInterface {
   protected $clientSecret;
 
   /**
-   * Guzzle client service.
+   * Http client factory service.
    *
-   * @var \GuzzleHttp\ClientInterface
+   * @var \Drupal\Core\Http\ClientFactory
+   */
+  protected $clientFactory;
+
+  /**
+   * OAuth2 middleware that acquires and attaches the access token.
+   *
+   * @var \Sainsburys\Guzzle\Oauth2\Middleware\OAuthMiddleware|null
+   */
+  protected $oauthMiddleware;
+
+  /**
+   * Guzzle client that authenticates requests with the OAuth2 middleware.
+   *
+   * @var \GuzzleHttp\ClientInterface|null
    */
   protected $client;
 
@@ -99,8 +118,8 @@ class Cap implements CapInterface {
   /**
    * Capx constructor.
    *
-   * @param \GuzzleHttp\ClientInterface $guzzle
-   *   Guzzle http service.
+   * @param \Drupal\Core\Http\ClientFactory $client_factory
+   *   Http client factory service.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   Entity Type Manager Service.
    * @param \Drupal\Core\Cache\CacheBackendInterface $cache
@@ -110,8 +129,8 @@ class Cap implements CapInterface {
    * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $logger_factory
    *   Database logging service.
    */
-  public function __construct(ClientInterface $guzzle, EntityTypeManagerInterface $entity_type_manager, CacheBackendInterface $cache, Connection $database, LoggerChannelFactoryInterface $logger_factory) {
-    $this->client = $guzzle;
+  public function __construct(ClientFactory $client_factory, EntityTypeManagerInterface $entity_type_manager, CacheBackendInterface $cache, Connection $database, LoggerChannelFactoryInterface $logger_factory) {
+    $this->clientFactory = $client_factory;
     $this->entityTypeManager = $entity_type_manager;
     $this->cache = $cache;
     $this->database = $database;
@@ -123,6 +142,7 @@ class Cap implements CapInterface {
    */
   public function setClientId(string $client_id): self {
     $this->clientId = $client_id;
+    $this->resetClient();
     return $this;
   }
 
@@ -131,7 +151,55 @@ class Cap implements CapInterface {
    */
   public function setClientSecret(string $secret): self {
     $this->clientSecret = $secret;
+    $this->resetClient();
     return $this;
+  }
+
+  /**
+   * Clear the OAuth client so it's rebuilt with the current credentials.
+   */
+  protected function resetClient(): void {
+    $this->oauthMiddleware = NULL;
+    $this->client = NULL;
+  }
+
+  /**
+   * Get the OAuth2 middleware using the client credentials grant.
+   *
+   * @return \Sainsburys\Guzzle\Oauth2\Middleware\OAuthMiddleware
+   *   OAuth2 middleware.
+   */
+  protected function getOauthMiddleware(): OAuthMiddleware {
+    if (!$this->oauthMiddleware) {
+      $token_client = $this->clientFactory->fromOptions();
+      $grant_type = new ClientCredentials($token_client, [
+        GrantTypeBase::CONFIG_CLIENT_ID => $this->clientId,
+        GrantTypeBase::CONFIG_CLIENT_SECRET => $this->clientSecret,
+        GrantTypeBase::CONFIG_TOKEN_URL => self::getAuthUrl()
+          ->toString(TRUE)
+          ->getGeneratedUrl(),
+      ]);
+      $this->oauthMiddleware = new OAuthMiddleware($token_client, $grant_type);
+    }
+    return $this->oauthMiddleware;
+  }
+
+  /**
+   * Get the guzzle client that adds the bearer token to API requests.
+   *
+   * @return \GuzzleHttp\ClientInterface
+   *   Guzzle client.
+   */
+  protected function getClient(): ClientInterface {
+    if (!$this->client) {
+      $handler_stack = HandlerStack::create();
+      $handler_stack->push($this->getOauthMiddleware()->onBefore(), 'oauth2');
+      $this->client = $this->clientFactory->fromOptions([
+        'handler' => $handler_stack,
+        'auth' => 'oauth2',
+      ]);
+    }
+    return $this->client;
   }
 
   /**
@@ -145,13 +213,16 @@ class Cap implements CapInterface {
    * @return bool|array
    *   Response string or false if failed.
    */
-  protected function getApiResponse(Url $url, array $options = [], $method = 'GET') {
+  protected function getApiResponse(Url $url, array $options = []) {
+    // Make sure the middleware has a valid token before the request is sent.
+    $this->getAccessToken();
     try {
-      $response = $this->client->request($method, $url->toString(TRUE)
+      $response = $this->getClient()->request('GET', $url->toString(TRUE)
         ->getGeneratedUrl(), $options);
     }
     catch (GuzzleException|\Exception $e) {
       $this->cache->delete('cap:access_token');
+      $this->resetClient();
       // Most errors originate from the API itself, log the error and let it
       // fall over.
       $this->logger->error('An unexpected error came from the API: %message', ['%message' => $e->getMessage()]);
@@ -193,9 +264,8 @@ class Cap implements CapInterface {
    * {@inheritDoc}
    */
   public function getTotalProfileCount(Url $url): int {
-    $token = $this->getAccessToken();
     $url->mergeOptions(['query' => ['ps' => 1]]);
-    $response = $this->getApiResponse($url, ['headers' => ['Authorization' => 'Bearer ' . $token]]);
+    $response = $this->getApiResponse($url);
     return (int) ($response['totalCount'] ?? 0);
   }
 
@@ -204,6 +274,7 @@ class Cap implements CapInterface {
    */
   public function testConnection(): bool {
     $this->cache->invalidate('cap:access_token');
+    $this->resetClient();
     try {
       return !empty($this->getAccessToken());
     }
@@ -278,9 +349,8 @@ class Cap implements CapInterface {
       return $cache->data;
     }
 
-    $options = ['query' => ['access_token' => $this->getAccessToken()]];
     // AA00 is the root level of all Stanford.
-    $result = $this->getApiResponse(self::getApiUrl('/cap/v1/orgs/AA00', $options));
+    $result = $this->getApiResponse(self::getApiUrl('/cap/v1/orgs/AA00'));
 
     if ($result) {
       $this->cache->set('cap:org_data', $result, time() + 60 * 60 * 24 * 7, [
@@ -299,23 +369,34 @@ class Cap implements CapInterface {
    *   API Token.
    */
   protected function getAccessToken(): ?string {
-    if ($cache = $this->cache->get('cap:access_token')) {
-      return $cache->data['access_token'];
+    try {
+      $middleware = $this->getOauthMiddleware();
+
+      // Share the token across requests by seeding the middleware from cache.
+      if ($cache = $this->cache->get('cap:access_token')) {
+        $middleware->setAccessToken($cache->data['access_token'], 'Bearer');
+        return $cache->data['access_token'];
+      }
+
+      $token = $middleware->getAccessToken();
+    }
+    catch (GuzzleException|\Exception $e) {
+      $this->resetClient();
+      $this->logger->error('Unable to acquire a CAP API access token: %message', ['%message' => $e->getMessage()]);
+      throw new \Exception($e->getMessage());
     }
 
-    $result = $this->getApiResponse(self::getAuthUrl(), [
-      'auth' => [$this->clientId, $this->clientSecret],
-      'form_params' => ['grant_type' => 'client_credentials'],
-    ], 'POST');
-
-    if ($result) {
-      $this->cache->set('cap:access_token', $result, time() + $result['expires_in'] - 3600, [
-        'cap',
-        'cap:token',
-      ]);
+    if (!$token?->getToken()) {
+      $this->resetClient();
+      return NULL;
     }
 
-    return $result['access_token'] ?? NULL;
+    $data = $token->getData();
+    $this->cache->set('cap:access_token', $data, time() + ($data['expires_in'] ?? 3600) - 3600, [
+      'cap',
+      'cap:token',
+    ]);
+    return $token->getToken();
   }
 
   /**
