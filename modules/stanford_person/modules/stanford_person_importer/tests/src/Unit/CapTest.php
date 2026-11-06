@@ -140,6 +140,11 @@ class CapTest extends UnitTestCase {
       ->testConnection();
     $this->assertTrue($success);
 
+    // Client credentials are sent in the basic auth header.
+    $token_request = end($this->requests);
+    $this->assertEquals('Basic ' . base64_encode('foo:bar'), $token_request->getHeaderLine('Authorization'));
+    $this->assertStringContainsString('grant_type=client_credentials', (string) $token_request->getBody());
+
     $this->guzzleStatusCode = 403;
     $this->assertFalse($this->service->testConnection());
 
@@ -237,7 +242,7 @@ class CapTest extends UnitTestCase {
     ]);
     $this->assertEquals(123, $this->service->getTotalProfileCount(Url::fromUri('http://localhost')));
 
-    // The OAuth middleware attached the bearer token to the API request.
+    // The access token is attached as a bearer token to the API request.
     $api_request = end($this->requests);
     $this->assertEquals('Bearer foo', $api_request->getHeaderLine('Authorization'));
 
