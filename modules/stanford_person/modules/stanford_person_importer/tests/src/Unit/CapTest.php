@@ -146,6 +146,7 @@ class CapTest extends UnitTestCase {
     $this->assertStringContainsString('grant_type=client_credentials', (string) $token_request->getBody());
 
     $this->guzzleStatusCode = 403;
+    $this->guzzleBody = json_encode(['error' => 'unauthorized']);
     $this->assertFalse($this->service->testConnection());
 
     $this->guzzleStatusCode = 0;

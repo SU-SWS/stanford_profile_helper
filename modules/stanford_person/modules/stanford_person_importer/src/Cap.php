@@ -16,6 +16,7 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use League\OAuth2\Client\OptionProvider\HttpBasicAuthOptionProvider;
 use League\OAuth2\Client\Provider\AbstractProvider;
+use League\OAuth2\Client\Provider\GenericProvider;
 
 /**
  * Stanford CAP API helper service.
@@ -178,7 +179,7 @@ class Cap implements CapInterface {
   protected function getOauthProvider(): AbstractProvider {
     if (!$this->oauthProvider) {
       $auth_url = self::getAuthUrl()->toString(TRUE)->getGeneratedUrl();
-      $this->oauthProvider = new CapOauthProvider([
+      $this->oauthProvider = new GenericProvider([
         'clientId' => $this->clientId,
         'clientSecret' => $this->clientSecret,
         // Only the token url is used with the client credentials grant.
