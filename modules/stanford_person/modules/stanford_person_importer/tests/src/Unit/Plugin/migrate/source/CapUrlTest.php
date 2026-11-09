@@ -59,6 +59,13 @@ class CapUrlTest extends UnitTestCase {
   protected $parserConfiguration;
 
   /**
+   * Credentials the CAP service received, keyed by "client_id" and "secret".
+   *
+   * @var array
+   */
+  protected $capCredentials = [];
+
+  /**
    * {@inheritDoc}
    */
   protected function setUp(): void {
@@ -103,6 +110,16 @@ class CapUrlTest extends UnitTestCase {
       ->willReturn(Url::fromUri('http://localhost.workgroup'));
     $cap->method('getSunetUrl')
       ->willReturnCallback([$this, 'getSunetUrlCallback']);
+    $cap->method('setClientId')
+      ->willReturnCallback(function ($client_id) use (&$cap) {
+        $this->capCredentials['client_id'] = $client_id;
+        return $cap;
+      });
+    $cap->method('setClientSecret')
+      ->willReturnCallback(function ($secret) use (&$cap) {
+        $this->capCredentials['secret'] = $secret;
+        return $cap;
+      });
 
     $migration = $this->createMock(MigrationInterface::class);
     $migration->method('getIdMap')
@@ -117,7 +134,6 @@ class CapUrlTest extends UnitTestCase {
 
     $configuration = [
       'data_parser_plugin' => 'json',
-      'authentication' => ['plugin' => 'oauth2'],
       'fields' => [['selector' => 'fooBar'], ['selector' => 'barFoo/baz']],
       'ids' => ['sunetid' => ['type' => 'string']],
     ];
@@ -133,7 +149,7 @@ class CapUrlTest extends UnitTestCase {
   }
 
   /**
-   * The credentials are added to the authentication configuration.
+   * The credentials are passed to the CAP service.
    */
   public function testCredentials() {
     $this->configPageValues = [
@@ -144,8 +160,8 @@ class CapUrlTest extends UnitTestCase {
     $plugin->checkRequirements();
     $plugin->getDataParserPlugin();
 
-    $this->assertEquals('foo', $this->parserConfiguration['authentication']['client_id']);
-    $this->assertEquals('bar', $this->parserConfiguration['authentication']['client_secret']);
+    $this->assertEquals('foo', $this->capCredentials['client_id']);
+    $this->assertEquals('bar', $this->capCredentials['secret']);
     $this->assertEmpty($this->parserConfiguration['urls']);
   }
 

@@ -29,11 +29,6 @@ use Drupal\stanford_person_importer\CapInterface;
  *   plugin: cap_url
  *   data_fetcher_plugin: http
  *   data_parser_plugin: json
- *   authentication:
- *     plugin: oauth2
- *     grant_type: client_credentials
- *     base_uri: 'https://authz.stanford.edu'
- *     token_url: /oauth/token
  * @endcode
  */
 #[MigrateSource(id: 'cap_url')]
@@ -75,8 +70,6 @@ class CapUrl extends StanfordUrl implements RequirementsInterface {
   ) {
     // The urls are populated once the data parser is needed.
     $configuration['urls'] = [];
-    $configuration['authentication']['client_id'] = $this->getCapClientId();
-    $configuration['authentication']['client_secret'] = $this->getCapClientSecret();
     parent::__construct($configuration, $plugin_id, $plugin_definition, $migration, $parser_plugin_manager);
   }
 
