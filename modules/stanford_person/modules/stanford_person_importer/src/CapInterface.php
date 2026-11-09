@@ -22,11 +22,6 @@ interface CapInterface {
   const AUTH_URL = 'https://authz.stanford.edu/oauth/token';
 
   /**
-   * The actual CAP API.
-   */
-  const CAP_URL = 'https://api.stanford.edu/profiles/v1';
-
-  /**
    * Set the CAP Client ID.
    *
    * @param string $client_id
