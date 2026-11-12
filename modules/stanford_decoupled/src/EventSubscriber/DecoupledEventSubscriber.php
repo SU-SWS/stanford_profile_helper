@@ -29,6 +29,15 @@ use Symfony\Component\HttpKernel\KernelEvents;
 final class DecoupledEventSubscriber implements EventSubscriberInterface {
 
   /**
+   * State key that pauses all front end revalidations when TRUE.
+   *
+   * Use during bulk operations (migrations, mass updates) on any environment:
+   * `drush sset stanford_decoupled.stop_propagation 1` to pause, and
+   * `drush sdel stanford_decoupled.stop_propagation` to resume.
+   */
+  const string STOP_PROPAGATION_STATE = 'stanford_decoupled.stop_propagation';
+
+  /**
    * {@inheritdoc}
    */
   public static function getSubscribedEvents(): array {
@@ -63,6 +72,11 @@ final class DecoupledEventSubscriber implements EventSubscriberInterface {
    *   Termination event.
    */
   public function onKernelTerminate(TerminateEvent $event): void {
+    // While revalidations are paused, hold any already queued paths. They are
+    // sent on the first request after revalidations resume.
+    if ($this->revalidationsPaused()) {
+      return;
+    }
     if (!$this->database->schema()
       ->tableExists('stanford_decoupled_revalidation')) {
       return;
@@ -165,12 +179,30 @@ final class DecoupledEventSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * Stop propagation of the event if on local environment and CLI execution.
+   * Check if front end revalidations are paused with the state setting.
+   *
+   * @return bool
+   *   TRUE if revalidations should be skipped.
+   */
+  protected function revalidationsPaused(): bool {
+    return (bool) $this->state->get(self::STOP_PROPAGATION_STATE, FALSE);
+  }
+
+  /**
+   * Stop propagation of the event when revalidations are paused.
+   *
+   * Revalidations are skipped when the state setting is enabled, or when on a
+   * local environment and running from the CLI.
    *
    * @param \Drupal\next\Event\EntityActionEvent $event
    *   Next module event.
    */
   public function onNextEntityAction(EntityActionEvent $event) {
+    if ($this->revalidationsPaused()) {
+      $event->stopPropagation();
+      return;
+    }
+
     $entity = $event->getEntity();
 
     // If the current entity is the home page, set the entity url to "/" instead
