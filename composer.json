@@ -94,7 +94,7 @@
         "drupal/views_taxonomy_term_name_depth": ">=7.2",
         "drupal/xmlsitemap": ">=1.4",
         "seboettg/citeproc-php": ">=2.4",
-        "su-sws/drupal-patches": "^11.0",
+        "su-sws/drupal-patches": "^11.2",
         "su-sws/react_paragraphs": ">=8.2",
         "su-sws/stanford_media": ">=10.0",
         "su-sws/stanford_migrate": ">=9.4"
