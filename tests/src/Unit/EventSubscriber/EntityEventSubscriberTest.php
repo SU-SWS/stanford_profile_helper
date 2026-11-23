@@ -2,19 +2,19 @@
 
 namespace Drupal\Tests\stanford_profile_helper\Unit\EventSubscriber;
 
-use Drupal\layout_builder\LayoutBuilderEvents;
-use Codeception\Attribute\Group;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\State\StateInterface;
+use Drupal\Tests\UnitTestCase;
 use Drupal\layout_builder\Event\SectionComponentBuildRenderArrayEvent;
+use Drupal\layout_builder\LayoutBuilderEvents;
 use Drupal\layout_builder\SectionComponent;
 use Drupal\node\NodeInterface;
 use Drupal\stanford_profile_helper\EventSubscriber\EntityEventSubscriber;
 use Drupal\stanford_profile_helper\StanfordDefaultContentInterface;
-use Drupal\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test the EntityEventSubscriber.
