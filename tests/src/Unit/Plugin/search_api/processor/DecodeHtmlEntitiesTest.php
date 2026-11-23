@@ -11,14 +11,22 @@ use Drupal\stanford_profile_helper\Plugin\search_api\processor\DecodeHtmlEntitie
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\Group;
 
+/**
+ * Tests the decode HTML entities search API processor.
+ */
 #[Group('stanford_profile_helper')]
 class DecodeHtmlEntitiesTest extends UnitTestCase {
 
   /**
+   * The processor plugin being tested.
+   *
    * @var \Drupal\stanford_profile_helper\Plugin\search_api\processor\DecodeHtmlEntities
    */
   protected $plugin;
 
+  /**
+   * {@inheritdoc}
+   */
   protected function setUp(): void {
     parent::setUp();
     $container = new ContainerBuilder();
@@ -33,6 +41,9 @@ class DecodeHtmlEntitiesTest extends UnitTestCase {
     $this->plugin->setIndex($index);
   }
 
+  /**
+   * Test HTML entities are decoded in strings and arrays.
+   */
   public function testFieldProcessor() {
     $string = htmlentities('<div>foobar</div>');
     $this->plugin->processFieldValue($string, 'text');
@@ -45,8 +56,14 @@ class DecodeHtmlEntitiesTest extends UnitTestCase {
 
 }
 
+/**
+ * Decode HTML entities processor that exposes processFieldValue().
+ */
 class TestDecodeHtmlEntities extends DecodeHtmlEntities {
 
+  /**
+   * Expose the protected method so the test can call it.
+   */
   public function processFieldValue(&$value, $type) {
     return parent::processFieldValue($value, $type);
   }

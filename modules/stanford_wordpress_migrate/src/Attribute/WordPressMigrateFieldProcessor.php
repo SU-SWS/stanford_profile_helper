@@ -23,6 +23,8 @@ class WordPressMigrateFieldProcessor extends AttributeBase {
    *   the ID must be either "foo" or "foo:bar".
    * @param \Drupal\Core\StringTranslation\TranslatableMarkup|null $label
    *   (optional) The human-readable name of the plugin.
+   * @param array $fieldType
+   *   (optional) The field types the plugin processes.
    */
   public function __construct(
     public readonly string $id,

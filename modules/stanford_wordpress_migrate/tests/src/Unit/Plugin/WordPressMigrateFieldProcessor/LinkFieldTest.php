@@ -65,16 +65,16 @@ class LinkFieldTest extends UnitTestCase {
     $this->assertIsArray($process);
     $this->assertCount(3, $process);
 
-    // Check skip_on_empty from parent
+    // Check skip_on_empty from parent.
     $this->assertEquals('skip_on_empty', $process[0]['plugin']);
 
-    // Check str_replace plugin for www prefix
+    // Check str_replace plugin for www prefix.
     $this->assertEquals('str_replace', $process[1]['plugin']);
     $this->assertTrue($process[1]['regex']);
     $this->assertEquals('/^www/', $process[1]['search']);
     $this->assertEquals('http://www', $process[1]['replace']);
 
-    // Check url_check plugin
+    // Check url_check plugin.
     $this->assertEquals('url_check', $process[2]['plugin']);
     $this->assertEquals('process', $process[2]['method']);
   }
@@ -90,14 +90,14 @@ class LinkFieldTest extends UnitTestCase {
     $this->assertIsArray($process);
     $this->assertCount(3, $process);
 
-    // Check skip_on_empty from parent
+    // Check skip_on_empty from parent.
     $this->assertEquals('skip_on_empty', $process[0]['plugin']);
 
-    // Check html_entity_decode callback
+    // Check html_entity_decode callback.
     $this->assertEquals('callback', $process[1]['plugin']);
     $this->assertEquals('html_entity_decode', $process[1]['callable']);
 
-    // Check substr plugin for max length
+    // Check substr plugin for max length.
     $this->assertEquals('substr', $process[2]['plugin']);
     $this->assertEquals(0, $process[2]['start']);
     $this->assertEquals(255, $process[2]['length']);
@@ -143,11 +143,11 @@ class LinkFieldTest extends UnitTestCase {
   public function testInheritedMethods(): void {
     $field = $this->createMock(FieldDefinitionInterface::class);
 
-    // Test getConstants
+    // Test getConstants.
     $constants = $this->plugin->getConstants();
     $this->assertEquals([], $constants);
 
-    // Test getExtraProcess
+    // Test getExtraProcess.
     $extraProcess = $this->plugin->getExtraProcess($field);
     $this->assertEquals([], $extraProcess);
   }

@@ -39,8 +39,10 @@ abstract class WordPressMigrationDeriverBase extends DeriverBase implements Cont
    *   Entity Type Manager service.
    * @param \Drupal\Core\Entity\EntityFieldManagerInterface $entityFieldManager
    *   Entity field manager service.
+   * @param \Drupal\stanford_wordpress_migrate\WordPressMigrateFieldProcessorPluginManager $fieldProcessorPluginManager
+   *   WordPress field processor plugin manager service.
    */
-  public function __construct(
+  final public function __construct(
     protected ClientInterface $client,
     protected EntityTypeManagerInterface $entityTypeManager,
     protected EntityFieldManagerInterface $entityFieldManager,
@@ -53,7 +55,7 @@ abstract class WordPressMigrationDeriverBase extends DeriverBase implements Cont
    * @param array $base_plugin_definition
    *   Base migration definition.
    * @param string|null $entityType
-   *    Entity type id.
+   *   Entity type id.
    *
    * @return array
    *   Derivative definitions.
@@ -107,8 +109,8 @@ abstract class WordPressMigrationDeriverBase extends DeriverBase implements Cont
             // Put the delta in front so later sorting step doesn't change the
             // order from that of the UI.
             $key = '_' . u(sprintf('%s__%s__%s', $delta, $sourceField, $field['destination']))
-                ->snake()
-                ->toString();
+              ->snake()
+              ->toString();
             $column = preg_replace('/^.*?\/(.*)/', '$1', $field['destination']) ?: NULL;
             $process = $field['settings'] ?? $plugin->getProcess($destField, $column);
             if (!$process) {
@@ -189,6 +191,8 @@ abstract class WordPressMigrationDeriverBase extends DeriverBase implements Cont
    *
    * @param string $baseApi
    *   Base api url.
+   * @param array $filterQuery
+   *   Additional query parameters to filter the API results.
    *
    * @return array
    *   Indexed array of API urls.

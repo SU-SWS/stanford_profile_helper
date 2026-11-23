@@ -16,15 +16,30 @@ use Drupal\Core\StreamWrapper\StreamWrapperInterface;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class ConfigOverridesTest
+ * Tests the config overrides from config pages and state values.
  */
 #[Group('stanford_profile_helper')]
 class ConfigOverridesTest extends UnitTestCase {
 
+  /**
+   * Mocked logo file entity returned by the file storage.
+   *
+   * @var \Drupal\file\FileInterface|null
+   */
   protected $logoFile;
 
+  /**
+   * Config page values keyed by config page name and field.
+   *
+   * @var array
+   */
   protected $configPageValues = [];
 
+  /**
+   * Config factory stub.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
   protected $configFactory;
 
   /**
@@ -86,6 +101,9 @@ class ConfigOverridesTest extends UnitTestCase {
     $this->assertEquals($expected, $overridder->loadOverrides(['foobar.settings']));
   }
 
+  /**
+   * Test the main menu block settings are overridden.
+   */
   public function testMainMenuOverrides() {
     $configs = [
       'block.block.foobar_main_menu' => [
@@ -103,14 +121,15 @@ class ConfigOverridesTest extends UnitTestCase {
     $this->assertEquals($expected, $overridder->loadOverrides(['block.block.foobar_main_menu']));
   }
 
+  /**
+   * Config pages loader callback returning the test values.
+   */
   public function getConfigPageValue($config_name, $field, $delta = [], $key = NULL) {
     return $this->configPageValues[$config_name][$field] ?? NULL;
   }
 
   /**
-   * [testCreateConfigObject description]
-   *
-   * @return [type] [description]
+   * Test the default config override methods.
    */
   public function testDefaultFunctions() {
     $overridder = $this->getOverrideService();
@@ -134,6 +153,9 @@ class ConfigOverridesTest extends UnitTestCase {
     };
   }
 
+  /**
+   * Build the config overrides service with mocked dependencies.
+   */
   protected function getOverrideService(array $configs = []) {
     if (!isset($configs['system.theme']['default'])) {
       $configs['system.theme']['default'] = 'foobar';
@@ -163,6 +185,9 @@ class ConfigOverridesTest extends UnitTestCase {
     return new ConfigOverrides($state, $config_pages, $this->getConfigFactoryStub($configs), $entity_manager, $stream_wrapper_manager);
   }
 
+  /**
+   * Get a config factory stub that also supports editable configs.
+   */
   public function getConfigFactoryStub(array $configs = []) {
     $config_get_map = [];
     $config_editable_map = [];

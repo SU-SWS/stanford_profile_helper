@@ -40,7 +40,7 @@ class CapUrl extends StanfordUrl implements RequirementsInterface {
   const URL_CHUNKS = 15;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public static function create($container, array $configuration, $plugin_id, $plugin_definition, ?MigrationInterface $migration = NULL) {
     return new static(
@@ -56,9 +56,9 @@ class CapUrl extends StanfordUrl implements RequirementsInterface {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
-  public function __construct(
+  final public function __construct(
     array $configuration,
     $plugin_id,
     $plugin_definition,
@@ -74,7 +74,7 @@ class CapUrl extends StanfordUrl implements RequirementsInterface {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function checkRequirements() {
     if (!$this->getCapClientId() || !$this->getCapClientSecret()) {
@@ -90,7 +90,7 @@ class CapUrl extends StanfordUrl implements RequirementsInterface {
   protected bool $urlsBuilt = FALSE;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function getSourceUrls(): array {
     if (!$this->urlsBuilt) {
@@ -102,7 +102,7 @@ class CapUrl extends StanfordUrl implements RequirementsInterface {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function getDataParserPlugin(): DataParserPluginInterface {
     // The data parser needs the urls when it's created.

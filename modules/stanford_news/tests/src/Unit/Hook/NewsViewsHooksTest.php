@@ -25,7 +25,7 @@ class NewsViewsHooksTest extends UnitTestCase {
   protected NewsViewsHooks $hooks;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
@@ -33,8 +33,7 @@ class NewsViewsHooksTest extends UnitTestCase {
   }
 
   /**
-   * Builds a mocked ViewExecutable with the given storage ID and filter
-   * type values.
+   * Builds a mocked ViewExecutable with the given ID and filter type values.
    */
   protected function createView(string $storageId, array $filterTypeValues = []): ViewExecutable {
     $storage = $this->createMock(EntityInterface::class);
@@ -65,8 +64,9 @@ class NewsViewsHooksTest extends UnitTestCase {
   }
 
   /**
-   * The stanford_news view gets its library attached and the node_list
-   * cache tag replaced with per-type cache tags.
+   * The news view gets its library and per-type cache tags.
+   *
+   * The node_list cache tag is replaced with per-type cache tags.
    */
   public function testViewsPostRenderProcessesStanfordNewsView(): void {
     $view = $this->createView('stanford_news', ['article', 'press_release']);
@@ -86,8 +86,9 @@ class NewsViewsHooksTest extends UnitTestCase {
   }
 
   /**
-   * A stanford_news view with no configured node types still attaches the
-   * library and strips the node_list tag, adding no per-type tags.
+   * A news view without node types attaches the library and no type tags.
+   *
+   * The node_list tag is still stripped.
    */
   public function testViewsPostRenderProcessesStanfordNewsViewWithNoTypes(): void {
     $view = $this->createView('stanford_news', []);

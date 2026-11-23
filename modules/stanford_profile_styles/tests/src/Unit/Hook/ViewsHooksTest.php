@@ -24,7 +24,7 @@ class ViewsHooksTest extends UnitTestCase {
   protected ViewsHooks $hooks;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
@@ -79,8 +79,9 @@ class ViewsHooksTest extends UnitTestCase {
   }
 
   /**
-   * The taxonomy_term_pages view (matched via storage id) gets the
-   * stanford_person views library attached.
+   * The taxonomy_term_pages view gets the stanford_person views library.
+   *
+   * The view is matched via its storage id.
    */
   public function testViewsPreRenderTaxonomyTermPages(): void {
     $view = $this->buildView('taxonomy_term_pages');
@@ -90,8 +91,10 @@ class ViewsHooksTest extends UnitTestCase {
   }
 
   /**
-   * An unrelated view gets no extra libraries attached — only the default
-   * views/views.module library that ViewExecutable ships with remains.
+   * An unrelated view gets no extra libraries attached.
+   *
+   * Only the default views/views.module library that ViewExecutable ships
+   * with remains.
    */
   public function testViewsPreRenderUnrelatedView(): void {
     $view = $this->buildView('unrelated_view');

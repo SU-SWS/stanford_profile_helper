@@ -14,7 +14,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class MenuLinkTreeOverrideTest.
+ * Tests the menu link tree override service and its cache tags.
  */
 #[Group('stanford_profile_helper')]
 #[RunTestsInSeparateProcesses]
@@ -35,6 +35,9 @@ class MenuLinkTreeOverrideTest extends KernelTestBase {
     'rabbit_hole',
   ];
 
+  /**
+   * {@inheritdoc}
+   */
   protected function setUp(): void {
     parent::setUp();
     $this->installEntitySchema('user');

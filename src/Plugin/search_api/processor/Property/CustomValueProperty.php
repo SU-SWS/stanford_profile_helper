@@ -12,7 +12,7 @@ use Drupal\search_api\Plugin\search_api\processor\Property\CustomValueProperty a
 class CustomValueProperty extends SearchApiCustomValueProperty {
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function buildConfigurationForm(FieldInterface $field, array $form, FormStateInterface $form_state) {
     $form = parent::buildConfigurationForm($field, $form, $form_state);

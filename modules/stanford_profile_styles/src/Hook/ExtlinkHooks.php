@@ -5,11 +5,24 @@ declare(strict_types=1);
 namespace Drupal\stanford_profile_styles\Hook;
 
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\config_pages\ConfigPagesLoaderServiceInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Hooks that adjust the External Links module's icon/class behavior.
  */
 class ExtlinkHooks {
+
+  /**
+   * Constructs the hook class.
+   *
+   * @param \Drupal\config_pages\ConfigPagesLoaderServiceInterface|null $configPagesLoader
+   *   Config pages loader service, NULL when config_pages isn't installed.
+   */
+  public function __construct(
+    #[Autowire(service: 'config_pages.loader')]
+    protected ?ConfigPagesLoaderServiceInterface $configPagesLoader = NULL,
+  ) {}
 
   /**
    * Implements hook_extlink_settings_alter().
@@ -39,14 +52,13 @@ class ExtlinkHooks {
    * Whether external link icons should be hidden per site settings.
    *
    * The config_pages module is not a hard dependency of this module, so the
-   * service is looked up lazily rather than constructor injected.
+   * loader service is optional.
    *
    * @return bool
    *   TRUE if the external link icons should be hidden.
    */
   protected function hideExtLinkIcons(): bool {
-    return (bool) \Drupal::service('config_pages.loader')
-      ->getValue('stanford_basic_site_settings', 'su_hide_ext_link_icons', 0, 'value');
+    return (bool) $this->configPagesLoader?->getValue('stanford_basic_site_settings', 'su_hide_ext_link_icons', 0, 'value');
   }
 
 }

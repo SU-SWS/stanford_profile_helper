@@ -20,11 +20,15 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
+ * Kernel tests for policy title prefixes in the book outline.
  */
 #[RunTestsInSeparateProcesses]
 #[Group('stanford_policy')]
 class StanfordPolicySubscriberTest extends KernelTestBase {
 
+  /**
+   * {@inheritdoc}
+   */
   protected static $modules = [
     'node',
     'user',
@@ -37,20 +41,29 @@ class StanfordPolicySubscriberTest extends KernelTestBase {
   ];
 
   /**
+   * Top level policy book node.
+   *
    * @var \Drupal\node\NodeInterface
    */
   protected $book;
 
   /**
+   * Policy node in the book.
+   *
    * @var \Drupal\node\NodeInterface
    */
   protected $node;
 
   /**
+   * Policy node nested under another policy node in the book.
+   *
    * @var \Drupal\node\NodeInterface
    */
   protected $childNode;
 
+  /**
+   * {@inheritdoc}
+   */
   protected function setUp(): void {
     parent::setUp();
     $this->installEntitySchema('node');
@@ -162,6 +175,9 @@ class StanfordPolicySubscriberTest extends KernelTestBase {
     $this->childNode->save();
   }
 
+  /**
+   * Test policy titles get numeric prefixes from their book position.
+   */
   public function testNumberPrefix() {
     /** @var \Drupal\book\BookManagerInterface $book_manager */
     $book_manager = \Drupal::service('book.manager');
@@ -180,6 +196,9 @@ class StanfordPolicySubscriberTest extends KernelTestBase {
       ->label());
   }
 
+  /**
+   * Test the uppercase alphabetic prefix setting.
+   */
   public function testUpperCaseAlpha() {
     ConfigPages::create([
       'type' => 'policy_settings',
@@ -198,6 +217,9 @@ class StanfordPolicySubscriberTest extends KernelTestBase {
     $this->assertStringStartsWith('A.i ', $reloaded_node->label());
   }
 
+  /**
+   * Test the lowercase alphabetic prefix setting.
+   */
   public function testLowerCaseAlpha() {
     ConfigPages::create([
       'type' => 'policy_settings',
@@ -216,6 +238,9 @@ class StanfordPolicySubscriberTest extends KernelTestBase {
     $this->assertStringStartsWith('a.I ', $reloaded_node->label());
   }
 
+  /**
+   * Test the uppercase roman numeral prefix setting.
+   */
   public function testUpperCaseRomanNumeral() {
     ConfigPages::create([
       'type' => 'policy_settings',
@@ -234,6 +259,9 @@ class StanfordPolicySubscriberTest extends KernelTestBase {
     $this->assertStringStartsWith('I.A ', $reloaded_node->label());
   }
 
+  /**
+   * Test the lowercase roman numeral prefix setting.
+   */
   public function testLowerCaseRomanNumeral() {
     ConfigPages::create([
       'type' => 'policy_settings',
@@ -252,6 +280,9 @@ class StanfordPolicySubscriberTest extends KernelTestBase {
     $this->assertStringStartsWith('i.a', $reloaded_node->label());
   }
 
+  /**
+   * Test the book admin edit form adds the title prefixes on submit.
+   */
   public function testFormAlter() {
     $renderer = \Drupal::service('renderer');
     /** @var \Drupal\Core\Form\FormBuilderInterface $form_builder */

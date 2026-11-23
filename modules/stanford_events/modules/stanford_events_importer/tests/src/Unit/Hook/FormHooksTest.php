@@ -34,7 +34,7 @@ class FormHooksTest extends UnitTestCase {
   protected $currentUser;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
@@ -56,8 +56,10 @@ class FormHooksTest extends UnitTestCase {
   }
 
   /**
-   * The form alter adds a fieldset with the "Save & Import" submit button
-   * and the "Update Org & Category Options" button, gated by permission.
+   * The form alter adds the import and update options buttons.
+   *
+   * The "Save & Import" submit button and the "Update Org & Category Options"
+   * button are added in a fieldset, gated by permission.
    */
   public function testFormConfigPagesStanfordEventsImporterFormAlterWithPermission(): void {
     $this->currentUser->method('hasPermission')
@@ -93,8 +95,9 @@ class FormHooksTest extends UnitTestCase {
   }
 
   /**
-   * Without the "administer migrations" permission, the update options
-   * button is inaccessible.
+   * The update options button is inaccessible without permission.
+   *
+   * The permission required is "administer migrations".
    */
   public function testFormConfigPagesStanfordEventsImporterFormAlterWithoutPermission(): void {
     $this->currentUser->method('hasPermission')

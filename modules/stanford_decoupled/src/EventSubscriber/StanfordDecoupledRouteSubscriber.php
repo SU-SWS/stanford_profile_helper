@@ -13,10 +13,18 @@ use Symfony\Component\Routing\RouteCollection;
  */
 final class StanfordDecoupledRouteSubscriber extends RouteSubscriberBase {
 
+  /**
+   * Authentication provider ids.
+   *
+   * @var string[]
+   */
   protected array $providerIds = [];
 
   /**
+   * Route subscriber constructor.
+   *
    * @param array $authentication_providers
+   *   Authentication providers, keyed by provider id.
    */
   public function __construct(array $authentication_providers) {
     $this->providerIds = array_keys($authentication_providers);

@@ -19,7 +19,7 @@ use PHPUnit\Framework\Attributes\Group;
 class FaqParagraphBehaviorTest extends UnitTestCase {
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();

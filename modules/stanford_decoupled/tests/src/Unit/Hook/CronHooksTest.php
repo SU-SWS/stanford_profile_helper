@@ -55,8 +55,10 @@ class CronHooksTest extends UnitTestCase {
   protected CacheBackendInterface $cache;
 
   /**
-   * Real dispatcher (final class) wired with a mocked event dispatcher so
-   * next_entity_update() -> EntityActionEvent::createFromEntity() ->
+   * Real entity action event dispatcher wired with a mocked event dispatcher.
+   *
+   * The class is final, so next_entity_update() ->
+   * EntityActionEvent::createFromEntity() ->
    * \Drupal::service('next.entity_action_event_dispatcher') has something
    * real to call.
    *

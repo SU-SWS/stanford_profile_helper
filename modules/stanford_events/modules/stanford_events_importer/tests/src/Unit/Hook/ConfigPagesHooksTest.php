@@ -31,7 +31,7 @@ class ConfigPagesHooksTest extends UnitTestCase {
   protected $migrationManager;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();

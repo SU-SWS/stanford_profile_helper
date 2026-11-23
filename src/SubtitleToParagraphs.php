@@ -14,7 +14,7 @@ class SubtitleToParagraphs {
    *
    * @param float $maxGapSeconds
    *   Maximum gap between subtitles to keep in same paragraph.
-   * @param $minParagraphLength
+   * @param int $minParagraphLength
    *   Minimum characters for a paragraph.
    */
   public function __construct(protected float $maxGapSeconds = 0.1, protected $minParagraphLength = 50) {}
@@ -61,10 +61,10 @@ class SubtitleToParagraphs {
   protected function parseSrt(string $srtContent): array {
     $subtitles = [];
 
-    // Normalize line endings
+    // Normalize line endings.
     $srtContent = str_replace(["\r\n", "\r"], "\n", $srtContent);
 
-    // Split into blocks
+    // Split into blocks.
     $blocks = preg_split('/\n\s*\n/', trim($srtContent));
 
     foreach ($blocks as $block) {
@@ -125,7 +125,7 @@ class SubtitleToParagraphs {
   }
 
   /**
-   * Clean subtitle text
+   * Clean subtitle text.
    *
    * @param string $text
    *   Text contents.
@@ -163,21 +163,21 @@ class SubtitleToParagraphs {
     $currentParagraph = '';
     $lastEndTime = 0;
 
-    foreach ($subtitles as $index => $subtitle) {
+    foreach ($subtitles as $subtitle) {
       $text = $subtitle['text'];
 
       if (empty($text)) {
         continue;
       }
 
-      // Calculate gap from previous subtitle
+      // Calculate gap from previous subtitle.
       $gap = $subtitle['start'] - $lastEndTime;
 
-      // Determine if we should start a new paragraph
+      // Determine if we should start a new paragraph.
       $shouldStartNew = FALSE;
 
       if (!empty($currentParagraph)) {
-        // Check time gap
+        // Check time gap.
         if ($gap > $this->maxGapSeconds) {
           $shouldStartNew = TRUE;
         }
@@ -195,14 +195,14 @@ class SubtitleToParagraphs {
       }
 
       if ($shouldStartNew) {
-        // Save current paragraph
+        // Save current paragraph.
         $paragraphs[] = trim($currentParagraph);
         $currentParagraph = $text;
       }
       else {
-        // Add to current paragraph
+        // Add to current paragraph.
         if (!empty($currentParagraph)) {
-          // Check if we need a space
+          // Check if we need a space.
           if (!preg_match('/-\s*$/', $currentParagraph)) {
             $currentParagraph .= ' ';
           }
@@ -213,7 +213,7 @@ class SubtitleToParagraphs {
       $lastEndTime = $subtitle['end'];
     }
 
-    // Add the last paragraph
+    // Add the last paragraph.
     if (!empty($currentParagraph)) {
       $paragraphs[] = trim($currentParagraph);
     }

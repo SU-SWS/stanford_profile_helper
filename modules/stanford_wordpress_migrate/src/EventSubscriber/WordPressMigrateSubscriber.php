@@ -33,16 +33,21 @@ class WordPressMigrateSubscriber implements EventSubscriberInterface {
    *
    * @param \Drupal\migrate\Plugin\MigrationPluginManager $migrationPluginManager
    *   Plugin manager service.
+   * @param \Drupal\Core\File\FileSystemInterface $fileSystem
+   *   File system service.
+   * @param \Drupal\Core\Database\Connection $database
+   *   Database connection service.
    */
   public function __construct(
     protected readonly MigrationPluginManager $migrationPluginManager,
     protected readonly FileSystemInterface $fileSystem,
-    protected readonly Connection $database
+    protected readonly Connection $database,
   ) {}
 
   /**
-   * After importing WordPress content, clear migration plugins so the media
-   * importer can run correctly.
+   * Clear migration plugins after a WordPress import.
+   *
+   * This allows the media importer to run correctly.
    *
    * @param \Drupal\migrate\Event\MigrateImportEvent $event
    *   Post migration event.
@@ -55,6 +60,8 @@ class WordPressMigrateSubscriber implements EventSubscriberInterface {
   }
 
   /**
+   * Clear migration plugins after a WordPress migration rollback.
+   *
    * @param \Drupal\migrate\Event\MigrateRollbackEvent $event
    *   RoleBack event.
    */

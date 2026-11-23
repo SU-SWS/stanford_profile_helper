@@ -26,7 +26,7 @@ class FormHooksTest extends UnitTestCase {
   protected FormHooks $hooks;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();

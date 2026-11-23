@@ -14,7 +14,7 @@ use Drupal\paragraphs\ParagraphsTypeInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class HeroPatternBehavior.
+ * Paragraph behavior providing display options for the hero pattern.
  */
 #[ParagraphsBehavior(
   id: 'hero_pattern',
@@ -31,7 +31,7 @@ class HeroPatternBehavior extends ParagraphsBehaviorBase {
   protected StateInterface $state;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
@@ -40,7 +40,7 @@ class HeroPatternBehavior extends ParagraphsBehaviorBase {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function defaultConfiguration() {
     return [
@@ -53,14 +53,14 @@ class HeroPatternBehavior extends ParagraphsBehaviorBase {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public static function isApplicable(ParagraphsTypeInterface $paragraphs_type) {
     return $paragraphs_type->id() === 'stanford_banner';
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function buildBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state) {
     $form = parent::buildBehaviorForm($paragraph, $form, $form_state);
@@ -88,7 +88,7 @@ class HeroPatternBehavior extends ParagraphsBehaviorBase {
       '#options' => [
         'left' => $this->t('Left Card'),
         'right' => $this->t('Right Card'),
-        //'center' => $this->t('Center Transparent Overlay'),
+        // 'center' => $this->t('Center Transparent Overlay'),
       ],
     ];
     $allowOverlayColor = (bool) $this->state->get('allow_hero_pattern_overlay_color');
@@ -150,7 +150,7 @@ class HeroPatternBehavior extends ParagraphsBehaviorBase {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function submitBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state) {
     $values = $form_state->getValues();
@@ -163,7 +163,7 @@ class HeroPatternBehavior extends ParagraphsBehaviorBase {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    *
    * @codeCoverageIgnore Changes are handled in the preprocess hook.
    */

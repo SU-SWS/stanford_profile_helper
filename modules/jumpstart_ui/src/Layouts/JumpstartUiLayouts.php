@@ -7,21 +7,21 @@ use Drupal\Core\Layout\LayoutDefault;
 use Drupal\Core\Plugin\PluginFormInterface;
 
 /**
- * Class JumpstartUiLayouts.
+ * Base layout plugin for Jumpstart UI layouts with extra settings.
  *
  * @package Drupal\jumpstart_ui
  */
 class JumpstartUiLayouts extends LayoutDefault implements PluginFormInterface {
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function defaultConfiguration() {
     return ['extra_classes' => NULL, 'centered' => TRUE, 'columns' => 'default'];
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
     $form = parent::buildConfigurationForm($form, $form_state);
@@ -66,7 +66,7 @@ class JumpstartUiLayouts extends LayoutDefault implements PluginFormInterface {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
     parent::submitConfigurationForm($form, $form_state);

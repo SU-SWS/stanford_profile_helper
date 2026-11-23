@@ -104,7 +104,7 @@ class WordPressMigrateSubscriberTest extends UnitTestCase {
       ->willReturn($migration);
 
     // The method calls flushMigrationPlugins which calls clearCachedDefinitions
-    // only if the migration ID starts with 'wordpress_content:'
+    // only if the migration ID starts with 'wordpress_content:'.
     $this->migrationPluginManager->expects($this->once())
       ->method('clearCachedDefinitions');
 
@@ -125,7 +125,8 @@ class WordPressMigrateSubscriberTest extends UnitTestCase {
       ->method('getMigration')
       ->willReturn($migration);
 
-    // The method calls flushMigrationPlugins which calls clearCachedDefinitions
+    // The method calls flushMigrationPlugins which calls
+    // clearCachedDefinitions.
     $this->migrationPluginManager->expects($this->once())
       ->method('clearCachedDefinitions');
 
@@ -166,13 +167,13 @@ class WordPressMigrateSubscriberTest extends UnitTestCase {
     $this->migrationPluginManager->expects($this->exactly(2))
       ->method('clearCachedDefinitions');
 
-    // Test both event handlers
+    // Test both event handlers.
     $this->subscriber->onPostMigrateImport($importEvent);
     $this->subscriber->onPostMigrateRollback($rollbackEvent);
   }
 
   /**
-   * Test onPostMigrateImport calls deleteStubbedFiles for wordpress_files:files.
+   * Test onPostMigrateImport deletes stubbed files for wordpress_files:files.
    */
   public function testOnPostMigrateImportDeletesStubbedFiles(): void {
     $migration = $this->createMock(MigrationInterface::class);
@@ -225,7 +226,7 @@ class WordPressMigrateSubscriberTest extends UnitTestCase {
   }
 
   /**
-   * Test onPostMigrateImport does not call deleteStubbedFiles for other migrations.
+   * Test onPostMigrateImport doesn't delete stubbed files for other migrations.
    */
   public function testOnPostMigrateImportSkipsDeleteForOtherMigrations(): void {
     $migration = $this->createMock(MigrationInterface::class);

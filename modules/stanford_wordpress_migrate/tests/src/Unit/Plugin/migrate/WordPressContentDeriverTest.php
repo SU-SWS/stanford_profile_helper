@@ -9,7 +9,6 @@ use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
-use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\stanford_wordpress_migrate\Plugin\migrate\WordPressContentDeriver;
 use Drupal\stanford_wordpress_migrate\WordPressMigrateFieldProcessorInterface;
 use Drupal\stanford_wordpress_migrate\WordPressMigrateFieldProcessorPluginManager;
@@ -206,7 +205,7 @@ class WordPressContentDeriverTest extends UnitTestCase {
     $derivatives = $this->deriver->getDerivativeDefinitions($base_definition);
 
     $this->assertIsArray($derivatives);
-    // Taxonomies should be filtered out, only node content processed
+    // Taxonomies should be filtered out, only node content processed.
     $this->assertEmpty($derivatives);
   }
 
@@ -316,7 +315,7 @@ class WordPressContentDeriverTest extends UnitTestCase {
     // Line 66: $id = basename($source) . "__$destination";
     // basename('/wp/v2/posts') = 'posts'
     // destination = 'article'
-    // Expected ID: 'posts__article'
+    // Expected ID: 'posts__article'.
     $this->assertArrayHasKey('posts__article', $derivatives);
     $this->assertIsArray($derivatives['posts__article']);
     $this->assertEquals('entity:node', $derivatives['posts__article']['destination']['plugin']);

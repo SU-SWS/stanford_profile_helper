@@ -72,20 +72,21 @@ class StringFieldTest extends UnitTestCase {
     $process = $this->plugin->getProcess($field);
 
     $this->assertIsArray($process);
-    $this->assertCount(4, $process); // skip_on_empty + html_entity_decode + strip_tags + substr
+    // skip_on_empty + html_entity_decode + strip_tags + substr.
+    $this->assertCount(4, $process);
 
-    // Check the first process plugin from parent
+    // Check the first process plugin from parent.
     $this->assertEquals('skip_on_empty', $process[0]['plugin']);
 
-    // Check html_entity_decode callback
+    // Check html_entity_decode callback.
     $this->assertEquals('callback', $process[1]['plugin']);
     $this->assertEquals('html_entity_decode', $process[1]['callable']);
 
-    // Check strip_tags callback
+    // Check strip_tags callback.
     $this->assertEquals('callback', $process[2]['plugin']);
     $this->assertEquals('strip_tags', $process[2]['callable']);
 
-    // Check substr plugin for max length
+    // Check substr plugin for max length.
     $this->assertEquals('substr', $process[3]['plugin']);
     $this->assertEquals(0, $process[3]['start']);
     $this->assertEquals(255, $process[3]['length']);
@@ -109,9 +110,11 @@ class StringFieldTest extends UnitTestCase {
     $process = $this->plugin->getProcess($field);
 
     $this->assertIsArray($process);
-    $this->assertCount(3, $process); // skip_on_empty + html_entity_decode + strip_tags (no substr for string_long)
+    // skip_on_empty + html_entity_decode + strip_tags (no substr for
+    // string_long).
+    $this->assertCount(3, $process);
 
-    // Check there's no substr plugin for string_long fields
+    // Check there's no substr plugin for string_long fields.
     foreach ($process as $processPlugin) {
       $this->assertNotEquals('substr', $processPlugin['plugin'] ?? '');
     }
@@ -142,7 +145,7 @@ class StringFieldTest extends UnitTestCase {
     $this->assertIsArray($process);
     $this->assertCount(4, $process);
 
-    // Check substr plugin uses custom max length
+    // Check substr plugin uses custom max length.
     $this->assertEquals('substr', $process[3]['plugin']);
     $this->assertEquals(100, $process[3]['length']);
   }
@@ -172,7 +175,7 @@ class StringFieldTest extends UnitTestCase {
     $this->assertIsArray($process);
     $this->assertCount(4, $process);
 
-    // Check substr plugin uses default 255
+    // Check substr plugin uses default 255.
     $this->assertEquals('substr', $process[3]['plugin']);
     $this->assertEquals(255, $process[3]['length']);
   }
@@ -202,7 +205,7 @@ class StringFieldTest extends UnitTestCase {
     $this->assertIsArray($process);
     $this->assertCount(4, $process);
 
-    // Same processing regardless of column
+    // Same processing regardless of column.
     $this->assertEquals('skip_on_empty', $process[0]['plugin']);
     $this->assertEquals('callback', $process[1]['plugin']);
     $this->assertEquals('callback', $process[2]['plugin']);

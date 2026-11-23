@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\stanford_wordpress_migrate\Unit\Plugin\migrate;
 
+use Drupal\stanford_wordpress_migrate\Plugin\migrate\WordPressMigrationDeriverBase;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -87,15 +88,23 @@ class WordPressMigrationDeriverBaseTest extends UnitTestCase {
       ->with('wordpress_migration')
       ->willReturn($storage);
 
-    // Create a concrete implementation for testing
-    $deriver = new class($this->httpClient, $this->entityTypeManager, $this->entityFieldManager, $this->fieldProcessorPluginManager) extends \Drupal\stanford_wordpress_migrate\Plugin\migrate\WordPressMigrationDeriverBase {
+    // Create a concrete implementation for testing.
+    $deriver = new class($this->httpClient, $this->entityTypeManager, $this->entityFieldManager, $this->fieldProcessorPluginManager) extends WordPressMigrationDeriverBase {
+
+      /**
+       * Return no derivatives; not under test.
+       */
       public function getDerivativeDefinitions($base_plugin_definition) {
         return [];
       }
 
+      /**
+       * Expose the protected getWordPressMigrations() method.
+       */
       public function testGetWordPressMigrations(): array {
         return $this->getWordPressMigrations();
       }
+
     };
 
     $migrations = $deriver->testGetWordPressMigrations();
@@ -119,14 +128,22 @@ class WordPressMigrationDeriverBaseTest extends UnitTestCase {
       ->with('GET', 'https://example.com/api', $this->anything())
       ->willReturn($response);
 
-    $deriver = new class($this->httpClient, $this->entityTypeManager, $this->entityFieldManager, $this->fieldProcessorPluginManager) extends \Drupal\stanford_wordpress_migrate\Plugin\migrate\WordPressMigrationDeriverBase {
+    $deriver = new class($this->httpClient, $this->entityTypeManager, $this->entityFieldManager, $this->fieldProcessorPluginManager) extends WordPressMigrationDeriverBase {
+
+      /**
+       * Return no derivatives; not under test.
+       */
       public function getDerivativeDefinitions($base_plugin_definition) {
         return [];
       }
 
+      /**
+       * Expose the protected getSourceUrls() method.
+       */
       public function testGetSourceUrls(string $baseApi, array $filterQuery = []): array {
         return $this->getSourceUrls($baseApi, $filterQuery);
       }
+
     };
 
     $urls = $deriver->testGetSourceUrls('https://example.com/api');
@@ -154,7 +171,7 @@ class WordPressMigrationDeriverBaseTest extends UnitTestCase {
       ->with(
         'GET',
         'https://example.com/api',
-        $this->callback(function ($options) use ($filterQuery) {
+        $this->callback(function ($options) {
           return isset($options['query']) &&
             $options['query']['status'] === 'publish' &&
             $options['query']['author'] === '10' &&
@@ -163,14 +180,22 @@ class WordPressMigrationDeriverBaseTest extends UnitTestCase {
       )
       ->willReturn($response);
 
-    $deriver = new class($this->httpClient, $this->entityTypeManager, $this->entityFieldManager, $this->fieldProcessorPluginManager) extends \Drupal\stanford_wordpress_migrate\Plugin\migrate\WordPressMigrationDeriverBase {
+    $deriver = new class($this->httpClient, $this->entityTypeManager, $this->entityFieldManager, $this->fieldProcessorPluginManager) extends WordPressMigrationDeriverBase {
+
+      /**
+       * Return no derivatives; not under test.
+       */
       public function getDerivativeDefinitions($base_plugin_definition) {
         return [];
       }
 
+      /**
+       * Expose the protected getSourceUrls() method.
+       */
       public function testGetSourceUrls(string $baseApi, array $filterQuery = []): array {
         return $this->getSourceUrls($baseApi, $filterQuery);
       }
+
     };
 
     $urls = $deriver->testGetSourceUrls('https://example.com/api', $filterQuery);
@@ -192,14 +217,22 @@ class WordPressMigrationDeriverBaseTest extends UnitTestCase {
       ->with('GET', 'https://example.com/api', $this->anything())
       ->willThrowException(new \Exception('Network error'));
 
-    $deriver = new class($this->httpClient, $this->entityTypeManager, $this->entityFieldManager, $this->fieldProcessorPluginManager) extends \Drupal\stanford_wordpress_migrate\Plugin\migrate\WordPressMigrationDeriverBase {
+    $deriver = new class($this->httpClient, $this->entityTypeManager, $this->entityFieldManager, $this->fieldProcessorPluginManager) extends WordPressMigrationDeriverBase {
+
+      /**
+       * Return no derivatives; not under test.
+       */
       public function getDerivativeDefinitions($base_plugin_definition) {
         return [];
       }
 
+      /**
+       * Expose the protected getSourceUrls() method.
+       */
       public function testGetSourceUrls(string $baseApi, array $filterQuery = []): array {
         return $this->getSourceUrls($baseApi, $filterQuery);
       }
+
     };
 
     $urls = $deriver->testGetSourceUrls('https://example.com/api');
@@ -210,19 +243,27 @@ class WordPressMigrationDeriverBaseTest extends UnitTestCase {
    * Test getSourceUrls with different exception types.
    */
   public function testGetSourceUrlsWithDifferentExceptions(): void {
-    // Test with RuntimeException
+    // Test with RuntimeException.
     $this->httpClient->expects($this->once())
       ->method('request')
       ->willThrowException(new \RuntimeException('Connection timeout'));
 
-    $deriver = new class($this->httpClient, $this->entityTypeManager, $this->entityFieldManager, $this->fieldProcessorPluginManager) extends \Drupal\stanford_wordpress_migrate\Plugin\migrate\WordPressMigrationDeriverBase {
+    $deriver = new class($this->httpClient, $this->entityTypeManager, $this->entityFieldManager, $this->fieldProcessorPluginManager) extends WordPressMigrationDeriverBase {
+
+      /**
+       * Return no derivatives; not under test.
+       */
       public function getDerivativeDefinitions($base_plugin_definition) {
         return [];
       }
 
+      /**
+       * Expose the protected getSourceUrls() method.
+       */
       public function testGetSourceUrls(string $baseApi, array $filterQuery = []): array {
         return $this->getSourceUrls($baseApi, $filterQuery);
       }
+
     };
 
     $urls = $deriver->testGetSourceUrls('https://example.com/api');
@@ -241,20 +282,29 @@ class WordPressMigrationDeriverBaseTest extends UnitTestCase {
     $response->expects($this->once())
       ->method('getHeaderLine')
       ->with('X-WP-Total')
-      ->willReturn('350'); // Will result in 4 pages (350 / 100 = 3.5, ceil = 4)
+    // Will result in 4 pages (350 / 100 = 3.5, ceil = 4)
+      ->willReturn('350');
 
     $this->httpClient->expects($this->once())
       ->method('request')
       ->willReturn($response);
 
-    $deriver = new class($this->httpClient, $this->entityTypeManager, $this->entityFieldManager, $this->fieldProcessorPluginManager) extends \Drupal\stanford_wordpress_migrate\Plugin\migrate\WordPressMigrationDeriverBase {
+    $deriver = new class($this->httpClient, $this->entityTypeManager, $this->entityFieldManager, $this->fieldProcessorPluginManager) extends WordPressMigrationDeriverBase {
+
+      /**
+       * Return no derivatives; not under test.
+       */
       public function getDerivativeDefinitions($base_plugin_definition) {
         return [];
       }
 
+      /**
+       * Expose the protected getSourceUrls() method.
+       */
       public function testGetSourceUrls(string $baseApi, array $filterQuery = []): array {
         return $this->getSourceUrls($baseApi, $filterQuery);
       }
+
     };
 
     $urls = $deriver->testGetSourceUrls('https://example.com/api');
@@ -262,13 +312,13 @@ class WordPressMigrationDeriverBaseTest extends UnitTestCase {
     $this->assertIsArray($urls);
     $this->assertCount(4, $urls);
 
-    // Verify each URL has correct page number
+    // Verify each URL has correct page number.
     $this->assertStringContainsString('page=1', $urls[0]);
     $this->assertStringContainsString('page=2', $urls[1]);
     $this->assertStringContainsString('page=3', $urls[2]);
     $this->assertStringContainsString('page=4', $urls[3]);
 
-    // Verify all have per_page=100
+    // Verify all have per_page=100.
     foreach ($urls as $url) {
       $this->assertStringContainsString('per_page=100', $url);
       $this->assertStringStartsWith('https://example.com/api?', $url);
@@ -293,14 +343,22 @@ class WordPressMigrationDeriverBaseTest extends UnitTestCase {
       ->method('request')
       ->willReturn($response);
 
-    $deriver = new class($this->httpClient, $this->entityTypeManager, $this->entityFieldManager, $this->fieldProcessorPluginManager) extends \Drupal\stanford_wordpress_migrate\Plugin\migrate\WordPressMigrationDeriverBase {
+    $deriver = new class($this->httpClient, $this->entityTypeManager, $this->entityFieldManager, $this->fieldProcessorPluginManager) extends WordPressMigrationDeriverBase {
+
+      /**
+       * Return no derivatives; not under test.
+       */
       public function getDerivativeDefinitions($base_plugin_definition) {
         return [];
       }
 
+      /**
+       * Expose the protected getSourceUrls() method.
+       */
       public function testGetSourceUrls(string $baseApi, array $filterQuery = []): array {
         return $this->getSourceUrls($baseApi, $filterQuery);
       }
+
     };
 
     $urls = $deriver->testGetSourceUrls('https://example.com/api');
@@ -326,7 +384,7 @@ class WordPressMigrationDeriverBaseTest extends UnitTestCase {
       ->with(
         'GET',
         'https://example.com/api',
-        $this->callback(function ($options) use ($filterQuery) {
+        $this->callback(function ($options) {
           return isset($options['query']) &&
             $options['query']['status'] === 'publish' &&
             $options['query']['category'] === '5' &&
@@ -335,14 +393,22 @@ class WordPressMigrationDeriverBaseTest extends UnitTestCase {
       )
       ->willReturn($response);
 
-    $deriver = new class($this->httpClient, $this->entityTypeManager, $this->entityFieldManager, $this->fieldProcessorPluginManager) extends \Drupal\stanford_wordpress_migrate\Plugin\migrate\WordPressMigrationDeriverBase {
+    $deriver = new class($this->httpClient, $this->entityTypeManager, $this->entityFieldManager, $this->fieldProcessorPluginManager) extends WordPressMigrationDeriverBase {
+
+      /**
+       * Return no derivatives; not under test.
+       */
       public function getDerivativeDefinitions($base_plugin_definition) {
         return [];
       }
 
+      /**
+       * Expose the protected getSourceUrls() method.
+       */
       public function testGetSourceUrls(string $baseApi, array $filterQuery = []): array {
         return $this->getSourceUrls($baseApi, $filterQuery);
       }
+
     };
 
     $urls = $deriver->testGetSourceUrls('https://example.com/api', $filterQuery);
@@ -354,7 +420,7 @@ class WordPressMigrationDeriverBaseTest extends UnitTestCase {
    */
   public function testGetUrlMethod(): void {
     // Since getUrl was removed and URL building is now inline,
-    // test that http_build_query is used correctly
+    // test that http_build_query is used correctly.
     $response = $this->createMock(ResponseInterface::class);
     $response->expects($this->once())
       ->method('hasHeader')
@@ -369,14 +435,22 @@ class WordPressMigrationDeriverBaseTest extends UnitTestCase {
       ->method('request')
       ->willReturn($response);
 
-    $deriver = new class($this->httpClient, $this->entityTypeManager, $this->entityFieldManager, $this->fieldProcessorPluginManager) extends \Drupal\stanford_wordpress_migrate\Plugin\migrate\WordPressMigrationDeriverBase {
+    $deriver = new class($this->httpClient, $this->entityTypeManager, $this->entityFieldManager, $this->fieldProcessorPluginManager) extends WordPressMigrationDeriverBase {
+
+      /**
+       * Return no derivatives; not under test.
+       */
       public function getDerivativeDefinitions($base_plugin_definition) {
         return [];
       }
 
+      /**
+       * Expose the protected getSourceUrls() method.
+       */
       public function testGetSourceUrls(string $baseApi, array $filterQuery = []): array {
         return $this->getSourceUrls($baseApi, $filterQuery);
       }
+
     };
 
     $filterQuery = ['key' => 'value', 'special' => 'test&data'];
@@ -385,7 +459,7 @@ class WordPressMigrationDeriverBaseTest extends UnitTestCase {
     $this->assertIsArray($urls);
     $this->assertCount(1, $urls);
 
-    // Verify URL encoding works correctly
+    // Verify URL encoding works correctly.
     $this->assertStringContainsString('key=value', $urls[0]);
     $this->assertStringContainsString('special=test%26data', $urls[0]);
     $this->assertStringContainsString('per_page=100', $urls[0]);
@@ -410,14 +484,22 @@ class WordPressMigrationDeriverBaseTest extends UnitTestCase {
       ->method('request')
       ->willReturn($response);
 
-    $deriver = new class($this->httpClient, $this->entityTypeManager, $this->entityFieldManager, $this->fieldProcessorPluginManager) extends \Drupal\stanford_wordpress_migrate\Plugin\migrate\WordPressMigrationDeriverBase {
+    $deriver = new class($this->httpClient, $this->entityTypeManager, $this->entityFieldManager, $this->fieldProcessorPluginManager) extends WordPressMigrationDeriverBase {
+
+      /**
+       * Return no derivatives; not under test.
+       */
       public function getDerivativeDefinitions($base_plugin_definition) {
         return [];
       }
 
+      /**
+       * Expose the protected getSourceUrls() method.
+       */
       public function testGetSourceUrls(string $baseApi, array $filterQuery = []): array {
         return $this->getSourceUrls($baseApi, $filterQuery);
       }
+
     };
 
     $urls = $deriver->testGetSourceUrls('https://example.com/api');

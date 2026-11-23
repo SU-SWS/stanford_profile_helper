@@ -14,7 +14,7 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
- * Class TimeDurationFormatterTest.
+ * Tests the time duration field formatter output.
  */
 #[Group('stanford_profile_helper')]
 #[RunTestsInSeparateProcesses]
@@ -205,7 +205,8 @@ class TimeDurationFormatterTest extends KernelTestBase {
     $this->assertStringContainsString('5', $output);
     $this->assertStringNotContainsString('01:', $output);
 
-    // Test with hours and minutes only (simulating checkbox behavior with 0 for unchecked).
+    // Test with hours and minutes only (simulating checkbox behavior with 0
+    // for unchecked).
     $node = Node::create([
       'type' => 'page',
       'title' => 'Test',

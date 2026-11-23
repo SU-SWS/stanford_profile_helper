@@ -21,7 +21,7 @@ class Mathjax extends MathjaxFilter implements ContainerFactoryPluginInterface {
   protected $config;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     return new static(
@@ -33,9 +33,9 @@ class Mathjax extends MathjaxFilter implements ContainerFactoryPluginInterface {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $config_factory) {
+  final public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $config_factory) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->config = $config_factory->get('mathjax.settings');
   }

@@ -17,6 +17,9 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('stanford_intranet')]
 class StanfordIntranetManagerTest extends IntranetKernelTestBase {
 
+  /**
+   * {@inheritdoc}
+   */
   protected function setUp(): void {
     parent::setUp();
     $this->setSetting('file_private_path', $this->container->getParameter('site.path') . '/private');
@@ -56,7 +59,6 @@ class StanfordIntranetManagerTest extends IntranetKernelTestBase {
     \Drupal::service('stanford_intranet.manager')->moveIntranetFiles();
     $moved_file = File::load($file->id());
     $this->assertEquals('public', StreamWrapperManager::getScheme($moved_file->getFileUri()));
-
 
     \Drupal::service('file.usage')->add($file, 'file', 'media', 1);
     \Drupal::service('stanford_intranet.manager')->moveIntranetFiles();

@@ -2,16 +2,14 @@
 
 /**
  * @file
- * File description.
- *
- * Long description.
+ * Post update functions for stanford_person.
  */
 
 /**
- * Install the default profile image.
- *
- * Add the image to the media library and add the entities to the DB.
+ * Implements hook_removed_post_updates().
  */
-function stanford_person_post_update_8100() {
-  _stanford_person_install_default_photo();
+function stanford_person_removed_post_updates() {
+  return [
+    'stanford_person_post_update_8100' => '11.0.0',
+  ];
 }

@@ -27,7 +27,7 @@ class JumpstartUiTwoColumnLayout extends JumpstartUiLayouts {
   const RIGHT = 'right';
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function defaultConfiguration() {
     $config = parent::defaultConfiguration();
@@ -38,7 +38,7 @@ class JumpstartUiTwoColumnLayout extends JumpstartUiLayouts {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
     $form = parent::buildConfigurationForm($form, $form_state);
@@ -62,7 +62,7 @@ class JumpstartUiTwoColumnLayout extends JumpstartUiLayouts {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
     parent::submitConfigurationForm($form, $form_state);

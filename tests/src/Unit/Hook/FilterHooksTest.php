@@ -40,10 +40,6 @@ class FilterHooksTest extends UnitTestCase {
     $this->hooks = new FilterHooks($this->moduleHandler);
   }
 
-  // -----------------------------------------------------------------------
-  // filterInfoAlter()
-  // -----------------------------------------------------------------------
-
   /**
    * When the mathjax module is enabled, the filter class is overridden.
    */
@@ -79,10 +75,6 @@ class FilterHooksTest extends UnitTestCase {
 
     $this->assertSame(['some_other_filter' => []], $info);
   }
-
-  // -----------------------------------------------------------------------
-  // filterFormatAccess()
-  // -----------------------------------------------------------------------
 
   /**
    * The administrative_html filter format is always forbidden.

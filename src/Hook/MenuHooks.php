@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Drupal\stanford_profile_helper\Hook;
 
 use Drupal\Core\Block\BlockPluginInterface;
+use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\Routing\RouteBuilderInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\node\NodeInterface;
@@ -28,8 +30,17 @@ class MenuHooks {
    *   Current active user.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   Entity type manager service.
+   * @param \Drupal\Core\Database\Connection $database
+   *   Database connection.
+   * @param \Drupal\Core\Routing\RouteBuilderInterface $routeBuilder
+   *   Router builder service.
    */
-  public function __construct(protected AccountProxyInterface $currentUser, protected EntityTypeManagerInterface $entityTypeManager) {}
+  public function __construct(
+    protected AccountProxyInterface $currentUser,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected Connection $database,
+    protected RouteBuilderInterface $routeBuilder,
+  ) {}
 
   /**
    * Implements hook_menu_links_discovered_alter().
@@ -155,11 +166,11 @@ class MenuHooks {
       $entity->hasField('field_menulink') &&
       !$entity->get('field_menulink')->isEmpty()
     ) {
-      \Drupal::database()->delete('menu_tree')
+      $this->database->delete('menu_tree')
         ->condition('id', 'menu_link_field:%', 'LIKE')
         ->condition('route_param_key', 'node=' . $entity->id())
         ->execute();
-      \Drupal::service('router.builder')->rebuildIfNeeded();
+      $this->routeBuilder->rebuildIfNeeded();
       StanfordProfileHelper::clearMenuCacheTag();
     }
   }

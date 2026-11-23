@@ -71,8 +71,9 @@ class MediaHooksTest extends UnitTestCase {
   }
 
   /**
-   * When authorized, the embed field is accessible and no description
-   * override happens, but the title is still changed.
+   * Authorized users can access the embed field and keep its description.
+   *
+   * The title is still changed.
    */
   public function testFormAlterAuthorizedUser(): void {
     $this->setAuthorized(TRUE);
@@ -101,8 +102,9 @@ class MediaHooksTest extends UnitTestCase {
   }
 
   /**
-   * When not authorized, the embed field is inaccessible and the source
-   * field description is overridden with the support link.
+   * Unauthorized users can't access the embed field.
+   *
+   * The source field description is overridden with the support link.
    */
   public function testFormAlterUnauthorizedUser(): void {
     $this->setAuthorized(FALSE);
@@ -149,8 +151,7 @@ class MediaHooksTest extends UnitTestCase {
   }
 
   /**
-   * When authorized, the description on the embeddable oembed widget stays
-   * untouched.
+   * Authorized users keep the embeddable oEmbed widget description.
    */
   public function testFieldWidgetCompleteFormAlterAuthorizedUser(): void {
     $this->setAuthorized(TRUE);

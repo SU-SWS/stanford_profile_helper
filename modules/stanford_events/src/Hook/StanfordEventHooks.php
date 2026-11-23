@@ -6,7 +6,11 @@ namespace Drupal\stanford_events\Hook;
 
 use Drupal\Core\Hook\Attribute\Hook;
 
+/**
+ * Hook implementations for the event content type display.
+ */
 class StanfordEventHooks {
+
   /**
    * Implements hook_preprocess_HOOK().
    */

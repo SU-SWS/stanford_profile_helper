@@ -149,6 +149,9 @@ class FormHooksTest extends SuProfileHelperKernelTestBase {
     $this->assertArrayNotHasKey('token_help', $complete_form_array['field_viewfield']['widget'][0]['view_options']);
   }
 
+  /**
+   * Test tabledrag and term rows are removed from the vocabulary overview.
+   */
   public function testTaxonomyOverviewForm() {
     $entity_type_manager = $this->container->get('entity_type.manager');
     $entity_type = $entity_type_manager->getDefinition('taxonomy_vocabulary');
@@ -178,7 +181,7 @@ class FormHooksTest extends SuProfileHelperKernelTestBase {
   public function testLayoutSelectionFieldWidgetFormAlter() {
     $this->installEntitySchema('node');
     $this->installConfig(['node', 'field']);
-    
+
     $news_type = $this->container->get('entity_type.manager')
       ->getStorage('node_type')
       ->create([
@@ -215,7 +218,7 @@ class FormHooksTest extends SuProfileHelperKernelTestBase {
       'status' => TRUE,
     ]);
     $news_form_display->setComponent('layout_selection', [
-      'type' => 'options_select'
+      'type' => 'options_select',
     ]);
     $news_form_display->save();
 
@@ -232,4 +235,5 @@ class FormHooksTest extends SuProfileHelperKernelTestBase {
     $this->assertEquals('News', $form['layout_selection']['widget']['#options']['_none']);
     $this->assertEquals('Variant', (string) $form['layout_selection']['widget']['#title']);
   }
+
 }

@@ -24,7 +24,7 @@ use Drupal\stanford_migrate\Plugin\migrate\source\StanfordUrl;
 class ExploreCoursesUrl extends StanfordUrl {
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public static function create($container, array $configuration, $plugin_id, $plugin_definition, ?MigrationInterface $migration = NULL) {
     return new static(
@@ -38,9 +38,9 @@ class ExploreCoursesUrl extends StanfordUrl {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
-  public function __construct(
+  final public function __construct(
     array $configuration,
     $plugin_id,
     $plugin_definition,

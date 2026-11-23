@@ -48,6 +48,12 @@ final class LayoutLibraryIconForm extends EntityForm {
     return $form;
   }
 
+  /**
+   * Load the icon file entity saved in the layout's third party settings.
+   *
+   * @return \Drupal\file\FileInterface|null
+   *   Icon file entity, or NULL if none is set.
+   */
   protected function getIconFile() {
     $icon = $this->entity->getThirdPartySetting('stanford_profile_helper', 'icon', []);
     if (isset($icon['uuid']) && $icon['uuid']) {

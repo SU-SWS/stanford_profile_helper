@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\stanford_profile_helper\Kernel\Hook;
 
+use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\config_pages\ConfigPagesLoaderServiceInterface;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
@@ -9,7 +10,6 @@ use Drupal\node\Entity\Node;
 use Drupal\node\Entity\NodeType;
 use Drupal\search_api\IndexInterface;
 use Drupal\search_api\Item\FieldInterface;
-use Drupal\search_api\Item\ItemInterface;
 use Drupal\search_api_algolia\SearchApiAlgoliaHelper;
 use Drupal\stanford_profile_helper\Hook\AlgoliaHooks;
 use Drupal\taxonomy\Entity\Term;
@@ -43,7 +43,7 @@ class AlgoliaHooksTest extends SuProfileHelperKernelTestBase {
   /**
    * {@inheritDoc}
    */
-  public function register(\Drupal\Core\DependencyInjection\ContainerBuilder $container) {
+  public function register(ContainerBuilder $container) {
     parent::register($container);
     // Add service alias to work around autowiring issue with Hook system.
     $container->setAlias(
@@ -134,9 +134,9 @@ class AlgoliaHooksTest extends SuProfileHelperKernelTestBase {
   }
 
   /**
-   * Add the su_search_exclusion and su_metatags fields to the 'page' bundle
-   * and reload the test node so its field definitions are up to date.
+   * Add the search exclusion and metatags fields to the 'page' bundle.
    *
+   * The test node is reloaded so its field definitions are up to date.
    * Both fields are added together since NodeHooks::alterMetatags() also
    * runs on node_presave and expects su_metatags to exist alongside
    * su_search_exclusion.
@@ -415,7 +415,7 @@ class AlgoliaHooksTest extends SuProfileHelperKernelTestBase {
     $field->method('getPropertyPath')
       ->willReturn('entity:field_tags:entity:tid');
     $index->method('getField')
-      ->willReturnCallback(function($name) use ($field) {
+      ->willReturnCallback(function ($name) use ($field) {
         return str_starts_with($name, 'filters_') ? $field : NULL;
       });
 

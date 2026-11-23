@@ -20,14 +20,14 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class ExploreCoursesUrlWidgetTest.php.
+ * Kernel tests for the ExploreCourses URL field widget.
  */
 #[RunTestsInSeparateProcesses]
 #[Group('stanford_courses')]
 class ExploreCoursesUrlWidgetTest extends KernelTestBase {
 
   /**
-   * {@inheritDoc}.
+   * {@inheritdoc}
    */
   protected static $modules = [
     'system',
@@ -39,7 +39,7 @@ class ExploreCoursesUrlWidgetTest extends KernelTestBase {
   ];
 
   /**
-   * {@inheritDoc}.
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
@@ -71,7 +71,7 @@ class ExploreCoursesUrlWidgetTest extends KernelTestBase {
   }
 
   /**
-   * Test the settings form
+   * Test the settings form.
    */
   public function testSettingsForm() {
     $field_def = $this->createMock(FieldDefinitionInterface::class);
@@ -110,86 +110,89 @@ class ExploreCoursesUrlWidgetTest extends KernelTestBase {
     $this->assertCount(1, $form_state->getErrors());
   }
 
-    /**
-     * Test Url Validation.
-     */
-    public function testUrlValidation() {
-      $field_def = $this->createMock(FieldDefinitionInterface::class);
-      $config = [
-        'field_definition' => $field_def,
-        'settings' => [],
-        'third_party_settings' => [],
-      ];
-      $definition = [];
-      $widget = ExploreCoursesUrlWidget::create(\Drupal::getContainer(), $config, '', $definition);
+  /**
+   * Test Url Validation.
+   */
+  public function testUrlValidation() {
+    $field_def = $this->createMock(FieldDefinitionInterface::class);
+    $config = [
+      'field_definition' => $field_def,
+      'settings' => [],
+      'third_party_settings' => [],
+    ];
+    $definition = [];
+    $widget = ExploreCoursesUrlWidget::create(\Drupal::getContainer(), $config, '', $definition);
 
-      $element = ['#value' => '', '#parents' => ['foo']];
-      $form = [];
-      $form_state = new FormState();
-      $form_state->setValue('foo', 'bar');
+    $element = ['#value' => '', '#parents' => ['foo']];
+    $form = [];
+    $form_state = new FormState();
+    $form_state->setValue('foo', 'bar');
 
-      $widget->validateUrl($element, $form_state, $form);
-      $this->assertCount(0, $form_state->getErrors());
-      $element['#value'] = "https://explorecourses.stanford.edu?test=test";
-      $widget->validateUrl($element, $form_state, $form);
-      $this->assertCount(0, $form_state->getErrors());
-      $element['#value'] = "https://bad-data.com";
+    $widget->validateUrl($element, $form_state, $form);
+    $this->assertCount(0, $form_state->getErrors());
+    $element['#value'] = "https://explorecourses.stanford.edu?test=test";
+    $widget->validateUrl($element, $form_state, $form);
+    $this->assertCount(0, $form_state->getErrors());
+    $element['#value'] = "https://bad-data.com";
 
-      $widget->validateUrl($element, $form_state, $form);
-      $this->assertCount(1, $form_state->getErrors());
-    }
+    $widget->validateUrl($element, $form_state, $form);
+    $this->assertCount(1, $form_state->getErrors());
+  }
 
-    /**
-     * Test the entity form is displayed correctly.
-     */
-    public function testWidgetForm() {
-      $node = Node::create([
-        'type' => 'page',
-      ]);
-      /** @var \Drupal\Core\Entity\Display\EntityFormDisplayInterface $entity_form_display */
-      $entity_form_display = EntityFormDisplay::create([
-        'targetEntityType' => 'node',
-        'bundle' => 'page',
-        'mode' => 'default',
-        'status' => TRUE,
-      ]);
-      $entity_form_display->setComponent('su_explore_course_url', ['type' => 'explore_courses_url', 'settings' => ['api_version' => '20200810']])
-        ->removeComponent('created')
-        ->save();
+  /**
+   * Test the entity form is displayed correctly.
+   */
+  public function testWidgetForm() {
+    $node = Node::create([
+      'type' => 'page',
+    ]);
+    /** @var \Drupal\Core\Entity\Display\EntityFormDisplayInterface $entity_form_display */
+    $entity_form_display = EntityFormDisplay::create([
+      'targetEntityType' => 'node',
+      'bundle' => 'page',
+      'mode' => 'default',
+      'status' => TRUE,
+    ]);
+    $entity_form_display->setComponent('su_explore_course_url', [
+      'type' => 'explore_courses_url',
+      'settings' => ['api_version' => '20200810'],
+    ])
+      ->removeComponent('created')
+      ->save();
 
-      $node->set('su_explore_course_url', [
-        [
-          'uri' => 'https://explorecourses.stanford.edu/search?view=catalog',
-          'title' => '',
-          'options' => '',
-        ],
-      ]);
+    $node->set('su_explore_course_url', [
+      [
+        'uri' => 'https://explorecourses.stanford.edu/search?view=catalog',
+        'title' => '',
+        'options' => '',
+      ],
+    ]);
 
-      $form = [];
-      $form_state = new FormState();
-      $entity_form_display->buildForm($node, $form, $form_state);
-      $widget_value = $form['su_explore_course_url']['widget'][0];
+    $form = [];
+    $form_state = new FormState();
+    $entity_form_display->buildForm($node, $form, $form_state);
+    $widget_value = $form['su_explore_course_url']['widget'][0];
 
-      $this->assertIsArray($widget_value);
-      $this->assertEquals($widget_value['uri']['#default_value'], 'https://explorecourses.stanford.edu/search?view=catalog');
+    $this->assertIsArray($widget_value);
+    $this->assertEquals($widget_value['uri']['#default_value'], 'https://explorecourses.stanford.edu/search?view=catalog');
 
-      $field_def = $this->createMock(FieldDefinitionInterface::class);
-      $config = [
-        'field_definition' => $field_def,
-        'settings' => [
-          'api_version' => '20200810',
-        ],
-        'third_party_settings' => [],
-      ];
+    $field_def = $this->createMock(FieldDefinitionInterface::class);
+    $config = [
+      'field_definition' => $field_def,
+      'settings' => [
+        'api_version' => '20200810',
+      ],
+      'third_party_settings' => [],
+    ];
 
-      $widget = ExploreCoursesUrlWidget::create(\Drupal::getContainer(), $config, '', []);
-      $form = [];
-      $form_state = new FormState();
+    $widget = ExploreCoursesUrlWidget::create(\Drupal::getContainer(), $config, '', []);
+    $form = [];
+    $form_state = new FormState();
 
-      $massaged_values = $widget->massageFormValues([0 => ['uri' => 'https://explorecourses.stanford.edu/search?q=all%20courses&view=catalog&page=0']], $form, $form_state);
-      $this->assertCount(1, $massaged_values);
-      $this->assertEquals('https://explorecourses.stanford.edu/search?q=all%20courses&view=xml-20200810&page=0', $massaged_values[0]['uri']);
-    }
+    $massaged_values = $widget->massageFormValues([0 => ['uri' => 'https://explorecourses.stanford.edu/search?q=all%20courses&view=catalog&page=0']], $form, $form_state);
+    $this->assertCount(1, $massaged_values);
+    $this->assertEquals('https://explorecourses.stanford.edu/search?q=all%20courses&view=xml-20200810&page=0', $massaged_values[0]['uri']);
+  }
 
   /**
    * Provide a little xml needed by the settings form validator.

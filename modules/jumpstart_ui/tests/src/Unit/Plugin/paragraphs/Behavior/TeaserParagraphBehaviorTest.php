@@ -6,9 +6,6 @@ use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Entity\Display\EntityDisplayInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
-use Drupal\Core\Entity\EntityStorageInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Entity\Query\QueryInterface;
 use Drupal\Core\Form\FormState;
 use Drupal\jumpstart_ui\Plugin\paragraphs\Behavior\TeaserParagraphBehavior;
 use Drupal\paragraphs\Entity\Paragraph;
@@ -18,13 +15,13 @@ use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class TeaserParagraphBehaviorTest
+ * Unit tests for the teaser paragraph behavior.
  */
 #[Group('jumpstart_ui')]
 class TeaserParagraphBehaviorTest extends UnitTestCase {
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
@@ -50,6 +47,9 @@ class TeaserParagraphBehaviorTest extends UnitTestCase {
     $this->assertTrue(TeaserParagraphBehavior::isApplicable($paragraph_type));
   }
 
+  /**
+   * Test the heading behavior form element and its default value.
+   */
   public function testForm() {
     $plugin = TeaserParagraphBehavior::create(\Drupal::getContainer(), [], '', []);
     $paragraph = $this->createMock(ParagraphInterface::class);
@@ -61,6 +61,9 @@ class TeaserParagraphBehaviorTest extends UnitTestCase {
     $this->assertEquals('show', $form['heading_behavior']['#default_value']);
   }
 
+  /**
+   * Test the behavior alters the paragraph build.
+   */
   public function testView() {
     $plugin = TeaserParagraphBehavior::create(\Drupal::getContainer(), [], '', []);
 

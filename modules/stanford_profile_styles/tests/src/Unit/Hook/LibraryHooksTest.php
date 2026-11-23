@@ -58,7 +58,7 @@ class LibraryHooksTest extends UnitTestCase {
   protected LibraryHooks $hooks;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
@@ -72,7 +72,7 @@ class LibraryHooksTest extends UnitTestCase {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function tearDown(): void {
     putenv('CI');
@@ -93,8 +93,7 @@ class LibraryHooksTest extends UnitTestCase {
   }
 
   /**
-   * Non admin route without a node route parameter gets the three base
-   * libraries only.
+   * A non admin route without a node parameter gets only the base libraries.
    */
   public function testPageAttachmentsNonAdminNoNode(): void {
     $this->adminContext->method('isAdminRoute')->willReturn(FALSE);
@@ -111,8 +110,7 @@ class LibraryHooksTest extends UnitTestCase {
   }
 
   /**
-   * A node of an unrelated type gets its node.TYPE library attached, with
-   * no further special-casing.
+   * A node of an unrelated type gets only its node.TYPE library attached.
    */
   public function testPageAttachmentsOtherNodeType(): void {
     $this->adminContext->method('isAdminRoute')->willReturn(FALSE);
@@ -132,8 +130,7 @@ class LibraryHooksTest extends UnitTestCase {
   }
 
   /**
-   * A stanford_page node with no layout_selection value gets no full-width
-   * library.
+   * A page node without a layout_selection value gets no full-width library.
    */
   public function testPageAttachmentsStanfordPageNoLayout(): void {
     $this->adminContext->method('isAdminRoute')->willReturn(FALSE);
@@ -154,8 +151,7 @@ class LibraryHooksTest extends UnitTestCase {
   }
 
   /**
-   * A stanford_page node with the full-width layout target gets the
-   * full-width library attached.
+   * A page node with the full-width layout gets the full-width library.
    */
   public function testPageAttachmentsStanfordPageFullWidthLayout(): void {
     $this->adminContext->method('isAdminRoute')->willReturn(FALSE);
@@ -178,8 +174,7 @@ class LibraryHooksTest extends UnitTestCase {
   }
 
   /**
-   * A stanford_page node with a different layout target gets no full-width
-   * library.
+   * A page node with a different layout gets no full-width library.
    */
   public function testPageAttachmentsStanfordPageOtherLayout(): void {
     $this->adminContext->method('isAdminRoute')->willReturn(FALSE);
@@ -220,8 +215,7 @@ class LibraryHooksTest extends UnitTestCase {
   }
 
   /**
-   * The real dist/css directory is scanned and produces the expected
-   * library definitions.
+   * Scanning the real dist/css directory gives the expected libraries.
    */
   public function testLibraryInfoBuild(): void {
     $this->moduleExtensionList->method('getPath')
@@ -298,8 +292,7 @@ class LibraryHooksTest extends UnitTestCase {
   }
 
   /**
-   * The react_paragraphs extension without a field_formatter library key is
-   * left untouched.
+   * The react_paragraphs libraries are untouched without field_formatter.
    */
   public function testLibraryInfoAlterReactParagraphsWithoutFieldFormatter(): void {
     $libraries = ['other' => ['css' => []]];
@@ -375,8 +368,9 @@ class LibraryHooksTest extends UnitTestCase {
   }
 
   /**
-   * A paragraph entity display gets the paragraph.BUNDLE library attached,
-   * with the `stanford_` prefix stripped from the bundle name.
+   * A paragraph entity display gets the paragraph.BUNDLE library attached.
+   *
+   * The `stanford_` prefix is stripped from the bundle name.
    */
   public function testEntityDisplayBuildAlterParagraph(): void {
     $this->adminContext->method('isAdminRoute')->willReturn(FALSE);
@@ -392,8 +386,7 @@ class LibraryHooksTest extends UnitTestCase {
   }
 
   /**
-   * An entity type that is neither node nor paragraph gets no library
-   * attached.
+   * An entity that is neither node nor paragraph gets no library attached.
    */
   public function testEntityDisplayBuildAlterOtherEntityType(): void {
     $this->adminContext->method('isAdminRoute')->willReturn(FALSE);
@@ -424,8 +417,7 @@ class LibraryHooksTest extends UnitTestCase {
   }
 
   /**
-   * A filter format that is not one of the known formats gets no css
-   * added.
+   * A filter format that is not one of the known formats gets no css added.
    */
   public function testCkeditorCssAlterUnknownFormat(): void {
     $filter_format = $this->createMock(FilterFormatInterface::class);
@@ -464,8 +456,7 @@ class LibraryHooksTest extends UnitTestCase {
   }
 
   /**
-   * The other known stanford_minimal_html filter format also gets the
-   * ckeditor css appended.
+   * The stanford_minimal_html format also gets the ckeditor css appended.
    */
   public function testCkeditorCssAlterKnownMinimalFormat(): void {
     $filter_format = $this->createMock(FilterFormatInterface::class);

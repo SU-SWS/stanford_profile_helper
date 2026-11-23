@@ -34,7 +34,7 @@ class StanfordDecoupledRouteSubscriberTest extends KernelTestBase {
    * Test route alteration when NOT in decoupled mode.
    *
    * // Covers: alterRoutes
-   * // Covers: __construct
+   * // Covers: __construct.
    */
   public function testRouteAlterNotDecoupled(): void {
     // Ensure decoupled mode is disabled.
@@ -67,7 +67,7 @@ class StanfordDecoupledRouteSubscriberTest extends KernelTestBase {
    * Test route alteration when in decoupled mode.
    *
    * // Covers: alterRoutes
-   * // Covers: __construct
+   * // Covers: __construct.
    */
   public function testRouteAlterDecoupled(): void {
     // Enable decoupled mode.
@@ -103,7 +103,7 @@ class StanfordDecoupledRouteSubscriberTest extends KernelTestBase {
   /**
    * Test constructor stores provider IDs correctly.
    *
-   * // Covers: __construct
+   * // Covers: __construct.
    */
   public function testConstructor(): void {
     $auth_providers = [
@@ -125,7 +125,7 @@ class StanfordDecoupledRouteSubscriberTest extends KernelTestBase {
    * Test with empty authentication providers.
    *
    * // Covers: alterRoutes
-   * // Covers: __construct
+   * // Covers: __construct.
    */
   public function testAlterRoutesWithEmptyProviders(): void {
     // Enable decoupled mode.
@@ -154,7 +154,7 @@ class StanfordDecoupledRouteSubscriberTest extends KernelTestBase {
    * Test with single authentication provider.
    *
    * // Covers: alterRoutes
-   * // Covers: __construct
+   * // Covers: __construct.
    */
   public function testAlterRoutesWithSingleProvider(): void {
     // Enable decoupled mode.
@@ -182,7 +182,7 @@ class StanfordDecoupledRouteSubscriberTest extends KernelTestBase {
   /**
    * Test that only specific routes are altered.
    *
-   * // Covers: alterRoutes
+   * // Covers: alterRoutes.
    */
   public function testOnlySpecificRoutesAltered(): void {
     // Enable decoupled mode.
@@ -214,7 +214,7 @@ class StanfordDecoupledRouteSubscriberTest extends KernelTestBase {
   /**
    * Test with missing routes.
    *
-   * // Covers: alterRoutes
+   * // Covers: alterRoutes.
    */
   public function testAlterRoutesWithMissingRoutes(): void {
     // Enable decoupled mode.
@@ -240,7 +240,7 @@ class StanfordDecoupledRouteSubscriberTest extends KernelTestBase {
   /**
    * Test route collection with no routes.
    *
-   * // Covers: alterRoutes
+   * // Covers: alterRoutes.
    */
   public function testAlterRoutesWithEmptyCollection(): void {
     // Enable decoupled mode.
@@ -265,7 +265,7 @@ class StanfordDecoupledRouteSubscriberTest extends KernelTestBase {
   /**
    * Test that existing auth options are replaced.
    *
-   * // Covers: alterRoutes
+   * // Covers: alterRoutes.
    */
   public function testExistingAuthOptionsReplaced(): void {
     // Enable decoupled mode.
@@ -298,7 +298,7 @@ class StanfordDecoupledRouteSubscriberTest extends KernelTestBase {
   /**
    * Test that other route options are preserved.
    *
-   * // Covers: alterRoutes
+   * // Covers: alterRoutes.
    */
   public function testOtherRouteOptionsPreserved(): void {
     // Enable decoupled mode.
@@ -332,7 +332,7 @@ class StanfordDecoupledRouteSubscriberTest extends KernelTestBase {
    * Test with complex authentication provider array.
    *
    * // Covers: __construct
-   * // Covers: alterRoutes
+   * // Covers: alterRoutes.
    */
   public function testComplexAuthenticationProviders(): void {
     // Enable decoupled mode.

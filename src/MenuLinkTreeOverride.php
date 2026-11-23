@@ -28,7 +28,7 @@ class MenuLinkTreeOverride implements MenuLinkTreeInterface {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function build(array $tree) {
     $build = $this->menuTree->build($tree);
@@ -42,7 +42,7 @@ class MenuLinkTreeOverride implements MenuLinkTreeInterface {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    *
    * @codeCoverageIgnore
    */
@@ -51,14 +51,14 @@ class MenuLinkTreeOverride implements MenuLinkTreeInterface {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function load($menu_name, MenuTreeParameters $parameters) {
     return $this->menuTree->load($menu_name, $parameters);
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    *
    * @codeCoverageIgnore
    */
@@ -67,14 +67,14 @@ class MenuLinkTreeOverride implements MenuLinkTreeInterface {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function maxDepth() {
     return $this->menuTree->maxDepth();
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    *
    * @codeCoverageIgnore
    */
@@ -83,7 +83,7 @@ class MenuLinkTreeOverride implements MenuLinkTreeInterface {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    *
    * @codeCoverageIgnore
    */

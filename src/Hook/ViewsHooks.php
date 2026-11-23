@@ -13,7 +13,7 @@ use Drupal\views\ViewExecutable;
 class ViewsHooks {
 
   /**
-   * Modify the cache tags on views..
+   * Modify the cache tags on views.
    */
   #[Hook('views_pre_view')]
   public function viewsPreView(ViewExecutable $view, $display_id, array &$args): void {

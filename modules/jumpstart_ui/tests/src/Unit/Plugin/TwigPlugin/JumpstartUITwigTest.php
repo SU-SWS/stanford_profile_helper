@@ -12,7 +12,7 @@ use Twig\TwigFunction;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class JumpstartUITwigTest
+ * Unit tests for the Jumpstart UI Twig extension.
  */
 #[Group('jumpstart_ui')]
 class JumpstartUITwigTest extends UnitTestCase {
@@ -25,7 +25,7 @@ class JumpstartUITwigTest extends UnitTestCase {
   protected $twiggery;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
@@ -33,7 +33,7 @@ class JumpstartUITwigTest extends UnitTestCase {
     $container->set('string_translation', $this->getStringTranslationStub());
 
     $renderer = $this->createMock(RendererInterface::class);
-    $renderer->method('renderInIsolation')->willReturnCallback(function($arg){
+    $renderer->method('renderInIsolation')->willReturnCallback(function ($arg) {
       return $arg['#markup'] ?? $arg;
     });
     $this->twiggery = new JumpstartUITwig($renderer);

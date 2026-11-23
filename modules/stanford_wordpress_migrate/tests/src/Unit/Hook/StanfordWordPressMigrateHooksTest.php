@@ -43,9 +43,9 @@ class StanfordWordPressMigrateHooksTest extends UnitTestCase {
   public function testEntityTypeAlterWithDevelLoad(): void {
     $entityType = $this->createMock(EntityTypeInterface::class);
 
-    // Set up the mock to return TRUE only for devel-load check
+    // Set up the mock to return TRUE only for devel-load check.
     $entityType->method('hasLinkTemplate')
-      ->willReturnCallback(function($template) {
+      ->willReturnCallback(function ($template) {
         return $template === 'devel-load';
       });
 
@@ -138,7 +138,7 @@ class StanfordWordPressMigrateHooksTest extends UnitTestCase {
 
     $entityType->expects($this->exactly(4))
       ->method('setLinkTemplate')
-      ->willReturnCallback(function($template, $path) {
+      ->willReturnCallback(function ($template, $path) {
         $expected = [
           'devel-load' => '/devel/wordpress-migration/{wordpress_migration}',
           'devel-definition' => '/devel/definition/wordpress-migration/{wordpress_migration}',

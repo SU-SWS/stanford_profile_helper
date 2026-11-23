@@ -6,7 +6,6 @@ namespace Drupal\Tests\stanford_profile_helper\Unit\Hook;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\ImmutableConfig;
-use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\Query\QueryInterface;
@@ -77,9 +76,6 @@ class CronHooksTest extends UnitTestCase {
    * When the config_pages.loader service is unavailable, cron does nothing.
    */
   public function testCronReturnsEarlyWhenConfigPagesUnavailable(): void {
-    $container = new ContainerBuilder();
-    \Drupal::setContainer($container);
-
     $this->entityTypeManager->expects($this->never())->method('getStorage');
     $this->fileSystem->expects($this->never())->method('saveData');
 
@@ -87,7 +83,7 @@ class CronHooksTest extends UnitTestCase {
   }
 
   /**
-   * Sets up the config_pages.loader mock and returns it.
+   * Rebuilds the hooks with a config_pages.loader mock and returns the mock.
    */
   protected function mockConfigPagesLoader(): ConfigPagesLoaderServiceInterface {
     $configPages = $this->createMock(ConfigPagesLoaderServiceInterface::class);
@@ -107,9 +103,7 @@ class CronHooksTest extends UnitTestCase {
         };
       });
 
-    $container = new ContainerBuilder();
-    $container->set('config_pages.loader', $configPages);
-    \Drupal::setContainer($container);
+    $this->hooks = new CronHooks($this->entityTypeManager, $this->configFactory, $this->streamWrapperManager, $this->fileSystem, $configPages);
 
     return $configPages;
   }

@@ -47,7 +47,7 @@ class BooleanFieldTest extends UnitTestCase {
   public function testInheritsFromBase(): void {
     $field = $this->createMock(FieldDefinitionInterface::class);
 
-    // Test that it uses parent implementation
+    // Test that it uses parent implementation.
     $process = $this->plugin->getProcess($field);
     $this->assertIsArray($process);
     $this->assertCount(1, $process);
@@ -81,11 +81,11 @@ class BooleanFieldTest extends UnitTestCase {
   public function testInheritedMethods(): void {
     $field = $this->createMock(FieldDefinitionInterface::class);
 
-    // Test getConstants
+    // Test getConstants.
     $constants = $this->plugin->getConstants();
     $this->assertEquals([], $constants);
 
-    // Test getExtraProcess
+    // Test getExtraProcess.
     $extraProcess = $this->plugin->getExtraProcess($field);
     $this->assertEquals([], $extraProcess);
   }

@@ -24,6 +24,8 @@ use PHPUnit\Framework\Attributes\Group;
 class RabbitHoleMessageBlockTest extends KernelTestBase {
 
   /**
+   * The block plugin being tested.
+   *
    * @var \Drupal\stanford_profile_helper\Plugin\Block\RabbitHoleMessageBlock
    */
   protected $block;
@@ -50,6 +52,9 @@ class RabbitHoleMessageBlockTest extends KernelTestBase {
     'pdb',
   ];
 
+  /**
+   * {@inheritdoc}
+   */
   protected function setUp(): void {
     parent::setUp();
 

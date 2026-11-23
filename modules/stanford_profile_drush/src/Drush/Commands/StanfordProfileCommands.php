@@ -41,7 +41,7 @@ class StanfordProfileCommands extends DrushCommands {
       $this->entityTypeManager->getStorage('node')
         ->load($nid)
         ?->setUnpublished()
-        ->save();
+          ->save();
     }
   }
 

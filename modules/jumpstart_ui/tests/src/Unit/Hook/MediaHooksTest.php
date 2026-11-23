@@ -21,7 +21,7 @@ class MediaHooksTest extends UnitTestCase {
   protected MediaHooks $hooks;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();

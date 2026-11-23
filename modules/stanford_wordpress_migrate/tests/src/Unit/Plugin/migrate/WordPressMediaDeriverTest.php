@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\stanford_wordpress_migrate\Unit\Plugin\migrate;
 
+use Drupal\stanford_wordpress_migrate\WordPressMigrateFieldProcessorInterface;
+use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Database\Schema;
-use Drupal\Core\Database\StatementInterface;
 use Drupal\Core\DependencyInjection\Container;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\stanford_wordpress_migrate\Plugin\migrate\WordPressMediaDeriver;
-use Drupal\stanford_wordpress_migrate\WordPressMigrateFieldProcessorInterface;
 use Drupal\stanford_wordpress_migrate\WordPressMigrateFieldProcessorPluginManager;
 use Drupal\stanford_wordpress_migrate\WordPressMigrationInterface;
 use Drupal\Tests\UnitTestCase;
@@ -177,7 +176,7 @@ class WordPressMediaDeriverTest extends UnitTestCase {
       ->willReturn($response);
 
     // Mock field definitions.
-    $fieldDefinition = $this->createMock(\Drupal\Core\Field\FieldDefinitionInterface::class);
+    $fieldDefinition = $this->createMock(FieldDefinitionInterface::class);
     $fieldDefinition->expects($this->any())
       ->method('getType')
       ->willReturn('string');
@@ -188,7 +187,7 @@ class WordPressMediaDeriverTest extends UnitTestCase {
       ->willReturn(['name' => $fieldDefinition]);
 
     // Mock field processor plugin.
-    $fieldProcessor = $this->createMock(\Drupal\stanford_wordpress_migrate\WordPressMigrateFieldProcessorInterface::class);
+    $fieldProcessor = $this->createMock(WordPressMigrateFieldProcessorInterface::class);
     $fieldProcessor->expects($this->once())
       ->method('setWordPressMigration')
       ->with($migration)
@@ -279,7 +278,7 @@ class WordPressMediaDeriverTest extends UnitTestCase {
       ->willReturn($response);
 
     // Mock field definitions.
-    $fieldDefinition = $this->createMock(\Drupal\Core\Field\FieldDefinitionInterface::class);
+    $fieldDefinition = $this->createMock(FieldDefinitionInterface::class);
     $fieldDefinition->expects($this->any())
       ->method('getType')
       ->willReturn('string');
@@ -290,7 +289,7 @@ class WordPressMediaDeriverTest extends UnitTestCase {
       ->willReturn(['name' => $fieldDefinition]);
 
     // Mock field processor plugin.
-    $fieldProcessor = $this->createMock(\Drupal\stanford_wordpress_migrate\WordPressMigrateFieldProcessorInterface::class);
+    $fieldProcessor = $this->createMock(WordPressMigrateFieldProcessorInterface::class);
     $fieldProcessor->expects($this->once())
       ->method('setWordPressMigration')
       ->with($migration)

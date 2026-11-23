@@ -29,7 +29,7 @@ interface WordPressMigrationInterface extends ContentEntityInterface, EntityPubl
   /**
    * Get the configured base url of the WordPress site.
    *
-   * @return string|NULL
+   * @return string|null
    *   Site domain.
    */
   public function getBaseUrl(): ?string;
@@ -45,7 +45,7 @@ interface WordPressMigrationInterface extends ContentEntityInterface, EntityPubl
    * @param string|array $key
    *   Parent path of the configuration.
    * @param mixed $value
-   *  Value to set the configuration.
+   *   Value to set the configuration.
    */
   public function setConfigurationValue(string|array $key, $value): void;
 

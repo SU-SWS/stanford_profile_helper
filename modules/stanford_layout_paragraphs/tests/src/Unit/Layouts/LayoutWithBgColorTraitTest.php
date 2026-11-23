@@ -29,24 +29,41 @@ class LayoutWithBgColorTraitTest extends UnitTestCase {
     parent::setUp();
 
     // Create an anonymous class that uses the trait.
-    $this->traitObject = new class {
+    $this->traitObject = new class() {
       use LayoutWithBgColorTrait;
 
+      /**
+       * Layout plugin configuration.
+       *
+       * @var array
+       */
       public $configuration = [];
 
+      /**
+       * Get a fixed plugin ID for the test layout.
+       */
       public function getPluginId() {
         return 'test_plugin';
       }
 
+      /**
+       * Return a stub translatable object for the given string.
+       */
       public function t($string, array $args = [], array $options = []) {
         return new class($string) {
 
           public function __construct(private $string) {}
 
+          /**
+           * Render the untranslated string.
+           */
           public function render() {
             return $this->string;
           }
 
+          /**
+           * Cast the stub to the untranslated string.
+           */
           public function __toString() {
             return $this->string;
           }
@@ -54,18 +71,30 @@ class LayoutWithBgColorTraitTest extends UnitTestCase {
         };
       }
 
+      /**
+       * Expose the protected addBackgroundColorElement() method.
+       */
       public function addBackgroundColorElementPublic(array &$form, $form_state) {
         return $this->addBackgroundColorElement($form, $form_state);
       }
 
+      /**
+       * Expose the protected addPaddingMarginElements() method.
+       */
       public function addPaddingMarginElementsPublic(array &$form, $form_state) {
         return $this->addPaddingMarginElements($form, $form_state);
       }
 
+      /**
+       * Expose the protected submitBackgroundForm() method.
+       */
       public function submitBackgroundFormPublic(array &$form, $form_state) {
         return $this->submitBackgroundForm($form, $form_state);
       }
 
+      /**
+       * Expose the protected submitPaddingMarginForm() method.
+       */
       public function submitPaddingMarginFormPublic(array &$form, $form_state) {
         return $this->submitPaddingMarginForm($form, $form_state);
       }
@@ -76,7 +105,7 @@ class LayoutWithBgColorTraitTest extends UnitTestCase {
   /**
    * Test addBackgroundColorElement adds form element.
    *
-   * // Covers: addBackgroundColorElement
+   * // Covers: addBackgroundColorElement.
    */
   public function testAddBackgroundColorElement(): void {
     $form = [];
@@ -94,7 +123,7 @@ class LayoutWithBgColorTraitTest extends UnitTestCase {
   /**
    * Test addBackgroundColorElement with existing color.
    *
-   * // Covers: addBackgroundColorElement
+   * // Covers: addBackgroundColorElement.
    */
   public function testAddBackgroundColorElementWithExistingColor(): void {
     $this->traitObject->configuration['bg_color'] = 'ff0000';
@@ -110,7 +139,7 @@ class LayoutWithBgColorTraitTest extends UnitTestCase {
   /**
    * Test addBackgroundColorElement without existing color.
    *
-   * // Covers: addBackgroundColorElement
+   * // Covers: addBackgroundColorElement.
    */
   public function testAddBackgroundColorElementWithoutColor(): void {
     $form = [];
@@ -124,7 +153,7 @@ class LayoutWithBgColorTraitTest extends UnitTestCase {
   /**
    * Test addBackgroundColorElement includes color library.
    *
-   * // Covers: addBackgroundColorElement
+   * // Covers: addBackgroundColorElement.
    */
   public function testAddBackgroundColorElementLibrary(): void {
     $form = [];
@@ -140,7 +169,7 @@ class LayoutWithBgColorTraitTest extends UnitTestCase {
   /**
    * Test addBackgroundColorElement includes drupalSettings.
    *
-   * // Covers: addBackgroundColorElement
+   * // Covers: addBackgroundColorElement.
    */
   public function testAddBackgroundColorElementSettings(): void {
     $form = [];
@@ -156,7 +185,7 @@ class LayoutWithBgColorTraitTest extends UnitTestCase {
   /**
    * Test addBackgroundColorElement palette settings.
    *
-   * // Covers: addBackgroundColorElement
+   * // Covers: addBackgroundColorElement.
    */
   public function testAddBackgroundColorElementPalette(): void {
     $form = [];
@@ -178,7 +207,7 @@ class LayoutWithBgColorTraitTest extends UnitTestCase {
   /**
    * Test addPaddingMarginElements adds all form elements.
    *
-   * // Covers: addPaddingMarginElements
+   * // Covers: addPaddingMarginElements.
    */
   public function testAddPaddingMarginElements(): void {
     $form = [];
@@ -194,7 +223,7 @@ class LayoutWithBgColorTraitTest extends UnitTestCase {
   /**
    * Test addPaddingMarginElements top_padding configuration.
    *
-   * // Covers: addPaddingMarginElements
+   * // Covers: addPaddingMarginElements.
    */
   public function testAddPaddingMarginElementsTopPadding(): void {
     $form = [];
@@ -212,7 +241,7 @@ class LayoutWithBgColorTraitTest extends UnitTestCase {
   /**
    * Test addPaddingMarginElements bottom_padding configuration.
    *
-   * // Covers: addPaddingMarginElements
+   * // Covers: addPaddingMarginElements.
    */
   public function testAddPaddingMarginElementsBottomPadding(): void {
     $form = [];
@@ -229,7 +258,7 @@ class LayoutWithBgColorTraitTest extends UnitTestCase {
   /**
    * Test addPaddingMarginElements bottom_margin configuration.
    *
-   * // Covers: addPaddingMarginElements
+   * // Covers: addPaddingMarginElements.
    */
   public function testAddPaddingMarginElementsBottomMargin(): void {
     $form = [];
@@ -246,7 +275,7 @@ class LayoutWithBgColorTraitTest extends UnitTestCase {
   /**
    * Test addPaddingMarginElements with existing configuration.
    *
-   * // Covers: addPaddingMarginElements
+   * // Covers: addPaddingMarginElements.
    */
   public function testAddPaddingMarginElementsWithConfig(): void {
     $this->traitObject->configuration['top_padding'] = 'more';
@@ -266,7 +295,7 @@ class LayoutWithBgColorTraitTest extends UnitTestCase {
   /**
    * Test submitBackgroundForm processes color value.
    *
-   * // Covers: submitBackgroundForm
+   * // Covers: submitBackgroundForm.
    */
   public function testSubmitBackgroundForm(): void {
     $form = [];
@@ -281,7 +310,7 @@ class LayoutWithBgColorTraitTest extends UnitTestCase {
   /**
    * Test submitBackgroundForm handles lowercase.
    *
-   * // Covers: submitBackgroundForm
+   * // Covers: submitBackgroundForm.
    */
   public function testSubmitBackgroundFormLowercase(): void {
     $form = [];
@@ -296,7 +325,7 @@ class LayoutWithBgColorTraitTest extends UnitTestCase {
   /**
    * Test submitBackgroundForm removes hash.
    *
-   * // Covers: submitBackgroundForm
+   * // Covers: submitBackgroundForm.
    */
   public function testSubmitBackgroundFormRemovesHash(): void {
     $form = [];
@@ -311,7 +340,7 @@ class LayoutWithBgColorTraitTest extends UnitTestCase {
   /**
    * Test submitPaddingMarginForm sets all values.
    *
-   * // Covers: submitPaddingMarginForm
+   * // Covers: submitPaddingMarginForm.
    */
   public function testSubmitPaddingMarginForm(): void {
     $form = [];
@@ -330,7 +359,7 @@ class LayoutWithBgColorTraitTest extends UnitTestCase {
   /**
    * Test submitPaddingMarginForm with NULL values.
    *
-   * // Covers: submitPaddingMarginForm
+   * // Covers: submitPaddingMarginForm.
    */
   public function testSubmitPaddingMarginFormNullValues(): void {
     $form = [];

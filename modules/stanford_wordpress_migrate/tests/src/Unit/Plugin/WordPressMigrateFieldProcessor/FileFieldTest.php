@@ -52,10 +52,10 @@ class FileFieldTest extends UnitTestCase {
     $this->assertIsArray($process);
     $this->assertCount(2, $process);
 
-    // Check skip_on_empty from parent
+    // Check skip_on_empty from parent.
     $this->assertEquals('skip_on_empty', $process[0]['plugin']);
 
-    // Check migration_lookup plugin
+    // Check migration_lookup plugin.
     $this->assertEquals('migration_lookup', $process[1]['plugin']);
     $this->assertEquals('wordpress_files:files', $process[1]['migration']);
     $this->assertEquals('wordpress_files:files', $process[1]['stub_id']);
@@ -102,11 +102,11 @@ class FileFieldTest extends UnitTestCase {
   public function testInheritedMethods(): void {
     $field = $this->createMock(FieldDefinitionInterface::class);
 
-    // Test getConstants
+    // Test getConstants.
     $constants = $this->plugin->getConstants();
     $this->assertEquals([], $constants);
 
-    // Test getExtraProcess
+    // Test getExtraProcess.
     $extraProcess = $this->plugin->getExtraProcess($field);
     $this->assertEquals([], $extraProcess);
   }

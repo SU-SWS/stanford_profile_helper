@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class MenuActiveTrailsCacheContextOverrideTest.
+ * Tests the menu active trails cache context override service.
  */
 #[Group('stanford_profile_helper')]
 #[RunTestsInSeparateProcesses]

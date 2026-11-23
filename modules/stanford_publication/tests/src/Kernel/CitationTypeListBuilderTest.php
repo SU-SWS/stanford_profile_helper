@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class CitationTypeListBuilderTest
+ * Tests the citation type list builder.
  */
 #[RunTestsInSeparateProcesses]
 #[Group('stanford_publication')]

@@ -28,11 +28,13 @@ use Drupal\stanford_decoupled\Plugin\Next\Revalidator\Path;
 class StanfordDecoupledHooksTest extends KernelTestBase {
 
   /**
-   * Disable strict config schema checking for this test.
+   * Config without a complete schema while graphql_compose isn't installed.
    *
-   * @var bool
+   * @var string[]
    */
-  protected $strictConfigSchema = FALSE;
+  protected static $configSchemaCheckerExclusions = [
+    'graphql_compose.settings.graphql_compose_server',
+  ];
 
   /**
    * {@inheritdoc}

@@ -24,7 +24,7 @@ class FormHooksTest extends UnitTestCase {
   protected FormHooks $hooks;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
@@ -32,8 +32,7 @@ class FormHooksTest extends UnitTestCase {
   }
 
   /**
-   * When the access field is present on the form, it is moved into the
-   * revision information group.
+   * The access field is moved into the revision information group.
    */
   public function testFormNodeFormAlterMovesFieldIntoGroup() {
     $form = [

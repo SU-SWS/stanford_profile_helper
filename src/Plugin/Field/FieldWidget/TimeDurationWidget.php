@@ -33,10 +33,10 @@ final class TimeDurationWidget extends WidgetBase {
     $seconds = $time ? $time % 60 : NULL;
 
     $element['time'] = $element + [
-        '#type' => 'fieldset',
-        '#attributes' => ['class' => ['time-duration']],
-        '#attached' => ['library' => ['stanford_profile_helper/time_duration_widget']],
-      ];
+      '#type' => 'fieldset',
+      '#attributes' => ['class' => ['time-duration']],
+      '#attached' => ['library' => ['stanford_profile_helper/time_duration_widget']],
+    ];
     $element['time']['hour'] = [
       '#type' => 'number',
       '#title' => $this->t('Hours'),

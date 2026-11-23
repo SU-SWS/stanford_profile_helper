@@ -40,15 +40,21 @@ class WordPressImporterFormBaseTest extends UnitTestCase {
 
     $this->httpClient = $this->createMock(ClientInterface::class);
 
-    // Create anonymous class to test abstract base class
+    // Create anonymous class to test abstract base class.
     $this->form = new class($this->httpClient) extends WordPressImporterFormBase {
 
+      /**
+       * Return a test form ID.
+       */
       public function getFormId() {
         return 'test_form';
       }
 
+      /**
+       * Do nothing on submit.
+       */
       public function submitForm(array &$form, FormStateInterface $form_state): void {
-        // Implementation not needed for testing
+        // Implementation not needed for testing.
       }
 
     };
@@ -73,16 +79,18 @@ class WordPressImporterFormBaseTest extends UnitTestCase {
 
     $form = new class($this->httpClient) extends WordPressImporterFormBase {
 
+      /**
+       * Return a test form ID.
+       */
       public function getFormId() {
         return 'test_form';
       }
 
+      /**
+       * Do nothing on submit.
+       */
       public function submitForm(array &$form, FormStateInterface $form_state): void {
-        // Implementation not needed for testing
-      }
-
-      public static function create(ContainerInterface $container) {
-        return parent::create($container);
+        // Implementation not needed for testing.
       }
 
     };
@@ -115,7 +123,7 @@ class WordPressImporterFormBaseTest extends UnitTestCase {
       ->method('setTemporaryValue')
       ->with(['wizard', 'api-routes'], $this->isArray());
 
-    // Create a mock form that extends the base class
+    // Create a mock form that extends the base class.
     $mockForm = $this->getMockBuilder(WordPressImporterFormBase::class)
       ->setConstructorArgs([$this->httpClient])
       ->onlyMethods(['getApiEndpoints'])
@@ -146,7 +154,7 @@ class WordPressImporterFormBaseTest extends UnitTestCase {
         [['wizard', 'api-routes'], $existing_routes],
       ]);
 
-    // Should not call setTemporaryValue if routes already exist
+    // Should not call setTemporaryValue if routes already exist.
     $form_state->expects($this->never())
       ->method('setTemporaryValue');
 
@@ -174,7 +182,7 @@ class WordPressImporterFormBaseTest extends UnitTestCase {
       ->method('getBaseUrl')
       ->willReturn(NULL);
 
-    // Should not call setTemporaryValue if no base URL
+    // Should not call setTemporaryValue if no base URL.
     $form_state->expects($this->never())
       ->method('setTemporaryValue');
 

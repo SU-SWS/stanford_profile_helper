@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ViewFieldController extends ControllerBase {
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
     return new static(
@@ -37,7 +37,7 @@ class ViewFieldController extends ControllerBase {
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   Entity type manager service.
    */
-  public function __construct(protected AliasCleanerInterface $aliasCleaner, ModuleHandlerInterface $moduleHandler, EntityTypeManagerInterface $entityTypeManager) {
+  final public function __construct(protected AliasCleanerInterface $aliasCleaner, ModuleHandlerInterface $moduleHandler, EntityTypeManagerInterface $entityTypeManager) {
     $this->moduleHandler = $moduleHandler;
     $this->entityTypeManager = $entityTypeManager;
   }

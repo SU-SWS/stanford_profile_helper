@@ -7,7 +7,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\next\Entity\NextSiteInterface;
 use Drupal\next\Plugin\ConfigurablePreviewUrlGeneratorBase;
-use Drupal\next\Plugin\PreviewUrlGeneratorBase;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -60,7 +59,7 @@ class SimplePreview extends ConfigurablePreviewUrlGeneratorBase {
       'x-vercel-set-bypass-cookie' => $vercel_bypass ? 'samesitenone' : NULL,
     ];
     try {
-      return Url::fromUri($next_site->getPreviewUrl(), ['query' => array_filter($query),]);
+      return Url::fromUri($next_site->getPreviewUrl(), ['query' => array_filter($query)]);
     }
     catch (\Throwable $e) {
     }

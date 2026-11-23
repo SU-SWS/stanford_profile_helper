@@ -98,8 +98,10 @@ class DecoupledRenderHooksTest extends UnitTestCase {
   }
 
   /**
-   * Decoupled, missing dimensions, valid absolute (leading slash) uri:
-   * getimagesize() succeeds and populates the data-width/data-height attrs.
+   * Decoupled image with an absolute uri gets its dimensions populated.
+   *
+   * Missing dimensions, valid absolute (leading slash) uri: getimagesize()
+   * succeeds and populates the data-width/data-height attrs.
    */
   public function testPreprocessImageDecoupledSetsDimensions(): void {
     $this->setDecoupled(TRUE);
@@ -119,8 +121,7 @@ class DecoupledRenderHooksTest extends UnitTestCase {
   }
 
   /**
-   * Decoupled, missing dimensions, a uri with query string is trimmed before
-   * being passed to getimagesize().
+   * Decoupled image uri has its query string trimmed before getimagesize().
    */
   public function testPreprocessImageDecoupledStripsQueryString(): void {
     $this->setDecoupled(TRUE);
@@ -140,8 +141,10 @@ class DecoupledRenderHooksTest extends UnitTestCase {
   }
 
   /**
-   * Decoupled, missing dimensions, uri does not resolve to a real image:
-   * getimagesize() fails and no attributes are set.
+   * Decoupled image uri that is not a real image gets no dimensions.
+   *
+   * Missing dimensions, uri does not resolve to a real image: getimagesize()
+   * fails and no attributes are set.
    */
   public function testPreprocessImageDecoupledGetImageSizeFails(): void {
     $this->setDecoupled(TRUE);
@@ -161,9 +164,10 @@ class DecoupledRenderHooksTest extends UnitTestCase {
   }
 
   /**
-   * Decoupled, missing dimensions, uri without a leading slash is used
-   * directly (not prefixed with DRUPAL_ROOT), resolved relative to the
-   * current working directory.
+   * Decoupled image uri without a leading slash is used directly.
+   *
+   * Missing dimensions, uri without a leading slash is not prefixed with
+   * DRUPAL_ROOT and is resolved relative to the current working directory.
    */
   public function testPreprocessImageDecoupledUriWithoutLeadingSlash(): void {
     $this->setDecoupled(TRUE);
@@ -227,8 +231,7 @@ class DecoupledRenderHooksTest extends UnitTestCase {
   }
 
   /**
-   * Node canonical route, decoupled, current limit is 0 (disabled):
-   * limit should be forced to 30.
+   * Decoupled node canonical route with a limit of 0 is capped at 30.
    */
   public function testViewsPreExecuteLimitZeroIsCapped(): void {
     $this->routeMatch->method('getRouteName')->willReturn('entity.node.canonical');

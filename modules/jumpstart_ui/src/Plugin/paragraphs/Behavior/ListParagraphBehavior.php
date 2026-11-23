@@ -28,14 +28,14 @@ class ListParagraphBehavior extends ParagraphsBehaviorBase {
   const REMOVE_HEADING = 'remove';
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public static function isApplicable(ParagraphsTypeInterface $paragraphs_type) {
     return $paragraphs_type->id() == 'stanford_lists';
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function defaultConfiguration() {
     return [
@@ -46,7 +46,7 @@ class ListParagraphBehavior extends ParagraphsBehaviorBase {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function buildBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state) {
     $form = parent::buildBehaviorForm($paragraph, $form, $form_state);
@@ -76,7 +76,7 @@ class ListParagraphBehavior extends ParagraphsBehaviorBase {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function view(array &$build, ParagraphInterface $paragraph, EntityViewDisplayInterface $display, $view_mode) {
     $heading_behavior = $paragraph->getBehaviorSetting('list_paragraph', 'heading_behavior', self::SHOW_HEADING);

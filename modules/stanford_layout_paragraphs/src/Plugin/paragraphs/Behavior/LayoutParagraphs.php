@@ -12,7 +12,7 @@ use Drupal\paragraphs\ParagraphInterface;
 class LayoutParagraphs extends LayoutParagraphsBehavior {
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function buildBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state) {
     $form = parent::buildBehaviorForm($paragraph, $form, $form_state);

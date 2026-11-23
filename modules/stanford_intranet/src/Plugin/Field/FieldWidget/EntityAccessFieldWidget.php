@@ -31,7 +31,7 @@ class EntityAccessFieldWidget extends WidgetBase {
   protected $state;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     return new static(
@@ -45,9 +45,9 @@ class EntityAccessFieldWidget extends WidgetBase {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
-  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, array $third_party_settings, StateInterface $state) {
+  final public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, array $third_party_settings, StateInterface $state) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $third_party_settings);
     $this->state = $state;
   }
@@ -79,7 +79,7 @@ class EntityAccessFieldWidget extends WidgetBase {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
     $new_values = [];

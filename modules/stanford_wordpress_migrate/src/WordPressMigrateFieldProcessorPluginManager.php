@@ -24,7 +24,7 @@ class WordPressMigrateFieldProcessorPluginManager extends DefaultPluginManager {
   }
 
   /**
-   * Get plugin instance
+   * Get plugin instance.
    *
    * @param string $fieldType
    *   Field type id.

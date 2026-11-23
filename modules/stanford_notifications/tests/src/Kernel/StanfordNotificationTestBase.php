@@ -13,7 +13,7 @@ use Drupal\user\RoleInterface;
 abstract class StanfordNotificationTestBase extends KernelTestBase {
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected static $modules = [
     'system',
@@ -23,7 +23,7 @@ abstract class StanfordNotificationTestBase extends KernelTestBase {
   ];
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();

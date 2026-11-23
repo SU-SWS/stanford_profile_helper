@@ -12,4 +12,3 @@ dependencies:
 components:
   namespaces:
     jumpstart_ui: templates
-

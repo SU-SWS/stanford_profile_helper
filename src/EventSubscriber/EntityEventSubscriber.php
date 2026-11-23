@@ -17,7 +17,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class EntityEventSubscriber implements EventSubscriberInterface {
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public static function getSubscribedEvents(): array {
     return [
@@ -28,8 +28,6 @@ class EntityEventSubscriber implements EventSubscriberInterface {
   /**
    * Event subscriber constructor.
    *
-   * @codeCoverageIgnore
-   *
    * @param \Drupal\stanford_profile_helper\StanfordDefaultContentInterface $defaultContent
    *   Default content importer service.
    * @param \Drupal\Core\State\StateInterface $state
@@ -38,12 +36,14 @@ class EntityEventSubscriber implements EventSubscriberInterface {
    *   Core entity type manager service.
    * @param \Drupal\Core\Routing\RouteMatchInterface $routeMatch
    *   Route match service.
+   *
+   * @codeCoverageIgnore
    */
   public function __construct(
     protected StanfordDefaultContentInterface $defaultContent,
     protected StateInterface $state,
     protected EntityTypeManagerInterface $entityTypeManager,
-    protected RouteMatchInterface $routeMatch
+    protected RouteMatchInterface $routeMatch,
   ) {}
 
   /**

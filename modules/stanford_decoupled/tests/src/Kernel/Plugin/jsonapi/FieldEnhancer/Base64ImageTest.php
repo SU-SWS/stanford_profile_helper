@@ -10,11 +10,15 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
+ * Tests the base64 image JSON:API field enhancer.
  */
 #[RunTestsInSeparateProcesses]
 #[Group('stanford_decoupled')]
 class Base64ImageTest extends KernelTestBase {
 
+  /**
+   * {@inheritdoc}
+   */
   protected static $modules = [
     'system',
     'user',
@@ -30,6 +34,9 @@ class Base64ImageTest extends KernelTestBase {
     'next',
   ];
 
+  /**
+   * {@inheritdoc}
+   */
   protected function setUp(): void {
     parent::setUp();
     $this->installEntitySchema('file');
@@ -37,6 +44,9 @@ class Base64ImageTest extends KernelTestBase {
     ImageStyle::create(['name' => 'thumbnail', 'label' => 'thumb'])->save();
   }
 
+  /**
+   * Image uris are transformed into base64 encoded image data.
+   */
   public function testTransform() {
     /** @var \Drupal\stanford_decoupled\Plugin\jsonapi\FieldEnhancer\Base64Image $plugin */
     $plugin = $this->container->get('plugin.manager.resource_field_enhancer')

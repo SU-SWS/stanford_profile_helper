@@ -65,18 +65,18 @@ class DateTimeFieldTest extends UnitTestCase {
     $this->assertIsArray($process);
     $this->assertCount(4, $process);
 
-    // Check skip_on_empty from parent
+    // Check skip_on_empty from parent.
     $this->assertEquals('skip_on_empty', $process[0]['plugin']);
 
-    // Check strtotime callback
+    // Check strtotime callback.
     $this->assertEquals('callback', $process[1]['plugin']);
     $this->assertEquals('strtotime', $process[1]['callable']);
 
-    // Check skip_on_empty after strtotime
+    // Check skip_on_empty after strtotime.
     $this->assertEquals('skip_on_empty', $process[2]['plugin']);
     $this->assertEquals('process', $process[2]['method']);
 
-    // Check format_date plugin with datetime format
+    // Check format_date plugin with datetime format.
     $this->assertEquals('format_date', $process[3]['plugin']);
     $this->assertEquals('U', $process[3]['from_format']);
     $this->assertEquals(DateTimeItemInterface::DATETIME_STORAGE_FORMAT, $process[3]['to_format']);
@@ -103,7 +103,7 @@ class DateTimeFieldTest extends UnitTestCase {
     $this->assertIsArray($process);
     $this->assertCount(4, $process);
 
-    // Check format_date plugin uses date format
+    // Check format_date plugin uses date format.
     $this->assertEquals('format_date', $process[3]['plugin']);
     $this->assertEquals('U', $process[3]['from_format']);
     $this->assertEquals(DateTimeItemInterface::DATE_STORAGE_FORMAT, $process[3]['to_format']);

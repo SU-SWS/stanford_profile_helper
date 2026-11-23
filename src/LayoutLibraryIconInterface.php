@@ -25,6 +25,12 @@ interface LayoutLibraryIconInterface {
    */
   public function getLayoutIcon(Layout $layout): ?FileInterface;
 
+  /**
+   * Get the default icon file used when a layout has no icon of its own.
+   *
+   * @return \Drupal\file\FileInterface|null
+   *   Default icon file entity, null if it doesn't exist.
+   */
   public function getDefaultIcon(): ?FileInterface;
 
 }

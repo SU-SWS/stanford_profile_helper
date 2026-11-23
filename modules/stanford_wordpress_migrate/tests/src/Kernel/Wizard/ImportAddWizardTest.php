@@ -312,7 +312,6 @@ class ImportAddWizardTest extends KernelTestBase {
     $form_state->setTemporaryValue(['wizard', 'wordpress_migration'], $migration);
     $form_state->setTemporaryValue(['wizard', 'label'], 'Test Migration');
     // Don't set wizard id to simulate new entity.
-
     $this->wizard->finish($form, $form_state);
 
     $this->assertNull($form_state->getTemporaryValue(['wizard', 'id']));

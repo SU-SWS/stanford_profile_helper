@@ -10,6 +10,8 @@ use Drupal\Core\File\FileExists;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\StreamWrapper\StreamWrapperManagerInterface;
+use Drupal\config_pages\ConfigPagesLoaderServiceInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Hooks that run during cron.
@@ -27,12 +29,16 @@ class CronHooks {
    *   Stream wrapper manager service.
    * @param \Drupal\Core\File\FileSystemInterface $fileSystem
    *   File system service.
+   * @param \Drupal\config_pages\ConfigPagesLoaderServiceInterface|null $configPagesLoader
+   *   Config pages loader service, NULL when config_pages isn't installed.
    */
   public function __construct(
     protected EntityTypeManagerInterface $entityTypeManager,
     protected ConfigFactoryInterface $configFactory,
     protected StreamWrapperManagerInterface $streamWrapperManager,
     protected FileSystemInterface $fileSystem,
+    #[Autowire(service: 'config_pages.loader')]
+    protected ?ConfigPagesLoaderServiceInterface $configPagesLoader = NULL,
   ) {}
 
   /**
@@ -40,11 +46,10 @@ class CronHooks {
    */
   #[Hook('cron')]
   public function cron(): void {
-    if (!\Drupal::hasService('config_pages.loader')) {
+    if (!$this->configPagesLoader) {
       return;
     }
-    /** @var \Drupal\config_pages\ConfigPagesLoaderServiceInterface $config_pages */
-    $config_pages = \Drupal::service('config_pages.loader');
+    $config_pages = $this->configPagesLoader;
 
     $ally = $config_pages->getValue('stanford_basic_site_settings', 'su_site_a11y_contact', [], 'value');
     $canonical_url = $config_pages->getValue('stanford_basic_site_settings', 'su_site_url', 0, 'uri');

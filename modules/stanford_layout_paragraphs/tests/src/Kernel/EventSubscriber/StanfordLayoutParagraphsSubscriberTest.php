@@ -42,7 +42,7 @@ class StanfordLayoutParagraphsSubscriberTest extends KernelTestBase {
       'nesting_depth' => 0,
     ]);
     $layout->method('getComponentByUuid')
-      ->willReturnCallback(function($arg) {
+      ->willReturnCallback(function ($arg) {
         if ($arg == 'foo') {
           $component = $this->createMock(LayoutParagraphsComponent::class);
           $component->method('getSettings')

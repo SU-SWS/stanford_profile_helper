@@ -6,7 +6,6 @@ namespace Drupal\Tests\stanford_policy\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\stanford_policy\Entity\SuPolicyLog;
-use Drupal\stanford_policy\SuPolicyLogAccessControlHandler;
 use Drupal\user\Entity\Role;
 use Drupal\user\Entity\User;
 use PHPUnit\Framework\Attributes\Group;
@@ -169,7 +168,7 @@ class SuPolicyLogAccessControlHandlerTest extends KernelTestBase {
   /**
    * Test view access.
    *
-   * // Covers: checkAccess
+   * // Covers: checkAccess.
    */
   public function testViewAccess(): void {
     // User with view permission should have access.
@@ -189,7 +188,7 @@ class SuPolicyLogAccessControlHandlerTest extends KernelTestBase {
   /**
    * Test update access.
    *
-   * // Covers: checkAccess
+   * // Covers: checkAccess.
    */
   public function testUpdateAccess(): void {
     // User with edit permission should have access.
@@ -208,7 +207,7 @@ class SuPolicyLogAccessControlHandlerTest extends KernelTestBase {
   /**
    * Test delete access.
    *
-   * // Covers: checkAccess
+   * // Covers: checkAccess.
    */
   public function testDeleteAccess(): void {
     // User with delete permission should have access.
@@ -227,7 +226,7 @@ class SuPolicyLogAccessControlHandlerTest extends KernelTestBase {
   /**
    * Test create access.
    *
-   * // Covers: checkCreateAccess
+   * // Covers: checkCreateAccess.
    */
   public function testCreateAccess(): void {
     $access_control_handler = $this->container->get('entity_type.manager')
@@ -249,7 +248,7 @@ class SuPolicyLogAccessControlHandlerTest extends KernelTestBase {
   /**
    * Test unknown operation returns neutral.
    *
-   * // Covers: checkAccess
+   * // Covers: checkAccess.
    */
   public function testUnknownOperationReturnsNeutral(): void {
     $access = $this->policyLog->access('unknown_operation', $this->adminUser, TRUE);
@@ -262,7 +261,7 @@ class SuPolicyLogAccessControlHandlerTest extends KernelTestBase {
   /**
    * Test that OR logic works for update permission.
    *
-   * // Covers: checkAccess
+   * // Covers: checkAccess.
    */
   public function testUpdateOrPermission(): void {
     // User with edit permission (no administer) should have access.
@@ -286,7 +285,7 @@ class SuPolicyLogAccessControlHandlerTest extends KernelTestBase {
   /**
    * Test that OR logic works for delete permission.
    *
-   * // Covers: checkAccess
+   * // Covers: checkAccess.
    */
   public function testDeleteOrPermission(): void {
     // User with delete permission (no administer) should have access.
@@ -310,7 +309,7 @@ class SuPolicyLogAccessControlHandlerTest extends KernelTestBase {
   /**
    * Test that OR logic works for create permission.
    *
-   * // Covers: checkCreateAccess
+   * // Covers: checkCreateAccess.
    */
   public function testCreateOrPermission(): void {
     $access_control_handler = $this->container->get('entity_type.manager')
@@ -338,7 +337,7 @@ class SuPolicyLogAccessControlHandlerTest extends KernelTestBase {
    * Test user with multiple permissions.
    *
    * // Covers: checkAccess
-   * // Covers: checkCreateAccess
+   * // Covers: checkCreateAccess.
    */
   public function testUserWithMultiplePermissions(): void {
     // Create user with multiple permissions.
@@ -374,7 +373,7 @@ class SuPolicyLogAccessControlHandlerTest extends KernelTestBase {
   /**
    * Test access with context parameters.
    *
-   * // Covers: checkCreateAccess
+   * // Covers: checkCreateAccess.
    */
   public function testCreateAccessWithContext(): void {
     $access_control_handler = $this->container->get('entity_type.manager')
@@ -397,7 +396,7 @@ class SuPolicyLogAccessControlHandlerTest extends KernelTestBase {
   /**
    * Test access results are properly cached.
    *
-   * // Covers: checkAccess
+   * // Covers: checkAccess.
    */
   public function testAccessResultCaching(): void {
     // First access check.

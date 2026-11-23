@@ -30,8 +30,8 @@ final class LocalistEventChecker extends QueueWorkerBase implements ContainerFac
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    private readonly ClientInterface $httpClient,
-    private readonly EntityTypeManagerInterface $entityTypeManager,
+    protected readonly ClientInterface $httpClient,
+    protected readonly EntityTypeManagerInterface $entityTypeManager,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
   }

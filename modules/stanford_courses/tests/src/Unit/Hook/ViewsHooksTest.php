@@ -24,7 +24,7 @@ class ViewsHooksTest extends UnitTestCase {
   protected ViewsHooks $hooks;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();

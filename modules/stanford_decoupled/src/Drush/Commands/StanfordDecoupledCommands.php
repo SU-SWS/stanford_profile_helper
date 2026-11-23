@@ -37,13 +37,13 @@ final class StanfordDecoupledCommands extends DrushCommands {
     protected readonly PasswordGeneratorInterface $passwordGenerator,
     protected readonly EventDispatcherInterface $eventDispatcher,
     protected readonly ConfigFactoryInterface $configFactory,
-    protected readonly StateInterface $state
+    protected readonly StateInterface $state,
   ) {
     parent::__construct();
   }
 
   /**
-   * Create a next site entity to connect with NextJS site
+   * Create a next site entity to connect with NextJS site.
    */
   #[CLI\Command(name: 'stanford-decoupled:connect-next', aliases: ['su-next-connect'])]
   #[CLI\Argument(name: 'domain', description: 'Next.js Domain.')]
@@ -52,13 +52,15 @@ final class StanfordDecoupledCommands extends DrushCommands {
   #[CLI\Option(name: 'invisible', description: 'Configure the next entity types to not enable "Draft preview"')]
   #[CLI\Option(name: 'format', description: 'Format the result data. Available formats: json,string')]
   #[CLI\Usage(name: 'stanford-decoupled:connect-next "http://localhost:3000"', description: 'Create a next site entity to connect with Next.JS site')]
-  public function connectNextSite($domain = 'http://localhost:3000', $options = [
-    'id' => 'local',
-    'preview-secret' => NULL,
-    'revalidation-secret' => NULL,
-    'format' => 'string',
-    'invisible' => FALSE,
-  ]
+  public function connectNextSite(
+    $domain = 'http://localhost:3000',
+    $options = [
+      'id' => 'local',
+      'preview-secret' => NULL,
+      'revalidation-secret' => NULL,
+      'format' => 'string',
+      'invisible' => FALSE,
+    ],
   ) {
     $domain = trim($domain);
     if (!UrlHelper::isValid($domain, TRUE)) {

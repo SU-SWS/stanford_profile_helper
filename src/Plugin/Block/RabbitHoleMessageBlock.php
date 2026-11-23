@@ -47,13 +47,13 @@ class RabbitHoleMessageBlock extends BlockBase implements ContainerFactoryPlugin
   /**
    * {@inheritdoc}
    */
-  public function __construct(
+  final public function __construct(
     array $configuration,
     $plugin_id,
     $plugin_definition,
     protected CurrentPathStack $currentPath,
     protected BehaviorInvokerInterface $rabbitHoleBehavior,
-    protected RabbitHoleBehaviorPluginManager $rabbitHolePluginManager
+    protected RabbitHoleBehaviorPluginManager $rabbitHolePluginManager,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
   }

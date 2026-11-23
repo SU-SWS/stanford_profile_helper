@@ -26,14 +26,14 @@ class NotificationsController extends ControllerBase {
   protected $notificationService;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
-  public function __construct(NotificationServiceInterface $notificationService) {
+  final public function __construct(NotificationServiceInterface $notificationService) {
     $this->notificationService = $notificationService;
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
     return new static(
@@ -54,7 +54,7 @@ class NotificationsController extends ControllerBase {
    */
   public function clearNotification(NotificationInterface $notification) {
     if ($this->currentUser()->id() != $notification->userId()) {
-      throw new AccessDeniedHttpException($this->t('Invalid user'));
+      throw new AccessDeniedHttpException('Invalid user');
     }
 
     $notification->delete();

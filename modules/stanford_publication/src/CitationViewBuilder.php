@@ -14,7 +14,7 @@ use Drupal\stanford_publication\Entity\CitationInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class CitationViewBuilder.
+ * View builder that renders citation entities in a citation style.
  *
  * @package Drupal\stanford_publication
  */
@@ -44,7 +44,7 @@ class CitationViewBuilder extends EntityViewBuilder {
   /**
    * {@inheritDoc}
    */
-  public function __construct(EntityTypeInterface $entity_type, EntityRepositoryInterface $entity_repository, LanguageManagerInterface $language_manager, Registry $theme_registry, EntityDisplayRepositoryInterface $entity_display_repository, RendererInterface $renderer) {
+  final public function __construct(EntityTypeInterface $entity_type, EntityRepositoryInterface $entity_repository, LanguageManagerInterface $language_manager, Registry $theme_registry, EntityDisplayRepositoryInterface $entity_display_repository, RendererInterface $renderer) {
     parent::__construct($entity_type, $entity_repository, $language_manager, $theme_registry, $entity_display_repository);
     $this->renderer = $renderer;
   }

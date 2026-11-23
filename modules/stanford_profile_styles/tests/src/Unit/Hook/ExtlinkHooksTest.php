@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\stanford_profile_styles\Unit\Hook;
 
-use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\config_pages\ConfigPagesLoaderServiceInterface;
 use Drupal\stanford_profile_styles\Hook\ExtlinkHooks;
 use Drupal\Tests\UnitTestCase;
@@ -31,17 +30,12 @@ class ExtlinkHooksTest extends UnitTestCase {
   protected $configPagesLoader;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
     $this->configPagesLoader = $this->createMock(ConfigPagesLoaderServiceInterface::class);
-
-    $container = new ContainerBuilder();
-    $container->set('config_pages.loader', $this->configPagesLoader);
-    \Drupal::setContainer($container);
-
-    $this->hooks = new ExtlinkHooks();
+    $this->hooks = new ExtlinkHooks($this->configPagesLoader);
   }
 
   /**

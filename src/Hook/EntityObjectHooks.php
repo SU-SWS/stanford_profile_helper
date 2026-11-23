@@ -7,7 +7,9 @@ namespace Drupal\stanford_profile_helper\Hook;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\Menu\MenuLinkManagerInterface;
 use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\field\FieldStorageConfigInterface;
@@ -22,6 +24,16 @@ class EntityObjectHooks {
 
   use MessengerTrait;
   use StringTranslationTrait;
+
+  /**
+   * Constructs the entity object hooks.
+   *
+   * @param \Drupal\Core\Menu\MenuLinkManagerInterface $menuLinkManager
+   *   Menu link plugin manager service.
+   * @param \Drupal\Core\Extension\ModuleHandlerInterface $moduleHandler
+   *   Module handler service.
+   */
+  public function __construct(protected MenuLinkManagerInterface $menuLinkManager, protected ModuleHandlerInterface $moduleHandler) {}
 
   /**
    * Alter entity types.
@@ -129,16 +141,14 @@ class EntityObjectHooks {
     // expanded attribute so all menu items are expanded by default.
     $expanded = $entity->isNew() ?: $entity->isExpanded();
     $entity->set('expanded', $expanded);
-    /** @var \Drupal\Core\Menu\MenuLinkManagerInterface $link_manager */
-    $link_manager = \Drupal::service('plugin.manager.menu.link');
-    $parent_ids = $link_manager->getParentIds($entity->getPluginId()) ?: [];
+    $parent_ids = $this->menuLinkManager->getParentIds($entity->getPluginId()) ?: [];
 
     $cache_tags = [];
     // When a menu item is added as a child of another menu item clear the
     // parent pages cache so that the block shows up as it doesn't get
     // invalidated just by the menu cache tags.
     foreach ($parent_ids as $parent_id) {
-      $link = $link_manager->getDefinition($parent_id);
+      $link = $this->menuLinkManager->getDefinition($parent_id);
       if (isset($link['route_parameters']['node'])) {
         $cache_tags[] = 'node:' . $link['route_parameters']['node'];
       }
@@ -162,15 +172,16 @@ class EntityObjectHooks {
   }
 
   /**
-   * Purge the redirect source path so it works immediately without any
-   * further intervention.
+   * Purge the redirect source path so it works immediately.
+   *
+   * This avoids any further intervention.
    *
    * @param \Drupal\Core\Entity\ContentEntityInterface $redirect
    *   Redirect being saved.
    */
   #[Hook('redirect_presave')]
   public function purgeRedirectSource(ContentEntityInterface $redirect): void {
-    if (\Drupal::moduleHandler()->moduleExists('purge_processor_lateruntime')) {
+    if ($this->moduleHandler->moduleExists('purge_processor_lateruntime')) {
       $source = $redirect->get('redirect_source')->getString();
       self::purgePath($source);
     }

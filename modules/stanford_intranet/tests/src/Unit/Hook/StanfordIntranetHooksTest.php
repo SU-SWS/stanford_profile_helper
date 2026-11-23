@@ -25,7 +25,7 @@ class StanfordIntranetHooksTest extends UnitTestCase {
   protected StanfordIntranetHooks $hooks;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();

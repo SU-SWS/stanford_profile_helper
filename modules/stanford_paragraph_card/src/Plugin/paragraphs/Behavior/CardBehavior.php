@@ -21,14 +21,14 @@ use Drupal\paragraphs\ParagraphsBehaviorBase;
 class CardBehavior extends ParagraphsBehaviorBase {
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public static function isApplicable(ParagraphsType $paragraphs_type): bool {
     return $paragraphs_type->id() == 'stanford_card';
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function defaultConfiguration() {
     return [
@@ -39,7 +39,7 @@ class CardBehavior extends ParagraphsBehaviorBase {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function buildBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state): array {
     $element = parent::buildBehaviorForm($paragraph, $form, $form_state);
@@ -73,15 +73,11 @@ class CardBehavior extends ParagraphsBehaviorBase {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function view(array &$build, ParagraphInterface $paragraph, EntityViewDisplayInterface $display, $view_mode): void {
-//    $link_style = $paragraph->getBehaviorSetting('su_card_styles', 'link_style');
-//    if ($link_style == 'action') {
-//      // Change the DS config going in to the render.
-//      $build['#ds_configuration']['regions']['card_cta_label'] = $build['#ds_configuration']['regions']['card_button_label'];
-//      unset($build['#ds_configuration']['regions']['card_button_label']);
-//    }
+    // The link style no longer alters the build. When it was set to "action",
+    // the DS card_button_label region was moved to the card_cta_label region.
   }
 
 }

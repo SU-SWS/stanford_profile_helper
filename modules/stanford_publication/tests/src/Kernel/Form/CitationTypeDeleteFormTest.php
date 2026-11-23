@@ -9,7 +9,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class CitationTypeDeleteFormTest.
+ * Tests the citation type delete form.
  */
 #[RunTestsInSeparateProcesses]
 #[Group('stanford_publication')]

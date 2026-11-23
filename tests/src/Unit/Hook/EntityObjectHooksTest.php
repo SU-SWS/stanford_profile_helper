@@ -13,6 +13,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\GeneratedUrl;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
+use Drupal\Core\Menu\MenuLinkManagerInterface;
 use Drupal\Core\Path\PathValidatorInterface;
 use Drupal\Core\Utility\UnroutedUrlAssemblerInterface;
 use Drupal\stanford_profile_helper\Hook\EntityObjectHooks;
@@ -51,7 +52,7 @@ class EntityObjectHooksTest extends UnitTestCase {
    */
   protected function setUp(): void {
     parent::setUp();
-    $this->hooks = new EntityObjectHooks();
+    $this->hooks = new EntityObjectHooks($this->createMock(MenuLinkManagerInterface::class), $this->createMock(ModuleHandlerInterface::class));
 
     $path_validator = $this->createMock(PathValidatorInterface::class);
     $path_validator->method('getUrlIfValidWithoutAccessCheck')->willReturn(FALSE);
@@ -64,6 +65,9 @@ class EntityObjectHooksTest extends UnitTestCase {
     // services rather than mocking its interfaces.
     $invalidation_factory = new class() {
 
+      /**
+       * Return a cache invalidation string for the type and expression.
+       */
       public function get($type, $expression) {
         return "$type:$expression";
       }
@@ -71,6 +75,9 @@ class EntityObjectHooksTest extends UnitTestCase {
     };
     $processors = new class() {
 
+      /**
+       * Return the processor ID as the processor.
+       */
       public function get($id) {
         return $id;
       }
@@ -78,10 +85,23 @@ class EntityObjectHooksTest extends UnitTestCase {
     };
     $this->purgers = new class() {
 
+      /**
+       * The recorded invalidate() calls.
+       *
+       * @var array
+       */
       public array $calls = [];
 
+      /**
+       * Exception to throw from invalidate(), if any.
+       *
+       * @var \Exception|null
+       */
       public ?\Exception $exception = NULL;
 
+      /**
+       * Record the invalidation call and throw the configured exception.
+       */
       public function invalidate($processor, array $invalidations) {
         $this->calls[] = [$processor, $invalidations];
         if ($this->exception) {
@@ -176,7 +196,7 @@ class EntityObjectHooksTest extends UnitTestCase {
     $module_handler->method('moduleExists')
       ->with('purge_processor_lateruntime')
       ->willReturnOnConsecutiveCalls(FALSE, TRUE);
-    $this->container->set('module_handler', $module_handler);
+    $this->hooks = new EntityObjectHooks($this->createMock(MenuLinkManagerInterface::class), $module_handler);
 
     $redirect = $this->getRedirect('/foo/bar/');
 
@@ -195,7 +215,7 @@ class EntityObjectHooksTest extends UnitTestCase {
   public function testPurgeRedirectSourceFailure(): void {
     $module_handler = $this->createMock(ModuleHandlerInterface::class);
     $module_handler->method('moduleExists')->willReturn(TRUE);
-    $this->container->set('module_handler', $module_handler);
+    $this->hooks = new EntityObjectHooks($this->createMock(MenuLinkManagerInterface::class), $module_handler);
 
     $logger = $this->createMock(LoggerChannelInterface::class);
     $logger->expects($this->once())->method('error')->with('Purge failed');

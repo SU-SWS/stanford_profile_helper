@@ -56,8 +56,7 @@ class LayoutLibraryHooksTest extends UnitTestCase {
   }
 
   /**
-   * 'layout' key is present — link template, form class, and list builder
-   * are all updated on the layout entity type.
+   * The layout entity type gets its link template, form and list builder.
    */
   public function testEntityTypeAlterWithLayoutKey() {
     $editFormPath = '/admin/structure/layouts/{layout}/edit';
@@ -84,8 +83,7 @@ class LayoutLibraryHooksTest extends UnitTestCase {
   }
 
   /**
-   * 'layout' key present alongside other entity types — only the layout
-   * entity type is modified; other types are untouched.
+   * Only the layout entity type is modified; other types are untouched.
    */
   public function testEntityTypeAlterOnlyModifiesLayoutType() {
     $editFormPath = '/admin/structure/layouts/{layout}/edit';
@@ -106,8 +104,7 @@ class LayoutLibraryHooksTest extends UnitTestCase {
   }
 
   /**
-   * The edit-icon-form link template is derived from the existing edit-form
-   * path — the '/edit-icon' suffix must be appended.
+   * The edit-icon-form link template is the edit-form path plus '/edit-icon'.
    */
   public function testEntityTypeAlterEditIconFormLinkTemplate() {
     $editFormPath = '/some/custom/path';

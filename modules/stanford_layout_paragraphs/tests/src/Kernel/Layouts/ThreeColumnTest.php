@@ -54,7 +54,7 @@ class ThreeColumnTest extends KernelTestBase {
   /**
    * Test defaultConfiguration.
    *
-   * // Covers: defaultConfiguration
+   * // Covers: defaultConfiguration.
    */
   public function testDefaultConfiguration(): void {
     $config = $this->layout->defaultConfiguration();
@@ -75,7 +75,7 @@ class ThreeColumnTest extends KernelTestBase {
   /**
    * Test buildConfigurationForm adds all elements.
    *
-   * // Covers: buildConfigurationForm
+   * // Covers: buildConfigurationForm.
    */
   public function testBuildConfigurationForm(): void {
     $form = [];
@@ -96,7 +96,7 @@ class ThreeColumnTest extends KernelTestBase {
   /**
    * Test buildConfigurationForm with existing configuration.
    *
-   * // Covers: buildConfigurationForm
+   * // Covers: buildConfigurationForm.
    */
   public function testBuildConfigurationFormWithExistingConfig(): void {
     $configuration = [
@@ -133,7 +133,7 @@ class ThreeColumnTest extends KernelTestBase {
   /**
    * Test submitConfigurationForm processes all values.
    *
-   * // Covers: submitConfigurationForm
+   * // Covers: submitConfigurationForm.
    */
   public function testSubmitConfigurationForm(): void {
     $form = [];
@@ -157,7 +157,7 @@ class ThreeColumnTest extends KernelTestBase {
   /**
    * Test submitConfigurationForm with vertical_dividers as FALSE.
    *
-   * // Covers: submitConfigurationForm
+   * // Covers: submitConfigurationForm.
    */
   public function testSubmitConfigurationFormVerticalDividersFalse(): void {
     $form = [];
@@ -177,7 +177,7 @@ class ThreeColumnTest extends KernelTestBase {
   /**
    * Test submitConfigurationForm casts vertical_dividers to boolean.
    *
-   * // Covers: submitConfigurationForm
+   * // Covers: submitConfigurationForm.
    */
   public function testSubmitConfigurationFormVerticalDividersCast(): void {
     $form = [];
@@ -198,7 +198,7 @@ class ThreeColumnTest extends KernelTestBase {
   /**
    * Test buildConfigurationForm without vertical_dividers in config.
    *
-   * // Covers: buildConfigurationForm
+   * // Covers: buildConfigurationForm.
    */
   public function testBuildConfigurationFormNoVerticalDividers(): void {
     $configuration = [

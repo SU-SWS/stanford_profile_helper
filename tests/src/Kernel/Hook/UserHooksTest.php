@@ -8,12 +8,15 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class EventSubscriberTest.
+ * Tests the user hooks.
  */
 #[Group('stanford_profile_helper')]
 #[RunTestsInSeparateProcesses]
 class UserHooksTest extends KernelTestBase {
 
+  /**
+   * {@inheritdoc}
+   */
   protected $profile = 'stanford_profile';
 
   /**
@@ -40,6 +43,9 @@ class UserHooksTest extends KernelTestBase {
     $this->installConfig('samlauth');
   }
 
+  /**
+   * Test new roles are added to the SAML role mapping setting.
+   */
   public function testUserInsert() {
     $role = Role::create(['id' => 'test_role1', 'label' => 'Test role 1']);
     $role->save();

@@ -9,13 +9,13 @@ use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class JumpstartUiThreeColumnLayoutTest.
+ * Unit tests for the Jumpstart UI three column layout plugin.
  */
 #[Group('jumpstart_ui')]
 class JumpstartUiThreeColumnLayoutTest extends UnitTestCase {
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();

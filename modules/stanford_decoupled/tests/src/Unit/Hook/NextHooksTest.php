@@ -73,6 +73,8 @@ class NextHooksTest extends UnitTestCase {
   }
 
   /**
+   * Inserting a next site creates all missing entity type configs.
+   *
    * When none of the next_entity_type_config entities exist yet, one is
    * created for each node bundle, plus redirect, menu_link_content, and
    * each of the 5 config_pages types.
@@ -110,8 +112,7 @@ class NextHooksTest extends UnitTestCase {
   }
 
   /**
-   * When every next_entity_type_config entity already exists, none of them
-   * are recreated.
+   * Inserting a next site does not recreate existing entity type configs.
    */
   public function testNextSiteInsertSkipsExistingConfigs(): void {
     $this->cacheTagsInvalidator->expects($this->once())
@@ -188,9 +189,10 @@ class NextHooksTest extends UnitTestCase {
   }
 
   /**
-   * Non-node entity: the preview is replaced by the original build's
-   * content. With no toolbar live_link present in the replacement, nothing
-   * else happens.
+   * Non-node entity previews are replaced by the original build's content.
+   *
+   * With no toolbar live_link present in the replacement, nothing else
+   * happens.
    */
   public function testNextSitePreviewAlterNonNodeEntityReplacesPreview(): void {
     $entity = $this->createMock(EntityInterface::class);
@@ -211,8 +213,9 @@ class NextHooksTest extends UnitTestCase {
   }
 
   /**
-   * Node entity: the preview is left as-is (not replaced with original
-   * build). No toolbar live_link present, so nothing else happens.
+   * Node entity previews are left as-is, not replaced with the original build.
+   *
+   * No toolbar live_link present, so nothing else happens.
    */
   public function testNextSitePreviewAlterNodeEntityKeepsPreview(): void {
     $entity = $this->createMock(EntityInterface::class);
@@ -228,8 +231,7 @@ class NextHooksTest extends UnitTestCase {
   }
 
   /**
-   * Node entity with a live_link url whose query has a 'slug': the url's
-   * options are trimmed down to slug + secret only.
+   * Live link url query with a slug is trimmed down to slug and secret only.
    */
   public function testNextSitePreviewAlterTrimsSlugSecretQuery(): void {
     $entity = $this->createMock(EntityInterface::class);
@@ -257,8 +259,7 @@ class NextHooksTest extends UnitTestCase {
   }
 
   /**
-   * Node entity with a live_link url whose query has no 'slug': the url's
-   * options are left untouched.
+   * Live link url query without a slug is left untouched.
    */
   public function testNextSitePreviewAlterLeavesQueryWithoutSlug(): void {
     $entity = $this->createMock(EntityInterface::class);

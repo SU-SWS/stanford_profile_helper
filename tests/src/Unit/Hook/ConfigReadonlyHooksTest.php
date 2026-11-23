@@ -67,10 +67,6 @@ class ConfigReadonlyHooksTest extends UnitTestCase {
     $this->hooks = new ConfigReadonlyHooks($this->configFactory, $this->routeMatch, $this->currentUser, $this->messenger);
   }
 
-  // -----------------------------------------------------------------------
-  // configReadonlyWhitelistPatterns()
-  // -----------------------------------------------------------------------
-
   /**
    * By default only the active theme settings are whitelisted.
    */
@@ -145,10 +141,6 @@ class ConfigReadonlyHooksTest extends UnitTestCase {
     $this->assertSame(['olivero.settings'], $patterns);
   }
 
-  // -----------------------------------------------------------------------
-  // formMenuEditFormAlter()
-  // -----------------------------------------------------------------------
-
   /**
    * When config_readonly setting is off, the form is left untouched.
    */
@@ -179,8 +171,7 @@ class ConfigReadonlyHooksTest extends UnitTestCase {
   }
 
   /**
-   * With config_readonly and the permission, fields are accessible and the
-   * warning message is left intact.
+   * With read-only config and the permission, fields and warning are kept.
    */
   public function testFormMenuEditFormAlterReadOnlyWithPermission(): void {
     new Settings(['config_readonly' => TRUE]);
@@ -199,8 +190,7 @@ class ConfigReadonlyHooksTest extends UnitTestCase {
   }
 
   /**
-   * With config_readonly and no permission, fields are hidden and the
-   * warning message is removed.
+   * With read-only config and no permission, fields and warning are removed.
    */
   public function testFormMenuEditFormAlterReadOnlyWithoutPermission(): void {
     new Settings(['config_readonly' => TRUE]);

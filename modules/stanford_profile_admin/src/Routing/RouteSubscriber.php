@@ -6,14 +6,14 @@ use Drupal\Core\Routing\RouteSubscriberBase;
 use Symfony\Component\Routing\RouteCollection;
 
 /**
- * Class RouteSubscriber.
+ * Moves the people admin pages to /admin/users and renames them "Users".
  *
  * @package Drupal\stanford_profile_admin\Routing
  */
 class RouteSubscriber extends RouteSubscriberBase {
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function alterRoutes(RouteCollection $collection) {
     foreach ($collection as $route) {

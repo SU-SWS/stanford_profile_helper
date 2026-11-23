@@ -13,7 +13,7 @@ use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class ListParagraphBehaviorTest
+ * Unit tests for the list paragraph behavior.
  */
 #[Group('jumpstart_ui')]
 class ListParagraphBehaviorTest extends UnitTestCase {
@@ -26,7 +26,7 @@ class ListParagraphBehaviorTest extends UnitTestCase {
   protected $paragraphBehavior = [];
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
@@ -66,7 +66,6 @@ class ListParagraphBehaviorTest extends UnitTestCase {
     $plugin->view($build, $paragraph, $display, 'default');
     $this->assertEquals([], $build);
 
-
     $build = ['su_list_view' => [], '#cache' => []];
     $plugin->view($build, $paragraph, $display, 'default');
     $this->assertEquals(['su_list_view' => [], '#cache' => []], $build);
@@ -76,7 +75,7 @@ class ListParagraphBehaviorTest extends UnitTestCase {
       'su_list_button' => [],
       'su_list_description' => [],
       'su_list_headline' => [],
-      '#cache' => []
+      '#cache' => [],
     ];
     $this->paragraphBehavior['hide_empty'] = TRUE;
     $plugin->view($build, $paragraph, $display, 'default');

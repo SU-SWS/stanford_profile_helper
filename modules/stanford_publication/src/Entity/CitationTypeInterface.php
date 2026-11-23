@@ -5,7 +5,7 @@ namespace Drupal\stanford_publication\Entity;
 use Drupal\Core\Config\Entity\ConfigEntityInterface;
 
 /**
- * Interface CitationTypeInterface.
+ * Provides an interface for citation type config entities.
  *
  * @package Drupal\stanford_publication\Entity
  */

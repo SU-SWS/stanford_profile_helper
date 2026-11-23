@@ -31,7 +31,7 @@ class ViewsHooksTest extends UnitTestCase {
   protected $cache;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
@@ -61,8 +61,7 @@ class ViewsHooksTest extends UnitTestCase {
   }
 
   /**
-   * A node base table view on the allow list gets the library attached and
-   * its cache tags rewritten to be node-type specific.
+   * An allowed node view gets the library and node-type specific cache tags.
    */
   public function testViewsPostRenderNodeAllowList(): void {
     $view = $this->createViewMock('stanford_events', ['stanford_event']);
@@ -100,8 +99,7 @@ class ViewsHooksTest extends UnitTestCase {
   }
 
   /**
-   * A term base table view on the allow list gets the library attached and
-   * its cache tags rewritten to be term-vocabulary specific.
+   * An allowed term view gets the library and vocabulary specific cache tags.
    */
   public function testViewsPostRenderTermAllowList(): void {
     $view = $this->createViewMock('stanford_event_terms_utility', [], ['event_types']);

@@ -40,10 +40,9 @@ class MediaHooks {
 
     if (isset($form['container'][$source_field])) {
       if (!$authorized) {
-        $new_desc = 'Allowed providers: @providers. For custom embeds, please <a href="@snow_form">request support.</a>';
         $args = $form['container'][$source_field]['#description']->getArguments();
         $args['@snow_form'] = 'https://stanford.service-now.com/it_services?id=sc_cat_item&sys_id=83daed294f4143009a9a97411310c70a';
-        $form['container'][$source_field]['#description'] = $this->t($new_desc, $args);
+        $form['container'][$source_field]['#description'] = $this->t('Allowed providers: @providers. For custom embeds, please <a href="@snow_form">request support.</a>', $args);
       }
       $form['container'][$source_field]['#title'] = $this->t('oEmbed URL');
     }
@@ -64,8 +63,7 @@ class MediaHooks {
       if (!$authorized) {
         $args = $field_widget_complete_form['widget'][0]['value']['#description']['#items'][1]->getArguments();
         $args['@snow_form'] = 'https://stanford.service-now.com/it_services?id=sc_cat_item&sys_id=83daed294f4143009a9a97411310c70a';
-        $new_desc = 'Allowed providers: @providers. For custom embeds, please <a href="@snow_form">request support.</a>';
-        $field_widget_complete_form['widget'][0]['value']['#description'] = $this->t($new_desc, $args);
+        $field_widget_complete_form['widget'][0]['value']['#description'] = $this->t('Allowed providers: @providers. For custom embeds, please <a href="@snow_form">request support.</a>', $args);
       }
     }
   }

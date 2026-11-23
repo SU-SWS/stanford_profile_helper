@@ -66,7 +66,7 @@ class CapUrlTest extends UnitTestCase {
   protected $capCredentials = [];
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();

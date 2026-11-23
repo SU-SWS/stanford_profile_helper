@@ -25,7 +25,7 @@ class PreprocessHooksTest extends UnitTestCase {
   protected PreprocessHooks $hooks;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
@@ -55,9 +55,10 @@ class PreprocessHooksTest extends UnitTestCase {
   }
 
   /**
-   * The react paragraph row preprocess adds container classes and flexes
-   * each item according to its react width behavior setting, for array
-   * style attributes.
+   * React paragraph rows get container classes and flex items by width.
+   *
+   * Each item is flexed according to its react width behavior setting, for
+   * array style attributes.
    */
   public function testPreprocessFieldReactParagraphRowArrayAttributes(): void {
     $paragraph = $this->createMock(ParagraphInterface::class);
@@ -82,8 +83,9 @@ class PreprocessHooksTest extends UnitTestCase {
   }
 
   /**
-   * When width resolves to 0, no flex class is added — the falsy check
-   * short-circuits the inner if.
+   * No flex class is added when the width resolves to 0.
+   *
+   * The falsy check short-circuits the inner if.
    */
   public function testPreprocessFieldReactParagraphRowZeroWidth(): void {
     $paragraph = $this->createMock(ParagraphInterface::class);
@@ -103,8 +105,9 @@ class PreprocessHooksTest extends UnitTestCase {
   }
 
   /**
-   * When the item attributes are an Attribute object, addClass() is used
-   * instead of manipulating an array key.
+   * The addClass() method is used when item attributes are an Attribute.
+   *
+   * This is instead of manipulating an array key.
    */
   public function testPreprocessFieldReactParagraphRowAttributeObject(): void {
     $paragraph = $this->createMock(ParagraphInterface::class);
@@ -126,8 +129,7 @@ class PreprocessHooksTest extends UnitTestCase {
   }
 
   /**
-   * Multiple items produce the correct item count in classes and data
-   * attribute.
+   * Multiple items give the correct item count in classes and data attribute.
    */
   public function testPreprocessFieldReactParagraphRowMultipleItems(): void {
     $paragraph_a = $this->createMock(ParagraphInterface::class);
@@ -148,8 +150,7 @@ class PreprocessHooksTest extends UnitTestCase {
   }
 
   /**
-   * The super footer config page block gets the special block class and
-   * library.
+   * The super footer config page block gets its block class and library.
    */
   public function testPreprocessBlockConfigPagesBlockSuperFooter(): void {
     $config_page = $this->createMock(ConfigPagesInterface::class);

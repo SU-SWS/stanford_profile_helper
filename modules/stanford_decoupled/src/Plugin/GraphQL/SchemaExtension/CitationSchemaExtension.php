@@ -44,10 +44,14 @@ class CitationSchemaExtension extends ResolverOnlySchemaExtensionPluginBase {
     $builder = new ResolverBuilder();
 
     $registry->addFieldResolver('CitationInterface', 'apa',
-      $builder->callback(fn(CitationInterface $citation) => $citation->getBibliography()),
+      $builder->produce('stanford_citation_bibliography')
+        ->map('citation', $builder->fromParent())
+        ->map('style', $builder->fromValue(CitationInterface::APA)),
     );
     $registry->addFieldResolver('CitationInterface', 'chicago',
-      $builder->callback(fn(CitationInterface $citation) => $citation->getBibliography(CitationInterface::CHICAGO)),
+      $builder->produce('stanford_citation_bibliography')
+        ->map('citation', $builder->fromParent())
+        ->map('style', $builder->fromValue(CitationInterface::CHICAGO)),
     );
   }
 

@@ -17,7 +17,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class SamlRoleMappingWidgetTest.
+ * Tests the SAML role mapping field widget.
  *
  * @package Drupal\Tests\stanford_profile_helper\Kernel\Plugin\Field\FieldWidget
  */

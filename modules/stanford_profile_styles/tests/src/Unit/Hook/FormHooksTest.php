@@ -26,7 +26,7 @@ class FormHooksTest extends UnitTestCase {
   protected FormHooks $hooks;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
@@ -50,8 +50,7 @@ class FormHooksTest extends UnitTestCase {
   }
 
   /**
-   * The smartdate timezone widget form alter attaches the field widget
-   * library.
+   * The smartdate timezone widget alter attaches the field widget library.
    */
   public function testFieldWidgetCompleteSmartdateTimezoneFormAlter(): void {
     $form_state = $this->createMock(FormStateInterface::class);

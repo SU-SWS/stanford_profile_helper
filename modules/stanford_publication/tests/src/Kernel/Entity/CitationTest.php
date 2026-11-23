@@ -9,7 +9,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class CitationTest
+ * Tests citation entity bibliography formatting.
  */
 #[RunTestsInSeparateProcesses]
 #[Group('stanford_publication')]
@@ -155,6 +155,9 @@ class CitationTest extends PublicationTestBase {
     $this->assertStringContainsString($expected, $biblio);
   }
 
+  /**
+   * A Journal source in Chicago format should be formatted exactly as expected.
+   */
   public function testJournalChicago() {
     /** @var \Drupal\stanford_publication\Entity\CitationInterface $citation */
     $citation = Citation::create([

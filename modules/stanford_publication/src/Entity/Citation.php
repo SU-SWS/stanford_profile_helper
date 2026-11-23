@@ -21,6 +21,22 @@ use Seboettg\CiteProc\CiteProc;
 /**
  * Defines the Citation entity.
  *
+ * Field values are read through the magic __call() getters below.
+ *
+ * @method string|null getDoi()
+ * @method string|null getUrl()
+ * @method string|null getEdition()
+ * @method string|null getIssue()
+ * @method string|null getGenre()
+ * @method string|null getPage()
+ * @method string|null getPublisher()
+ * @method string|null getPublisherPlace()
+ * @method string|null getSubtitle()
+ * @method string|null getVolume()
+ * @method string|null getYear()
+ * @method string|null getMonth()
+ * @method string|null getDay()
+ *
  * @ingroup stanford_publication
  */
 #[ContentEntityType(
@@ -34,16 +50,16 @@ use Seboettg\CiteProc\CiteProc;
     'langcode' => 'langcode',
     'published' => 'status',
   ],
-  handlers: [
-    'view_builder' => 'Drupal\stanford_publication\CitationViewBuilder',
-    'access' => 'Drupal\stanford_publication\CitationAccessControlHandler',
-    'form' => [
-      'default' => 'Drupal\Core\Entity\ContentEntityForm',
-      'delete' => 'Drupal\Core\Entity\ContentEntityDeleteForm',
-      'edit' => 'Drupal\Core\Entity\ContentEntityForm'
-    ],
-    'views_data' => 'Drupal\views\EntityViewsData',
-  ],
+   handlers: [
+     'view_builder' => 'Drupal\stanford_publication\CitationViewBuilder',
+     'access' => 'Drupal\stanford_publication\CitationAccessControlHandler',
+     'form' => [
+       'default' => 'Drupal\Core\Entity\ContentEntityForm',
+       'delete' => 'Drupal\Core\Entity\ContentEntityDeleteForm',
+       'edit' => 'Drupal\Core\Entity\ContentEntityForm',
+     ],
+     'views_data' => 'Drupal\views\EntityViewsData',
+   ],
   admin_permission: 'administer citation entities',
   permission_granularity: 'bundle',
   bundle_entity_type: 'citation_type',
@@ -289,8 +305,8 @@ class Citation extends ContentEntityBase implements CitationInterface {
    * @param mixed $args
    *   Args.
    *
-   * @return string
-   *   Entity field value as a string.
+   * @return string|null
+   *   Entity field value as a string, or NULL if the field doesn't exist.
    */
   public function __call($name, $args) {
     // Remove the `get` from the beginning.
@@ -310,6 +326,7 @@ class Citation extends ContentEntityBase implements CitationInterface {
     if ($field = $this->getFieldName($data_name)) {
       return $this->get($field)->getString();
     }
+    return NULL;
   }
 
   /**

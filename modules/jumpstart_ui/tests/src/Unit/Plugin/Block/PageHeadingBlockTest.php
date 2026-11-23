@@ -10,7 +10,7 @@ use Drupal\Core\Form\FormState;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class PageHeadingBlockTest
+ * Unit tests for the page heading block.
  */
 #[Group('jumpstart_ui')]
 class PageHeadingBlockTest extends UnitTestCase {
@@ -37,14 +37,14 @@ class PageHeadingBlockTest extends UnitTestCase {
   protected $cacheContextsManager;
 
   /**
-   * The mocked account
+   * The mocked account.
    *
    * @var \Drupal\Core\Session\AccountInterface||\Prophecy\Prophet
    */
   protected $account;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();

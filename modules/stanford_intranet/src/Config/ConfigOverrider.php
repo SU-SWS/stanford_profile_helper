@@ -9,7 +9,7 @@ use Drupal\Core\Config\StorageInterface;
 use Drupal\Core\State\StateInterface;
 
 /**
- * Class ConfigOverrider.
+ * Overrides configuration when the site is set up as an intranet.
  *
  * @package Drupal\stanford_intranet\Config
  */
@@ -43,7 +43,7 @@ class ConfigOverrider implements ConfigFactoryOverrideInterface {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function loadOverrides($names) {
     $overrides = [];
@@ -83,21 +83,21 @@ class ConfigOverrider implements ConfigFactoryOverrideInterface {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function createConfigObject($name, $collection = StorageInterface::DEFAULT_COLLECTION) {
     return NULL;
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function getCacheSuffix() {
     return 'stanford_intranet';
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function getCacheableMetadata($name) {
     return new CacheableMetadata();

@@ -66,8 +66,9 @@ class StanfordImageStylesHooksTest extends UnitTestCase {
   }
 
   /**
-   * A new stanford_circle style without a mask effect still gets re-set,
-   * unchanged, and the module path is never looked up.
+   * A new circle style without a mask effect is re-set unchanged.
+   *
+   * The module path is never looked up.
    */
   public function testPresaveNewCircleWithoutMaskEffect(): void {
     $effects = [
@@ -87,8 +88,7 @@ class StanfordImageStylesHooksTest extends UnitTestCase {
   }
 
   /**
-   * A new stanford_circle style with a mask effect gets the mask image path
-   * set from the module path.
+   * A new circle style with a mask effect gets the module's mask image path.
    */
   public function testPresaveNewCircleWithMaskEffect(): void {
     $effects = [

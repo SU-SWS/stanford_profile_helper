@@ -8,7 +8,7 @@ use Drupal\Core\Link;
 use Drupal\Core\Url;
 
 /**
- * Class CitationTypeForm.
+ * Add and edit form for citation type config entities.
  */
 class CitationTypeForm extends EntityForm {
 
@@ -37,49 +37,52 @@ class CitationTypeForm extends EntityForm {
       '#disabled' => !$citation_type->isNew(),
     ];
 
+    // CSL type identifiers are used as their own labels and not translated.
+    $csl_types = [
+      'article',
+      'article-magazine',
+      'article-newspaper',
+      'article-journal',
+      'bill',
+      'book',
+      'broadcast',
+      'chapter',
+      'dataset',
+      'entry',
+      'entry-dictionary',
+      'entry-encyclopedia',
+      'figure',
+      'graphic',
+      'interview',
+      'legislation',
+      'legal_case',
+      'manuscript',
+      'map',
+      'motion_picture',
+      'musical_score',
+      'other',
+      'pamphlet',
+      'paper-conference',
+      'patent',
+      'post',
+      'post-weblog',
+      'personal_communication',
+      'report',
+      'review',
+      'review-book',
+      'song',
+      'speech',
+      'thesis',
+      'treaty',
+      'webpage',
+    ];
+
     $link = Link::fromTextAndUrl('CSL documentation', Url::fromUri('https://docs.citationstyles.org/en/1.0.1/specification.html#appendix-iii-types'));
     $form['type'] = [
       '#type' => 'select',
       '#title' => $this->t('Citation Type'),
       '#description' => $this->t('Based on the CSL type declaration. See %link', ['%link' => $link->toString()]),
-      '#options' => [
-        'article' => 'article',
-        'article-magazine' => 'article-magazine',
-        'article-newspaper' => 'article-newspaper',
-        'article-journal' => 'article-journal',
-        'bill' => 'bill',
-        'book' => 'book',
-        'broadcast' => 'broadcast',
-        'chapter' => 'chapter',
-        'dataset' => 'dataset',
-        'entry' => 'entry',
-        'entry-dictionary' => 'entry-dictionary',
-        'entry-encyclopedia' => 'entry-encyclopedia',
-        'figure' => 'figure',
-        'graphic' => 'graphic',
-        'interview' => 'interview',
-        'legislation' => 'legislation',
-        'legal_case' => 'legal_case',
-        'manuscript' => 'manuscript',
-        'map' => 'map',
-        'motion_picture' => 'motion_picture',
-        'musical_score' => 'musical_score',
-        'other' => 'other',
-        'pamphlet' => 'pamphlet',
-        'paper-conference' => 'paper-conference',
-        'patent' => 'patent',
-        'post' => 'post',
-        'post-weblog' => 'post-weblog',
-        'personal_communication' => 'personal_communication',
-        'report' => 'report',
-        'review' => 'review',
-        'review-book' => 'review-book',
-        'song' => 'song',
-        'speech' => 'speech',
-        'thesis' => 'thesis',
-        'treaty' => 'treaty',
-        'webpage' => 'webpage',
-      ],
+      '#options' => array_combine($csl_types, $csl_types),
       '#default_value' => $citation_type->type(),
       '#required' => TRUE,
     ];
@@ -109,6 +112,7 @@ class CitationTypeForm extends EntityForm {
           ]));
     }
     $form_state->setRedirectUrl($citation_type->toUrl('collection'));
+    return $status;
   }
 
 }

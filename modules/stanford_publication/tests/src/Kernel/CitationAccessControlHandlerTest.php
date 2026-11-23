@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class CitationAccessControlHandlerTest.
+ * Tests access control for citation entities.
  */
 #[RunTestsInSeparateProcesses]
 #[Group('stanford_publication')]

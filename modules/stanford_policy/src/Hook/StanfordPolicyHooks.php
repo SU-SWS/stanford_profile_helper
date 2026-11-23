@@ -11,6 +11,8 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\node\NodeInterface;
 use Drupal\stanford_fields\Event\BookOutlineUpdatedEvent;
+use Drupal\stanford_policy\EventSubscriber\StanfordPolicySubscriber;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Stanford Policy event subscriber.
@@ -26,8 +28,16 @@ class StanfordPolicyHooks {
    *   Config page loader service.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   Entity type manager service.
+   * @param \Drupal\stanford_policy\EventSubscriber\StanfordPolicySubscriber $policySubscriber
+   *   Policy event subscriber service that resaves book nodes.
    */
-  public function __construct(protected BookManagerInterface $bookManager, protected ConfigPagesLoaderServiceInterface $configPagesLoader, protected EntityTypeManagerInterface $entityTypeManager) {}
+  public function __construct(
+    protected BookManagerInterface $bookManager,
+    protected ConfigPagesLoaderServiceInterface $configPagesLoader,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    #[Autowire(service: 'stanford_policy.event_subscriber')]
+    protected StanfordPolicySubscriber $policySubscriber,
+  ) {}
 
   /**
    * Alter the policy form widgets.
@@ -51,8 +61,7 @@ class StanfordPolicyHooks {
     if ($entity->bundle() == 'policy_settings') {
       $book_node_ids = array_keys($this->bookManager->getAllBooks());
       foreach ($book_node_ids as $node_id) {
-        \Drupal::service('stanford_policy.event_subscriber')
-          ->resaveBookNodes($node_id);
+        $this->policySubscriber->resaveBookNodes($node_id);
       }
     }
   }

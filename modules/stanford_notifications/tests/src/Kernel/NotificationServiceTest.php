@@ -10,19 +10,21 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class NotificationServiceTest.
+ * Kernel tests for the notification service.
  */
 #[RunTestsInSeparateProcesses]
 #[Group('stanford_notifications')]
 class NotificationServiceTest extends StanfordNotificationTestBase {
 
   /**
+   * Notification service being tested.
+   *
    * @var \Drupal\stanford_notifications\NotificationServiceInterface
    */
   protected $service;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();

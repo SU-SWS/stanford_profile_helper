@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\stanford_profile_helper\Hook;
 
-use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Render\Element;

@@ -29,7 +29,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class CapTest.
+ * Unit tests for the CAP API service.
  */
 #[Group('stanford_person_importer')]
 class CapTest extends UnitTestCase {
@@ -70,7 +70,7 @@ class CapTest extends UnitTestCase {
   protected $cacheData;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();

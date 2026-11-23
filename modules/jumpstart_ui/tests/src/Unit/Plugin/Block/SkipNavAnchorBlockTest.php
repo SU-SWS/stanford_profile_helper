@@ -9,7 +9,7 @@ use Drupal\jumpstart_ui\Plugin\Block\SkipNavAnchorBlock;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class SkipNavAnchorBlockTest
+ * Unit tests for the skip navigation anchor block.
  */
 #[Group('jumpstart_ui')]
 class SkipNavAnchorBlockTest extends UnitTestCase {
@@ -36,14 +36,14 @@ class SkipNavAnchorBlockTest extends UnitTestCase {
   protected $cacheContextsManager;
 
   /**
-   * The mocked account
+   * The mocked account.
    *
    * @var \Drupal\Core\Session\AccountInterface||\Prophecy\Prophet
    */
   protected $account;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
@@ -85,7 +85,7 @@ class SkipNavAnchorBlockTest extends UnitTestCase {
     $this->assertTrue($build['anchor']['#value'] == 'Main content start');
     $this->assertTrue($build['anchor']['#attributes']['id'] == 'main-content');
 
-    // Build #2
+    // Build #2.
     $build = $this->block->build();
     $this->assertTrue($build['anchor']['#attributes']['id'] == 'main-content--2');
   }

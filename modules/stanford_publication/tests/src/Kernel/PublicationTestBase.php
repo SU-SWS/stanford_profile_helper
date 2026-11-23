@@ -7,7 +7,7 @@ use Drupal\node\Entity\Node;
 use Drupal\node\Entity\NodeType;
 
 /**
- * Class PublicationTestBase.
+ * Base class for publication kernel tests with citation schema and a node.
  */
 abstract class PublicationTestBase extends KernelTestBase {
 

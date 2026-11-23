@@ -46,7 +46,7 @@ class AssetHooksTest extends UnitTestCase {
   protected AssetHooks $hooks;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
@@ -57,8 +57,7 @@ class AssetHooksTest extends UnitTestCase {
   }
 
   /**
-   * The intranet library is attached when the intranet is on and the route
-   * is not an admin route.
+   * The intranet library is attached on non-admin routes of an intranet.
    */
   public function testPageAttachmentsAddsLibrary() {
     $this->state->method('get')
@@ -103,8 +102,7 @@ class AssetHooksTest extends UnitTestCase {
   }
 
   /**
-   * The library info build walks the module's real dist/css directory and
-   * derives library definitions from the discovered CSS files.
+   * Library definitions are built from the module's dist/css files.
    */
   public function testLibraryInfoBuild() {
     $module_path = dirname(__DIR__, 4);

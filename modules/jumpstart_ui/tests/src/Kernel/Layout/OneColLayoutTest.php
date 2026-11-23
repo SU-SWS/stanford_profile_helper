@@ -12,7 +12,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class OneColLayoutTest.
+ * Kernel tests for rendering the Jumpstart UI one column layout template.
  */
 #[RunTestsInSeparateProcesses]
 #[Group('jumpstart_ui')]
@@ -24,7 +24,6 @@ class OneColLayoutTest extends KernelTestBase {
    * @var array
    */
   protected static $modules = ['system'];
-
 
   /**
    * {@inheritdoc}
@@ -43,9 +42,9 @@ class OneColLayoutTest extends KernelTestBase {
    */
   public function testOneColLayoutFullProps() {
     // Boot twig environment.
-    $twig = \Drupal::service('twig');
+    \Drupal::service('twig');
     $template = \Drupal::service('extension.list.module')
-        ->getPath('jumpstart_ui') . '/templates/layouts/one-column';
+      ->getPath('jumpstart_ui') . '/templates/layouts/one-column';
     $props = $this->getProps();
     $this->setRawContent((string) $this->container->get(TwigThemeEngine::class)->renderTemplate($template, $props));
     $this->assertText("Somebody once told me php unit is gonna rule me");
@@ -59,9 +58,9 @@ class OneColLayoutTest extends KernelTestBase {
    */
   public function testOneColLayoutColumnProps() {
     // Boot twig environment.
-    $twig = \Drupal::service('twig');
+    \Drupal::service('twig');
     $template = \Drupal::service('extension.list.module')
-        ->getPath('jumpstart_ui') . '/templates/layouts/one-column';
+      ->getPath('jumpstart_ui') . '/templates/layouts/one-column';
     $props = $this->getProps();
     $props['settings']['columns'] = 'flex-6-of-12';
     $this->setRawContent((string) $this->container->get(TwigThemeEngine::class)->renderTemplate($template, $props));
@@ -72,13 +71,13 @@ class OneColLayoutTest extends KernelTestBase {
   }
 
   /**
-   * Layout should render when values are passed..
+   * Layout should render when values are passed.
    */
   public function testOneColLayoutNoProps() {
     // Boot twig environment.
-    $twig = \Drupal::service('twig');
+    \Drupal::service('twig');
     $template = \Drupal::service('extension.list.module')
-        ->getPath('jumpstart_ui') . '/templates/layouts/one-column';
+      ->getPath('jumpstart_ui') . '/templates/layouts/one-column';
     $this->setRawContent((string) $this->container->get(TwigThemeEngine::class)->renderTemplate($template, []));
     $this->assertNotEmpty($this->getRawContent());
     $this->assertStringNotContainsString("boy-is-this-a-neat-class", $this->getRawContent());
@@ -87,13 +86,13 @@ class OneColLayoutTest extends KernelTestBase {
   }
 
   /**
-   * Layout should render when values are passed..
+   * Layout should render when values are passed.
    */
   public function testOneColLayoutBadProps() {
     // Boot twig environment.
-    $twig = \Drupal::service('twig');
+    \Drupal::service('twig');
     $template = \Drupal::service('extension.list.module')
-        ->getPath('jumpstart_ui') . '/templates/layouts/one-column';
+      ->getPath('jumpstart_ui') . '/templates/layouts/one-column';
     $props = $this->getProps();
     unset($props['region_attributes']);
     $this->setRawContent((string) $this->container->get(TwigThemeEngine::class)->renderTemplate($template, $props));
@@ -104,7 +103,10 @@ class OneColLayoutTest extends KernelTestBase {
   }
 
   /**
+   * Get the template variables used to render the layout.
+   *
    * @return array
+   *   Layout template variables.
    */
   protected function getProps() {
     return [

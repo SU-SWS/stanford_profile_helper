@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\stanford_publication\Unit\Hook;
 
+use Drupal\taxonomy\VocabularyInterface;
 use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Form\FormStateInterface;
@@ -52,7 +53,7 @@ class FormHooksTest extends UnitTestCase {
    *   Mocked form state.
    */
   protected function mockFormStateForVocabulary(string $vocabulary_id) {
-    $vocabulary = $this->createMock(\Drupal\taxonomy\VocabularyInterface::class);
+    $vocabulary = $this->createMock(VocabularyInterface::class);
     $vocabulary->method('id')->willReturn($vocabulary_id);
 
     $form_state = $this->createMock(FormStateInterface::class);
@@ -95,8 +96,7 @@ class FormHooksTest extends UnitTestCase {
   }
 
   /**
-   * The submit handler updates the state and invalidates the cache tag when
-   * the value changes.
+   * Submit handler updates state and invalidates the cache tag on change.
    */
   public function testTermOverviewSubmitChangesValue() {
     $container = new ContainerBuilder();

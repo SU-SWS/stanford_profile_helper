@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\stanford_wordpress_migrate\Unit\Form;
 
+use Drupal\Core\Config\Entity\ConfigEntityInterface;
 use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Entity\EntityAccessControlHandlerInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Session\AccountInterface;
 use Drupal\stanford_wordpress_migrate\Form\ImporterStep2EntitySelectForm;
 use Drupal\stanford_wordpress_migrate\WordPressMigrationInterface;
 use Drupal\Tests\UnitTestCase;
@@ -54,9 +54,15 @@ class ImporterStep2EntitySelectFormTest extends UnitTestCase {
     $this->entityTypeManager = $this->createMock(EntityTypeManagerInterface::class);
     $this->httpClient = $this->createMock(ClientInterface::class);
 
-    $this->form = new ImporterStep2EntitySelectForm($this->entityTypeManager);
+    $container = $this->createMock(ContainerInterface::class);
+    $container->method('get')
+      ->willReturnMap([
+        ['http_client', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $this->httpClient],
+        ['entity_type.manager', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $this->entityTypeManager],
+      ]);
+    $this->form = ImporterStep2EntitySelectForm::create($container);
 
-    // Set up string translation
+    // Set up string translation.
     $string_translation = $this->getStringTranslationStub();
     $this->form->setStringTranslation($string_translation);
   }
@@ -73,10 +79,12 @@ class ImporterStep2EntitySelectFormTest extends UnitTestCase {
    */
   public function testCreate(): void {
     $container = $this->createMock(ContainerInterface::class);
-    $container->expects($this->once())
+    $container->expects($this->exactly(2))
       ->method('get')
-      ->with('entity_type.manager')
-      ->willReturn($this->entityTypeManager);
+      ->willReturnMap([
+        ['http_client', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $this->httpClient],
+        ['entity_type.manager', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $this->entityTypeManager],
+      ]);
 
     $form = ImporterStep2EntitySelectForm::create($container);
     $this->assertInstanceOf(ImporterStep2EntitySelectForm::class, $form);
@@ -123,7 +131,7 @@ class ImporterStep2EntitySelectFormTest extends UnitTestCase {
       ->method('set')
       ->with('num_mappings', 1);
 
-    // Mock entity type definition
+    // Mock entity type definition.
     $entity_type = $this->createMock(EntityTypeInterface::class);
     $entity_type->expects($this->once())
       ->method('getBundleEntityType')
@@ -134,8 +142,8 @@ class ImporterStep2EntitySelectFormTest extends UnitTestCase {
       ->with('media')
       ->willReturn($entity_type);
 
-    // Mock storage and bundles
-    $bundle1 = $this->createMock(\Drupal\Core\Config\Entity\ConfigEntityInterface::class);
+    // Mock storage and bundles.
+    $bundle1 = $this->createMock(ConfigEntityInterface::class);
     $bundle1->expects($this->any())
       ->method('id')
       ->willReturn('image');
@@ -143,7 +151,7 @@ class ImporterStep2EntitySelectFormTest extends UnitTestCase {
       ->method('label')
       ->willReturn('Image');
 
-    $bundle2 = $this->createMock(\Drupal\Core\Config\Entity\ConfigEntityInterface::class);
+    $bundle2 = $this->createMock(ConfigEntityInterface::class);
     $bundle2->expects($this->any())
       ->method('id')
       ->willReturn('video');
@@ -156,7 +164,7 @@ class ImporterStep2EntitySelectFormTest extends UnitTestCase {
       ->method('loadMultiple')
       ->willReturn(['image' => $bundle1, 'video' => $bundle2]);
 
-    // Mock access control
+    // Mock access control.
     $access_result = $this->createMock(AccessResultInterface::class);
     $access_result->expects($this->any())
       ->method('isAllowed')
@@ -230,7 +238,7 @@ class ImporterStep2EntitySelectFormTest extends UnitTestCase {
       ->method('set')
       ->with('num_mappings', 2);
 
-    // Mock entity type definition
+    // Mock entity type definition.
     $entity_type = $this->createMock(EntityTypeInterface::class);
     $entity_type->expects($this->once())
       ->method('getBundleEntityType')
@@ -241,8 +249,8 @@ class ImporterStep2EntitySelectFormTest extends UnitTestCase {
       ->with('media')
       ->willReturn($entity_type);
 
-    // Mock storage and bundles
-    $bundle = $this->createMock(\Drupal\Core\Config\Entity\ConfigEntityInterface::class);
+    // Mock storage and bundles.
+    $bundle = $this->createMock(ConfigEntityInterface::class);
     $bundle->expects($this->any())
       ->method('id')
       ->willReturn('image');
@@ -288,7 +296,7 @@ class ImporterStep2EntitySelectFormTest extends UnitTestCase {
     $migration = $this->createMock(WordPressMigrationInterface::class);
 
     // First call returns existing config with old mappings
-    // Second call returns config after filtering
+    // Second call returns config after filtering.
     $migration->expects($this->exactly(2))
       ->method('getConfigurationValue')
       ->willReturnCallback(function ($key, $default) {
@@ -303,7 +311,7 @@ class ImporterStep2EntitySelectFormTest extends UnitTestCase {
             ],
           ];
         }
-        // For the individual field mapping calls
+        // For the individual field mapping calls.
         return [];
       });
 
@@ -421,7 +429,7 @@ class ImporterStep2EntitySelectFormTest extends UnitTestCase {
    * Test getAllowedBundles filters by user access.
    */
   public function testGetAllowedBundlesFiltersAccess(): void {
-    // Mock entity type definition
+    // Mock entity type definition.
     $entity_type = $this->createMock(EntityTypeInterface::class);
     $entity_type->expects($this->once())
       ->method('getBundleEntityType')
@@ -432,8 +440,8 @@ class ImporterStep2EntitySelectFormTest extends UnitTestCase {
       ->with('node')
       ->willReturn($entity_type);
 
-    // Mock bundles
-    $bundle1 = $this->createMock(\Drupal\Core\Config\Entity\ConfigEntityInterface::class);
+    // Mock bundles.
+    $bundle1 = $this->createMock(ConfigEntityInterface::class);
     $bundle1->expects($this->any())
       ->method('id')
       ->willReturn('article');
@@ -441,7 +449,7 @@ class ImporterStep2EntitySelectFormTest extends UnitTestCase {
       ->method('label')
       ->willReturn('Article');
 
-    $bundle2 = $this->createMock(\Drupal\Core\Config\Entity\ConfigEntityInterface::class);
+    $bundle2 = $this->createMock(ConfigEntityInterface::class);
     $bundle2->expects($this->any())
       ->method('id')
       ->willReturn('page');
@@ -454,7 +462,7 @@ class ImporterStep2EntitySelectFormTest extends UnitTestCase {
       ->method('loadMultiple')
       ->willReturn(['article' => $bundle1, 'page' => $bundle2]);
 
-    // Mock access handler - allow article, deny page
+    // Mock access handler - allow article, deny page.
     $access_handler = $this->createMock(EntityAccessControlHandlerInterface::class);
     $access_handler->expects($this->exactly(2))
       ->method('createAccess')

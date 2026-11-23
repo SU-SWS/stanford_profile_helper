@@ -55,31 +55,31 @@ class WordPressMigrationInterfaceTest extends UnitTestCase {
   public function testMethodSignatures(): void {
     $reflection = new \ReflectionClass(WordPressMigrationInterface::class);
 
-    // Test enable method signature
+    // Test enable method signature.
     $enableMethod = $reflection->getMethod('enable');
     $this->assertTrue($enableMethod->hasReturnType());
 
-    // Test disable method signature
+    // Test disable method signature.
     $disableMethod = $reflection->getMethod('disable');
     $this->assertTrue($disableMethod->hasReturnType());
 
-    // Test getBaseUrl method signature
+    // Test getBaseUrl method signature.
     $getBaseUrlMethod = $reflection->getMethod('getBaseUrl');
     $returnType = $getBaseUrlMethod->getReturnType();
     $this->assertNotNull($returnType);
     $this->assertTrue($returnType->allowsNull());
 
-    // Test getConfiguration method signature
+    // Test getConfiguration method signature.
     $getConfigurationMethod = $reflection->getMethod('getConfiguration');
     $this->assertEquals('array', (string) $getConfigurationMethod->getReturnType());
 
-    // Test setConfigurationValue method signature
+    // Test setConfigurationValue method signature.
     $setConfigurationValueMethod = $reflection->getMethod('setConfigurationValue');
     $this->assertEquals('void', (string) $setConfigurationValueMethod->getReturnType());
     $parameters = $setConfigurationValueMethod->getParameters();
     $this->assertCount(2, $parameters);
 
-    // Test getConfigurationValue method signature
+    // Test getConfigurationValue method signature.
     $getConfigurationValueMethod = $reflection->getMethod('getConfigurationValue');
     $parameters = $getConfigurationValueMethod->getParameters();
     $this->assertCount(2, $parameters);

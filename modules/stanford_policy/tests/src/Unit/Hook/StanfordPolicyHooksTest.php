@@ -48,6 +48,13 @@ class StanfordPolicyHooksTest extends UnitTestCase {
   protected EntityTypeManagerInterface $entityTypeManager;
 
   /**
+   * Mocked policy event subscriber service.
+   *
+   * @var \Drupal\stanford_policy\EventSubscriber\StanfordPolicySubscriber&\PHPUnit\Framework\MockObject\MockObject
+   */
+  protected StanfordPolicySubscriber $policySubscriber;
+
+  /**
    * The hooks class under test.
    *
    * @var \Drupal\stanford_policy\Hook\StanfordPolicyHooks
@@ -62,7 +69,8 @@ class StanfordPolicyHooksTest extends UnitTestCase {
     $this->bookManager = $this->createMock(BookManagerInterface::class);
     $this->configPagesLoader = $this->createMock(ConfigPagesLoaderServiceInterface::class);
     $this->entityTypeManager = $this->createMock(EntityTypeManagerInterface::class);
-    $this->hooks = new StanfordPolicyHooks($this->bookManager, $this->configPagesLoader, $this->entityTypeManager);
+    $this->policySubscriber = $this->createMock(StanfordPolicySubscriber::class);
+    $this->hooks = new StanfordPolicyHooks($this->bookManager, $this->configPagesLoader, $this->entityTypeManager, $this->policySubscriber);
   }
 
   /**
@@ -138,17 +146,12 @@ class StanfordPolicyHooksTest extends UnitTestCase {
     $entity->method('bundle')->willReturn('policy_settings');
     $this->bookManager->method('getAllBooks')->willReturn([1 => [], 5 => []]);
 
-    $subscriber = $this->createMock(StanfordPolicySubscriber::class);
     $resaved = [];
-    $subscriber->expects($this->exactly(2))
+    $this->policySubscriber->expects($this->exactly(2))
       ->method('resaveBookNodes')
       ->willReturnCallback(function ($node_id) use (&$resaved) {
         $resaved[] = $node_id;
       });
-
-    $container = new ContainerBuilder();
-    $container->set('stanford_policy.event_subscriber', $subscriber);
-    \Drupal::setContainer($container);
 
     $this->hooks->onEntityCrud($entity);
 
@@ -168,8 +171,9 @@ class StanfordPolicyHooksTest extends UnitTestCase {
   }
 
   /**
-   * A stanford_policy node not yet placed in the book outline gets its
-   * title synced from the su_policy_title field.
+   * A policy node not yet in the book outline gets its title synced.
+   *
+   * The title comes from the su_policy_title field.
    */
   public function testOnEntityPreSaveEmptyBookPid(): void {
     $entity = $this->createMock(BookNodeDouble::class);
@@ -205,8 +209,7 @@ class StanfordPolicyHooksTest extends UnitTestCase {
   }
 
   /**
-   * A stanford_policy node already placed in the book outline (positive
-   * pid) is left untouched.
+   * A policy node already in the book outline (positive pid) is untouched.
    */
   public function testOnEntityPreSaveBookPidSet(): void {
     $entity = $this->createMock(BookNodeDouble::class);
@@ -219,8 +222,7 @@ class StanfordPolicyHooksTest extends UnitTestCase {
   }
 
   /**
-   * The book admin edit form gets a submit handler when editing a
-   * stanford_policy book node.
+   * The book admin edit form gets a submit handler for policy book nodes.
    */
   public function testOnFormAlterBookAdminEditMatchingBundle(): void {
     $book_node = $this->createMock(NodeInterface::class);
@@ -255,8 +257,9 @@ class StanfordPolicyHooksTest extends UnitTestCase {
   }
 
   /**
-   * The stanford_policy node add form gets the title class attached and
-   * never inspects the form build info.
+   * The policy node add form gets the title class attached.
+   *
+   * The form build info is never inspected.
    */
   public function testOnFormAlterPolicyNodeForm(): void {
     $form_state = $this->createMock(FormStateInterface::class);

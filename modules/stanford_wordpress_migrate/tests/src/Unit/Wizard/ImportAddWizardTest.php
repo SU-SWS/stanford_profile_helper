@@ -27,7 +27,8 @@ class ImportAddWizardTest extends UnitTestCase {
   protected function setUp(): void {
     parent::setUp();
 
-    // Mock the wizard since it extends EntityFormWizardBase which requires services
+    // Mock the wizard since it extends EntityFormWizardBase which requires
+    // services.
     $this->wizard = $this->getMockBuilder(ImportAddWizard::class)
       ->disableOriginalConstructor()
       ->onlyMethods(['t'])
@@ -35,7 +36,7 @@ class ImportAddWizardTest extends UnitTestCase {
 
     $this->wizard->expects($this->any())
       ->method('t')
-      ->willReturnCallback(function($string) {
+      ->willReturnCallback(function ($string) {
         return $string;
       });
   }
@@ -71,7 +72,7 @@ class ImportAddWizardTest extends UnitTestCase {
     $reflection = new \ReflectionClass(ImportAddWizard::class);
     $fileContents = file_get_contents($reflection->getFileName());
 
-    // Check that the wizard references the expected form classes
+    // Check that the wizard references the expected form classes.
     $this->assertStringContainsString('ImporterStep1SourceSelectForm', $fileContents);
     $this->assertStringContainsString('ImporterStep2EntitySelectForm', $fileContents);
     $this->assertStringContainsString('ImporterStep5FieldMappingForm', $fileContents);
