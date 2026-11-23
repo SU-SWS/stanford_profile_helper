@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\stanford_publication\Hook;
 
-use Drupal\Core\Cache\Cache;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;

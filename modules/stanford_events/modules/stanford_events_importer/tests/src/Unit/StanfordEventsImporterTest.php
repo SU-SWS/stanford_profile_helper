@@ -8,31 +8,39 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Psr7\Stream;
 use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class StanfordEventsImporterTest
+ * Unit tests for the Stanford events importer service.
  */
 #[Group('stanford_events_importer')]
 class StanfordEventsImporterTest extends UnitTestCase {
 
   /**
+   * Events importer service being tested.
+   *
    * @var \Drupal\stanford_events_importer\StanfordEventsImporter
    */
   public $plugin;
 
   /**
+   * Mocked http client.
+   *
    * @var \GuzzleHttp\ClientInterface
    */
   public $client;
 
   /**
+   * XML fetched from the mocked client.
+   *
    * @var string
    */
   public $xml;
 
+  /**
+   * {@inheritdoc}
+   */
   protected function setUp(): void {
     parent::setUp();
     $this->client = $this->createMock(ClientInterface::class);
@@ -83,18 +91,18 @@ class StanfordEventsImporterTest extends UnitTestCase {
   /**
    * Test Fetch.
    */
-  public function testFetchXML() {
-    $this->xml = $this->plugin->fetchXML();
+  public function testFetchXml() {
+    $this->xml = $this->plugin->fetchXml();
     $this->assertStringContainsString("Arts", $this->xml);
 
-    $orgs = $this->plugin->fetchXML('organization-list');
+    $orgs = $this->plugin->fetchXml('organization-list');
     $this->assertStringContainsString("AASA", $orgs);
   }
 
   /**
    * Test Parse.
    */
-  public function testParseXML() {
+  public function testParseXml() {
 
     $xml_string = <<<EOD
 <CategoryList>
@@ -145,36 +153,32 @@ EOD;
       'guids' => '/CategoryList/Category/guid',
       'label' => '/CategoryList/Category/name',
     ];
-    $result = $this->plugin->parseXML($xml_string, $args);
+    $result = $this->plugin->parseXml($xml_string, $args);
     $this->assertIsArray($result);
     $this->assertEquals("Class", $result[19]);
   }
 
   /**
    * Make sure exception passes back false.
-   *
-   * @return [type] [description]
    */
-  public function testFetchXMLException() {
+  public function testFetchXmlException() {
     $client = $this->createMock(ClientInterface::class);
     $client->method('request')
       ->willThrowException(new RequestException('Failure', new Request('GET', 'test')));
     $plugin = new StanfordEventsImporter($client);
-    $val = $plugin->fetchXML();
+    $val = $plugin->fetchXml();
     $this->assertFalse($val);
   }
 
   /**
    * Make sure exception passes back false.
-   *
-   * @return [type] [description]
    */
-  public function testParseXMLException() {
+  public function testParseXmlException() {
     $args = [
       'guids' => '/CategoryList/Category/guid',
       'label' => '/CategoryList/Category/name',
     ];
-    $val = $this->plugin->parseXML('<root><item>stuff</item></root>', $args);
+    $val = $this->plugin->parseXml('<root><item>stuff</item></root>', $args);
     $this->assertFalse($val);
   }
 
@@ -186,7 +190,7 @@ EOD;
       'guids' => '/CategoryList/Category/guid',
       'label' => '/CategoryList/Category/name',
     ];
-    $this->assertFalse($this->plugin->parseXML('<CategoryList><Category>', $args));
+    $this->assertFalse($this->plugin->parseXml('<CategoryList><Category>', $args));
   }
 
 }

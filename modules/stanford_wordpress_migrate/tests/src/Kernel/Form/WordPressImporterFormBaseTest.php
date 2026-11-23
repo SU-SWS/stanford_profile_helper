@@ -50,13 +50,7 @@ class WordPressImporterFormBaseTest extends KernelTestBase {
     $this->installEntitySchema('wordpress_migration');
 
     // Create a concrete implementation for testing the abstract class.
-    $this->form = new class($this->container->get('http_client')) extends WordPressImporterFormBase {
-
-      public function buildForm(array $form, \Drupal\Core\Form\FormStateInterface $form_state) {
-        return parent::buildForm($form, $form_state);
-      }
-
-    };
+    $this->form = new class($this->container->get('http_client')) extends WordPressImporterFormBase {};
   }
 
   /**
@@ -106,13 +100,7 @@ class WordPressImporterFormBaseTest extends KernelTestBase {
     $handlerStack = HandlerStack::create($mock);
     $mockClient = new Client(['handler' => $handlerStack]);
 
-    $form = new class($mockClient) extends WordPressImporterFormBase {
-
-      public function buildForm(array $form, \Drupal\Core\Form\FormStateInterface $form_state) {
-        return parent::buildForm($form, $form_state);
-      }
-
-    };
+    $form = new class($mockClient) extends WordPressImporterFormBase {};
 
     $form_state = new FormState();
     $form_state->setTemporaryValue(['wizard'], ['wordpress_migration' => $migration]);
@@ -143,10 +131,9 @@ class WordPressImporterFormBaseTest extends KernelTestBase {
 
     $form = new class($mockClient) extends WordPressImporterFormBase {
 
-      public function buildForm(array $form, \Drupal\Core\Form\FormStateInterface $form_state) {
-        return parent::buildForm($form, $form_state);
-      }
-
+      /**
+       * Expose the protected getApiEndpoints() method.
+       */
       public function testGetApiEndpoints($baseUrl) {
         return $this->getApiEndpoints($baseUrl);
       }
@@ -171,10 +158,9 @@ class WordPressImporterFormBaseTest extends KernelTestBase {
 
     $form = new class($mockClient) extends WordPressImporterFormBase {
 
-      public function buildForm(array $form, \Drupal\Core\Form\FormStateInterface $form_state) {
-        return parent::buildForm($form, $form_state);
-      }
-
+      /**
+       * Expose the protected getApiEndpoints() method.
+       */
       public function testGetApiEndpoints($baseUrl) {
         return $this->getApiEndpoints($baseUrl);
       }

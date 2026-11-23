@@ -93,8 +93,8 @@ class EntityReferenceFieldTest extends UnitTestCase {
         ['handler_settings', ['target_bundles' => []]],
       ]);
 
-    // For media references, getPossibleTermMigrations is called and returns empty
-    // which results in the fallback ['wordpress_media:media']
+    // For media references, getPossibleTermMigrations is called and returns
+    // empty which results in the fallback ['wordpress_media:media'].
     $this->migration->expects($this->once())
       ->method('getConfigurationValue')
       ->with('taxonomy_term', [])

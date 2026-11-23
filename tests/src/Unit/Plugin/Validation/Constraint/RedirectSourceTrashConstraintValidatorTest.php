@@ -18,7 +18,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class RedirectSourceTrashConstraintValidatorTest.
+ * Tests the redirect source trash constraint validator.
  */
 #[Group('stanford_profile_helper')]
 class RedirectSourceTrashConstraintValidatorTest extends UnitTestCase {
@@ -71,9 +71,12 @@ class RedirectSourceTrashConstraintValidatorTest extends UnitTestCase {
     $this->assertTrue($validator->hasErrors());
 
     $this->expectException(\InvalidArgumentException::class);
-    $validator->validate(null, new RedirectSourceTrashConstraint());
+    $validator->validate(NULL, new RedirectSourceTrashConstraint());
   }
 
+  /**
+   * Build a context object for the validator.
+   */
   protected function getContext() {
     $validator = $this->createMock(ValidatorInterface::class);
     $translator = $this->createMock(TranslatorInterface::class);

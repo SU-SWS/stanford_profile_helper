@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 class SuChooseComponentController extends ChooseComponentController {
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function list(Request $request, LayoutParagraphsLayout $layout_paragraphs_layout) {
     $response = parent::list($request, $layout_paragraphs_layout);

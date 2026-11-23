@@ -3,4 +3,3 @@ type: module
 description: 'Provides a condition to show or hide a block depending on the response code.'
 core_version_requirement: ^11.2 || ^12
 package: Custom
-

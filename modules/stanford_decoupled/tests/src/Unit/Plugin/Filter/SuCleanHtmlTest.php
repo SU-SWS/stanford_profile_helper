@@ -25,6 +25,9 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('stanford_decoupled')]
 class SuCleanHtmlTest extends UnitTestCase {
 
+  /**
+   * Data provider of markup to filter and the expected filtered markup.
+   */
   public static function filterDataProvider() {
     return [
       'comments and block white space' => [

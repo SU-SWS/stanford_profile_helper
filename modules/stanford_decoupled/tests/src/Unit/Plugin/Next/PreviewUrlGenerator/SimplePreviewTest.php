@@ -20,6 +20,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use PHPUnit\Framework\Attributes\Group;
 
+/**
+ * Tests the simple preview url generator plugin.
+ */
 #[Group('stanford_decoupled')]
 class SimplePreviewTest extends UnitTestCase {
 
@@ -47,11 +50,17 @@ class SimplePreviewTest extends UnitTestCase {
     \Drupal::setContainer($this->container);
   }
 
+  /**
+   * Default configuration has an empty Vercel bypass secret.
+   */
   public function testDefaultConfiguration() {
     $plugin = SimplePreview::create($this->container, [], '', []);
     $this->assertEquals(['vercel_bypass' => ''], $plugin->defaultConfiguration());
   }
 
+  /**
+   * Configuration form has an empty Vercel bypass textfield.
+   */
   public function testBuildConfigurationForm() {
     $plugin = SimplePreview::create($this->container, [], '', []);
     $form_state = $this->createMock(FormStateInterface::class);
@@ -63,6 +72,9 @@ class SimplePreviewTest extends UnitTestCase {
     $this->assertEquals('', $form['vercel_bypass']['#default_value']);
   }
 
+  /**
+   * Configuration form defaults to the saved Vercel bypass secret.
+   */
   public function testBuildConfigurationFormWithExistingValue() {
     $plugin = SimplePreview::create($this->container, ['vercel_bypass' => 'my-token'], '', []);
     $form_state = $this->createMock(FormStateInterface::class);
@@ -72,6 +84,9 @@ class SimplePreviewTest extends UnitTestCase {
     $this->assertEquals('my-token', $form['vercel_bypass']['#default_value']);
   }
 
+  /**
+   * Submitting the form saves the Vercel bypass secret.
+   */
   public function testSubmitConfigurationForm() {
     $plugin = SimplePreview::create($this->container, [], '', []);
     $form_state = $this->createMock(FormStateInterface::class);
@@ -86,6 +101,9 @@ class SimplePreviewTest extends UnitTestCase {
     $this->assertEquals('new-bypass-token', $config['vercel_bypass']);
   }
 
+  /**
+   * Preview url contains the entity slug and preview secret.
+   */
   public function testGenerator() {
     $plugin = SimplePreview::create($this->container, [], '', []);
 
@@ -101,6 +119,9 @@ class SimplePreviewTest extends UnitTestCase {
     $this->assertEquals('http://example.test/foo/bar?slug=/bar/foo&secret=baz', $url);
   }
 
+  /**
+   * Preview url contains the Vercel bypass query parameters when set.
+   */
   public function testGeneratorWithVercelBypass() {
     $plugin = SimplePreview::create($this->container, ['vercel_bypass' => 'bypass-secret'], '', []);
 
@@ -119,6 +140,9 @@ class SimplePreviewTest extends UnitTestCase {
     );
   }
 
+  /**
+   * An invalid site preview url generates no preview url.
+   */
   public function testGeneratorReturnsNullOnInvalidPreviewUrl() {
     $plugin = SimplePreview::create($this->container, [], '', []);
 
@@ -135,6 +159,9 @@ class SimplePreviewTest extends UnitTestCase {
     $this->assertNull($result);
   }
 
+  /**
+   * Validating a request does nothing.
+   */
   public function testValidate() {
     $plugin = SimplePreview::create($this->container, [], '', []);
     // validate() is a no-op; ensure it can be called without error.
@@ -142,6 +169,9 @@ class SimplePreviewTest extends UnitTestCase {
     $this->assertNull($result);
   }
 
+  /**
+   * Get an unrouted url assembler for the mock container.
+   */
   protected function getUrlAssembler() {
     $request_stack = new RequestStack();
     $request_stack->push(new Request());

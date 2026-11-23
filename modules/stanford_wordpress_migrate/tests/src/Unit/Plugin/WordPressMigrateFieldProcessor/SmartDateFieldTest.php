@@ -65,14 +65,14 @@ class SmartDateFieldTest extends UnitTestCase {
     $this->assertIsArray($process);
     $this->assertCount(3, $process);
 
-    // Check skip_on_empty from parent
+    // Check skip_on_empty from parent.
     $this->assertEquals('skip_on_empty', $process[0]['plugin']);
 
-    // Check strtotime callback
+    // Check strtotime callback.
     $this->assertEquals('callback', $process[1]['plugin']);
     $this->assertEquals('strtotime', $process[1]['callable']);
 
-    // Check skip_on_empty after strtotime
+    // Check skip_on_empty after strtotime.
     $this->assertEquals('skip_on_empty', $process[2]['plugin']);
     $this->assertEquals('process', $process[2]['method']);
   }
@@ -88,14 +88,14 @@ class SmartDateFieldTest extends UnitTestCase {
     $this->assertIsArray($process);
     $this->assertCount(3, $process);
 
-    // Check skip_on_empty from parent
+    // Check skip_on_empty from parent.
     $this->assertEquals('skip_on_empty', $process[0]['plugin']);
 
-    // Check strtotime callback
+    // Check strtotime callback.
     $this->assertEquals('callback', $process[1]['plugin']);
     $this->assertEquals('strtotime', $process[1]['callable']);
 
-    // Check skip_on_empty after strtotime
+    // Check skip_on_empty after strtotime.
     $this->assertEquals('skip_on_empty', $process[2]['plugin']);
     $this->assertEquals('process', $process[2]['method']);
   }
@@ -140,11 +140,11 @@ class SmartDateFieldTest extends UnitTestCase {
   public function testInheritedMethods(): void {
     $field = $this->createMock(FieldDefinitionInterface::class);
 
-    // Test getConstants
+    // Test getConstants.
     $constants = $this->plugin->getConstants();
     $this->assertEquals([], $constants);
 
-    // Test getExtraProcess
+    // Test getExtraProcess.
     $extraProcess = $this->plugin->getExtraProcess($field);
     $this->assertEquals([], $extraProcess);
   }

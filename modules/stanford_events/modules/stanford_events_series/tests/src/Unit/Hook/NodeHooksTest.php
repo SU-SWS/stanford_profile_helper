@@ -32,7 +32,7 @@ class NodeHooksTest extends UnitTestCase {
   protected $cacheTagsInvalidator;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();

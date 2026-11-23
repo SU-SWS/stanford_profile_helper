@@ -60,8 +60,7 @@ interface WordPressMigrateFieldProcessorInterface {
   public function getExtraProcess(FieldDefinitionInterface $field): array;
 
   /**
-   * Get the plugin name that is used when multiple sources are mapped to the
-   * same field.
+   * Get the plugin name used when multiple sources map to the same field.
    *
    * @param \Drupal\Core\Field\FieldDefinitionInterface $field
    *   Field storage entity.
@@ -78,6 +77,7 @@ interface WordPressMigrateFieldProcessorInterface {
    *   Content entity object.
    *
    * @return self
+   *   The called object.
    */
   public function setWordPressMigration(WordPressMigrationInterface $migration): self;
 

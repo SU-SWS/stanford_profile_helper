@@ -24,7 +24,7 @@ class StatButtonHooksTest extends UnitTestCase {
   protected StatButtonHooks $hooks;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
@@ -86,8 +86,9 @@ class StatButtonHooksTest extends UnitTestCase {
   }
 
   /**
-   * When the field is empty (get() returns NULL), the nullsafe operator
-   * should short circuit and nothing should be altered.
+   * Nothing is altered when the link style field is empty.
+   *
+   * When get() returns NULL, the nullsafe operator should short circuit.
    */
   public function testPreprocessFieldSuStatButtonWithNoLinkStyleField(): void {
     $entity = $this->createMock(FieldableEntityInterface::class);
@@ -111,8 +112,7 @@ class StatButtonHooksTest extends UnitTestCase {
   }
 
   /**
-   * When the field name is one of the color fields, the '#states' key
-   * should be added to the form.
+   * The '#states' key is added to the form for the color fields.
    */
   public function testFieldWidgetCompleteColorFieldWidgetBoxFormAlterWithIconColor(): void {
     $field_definition = $this->createMock(FieldDefinitionInterface::class);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\stanford_decoupled\Unit\Hook;
 
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\graphql\GraphQL\Execution\FieldContext;
@@ -27,8 +28,9 @@ class GraphqlComposeHooksTest extends UnitTestCase {
   protected GraphqlComposeHooks $hooks;
 
   /**
-   * The graphql field context, unused by the class but required by the
-   * method signature.
+   * The graphql field context.
+   *
+   * Unused by the class but required by the method signature.
    *
    * @var \Drupal\graphql\GraphQL\Execution\FieldContext&\PHPUnit\Framework\MockObject\MockObject
    */
@@ -58,8 +60,9 @@ class GraphqlComposeHooksTest extends UnitTestCase {
   }
 
   /**
-   * Layout selection results are passed through as entities so GraphQL
-   * Compose can resolve them with its entity data producers.
+   * Layout selection results are passed through as entities.
+   *
+   * This lets GraphQL Compose resolve them with its entity data producers.
    */
   public function testFieldResultsAlterLayoutSelection(): void {
     $entity = $this->createMock(EntityInterface::class);
@@ -72,8 +75,7 @@ class GraphqlComposeHooksTest extends UnitTestCase {
   }
 
   /**
-   * Field with a paragraph result that has behavior
-   * settings: behavior_settings is set to the JSON-encoded settings.
+   * Paragraph behavior settings are set as JSON-encoded behavior_settings.
    */
   public function testFieldResultsAlterParagraphWithBehaviors(): void {
     $behaviors = ['some_behavior' => ['enabled' => TRUE]];
@@ -91,8 +93,7 @@ class GraphqlComposeHooksTest extends UnitTestCase {
   }
 
   /**
-   * Field with a paragraph result that has no behavior
-   * settings: behavior_settings is set to NULL.
+   * Paragraph without behavior settings gets NULL behavior_settings.
    */
   public function testFieldResultsAlterParagraphWithoutBehaviors(): void {
     $paragraph = $this->createMock(ParagraphInterface::class);
@@ -133,7 +134,7 @@ class GraphqlComposeHooksTest extends UnitTestCase {
     $this->assertSame('string', $fields['behavior_settings']['field_type']);
     $this->assertSame('behaviors', $fields['behavior_settings']['name_sdl']);
     $this->assertFalse($fields['behavior_settings']['required']);
-    $this->assertInstanceOf(\Drupal\Core\StringTranslation\TranslatableMarkup::class, $fields['behavior_settings']['description']);
+    $this->assertInstanceOf(TranslatableMarkup::class, $fields['behavior_settings']['description']);
   }
 
   /**

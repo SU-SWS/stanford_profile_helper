@@ -32,8 +32,9 @@ class StanfordProfileAdminHooksTest extends UnitTestCase {
   }
 
   /**
-   * A link that is not routed at all is left untouched, and the route name
-   * is never even inspected.
+   * A link that is not routed is left untouched.
+   *
+   * The route name is never even inspected.
    */
   public function testLinkAlterNotRouted(): void {
     $url = $this->createMock(Url::class);

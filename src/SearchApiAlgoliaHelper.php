@@ -23,7 +23,7 @@ use Drupal\search_api_algolia\SearchApiAlgoliaHelper as SapiAlgoliaHelper;
 class SearchApiAlgoliaHelper extends SapiAlgoliaHelper {
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function entityDelete(EntityInterface $entity) {
     // Check if the entity is a content entity.

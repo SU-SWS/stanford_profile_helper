@@ -7,7 +7,11 @@ namespace Drupal\stanford_person_importer\Hook;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\config_pages\ConfigPagesInterface;
+use Drupal\migrate\Plugin\MigrationPluginManagerInterface;
 use Drupal\node\NodeInterface;
+use Drupal\stanford_migrate\StanfordMigrateInterface;
+use Drupal\stanford_person_importer\CapInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Presave hooks supporting the CAP profile importer.
@@ -19,8 +23,20 @@ class ImportPresaveHooks {
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   Core entity type manager service.
+   * @param \Drupal\stanford_migrate\StanfordMigrateInterface $stanfordMigrate
+   *   Stanford migrate service.
+   * @param \Drupal\stanford_person_importer\CapInterface $cap
+   *   CAP API service.
+   * @param \Drupal\migrate\Plugin\MigrationPluginManagerInterface $migrationManager
+   *   Migration plugin manager service.
    */
-  public function __construct(protected EntityTypeManagerInterface $entityTypeManager) {}
+  public function __construct(
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected StanfordMigrateInterface $stanfordMigrate,
+    #[Autowire(service: 'stanford_person_importer.cap')]
+    protected CapInterface $cap,
+    protected MigrationPluginManagerInterface $migrationManager,
+  ) {}
 
   /**
    * Implements hook_ENTITY_TYPE_presave().
@@ -30,10 +46,9 @@ class ImportPresaveHooks {
    */
   #[Hook('node_presave')]
   public function nodePresave(NodeInterface $entity): void {
-    /** @var \Drupal\stanford_migrate\StanfordMigrateInterface $stanford_migrate */
-    $stanford_migrate = \Drupal::service('stanford_migrate');
-    // Don't worry about nodes that were manually created or if the field is gone.
-    if (!$entity->hasField('su_person_photo') || !$stanford_migrate->getEntityMigration($entity)) {
+    // Don't worry about nodes that were manually created or if the field is
+    // gone.
+    if (!$entity->hasField('su_person_photo') || !$this->stanfordMigrate->getEntityMigration($entity)) {
       return;
     }
     $photo_values = $entity->get('su_person_photo')->getValue();
@@ -67,7 +82,7 @@ class ImportPresaveHooks {
 
       // No org codes exist, lets load them up.
       if (empty($terms)) {
-        \Drupal::service('stanford_person_importer.cap')
+        $this->cap
           ->setClientId($entity->get('su_person_cap_username')->getString())
           ->setClientSecret($entity->get('su_person_cap_password')->getString())
           ->updateOrganizations();
@@ -75,7 +90,7 @@ class ImportPresaveHooks {
 
       // The config page overrides the migration status, which decides if the
       // migration plugin exists, so the definitions have to be rebuilt.
-      \Drupal::service('plugin.manager.migration')->clearCachedDefinitions();
+      $this->migrationManager->clearCachedDefinitions();
     }
   }
 

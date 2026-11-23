@@ -1,4 +1,5 @@
 name: 'Test Stanford Publications Citations'
 type: module
+description: 'Provides citation display config used by the Stanford Publication tests.'
 core_version_requirement: ^11.2 || ^12
 hidden: true

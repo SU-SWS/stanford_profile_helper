@@ -18,7 +18,7 @@ class WordPressMigrateController extends ControllerBase {
   /**
    * Calls a method on a migration entity and reloads the listing page.
    *
-   * @param \Drupal\stanford_wordpress_migrate\WordPressMigrationInterface $migration
+   * @param \Drupal\stanford_wordpress_migrate\WordPressMigrationInterface $wordpress_migration
    *   The migration content entity being acted upon.
    * @param string $op
    *   The operation to perform, e.g., 'enable' or 'disable'.
@@ -42,7 +42,7 @@ class WordPressMigrateController extends ControllerBase {
    * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   Matching suggestions.
    *
-   * @see \Drupal\stanford_wordpress_migrate\Form\ImporterStep4FieldMappingForm::buildRow().
+   * @see \Drupal\stanford_wordpress_migrate\Form\ImporterStep4FieldMappingForm::buildRow()
    */
   public function handleSourcesAutocomplete(Request $request) {
     $results = [];

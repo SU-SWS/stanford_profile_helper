@@ -59,7 +59,7 @@ class AccessHooksTest extends UnitTestCase {
   protected AccessHooks $hooks;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();

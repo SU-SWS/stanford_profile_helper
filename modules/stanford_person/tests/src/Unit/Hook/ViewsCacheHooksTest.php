@@ -35,7 +35,7 @@ class ViewsCacheHooksTest extends UnitTestCase {
   protected $cachePlugin;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
@@ -113,8 +113,9 @@ class ViewsCacheHooksTest extends UnitTestCase {
   }
 
   /**
-   * The stanford_person_list_terms_first view attaches the library and
-   * falls through into the stanford_person_terms cache tag logic.
+   * The list terms first view attaches the library and uses term cache tags.
+   *
+   * It falls through into the stanford_person_terms cache tag logic.
    */
   public function testViewsPostRenderListTermsFirstFallsThrough() {
     $view = $this->getViewMock('stanford_person_list_terms_first');

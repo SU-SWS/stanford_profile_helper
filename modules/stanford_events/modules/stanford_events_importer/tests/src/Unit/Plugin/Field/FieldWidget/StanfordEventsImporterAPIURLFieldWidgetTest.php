@@ -15,20 +15,24 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Response;
 
 /**
- * Class StanfordEventsImporterAPIURLFieldWidget
+ * Class StanfordEventsImporterAPIURLFieldWidget.
  */
 #[Group('stanford_events_importer')]
 class StanfordEventsImporterAPIURLFieldWidgetTest extends UnitTestCase {
 
   /**
    * The fieldWidget Plugin.
+   *
+   * @var \Drupal\stanford_events_importer\Plugin\Field\FieldWidget\StanfordEventsImporterAPIURLFieldWidget
    */
   public $plugin;
 
   /**
    * The field def.
+   *
+   * @var \Drupal\field\Entity\FieldConfig
    */
-  public $field_definition;
+  public $fieldDefinition;
 
   /**
    * The mocked field type plugin manager.
@@ -69,8 +73,7 @@ class StanfordEventsImporterAPIURLFieldWidgetTest extends UnitTestCase {
     $this->container->set('plugin.manager.field.field_type', $this->fieldTypePluginManager);
     \Drupal::setContainer($this->container);
 
-    // Propheize the Cache Backend.
-//    $cache = $this->prophesize(CacheBackendInterface::CLASS);
+    // Mock the Cache Backend.
     $cache = $this->createMock(CacheBackendInterface::class);
     $obj = new \StdClass();
     $obj->data = [
@@ -81,17 +84,17 @@ class StanfordEventsImporterAPIURLFieldWidgetTest extends UnitTestCase {
 
     $plugin_definition = [
       "field_types" => ["link"],
-      "multiple_values" => false,
+      "multiple_values" => FALSE,
       "id" => "stanford_events_importer_apiurl_field_widget",
       "module" => "stanford_events_importer",
       "label" => "Label",
       "class" => "Drupal\stanford_events_importer\Plugin\Field\FieldWidget\StanfordEventsImporterAPIURLFieldWidget",
-       "provider" => "stanford_events_importer",
+      "provider" => "stanford_events_importer",
     ];
 
     $field_storage = new FieldStorageConfig([
       "langcode" => "en",
-      "status" => true,
+      "status" => TRUE,
       "dependencies" => [
         "module" => [
           "config_pages",
@@ -110,19 +113,19 @@ class StanfordEventsImporterAPIURLFieldWidgetTest extends UnitTestCase {
       "type" => "link",
       "settings" => [],
       "module" => "link",
-      "locked" => false,
+      "locked" => FALSE,
       "cardinality" => -1,
-      "translatable" => true,
+      "translatable" => TRUE,
       "indexes" => [],
-      "persist_with_no_fields" => false,
-      "custom_storage" => false,
+      "persist_with_no_fields" => FALSE,
+      "custom_storage" => FALSE,
     ]);
 
     $field_definition = new FieldConfig([
       "langcode" => "en",
-      "deleted" => false,
+      "deleted" => FALSE,
       "fieldStorage" => $field_storage,
-      "status" => true,
+      "status" => TRUE,
       "dependencies" => [
         "config" => [
           "config_pages.type.stanford_events_importer",
@@ -138,18 +141,18 @@ class StanfordEventsImporterAPIURLFieldWidgetTest extends UnitTestCase {
       "bundle" => "stanford_events_importer",
       "label" => 'Events to be imported',
       "description" => '',
-      "required" => true,
-      "translatable" => false,
+      "required" => TRUE,
+      "translatable" => FALSE,
       "default_value" => [],
       "default_value_callback" => '',
       "settings" => [
         "link_type" => 16,
         "title" => 0,
       ],
-      "field_type" => "link"
+      "field_type" => "link",
     ]);
 
-    $this->field_definition = $field_definition;
+    $this->fieldDefinition = $field_definition;
 
     $settings = [
       "placeholder_url" => "",
@@ -163,7 +166,7 @@ class StanfordEventsImporterAPIURLFieldWidgetTest extends UnitTestCase {
   }
 
   /**
-   * Test
+   * Test.
    */
   public function testMassageFormValues() {
     $values = [
@@ -204,10 +207,10 @@ class StanfordEventsImporterAPIURLFieldWidgetTest extends UnitTestCase {
   }
 
   /**
-   * Test
+   * Test.
    */
   public function testIsApplicable() {
-    $this->assertTrue(StanfordEventsImporterAPIURLFieldWidget::isApplicable($this->field_definition));
+    $this->assertTrue(StanfordEventsImporterAPIURLFieldWidget::isApplicable($this->fieldDefinition));
   }
 
   /**
@@ -231,7 +234,7 @@ class StanfordEventsImporterAPIURLFieldWidgetTest extends UnitTestCase {
     $this->container->set('cache.default', $cache);
     $this->container->set('messenger', $this->createMock(MessengerInterface::class));
 
-    $plugin = new StanfordEventsImporterAPIURLFieldWidget('stanford_events_importer_apiurl_field_widget', [], $this->field_definition, [], [], $cache);
+    $plugin = new StanfordEventsImporterAPIURLFieldWidget('stanford_events_importer_apiurl_field_widget', [], $this->fieldDefinition, [], [], $cache);
 
     $get_orgs = new \ReflectionMethod($plugin, 'getOrgOptions');
     $this->assertEquals([279 => 'AASA'], $get_orgs->invoke($plugin));

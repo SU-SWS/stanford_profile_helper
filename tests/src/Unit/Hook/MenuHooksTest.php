@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\stanford_profile_helper\Unit\Hook;
 
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
+use Drupal\Core\Routing\RouteBuilderInterface;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Block\BlockPluginInterface;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Database\Query\Delete;
@@ -54,7 +58,7 @@ class MenuHooksTest extends UnitTestCase {
     parent::setUp();
     $this->currentUser = $this->createMock(AccountProxyInterface::class);
     $this->entityTypeManager = $this->createMock(EntityTypeManagerInterface::class);
-    $this->hooks = new MenuHooks($this->currentUser, $this->entityTypeManager);
+    $this->hooks = new MenuHooks($this->currentUser, $this->entityTypeManager, $this->createMock(Connection::class), $this->createMock(RouteBuilderInterface::class));
     $this->hooks->setStringTranslation($this->getStringTranslationStub());
   }
 
@@ -102,7 +106,7 @@ class MenuHooksTest extends UnitTestCase {
   }
 
   /**
-   * preprocessMenu on a non-admin menu never checks admin access permissions.
+   * PreprocessMenu on a non-admin menu never checks admin access permissions.
    */
   public function testPreprocessMenuNonAdminMenuSkipsAccessCheck(): void {
     $this->currentUser->expects($this->never())->method('hasPermission');
@@ -133,8 +137,7 @@ class MenuHooksTest extends UnitTestCase {
   }
 
   /**
-   * Taxonomy menu link items have their title attribute removed and, when
-   * the referenced term exists, its cache tags added.
+   * Taxonomy menu links lose their title attribute and get the term cache tags.
    */
   public function testPreprocessMenuTaxonomyMenuLinkWithExistingTerm(): void {
     /** @var \Drupal\taxonomy_menu\Plugin\Menu\TaxonomyMenuMenuLink $link */
@@ -151,7 +154,7 @@ class MenuHooksTest extends UnitTestCase {
     $term->method('bundle')->willReturn('tags');
     $term->method('getCacheTags')->willReturn(['taxonomy_term:7']);
 
-    $storage = $this->createMock(\Drupal\Core\Entity\EntityStorageInterface::class);
+    $storage = $this->createMock(EntityStorageInterface::class);
     $storage->method('load')->with(7)->willReturn($term);
     $this->entityTypeManager->method('getStorage')->with('taxonomy_term')->willReturn($storage);
 
@@ -168,8 +171,7 @@ class MenuHooksTest extends UnitTestCase {
   }
 
   /**
-   * When the referenced term no longer exists, no term cache tags are added
-   * but the title attribute is still stripped.
+   * A missing term adds no cache tags but the title attribute is stripped.
    */
   public function testPreprocessMenuTaxonomyMenuLinkWithMissingTerm(): void {
     $link = $this->createMock(TaxonomyMenuMenuLink::class);
@@ -179,7 +181,7 @@ class MenuHooksTest extends UnitTestCase {
     $url->expects($this->once())->method('setOption')->with('attributes', []);
     $url->method('getRouteParameters')->willReturn(['taxonomy_term' => 999]);
 
-    $storage = $this->createMock(\Drupal\Core\Entity\EntityStorageInterface::class);
+    $storage = $this->createMock(EntityStorageInterface::class);
     $storage->method('load')->with(999)->willReturn(NULL);
     $this->entityTypeManager->method('getStorage')->with('taxonomy_term')->willReturn($storage);
 
@@ -208,8 +210,7 @@ class MenuHooksTest extends UnitTestCase {
   }
 
   /**
-   * On the admin menu, checkAdminMenuAccess() is invoked and items without
-   * permission are removed from the top level items array.
+   * On the admin menu, top level items without permission are removed.
    */
   public function testPreprocessMenuOnAdminMenuChecksAccess(): void {
     $this->currentUser->method('hasPermission')->willReturn(FALSE);
@@ -241,8 +242,7 @@ class MenuHooksTest extends UnitTestCase {
   }
 
   /**
-   * A user with the 'administer taxonomy' permission keeps all vocabulary
-   * items regardless of the specific vocabulary.
+   * Users with 'administer taxonomy' keep all vocabulary items.
    */
   public function testCheckAdminMenuAccessKeepsItemsWhenUserIsTaxonomyAdmin(): void {
     $this->currentUser->method('hasPermission')
@@ -257,8 +257,9 @@ class MenuHooksTest extends UnitTestCase {
   }
 
   /**
-   * An item is removed when the user has none of the required permissions,
-   * and its children are never visited due to the early continue.
+   * An item is removed when the user has none of the required permissions.
+   *
+   * Its children are never visited due to the early continue.
    */
   public function testCheckAdminMenuAccessRemovesItemsWithoutAnyPermission(): void {
     $this->currentUser->method('hasPermission')->willReturn(FALSE);
@@ -280,9 +281,9 @@ class MenuHooksTest extends UnitTestCase {
   }
 
   /**
-   * Items with a specific create/edit/delete permission for the vocabulary
-   * are kept, and their children are still recursed into and potentially
-   * removed.
+   * Items with a create/edit/delete permission for the vocabulary are kept.
+   *
+   * Their children are still recursed into and potentially removed.
    */
   public function testCheckAdminMenuAccessKeepsSpecificPermissionAndRecursesIntoChildren(): void {
     $this->currentUser->method('hasPermission')
@@ -303,8 +304,7 @@ class MenuHooksTest extends UnitTestCase {
   }
 
   /**
-   * When the base id is system_menu_block, the tag is added and node/menu
-   * config cache tags are stripped.
+   * The system menu block gets the menu tag and loses node/menu config tags.
    */
   public function testBlockBuildAlterForSystemMenuBlock(): void {
     $block = $this->createMock(BlockPluginInterface::class);
@@ -338,8 +338,7 @@ class MenuHooksTest extends UnitTestCase {
   }
 
   /**
-   * The system_main_block preprocess hook adds the cache tag and strips
-   * config:system.menu.* tags, but leaves node tags alone.
+   * The main block gets the menu tag and loses only system menu config tags.
    */
   public function testPreprocessBlockSystemMainBlock(): void {
     $variables = [
@@ -355,8 +354,7 @@ class MenuHooksTest extends UnitTestCase {
   }
 
   /**
-   * The system_menu_block preprocess hook adds the cache tag and strips both
-   * node and config:system.menu.* tags.
+   * The menu block gets the menu tag and loses node and menu config tags.
    */
   public function testPreprocessBlockSystemMenuBlock(): void {
     $variables = [
@@ -411,8 +409,7 @@ class MenuHooksTest extends UnitTestCase {
   }
 
   /**
-   * Nodes with a populated field_menulink field have their menu tree record
-   * deleted, the router rebuilt, and the menu cache tag cleared.
+   * Trashing a node with a menu link deletes it and clears the menu caches.
    */
   public function testEntityTrashDeleteDeletesMenuLinkForPopulatedField(): void {
     $field = $this->createMock(FieldItemListInterface::class);
@@ -433,20 +430,20 @@ class MenuHooksTest extends UnitTestCase {
       ->with('menu_tree')
       ->willReturn($delete);
 
-    $routerBuilder = $this->createMock(\Drupal\Core\Routing\RouteBuilderInterface::class);
+    $routerBuilder = $this->createMock(RouteBuilderInterface::class);
     $routerBuilder->expects($this->once())->method('rebuildIfNeeded');
 
-    $cacheTagsInvalidator = $this->createMock(\Drupal\Core\Cache\CacheTagsInvalidatorInterface::class);
+    $cacheTagsInvalidator = $this->createMock(CacheTagsInvalidatorInterface::class);
     $cacheTagsInvalidator->expects($this->once())
       ->method('invalidateTags')
       ->with(['stanford_profile_helper:menu_links']);
 
-    $eventDispatcher = $this->createMock(\Symfony\Contracts\EventDispatcher\EventDispatcherInterface::class);
+    $eventDispatcher = $this->createMock(EventDispatcherInterface::class);
     $eventDispatcher->expects($this->once())->method('dispatch');
 
+    $this->hooks = new MenuHooks($this->currentUser, $this->entityTypeManager, $database, $routerBuilder);
+
     $container = new ContainerBuilder();
-    $container->set('database', $database);
-    $container->set('router.builder', $routerBuilder);
     $container->set('cache_tags.invalidator', $cacheTagsInvalidator);
     $container->set('event_dispatcher', $eventDispatcher);
     \Drupal::setContainer($container);

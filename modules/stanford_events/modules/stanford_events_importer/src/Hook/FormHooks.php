@@ -74,7 +74,6 @@ class FormHooks {
     $migration_service->executeMigrationId('stanford_localist_importer');
   }
 
-
   /**
    * Fetch and save to state the org & category data.
    */
@@ -96,10 +95,10 @@ class FormHooks {
 
     $updated = TRUE;
     foreach ($lists as $cache_key => $args) {
-      $xml_raw = $importer->fetchXML($args['query']);
+      $xml_raw = $importer->fetchXml($args['query']);
 
       // Get the formatted key->value pairs.
-      $key_val = $xml_raw ? $importer->parseXML($xml_raw, $args) : FALSE;
+      $key_val = $xml_raw ? $importer->parseXml($xml_raw, $args) : FALSE;
 
       // Keep the previously cached options if the feed couldn't be read.
       if ($key_val === FALSE) {
@@ -120,6 +119,5 @@ class FormHooks {
     \Drupal::messenger()
       ->addStatus('Updated category and organization information.');
   }
-
 
 }

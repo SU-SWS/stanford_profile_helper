@@ -53,7 +53,7 @@ class TwoColumnTest extends KernelTestBase {
   /**
    * Test defaultConfiguration.
    *
-   * // Covers: defaultConfiguration
+   * // Covers: defaultConfiguration.
    */
   public function testDefaultConfiguration(): void {
     $config = $this->layout->defaultConfiguration();
@@ -86,7 +86,7 @@ class TwoColumnTest extends KernelTestBase {
   /**
    * Test buildConfigurationForm adds all elements.
    *
-   * // Covers: buildConfigurationForm
+   * // Covers: buildConfigurationForm.
    */
   public function testBuildConfigurationForm(): void {
     $form = [];
@@ -107,7 +107,7 @@ class TwoColumnTest extends KernelTestBase {
   /**
    * Test buildConfigurationForm with existing configuration.
    *
-   * // Covers: buildConfigurationForm
+   * // Covers: buildConfigurationForm.
    */
   public function testBuildConfigurationFormWithExistingConfig(): void {
     $configuration = [
@@ -143,7 +143,7 @@ class TwoColumnTest extends KernelTestBase {
   /**
    * Test submitConfigurationForm processes all values.
    *
-   * // Covers: submitConfigurationForm
+   * // Covers: submitConfigurationForm.
    */
   public function testSubmitConfigurationForm(): void {
     $form = [];
@@ -167,7 +167,7 @@ class TwoColumnTest extends KernelTestBase {
   /**
    * Test submitConfigurationForm with vertical_dividers as FALSE.
    *
-   * // Covers: submitConfigurationForm
+   * // Covers: submitConfigurationForm.
    */
   public function testSubmitConfigurationFormVerticalDividersFalse(): void {
     $form = [];
@@ -187,7 +187,7 @@ class TwoColumnTest extends KernelTestBase {
   /**
    * Test submitConfigurationForm casts vertical_dividers to boolean.
    *
-   * // Covers: submitConfigurationForm
+   * // Covers: submitConfigurationForm.
    */
   public function testSubmitConfigurationFormVerticalDividersCast(): void {
     $form = [];
@@ -208,7 +208,7 @@ class TwoColumnTest extends KernelTestBase {
   /**
    * Test submitConfigurationForm with 0 casts to false.
    *
-   * // Covers: submitConfigurationForm
+   * // Covers: submitConfigurationForm.
    */
   public function testSubmitConfigurationFormVerticalDividersZero(): void {
     $form = [];

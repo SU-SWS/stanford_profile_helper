@@ -154,7 +154,8 @@ SRT;
 
     $paragraphs = $method->invoke($converter, $subtitles);
 
-    // Should have at least 1 paragraph, possibly 2-3 depending on gaps and merging.
+    // Should have at least 1 paragraph, possibly 2-3 depending on gaps and
+    // merging.
     $this->assertNotEmpty($paragraphs);
     $this->assertStringContainsString('First sentence', $paragraphs[0]);
   }

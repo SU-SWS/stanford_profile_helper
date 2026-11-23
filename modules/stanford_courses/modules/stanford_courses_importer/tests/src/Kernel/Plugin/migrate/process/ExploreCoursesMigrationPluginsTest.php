@@ -10,7 +10,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class ExploreCoursesMigrationPluginsTest.
+ * Kernel tests for the ExploreCourses migrate process plugins.
  */
 #[RunTestsInSeparateProcesses]
 #[Group('stanford_courses_importer')]
@@ -18,6 +18,8 @@ class ExploreCoursesMigrationPluginsTest extends EntityKernelTestBase {
 
   /**
    * Migrate plugin object.
+   *
+   * @var \Drupal\migrate\Plugin\MigrateProcessInterface
    */
   protected $plugin;
 
@@ -33,14 +35,14 @@ class ExploreCoursesMigrationPluginsTest extends EntityKernelTestBase {
    *
    * @var string
    */
-  protected $section_xml;
+  protected $sectionXml;
 
   /**
    * Tags XML data to use for tests.
    *
    * @var string
    */
-  protected $tags_xml;
+  protected $tagsXml;
 
   /**
    * Modules to enable.
@@ -54,12 +56,12 @@ class ExploreCoursesMigrationPluginsTest extends EntityKernelTestBase {
   ];
 
   /**
-   * {@inheritDoc}.
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
     $this->processManager = $this->container->get('plugin.manager.migrate.process');
-    $this->section_xml = <<<DATA
+    $this->sectionXml = <<<DATA
 <?xml version="1.0" encoding="UTF-8"?>
 <sections>
     <section>
@@ -185,7 +187,7 @@ class ExploreCoursesMigrationPluginsTest extends EntityKernelTestBase {
     </section>
 </sections>
 DATA;
-    $this->tags_xml = <<<TAGS
+    $this->tagsXml = <<<TAGS
 <?xml version="1.0" encoding="UTF-8"?>
 <tags>
     <tag>
@@ -213,8 +215,8 @@ TAGS;
 
     $row = new Row();
     $migrate = new MigrateExecutableTest();
-    // good data.
-    $translated = $plugin->transform($this->section_xml, $migrate, $row, '');
+    // Good data.
+    $translated = $plugin->transform($this->sectionXml, $migrate, $row, '');
     $this->assertEquals([
       0 => 'Lu, S.',
       1 => 'Sklar, M.',
@@ -222,11 +224,11 @@ TAGS;
       3 => 'Morrison, T.',
     ], $translated);
 
-    // non string value
+    // Non string value.
     $translated = $plugin->transform([], $migrate, $row, '');
     $this->assertEquals('', $translated);
 
-    // unparseable xml
+    // Unparseable xml.
     $translated = $plugin->transform('<?xml version="1.0" encoding="ASCII"?>', $migrate, $row, '');
     $this->assertEquals('', $translated);
   }
@@ -240,13 +242,13 @@ TAGS;
 
     $row = new Row();
     $migrate = new MigrateExecutableTest();
-    // Good value
-    $translated = $plugin->transform($this->section_xml, $migrate, $row, '');
+    // Good value.
+    $translated = $plugin->transform($this->sectionXml, $migrate, $row, '');
     $this->assertEquals([0 => 'Autumn'], $translated);
-    // non string value
+    // Non string value.
     $translated = $plugin->transform([], $migrate, $row, '');
     $this->assertEquals('', $translated);
-    // unparseable xml
+    // Unparseable xml.
     $translated = $plugin->transform('<?xml version="1.0" encoding="ASCII"?>', $migrate, $row, '');
     $this->assertEquals('', $translated);
   }
@@ -260,13 +262,13 @@ TAGS;
 
     $row = new Row();
     $migrate = new MigrateExecutableTest();
-    // a good value.
-    $translated = $plugin->transform($this->tags_xml, $migrate, $row, '');
+    // A good value.
+    $translated = $plugin->transform($this->tagsXml, $migrate, $row, '');
     $this->assertEquals('EDUC::alluniversity;EDUC::alluniversityabove200;EDUC::alluniversityabove100', $translated);
-    // a non string value
+    // A non string value.
     $translated = $plugin->transform([], $migrate, $row, '');
     $this->assertEquals('', $translated);
-    // unparseable xml
+    // Unparseable xml.
     $translated = $plugin->transform('<?xml version="1.0" encoding="ASCII"?>', $migrate, $row, '');
     $this->assertEquals('', $translated);
   }
@@ -302,28 +304,28 @@ TAGS;
 class MigrateExecutableTest implements MigrateExecutableInterface {
 
   /**
-   * {@inheritDoc}.
+   * {@inheritdoc}
    */
   public function import() {
-
+    return MigrationInterface::RESULT_COMPLETED;
   }
 
   /**
-   * {@inheritDoc}.
+   * {@inheritdoc}
    */
   public function rollback() {
 
   }
 
   /**
-   * {@inheritDoc}.
+   * {@inheritdoc}
    */
   public function processRow(Row $row, ?array $process = NULL, $value = NULL) {
 
   }
 
   /**
-   * {@inheritDoc}.
+   * {@inheritdoc}
    */
   public function saveMessage($message, $level = MigrationInterface::MESSAGE_ERROR) {
 

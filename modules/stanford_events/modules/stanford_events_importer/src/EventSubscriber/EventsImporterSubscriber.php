@@ -23,7 +23,7 @@ final class EventsImporterSubscriber implements EventSubscriberInterface {
   public function __construct(
     private readonly QueueFactory $queue,
     private readonly EntityTypeManagerInterface $entityTypeManager,
-    private readonly Connection $database
+    private readonly Connection $database,
   ) {}
 
   /**
@@ -65,9 +65,10 @@ final class EventsImporterSubscriber implements EventSubscriberInterface {
    * Queue the given node to be check if it needs to be cleared.
    *
    * @param int $nid
+   *   Node ID of the imported event.
    * @param int $instanceId
+   *   Source event instance ID.
    *
-   * @return void
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */

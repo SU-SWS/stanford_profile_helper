@@ -4,28 +4,23 @@ namespace Drupal\Tests\jumpstart_ui\Unit\Plugin\paragraphs\Behavior;
 
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Entity\Display\EntityDisplayInterface;
-use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
-use Drupal\Core\Entity\EntityStorageInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Entity\Query\QueryInterface;
 use Drupal\Core\Form\FormState;
 use Drupal\Core\State\StateInterface;
 use Drupal\jumpstart_ui\Plugin\paragraphs\Behavior\HeroPatternBehavior;
-use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\paragraphs\Entity\ParagraphsType;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class HeroPatternBehaviorTest
+ * Unit tests for the hero pattern paragraph behavior.
  */
 #[Group('jumpstart_ui')]
 class HeroPatternBehaviorTest extends UnitTestCase {
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
@@ -53,6 +48,9 @@ class HeroPatternBehaviorTest extends UnitTestCase {
     $this->assertTrue(HeroPatternBehavior::isApplicable($paragraph_type));
   }
 
+  /**
+   * Test the behavior settings form is built.
+   */
   public function testForm() {
     $plugin = HeroPatternBehavior::create(\Drupal::getContainer(), [], '', []);
     $paragraph = $this->createMock(ParagraphInterface::class);

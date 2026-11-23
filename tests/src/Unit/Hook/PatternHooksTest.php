@@ -110,8 +110,9 @@ class PatternHooksTest extends UnitTestCase {
   }
 
   /**
-   * The component info alter hook currently performs no modifications since
-   * the enabling check is commented out in the source; the array passed in
+   * The component info alter hook leaves the components unchanged.
+   *
+   * The enabling check is commented out in the source, so the array passed in
    * should remain completely unchanged.
    */
   public function testComponentInfoAlterIsNoop(): void {
@@ -122,8 +123,7 @@ class PatternHooksTest extends UnitTestCase {
   }
 
   /**
-   * When no info.yml file is found anywhere up the directory tree, FALSE is
-   * returned.
+   * FALSE is returned when no info.yml file is found up the directory tree.
    */
   public function testExtensionEnabledReturnsFalseWhenNoInfoFileFound(): void {
     $deepPath = $this->makePath('no_info_anywhere/level1/level2');
@@ -136,8 +136,10 @@ class PatternHooksTest extends UnitTestCase {
   }
 
   /**
-   * When an info.yml file is found without a 'type' key, the walk continues
-   * up the tree until it eventually runs out of parents and returns FALSE.
+   * An info.yml file without a 'type' key doesn't stop the directory walk.
+   *
+   * The walk continues up the tree until it runs out of parents and returns
+   * FALSE.
    */
   public function testExtensionEnabledContinuesWhenInfoFileHasNoTypeKey(): void {
     $root = $this->makePath('no_type_key');
@@ -186,8 +188,7 @@ class PatternHooksTest extends UnitTestCase {
   }
 
   /**
-   * A module info.yml file found up the tree causes a module existence
-   * check.
+   * A module info.yml file found up the tree causes a module existence check.
    */
   public function testExtensionEnabledChecksModuleExistence(): void {
     $root = $this->makePath('module_case');
@@ -206,8 +207,9 @@ class PatternHooksTest extends UnitTestCase {
   }
 
   /**
-   * A profile info.yml file found up the tree also causes a module existence
-   * check (profiles are checked via the module handler).
+   * A profile info.yml file found up the tree causes a module existence check.
+   *
+   * Profiles are checked via the module handler.
    */
   public function testExtensionEnabledChecksProfileExistence(): void {
     $root = $this->makePath('profile_case');

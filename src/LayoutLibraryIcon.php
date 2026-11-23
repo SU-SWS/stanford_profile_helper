@@ -27,7 +27,7 @@ final class LayoutLibraryIcon implements LayoutLibraryIconInterface {
     private readonly FileUsageInterface $fileUsage,
     private readonly AccountProxyInterface $account,
     private readonly ModuleHandlerInterface $moduleHandler,
-    private readonly UuidInterface $uuid
+    private readonly UuidInterface $uuid,
   ) {}
 
   /**
@@ -58,7 +58,7 @@ final class LayoutLibraryIcon implements LayoutLibraryIconInterface {
     }
 
     $default_path = $this->moduleHandler->getModule('stanford_profile_helper')
-        ->getPath() . '/icons/layout-library-default.png';
+      ->getPath() . '/icons/layout-library-default.png';
     $icon_data = 'data:image/png;base64,' . base64_encode(file_get_contents($default_path));
 
     return $this->createFile('default', $this->uuid->generate(), $icon_data);

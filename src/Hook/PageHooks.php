@@ -27,7 +27,7 @@ class PageHooks {
    * Add drupal settings of the current logged in user to the page.
    *
    * @param array $attachments
-   *   Page attachments
+   *   Page attachments.
    */
   #[Hook('page_attachments')]
   public function pageAttachments(array &$attachments): void {

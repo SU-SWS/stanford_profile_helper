@@ -5,12 +5,21 @@ declare(strict_types=1);
 namespace Drupal\stanford_news\Hook;
 
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\node\NodeInterface;
 
 /**
  * Theming and asset attachment hooks for stanford_news.
  */
 class NewsThemeHooks {
+
+  /**
+   * Constructs the hook class.
+   *
+   * @param \Drupal\Core\Routing\RouteMatchInterface $routeMatch
+   *   Current route match service.
+   */
+  public function __construct(protected RouteMatchInterface $routeMatch) {}
 
   /**
    * Implements hook_theme().
@@ -41,7 +50,7 @@ class NewsThemeHooks {
   #[Hook('page_attachments')]
   public function pageAttachments(array &$attachments): void {
     // Get the node from the route.
-    $node = \Drupal::routeMatch()->getParameter('node');
+    $node = $this->routeMatch->getParameter('node');
 
     // Not a node. Then just continue.
     if (!$node instanceof NodeInterface || $node->bundle() != 'stanford_news') {

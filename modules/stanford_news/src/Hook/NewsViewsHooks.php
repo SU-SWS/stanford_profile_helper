@@ -17,12 +17,12 @@ class NewsViewsHooks {
    * Implements hook_views_post_render().
    *
    * Views render arrays contain a cache tag "node_list". This cache tag is
-   * cleared every time ANY node is created, edited or deleted. When this happens
-   * every view on the site gets its cache flushed. This causes poor performance
-   * since a view would get flushed even if it has no relation to that node. To
-   * assist in cache tags, we create a custom cache tag based on the node type
-   * filter on the view. Its a small improvement but will have huge impact in
-   * keeping cached renders much longer.
+   * cleared every time ANY node is created, edited or deleted. When this
+   * happens every view on the site gets its cache flushed. This causes poor
+   * performance since a view would get flushed even if it has no relation to
+   * that node. To assist in cache tags, we create a custom cache tag based on
+   * the node type filter on the view. Its a small improvement but will have
+   * huge impact in keeping cached renders much longer.
    *
    * @see \Drupal\stanford_person\Hook\ViewsCacheHooks::nodePresave()
    * @see \Drupal\stanford_person\Hook\ViewsCacheHooks::taxonomyTermPresave()

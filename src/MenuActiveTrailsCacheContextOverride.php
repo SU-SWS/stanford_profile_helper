@@ -19,7 +19,7 @@ class MenuActiveTrailsCacheContextOverride implements CalculatedCacheContextInte
   protected $cacheContext;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public static function getLabel() {
     return MenuActiveTrailsCacheContext::getLabel();
@@ -36,7 +36,7 @@ class MenuActiveTrailsCacheContextOverride implements CalculatedCacheContextInte
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function getCacheableMetadata($parameter = NULL) {
     // Remove the cache tags from the original service.
@@ -46,7 +46,7 @@ class MenuActiveTrailsCacheContextOverride implements CalculatedCacheContextInte
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function getContext($parameter = NULL) {
     return $this->cacheContext->getContext($parameter);

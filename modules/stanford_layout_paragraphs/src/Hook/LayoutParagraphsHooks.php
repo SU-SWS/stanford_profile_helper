@@ -5,12 +5,21 @@ declare(strict_types=1);
 namespace Drupal\stanford_layout_paragraphs\Hook;
 
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\views\ViewExecutable;
 
 /**
  * Hooks that alter the layout paragraphs editing experience.
  */
 class LayoutParagraphsHooks {
+
+  /**
+   * Constructs the hook class.
+   *
+   * @param \Drupal\Core\Routing\RouteMatchInterface $routeMatch
+   *   Current route match service.
+   */
+  public function __construct(protected RouteMatchInterface $routeMatch) {}
 
   /**
    * Implements hook_library_info_alter().
@@ -47,7 +56,7 @@ class LayoutParagraphsHooks {
    */
   protected function isEditingLayoutParagraphs(): bool {
     $layout_paragraphs_routes = ['entity.node.edit_form'];
-    $route_name = \Drupal::routeMatch()->getRouteName();
+    $route_name = $this->routeMatch->getRouteName();
     return $route_name && (in_array($route_name, $layout_paragraphs_routes) || str_starts_with($route_name, 'layout_paragraphs.'));
   }
 

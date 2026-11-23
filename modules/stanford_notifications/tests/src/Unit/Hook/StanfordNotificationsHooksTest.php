@@ -40,8 +40,7 @@ class StanfordNotificationsHooksTest extends UnitTestCase {
   }
 
   /**
-   * The toolbar hook delegates to the notification service and returns its
-   * render array.
+   * The toolbar hook returns the notification service's render array.
    */
   public function testToolbar(): void {
     $expected = ['#cache' => [], '#type' => 'toolbar_item'];
@@ -53,8 +52,7 @@ class StanfordNotificationsHooksTest extends UnitTestCase {
   }
 
   /**
-   * The user delete hook delegates to the notification service to clear the
-   * deleted user's notifications.
+   * The user delete hook has the service clear the user's notifications.
    */
   public function testUserDelete(): void {
     // The user_delete hook is only ever invoked with a User entity, which

@@ -30,12 +30,8 @@ class PatternHooks {
    */
   #[Hook('component_info_alter')]
   public function componentInfoAlter(&$components): void {
-    foreach ($components as $id => $component) {
-      // Check if the provider of the PDB component is enabled.
-      // if (!$this->extensionEnabled($component)) {
-      //   unset($components[$id]);
-      // }
-    }
+    // Removing PDB components whose provider extension isn't enabled is
+    // currently disabled. See extensionEnabled().
   }
 
   /**

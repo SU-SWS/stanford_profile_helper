@@ -14,8 +14,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 abstract class WordPressImporterFormBase extends FormBase {
 
-  public function __construct(
-    protected ClientInterface $client
+  final public function __construct(
+    protected ClientInterface $client,
   ) {}
 
   /**
@@ -93,10 +93,7 @@ abstract class WordPressImporterFormBase extends FormBase {
    *   Client service.
    */
   protected function client() {
-    if (isset($this->client)) {
-      return $this->client;
-    }
-    return \Drupal::httpClient();
+    return $this->client;
   }
 
   /**

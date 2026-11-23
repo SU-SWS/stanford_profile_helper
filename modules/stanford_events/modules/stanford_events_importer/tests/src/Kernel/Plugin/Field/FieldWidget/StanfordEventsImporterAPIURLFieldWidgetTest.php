@@ -15,14 +15,14 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class StanfordEventsImporterAPIURLFieldWidgetTest.php
+ * Kernel tests for the events importer API URL field widget.
  */
 #[RunTestsInSeparateProcesses]
 #[Group('stanford_events_importer')]
 class StanfordEventsImporterAPIURLFieldWidgetTest extends KernelTestBase {
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected static $modules = [
     'system',
@@ -37,7 +37,7 @@ class StanfordEventsImporterAPIURLFieldWidgetTest extends KernelTestBase {
   ];
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
@@ -102,28 +102,27 @@ class StanfordEventsImporterAPIURLFieldWidgetTest extends KernelTestBase {
       [
         'uri' => 'https://events-legacy.stanford.edu/xml/drupal/v2.php?featured',
         'title' => '',
-        'options' => ''
+        'options' => '',
       ],
       [
         'uri' => 'https://events-legacy.stanford.edu/xml/drupal/v2.php?today',
         'title' => '',
-        'options' => ''
+        'options' => '',
       ],
       [
         'uri' => 'https://events-legacy.stanford.edu/xml/drupal/v2.php?organization=23&bookmarked',
         'title' => '',
-        'options' => ''
+        'options' => '',
       ],
       [
         'uri' => 'https://events-legacy.stanford.edu/xml/drupal/v2.php?category=23',
         'title' => '',
-        'options' => ''
+        'options' => '',
       ],
     ]);
 
     $form = [];
     $form_state = new FormState();
-
 
     $entity_form_display->buildForm($node, $form, $form_state);
 

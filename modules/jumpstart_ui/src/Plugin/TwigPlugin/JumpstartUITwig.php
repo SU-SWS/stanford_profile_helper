@@ -41,7 +41,7 @@ class JumpstartUITwig extends AbstractExtension {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function getFilters(): array {
     return [
@@ -89,7 +89,6 @@ class JumpstartUITwig extends AbstractExtension {
       $tags .= '<drupal-render-placeholder>';
     }
     // Use a markup to flag it as "safe".
-
     $result = is_null($rendered) ? '' : trim(strip_tags($rendered, $tags));
     return $result ? ['#markup' => $result] : NULL;
   }

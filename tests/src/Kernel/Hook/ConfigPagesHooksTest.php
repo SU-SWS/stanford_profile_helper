@@ -20,6 +20,9 @@ use PHPUnit\Framework\Attributes\Group;
 #[RunTestsInSeparateProcesses]
 class ConfigPagesHooksTest extends SuProfileHelperKernelTestBase {
 
+  /**
+   * Test the config pages hooks with site URL and nobots fields.
+   */
   public function testConfigPages() {
     ConfigPagesType::create([
       'id' => 'foo',
@@ -58,6 +61,9 @@ class ConfigPagesHooksTest extends SuProfileHelperKernelTestBase {
       ->get('xmlsitemap_base_url'));
   }
 
+  /**
+   * Test when users are redirected based on the config page settings.
+   */
   public function testRedirectUser() {
     $this->assertFalse(ConfigPagesHooks::redirectUser());
     // Cache line.
@@ -67,7 +73,6 @@ class ConfigPagesHooksTest extends SuProfileHelperKernelTestBase {
     $account->method('hasPermission')->willReturn(TRUE);
     $account->method('getRoles')->willReturn([]);
     \Drupal::currentUser()->setAccount($account);
-
 
     $configPageLoader = $this->createMock(ConfigPagesLoaderServiceInterface::class);
     $configPageLoader->method('getValue')->willReturn(date('c', time() - 5));

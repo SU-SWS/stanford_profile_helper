@@ -48,7 +48,7 @@ class NotificationService implements NotificationServiceInterface {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function toolbar() {
     $notification_list = $this->getToolbarTrayItems($this->getUserNotifications());
@@ -127,7 +127,7 @@ class NotificationService implements NotificationServiceInterface {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function addNotification($message, array $roles = [], $status = Messenger::TYPE_STATUS) {
     $user_query = $this->entityTypeManager->getStorage('user')
@@ -151,7 +151,7 @@ class NotificationService implements NotificationServiceInterface {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function getUserNotifications(?AccountInterface $account = NULL) {
     if (!$account) {
@@ -162,7 +162,7 @@ class NotificationService implements NotificationServiceInterface {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function clearUserNotifications(AccountInterface $account) {
     foreach ($this->getUserNotifications($account) as $notification) {

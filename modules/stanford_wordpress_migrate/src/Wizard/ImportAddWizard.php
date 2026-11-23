@@ -147,6 +147,9 @@ class ImportAddWizard extends EntityFormWizardBase {
     return $steps;
   }
 
+  /**
+   * Add a cancel button to the wizard actions.
+   */
   protected function actions(FormInterface $form_object, FormStateInterface $form_state) {
     $actions = parent::actions($form_object, $form_state);
     $actions['cancel'] = [

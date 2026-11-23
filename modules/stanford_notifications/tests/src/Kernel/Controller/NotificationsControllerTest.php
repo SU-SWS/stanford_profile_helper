@@ -11,7 +11,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class NotificationsControllerTest.
+ * Kernel tests for the notifications controller.
  */
 #[RunTestsInSeparateProcesses]
 #[Group('stanford_notifications')]

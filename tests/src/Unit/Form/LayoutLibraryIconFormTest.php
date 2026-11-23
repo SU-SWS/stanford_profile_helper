@@ -8,8 +8,6 @@ use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
-use Drupal\Core\StringTranslation\TranslatableMarkup;
-use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\Core\Url;
 use Drupal\file\FileInterface;
 use Drupal\layout_library\Entity\Layout;
@@ -24,20 +22,48 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('stanford_profile_helper')]
 class LayoutLibraryIconFormTest extends UnitTestCase {
 
+  /**
+   * The form being tested.
+   *
+   * @var \Drupal\stanford_profile_helper\Form\LayoutLibraryIconForm
+   */
   protected $form;
+
+  /**
+   * Mocked layout library entity.
+   *
+   * @var \Drupal\layout_library\Entity\Layout|\PHPUnit\Framework\MockObject\MockObject
+   */
   protected $entity;
+
+  /**
+   * Mocked entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+   */
   protected $entityTypeManager;
+
+  /**
+   * Mocked messenger.
+   *
+   * @var \Drupal\Core\Messenger\MessengerInterface|\PHPUnit\Framework\MockObject\MockObject
+   */
   protected $messenger;
+
+  /**
+   * Mocked string translation service.
+   *
+   * @var \Drupal\Core\StringTranslation\TranslationInterface|\PHPUnit\Framework\MockObject\MockObject
+   */
   protected $translation;
 
+  /**
+   * {@inheritdoc}
+   */
   protected function setUp(): void {
     parent::setUp();
 
-    $this->translation = $this->createMock(TranslationInterface::class);
-    $this->translation->method('translate')
-      ->willReturnCallback(function ($string) {
-        return new TranslatableMarkup($string, [], [], $this->translation);
-      });
+    $this->translation = $this->getStringTranslationStub();
 
     $this->entity = $this->createMock(Layout::class);
     $this->entityTypeManager = $this->createMock(EntityTypeManagerInterface::class);
@@ -50,11 +76,17 @@ class LayoutLibraryIconFormTest extends UnitTestCase {
     $this->form->setMessenger($this->messenger);
   }
 
+  /**
+   * Test the form ID.
+   */
   public function testGetFormId() {
     $form_id = $this->form->getFormId();
     $this->assertEquals('layout_library_icon', $form_id);
   }
 
+  /**
+   * Test building the form when the layout has no icon.
+   */
   public function testBuildFormWithoutExistingIcon() {
     // Entity has no icon set.
     $this->entity->method('getThirdPartySetting')
@@ -78,6 +110,9 @@ class LayoutLibraryIconFormTest extends UnitTestCase {
     $this->assertEquals('submit', $result['actions']['submit']['#type']);
   }
 
+  /**
+   * Test building the form when the layout has an icon file.
+   */
   public function testBuildFormWithExistingIcon() {
     // Create mock file.
     $file = $this->createMock(FileInterface::class);
@@ -110,6 +145,9 @@ class LayoutLibraryIconFormTest extends UnitTestCase {
     $this->assertEquals(['target_id' => 42], $result['icon']['#default_value']);
   }
 
+  /**
+   * Test building the form when the icon file can't be loaded.
+   */
   public function testBuildFormWithInvalidIconUuid() {
     // Entity has icon with UUID but file doesn't exist.
     $this->entity->method('getThirdPartySetting')
@@ -136,6 +174,9 @@ class LayoutLibraryIconFormTest extends UnitTestCase {
     $this->assertArrayNotHasKey('#default_value', $result['icon']);
   }
 
+  /**
+   * Test submitting the form without an icon removes it.
+   */
   public function testSubmitFormWithoutIcon() {
     // Mock form state with no icon value.
     $form_state = $this->createMock(FormStateInterface::class);
@@ -166,6 +207,9 @@ class LayoutLibraryIconFormTest extends UnitTestCase {
     $this->form->submitForm($form, $form_state);
   }
 
+  /**
+   * Test submitting the form with a file ID that doesn't load.
+   */
   public function testSubmitFormWithInvalidFileId() {
     // Mock file storage to return null.
     $file_storage = $this->createMock(EntityStorageInterface::class);

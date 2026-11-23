@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\stanford_publication\Unit\Hook;
 
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
@@ -197,6 +198,9 @@ class CitationHooksTest extends UnitTestCase {
 
     $citation_type = new class {
 
+      /**
+       * Return the citation type label.
+       */
       public function label() {
         return 'Other';
       }
@@ -233,6 +237,9 @@ class CitationHooksTest extends UnitTestCase {
 
     $citation_type = new class {
 
+      /**
+       * Return the citation type label.
+       */
       public function label() {
         return 'Book';
       }
@@ -388,8 +395,7 @@ class CitationHooksTest extends UnitTestCase {
   }
 
   /**
-   * If there is no citation entity, post save does nothing and does not
-   * error.
+   * Without a citation entity, node update does nothing and doesn't error.
    */
   public function testNodeUpdateWithoutCitationEntity() {
     $entity = $this->mockNodeWithCitationField(FALSE);
@@ -546,7 +552,7 @@ class CitationHooksTest extends UnitTestCase {
     $this->hooks->fieldWidgetCompleteFormAlter($form, $form_state, $context);
 
     $this->assertInstanceOf(
-      \Drupal\Core\StringTranslation\TranslatableMarkup::class,
+      TranslatableMarkup::class,
       $form['widget']['actions']['ief_add']['#value']
     );
     $this->assertSame(

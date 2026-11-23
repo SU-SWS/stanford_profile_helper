@@ -9,7 +9,6 @@ use Drupal\Component\Serialization\Yaml;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\stanford_wordpress_migrate\WordPressMigrateFieldProcessorPluginManager;
 use Drupal\stanford_wordpress_migrate\WordPressMigrationInterface;
-use GuzzleHttp\ClientInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -25,34 +24,35 @@ class ImporterStep5FieldMappingForm extends WordPressImporterFormBase {
   }
 
   /**
-   * Constructs a new ImporterStep5Form.
+   * Entity type manager service.
    *
-   * @param \GuzzleHttp\ClientInterface $client
-   *   Guzzle client service.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
-   *   Entity type manager service.
-   * @param \Drupal\Core\Entity\EntityFieldManagerInterface $entityFieldManager
-   *   Entity field manager service.
-   * @param \Drupal\stanford_wordpress_migrate\WordPressMigrateFieldProcessorPluginManager $fieldProcessorPluginManager
-   *   Field process plugin manager service.
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  public function __construct(
-    protected ClientInterface $client,
-    protected EntityTypeManagerInterface $entityTypeManager,
-    protected EntityFieldManagerInterface $entityFieldManager,
-    protected WordPressMigrateFieldProcessorPluginManager $fieldProcessorPluginManager,
-  ) {}
+  protected EntityTypeManagerInterface $entityTypeManager;
+
+  /**
+   * Entity field manager service.
+   *
+   * @var \Drupal\Core\Entity\EntityFieldManagerInterface
+   */
+  protected EntityFieldManagerInterface $entityFieldManager;
+
+  /**
+   * Field process plugin manager service.
+   *
+   * @var \Drupal\stanford_wordpress_migrate\WordPressMigrateFieldProcessorPluginManager
+   */
+  protected WordPressMigrateFieldProcessorPluginManager $fieldProcessorPluginManager;
 
   /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container): ImporterStep5FieldMappingForm|static {
-    return new static(
-      $container->get('http_client'),
-      $container->get('entity_type.manager'),
-      $container->get('entity_field.manager'),
-      $container->get('plugin.manager.wordpress_migrate_field_processor')
-    );
+    $instance = parent::create($container);
+    $instance->entityTypeManager = $container->get('entity_type.manager');
+    $instance->entityFieldManager = $container->get('entity_field.manager');
+    $instance->fieldProcessorPluginManager = $container->get('plugin.manager.wordpress_migrate_field_processor');
+    return $instance;
   }
 
   /**
@@ -310,7 +310,7 @@ class ImporterStep5FieldMappingForm extends WordPressImporterFormBase {
    *   Current state of the form.
    *
    * @return array
-   *    Modified element.
+   *   Modified element.
    */
   public static function destinationChangedAjax(array $form, FormStateInterface $form_state): array {
     $trigger = $form_state->getTriggeringElement();
@@ -323,9 +323,9 @@ class ImporterStep5FieldMappingForm extends WordPressImporterFormBase {
    * Form submission handler for multistep buttons.
    *
    * @param array $form
-   *    Complete form.
+   *   Complete form.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *    Current state of the form.
+   *   Current state of the form.
    */
   public static function settingsEditSubmit(array $form, FormStateInterface $form_state): void {
     $trigger = $form_state->getTriggeringElement();
@@ -347,9 +347,9 @@ class ImporterStep5FieldMappingForm extends WordPressImporterFormBase {
    * Ajax callback for multistep buttons.
    *
    * @param array $form
-   *    Complete form.
+   *   Complete form.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *    Current state of the form.
+   *   Current state of the form.
    */
   public static function settingsEditAjax(array $form, FormStateInterface $form_state): array {
     $form_state->setRebuild();
@@ -411,7 +411,7 @@ class ImporterStep5FieldMappingForm extends WordPressImporterFormBase {
     // Filter out fields that the user doesn't have access to edit.
     /** @var \Drupal\Core\Field\FieldDefinitionInterface[] $contentFields */
     $contentFields = array_filter($contentFields, fn($field) => $mockEntity->get($field->getName())
-        ->access('edit') && in_array($field->getType(), $acceptedFieldTypes));
+      ->access('edit') && in_array($field->getType(), $acceptedFieldTypes));
 
     $fields = [];
     foreach ($contentFields as $field) {
@@ -433,8 +433,7 @@ class ImporterStep5FieldMappingForm extends WordPressImporterFormBase {
   }
 
   /**
-   * Get the default process plugin settings that would be applied to the
-   * field.
+   * Get the default process plugin settings that would apply to the field.
    *
    * @param \Drupal\stanford_wordpress_migrate\WordPressMigrationInterface $migration
    *   WordPress content entity.
@@ -465,7 +464,7 @@ class ImporterStep5FieldMappingForm extends WordPressImporterFormBase {
    *
    * @param array $array
    *   Multidimensional array to flatten.
-   * @param string|NULL $parentKey
+   * @param string|null $parentKey
    *   Parent key if nested.
    *
    * @return array
@@ -482,11 +481,11 @@ class ImporterStep5FieldMappingForm extends WordPressImporterFormBase {
       $currentKey = !$parentKey ? $key : $parentKey . '/' . $key;
 
       if (is_array($value)) {
-        // Recursively call the function for nested arrays
+        // Recursively call the function for nested arrays.
         $flatKeys = array_merge($flatKeys, $this->flattenArrayAndGetKeys($value, $currentKey));
       }
       else {
-        // Add the current key to the list
+        // Add the current key to the list.
         $flatKeys[] = $currentKey;
       }
     }

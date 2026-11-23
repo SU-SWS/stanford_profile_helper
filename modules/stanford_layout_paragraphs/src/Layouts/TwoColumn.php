@@ -13,7 +13,7 @@ class TwoColumn extends MultiWidthLayoutBase {
   use LayoutWithBgColorTrait;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function getWidthOptions() {
     return [

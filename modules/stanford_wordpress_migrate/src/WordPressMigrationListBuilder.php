@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\stanford_wordpress_migrate;
 
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityListBuilder;
 use Drupal\Core\Url;
@@ -39,9 +40,9 @@ class WordPressMigrationListBuilder extends EntityListBuilder {
   /**
    * {@inheritdoc}
    */
-  public function getDefaultOperations(EntityInterface $entity) {
+  public function getDefaultOperations(EntityInterface $entity, ?CacheableMetadata $cacheability = NULL) {
     /** @var \Drupal\stanford_wordpress_migrate\WordPressMigrationInterface $entity */
-    $operations = parent::getDefaultOperations($entity);
+    $operations = parent::getDefaultOperations($entity, $cacheability);
     $operations['edit']['url'] = new Url('entity.wordpress_migration.edit_form', [
       'machine_name' => $entity->id(),
       'step' => 'source',

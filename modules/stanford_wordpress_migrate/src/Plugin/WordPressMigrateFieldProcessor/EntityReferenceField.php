@@ -18,10 +18,11 @@ use Drupal\stanford_wordpress_migrate\WordPressMigrateFieldProcessorPluginBase;
   fieldType: ['entity_reference']
 )]
 class EntityReferenceField extends WordPressMigrateFieldProcessorPluginBase {
+
   /**
    * {@inheritDoc}
    */
-  public function getProcess(FieldDefinitionInterface $field, ?string $column = null): array {
+  public function getProcess(FieldDefinitionInterface $field, ?string $column = NULL): array {
     $termReference = $field->getSetting('target_type') == 'taxonomy_term';
     $mediaReference = $field->getSetting('target_type') == 'media';
 

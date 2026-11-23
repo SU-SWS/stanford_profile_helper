@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\stanford_profile_helper\Unit\Hook;
 
+use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Field\FieldItemInterface;
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Routing\RouteBuilderInterface;
 use Drupal\Core\State\StateInterface;
 use Drupal\file\FileInterface;
 use Drupal\node\NodeInterface;
@@ -45,14 +47,14 @@ class NodeHooksTest extends UnitTestCase {
     $default_content = $this->createMock(StanfordDefaultContentInterface::class);
     $state = $this->createMock(StateInterface::class);
     $this->entityTypeManager = $this->createMock(EntityTypeManagerInterface::class);
-    $this->hooks = new NodeHooks($default_content, $state, $this->entityTypeManager);
+    $this->hooks = new NodeHooks($default_content, $state, $this->entityTypeManager, $this->createMock(Connection::class), $this->createMock(RouteBuilderInterface::class));
   }
 
   /**
-   * Invoke the protected buildAVTranscript method via reflection.
+   * Invoke the protected buildAvTranscript method via reflection.
    */
-  protected function callBuildAVTranscript(NodeInterface $node): void {
-    $method = new \ReflectionMethod(NodeHooks::class, 'buildAVTranscript');
+  protected function callBuildAvTranscript(NodeInterface $node): void {
+    $method = new \ReflectionMethod(NodeHooks::class, 'buildAvTranscript');
     $method->invoke($this->hooks, $node);
   }
 
@@ -63,10 +65,6 @@ class NodeHooksTest extends UnitTestCase {
     $method = new \ReflectionMethod(NodeHooks::class, 'alterMetatags');
     $method->invoke($this->hooks, $node);
   }
-
-  // -----------------------------------------------------------------------
-  // alterMetatags tests.
-  // -----------------------------------------------------------------------
 
   /**
    * Node lacks the su_search_exclusion field — metatags are left untouched.
@@ -176,8 +174,7 @@ class NodeHooksTest extends UnitTestCase {
   }
 
   /**
-   * Exclusion is disabled — an existing robots tag is removed while other
-   * tags are preserved.
+   * Exclusion is disabled — the robots tag is removed, other tags are kept.
    */
   public function testAlterMetatagsExclusionDisabledRemovesRobotsTag() {
     $existing = json_encode([
@@ -211,8 +208,7 @@ class NodeHooksTest extends UnitTestCase {
   }
 
   /**
-   * Empty existing metatags JSON does not raise an error and defaults to an
-   * empty tag array when exclusion is disabled.
+   * Empty metatags JSON defaults to no tags when exclusion is disabled.
    */
   public function testAlterMetatagsHandlesEmptyMetatagsJson() {
     $metatagsField = $this->createMock(FieldItemListInterface::class);
@@ -237,10 +233,6 @@ class NodeHooksTest extends UnitTestCase {
     $this->callAlterMetatags($node);
   }
 
-  // -----------------------------------------------------------------------
-  // pathautoPatternAlter tests.
-  // -----------------------------------------------------------------------
-
   /**
    * No 'node' key in context data — pattern must not change.
    */
@@ -253,7 +245,7 @@ class NodeHooksTest extends UnitTestCase {
   }
 
   /**
-   * 'data['node']' is not a NodeInterface — pattern must not change.
+   * The data node is not a NodeInterface — pattern must not change.
    */
   public function testPathautoPatternAlterNodeNotNodeInterface() {
     $pattern = $this->createMock(PathautoPatternInterface::class);
@@ -339,25 +331,21 @@ class NodeHooksTest extends UnitTestCase {
     $this->hooks->pathautoPatternAlter($pattern, $context);
   }
 
-  // -----------------------------------------------------------------------
-  // buildAVTranscript tests.
-  // -----------------------------------------------------------------------
-
   /**
    * Node lacks the subtitles field — method returns without touching the node.
    */
-  public function testBuildAVTranscriptNoSubtitlesField() {
+  public function testBuildAvTranscriptNoSubtitlesField() {
     $node = $this->createMock(NodeInterface::class);
     $node->method('hasField')->with('su_media_subtitles')->willReturn(FALSE);
     $node->expects($this->never())->method('set');
 
-    $this->callBuildAVTranscript($node);
+    $this->callBuildAvTranscript($node);
   }
 
   /**
    * Subtitles field is empty — transcript is set to NULL.
    */
-  public function testBuildAVTranscriptEmptySubtitlesField() {
+  public function testBuildAvTranscriptEmptySubtitlesField() {
     $fieldList = $this->createMock(FieldItemListInterface::class);
     $fieldList->method('count')->willReturn(0);
 
@@ -366,13 +354,13 @@ class NodeHooksTest extends UnitTestCase {
     $node->method('get')->with('su_media_subtitles')->willReturn($fieldList);
     $node->expects($this->once())->method('set')->with('su_media_transcript', NULL);
 
-    $this->callBuildAVTranscript($node);
+    $this->callBuildAvTranscript($node);
   }
 
   /**
    * File entity cannot be loaded — transcript is set to NULL.
    */
-  public function testBuildAVTranscriptFileNotFound() {
+  public function testBuildAvTranscriptFileNotFound() {
     $fieldItem = $this->createMock(FieldItemInterface::class);
     $fieldItem->method('getValue')->willReturn(['target_id' => 99]);
 
@@ -392,13 +380,13 @@ class NodeHooksTest extends UnitTestCase {
     $node->method('get')->with('su_media_subtitles')->willReturn($fieldList);
     $node->expects($this->once())->method('set')->with('su_media_transcript', NULL);
 
-    $this->callBuildAVTranscript($node);
+    $this->callBuildAvTranscript($node);
   }
 
   /**
    * Valid SRT content — transcript field is populated with HTML and format.
    */
-  public function testBuildAVTranscriptSetsTranscriptFromSrtContent() {
+  public function testBuildAvTranscriptSetsTranscriptFromSrtContent() {
     $srt = implode("\n", [
       '1',
       '00:00:00,000 --> 00:00:02,000',
@@ -443,13 +431,13 @@ class NodeHooksTest extends UnitTestCase {
         })
       );
 
-    $this->callBuildAVTranscript($node);
+    $this->callBuildAvTranscript($node);
   }
 
   /**
-   * file_get_contents returns false — transcript field is not touched.
+   * File_get_contents returns false — transcript field is not touched.
    */
-  public function testBuildAVTranscriptFileContentsUnreadable() {
+  public function testBuildAvTranscriptFileContentsUnreadable() {
     // An invalid URI scheme causes file_get_contents() to return false.
     $file = $this->createMock(FileInterface::class);
     $file->method('getFileUri')->willReturn('invalid-scheme://nonexistent/file.srt');
@@ -475,7 +463,7 @@ class NodeHooksTest extends UnitTestCase {
     $node->expects($this->never())->method('set');
 
     // Suppress the PHP warning that file_get_contents emits for bad URIs.
-    @$this->callBuildAVTranscript($node);
+    @$this->callBuildAvTranscript($node);
   }
 
 }

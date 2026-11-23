@@ -9,10 +9,8 @@ use Drupal\stanford_wordpress_migrate\Controller\WordPressMigrateController;
 use Drupal\stanford_wordpress_migrate\WordPressMigrationInterface;
 use Drupal\Tests\UnitTestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use function Symfony\Component\String\s;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
@@ -53,7 +51,7 @@ class WordPressMigrateControllerTest extends UnitTestCase {
 
     $this->controller->expects($this->any())
       ->method('t')
-      ->willReturnCallback(function($string) {
+      ->willReturnCallback(function ($string) {
         return $string;
       });
   }
@@ -115,7 +113,7 @@ class WordPressMigrateControllerTest extends UnitTestCase {
       'sources' => ['foo', 'bar', 'baz', 'test foo bar'],
     ]);
 
-    // Since the method is complex, we'll just test it returns JsonResponse
+    // Since the method is complex, we'll just test it returns JsonResponse.
     $result = $this->controller->handleSourcesAutocomplete($request);
     $this->assertInstanceOf(JsonResponse::class, $result);
 

@@ -19,7 +19,7 @@ use Drupal\stanford_profile_helper\Plugin\Derivative\ReactBlockDeriver;
 class PDBlock extends PdbBlock {
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    *
    * @codeCoverageIgnore
    */

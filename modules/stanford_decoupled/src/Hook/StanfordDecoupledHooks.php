@@ -49,7 +49,8 @@ class StanfordDecoupledHooks {
       DecoupledConfigOverrides::isDecoupled() &&
       $this->routeMatch->getRouteName() == 'entity.node.canonical'
     ) {
-      // Disable Editoria11y library if the site is decoupled to avoid confusion.
+      // Disable Editoria11y library if the site is decoupled to avoid
+      // confusion.
       $libraries = [];
     }
   }
@@ -59,12 +60,16 @@ class StanfordDecoupledHooks {
    */
   #[Hook('layout_access')]
   public function layoutAccess(EntityInterface $entity, $operation, AccountInterface $account) {
-    // Only allow access if the site is decoupled. Otherwise, don't change access.
+    // Only allow access if the site is decoupled. Otherwise, don't change
+    // access.
     return AccessResult::allowedIf($operation == 'view' && DecoupledConfigOverrides::isDecoupled());
   }
 
   /**
-   * @param $plugins
+   * Implements hook_next_revalidator_info_alter().
+   *
+   * @param array $plugins
+   *   Revalidator plugin definitions, keyed by plugin id.
    */
   #[Hook('next_revalidator_info_alter')]
   public function nextRevalidatorInfoAlter(&$plugins) {

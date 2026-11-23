@@ -23,7 +23,7 @@ class FormHooksTest extends UnitTestCase {
   protected FormHooks $hooks;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
@@ -60,8 +60,10 @@ class FormHooksTest extends UnitTestCase {
   }
 
   /**
-   * The 'su_event_schedule' field strips drag handles/order columns from
-   * table rows and removes the header/tabledrag keys altogether.
+   * The 'su_event_schedule' field removes the table drag and order features.
+   *
+   * Drag handles and order columns are stripped from table rows and the
+   * header/tabledrag keys are removed altogether.
    */
   public function testPreprocessFieldMultipleValueFormEventSchedule(): void {
     $variables = [
@@ -100,8 +102,9 @@ class FormHooksTest extends UnitTestCase {
   }
 
   /**
-   * A child with the person CTA add-more button gets its value overridden,
-   * even when the field name is not 'su_schedule_speaker'.
+   * A child with the person CTA add-more button gets its value overridden.
+   *
+   * This happens even when the field name is not 'su_schedule_speaker'.
    */
   public function testPreprocessFieldMultipleValueFormChildWithPersonCta(): void {
     $variables = [
@@ -126,8 +129,9 @@ class FormHooksTest extends UnitTestCase {
   }
 
   /**
-   * A child without the person CTA add-more button is left untouched when
-   * the field name is not 'su_schedule_speaker'.
+   * A child without the person CTA add-more button is left untouched.
+   *
+   * The field name here is not 'su_schedule_speaker'.
    */
   public function testPreprocessFieldMultipleValueFormChildWithoutPersonCta(): void {
     $variables = [
@@ -147,8 +151,9 @@ class FormHooksTest extends UnitTestCase {
   }
 
   /**
-   * The 'su_schedule_speaker' field name updates all the add-more buttons on
-   * both the element and button render arrays, for each child present.
+   * The 'su_schedule_speaker' field updates all the add-more buttons.
+   *
+   * Both the element and button render arrays are updated, for each child.
    */
   public function testPreprocessFieldMultipleValueFormScheduleSpeaker(): void {
     $variables = [
@@ -172,8 +177,7 @@ class FormHooksTest extends UnitTestCase {
   }
 
   /**
-   * A child with the person CTA key, combined with the speaker field name,
-   * triggers both branches together.
+   * The person CTA key and the speaker field name trigger both branches.
    */
   public function testPreprocessFieldMultipleValueFormScheduleSpeakerWithPersonCta(): void {
     $variables = [

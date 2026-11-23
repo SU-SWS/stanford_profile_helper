@@ -12,17 +12,22 @@ use Drupal\user\Entity\User;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\Group;
 
+/**
+ * Kernel tests for the intranet entity access field widget.
+ */
 #[RunTestsInSeparateProcesses]
 #[Group('stanford_intranet')]
 class EntityAccessFieldWidgetTest extends IntranetKernelTestBase {
 
   /**
+   * Page node used in the tests.
+   *
    * @var \Drupal\node\NodeInterface
    */
   protected $node;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
@@ -48,29 +53,6 @@ class EntityAccessFieldWidgetTest extends IntranetKernelTestBase {
     $this->node->setOwner($user);
     $this->node->save();
   }
-
-//  /**
-//   * Verify the field widget form structure.
-//   */
-//  public function testFieldWidgetFormElement() {
-//    $this->node->set('stanford_intranet__access', [
-//      ['role' => 'foo', 'access' => ['view']],
-//    ])->save();
-//    /** @var \Drupal\Core\Entity\EntityFormBuilderInterface $entity_form_builder */
-//    $entity_form_builder = \Drupal::service('entity.form_builder');
-//
-//    $form = $entity_form_builder->getForm($this->node);
-//    $this->assertArrayHasKey('stanford_intranet__access', $form);
-//    $this->assertArrayNotHasKey('#options', $form['stanford_intranet__access']['widget']);
-//    \Drupal::state()->set('stanford_intranet', TRUE);
-//
-//    $form = $entity_form_builder->getForm($this->node);
-//    $this->assertArrayNotHasKey('#options', $form['stanford_intranet__access']['widget']);
-//
-//    Role::create(['id' => 'student', 'label' => 'Student'])->save();
-//    $form = $entity_form_builder->getForm($this->node);
-//    $this->assertArrayHasKey('student', $form['stanford_intranet__access']['widget']['#options']);
-//  }
 
   /**
    * Saving the node form should save the field widget.

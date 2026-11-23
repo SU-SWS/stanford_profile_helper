@@ -32,7 +32,7 @@ class AlgoliaHooks {
     #[Autowire(service: 'config_pages.loader')]
     protected ConfigPagesLoaderServiceInterface $configPagesLoader,
     protected RequestStack $requestStack,
-    protected EntityTypeManagerInterface $entityTypeManager
+    protected EntityTypeManagerInterface $entityTypeManager,
   ) {}
 
   /**
@@ -109,18 +109,18 @@ class AlgoliaHooks {
         }
 
         // Data that is being sent as the taxonomy term names should always be
-        // sent as an array of strings. When the node is only configured with one
-        // term in the field, it tries to send it as a string. So we force to be
-        // an array.
+        // sent as an array of strings. When the node is only configured with
+        // one term in the field, it tries to send it as a string. So we force
+        // it to be an array.
         $property_path = $index->getField($name)?->getPropertyPath() ?: '';
         if (is_string($field) && str_contains($property_path, ':entity:name')) {
           $field = [$field];
         }
 
         // Either the canonical url hasn't been set, or it matches the current
-        // request. It would match the current request when the event is happening
-        // in the UI. If cron is running, the current host won't match the canonical
-        // url.
+        // request. It would match the current request when the event is
+        // happening in the UI. If cron is running, the current host won't match
+        // the canonical url.
         if (
           $site_domain &&
           $site_domain != $current_host &&
@@ -152,7 +152,8 @@ class AlgoliaHooks {
     // record is under the limit.
     while (strlen(json_encode($item, JSON_UNESCAPED_SLASHES)) > 10000) {
       $words = explode(' ', $item['html']);
-      array_pop($words); // Removes the last element
+      // Removes the last element.
+      array_pop($words);
       $item['html'] = implode(' ', $words);
     }
   }
@@ -177,7 +178,7 @@ class AlgoliaHooks {
     $termStorage = $this->entityTypeManager->getStorage('taxonomy_term');
 
     // Grab the first parent and use that as the key for the array. This will
-    // allow facets to be used for "filters.Foo"
+    // allow facets to be used for "filters.Foo".
     foreach ($data as $tid) {
       $terms = $termStorage->loadAllParents($tid);
       if (!$terms) {

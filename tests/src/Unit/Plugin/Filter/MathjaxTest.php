@@ -8,7 +8,7 @@ use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class MathjaxTest.
+ * Tests the MathJax filter override.
  */
 #[Group('stanford_profile_helper')]
 class MathjaxTest extends UnitTestCase {

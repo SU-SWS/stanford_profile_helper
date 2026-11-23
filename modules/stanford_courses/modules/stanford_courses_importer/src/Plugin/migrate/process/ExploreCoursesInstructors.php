@@ -14,7 +14,7 @@ use Drupal\migrate\Row;
 class ExploreCoursesInstructors extends ProcessPluginBase {
 
   /**
-   * {@inheritDoc}.
+   * {@inheritdoc}
    */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
     if (!is_string($value)) {

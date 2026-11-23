@@ -9,7 +9,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class CitationTypeFormTest
+ * Tests the citation type add and edit form.
  */
 #[RunTestsInSeparateProcesses]
 #[Group('stanford_publication')]
@@ -31,16 +31,16 @@ class CitationTypeFormTest extends PublicationTestBase {
     $form_object->setEntity($citation_type);
     $form = $form_object->buildForm($form, $form_state);
 
-    $this->assertArrayHasKey('id',$form);
-    $this->assertArrayHasKey('label',$form);
-    $this->assertArrayHasKey('type',$form);
+    $this->assertArrayHasKey('id', $form);
+    $this->assertArrayHasKey('label', $form);
+    $this->assertArrayHasKey('type', $form);
 
     $form_object->save($form, $form_state);
-    $this->assertEquals('/admin/structure/citation_type',$form_state->getRedirect()->toString());
+    $this->assertEquals('/admin/structure/citation_type', $form_state->getRedirect()->toString());
 
     $form_object->setEntity(CitationType::load('su_foo'));
     $form_object->save($form, $form_state);
-    $this->assertEquals('/admin/structure/citation_type',$form_state->getRedirect()->toString());
+    $this->assertEquals('/admin/structure/citation_type', $form_state->getRedirect()->toString());
   }
 
 }

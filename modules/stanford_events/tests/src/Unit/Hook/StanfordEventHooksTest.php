@@ -24,7 +24,7 @@ class StanfordEventHooksTest extends UnitTestCase {
   protected StanfordEventHooks $hooks;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
@@ -32,8 +32,9 @@ class StanfordEventHooksTest extends UnitTestCase {
   }
 
   /**
-   * When the node has the date field with an end value, the end date is
-   * attached to the attributes, and the library is always attached.
+   * The end date is added to the attributes when the date has an end value.
+   *
+   * The library is always attached.
    */
   public function testPreprocessNodeStanfordEventFullWithEndDate(): void {
     $field = $this->createMock(FieldItemListInterface::class);
@@ -57,8 +58,9 @@ class StanfordEventHooksTest extends UnitTestCase {
   }
 
   /**
-   * When the date field exists but has no end value, no attribute is added
-   * but the library is still attached.
+   * No attribute is added when the date field has no end value.
+   *
+   * The library is still attached.
    */
   public function testPreprocessNodeStanfordEventFullEmptyEndDate(): void {
     $field = $this->createMock(FieldItemListInterface::class);
@@ -82,8 +84,9 @@ class StanfordEventHooksTest extends UnitTestCase {
   }
 
   /**
-   * When the node doesn't have the date field at all, no attribute is added
-   * but the library is still attached.
+   * No attribute is added when the node has no date field.
+   *
+   * The library is still attached.
    */
   public function testPreprocessNodeStanfordEventFullNoDateField(): void {
     $node = $this->createMock(NodeInterface::class);

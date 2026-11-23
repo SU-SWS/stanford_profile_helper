@@ -129,8 +129,9 @@ class LibraryHooks {
     $is_admin = $this->adminContext->isAdminRoute();
     if (!$is_admin && $context['entity']->getEntityTypeId() == 'node') {
       $bundle = $context['entity']->bundle();
-      // Add libraries that correspond to the current paragraph type. No need to
-      // check for the existing library. No message is created if no library exists.
+      // Add libraries that correspond to the current node type. No need to
+      // check for the existing library. No message is created if no library
+      // exists.
       $build['#attached']['library'][] = "stanford_profile_styles/node.$bundle";
     }
 
@@ -139,7 +140,8 @@ class LibraryHooks {
     }
     $bundle = str_replace('stanford_', '', $context['entity']->bundle());
     // Add libraries that correspond to the current paragraph type. No need to
-    // check for the existing library. No message is created if no library exists.
+    // check for the existing library. No message is created if no library
+    // exists.
     $build['#attached']['library'][] = "stanford_profile_styles/paragraph.$bundle";
   }
 

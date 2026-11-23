@@ -2,8 +2,10 @@
 
 namespace Drupal\stanford_decoupled\Plugin\jsonapi\FieldEnhancer;
 
+use Drupal\Component\Utility\DeprecationHelper;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\image\ImageDerivativeUtilities;
 use Drupal\jsonapi_extras\Plugin\ResourceFieldEnhancerBase;
 use Shaper\Util\Context;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -34,14 +36,16 @@ class Base64Image extends ResourceFieldEnhancerBase implements ContainerFactoryP
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('entity_type.manager')
+      $container->get('entity_type.manager'),
+      // @todo Require the service once Drupal 11.4 is the minimum version.
+      $container->has(ImageDerivativeUtilities::class) ? $container->get(ImageDerivativeUtilities::class) : NULL,
     );
   }
 
   /**
    * {@inheritDoc}
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entityTypeManager) {
+  final public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entityTypeManager, protected ?ImageDerivativeUtilities $imageDerivativeUtilities = NULL) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entityTypeManager;
   }
@@ -58,7 +62,12 @@ class Base64Image extends ResourceFieldEnhancerBase implements ContainerFactoryP
     $form['style'] = [
       '#type' => 'select',
       '#title' => $this->t('Image style'),
-      '#options' => image_style_options(FALSE),
+      '#options' => DeprecationHelper::backwardsCompatibleCall(
+        \Drupal::VERSION,
+        '11.4',
+        fn() => $this->imageDerivativeUtilities->styleOptions(FALSE),
+        fn() => image_style_options(FALSE),
+      ),
       '#default_value' => $settings['style'] ?? 'thumbnail',
     ];
     return $form;

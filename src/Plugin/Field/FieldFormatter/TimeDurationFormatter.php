@@ -63,7 +63,7 @@ class TimeDurationFormatter extends FormatterBase {
    * Element validation to clean up submitted values.
    *
    * @param array $element
-   *   Field element
+   *   Field element.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   Submitted form state.
    */
@@ -122,8 +122,7 @@ class TimeDurationFormatter extends FormatterBase {
   }
 
   /**
-   * Build a long-style, human-readable duration string from a number of
-   * seconds.
+   * Build a long-style, human-readable duration string from seconds.
    *
    * Produces a translated, verbose representation including hours, minutes and
    * seconds. The output respects the formatter 'units' setting to show or hide

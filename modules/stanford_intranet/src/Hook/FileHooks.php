@@ -45,10 +45,10 @@ class FileHooks {
   public function fileDownload($uri) {
     // When viewing images that were converted to PNG files, the Image Effects
     // module appends the `.png` extension onto the end of the existing uri.
-    // When a user visits a page with an image that was converted to PNG, Drupal
-    // core throws an access-denied error because it's unable to find the original
-    // image because of the extension changing. We simply need to remove the
-    // ending png extension and then pass it back to the core hook.
+    // When a user visits a page with an image that was converted to PNG,
+    // Drupal core throws an access-denied error because it's unable to find
+    // the original image because of the extension changing. We simply need to
+    // remove the ending png extension and then pass it back to the core hook.
     // @see \Drupal\image\Controller\ImageStyleDownloadController::deliver().
     // @see file_file_download().
     if (preg_match('/.jp[e]?g.png$/', $uri) && StreamWrapperManager::getScheme($uri) == 'private') {
@@ -62,10 +62,10 @@ class FileHooks {
     }
 
     $usage_list = $this->fileUsage->listUsage($file);
-    // Allow icon files to be viewed. All other files on the system are referenced
-    // via media entities, so they will go through normal access checks. This
-    // allows media library icons, paragraph type icons, etc to be viewed and
-    // downloaded.
+    // Allow icon files to be viewed. All other files on the system are
+    // referenced via media entities, so they will go through normal access
+    // checks. This allows media library icons, paragraph type icons, etc to be
+    // viewed and downloaded.
     if (!isset($usage_list['file']['media'])) {
       return $file->getDownloadHeaders();
     }
@@ -79,8 +79,8 @@ class FileHooks {
     $usage = $this->fileUsage->listUsage($file);
 
     // Allow the user to "download" the file if it meets the conditions. This
-    // allows images that are saved on config pages to be viewed by authenticated
-    // users. Such fields like the logo field.
+    // allows images that are saved on config pages to be viewed by
+    // authenticated users. Such fields like the logo field.
     $allowed = $this->state->get('stanford_intranet', FALSE) &&
       $account->isAuthenticated() &&
       isset($usage['file']['config_pages']) &&

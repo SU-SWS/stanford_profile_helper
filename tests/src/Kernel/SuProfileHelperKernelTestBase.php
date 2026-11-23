@@ -7,7 +7,6 @@ use Drupal\node\Entity\NodeType;
 
 /**
  * Test the event subscriber.
- *
  */
 abstract class SuProfileHelperKernelTestBase extends KernelTestBase {
 

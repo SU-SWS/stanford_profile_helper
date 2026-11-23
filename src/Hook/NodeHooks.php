@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Drupal\stanford_profile_helper\Hook;
 
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Installer\InstallerKernel;
 use Drupal\Core\Link;
 use Drupal\Core\Messenger\MessengerTrait;
+use Drupal\Core\Routing\RouteBuilderInterface;
 use Drupal\Core\State\StateInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\node\NodeInterface;
@@ -35,8 +37,18 @@ class NodeHooks {
    *   Core state service.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   Core entity type manager service.
+   * @param \Drupal\Core\Database\Connection $database
+   *   Database connection.
+   * @param \Drupal\Core\Routing\RouteBuilderInterface $routeBuilder
+   *   Router builder service.
    */
-  public function __construct(protected StanfordDefaultContentInterface $defaultContent, protected StateInterface $state, protected EntityTypeManagerInterface $entityTypeManager) {}
+  public function __construct(
+    protected StanfordDefaultContentInterface $defaultContent,
+    protected StateInterface $state,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected Connection $database,
+    protected RouteBuilderInterface $routeBuilder,
+  ) {}
 
   /**
    * On node insert event listener.
@@ -70,7 +82,7 @@ class NodeHooks {
     Cache::invalidateTags(['config:views.view.search']);
 
     if ($entity->bundle() == 'stanford_media') {
-      $this->buildAVTranscript($entity);
+      $this->buildAvTranscript($entity);
     }
 
     if (
@@ -200,7 +212,7 @@ class NodeHooks {
    * @param \Drupal\node\NodeInterface $node
    *   Node entity being saved.
    */
-  protected function buildAVTranscript(NodeInterface $node) {
+  protected function buildAvTranscript(NodeInterface $node) {
     if (!$node->hasField('su_media_subtitles')) {
       return;
     }
@@ -278,11 +290,11 @@ class NodeHooks {
       $node->hasField('field_menulink') &&
       !$node->get('field_menulink')->isEmpty()
     ) {
-      \Drupal::database()->delete('menu_tree')
+      $this->database->delete('menu_tree')
         ->condition('id', 'menu_link_field:%', 'LIKE')
         ->condition('route_param_key', 'node=' . $node->id())
         ->execute();
-      \Drupal::service('router.builder')->rebuildIfNeeded();
+      $this->routeBuilder->rebuildIfNeeded();
       StanfordProfileHelper::clearMenuCacheTag();
     }
   }

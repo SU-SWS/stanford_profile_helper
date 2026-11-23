@@ -11,14 +11,22 @@ use Drupal\stanford_profile_helper\Plugin\search_api\processor\SpaceTags;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\Group;
 
+/**
+ * Tests the space tags search API processor.
+ */
 #[Group('stanford_profile_helper')]
 class SpaceTagsTest extends UnitTestCase {
 
   /**
+   * The processor plugin being tested.
+   *
    * @var \Drupal\stanford_profile_helper\Plugin\search_api\processor\SpaceTags
    */
   protected $plugin;
 
+  /**
+   * {@inheritdoc}
+   */
   protected function setUp(): void {
     parent::setUp();
     $container = new ContainerBuilder();
@@ -33,6 +41,9 @@ class SpaceTagsTest extends UnitTestCase {
     $this->plugin->setIndex($index);
   }
 
+  /**
+   * Test spaces are added between HTML tags.
+   */
   public function testFieldProcessor() {
     $this->assertTrue($this->plugin->defaultConfiguration()['all_fields']);
 
@@ -43,8 +54,14 @@ class SpaceTagsTest extends UnitTestCase {
 
 }
 
+/**
+ * Space tags processor that exposes processFieldValue() for testing.
+ */
 class TestSpaceTags extends SpaceTags {
 
+  /**
+   * Expose the protected method so the test can call it.
+   */
   public function processFieldValue(&$value, $type) {
     return parent::processFieldValue($value, $type);
   }

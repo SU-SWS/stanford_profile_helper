@@ -163,7 +163,7 @@ class ImporterStepReviewFormTest extends KernelTestBase {
       'base_url' => 'https://example.com',
     ]);
     $migration->setConfigurationValue('taxonomy_term', [
-     '/wp/v2/categories' => ['test_vocab' => []],
+      '/wp/v2/categories' => ['test_vocab' => []],
     ]);
 
     $form_state = new FormState();
@@ -196,7 +196,8 @@ class ImporterStepReviewFormTest extends KernelTestBase {
     $form = $this->form->buildForm([], $form_state);
 
     $this->assertArrayHasKey('node', $form);
-    // Should have two rows for the two destinations, but the table also has a header row.
+    // Should have two rows for the two destinations, but the table also has a
+    // header row.
     $this->assertGreaterThanOrEqual(2, count($form['node']['table']));
   }
 

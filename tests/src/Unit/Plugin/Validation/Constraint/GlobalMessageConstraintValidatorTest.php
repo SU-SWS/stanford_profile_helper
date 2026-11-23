@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class GlobalMessageConstraintValidatorTest.
+ * Tests the global message constraint validator.
  */
 #[Group('stanford_profile_helper')]
 class GlobalMessageConstraintValidatorTest extends UnitTestCase {
@@ -111,6 +111,7 @@ class GlobalMessageConstraintValidatorTest extends UnitTestCase {
    * Build a context object for the validator.
    *
    * @return \Symfony\Component\Validator\Context\ExecutionContext
+   *   The execution context.
    */
   protected function getContext() {
     $validator = $this->createMock(ValidatorInterface::class);

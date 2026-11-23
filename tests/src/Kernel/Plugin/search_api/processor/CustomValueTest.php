@@ -9,6 +9,7 @@ use Drupal\Tests\search_api\Kernel\Processor\CustomValueTest as SearchApiCustomV
 use PHPUnit\Framework\Attributes\Group;
 
 /**
+ * Tests the custom value search API processor with token alternatives.
  */
 #[Group('stanford_profile_helper')]
 #[RunTestsInSeparateProcesses]
@@ -34,6 +35,9 @@ class CustomValueTest extends SearchApiCustomValueTest {
     'token_or',
   ];
 
+  /**
+   * Add a custom value field with token alternatives to the index.
+   */
   public function setUp($processor = NULL): void {
     parent::setUp($processor);
 
@@ -45,6 +49,9 @@ class CustomValueTest extends SearchApiCustomValueTest {
     $this->index->addField($field);
   }
 
+  /**
+   * Test the custom value processor plugin can be created.
+   */
   public function testPlugin() {
     /** @var \Drupal\search_api\Processor\ProcessorPluginManager $plugin_manager */
     $plugin_manager = \Drupal::service('plugin.manager.search_api.processor');

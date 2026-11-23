@@ -45,10 +45,13 @@ class StanfordNotificationsCommands extends DrushCommands {
   #[CLI\Argument(name: 'message', description: 'Notification message for the user.')]
   #[CLI\Option(name: 'roles', description: 'Comma delimited list of roles to set the notification for.')]
   #[CLI\Option(name: 'status', description: "Notification status type, 'status', 'warning', or 'error'.")]
-  public function addNotification(string $message, array $options = [
-    'roles' => '',
-    'status' => MessengerInterface::TYPE_STATUS,
-  ]): void {
+  public function addNotification(
+    string $message,
+    array $options = [
+      'roles' => '',
+      'status' => MessengerInterface::TYPE_STATUS,
+    ],
+  ): void {
     $status_options = [
       MessengerInterface::TYPE_STATUS,
       MessengerInterface::TYPE_WARNING,

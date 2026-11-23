@@ -24,9 +24,9 @@ abstract class WordPressMigrateFieldProcessorPluginBase extends PluginBase imple
    *
    * @param array $configuration
    *   Keyed array of configuration.
-   * @param $plugin_id
+   * @param string $plugin_id
    *   Plugin id.
-   * @param $plugin_definition
+   * @param mixed $plugin_definition
    *   Plugin definition.
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition) {

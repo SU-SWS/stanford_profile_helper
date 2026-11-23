@@ -13,7 +13,6 @@ use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
-use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\file\FileInterface;
 use Drupal\layout_library\Entity\Layout;
 use Drupal\stanford_profile_helper\LayoutLibraryIconInterface;
@@ -27,20 +26,48 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('stanford_profile_helper')]
 class LayoutLibraryIconsWidgetTest extends UnitTestCase {
 
+  /**
+   * The widget being tested.
+   *
+   * @var \Drupal\stanford_profile_helper\Plugin\Field\FieldWidget\LayoutLibraryIconsWidget
+   */
   protected $widget;
+
+  /**
+   * Mocked layout library icon service.
+   *
+   * @var \Drupal\stanford_profile_helper\LayoutLibraryIconInterface|\PHPUnit\Framework\MockObject\MockObject
+   */
   protected $layoutLibraryIcon;
+
+  /**
+   * Mocked entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+   */
   protected $entityTypeManager;
+
+  /**
+   * Mocked renderer.
+   *
+   * @var \Drupal\Core\Render\RendererInterface|\PHPUnit\Framework\MockObject\MockObject
+   */
   protected $renderer;
+
+  /**
+   * Mocked string translation service.
+   *
+   * @var \Drupal\Core\StringTranslation\TranslationInterface|\PHPUnit\Framework\MockObject\MockObject
+   */
   protected $translation;
 
+  /**
+   * {@inheritdoc}
+   */
   protected function setUp(): void {
     parent::setUp();
 
-    $this->translation = $this->createMock(TranslationInterface::class);
-    $this->translation->method('translate')
-      ->willReturnCallback(function ($string) {
-        return new TranslatableMarkup($string, [], [], $this->translation);
-      });
+    $this->translation = $this->getStringTranslationStub();
 
     $this->layoutLibraryIcon = $this->createMock(LayoutLibraryIconInterface::class);
     $this->entityTypeManager = $this->createMock(EntityTypeManagerInterface::class);
@@ -67,6 +94,9 @@ class LayoutLibraryIconsWidgetTest extends UnitTestCase {
     $this->widget->setStringTranslation($this->translation);
   }
 
+  /**
+   * Test the form element includes the layout options and their icons.
+   */
   public function testFormElementWithLayoutsAndIcons() {
     // Create mock layouts.
     $layout1 = $this->createMock(Layout::class);
@@ -95,7 +125,8 @@ class LayoutLibraryIconsWidgetTest extends UnitTestCase {
         [$layout2, $icon2],
       ]);
 
-    // Mock entity storage - loadMultiple is called with option keys including _none.
+    // Mock entity storage - loadMultiple is called with option keys including
+    // _none.
     $storage = $this->createMock(EntityStorageInterface::class);
     $storage->method('loadMultiple')
       ->willReturnCallback(function ($ids) use ($layout1, $layout2) {
@@ -122,9 +153,14 @@ class LayoutLibraryIconsWidgetTest extends UnitTestCase {
 
     // Mock field items.
     $entity = new class {
+
+      /**
+       * Get the entity type ID of the stub entity.
+       */
       public function getEntityTypeId() {
         return 'node';
       }
+
     };
 
     $items = $this->createMock(FieldItemListInterface::class);
@@ -149,6 +185,10 @@ class LayoutLibraryIconsWidgetTest extends UnitTestCase {
       $this->entityTypeManager,
       $this->renderer
     ) extends LayoutLibraryIconsWidget {
+
+      /**
+       * Get fixed layout options.
+       */
       public function getOptions($entity = NULL) {
         return [
           '_none' => '- Default -',
@@ -156,9 +196,14 @@ class LayoutLibraryIconsWidgetTest extends UnitTestCase {
           'layout_2' => 'Layout 2',
         ];
       }
+
+      /**
+       * Get the selected layout options.
+       */
       public function getSelectedOptions(FieldItemListInterface $items, $delta = 0) {
         return ['layout_1'];
       }
+
     };
     $widget->setStringTranslation($this->translation);
 
@@ -183,6 +228,9 @@ class LayoutLibraryIconsWidgetTest extends UnitTestCase {
     $this->assertEquals(['layout-library-icons'], $result['#attributes']['class']);
   }
 
+  /**
+   * Test the empty option label.
+   */
   public function testGetEmptyLabel() {
     // Use reflection to access protected method.
     $reflection = new \ReflectionClass($this->widget);

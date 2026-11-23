@@ -56,7 +56,7 @@ class StanfordDefaultContent implements StanfordDefaultContentInterface {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function createDefaultContent(string $page_uuid, string $type = 'profile', string $name = ''): ?ContentEntityInterface {
     // Profile can only ever be 1 value, so ignore whatever was passed by $name.

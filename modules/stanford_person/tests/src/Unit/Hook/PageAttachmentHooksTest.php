@@ -24,7 +24,7 @@ class PageAttachmentHooksTest extends UnitTestCase {
   protected $routeMatch;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();

@@ -29,7 +29,7 @@ class LayoutLibraryIconsWidget extends OptionsWidgetBase {
   /**
    * Constructs the plugin instance.
    */
-  public function __construct(
+  final public function __construct(
     $plugin_id,
     $plugin_definition,
     FieldDefinitionInterface $field_definition,
@@ -37,7 +37,7 @@ class LayoutLibraryIconsWidget extends OptionsWidgetBase {
     array $third_party_settings,
     protected LayoutLibraryIconInterface $layoutLibraryIcon,
     protected EntityTypeManagerInterface $entityTypeManager,
-    protected RendererInterface $renderer
+    protected RendererInterface $renderer,
   ) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $third_party_settings);
   }

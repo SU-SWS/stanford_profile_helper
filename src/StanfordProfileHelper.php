@@ -23,7 +23,7 @@ class StanfordProfileHelper {
     if (!is_array($item) || empty($item['#cache']['tags'])) {
       return;
     }
-    $item['#cache']['tags'] = array_filter($item['#cache']['tags'], function($tag) use ($tags) {
+    $item['#cache']['tags'] = array_filter($item['#cache']['tags'], function ($tag) use ($tags) {
       foreach ($tags as $search_tag) {
         if (preg_match("/$search_tag/", $tag)) {
           return FALSE;

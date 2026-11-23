@@ -9,14 +9,13 @@ use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class DateMathTest.
+ * Unit tests for the date math migrate process plugin.
  */
 #[Group('stanford_events_importer')]
 class DateMathTest extends UnitTestCase {
 
   /**
-   * [protected description]
-   * @var [type]
+   * Test the end date is calculated from the start date.
    */
   public function testTransform() {
     $end_value = "2022-06-11 01:00:00 -0700";
@@ -25,7 +24,7 @@ class DateMathTest extends UnitTestCase {
     $configuration = [
       'operation' => 'subtraction',
       'values' => [
-        $value
+        $value,
       ],
     ];
 
@@ -39,13 +38,13 @@ class DateMathTest extends UnitTestCase {
 
     // Add.
     $configuration['operation'] = "addition";
-    $plugin = new DateMath($configuration,  '', []);
+    $plugin = new DateMath($configuration, '', []);
     $duration = $plugin->transform($end_value, $migrate, $row, '');
     $this->assertEquals(55164420, $duration);
 
-    // Nana
+    // Nana.
     unset($configuration['operation']);
-    $plugin = new DateMath($configuration,  '', []);
+    $plugin = new DateMath($configuration, '', []);
     $duration = $plugin->transform($end_value, $migrate, $row, '');
     $this->assertEquals(27582240, $duration);
   }

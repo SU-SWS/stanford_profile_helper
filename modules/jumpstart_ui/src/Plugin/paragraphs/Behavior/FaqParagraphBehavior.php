@@ -11,7 +11,7 @@ use Drupal\paragraphs\ParagraphsBehaviorBase;
 use Drupal\paragraphs\ParagraphsTypeInterface;
 
 /**
- * Class FaqParagraphBehavior.
+ * Paragraph behavior providing display options for FAQ accordions.
  */
 #[ParagraphsBehavior(
   id: 'faq_accordions',
@@ -21,21 +21,21 @@ use Drupal\paragraphs\ParagraphsTypeInterface;
 class FaqParagraphBehavior extends ParagraphsBehaviorBase {
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function defaultConfiguration() {
     return ['heading' => 'h2'];
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public static function isApplicable(ParagraphsTypeInterface $paragraphs_type) {
     return $paragraphs_type->id() == 'stanford_faq';
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function buildBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state) {
     $form = parent::buildBehaviorForm($paragraph, $form, $form_state);
@@ -53,7 +53,7 @@ class FaqParagraphBehavior extends ParagraphsBehaviorBase {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function view(array &$build, ParagraphInterface $paragraph, EntityViewDisplayInterface $display, $view_mode) {
     if (isset($build['su_faq_headline'][0]['#tag'])) {

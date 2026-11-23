@@ -12,9 +12,15 @@ use Drupal\stanford_paragraph_card\Plugin\paragraphs\Behavior\CardBehavior;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\Group;
 
+/**
+ * Unit tests for the card paragraph behavior.
+ */
 #[Group('stanford_paragraph_card')]
 class CardBehaviorTest extends UnitTestCase {
 
+  /**
+   * {@inheritdoc}
+   */
   protected function setUp(): void {
     parent::setUp();
     $container = new ContainerBuilder();
@@ -22,6 +28,9 @@ class CardBehaviorTest extends UnitTestCase {
     \Drupal::setContainer($container);
   }
 
+  /**
+   * Test the link style behavior applicability and form.
+   */
   public function testLinkStyleBehavior() {
     $paragraph_type = $this->createMock(ParagraphsType::class);
     $paragraph_type->method('id')->willReturn($this->randomMachineName());

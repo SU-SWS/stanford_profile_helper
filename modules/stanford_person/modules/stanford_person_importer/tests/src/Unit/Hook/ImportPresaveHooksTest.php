@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\stanford_person_importer\Unit\Hook;
 
+use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\config_pages\ConfigPagesInterface;
-use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\Query\QueryInterface;
@@ -27,27 +27,21 @@ use PHPUnit\Framework\Attributes\Group;
 class ImportPresaveHooksTest extends UnitTestCase {
 
   /**
-   * Sets a container with the given (or default mocked) services.
+   * Creates the mocked services the hook class depends on.
    *
    * @return array{
    *   stanford_migrate: \PHPUnit\Framework\MockObject\MockObject&\Drupal\stanford_migrate\StanfordMigrateInterface,
    *   cap: \PHPUnit\Framework\MockObject\MockObject&\Drupal\stanford_person_importer\CapInterface,
    *   migration_manager: \PHPUnit\Framework\MockObject\MockObject&\Drupal\migrate\Plugin\MigrationPluginManager,
-   * }
+   *   }
    *   The mocked services keyed by short name.
    */
-  protected function setUpContainer(): array {
+  protected function createServiceMocks(): array {
     $stanford_migrate = $this->createMock(StanfordMigrateInterface::class);
     $cap = $this->createMock(CapInterface::class);
     $cap->method('setClientId')->willReturnSelf();
     $cap->method('setClientSecret')->willReturnSelf();
     $migration_manager = $this->createMock(MigrationPluginManager::class);
-
-    $container = new ContainerBuilder();
-    $container->set('stanford_migrate', $stanford_migrate);
-    $container->set('stanford_person_importer.cap', $cap);
-    $container->set('plugin.manager.migration', $migration_manager);
-    \Drupal::setContainer($container);
 
     return [
       'stanford_migrate' => $stanford_migrate,
@@ -60,7 +54,7 @@ class ImportPresaveHooksTest extends UnitTestCase {
    * A node without the photo field is left completely untouched.
    */
   public function testNodePresaveNoPhotoField() {
-    $services = $this->setUpContainer();
+    $services = $this->createServiceMocks();
     $services['stanford_migrate']->expects($this->never())->method('getEntityMigration');
 
     $entity_type_manager = $this->createMock(EntityTypeManagerInterface::class);
@@ -70,7 +64,7 @@ class ImportPresaveHooksTest extends UnitTestCase {
     $node->method('hasField')->with('su_person_photo')->willReturn(FALSE);
     $node->expects($this->never())->method('set');
 
-    $hooks = new ImportPresaveHooks($entity_type_manager);
+    $hooks = new ImportPresaveHooks($entity_type_manager, $services['stanford_migrate'], $services['cap'], $services['migration_manager']);
     $hooks->nodePresave($node);
   }
 
@@ -78,7 +72,7 @@ class ImportPresaveHooksTest extends UnitTestCase {
    * A node that was not created by a migration is left untouched.
    */
   public function testNodePresaveNoMigration() {
-    $services = $this->setUpContainer();
+    $services = $this->createServiceMocks();
     $services['stanford_migrate']->method('getEntityMigration')->willReturn(NULL);
 
     $entity_type_manager = $this->createMock(EntityTypeManagerInterface::class);
@@ -88,7 +82,7 @@ class ImportPresaveHooksTest extends UnitTestCase {
     $node->method('hasField')->with('su_person_photo')->willReturn(TRUE);
     $node->expects($this->never())->method('set');
 
-    $hooks = new ImportPresaveHooks($entity_type_manager);
+    $hooks = new ImportPresaveHooks($entity_type_manager, $services['stanford_migrate'], $services['cap'], $services['migration_manager']);
     $hooks->nodePresave($node);
   }
 
@@ -96,8 +90,8 @@ class ImportPresaveHooksTest extends UnitTestCase {
    * A migrated node that already has a valid media photo is left alone.
    */
   public function testNodePresaveExistingValidPhoto() {
-    $services = $this->setUpContainer();
-    $services['stanford_migrate']->method('getEntityMigration')->willReturn($this->createMock(\Drupal\migrate\Plugin\MigrationInterface::class));
+    $services = $this->createServiceMocks();
+    $services['stanford_migrate']->method('getEntityMigration')->willReturn($this->createMock(MigrationInterface::class));
 
     $media = $this->createMock(MediaInterface::class);
     $media_storage = $this->createMock(EntityStorageInterface::class);
@@ -114,7 +108,7 @@ class ImportPresaveHooksTest extends UnitTestCase {
     $node->method('get')->with('su_person_photo')->willReturn($photo_items);
     $node->expects($this->never())->method('set');
 
-    $hooks = new ImportPresaveHooks($entity_type_manager);
+    $hooks = new ImportPresaveHooks($entity_type_manager, $services['stanford_migrate'], $services['cap'], $services['migration_manager']);
     $hooks->nodePresave($node);
   }
 
@@ -122,8 +116,8 @@ class ImportPresaveHooksTest extends UnitTestCase {
    * A migrated node with no photo values at all gets the default photo set.
    */
   public function testNodePresaveEmptyPhotoValuesSetsDefault() {
-    $services = $this->setUpContainer();
-    $services['stanford_migrate']->method('getEntityMigration')->willReturn($this->createMock(\Drupal\migrate\Plugin\MigrationInterface::class));
+    $services = $this->createServiceMocks();
+    $services['stanford_migrate']->method('getEntityMigration')->willReturn($this->createMock(MigrationInterface::class));
 
     $media_storage = $this->createMock(EntityStorageInterface::class);
     $media_storage->expects($this->never())->method('load');
@@ -144,17 +138,16 @@ class ImportPresaveHooksTest extends UnitTestCase {
     $node->method('getFieldDefinition')->with('su_person_photo')->willReturn($field_definition);
     $node->expects($this->once())->method('set')->with('su_person_photo', $default_photo);
 
-    $hooks = new ImportPresaveHooks($entity_type_manager);
+    $hooks = new ImportPresaveHooks($entity_type_manager, $services['stanford_migrate'], $services['cap'], $services['migration_manager']);
     $hooks->nodePresave($node);
   }
 
   /**
-   * A migrated node whose photo values all fail to load gets the default
-   * photo set after exhausting the loop.
+   * A migrated node whose photos all fail to load gets the default photo.
    */
   public function testNodePresaveNoValidPhotoSetsDefault() {
-    $services = $this->setUpContainer();
-    $services['stanford_migrate']->method('getEntityMigration')->willReturn($this->createMock(\Drupal\migrate\Plugin\MigrationInterface::class));
+    $services = $this->createServiceMocks();
+    $services['stanford_migrate']->method('getEntityMigration')->willReturn($this->createMock(MigrationInterface::class));
 
     $media_storage = $this->createMock(EntityStorageInterface::class);
     $media_storage->method('load')->willReturn(NULL);
@@ -178,7 +171,7 @@ class ImportPresaveHooksTest extends UnitTestCase {
     $node->method('getFieldDefinition')->with('su_person_photo')->willReturn($field_definition);
     $node->expects($this->once())->method('set')->with('su_person_photo', $default_photo);
 
-    $hooks = new ImportPresaveHooks($entity_type_manager);
+    $hooks = new ImportPresaveHooks($entity_type_manager, $services['stanford_migrate'], $services['cap'], $services['migration_manager']);
     $hooks->nodePresave($node);
   }
 
@@ -200,7 +193,7 @@ class ImportPresaveHooksTest extends UnitTestCase {
    * Config pages entities of other bundles are ignored entirely.
    */
   public function testConfigPagesPresaveOtherBundle() {
-    $services = $this->setUpContainer();
+    $services = $this->createServiceMocks();
     $services['migration_manager']->expects($this->never())->method('clearCachedDefinitions');
     $services['cap']->expects($this->never())->method('updateOrganizations');
 
@@ -210,16 +203,17 @@ class ImportPresaveHooksTest extends UnitTestCase {
     $entity = $this->createMock(ConfigPagesInterface::class);
     $entity->method('bundle')->willReturn('some_other_bundle');
 
-    $hooks = new ImportPresaveHooks($entity_type_manager);
+    $hooks = new ImportPresaveHooks($entity_type_manager, $services['stanford_migrate'], $services['cap'], $services['migration_manager']);
     $hooks->configPagesPresave($entity);
   }
 
   /**
-   * When no org code terms exist yet, the CAP service updates organizations
-   * and the migration definitions are rebuilt.
+   * Organizations are updated when no org code terms exist yet.
+   *
+   * The migration definitions are rebuilt too.
    */
   public function testConfigPagesPresaveNoExistingTermsUpdatesOrgs() {
-    $services = $this->setUpContainer();
+    $services = $this->createServiceMocks();
     $services['cap']->expects($this->once())->method('setClientId')->with('user1');
     $services['cap']->expects($this->once())->method('setClientSecret')->with('pass1');
     $services['cap']->expects($this->once())->method('updateOrganizations');
@@ -242,16 +236,17 @@ class ImportPresaveHooksTest extends UnitTestCase {
       ['su_person_cap_password', $password_item],
     ]);
 
-    $hooks = new ImportPresaveHooks($entity_type_manager);
+    $hooks = new ImportPresaveHooks($entity_type_manager, $services['stanford_migrate'], $services['cap'], $services['migration_manager']);
     $hooks->configPagesPresave($entity);
   }
 
   /**
-   * When org code terms already exist, the CAP service is not called again
-   * but the migration definitions are still rebuilt.
+   * The CAP service isn't called again when org code terms already exist.
+   *
+   * The migration definitions are still rebuilt.
    */
   public function testConfigPagesPresaveExistingTermsSkipsUpdate() {
-    $services = $this->setUpContainer();
+    $services = $this->createServiceMocks();
     $services['cap']->expects($this->never())->method('updateOrganizations');
     $services['migration_manager']->expects($this->once())->method('clearCachedDefinitions');
 
@@ -263,7 +258,7 @@ class ImportPresaveHooksTest extends UnitTestCase {
     $entity = $this->createMock(ConfigPagesInterface::class);
     $entity->method('bundle')->willReturn('stanford_person_importer');
 
-    $hooks = new ImportPresaveHooks($entity_type_manager);
+    $hooks = new ImportPresaveHooks($entity_type_manager, $services['stanford_migrate'], $services['cap'], $services['migration_manager']);
     $hooks->configPagesPresave($entity);
   }
 

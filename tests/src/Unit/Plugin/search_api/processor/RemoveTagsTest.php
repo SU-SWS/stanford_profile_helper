@@ -12,14 +12,22 @@ use Drupal\stanford_profile_helper\Plugin\search_api\processor\RemoveTags;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\Group;
 
+/**
+ * Tests the remove tags search API processor.
+ */
 #[Group('stanford_profile_helper')]
 class RemoveTagsTest extends UnitTestCase {
 
   /**
+   * The processor plugin being tested.
+   *
    * @var \Drupal\stanford_profile_helper\Plugin\search_api\processor\RemoveTags
    */
   protected $plugin;
 
+  /**
+   * {@inheritdoc}
+   */
   protected function setUp(): void {
     parent::setUp();
     $container = new ContainerBuilder();
@@ -34,6 +42,9 @@ class RemoveTagsTest extends UnitTestCase {
     $this->plugin->setIndex($index);
   }
 
+  /**
+   * Test the processor's default configuration and settings form.
+   */
   public function testFieldProcessorForm() {
     $this->assertContains('div', $this->plugin->defaultConfiguration()['tags']);
 
@@ -53,6 +64,9 @@ class RemoveTagsTest extends UnitTestCase {
     $this->assertTrue($form_state::hasAnyErrors());
   }
 
+  /**
+   * Test the configured tags are stripped from the value.
+   */
   public function testFieldProcessor() {
     $value = '<div>foo bar<p>baz</p></div>';
     $this->plugin->processFieldValue($value, '');
@@ -61,8 +75,14 @@ class RemoveTagsTest extends UnitTestCase {
 
 }
 
+/**
+ * Remove tags processor that exposes processFieldValue() for testing.
+ */
 class TestRemoveTags extends RemoveTags {
 
+  /**
+   * Expose the protected method so the test can call it.
+   */
   public function processFieldValue(&$value, $type) {
     return parent::processFieldValue($value, $type);
   }

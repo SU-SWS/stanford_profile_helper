@@ -10,6 +10,17 @@ use Drupal\Core\Form\FormStateInterface;
  */
 trait LayoutWithBgColorTrait {
 
+  /**
+   * Add the background color picker element to the layout form.
+   *
+   * @param array $form
+   *   Layout configuration form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Current form state.
+   *
+   * @return array
+   *   The altered form.
+   */
   protected function addBackgroundColorElement(array &$form, FormStateInterface $form_state) {
     $id = Html::getUniqueId('color-field-' . $this->getPluginId());
     $default_color = $this->configuration['bg_color'] ?? '';
@@ -46,6 +57,17 @@ trait LayoutWithBgColorTrait {
     return $form;
   }
 
+  /**
+   * Add the section padding and margin select elements to the layout form.
+   *
+   * @param array $form
+   *   Layout configuration form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Current form state.
+   *
+   * @return array
+   *   The altered form.
+   */
   protected function addPaddingMarginElements(array &$form, FormStateInterface $form_state) {
     $form['top_padding'] = [
       '#type' => 'select',
@@ -81,11 +103,27 @@ trait LayoutWithBgColorTrait {
     return $form;
   }
 
-  protected function submitBackgroundForm(array &$form, FormStateInterface $form_state){
+  /**
+   * Save the submitted background color, without the "#", to configuration.
+   *
+   * @param array $form
+   *   Layout configuration form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Current form state.
+   */
+  protected function submitBackgroundForm(array &$form, FormStateInterface $form_state) {
     $this->configuration['bg_color'] = strtolower(str_replace('#', '', $form_state->getValue('bg_color')));
   }
 
-  protected function submitPaddingMarginForm(array &$form, FormStateInterface $form_state){
+  /**
+   * Save the submitted padding and margin values to configuration.
+   *
+   * @param array $form
+   *   Layout configuration form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Current form state.
+   */
+  protected function submitPaddingMarginForm(array &$form, FormStateInterface $form_state) {
     $this->configuration['top_padding'] = $form_state->getValue('top_padding');
     $this->configuration['bottom_padding'] = $form_state->getValue('bottom_padding');
     $this->configuration['bottom_margin'] = $form_state->getValue('bottom_margin');

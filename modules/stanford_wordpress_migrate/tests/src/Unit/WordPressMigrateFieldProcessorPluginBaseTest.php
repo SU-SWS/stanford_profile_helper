@@ -39,7 +39,7 @@ class WordPressMigrateFieldProcessorPluginBaseTest extends UnitTestCase {
 
     $this->migration = $this->createMock(WordPressMigrationInterface::class);
 
-    // Create anonymous class to test abstract base class
+    // Create anonymous class to test abstract base class.
     $this->plugin = new class([], 'test_plugin', ['label' => 'Test Plugin']) extends WordPressMigrateFieldProcessorPluginBase {
 
     };
@@ -187,7 +187,8 @@ class WordPressMigrateFieldProcessorPluginBaseTest extends UnitTestCase {
 
     $fieldStorage->expects($this->once())
       ->method('getCardinality')
-      ->willReturn(-1); // Unlimited
+    // Unlimited.
+      ->willReturn(-1);
 
     $result = $this->plugin->getMultiplePlugin($field);
     $this->assertEquals('get', $result);

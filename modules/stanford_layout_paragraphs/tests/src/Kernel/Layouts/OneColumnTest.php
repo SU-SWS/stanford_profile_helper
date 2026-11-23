@@ -52,7 +52,7 @@ class OneColumnTest extends KernelTestBase {
   /**
    * Test buildConfigurationForm adds background color element.
    *
-   * // Covers: buildConfigurationForm
+   * // Covers: buildConfigurationForm.
    */
   public function testBuildConfigurationForm(): void {
     $form = [];
@@ -72,7 +72,7 @@ class OneColumnTest extends KernelTestBase {
   /**
    * Test buildConfigurationForm adds padding elements.
    *
-   * // Covers: buildConfigurationForm
+   * // Covers: buildConfigurationForm.
    */
   public function testBuildConfigurationFormPadding(): void {
     $form = [];
@@ -92,7 +92,7 @@ class OneColumnTest extends KernelTestBase {
   /**
    * Test buildConfigurationForm with existing configuration.
    *
-   * // Covers: buildConfigurationForm
+   * // Covers: buildConfigurationForm.
    */
   public function testBuildConfigurationFormWithExistingConfig(): void {
     $configuration = [
@@ -125,7 +125,7 @@ class OneColumnTest extends KernelTestBase {
   /**
    * Test submitConfigurationForm processes background color.
    *
-   * // Covers: submitConfigurationForm
+   * // Covers: submitConfigurationForm.
    */
   public function testSubmitConfigurationForm(): void {
     $form = [];
@@ -147,7 +147,7 @@ class OneColumnTest extends KernelTestBase {
   /**
    * Test submitConfigurationForm handles color without hash.
    *
-   * // Covers: submitConfigurationForm
+   * // Covers: submitConfigurationForm.
    */
   public function testSubmitConfigurationFormColorWithoutHash(): void {
     $form = [];
@@ -166,7 +166,7 @@ class OneColumnTest extends KernelTestBase {
   /**
    * Test submitConfigurationForm with empty values.
    *
-   * // Covers: submitConfigurationForm
+   * // Covers: submitConfigurationForm.
    */
   public function testSubmitConfigurationFormEmpty(): void {
     $form = [];

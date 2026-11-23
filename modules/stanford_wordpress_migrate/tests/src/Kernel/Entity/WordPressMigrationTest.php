@@ -90,12 +90,12 @@ class WordPressMigrationTest extends KernelTestBase {
       'label' => 'Test Migration',
     ]);
 
-    // Test enable
+    // Test enable.
     $result = $entity->enable();
     $this->assertSame($entity, $result);
     $this->assertTrue($entity->isPublished());
 
-    // Test disable
+    // Test disable.
     $result = $entity->disable();
     $this->assertSame($entity, $result);
     $this->assertFalse($entity->isPublished());
@@ -107,10 +107,11 @@ class WordPressMigrationTest extends KernelTestBase {
   public function testGetBaseUrl(): void {
     $entity = WordPressMigration::create([
       'label' => 'Test Migration',
-      'base_url' => '', // Empty string, not NULL
+    // Empty string, not NULL.
+      'base_url' => '',
     ]);
 
-    // Empty string should be returned as empty string, not null
+    // Empty string should be returned as empty string, not null.
     $this->assertEquals('', $entity->getBaseUrl());
 
     $entity->set('base_url', 'https://example.com');
@@ -125,25 +126,25 @@ class WordPressMigrationTest extends KernelTestBase {
       'label' => 'Test Migration',
     ]);
 
-    // Test initial empty configuration
+    // Test initial empty configuration.
     $config = $entity->getConfiguration();
     $this->assertEquals([], $config);
 
-    // Test setting configuration value
+    // Test setting configuration value.
     $entity->setConfigurationValue('test_key', 'test_value');
     $this->assertEquals('test_value', $entity->getConfigurationValue('test_key'));
 
-    // Test nested configuration
+    // Test nested configuration.
     $entity->setConfigurationValue(['nested', 'key'], 'nested_value');
     $this->assertEquals('nested_value', $entity->getConfigurationValue([
       'nested',
       'key',
     ]));
 
-    // Test default value
+    // Test default value.
     $this->assertEquals('default', $entity->getConfigurationValue('nonexistent', 'default'));
 
-    // Test full configuration
+    // Test full configuration.
     $config = $entity->getConfiguration();
     $this->assertArrayHasKey('test_key', $config);
     $this->assertArrayHasKey('nested', $config);
@@ -163,8 +164,10 @@ class WordPressMigrationTest extends KernelTestBase {
     $this->assertArrayHasKey('label', $base_fields);
     $this->assertArrayHasKey('base_url', $base_fields);
     $this->assertArrayHasKey('configuration', $base_fields);
-    $this->assertArrayHasKey('status', $base_fields); // From publishedBaseFieldDefinitions
-    // Note: created/changed fields are added by parent::baseFieldDefinitions() if the entity type supports them
+    // From publishedBaseFieldDefinitions.
+    $this->assertArrayHasKey('status', $base_fields);
+    // Note: created/changed fields are added by parent::baseFieldDefinitions()
+    // if the entity type supports them.
   }
 
 }

@@ -56,7 +56,7 @@ class FileHooksTest extends UnitTestCase {
   protected FileHooks $hooks;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
@@ -82,8 +82,9 @@ class FileHooksTest extends UnitTestCase {
   }
 
   /**
-   * Converted PNG images on the private scheme are re-dispatched to the
-   * original uri via the module handler.
+   * Private converted PNG images are re-dispatched to the original uri.
+   *
+   * The re-dispatch goes through the module handler.
    */
   public function testFileDownloadPrivatePngRedispatchesToOriginalUri() {
     $uri = 'private://styles/thumbnail/private/image.jpg.png';
@@ -113,8 +114,9 @@ class FileHooksTest extends UnitTestCase {
   }
 
   /**
-   * A ".png" converted file on a non-private scheme does not get
-   * re-dispatched and instead continues through the normal file lookup.
+   * A ".png" converted file on a non-private scheme is not re-dispatched.
+   *
+   * It continues through the normal file lookup instead.
    */
   public function testFileDownloadNonPrivateSchemeDoesNotRedispatch() {
     $uri = 'public://foo/image.jpg.png';
@@ -153,8 +155,9 @@ class FileHooksTest extends UnitTestCase {
   }
 
   /**
-   * Files referenced by media entities fall through to normal access
-   * checks, so this hook implementation returns nothing.
+   * Nothing is returned for files referenced by media entities.
+   *
+   * Those files fall through to the normal access checks.
    */
   public function testFileDownloadReturnsNothingWhenUsedByMedia() {
     $uri = 'public://foo/bar.txt';

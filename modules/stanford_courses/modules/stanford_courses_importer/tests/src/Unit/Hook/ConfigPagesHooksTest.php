@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\stanford_courses_importer\Unit\Hook;
 
-use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\config_pages\ConfigPagesInterface;
 use Drupal\migrate\Plugin\MigrationPluginManager;
 use Drupal\stanford_courses_importer\Hook\ConfigPagesHooks;
@@ -32,18 +31,12 @@ class ConfigPagesHooksTest extends UnitTestCase {
   protected $migrationManager;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
-    $this->hooks = new ConfigPagesHooks();
-
-    $container = new ContainerBuilder();
-
     $this->migrationManager = $this->createMock(MigrationPluginManager::class);
-    $container->set('plugin.manager.migration', $this->migrationManager);
-
-    \Drupal::setContainer($container);
+    $this->hooks = new ConfigPagesHooks($this->migrationManager);
   }
 
   /**

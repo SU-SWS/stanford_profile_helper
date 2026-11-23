@@ -21,7 +21,7 @@ class MenuLinkItemConstraintValidator extends ConstraintValidator implements Con
   protected $request;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
     return new static(
@@ -35,7 +35,7 @@ class MenuLinkItemConstraintValidator extends ConstraintValidator implements Con
    * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
    *   Current request stack.
    */
-  public function __construct(RequestStack $request_stack) {
+  final public function __construct(RequestStack $request_stack) {
     $this->request = $request_stack->getCurrentRequest();
   }
 

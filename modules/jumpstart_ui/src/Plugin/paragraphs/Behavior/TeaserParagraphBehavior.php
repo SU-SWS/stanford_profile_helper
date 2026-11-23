@@ -28,21 +28,21 @@ class TeaserParagraphBehavior extends ParagraphsBehaviorBase {
   const REMOVE_HEADING = 'remove';
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public static function isApplicable(ParagraphsTypeInterface $paragraphs_type) {
     return $paragraphs_type->id() == 'stanford_entity';
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function defaultConfiguration() {
     return ['heading_behavior' => 'show'];
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function buildBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state) {
     $form = parent::buildBehaviorForm($paragraph, $form, $form_state);
@@ -60,7 +60,7 @@ class TeaserParagraphBehavior extends ParagraphsBehaviorBase {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function view(array &$build, ParagraphInterface $paragraph, EntityViewDisplayInterface $display, $view_mode) {
     $heading_behavior = $paragraph->getBehaviorSetting('stanford_teaser', 'heading_behavior', self::SHOW_HEADING);

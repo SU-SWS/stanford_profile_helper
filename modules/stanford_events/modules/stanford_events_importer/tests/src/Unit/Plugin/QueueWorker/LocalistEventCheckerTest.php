@@ -59,7 +59,7 @@ class LocalistEventCheckerTest extends UnitTestCase {
     $container = new ContainerBuilder();
     $container->set('http_client', $this->httpClient);
     $container->set('entity_type.manager', $this->entityTypeManager);
-    $this->queueWorker = LocalistEventChecker::create($container, [], 'localist_event_checker', ['id' => 'localist_event_checker'] );
+    $this->queueWorker = LocalistEventChecker::create($container, [], 'localist_event_checker', ['id' => 'localist_event_checker']);
   }
 
   /**

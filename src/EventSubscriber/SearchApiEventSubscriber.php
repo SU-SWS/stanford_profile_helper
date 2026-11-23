@@ -15,12 +15,12 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class SearchApiEventSubscriber implements EventSubscriberInterface {
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public static function getSubscribedEvents() {
     $events = [
       SearchApiEvents::INDEXING_ITEMS => 'alterIndexItems',
-      SearchApiEvents::GATHERING_PROCESSORS =>  'processorInfoAlter'
+      SearchApiEvents::GATHERING_PROCESSORS => 'processorInfoAlter',
     ];
 
     return $events;

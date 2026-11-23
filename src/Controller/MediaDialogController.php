@@ -29,7 +29,7 @@ final class MediaDialogController extends ControllerBase {
    * Just return the media view display.
    *
    * @param \Drupal\media\MediaInterface $media
-   *    Media entity.
+   *   Media entity.
    *
    * @return array
    *   Media render array.

@@ -7,7 +7,6 @@ use Drupal\node\Entity\Node;
 use Drupal\node\Entity\NodeType;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\paragraphs\Entity\ParagraphsType;
-use Drupal\stanford_decoupled\Hook\StanfordDecoupledEntityTrackHooks;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\taxonomy\Entity\Vocabulary;
 use PHPUnit\Framework\Attributes\Group;
@@ -21,11 +20,13 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 class StanfordDecoupledEntityTrackHooksTest extends KernelTestBase {
 
   /**
-   * Disable strict config schema checking for this test.
+   * Config without a complete schema while graphql_compose isn't installed.
    *
-   * @var bool
+   * @var string[]
    */
-  protected $strictConfigSchema = FALSE;
+  protected static $configSchemaCheckerExclusions = [
+    'graphql_compose.settings.graphql_compose_server',
+  ];
 
   /**
    * {@inheritdoc}
@@ -247,7 +248,8 @@ class StanfordDecoupledEntityTrackHooksTest extends KernelTestBase {
     $entity_usage = \Drupal::service('entity_usage.usage');
     $entity_usage->registerUsage($this->term->id(), 'taxonomy_term', $paragraph->id(), 'paragraph', 'en', $paragraph->getRevisionId(), 'entity_reference', 'field_tags');
 
-    // Update the term - this should trigger events for the paragraph's parent node.
+    // Update the term - this should trigger events for the paragraph's parent
+    // node.
     $this->term->setName('Term Referenced in Paragraph');
     $this->term->save();
 

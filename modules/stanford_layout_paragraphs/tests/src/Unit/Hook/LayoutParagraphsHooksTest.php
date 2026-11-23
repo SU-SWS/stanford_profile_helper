@@ -11,7 +11,6 @@ use Drupal\views\Plugin\views\query\QueryPluginBase;
 use Drupal\views\ViewExecutable;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\MockObject\MockObject;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * Unit tests for LayoutParagraphsHooks.
@@ -27,23 +26,20 @@ class LayoutParagraphsHooksTest extends UnitTestCase {
   protected LayoutParagraphsHooks $hooks;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
-    $this->hooks = new LayoutParagraphsHooks();
+    $this->hooks = new LayoutParagraphsHooks($this->createMock(RouteMatchInterface::class));
   }
 
   /**
-   * Puts a route match returning the given route name into the container.
+   * Rebuilds the hooks with a route match returning the given route name.
    */
   protected function setCurrentRoute(?string $routeName): void {
     $routeMatch = $this->createMock(RouteMatchInterface::class);
     $routeMatch->method('getRouteName')->willReturn($routeName);
-
-    $container = new ContainerBuilder();
-    $container->set('current_route_match', $routeMatch);
-    \Drupal::setContainer($container);
+    $this->hooks = new LayoutParagraphsHooks($routeMatch);
   }
 
   /**

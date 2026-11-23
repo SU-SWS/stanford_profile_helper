@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\stanford_profile_helper\Unit\EventSubscriber;
 
+use Drupal\layout_builder\LayoutBuilderEvents;
 use Codeception\Attribute\Group;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -27,8 +28,8 @@ class EntityEventSubscriberTest extends UnitTestCase {
   public function testGetSubscribedEvents() {
     $events = EntityEventSubscriber::getSubscribedEvents();
     $this->assertIsArray($events);
-    $this->assertArrayHasKey(\Drupal\layout_builder\LayoutBuilderEvents::SECTION_COMPONENT_BUILD_RENDER_ARRAY, $events);
-    $this->assertEquals('prepareLayoutBuilderComponent', $events[\Drupal\layout_builder\LayoutBuilderEvents::SECTION_COMPONENT_BUILD_RENDER_ARRAY]);
+    $this->assertArrayHasKey(LayoutBuilderEvents::SECTION_COMPONENT_BUILD_RENDER_ARRAY, $events);
+    $this->assertEquals('prepareLayoutBuilderComponent', $events[LayoutBuilderEvents::SECTION_COMPONENT_BUILD_RENDER_ARRAY]);
   }
 
   /**
@@ -223,9 +224,14 @@ class EntityEventSubscriberTest extends UnitTestCase {
   public function testTaxonomyMenuLabelDisplay() {
     // Mock taxonomy menu entity.
     $taxonomy_menu = new class {
+
+      /**
+       * Get the menu name used by the taxonomy menu.
+       */
       public function getMenu() {
         return 'test-taxonomy-menu';
       }
+
     };
 
     // Mock entity storage.

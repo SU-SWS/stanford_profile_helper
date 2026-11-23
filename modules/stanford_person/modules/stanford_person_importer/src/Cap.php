@@ -144,7 +144,7 @@ class Cap implements CapInterface {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function setClientId(string $client_id): self {
     $this->clientId = $client_id;
@@ -153,7 +153,7 @@ class Cap implements CapInterface {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function setClientSecret(string $secret): self {
     $this->clientSecret = $secret;
@@ -229,7 +229,7 @@ class Cap implements CapInterface {
       $response = $this->getClient()->request('GET', $url->toString(TRUE)
         ->getGeneratedUrl(), $options);
     }
-    catch (GuzzleException|\Exception $e) {
+    catch (GuzzleException | \Exception $e) {
       $this->cache->delete('cap:access_token');
       $this->resetClient();
       // Most errors originate from the API itself, log the error and let it
@@ -241,7 +241,7 @@ class Cap implements CapInterface {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function getOrganizationUrl(array $organizations, bool $children = FALSE): Url {
     $organizations = preg_replace('/[^A-Z,0-9]/', '', strtoupper(implode(',', array_unique($organizations))));
@@ -253,7 +253,7 @@ class Cap implements CapInterface {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function getWorkgroupUrl(array $workgroups): Url {
     $workgroups = preg_replace('/[^A-Z,:~\-_0-9]/', '', strtoupper(implode(',', array_unique($workgroups))));
@@ -261,7 +261,7 @@ class Cap implements CapInterface {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function getSunetUrl(array $sunetids): Url {
     $sunetids = array_unique($sunetids);
@@ -270,7 +270,7 @@ class Cap implements CapInterface {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function getTotalProfileCount(Url $url): int {
     $url->mergeOptions(['query' => ['ps' => 1]]);
@@ -279,7 +279,7 @@ class Cap implements CapInterface {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function testConnection(): bool {
     $this->cache->invalidate('cap:access_token');
@@ -294,7 +294,7 @@ class Cap implements CapInterface {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function updateOrganizations(): void {
     $this->insertOrgData($this->getOrgData());
@@ -390,7 +390,7 @@ class Cap implements CapInterface {
     try {
       $token = $this->getOauthProvider()->getAccessToken('client_credentials');
     }
-    catch (GuzzleException|\Exception $e) {
+    catch (GuzzleException | \Exception $e) {
       $this->resetClient();
       $this->logger->error('Unable to acquire a CAP API access token: %message', ['%message' => $e->getMessage()]);
       throw new \Exception($e->getMessage());
@@ -429,7 +429,7 @@ class Cap implements CapInterface {
    * Get the OAuth url.
    *
    * @param array $options
-   *    Options to pass into the Url::fromUri() method.
+   *   Options to pass into the Url::fromUri() method.
    *
    * @return \Drupal\Core\Url
    *   Full url of the OAuth service.

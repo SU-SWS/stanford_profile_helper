@@ -48,8 +48,7 @@ class DecoupledConfigOverrides implements ConfigFactoryOverrideInterface {
   }
 
   /**
-   * Check if any Next module configs exist to determine if the site is
-   * decoupled.
+   * Check if any Next module configs exist to tell if the site is decoupled.
    *
    * @return bool
    *   If the site is decoupled.

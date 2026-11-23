@@ -12,7 +12,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class TwoColLayoutTest.
+ * Kernel tests for rendering the Jumpstart UI two column layout template.
  */
 #[RunTestsInSeparateProcesses]
 #[Group('jumpstart_ui')]
@@ -24,7 +24,6 @@ class TwoColLayoutTest extends KernelTestBase {
    * @var array
    */
   protected static $modules = ['system'];
-
 
   /**
    * {@inheritdoc}
@@ -42,9 +41,9 @@ class TwoColLayoutTest extends KernelTestBase {
    */
   public function testTwoColLayoutFullProps() {
     // Boot twig environment.
-    $twig = \Drupal::service('twig');
+    \Drupal::service('twig');
     $template = \Drupal::service('extension.list.module')
-        ->getPath('jumpstart_ui') . '/templates/layouts/two-column';
+      ->getPath('jumpstart_ui') . '/templates/layouts/two-column';
     $props = $this->getProps();
     $this->setRawContent((string) $this->container->get(TwigThemeEngine::class)->renderTemplate($template, $props));
     $this->assertText("Somebody once told me php unit is gonna rule me");
@@ -54,13 +53,13 @@ class TwoColLayoutTest extends KernelTestBase {
   }
 
   /**
-   * Layout should render when values are passed..
+   * Layout should render when values are passed.
    */
   public function testTwoColLayoutNoProps() {
     // Boot twig environment.
-    $twig = \Drupal::service('twig');
+    \Drupal::service('twig');
     $template = \Drupal::service('extension.list.module')
-        ->getPath('jumpstart_ui') . '/templates/layouts/two-column';
+      ->getPath('jumpstart_ui') . '/templates/layouts/two-column';
     $this->setRawContent((string) $this->container->get(TwigThemeEngine::class)->renderTemplate($template, []));
     $this->assertNotEmpty($this->getRawContent());
     $this->assertStringNotContainsString("boy-is-this-a-neat-class", $this->getRawContent());
@@ -69,13 +68,13 @@ class TwoColLayoutTest extends KernelTestBase {
   }
 
   /**
-   * Layout should render when values are passed..
+   * Layout should render when values are passed.
    */
   public function testTwoColLayoutBadProps() {
     // Boot twig environment.
-    $twig = \Drupal::service('twig');
+    \Drupal::service('twig');
     $template = \Drupal::service('extension.list.module')
-        ->getPath('jumpstart_ui') . '/templates/layouts/two-column';
+      ->getPath('jumpstart_ui') . '/templates/layouts/two-column';
     $props = $this->getProps();
     unset($props['region_attributes']);
     $this->setRawContent((string) $this->container->get(TwigThemeEngine::class)->renderTemplate($template, $props));
@@ -86,7 +85,10 @@ class TwoColLayoutTest extends KernelTestBase {
   }
 
   /**
+   * Get the template variables used to render the layout.
+   *
    * @return array
+   *   Layout template variables.
    */
   protected function getProps() {
     return [

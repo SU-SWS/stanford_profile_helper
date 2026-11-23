@@ -12,17 +12,35 @@ use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class SulCleanHtmlTest.
+ * Tests the decoupled config overrides.
  */
 #[Group('stanford_decoupled')]
 class DecoupledConfigOverridesTest extends UnitTestCase {
 
+  /**
+   * Cache data returned by the mocked cache backend.
+   *
+   * @var object|false|null
+   */
   protected $cacheData;
 
+  /**
+   * If the mocked entity type manager has the entity definition.
+   *
+   * @var bool
+   */
   protected $hasEntityDefinition = FALSE;
 
+  /**
+   * Entity count returned by the mocked entity query.
+   *
+   * @var int
+   */
   protected $entityCount = 0;
 
+  /**
+   * {@inheritdoc}
+   */
   protected function setUp(): void {
     parent::setUp();
 
@@ -50,6 +68,9 @@ class DecoupledConfigOverridesTest extends UnitTestCase {
     \Drupal::setContainer($container);
   }
 
+  /**
+   * Overrides are only provided when Next site entities exist.
+   */
   public function testConfigOverrides() {
     $overrider = new DecoupledConfigOverrides();
     $overrides = $overrider->loadOverrides(['filter.format.html']);

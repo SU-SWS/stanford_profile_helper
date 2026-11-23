@@ -7,9 +7,15 @@ use Drupal\stanford_profile_helper\Plugin\Block\PDBlock;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\Group;
 
+/**
+ * Tests the PDB component block.
+ */
 #[Group('stanford_profile_helper')]
 class PDBlockTest extends UnitTestCase {
 
+  /**
+   * Test the block build and attached libraries.
+   */
   public function testBuild() {
     $uuidService = $this->createMock(UuidInterface::class);
     $pdb_info = [

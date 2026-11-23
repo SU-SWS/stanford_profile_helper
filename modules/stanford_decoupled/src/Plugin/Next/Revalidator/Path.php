@@ -19,6 +19,8 @@ use Symfony\Component\HttpFoundation\Response;
 class Path extends NextPath {
 
   /**
+   * Database connection service.
+   *
    * @var \Drupal\Core\Database\Connection
    */
   protected $database;
@@ -65,10 +67,8 @@ class Path extends NextPath {
     $form['method'] = [
       '#type' => 'radios',
       '#title' => $this->t('Method'),
-      '#options' => [
-        'GET' => 'GET',
-        'POST' => 'POST',
-      ],
+      // HTTP method names are not translatable.
+      '#options' => array_combine(['GET', 'POST'], ['GET', 'POST']),
       '#default_value' => $this->configuration['method'],
     ];
     $form['aggregate'] = [

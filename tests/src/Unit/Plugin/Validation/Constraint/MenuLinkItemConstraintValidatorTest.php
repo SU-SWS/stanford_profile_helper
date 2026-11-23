@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\menu_link_content\MenuLinkContentInterface;
-use Drupal\path_alias\AliasManagerInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\stanford_profile_helper\Plugin\Validation\Constraint\MenuLinkItemConstraint;
 use Drupal\stanford_profile_helper\Plugin\Validation\Constraint\MenuLinkItemConstraintValidator;
@@ -19,7 +18,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class MenuLinkItemConstraintValidatorTest.
+ * Tests the menu link item constraint validator.
  */
 #[Group('stanford_profile_helper')]
 class MenuLinkItemConstraintValidatorTest extends UnitTestCase {
@@ -77,6 +76,9 @@ class MenuLinkItemConstraintValidatorTest extends UnitTestCase {
     $this->assertTrue($validator->hasErrors());
   }
 
+  /**
+   * Build a context object for the validator.
+   */
   protected function getContext() {
     $validator = $this->createMock(ValidatorInterface::class);
     $translator = $this->createMock(TranslatorInterface::class);

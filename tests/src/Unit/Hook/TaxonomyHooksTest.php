@@ -87,8 +87,7 @@ class TaxonomyHooksTest extends UnitTestCase {
   }
 
   /**
-   * When the parent changed but no matching menu link exists, nothing else
-   * happens.
+   * A changed parent without a matching menu link does nothing else.
    */
   public function testTaxonomyTermUpdateWithChangedParentAndNoMenuLink(): void {
     $term = $this->mockTerm('5', '9');
@@ -115,8 +114,7 @@ class TaxonomyHooksTest extends UnitTestCase {
   }
 
   /**
-   * When the parent changed and a matching menu link exists, it is deleted
-   * and the router is rebuilt.
+   * A changed parent deletes the matching menu link and rebuilds the router.
    */
   public function testTaxonomyTermUpdateWithChangedParentAndExistingMenuLink(): void {
     $term = $this->mockTerm('5', '9');

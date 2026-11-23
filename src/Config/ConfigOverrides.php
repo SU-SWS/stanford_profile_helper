@@ -76,7 +76,7 @@ class ConfigOverrides implements ConfigFactoryOverrideInterface {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function loadOverrides($names) {
     $overrides = [];
@@ -216,21 +216,21 @@ class ConfigOverrides implements ConfigFactoryOverrideInterface {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function createConfigObject($name, $collection = StorageInterface::DEFAULT_COLLECTION) {
     return NULL;
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function getCacheSuffix() {
     return 'StanfordProfileHelperConfigOverride';
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function getCacheableMetadata($name) {
     return new CacheableMetadata();

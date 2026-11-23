@@ -368,9 +368,9 @@ class WordPressRedirectDeriverTest extends UnitTestCase {
 
     $this->assertIsArray($derivatives);
     $this->assertCount(2, $derivatives);
-    // First one gets normal ID
+    // First one gets normal ID.
     $this->assertArrayHasKey('posts__article', $derivatives);
-    // Second one gets migration ID appended
+    // Second one gets migration ID appended.
     $this->assertArrayHasKey('posts__article-migration2', $derivatives);
   }
 

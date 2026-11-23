@@ -5,10 +5,6 @@ declare(strict_types=1);
 namespace Drupal\stanford_wordpress_migrate\Plugin\migrate;
 
 use Drupal\Core\Database\Connection;
-use Drupal\Core\Entity\EntityFieldManagerInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\stanford_wordpress_migrate\WordPressMigrateFieldProcessorPluginManager;
-use GuzzleHttp\ClientInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -19,35 +15,20 @@ class WordPressFileDeriver extends WordPressMigrationDeriverBase {
   const MIGRATE_TABLE_NAME = 'migrate_map_wordpress_files__files';
 
   /**
+   * Database service.
+   *
+   * @var \Drupal\Core\Database\Connection
+   */
+  protected Connection $database;
+
+  /**
    * {@inheritDoc}
    */
   public static function create(ContainerInterface $container, $base_plugin_id) {
-    return new static(
-      $container->get('http_client'),
-      $container->get('entity_type.manager'),
-      $container->get('entity_field.manager'),
-      $container->get('plugin.manager.wordpress_migrate_field_processor'),
-      $container->get('database'),
-    );
+    $instance = parent::create($container, $base_plugin_id);
+    $instance->database = $container->get('database');
+    return $instance;
   }
-
-  /**
-   * Content migration plugin deriver constructor.
-   *
-   * @param \GuzzleHttp\ClientInterface $client
-   *   Guzzler client service.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
-   *   Entity Type Manager service.
-   * @param \Drupal\Core\Database\Connection $database
-   *   Database service.
-   */
-  public function __construct(
-    protected ClientInterface $client,
-    protected EntityTypeManagerInterface $entityTypeManager,
-    protected EntityFieldManagerInterface $entityFieldManager,
-    protected WordPressMigrateFieldProcessorPluginManager $fieldProcessorPluginManager,
-    protected Connection $database,
-  ) {}
 
   /**
    * {@inheritDoc}

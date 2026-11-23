@@ -11,9 +11,8 @@ use Twig\Loader\FilesystemLoader;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\Group;
 
-
 /**
- * Class ThreeColLayoutTest.
+ * Kernel tests for rendering the Jumpstart UI three column layout template.
  */
 #[RunTestsInSeparateProcesses]
 #[Group('jumpstart_ui')]
@@ -25,7 +24,6 @@ class ThreeColLayoutTest extends KernelTestBase {
    * @var array
    */
   protected static $modules = ['system'];
-
 
   /**
    * {@inheritdoc}
@@ -43,9 +41,9 @@ class ThreeColLayoutTest extends KernelTestBase {
    */
   public function testThreeColLayoutFullProps() {
     // Boot twig environment.
-    $twig = \Drupal::service('twig');
+    \Drupal::service('twig');
     $template = \Drupal::service('extension.list.module')
-        ->getPath('jumpstart_ui') . '/templates/layouts/three-column';
+      ->getPath('jumpstart_ui') . '/templates/layouts/three-column';
     $props = $this->getProps();
     $this->setRawContent((string) $this->container->get(TwigThemeEngine::class)->renderTemplate($template, $props));
     $this->assertText("Somebody once told me php unit is gonna rule me");
@@ -57,7 +55,10 @@ class ThreeColLayoutTest extends KernelTestBase {
   }
 
   /**
+   * Get the template variables used to render the layout.
+   *
    * @return array
+   *   Layout template variables.
    */
   protected function getProps() {
     return [

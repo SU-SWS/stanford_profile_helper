@@ -30,8 +30,9 @@ class FieldGroupHooksTest extends UnitTestCase {
   }
 
   /**
-   * When the lockup options group is present, #states are added to both
-   * the lockup options and logo image elements.
+   * Test #states are added to the lockup options and logo image elements.
+   *
+   * This happens when the lockup options group is present.
    */
   public function testFieldGroupFormProcessBuildAlterAddsStates(): void {
     $element = [

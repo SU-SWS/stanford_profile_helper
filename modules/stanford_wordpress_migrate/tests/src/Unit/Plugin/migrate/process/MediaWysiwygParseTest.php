@@ -7,7 +7,6 @@ namespace Drupal\Tests\stanford_wordpress_migrate\Unit\Plugin\migrate\process;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileSystemInterface;
-use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\file\FileInterface;
 use Drupal\media\MediaInterface;
 use Drupal\migrate\MigrateExecutableInterface;
@@ -54,11 +53,11 @@ class MediaWysiwygParseTest extends UnitTestCase {
   protected $entityTypeManager;
 
   /**
-   * Mock logger factory.
+   * Mock logger channel.
    *
-   * @var \Drupal\Core\Logger\LoggerChannelFactoryInterface
+   * @var \Drupal\Core\Logger\LoggerChannelInterface
    */
-  protected $loggerFactory;
+  protected $logger;
 
   /**
    * {@inheritdoc}
@@ -69,7 +68,7 @@ class MediaWysiwygParseTest extends UnitTestCase {
     $this->fileSystem = $this->createMock(FileSystemInterface::class);
     $this->httpClient = $this->createMock(ClientInterface::class);
     $this->entityTypeManager = $this->createMock(EntityTypeManagerInterface::class);
-    $this->loggerFactory = $this->createMock(LoggerChannelFactoryInterface::class);
+    $this->logger = $this->createMock(LoggerChannelInterface::class);
 
     $this->plugin = new MediaWysiwygParse(
       ['image_domain' => 'example.com'],
@@ -78,7 +77,7 @@ class MediaWysiwygParseTest extends UnitTestCase {
       $this->fileSystem,
       $this->httpClient,
       $this->entityTypeManager,
-      $this->loggerFactory
+      $this->logger
     );
   }
 
@@ -100,7 +99,7 @@ class MediaWysiwygParseTest extends UnitTestCase {
         ['file_system', $this->fileSystem],
         ['http_client', $this->httpClient],
         ['entity_type.manager', $this->entityTypeManager],
-        ['logger.factory', $this->loggerFactory],
+        ['logger.channel.stanford_wordpress_migrate', $this->logger],
       ]);
 
     $plugin = MediaWysiwygParse::create(
@@ -182,7 +181,7 @@ class MediaWysiwygParseTest extends UnitTestCase {
 
     $result = $this->plugin->transform($value, $migrateExecutable, $row, 'field_test');
 
-    // Should not change since domain doesn't match
+    // Should not change since domain doesn't match.
     $this->assertEquals($value, $result);
   }
 
@@ -191,13 +190,14 @@ class MediaWysiwygParseTest extends UnitTestCase {
    */
   public function testTransformWithoutImageDomain(): void {
     $plugin = new MediaWysiwygParse(
-      [], // No image_domain configured
+    // No image_domain configured.
+      [],
       'media_wysiwyg_parse',
       [],
       $this->fileSystem,
       $this->httpClient,
       $this->entityTypeManager,
-      $this->loggerFactory
+      $this->logger
     );
 
     $migrateExecutable = $this->createMock(MigrateExecutableInterface::class);
@@ -208,7 +208,7 @@ class MediaWysiwygParseTest extends UnitTestCase {
 
     $result = $plugin->transform($value, $migrateExecutable, $row, 'field_test');
 
-    // Should not process images without domain configuration
+    // Should not process images without domain configuration.
     $this->assertEquals($value, $result);
   }
 
@@ -307,7 +307,7 @@ class MediaWysiwygParseTest extends UnitTestCase {
     $value = "Text $iframe end";
     $result = $this->plugin->transform($value, $migrateExecutable, $row, 'field_test');
 
-    // Should return original value when exception occurs
+    // Should return original value when exception occurs.
     $this->assertEquals($value, $result);
   }
 
@@ -318,7 +318,7 @@ class MediaWysiwygParseTest extends UnitTestCase {
     $migrateExecutable = $this->createMock(MigrateExecutableInterface::class);
     $row = $this->createMock(Row::class);
 
-    // Use plugin without image_domain to test null return
+    // Use plugin without image_domain to test null return.
     $plugin = new MediaWysiwygParse(
       [],
       'media_wysiwyg_parse',
@@ -326,7 +326,7 @@ class MediaWysiwygParseTest extends UnitTestCase {
       $this->fileSystem,
       $this->httpClient,
       $this->entityTypeManager,
-      $this->loggerFactory
+      $this->logger
     );
 
     $image = '<img src="https://example.com/image.jpg">';
@@ -334,7 +334,7 @@ class MediaWysiwygParseTest extends UnitTestCase {
 
     $result = $plugin->transform($value, $migrateExecutable, $row, 'field_test');
 
-    // Should not replace when getMediaTokenFromMarkup returns null
+    // Should not replace when getMediaTokenFromMarkup returns null.
     $this->assertEquals($value, $result);
   }
 
@@ -350,25 +350,25 @@ class MediaWysiwygParseTest extends UnitTestCase {
     $media = $this->createMock(MediaInterface::class);
     $file = $this->createMock(FileInterface::class);
 
-    // Setup file mock
+    // Setup file mock.
     $file->method('id')->willReturn(123);
 
-    // Setup media mock
+    // Setup media mock.
     $media->method('uuid')->willReturn('image-uuid');
 
-    // File storage returns existing file
+    // File storage returns existing file.
     $fileStorage->method('loadByProperties')->willReturn([$file]);
 
-    // Media storage returns existing media
+    // Media storage returns existing media.
     $mediaStorage->method('loadByProperties')->willReturn([$media]);
 
-    // Entity type manager returns appropriate storage
+    // Entity type manager returns appropriate storage.
     $this->entityTypeManager->method('getStorage')
-      ->willReturnCallback(function($type) use ($fileStorage, $mediaStorage) {
+      ->willReturnCallback(function ($type) use ($fileStorage, $mediaStorage) {
         return $type === 'file' ? $fileStorage : $mediaStorage;
       });
 
-    // File system prepareDirectory succeeds
+    // File system prepareDirectory succeeds.
     $this->fileSystem->method('prepareDirectory')->willReturn(TRUE);
 
     $image = '<img src="https://example.com/image.jpg">';
@@ -406,11 +406,11 @@ class MediaWysiwygParseTest extends UnitTestCase {
 
     $result = $this->plugin->transform($value, $migrateExecutable, $row, 'field_test');
 
-    // Paragraph should remain
+    // Paragraph should remain.
     $this->assertStringContainsString('<p>Paragraph</p>', $result);
     // Image should remain (wrong domain)
     $this->assertStringContainsString('otherdomain.com', $result);
-    // Iframe should be replaced
+    // Iframe should be replaced.
     $this->assertStringContainsString('embed-uuid', $result);
   }
 
@@ -422,7 +422,7 @@ class MediaWysiwygParseTest extends UnitTestCase {
     $method = $reflection->getMethod('getMediaTokenFromMarkup');
     $method->setAccessible(TRUE);
 
-    // Test with image that doesn't match domain
+    // Test with image that doesn't match domain.
     $image = '<img src="https://wrongdomain.com/image.jpg" alt="Test">';
     $result = $method->invoke($this->plugin, $image);
 
@@ -441,11 +441,12 @@ class MediaWysiwygParseTest extends UnitTestCase {
     $media = $this->createMock(MediaInterface::class);
     $file = $this->createMock(FileInterface::class);
 
-    // Track call sequence: getExistingMedia gets file & media storage, downloadFile gets file storage
+    // Track call sequence: getExistingMedia gets file & media storage,
+    // downloadFile gets file storage.
     $storageCallCount = 0;
     $this->entityTypeManager->expects($this->exactly(4))
       ->method('getStorage')
-      ->willReturnCallback(function($type) use ($fileStorage, $mediaStorage, &$storageCallCount) {
+      ->willReturnCallback(function ($type) use ($fileStorage, $mediaStorage, &$storageCallCount) {
         $storageCallCount++;
         if ($type === 'file') {
           return $fileStorage;
@@ -457,12 +458,13 @@ class MediaWysiwygParseTest extends UnitTestCase {
       ->method('prepareDirectory')
       ->willReturn(TRUE);
 
-    // First call in getExistingMedia - return empty to simulate file doesn't exist
+    // First call in getExistingMedia - return empty to simulate file doesn't
+    // exist.
     $fileStorage->expects($this->once())
       ->method('loadByProperties')
       ->willReturn([]);
 
-    // Mock the HTTP client request method
+    // Mock the HTTP client request method.
     $this->httpClient->expects($this->once())
       ->method('request')
       ->with(
@@ -471,7 +473,7 @@ class MediaWysiwygParseTest extends UnitTestCase {
         $this->anything()
       );
 
-    // Create file in downloadFile method
+    // Create file in downloadFile method.
     $fileStorage->expects($this->once())
       ->method('create')
       ->willReturn($file);
@@ -486,7 +488,7 @@ class MediaWysiwygParseTest extends UnitTestCase {
       ->method('id')
       ->willReturn(456);
 
-    // Create media in getImageMedia method
+    // Create media in getImageMedia method.
     $mediaStorage->expects($this->once())
       ->method('create')
       ->willReturn($media);
@@ -531,7 +533,7 @@ class MediaWysiwygParseTest extends UnitTestCase {
       ->method('id')
       ->willReturn(123);
 
-    // No media exists for this file
+    // No media exists for this file.
     $mediaStorage->expects($this->once())
       ->method('loadByProperties')
       ->with([
@@ -661,8 +663,6 @@ class MediaWysiwygParseTest extends UnitTestCase {
     $logger->expects($this->once())
       ->method('warning')
       ->with($this->stringContains('does not contain a title'));
-    $loggerFactory = $this->createMock(LoggerChannelFactoryInterface::class);
-    $loggerFactory->method('get')->willReturn($logger);
 
     $mediaStorage = $this->createMock(EntityStorageInterface::class);
     $media = $this->createMock(MediaInterface::class);
@@ -683,7 +683,7 @@ class MediaWysiwygParseTest extends UnitTestCase {
       $this->fileSystem,
       $this->httpClient,
       $this->entityTypeManager,
-      $loggerFactory
+      $logger
     );
     $method = new \ReflectionMethod($plugin, 'getEmbedMedia');
     $this->assertSame($media, $method->invoke($plugin, $iframe));

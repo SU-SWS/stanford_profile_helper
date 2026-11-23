@@ -24,7 +24,7 @@ class AnchorLinkNavigationBlockTest extends UnitTestCase {
   protected $block;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();

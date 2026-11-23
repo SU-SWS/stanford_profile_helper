@@ -23,4 +23,3 @@ props:
     url:
       title: URL
       type: string
-

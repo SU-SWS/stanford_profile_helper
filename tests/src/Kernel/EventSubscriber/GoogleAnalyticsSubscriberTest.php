@@ -17,6 +17,9 @@ use PHPUnit\Framework\Attributes\Group;
 #[RunTestsInSeparateProcesses]
 class GoogleAnalyticsSubscriberTest extends SuProfileHelperKernelTestBase {
 
+  /**
+   * Test the cookie settings added to the Google Analytics config.
+   */
   public function testConfigChanges() {
     $config = $this->container->get('config.factory')
       ->getEditable('google_analytics.settings');

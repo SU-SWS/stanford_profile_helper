@@ -25,7 +25,7 @@ use Drupal\stanford_notifications\NotificationInterface;
 class Notification extends ContentEntityBase implements NotificationInterface {
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
@@ -46,21 +46,21 @@ class Notification extends ContentEntityBase implements NotificationInterface {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function message() {
     return $this->get('message')->getString();
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function userId() {
     return (int) $this->get('uid')->getString();
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function delete() {
     parent::delete();
@@ -68,7 +68,7 @@ class Notification extends ContentEntityBase implements NotificationInterface {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function status() {
     return $this->get('status')->getString();

@@ -6,6 +6,9 @@ use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\stanford_profile_helper\Form\LayoutLibraryIconForm;
 use Drupal\stanford_profile_helper\StanfordLayoutListBuilder;
 
+/**
+ * Hook implementations that add icons to Layout Library layouts.
+ */
 class LayoutLibraryHooks {
 
   /**

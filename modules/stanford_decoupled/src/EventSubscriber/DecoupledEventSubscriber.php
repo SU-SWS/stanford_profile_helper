@@ -53,6 +53,20 @@ final class DecoupledEventSubscriber implements EventSubscriberInterface {
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   Entity type manager service.
+   * @param \Drupal\next\NextSettingsManagerInterface $nextSettingsManager
+   *   Next module settings manager service.
+   * @param \Drupal\Core\State\StateInterface $state
+   *   State service.
+   * @param \GuzzleHttp\ClientInterface $client
+   *   Guzzle client service.
+   * @param \Drupal\Core\Database\Connection $database
+   *   Database connection service.
+   * @param \Drupal\Core\Extension\ModuleHandlerInterface $moduleHandler
+   *   Module handler service.
+   * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $loggerFactory
+   *   Logger channel factory service.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
+   *   Config factory service.
    */
   public function __construct(
     protected EntityTypeManagerInterface $entityTypeManager,

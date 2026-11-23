@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class ConfigOverriderTest.
+ * Kernel tests for the intranet config overrider.
  */
 #[RunTestsInSeparateProcesses]
 #[Group('stanford_intranet')]

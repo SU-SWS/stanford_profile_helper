@@ -71,7 +71,7 @@ class StanfordIntranetManager implements StanfordIntranetManagerInterface {
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public function moveIntranetFiles(): void {
     if (!$this->state->get('stanford_intranet')) {

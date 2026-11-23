@@ -6,9 +6,14 @@ use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\node\Entity\NodeType;
 
+/**
+ * Base kernel test that sets up the intranet access field on page nodes.
+ */
 abstract class IntranetKernelTestBase extends KernelTestBase {
 
   /**
+   * Intranet access field storage.
+   *
    * @var \Drupal\field\FieldStorageConfigInterface
    */
   protected $fieldStorage;

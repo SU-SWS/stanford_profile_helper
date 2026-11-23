@@ -10,18 +10,20 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class SignupBlockTest.
+ * Unit tests for the newsletter signup block.
  */
 #[Group('stanford_news')]
 class SignupBlockTest extends UnitTestCase {
 
   /**
+   * Signup block plugin being tested.
+   *
    * @var \Drupal\stanford_news\Plugin\Block\SignupBlock
    */
   protected $blockObject;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
@@ -38,6 +40,9 @@ class SignupBlockTest extends UnitTestCase {
     \Drupal::setContainer($container);
   }
 
+  /**
+   * Test the block build uses the configured form action.
+   */
   public function testBuild() {
     $build = $this->blockObject->build();
     $this->assertEquals([
@@ -46,6 +51,9 @@ class SignupBlockTest extends UnitTestCase {
     ], $build);
   }
 
+  /**
+   * Test the block is only accessible when a form action is configured.
+   */
   public function testAccess() {
     $account = $this->createMock(AccountInterface::class);
     $this->assertTrue($this->blockObject->access($account));
@@ -56,6 +64,9 @@ class SignupBlockTest extends UnitTestCase {
     $this->assertFalse($this->blockObject->access($account));
   }
 
+  /**
+   * Test the block form element and saving the form action.
+   */
   public function testForm() {
     $form = [];
     $form_state = new FormState();

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Drupal\Tests\stanford_decoupled\Unit\Hook;
 
 use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\stanford_decoupled\Hook\TokenHooks;
@@ -103,7 +102,7 @@ class TokenHooksTest extends UnitTestCase {
   }
 
   /**
-   * $data[$type] is not a ContentEntityInterface: no replacements produced.
+   * Non content entity data produces no token replacements.
    */
   public function testTokensNonContentEntity(): void {
     $data = ['node' => new \stdClass()];
@@ -112,7 +111,7 @@ class TokenHooksTest extends UnitTestCase {
   }
 
   /**
-   * $data[$type] entirely missing: no replacements produced.
+   * Missing data for the token type produces no token replacements.
    */
   public function testTokensMissingDataKey(): void {
     $entity = $this->createMock(ContentEntityInterface::class);

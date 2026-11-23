@@ -4,7 +4,7 @@ namespace Drupal\stanford_wordpress_migrate\Plugin\migrate\process;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileSystemInterface;
-use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\file\FileInterface;
 use Drupal\media\MediaInterface;
@@ -32,13 +32,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class MediaWysiwygParse extends ProcessPluginBase implements ContainerFactoryPluginInterface {
 
   /**
-   * Logger channel service.
-   *
-   * @var \Drupal\Core\Logger\LoggerChannelInterface
-   */
-  protected $logger;
-
-  /**
    * {@inheritDoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
@@ -49,7 +42,7 @@ class MediaWysiwygParse extends ProcessPluginBase implements ContainerFactoryPlu
       $container->get('file_system'),
       $container->get('http_client'),
       $container->get('entity_type.manager'),
-      $container->get('logger.factory')
+      $container->get('logger.channel.stanford_wordpress_migrate')
     );
   }
 
@@ -68,18 +61,19 @@ class MediaWysiwygParse extends ProcessPluginBase implements ContainerFactoryPlu
    *   Guzzle client service.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   Entity type manager service.
+   * @param \Drupal\Core\Logger\LoggerChannelInterface $logger
+   *   Logger channel service.
    */
-  public function __construct(
+  final public function __construct(
     array $configuration,
     $plugin_id,
     $plugin_definition,
     protected FileSystemInterface $fileSystem,
     protected ClientInterface $client,
     protected EntityTypeManagerInterface $entityTypeManager,
-    LoggerChannelFactoryInterface $loggerFactory
+    protected LoggerChannelInterface $logger,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->logger = $loggerFactory->get('stanford_wordpress_migrate');
   }
 
   /**
@@ -122,9 +116,13 @@ class MediaWysiwygParse extends ProcessPluginBase implements ContainerFactoryPlu
   }
 
   /**
+   * Create a media entity for the markup and return its embed token.
+   *
    * @param string $markup
+   *   Image or iframe HTML markup.
    *
    * @return string|null
+   *   Drupal media embed markup, or NULL if no media was created.
    */
   protected function getMediaTokenFromMarkup(string $markup): ?string {
     if (str_contains($markup, '<img ')) {
@@ -146,10 +144,15 @@ class MediaWysiwygParse extends ProcessPluginBase implements ContainerFactoryPlu
   }
 
   /**
+   * Download an image and get or create an image media entity for it.
+   *
    * @param string $source
+   *   External image url.
    * @param string $alt
+   *   Image alt text.
    *
    * @return \Drupal\media\MediaInterface|null
+   *   Existing or newly created image media entity.
    */
   protected function getImageMedia(string $source, string $alt = ''): ?MediaInterface {
     $mediaStorage = $this->entityTypeManager->getStorage('media');
@@ -227,9 +230,13 @@ class MediaWysiwygParse extends ProcessPluginBase implements ContainerFactoryPlu
   }
 
   /**
+   * Get or create an embeddable media entity for the iframe markup.
+   *
    * @param string $markup
+   *   Iframe HTML markup.
    *
    * @return \Drupal\media\MediaInterface|null
+   *   Existing or newly created embeddable media entity.
    */
   protected function getEmbedMedia(string $markup): ?MediaInterface {
     preg_match('/src="(.*?)"/', $markup, $src);

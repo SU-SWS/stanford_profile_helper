@@ -31,6 +31,9 @@ class SearchApiSubscriberTest extends KernelTestBase {
     'config_pages',
   ];
 
+  /**
+   * Test the search API items alter event subscriber.
+   */
   public function testSearchItemsAlter() {
     $index = $this->createMock(IndexInterface::class);
 

@@ -19,8 +19,18 @@ use PHPUnit\Framework\Attributes\Group;
 #[RunTestsInSeparateProcesses]
 class EntityObjectHooksTest extends SuProfileHelperKernelTestBase {
 
-  protected $strictConfigSchema = FALSE;
+  /**
+   * Config skipped by the schema checker; menu_link's schema is incomplete.
+   *
+   * @var string[]
+   */
+  protected static $configSchemaCheckerExclusions = [
+    'field.field.node.stanford_event.field_menulink',
+  ];
 
+  /**
+   * Test menu caches are cleared when nodes with menu links change.
+   */
   public function testMenuCacheClears() {
     $field_storage = FieldStorageConfig::create([
       'field_name' => 'field_menulink',
@@ -121,6 +131,9 @@ class EntityObjectHooksTest extends SuProfileHelperKernelTestBase {
       ->getString());
   }
 
+  /**
+   * Test the field permissions setting is removed from new field storage.
+   */
   public function testFields() {
     $field_storage = FieldStorageConfig::create([
       'field_name' => 'field_foo',

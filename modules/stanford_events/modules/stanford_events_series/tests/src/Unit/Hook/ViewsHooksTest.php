@@ -31,7 +31,7 @@ class ViewsHooksTest extends UnitTestCase {
   protected $cache;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
@@ -57,8 +57,7 @@ class ViewsHooksTest extends UnitTestCase {
   }
 
   /**
-   * A view on the allow list gets the library attached and its cache tags
-   * rewritten to be node-type specific.
+   * An allowed view gets the library and node-type specific cache tags.
    */
   public function testViewsPostRenderAllowList(): void {
     $view = $this->createViewMock('stanford_event_series', ['stanford_event_series']);

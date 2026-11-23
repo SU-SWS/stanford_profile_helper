@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class NotificationTest.
+ * Kernel tests for the notification entity.
  */
 #[RunTestsInSeparateProcesses]
 #[Group('stanford_notifications')]

@@ -11,7 +11,6 @@ use Drupal\stanford_news\Hook\NewsThemeHooks;
 use Drupal\taxonomy\TermInterface;
 use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\Attributes\Group;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * Unit tests for NewsThemeHooks.
@@ -27,23 +26,20 @@ class NewsThemeHooksTest extends UnitTestCase {
   protected NewsThemeHooks $hooks;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
-    $this->hooks = new NewsThemeHooks();
+    $this->hooks = new NewsThemeHooks($this->createMock(RouteMatchInterface::class));
   }
 
   /**
-   * Puts a route match returning the given "node" parameter in the container.
+   * Rebuilds the hooks with a route match returning the given node parameter.
    */
   protected function setRouteNodeParameter($node): void {
     $routeMatch = $this->createMock(RouteMatchInterface::class);
     $routeMatch->method('getParameter')->with('node')->willReturn($node);
-
-    $container = new ContainerBuilder();
-    $container->set('current_route_match', $routeMatch);
-    \Drupal::setContainer($container);
+    $this->hooks = new NewsThemeHooks($routeMatch);
   }
 
   /**
@@ -113,8 +109,7 @@ class NewsThemeHooksTest extends UnitTestCase {
   }
 
   /**
-   * A stanford_news node without the hide-social field only attaches the
-   * library.
+   * A news node without the hide-social field only attaches the library.
    */
   public function testPageAttachmentsNoHideSocialField(): void {
     $node = $this->createMock(NodeInterface::class);
@@ -131,8 +126,7 @@ class NewsThemeHooksTest extends UnitTestCase {
   }
 
   /**
-   * A stanford_news node with the hide-social field attaches both the
-   * drupalSettings and the library.
+   * A news node with the hide-social field attaches settings and the library.
    */
   public function testPageAttachmentsWithHideSocialField(): void {
     $fieldList = $this->createMock(FieldItemListInterface::class);

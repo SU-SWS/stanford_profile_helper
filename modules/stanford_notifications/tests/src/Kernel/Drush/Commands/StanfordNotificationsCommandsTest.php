@@ -9,7 +9,7 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
- * Class StanfordNotificationsCommandsTest.
+ * Kernel tests for the notifications Drush commands.
  */
 #[RunTestsInSeparateProcesses]
 #[Group('stanford_notifications')]

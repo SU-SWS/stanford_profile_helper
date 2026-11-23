@@ -68,14 +68,14 @@ class TextFieldTest extends UnitTestCase {
     $this->assertIsArray($process);
     $this->assertCount(3, $process);
 
-    // Check skip_on_empty from parent
+    // Check skip_on_empty from parent.
     $this->assertEquals('skip_on_empty', $process[0]['plugin']);
 
-    // Check html_entity_decode callback
+    // Check html_entity_decode callback.
     $this->assertEquals('callback', $process[1]['plugin']);
     $this->assertEquals('html_entity_decode', $process[1]['callable']);
 
-    // Check media_wysiwyg_parse plugin
+    // Check media_wysiwyg_parse plugin.
     $this->assertEquals('media_wysiwyg_parse', $process[2]['plugin']);
     $this->assertEquals('https://example.com', $process[2]['image_domain']);
   }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\stanford_profile_helper\Unit\Hook;
 
+use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
@@ -116,10 +117,6 @@ class AccessHooksTest extends UnitTestCase {
     $config->method('get')->with('page')->willReturn($pages);
     $this->configFactory->method('get')->with('system.site')->willReturn($config);
   }
-
-  // -----------------------------------------------------------------------
-  // entityFieldAccess() — status field lock branch.
-  // -----------------------------------------------------------------------
 
   /**
    * Default case, no matching conditions returns neutral.
@@ -262,10 +259,6 @@ class AccessHooksTest extends UnitTestCase {
     $this->assertTrue($result->isNeutral());
   }
 
-  // -----------------------------------------------------------------------
-  // entityFieldAccess() — layout_library handler branch.
-  // -----------------------------------------------------------------------
-
   /**
    * Layout library reference fields are forbidden without permission.
    */
@@ -352,10 +345,6 @@ class AccessHooksTest extends UnitTestCase {
     $result = $this->hooks->entityFieldAccess('view', $field_definition, $account, NULL);
     $this->assertTrue($result->isNeutral());
   }
-
-  // -----------------------------------------------------------------------
-  // entityFieldAccess() — page title banner branch.
-  // -----------------------------------------------------------------------
 
   /**
    * Builds mocks for the title-field / banner scenario.
@@ -504,10 +493,6 @@ class AccessHooksTest extends UnitTestCase {
     $this->assertTrue($result->isNeutral());
   }
 
-  // -----------------------------------------------------------------------
-  // nodeAccess()
-  // -----------------------------------------------------------------------
-
   /**
    * Deleting a node configured as a special page (home/403/404) is forbidden.
    */
@@ -604,10 +589,6 @@ class AccessHooksTest extends UnitTestCase {
     $result = $this->hooks->nodeAccess($node, 'update', $account);
     $this->assertTrue($result->isNeutral());
   }
-
-  // -----------------------------------------------------------------------
-  // paragraphAccess()
-  // -----------------------------------------------------------------------
 
   /**
    * Builds a child paragraph belonging to a layout.
@@ -923,7 +904,7 @@ class AccessHooksTest extends UnitTestCase {
     }
     $query->expects($this->once())->method('execute')->willReturn([20 => 7]);
 
-    $entityType = $this->createMock(\Drupal\Core\Entity\EntityTypeInterface::class);
+    $entityType = $this->createMock(EntityTypeInterface::class);
     $entityType->method('getKey')->willReturnMap([['id', 'nid'], ['revision', 'vid']]);
 
     $storage = $this->createMock(RevisionableStorageInterface::class);

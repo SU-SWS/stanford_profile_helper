@@ -16,11 +16,14 @@ use PHPUnit\Framework\Attributes\Group;
 #[RunTestsInSeparateProcesses]
 class PageHooksTest extends SuProfileHelperKernelTestBase {
 
+  /**
+   * Test the page attachments added by the module's hooks.
+   */
   public function testPageAttachments() {
     $attachments = [];
     $this->container->get('module_handler')->invokeAllWith(
       'page_attachments',
-      function(callable $hook, string $module) use (&$attachments) {
+      function (callable $hook, string $module) use (&$attachments) {
         $hook($attachments);
       }
     );
@@ -30,7 +33,7 @@ class PageHooksTest extends SuProfileHelperKernelTestBase {
     $attachments = [];
     $this->container->get('module_handler')->invokeAllWith(
       'page_attachments',
-      function(callable $hook, string $module) use (&$attachments) {
+      function (callable $hook, string $module) use (&$attachments) {
         $hook($attachments);
       }
     );
@@ -42,7 +45,7 @@ class PageHooksTest extends SuProfileHelperKernelTestBase {
       ->create(['name' => 'foobar']);
     $user->save();
 
-    //    $this->container->get('current_user')->set
+    // $this->container->get('current_user')->set
     $account = $this->createMock(AccountProxyInterface::class);
     $account->method('getEmail')->willReturn('foo@bar.com');
     $account->method('getAccountName')->willReturn('foo');
@@ -53,7 +56,7 @@ class PageHooksTest extends SuProfileHelperKernelTestBase {
     $attachments = [];
     $this->container->get('module_handler')->invokeAllWith(
       'page_attachments',
-      function(callable $hook, string $module) use (&$attachments) {
+      function (callable $hook, string $module) use (&$attachments) {
         $hook($attachments);
       }
     );

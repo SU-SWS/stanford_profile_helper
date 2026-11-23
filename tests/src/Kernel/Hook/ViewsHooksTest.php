@@ -41,6 +41,9 @@ class ViewsHooksTest extends SuProfileHelperKernelTestBase {
     'views_custom_cache_tag',
   ];
 
+  /**
+   * Test the cache tags added to views.
+   */
   public function testCacheTags() {
     $view_id = $this->randomMachineName();
     $view = View::create([

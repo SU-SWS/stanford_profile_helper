@@ -12,21 +12,20 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class ImporterStep2EntitySelectForm extends WordPressImporterFormBase {
 
   /**
+   * Entity type manager service.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected EntityTypeManagerInterface $entityTypeManager;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('entity_type.manager')
-    );
+    $instance = parent::create($container);
+    $instance->entityTypeManager = $container->get('entity_type.manager');
+    return $instance;
   }
-
-  /**
-   * Step 2 form constructor.
-   *
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
-   *   Entity type manager service.
-   */
-  public function __construct(private readonly EntityTypeManagerInterface $entityTypeManager) {}
 
   /**
    * {@inheritdoc}

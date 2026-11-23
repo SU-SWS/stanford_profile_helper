@@ -2,14 +2,13 @@
 
 namespace Drupal\Tests\stanford_profile_helper\Kernel;
 
-use Drupal\Core\Render\RenderContext;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\stanford_profile_helper\StanfordProfileHelper;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Class StanfordProfileHelperTest.
+ * Tests the StanfordProfileHelper utility methods.
  */
 #[Group('stanford_profile_helper')]
 #[RunTestsInSeparateProcesses]
@@ -20,6 +19,9 @@ class StanfordProfileHelperTest extends KernelTestBase {
    */
   protected static $modules = ['system', 'contextual'];
 
+  /**
+   * Test removing cache tags that match patterns.
+   */
   public function testCacheTagRemoval() {
     $variable = [];
     StanfordProfileHelper::removeCacheTags($variable, ['^foo$']);
@@ -33,19 +35,19 @@ class StanfordProfileHelperTest extends KernelTestBase {
     StanfordProfileHelper::removeCacheTags($variable, ['^foo$']);
     $this->assertEquals(['#cache' => ['tags' => ['bar']]], $variable);
 
-    $variable = ['#cache' => ['tags' => ['foo','bar']]];
+    $variable = ['#cache' => ['tags' => ['foo', 'bar']]];
     StanfordProfileHelper::removeCacheTags($variable, ['^foo$']);
     $this->assertEquals(['#cache' => ['tags' => ['bar']]], $variable);
 
-    $variable = ['#cache' => ['tags' => ['foo:bar','bar']]];
+    $variable = ['#cache' => ['tags' => ['foo:bar', 'bar']]];
     StanfordProfileHelper::removeCacheTags($variable, ['^foo$']);
     $this->assertEquals(['#cache' => ['tags' => ['foo:bar', 'bar']]], $variable);
 
-    $variable = ['#cache' => ['tags' => ['foo:bar','bar']]];
+    $variable = ['#cache' => ['tags' => ['foo:bar', 'bar']]];
     StanfordProfileHelper::removeCacheTags($variable, ['foo']);
     $this->assertEquals(['#cache' => ['tags' => ['bar']]], $variable);
 
-    $variable = ['#cache' => ['tags' => ['foo:bar','bar']]];
+    $variable = ['#cache' => ['tags' => ['foo:bar', 'bar']]];
     StanfordProfileHelper::removeCacheTags($variable, ['bar']);
     $this->assertEquals(['#cache' => ['tags' => []]], $variable);
   }

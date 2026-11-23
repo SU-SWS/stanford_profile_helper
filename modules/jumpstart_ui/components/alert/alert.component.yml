@@ -19,4 +19,3 @@ props:
 slots:
   message:
     title: Message
-
